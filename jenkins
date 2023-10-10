@@ -1,3 +1,7 @@
+2:23:35  JENKINS EXECUTORS ARE NOT PLUGINS, THEY ARE agents and parameters in jenkins that permit us to run jobs in the slave servers
+we use plugins to establish connection btw jenkins and the slaves , for the slave to be added to the jenkins master, we need to use the ssh agent plugin
+
+
 
 PROJECTS: 
   In LandmakTechnology I work in a Team where we:
@@ -42,7 +46,9 @@ the common plugins we can find in our environment include the following among ot
        This plugin allows you to restart Jenkins safely.,, it allows all the running jobs to be completed before restarting jenkins
 but without it when u restrt jenkins while jobs are on going that can wreck some other processes, after its installation we can see it in our 
 menu option.
-we can install all these plugins depending on our task
+we can install all these plugins depending on our task but we can also identify the plugin that will be commonly used and group them 
+e.g for an agent slave to be configure the master/slave architecture, for the jenkins slave to be added to the maaster, we need an SSH plugin.
+to import jenkins job from an old server to a new server e.g upgrading frm redhat 8 to redhat9
   • Next Build Number***************************
   • JACOCO********************************
   • SSH Agent
@@ -58,6 +64,7 @@ build name and description setter**************************
       1 / 2 / 3 / 11   
      we can reset it like this e.g tesla-1  tesla2, tesla17 
 • Blue Ocean *************************************
+2:27:00 audit trail: there will be diff individuals connecting to my server, doing diff task, to know that this task was done by emeka or john etc.we use an auditor
 
 • Publish Over SSH:we can use it to send artifacts like whne a build server does a build , we can upload artifcats into nexus 
      jenkins --> ansible --deployment
@@ -162,19 +169,23 @@ java --version
 
 2. use sshAgent plugin to establish the connection    
 
-     ip = 3.95.244.231
-          172.31.81.224   
+     ip = 3.95.244.231   PUBLIC
+          172.31.81.224  PRIVATE 
+1:44:45 iF THEY ARE IN THE SAME NTWRK I USE PRIVATE IP, IF THEY ARE IN DIFF NTWRK I USE PUBLIC IP
     ssh -i demo32.pem  ec2-user@172.31.81.224 
     ssh -i demo32.pem  ec2-user@3.95.244.231  
 1:46 TO MAKE the CLI a slave, in jenkins server; 
-manage jenkins-nodes and cloud ..... level:2, label:mater and save 
-click nodes -add new node- name: agent1 -select permanent agent- excutors: 1 0r 2 etc -remote root dir: /home/obi- lebel:maven
+FOR now when we click on manage jenkins --nodes and cloud , we hv jst the master server, we click on its blue settings or built in node
+no. of executors:2  - label :master then save
+ we can configure the master and add slaves by clicking on 
+-add new node- name: agent1 -select permanent agent- excutors: 1 0r 2 etc -remote root dir: /home/obi- lebel:maven
 1:50 launch method:launch agents via ssh - host is my ipadress - credential: add (jenkins)..(in CLI, we ls/home to see users and sudo passwd obi to assign passwd:admin123)
 credential ,add; kind: username with paswd - username:obi ,-passwd: admin123 - description and ID :obilogin - 
 credentials: obi - hostkey: manually trusted key and save - relaunch agent
 remote root dir:/home/ec2-user or /home/ubuntu
 then the kind option is with prvate key:search for private key file in download folder ,copy n paste and add
-# disk space is too low means it has a resource issue ... and we can add space
+# disk space is too low means it has a resource issue ... and we can add space by increasing the linux box
+
 
 
    ssh -i "demo32.pem" ec2-user@ec2-3-95-244-231.compute-1.amazonaws.com
@@ -188,28 +199,56 @@ then the kind option is with prvate key:search for private key file in download 
       sudo apt install default-jre
       java -version
 
+
+TO USE ANY OF THE AGENTS      ..e.g to run a project on agent3
+Click on the project - configure- restrict wher this project can be run: agent 3  - save
+to build click build with parameters
+when we build we can see the angent 3 reflected in the output for no.8 but output n0.7 was done without any restriction it was built straight from the master
 7:
 09:18:26 Started by user mylandmarktech32
 09:18:26 Running as SYSTEM
 09:18:26 Building in workspace /var/lib/jenkins/workspace/landmark-webapp
 
-8:
+8: even though maven was uninstalled in the CLI of the agent server, it was able to build with executors
 10:53:45 Started by user mylandmarktech32
 10:53:45 Running as SYSTEM
 10:53:45 Building remotely on agent3 (docker) in workspace /home/ubuntu/workspace/landmark-webapp
 
-
-python-webapp 
+therefore we can hv multiple jobs runing at once (very fast) which will increase efficiency n performance, one job running for 
+python-webapp running in
    agent1   
+another job running in 
 maven-webapp 
    agent3   
+and another running in 
 nodeJS webapp
    agent2      
 
-Jenkins executors jenkins run jobs in slaves/agents  
+with the help of Jenkins executors, jenkins run jobs in slaves/agents
+even though maven was uninstalled in the CLI of the agent server, it was able to build no.8 with executors 
 
+2:23:35  JENKINS EXECUTORS ARE NOT PLUGINS, THEY ARE agents and parameters in jenkins that permit us to run jobs in the slave servers
+we use plugins to establish connection btw jenkins and the slaves , for the slave to be added to the jenkins master, we need to use the ssh agent plugin
 
+QUESTIONS:
+why do DEvelopers need git in their environment since git will be installed in jenkins?
+developers are to develp the application and use git for versioning the application, 
+when they do a git commit, they creat a new version
+and to share the code they need the git push command and as a devops engr, we need git to clone the code.
+we no longer need maven standalone bc in jenkins we can install maven as a tool
+if we want to run a job in jenkins we can jenkins master slave architeture without havin to install maven in the set slave server, so long as i hv 
+the tool maven installed and running in jenkins and with the help of jenkins executors, jenkins will run the jobs with relative ease.
 
+is the low system/resource requirement/capacity of agent that were established a problem?.. e.g some are free tier servers
+bc our jenkins reqire a minimum of 4GB ram 
+not necessary, as a matter of fact , this is the first time an agent has failed on the grouns that it doesnt hv enough resources, but thi scan abe added as one of the problems
+encountered for TS using jenkins and hw did you solve them 
+
+ADVANTQAGES OF SLAVE MASTER ARCHITECTURE
+it helps in redundancy e.g if the job in the master fails, we stil hv the jobs in the slaves
+it enhances the master performance
+it helps with para builds,i.e running multiple jobs at once, inorder words, one job doesnt hv to run and end b4 another starts.. bc under normal circumstances, 
+when running multiple jobs in jenkins, depending on the number of executioners,one job wil run and end b4 another starts but master/slave makes multiple jobs possible.
 
 pipeline jenkins projects:
 ===========================
