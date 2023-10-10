@@ -1,0 +1,213 @@
+
+PROJECTS: 
+  In LandmakTechnology I work in a Team where we:
+1. Develop, test, build, secure, deploy, manage & monitor web and 
+   enterprise applications for FinTech clients like;
+      Banks  [ boa, wf, barclays, rbc, td, bicec, uba, ecobank ] 
+      Insurance [BLI, WFG, TD, Sunlife, AIG  ] 
+      Money Transfer [zelle, cashApp, interact, MTN-MOMO,
+      payment gateways = VISA, MASTERCard, Paypal 
+
+2. We automate the entire process stated above:by intergrating all the tools we hv been able to discuss
+   PROJECTS Requirements:
+    Git [git-bash]:
+        IDEs = Integrated Development Environments
+               simplifies the deployment process  
+        vscode, pycharm, eclipes, atom 
+
+PLUGINS MANAGEMENT: How to use plugins to achieve automation
+
+Plugins Mgt in Jenkins 
+==========================
+ ---Plugins extends the functionality of jenkins, maven, etc.   
+
+e.g, mvn package = this uses the following  
+   mvn validate/
+       compile/
+       test/
+       package/
+       install/
+       deploy/
+       clean/
+       sonar[plugin]:sonar[goal] 
+
+Plugin Management
+  how to install plugins in jenkins =    
+  --> dashboard-->manageJenkins-->plugins and install
+the common plugins we can find in our environment include the following among others 
+  • Deploy to container to  [ deploy to tomcat ]
+  • Deploy WebLogic
+  • Maven Integration 
+  • Safe Restart ************************************************1:13(to do)*
+       This plugin allows you to restart Jenkins safely.,, it allows all the running jobs to be completed before restarting jenkins
+but without it when u restrt jenkins while jobs are on going that can wreck some other processes, after its installation we can see it in our 
+menu option.
+we can install all these plugins depending on our task
+  • Next Build Number***************************
+  • JACOCO********************************
+  • SSH Agent
+  • Email Extension
+  • SonarQube Scanner
+  • Audit Trail Plugin
+  . job import plugin  
+  • Schedule Build
+  • Artifactory Plugin
+  • Cloud Foundry
+  • Build Name Setter*********************************
+build name and description setter**************************
+      1 / 2 / 3 / 11   
+     we can reset it like this e.g tesla-1  tesla2, tesla17 
+• Blue Ocean *************************************
+
+• Publish Over SSH:we can use it to send artifacts like whne a build server does a build , we can upload artifcats into nexus 
+     jenkins --> ansible --deployment
+     JENKINS-server    ------ appServer   
+• ThinBackup : for backing up our jobs in jenkins incase smt goes wrong************************
+
+• Convert To Pipeline*********************************************
+
+• Job import plugin : to migrate jenkin jobs from one jenkin server to another ********************1:21 list of pluggins to install
+  jenkins job migration 
+    Jenkins server1 redhat6 
+    Jenkins server2 redhat8  
+    Jenkins server3 docker-container
+    decommissioning Jenkins Server
+
+Technology stack:so far we hv looked at 
+  Linux Servers/OS 
+  Windows 
+  maven 
+  Nexus  
+  SonarQube   
+  Bash shell scripting    
+  Git  
+  GitHub  
+  SonarcLoud  
+  AWS cloud     
+  NGINX 
+  java  
+  Tomcat 
+  Jenkins   
+----------
+--------------------------------
+IQ: Explain your experience using Jenkins in your Environment??? 
+answers:
+ 1. I and my team have used Jenkins to automate tasks and run jobs/workloads:uing,
+   ---  freestyle projects --- 5mins
+   ---- maven projects     --- 2mins  
+   ---- Pipeline projects  
+   ---- multi-branch pipeline 
+ 2. With Jenkins i have managed projects such as:
+    --- software/application builds and testing and deployment  
+    --- systems  monitoring  
+    --- application monitoring  
+    --- database backup
+    --- Infrastructure provisioning - when jenkins/terraform are integrated.. jenkins/terraformintegration 
+    --- Infrastructure Configuration mgt - jenkins/ansible integration 
+ 3. I have installed, removed and updated plugins that extend Jenkins functionality:
+   installed deploy to container
+   update deploy to container 
+   remove deploy to container
+   Read The Release Notes [Documentation] for the Plugins 
+   most Jenkins Plugins are developed by the Community  
+
+ 4. Using Jenkins Plugins to achieve automation:such as ,
+  ssh, sshAgent, Publish-over-SSH, deploy to container, Slack notification,   
+  job import, jacoco,
+aside frm installing plugins, i hv also used plugins to achieve atomation and hv taken automation to the nxt level by 
+configuring build triggers
+ 5. Configuring Build triggers such as:[pollSCM, webhooks] for automation:
+i hv secured jenkins by ensuring :
+ 6. Configuring credentials for authentications:
+     GitHub credentials 
+     Tomcat-user 
+     Docker-hub/Nexus/SonarQube/SONARCLOUD 
+     username/temporal access /  
+
+  7. Configuring Jenkins (master)slave agents  using ssh plugins:
+
+there are problems in jenkins and i have been able to :
+  8. Troubleshooting jenkins build related problems:
+     -- permissions issues, Unauthorized [4** error codes] , i manage the credentials such taht jenkins can be authenicated by github or nexus accordingly
+                     e.g jenkins trying to connect with nexus/sonarqube/github
+
+     -- Jenkins [GitHub/sonarqube/nexus/tomcat] 
+
+     -- Jenkins agent/slave failing to connect to the master
+        [java not install], wrong java version, AUTHENTICATION
+
+ 9. Installation and configuration of the Jenkins server in Linux/Windows systems:  
+
+ 10. Securing the Jenkins server  :
+   
+
+IQ: What problems have you faced using/applying Jenkins in your Environment??
+     1. builds failing
+     2. jenkins service failing start so we need the complier, check if [java-11-openjdk] is installed
+     3. slave/agent failing to connect to the master [bc of executables] mayb java is nt installed or trying to run multiple jobs at once
+jenkins master slave architecture
+to run multiple jobs at once,  we may have one jenkins master server connecting to to other jenkins slaves via executioners
+      4. integration isues, integration failing
+     3. firewall issues = ports [8080 / 8899] not open      
+
+JENKINS MASTER -SLAVE ARCHITECTURE:
+====================================
+1:38 we can connect multiple slave servers to one jenkins master so that we can run multiple jobs at once
+
+JENKINS MASTER SLAVE ARCHITECTURE CONFIGURATION
+   For a slave or an agent to be connected to the jenkins master :
+     1. java-11-openjdk must be installed in the slave/agent ( in the CLI) 
+1:56 sudo yum install java-11 -y  
+java --version
+
+2. use sshAgent plugin to establish the connection    
+
+     ip = 3.95.244.231
+          172.31.81.224   
+    ssh -i demo32.pem  ec2-user@172.31.81.224 
+    ssh -i demo32.pem  ec2-user@3.95.244.231  
+1:46 TO MAKE the CLI a slave, in jenkins server; 
+manage jenkins-nodes and cloud ..... level:2, label:mater and save 
+click nodes -add new node- name: agent1 -select permanent agent- remote root: /home/obi- lebel:maven
+1:50 launch method:launch agents via ssh - host is my ipadress - credential: add (jenkins)..(in CLI, we ls/home to see users and sudo passwd obi to assign passwd:admin123)
+credential ,add; kind: username with paswd - username:obi ,-passwd: admin123 - description and ID :obilogin - 
+credentials: obi - hostkey: manually trusted key and save - relaunch agent
+if with prvate key:search for private key file in download folder ,copy n paste and add
+
+
+   ssh -i "demo32.pem" ec2-user@ec2-3-95-244-231.compute-1.amazonaws.com
+    yum install java-11 -y
+
+
+   ssh -i "demo31.pem" ubuntu@ec2-52-87-183-168.compute-1.amazonaws.com
+   ssh -i "demo31.pem" ubuntu@52.87.183.168  
+
+      sudo apt update  
+      sudo apt install default-jre
+      java -version
+
+7:
+09:18:26 Started by user mylandmarktech32
+09:18:26 Running as SYSTEM
+09:18:26 Building in workspace /var/lib/jenkins/workspace/landmark-webapp
+
+8:
+10:53:45 Started by user mylandmarktech32
+10:53:45 Running as SYSTEM
+10:53:45 Building remotely on agent3 (docker) in workspace /home/ubuntu/workspace/landmark-webapp
+
+
+python-webapp 
+   agent1   
+maven-webapp 
+   agent3   
+nodeJS webapp
+   agent2      
+
+Jenkins executors jenkins run jobs in slaves/agents  
+
+
+
+
+pipeline jenkins projects:
+===========================
