@@ -168,12 +168,13 @@ java --version
     ssh -i demo32.pem  ec2-user@3.95.244.231  
 1:46 TO MAKE the CLI a slave, in jenkins server; 
 manage jenkins-nodes and cloud ..... level:2, label:mater and save 
-click nodes -add new node- name: agent1 -select permanent agent- remote root: /home/obi- lebel:maven
+click nodes -add new node- name: agent1 -select permanent agent- excutors: 1 0r 2 etc -remote root dir: /home/obi- lebel:maven
 1:50 launch method:launch agents via ssh - host is my ipadress - credential: add (jenkins)..(in CLI, we ls/home to see users and sudo passwd obi to assign passwd:admin123)
 credential ,add; kind: username with paswd - username:obi ,-passwd: admin123 - description and ID :obilogin - 
 credentials: obi - hostkey: manually trusted key and save - relaunch agent
-if with prvate key:search for private key file in download folder ,copy n paste and add
-# disk space is too low means it has a resource issue
+remote root dir:/home/ec2-user or /home/ubuntu
+then the kind option is with prvate key:search for private key file in download folder ,copy n paste and add
+# disk space is too low means it has a resource issue ... and we can add space
 
 
    ssh -i "demo32.pem" ec2-user@ec2-3-95-244-231.compute-1.amazonaws.com
