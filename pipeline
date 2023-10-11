@@ -1,0 +1,301 @@
+jenkins default user is jenkins
+===========================================
+Plugins Mgt in Jenkins 
+==========================
+ ---Plugins extends the functionality of jenkins, maven, etc.   
+plugin make smt more useful we add plugins , jst add certain features to it 
+mvn package = 
+for maven we need plugin for each of the following
+ mvn validate/
+       compile/
+       test/
+       package/
+       install/
+       deploy/
+      clean/  to even delete old artifact
+       sonar:sonar for code quality analysis 
+      the 1st isplugin and the 2nd is goal
+sonar[plugin]:sonar[goal] 
+
+=========================
+Technology stack:
+  Linux Servers/OS 
+  Windows 
+  macOS SYSTEMS  
+ diff types of software
+ maven 
+  Nexus  
+  SonarQube   
+  Bash shell scripting    
+  Git  
+  GitHub  
+  SonarcLoud  
+  AWS cloud     
+  NGINX 
+  java  
+  Tomcat 
+  Jenkins   
+
+
+PIPELINE JENKINS PROJECTS:
+FREE-style
+maven
+we want to create a pipeline that can automate the test and build process  
+pipeline:
+  Jenkins Pipeline scripts are generally written in groovy 
+  Jenkins Pipelines scripts are called Jenkinsfile 
+
+  we have scripted and 
+  declarative Pipeline scripts
+Jenkinsfile = scripted:
+
+Jenkinsfile is a file generally written in the groovy language:
+Jenkinsfile helps to better manage and automate jenkins jobs/tasks  
+Jenkinsfile introduces infrastructure as a code concept with all its 
+benefits 
+what is a groovy language please? 
+
+Ticket0055:
+  Create a tesla-wepapp Jenkins scripted pipeline job:
+Jenkinsfile
+============
+node{
+    stage('1.CloneCode'){}
+    stage('2.mvnBuild'){}
+    stage('3.CodeQuality'){}
+    stage('4.UploadArtifacts'){}
+    stage('5.Deploy2UAT'){}
+    stage('6.6ManualApproval'){}
+    stage('7.Deploy2Prod'){}
+    stage('8.emailNotification'){}
+}
+==============================================
+https://github.com/LandmakTechnology/maven-web-application
+https://github.com/LandmakTechnology/maven-web-app = private  Repo
+single line comment in groovy  = //  
+multi-line comment in groovy  =  /*  */
+
+node{
+    def mavenHome = tool name: 'maven3.9.4'
+    stage('1.CloneCode'){
+        //Jenkins running on a Linux system  
+        //sh "git clone https://github.com/LandmakTechnology/maven-web-application"
+        git "https://github.com/LandmakTechnology/maven-web-application"
+        //Jenkins running on a windows system
+        //bat "git clone https://github.com/LandmakTechnology/maven-web-application"  
+    }
+    stage('2.mvnBuild'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage('3.CodeQuality'){
+        //sh "${mavenHome}/bin/mvn sonar:sonar"
+        //edit pom.xml propertiesTAG with SonarQube server details
+    }
+    stage('4.UploadArtifacts'){
+        sh "${mavenHome}/bin/mvn deploy"
+        //edit pom.xml distributionManagement TAG with repository details
+        //edit settings.xml with nexus-user login credentials       
+    }
+    stage('5.Deploy2UAT'){
+        //use deploy-to-container plugin via pipeline syntax
+        deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
+        //Deploying [/var/lib/jenkins/workspace/tesla-app-pipeline/target/tesla.war]
+    }
+    stage('6.6ManualApproval'){
+        sh "echo 'Please review the application performance' "
+       : timeout(time:600, unit:'MINUTES') {
+        input message: 'Application ready for deployment, Please review and approve'
+      }       
+    }
+    stage('7.Deploy2Prod'){
+      sh "echo 'Deploy application to the customers/production' " 
+     deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
+         
+    }
+    stage('8.APM'){
+        sh "echo 'monitoring and observation and alerting' "
+        sh "echo 'application performance Monitoring in progress' "
+    }
+    stage('9.emailNotification'){
+        sh "echo 'notify the team for unusual accurances' "
+        sh "echo 'notify the team if the applications are down' "
+        sh "echo 'notify the team if the latency is higher that expected' "
+        emailext body: '''Hi Team,
+
+The build and Deployment status for tesla-app follows.
+
+Regards,
+Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
+
+    }
+}
+
+
+options:
+    Discard old builds
+    Keep 2 builds for a maximum of 5days  
+
+
+myViews: Filter/classify for projects 
+disable project:
+  Projects are disabled during server maintenance 
+
+this project is currently disabled
+
+
+Continuous Development ---> 
+when developers commit to the master branch.
+   Jenkins triggers a continuous integration job :
+   If the CI job succeeds Jenkins will trigger the continuous Delivery  JOB   
+
+ scripted Jenkinsfile:
+node{
+    stage('1.CloneCode'){}
+    stage('2.mvnBuild'){}
+    stage('3.CodeQuality'){}
+    stage('4.UploadArtifacts'){}
+    stage('5.Deploy2UAT'){}
+    stage('6.6ManualApproval'){}
+    stage('7.Deploy2Prod'){}
+    stage('8.emailNotification'){}
+}
+
+Ticket0056:
+  Create a tesla-wepapp Jenkins declarative pipeline job:
+Declarative Jenkinsfile:
+=========================
+pipeline{
+    agent any   
+    tools{}
+    options{}
+    triggers{}
+    stages{
+      stage('1.CloneCode'){}
+      stage('2.mvnBuild'){}
+      stage('3.CodeQuality'){}
+      stage('4.UploadArtifacts'){}
+      stage('5.Deploy2UAT'){}
+      stage('6.6ManualApproval'){}
+      stage('7.Deploy2Prod'){}
+      stage('8.emailNotification'){}
+    }
+    post{}
+}
+Declarative Jenkinsfile:
+=========================
+pipeline{
+    agent any 
+    tools{
+        maven 'maven3.9.4'
+    }
+    //options{}
+    //triggers{}
+    stages{
+      stage('1.CloneCode'){
+        steps{
+            sh "echo 'cloning the latest application version' "
+            git "https://github.com/LandmakTechnology/maven-web-application"
+        }
+      }
+      stage('2.mvnBuild'){
+        steps{
+          sh "echo 'running JUnit-test-cases' "
+          sh "echo 'testing must passed to create artifacts ' "
+          sh "mvn clean package"             
+        }
+      }
+      stage('3.CodeQuality'){
+        steps{
+          sh "echo 'Perfoming CodeQualityAnalysis' "
+          //sh "mvn sonar:sonar"              
+        }
+      }
+      stage('4.UploadArtifacts'){
+        steps{
+          sh "mvn deploy"   
+        }
+      }
+      stage('5.Deploy2UAT'){
+        steps{
+            deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
+        }
+      }
+      stage('6.ManualApproval'){
+        steps{
+          sh "echo 'Please review the application performance' "
+          timeout(time:600, unit:'MINUTES') {
+          input message: 'Application ready for deployment, Please review and approve'
+      }  
+        }
+      }
+      stage('7.Deploy2Prod'){
+        steps{
+            deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
+         }
+      }
+    }
+    post{
+        always{
+  emailext body: '''Hi Team,
+
+  The build and Deployment status for is a success.
+
+  Regards,
+  Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
+
+        }
+        success{
+  emailext body: '''Hi Team,
+
+  The build and Deployment is a success.
+
+  Regards,
+  Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
+
+        }
+        failure{
+  emailext body: '''Hi Team,
+
+  The build and Deployment failed.
+
+  Regards,
+  Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
+
+        }
+    }
+}
+
+Jenkinsfile-s 
+node{}
+pipeline{
+    agent any
+    tools {
+        maven 'maven3.9.4'
+    }
+    stages{
+        stage('1.clone'){
+            agent {
+                labels 'build'
+            steps{
+                sh "echo 'Creating artfacts' "
+                sh "mvn package"
+            }
+            }
+        }
+    }
+}
+
+Explain how you have applied Jenkins and resolve build failures?? 
+
+pipeline jobs  
+groovy scripts and Jenkinsfiles  
+
+
+webapp  :
+    https://github.com/LandmakTechnology/maven-web-app = private  Repo
+
+  node{
+    stage('1.clone'){
+      git credentialsId: 'github', url: 'https://github.com/LandmakTechnology/maven-web-app'
+    }
+  }
