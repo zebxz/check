@@ -53,20 +53,27 @@ Jenkinsfile is a file generally written in the groovy language:
 Jenkinsfile helps to better manage and automate jenkins jobs/tasks  
 Jenkinsfile introduces infrastructure as a code concept with all its 
 benefits 
-what is a groovy language please? 
+what is a groovy language?  lets work on a ticket  
 
 Ticket0055:
   Create a tesla-wepapp Jenkins scripted pipeline job:
 Jenkinsfile
 ============
+comit id helps identify the diff versions
+jenkins pipeline is just a file
+we want to create a file , everytin will run inside a node 
+jenkins server is a node
+
+when developers commit their code in github, we have stages... so 
+jenkinsfile:
 node{
     stage('1.CloneCode'){}
-    stage('2.mvnBuild'){}
-    stage('3.CodeQuality'){}
-    stage('4.UploadArtifacts'){}
-    stage('5.Deploy2UAT'){}
+    stage('2.mvnBuild'){}creating artifacts but b4 the build happens, it performs testing so it does testing-build eithr war or ear
+    stage('3.CodeQuality'){} 
+    stage('4.UploadArtifacts'){}into nexus
+    stage('5.Deploy2UAT'){}is the cx happy? then
     stage('6.6ManualApproval'){}
-    stage('7.Deploy2Prod'){}
+    stage('7.Deploy2Prod'){}if ders problem, then 
     stage('8.emailNotification'){}
 }
 ==============================================
@@ -75,48 +82,76 @@ https://github.com/LandmakTechnology/maven-web-app = private  Repo
 single line comment in groovy  = //  
 multi-line comment in groovy  =  /*  */
 
+31:29
 node{
     def mavenHome = tool name: 'maven3.9.4'
     stage('1.CloneCode'){
-        //Jenkins running on a Linux system  
-        //sh "git clone https://github.com/LandmakTechnology/maven-web-application"
-        git "https://github.com/LandmakTechnology/maven-web-application"
+        //Jenkins is running on a Linux system 
+//when jenkins id running on linux system,there are 2ways to achieve cloning of code, the first is to 
+  sh "git clone https://github.com/LandmakTechnology/maven-web-application"
+       // git "https://github.com/LandmakTechnology/maven-web-application"
         //Jenkins running on a windows system
-        //bat "git clone https://github.com/LandmakTechnology/maven-web-application"  
+      //  bat "git clone https://github.com/LandmakTechnology/maven-web-application" 
+//NEW ITEM -REQ FIELD:tesla app pipeline- select PIPELINE -ok - select pipeline: -PIPELINE:DEFINITION :pipeline script: paste script - apply save, build now
+    }" 
+      //40.09 error..... run stage2 with satge1 but comment evertin except > git "https://github.com/LandmakTechnology/maven-web-application"
+Stage('2.mvnBuild'){ 
+//...  when we install maven in the bin dir, we find mvn but the bin dir is found in 
+
+//maven was installed in jenkins so maven is running in my jenkins server , so where is maven running in jenkins/home dir ,so jst b4 the stages we can define a function.
+//my maven home was instal as a tool, the tool name is maven3.9.4
+//we want to def a function called > maavenhome = tool name: maven3.9.4
+//so inside the maven3.9.4 which i hv defined as a function, i can call the function using "$
+ 
+sh "${mavenHome}/bin/mvn clean package"
+
+//so in my maven homedir wich IS installed IN MY JENKINS SERVER as maven3.9.4 , I WILL execute mvn and
+//i will use the mvn both for maven, sonarqube and nexus
+  //so -dashboard-project-config- pipeline- paste script- aply save n buiid now
+
     }
-    stage('2.mvnBuild'){
-        sh "${mavenHome}/bin/mvn clean package"
-    }
-    stage('3.CodeQuality'){
+    Stage('3.CodeQuality'){
         //sh "${mavenHome}/bin/mvn sonar:sonar"
+        //run stage3 with stage2 and stage1 with only >>  git "https://github.com/LandmakTechnology/maven-web-application"  
         //edit pom.xml propertiesTAG with SonarQube server details
     }
     stage('4.UploadArtifacts'){
         sh "${mavenHome}/bin/mvn deploy"
         //edit pom.xml distributionManagement TAG with repository details
-        //edit settings.xml with nexus-user login credentials       
+        //edit settings.xml with nexus-user login credentials 
+       //ensure nexus port is open on firewall
     }
     stage('5.Deploy2UAT'){
+             //we are runing from stage1 as well
         //use deploy-to-container plugin via pipeline syntax
+click on syntax - sample step: select deploy container - deploy war: target*/ - add container -credentials: tomcat cred - then copy tomcat server url - click generate 
+so am using the deploy adopters 
         deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
         //Deploying [/var/lib/jenkins/workspace/tesla-app-pipeline/target/tesla.war]
     }
     stage('6.6ManualApproval'){
         sh "echo 'Please review the application performance' "
-       : timeout(time:600, unit:'MINUTES') {
+       : once it is reviewed we will use a parameter called timeout(time:600, unit:'MINUTES') {
         input message: 'Application ready for deployment, Please review and approve'
+how do we review, we observe the application , we click on stage 6 .. (we see it on the browser) is this what i want, the client biz analyst will review n decide.. 
+then once its approvd, we click on proceed and then deployment in prod has taken place. 
       }       
     }
     stage('7.Deploy2Prod'){
       sh "echo 'Deploy application to the customers/production' " 
+   // to deploy application we use thw same deploy to container pluggin
      deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
          
     }
     stage('8.APM'){
+//we want to deploy application performance monitoring tools e.g NEW RELIC
         sh "echo 'monitoring and observation and alerting' "
+ //OR
         sh "echo 'application performance Monitoring in progress' "
     }
-    stage('9.emailNotification'){
+    stage('9.emailNotification'){ // or slack channel // project - pipeline syntax - sample step: select embedded email - to : the email address - add recepients: buiders users,devlopers,
+requestor,contributors..- buid n deployment status - body: hi team . the build and deploymeny status for tesla app as folloes , regards, landmark technologies - click
+genertae pipeline sysntax and copy ..... - click on my job up - cong - pipeline -paste - apply n save build now 
         sh "echo 'notify the team for unusual accurances' "
         sh "echo 'notify the team if the applications are down' "
         sh "echo 'notify the team if the latency is higher that expected' "
@@ -129,6 +164,17 @@ Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), deve
 
     }
 }
+wwe hv created this jenkins job ith the help of the jenkins job we hv been able to deploy the application and we can add this file in our SCM/ source code
+jenkins file scripted 33
+
+1:24:56
+
+click new item-paypal project -pipeline - ok
+pipeline:definition: pipeline script from SCM - SCMZ:GIT - PASTE REPO URL -CREDENTIALS:GIThub credentials- scriptpath:(default name 4 jenkins file is jenkins file)
+so we go bk to our git hub and copy our jenkins file name n paste then save then build now ... when u hv a jenkins job, u can use it for any no of jobs
+it is building with exactly what we already wrote n configured.
+
+1:29:40
 
 
 options:
