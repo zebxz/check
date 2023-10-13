@@ -36,6 +36,10 @@ Technology stack:
   Tomcat 
   Jenkins   
 
+maven is running in jenkins so we 
+2:13:00   day1)start runinng, day2)keep runinn, day3)
+continue to run, 4)dnt stop running
+
 
 PIPELINE JENKINS PROJECTS:
 FREE-style
@@ -45,8 +49,25 @@ pipeline:
   Jenkins Pipeline scripts are generally written in groovy 
   Jenkins Pipelines scripts are called Jenkinsfile 
 
-  we have scripted and 
+  we have scripted and  
   declarative Pipeline scripts
+2:05:21
+scripted file starts with a node while declarative starts with pipeline
+scripted file is restricted to a particular node e.g in pipeline we hv  "agent any
+pipeline{
+    agent any
+    tools {
+        maven 'maven3.9.4'
+    }
+    stages{
+        stage('1.clone'){
+            agent {
+                labels 'build'
+            steps{
+                sh "echo 'Creating artfacts' "
+                sh "mvn package"
+            }
+
 Jenkinsfile = scripted:
 
 Jenkinsfile is a file generally written in the groovy language:
@@ -80,7 +101,7 @@ node{
 https://github.com/LandmakTechnology/maven-web-application
 https://github.com/LandmakTechnology/maven-web-app = private  Repo
 single line comment in groovy  = //  
-multi-line comment in groovy  =  /*  */
+multi-line comment in groovy  = starts  /*     ends */
 
 31:29
 node{
@@ -123,7 +144,7 @@ sh "${mavenHome}/bin/mvn clean package"
     }
     stage('5.Deploy2UAT'){
              //we are runing from stage1 as well
-        //use deploy-to-container plugin via pipeline syntax
+        //use deploy-to-container plugin via pipeline syntax  2:36:32 syntax helps to ease pipeline script writing
 click on syntax - sample step: select deploy container - deploy war: target*/ - add container -credentials: tomcat cred - then copy tomcat server url - click generate 
 so am using the deploy adopters 
         deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
@@ -174,7 +195,9 @@ pipeline:definition: pipeline script from SCM - SCMZ:GIT - PASTE REPO URL -CREDE
 so we go bk to our git hub and copy our jenkins file name n paste then save then build now ... when u hv a jenkins job, u can use it for any no of jobs
 it is building with exactly what we already wrote n configured.
 
-1:29:40
+1:30:00  multiline comment
+1:38:40   my view
+
 
 
 options:
@@ -205,17 +228,18 @@ node{
     stage('7.Deploy2Prod'){}
     stage('8.emailNotification'){}
 }
-
-Ticket0056:
-  Create a tesla-wepapp Jenkins declarative pipeline job:
+                   ****************************************sept23 del
+Ticket0056: the most common today
+in declaraclarative pipelineline, everytin is declared and there are more options
+  Create a tesla-wepapp Jenkins declarative pipeline job: 
 Declarative Jenkinsfile:
 =========================
 pipeline{
     agent any   
     tools{}
-    options{}
-    triggers{}
-    stages{
+    options{}like discard olduilds , del workspace
+    triggers{} we can add triggers 
+    stages{ dif stages
       stage('1.CloneCode'){}
       stage('2.mvnBuild'){}
       stage('3.CodeQuality'){}
@@ -252,6 +276,7 @@ pipeline{
       }
       stage('3.CodeQuality'){
         steps{
+
           sh "echo 'Perfoming CodeQualityAnalysis' "
           //sh "mvn sonar:sonar"              
         }
@@ -337,11 +362,17 @@ pipeline jobs
 groovy scripts and Jenkinsfiles  
 
 
+2:25:20 BUILDING FROM PRIVATE REPO
+my views- paypal- new item- free style- 
+
 webapp  :
     https://github.com/LandmakTechnology/maven-web-app = private  Repo
 
+1:28:20 for pipeline project
   node{
     stage('1.clone'){
       git credentialsId: 'github', url: 'https://github.com/LandmakTechnology/maven-web-app'
     }
   }
+2:25:20 BUILDING FROM PRIVATE REPO
+my views- paypal- new item- free style- 
