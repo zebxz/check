@@ -105,7 +105,7 @@ multi-line comment in groovy  = starts  /*     ends */
 
 31:29
 node{
-    def mavenHome = tool name: 'maven3.9.4'
+    def mavenHome (is the tool name) = tool name: 'maven3.9.4'
     stage('1.CloneCode'){
         //Jenkins is running on a Linux system 
 //when jenkins id running on linux system,there are 2ways to achieve cloning of code, the first is to 
@@ -121,7 +121,8 @@ Stage('2.mvnBuild'){
 
 //maven was installed in jenkins so maven is running in my jenkins server , so where is maven running in jenkins/home dir ,so jst b4 the stages we can define a function.
 //my maven home was instal as a tool, the tool name is maven3.9.4
-//we want to def a function called > maavenhome = tool name: maven3.9.4
+//we want to def a function called > maavenhome = tool name: maven3.9.4   
+
 //so inside the maven3.9.4 which i hv defined as a function, i can call the function using "$
  
 sh "${mavenHome}/bin/mvn clean package"
