@@ -1,0 +1,258 @@
+jenkins sept23 del
+sept23 scripted
+
+multiBranch Pipeline job : 
+=========================
+Project private repo - https://github.com/LandmakTechnology/maven-web-app  
+   we are expected to see line of development
+               Git Branches - Are Lines of development 
+
+we can build in multiple branches 42:38
+
+
+https://github.com/Landmark-Technologies/maven-web-application
+     sourceCode-src 
+     JUnitTest cases   
+     pom.xml  
+     Jenkinsfile   
+     Jenkinsfile-sep23  this file has all the configuration needed
+https://github.com/Landmark-Technologies/maven-web-application/blob/master/Jenkinsfile-sep23
+
+1 ###### 18:12 .. new item - description:tesla mbpp - select muliti - ok =branch source :git: git repo - cred :git- build conf-  mode: jenkinfile - it wil build either frm d script or jenkins file
+, our file name n paste - property strategy: all branches -save - then the build is triggered 31:12 or click scan multi line pipeline now
+
+2 ####### 40:40  to create another branch click on 1branch 
+then click scan multiline 42 :00
+Ticket005
+============
+Create a Mulit-Branch pipeline job for tesla
+ https://github.com/Landmark-Technologies/maven-web-application
+ we build from 3branches: master  development  stage 
+some companies may hv a project with 50 branches   
+
+
+QQQQQQQQQQQQ   IQ :  Create a Jenkinsfile using both default & custom name and share it using SCM.
+MY EXPERIENCE IN JENKINS include creating and customising/editing Jenkinsfiles. 
+
+TO clone code, i nid git and the repository
+
+scripted Jenkinsfile:   
+node{
+  def mavenHome = tool name: 'maven3.9.4'
+  stage('1.Clone'){
+    git "https://github.com/Landmark-Technologies/maven-web-application"
+  }
+  stage('2.Build'){
+  //sh "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/bin/mvn package"
+  sh "${mavenHome}/bin/mvn package"
+  }
+  stage('3.codeQualityAnalysis'){
+    sh "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/bin/mvn sonar:sonar"
+
+  }
+  stage('4Upload2Nexus'){
+    sh "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/bin/mvn deploy"
+  }
+}
+
+Declarative Jenkinsfile:
+pipeline{
+    agent any  
+    tools {
+      maven 'maven3.9.4'
+    } 
+    stages{
+        stage('1.Clone'){
+            agent {
+                label 'slave1'
+            }  
+            steps 
+        }
+        stage('2.Build, qualify & upload'){
+            agent {
+                label 'slave1'
+            }  
+            steps{
+                sh "mvn package" 
+                sh "mvn sonar:sonar"
+                sh "mvn deploy"
+            } 
+        }
+        stage('3.Containerise'){
+            agent {
+                label 'dockernode'
+            } 
+            steps{
+                sh "docker build " 
+                sh "docker push " 
+            }  
+        }
+      stage('4deploy'){
+        agent  {
+            label 'kubernetesnode'
+        }
+        steps {
+            sh "kubectl apply -f app.yml"
+        }
+      }
+    }
+    post  
+}
+
+=======================
+SHARED LIBRARIES 
+==========================
+apps: tesla-be, tesla-myapp,  tesla-fe, tesla-wepapp
+branches: master, dev. testing, uat, pre-prod, prod  
+no of jobs = 24 jobs requiring 24 Jenkinsfiles   
+common stages: common.groovy  
+  unittesting:
+  stage('1RunUnitTests'){ 
+    sh  "mvn test" }
+  packaging:
+  stage('2Build'){ 
+    sh "mvn package" }
+  codequality:
+  stage('3CodeQuality'){ 
+    sh "mvn sonar:sonar" }
+  artifactUpload:
+  stage('4Upload'){ 
+    sh "mvn deploy" }
+  stage('14'){}
+
+Jenkinsfile:
+node{
+    stage ('1clone'){
+        git 'gitURL'
+    }
+    stage('unittesting'){
+        common{
+            stage 'unittesting'
+        } 
+    }
+   stage('2mavenBuid'){
+     common{
+        stage 'packaging'
+     }
+   } 
+   stage('3CodeQuality'){
+     common{
+        stage 'codequality'
+     }
+   } 
+   stage('4Upload'){} 
+
+}
+
+  tesla-myapp :  
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+  tesla-be   :  
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+  tesla-fe  : 
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+  tesla-wepapp :    
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+
+Jenkins security:
+==================
+1. changing Jenkins default configurations
+    Jenkins home directory = /var/lib/jenkins   
+    Jenkins port number    = 8080  
+    Jenkins_user           = jenkins  
+         sudo vi /etc/default/jenkins    [ubuntu]
+         sudo vi /etc/sysconfig/jenkins  [redhat]
+
+2. vi config.xml
+     <useSecurity>true</useSecurity>
+     <useSecurity>false</useSecurity> 
+        password not required to access Jenkins on the browser   
+
+
+3. userMgt
+     authentication [username/password]  
+
+     authorization  [rbac] 
+
+   DevOps Engineers: james landmark  paul 
+   developers:       chidi mercy Joy  
+
+  rbac 
+
+  port numbers for servers  = 65,536 [ 0 - 65535]
+   jenkins port  = 8080 
+   tomcat port   = 8080 
+   ssh           = 22 
+   rdp port      = 3389  
+   smtp          = 587/465
+   nfs           = 2089  
+   http          = 80  
+   https         = 443  
+   Sonarqube     = 9000 
+   nexus         = 8081  
+
+  By default for Jenkins to start port 8080 must not be in use  
+
+  If port 8080 in use then Jenkins or tomcat can only start by changing their 
+  default ports    
+
+  netstat -tulpn 
+
+  http://34.219.46.160:7070 
+
+token :
+    <sonar.login>class33</sonar.login> 
+    <sonar.password>admin123</sonar.password> 
+
+    <sonar.login>5bb43cdd151f4f19d7913168e5307bcdd1eb81f7</sonar.login> 
+   <!--  <sonar.password>******</sonar.password> --->
+
+
+http://34.217.27.159:8081/repository/tesla-releases/
+http://34.217.27.159:8081/repository/tesla-snapshots/
+
+public: 
+https://github.com/LandmakTechnology/maven-web-application
+
+Jenkinsfile  
+writing code is more complex
+
+
+node
+{
+  
+}
+
+pipeline
+{
+
+}
+
+
+Jenkins:
+  1. Build + Release Engineer  
+  2. AWS cloud    = Cloud Engineer 
+         
+  3. Docker       = 
+  4. Kubernetes   = Application Engineer  / kubernete Engineer 
+  5. Ansible      = System Automation Engineer  
+  6. Terraform    = Infrastructure Engineer [ IaC ] 
+  7. DevSecOps    = 
+  8. SRE          = 
+  9. Sr. DevOps Engineer  
+  10. Platform Engineer - Linux  
