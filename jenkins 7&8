@@ -36,6 +36,11 @@ MY EXPERIENCE IN JENKINS include creating and customising/editing Jenkinsfiles.
 
 TO clone code, i nid git and the repository
 
+ inside maven home, we hv the bin dir & inside the bin dir we hv mvn & we
+are doing mvn bc mvn is a script wich is found in the bin dir , so we can either use the full command: 
+//sh "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/bin/mvn package"
+or do this :  sh "${mavenHome}/bin/mvn package" ,,, both will work ... 52:15
+
 scripted Jenkinsfile:   
 node{
   def mavenHome = tool name: 'maven3.9.4'
