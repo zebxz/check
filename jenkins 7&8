@@ -205,6 +205,13 @@ Jenkins security: where we do the changes depends on where jenkins was installed
        
 1:33:30  to  effect the changes:  sudo vi /etc/default/jenkins    [ubuntu]
          sudo vi /etc/sysconfig/jenkins  [redhat]  ... 
+then sudo systemctl restart jenkins
+then sudo systemctl stop jenkins
+then sudo systemctl restart jenkins 
+
+2:21:35 ...couldnt access jenkins when the port number was changed
+
+
 can change JENKINS_HOME="/var/lib/jenkins" to JENKINS_HOME="/app/jenkins"
 JENKINS_USER="jenkins" to JENKINS_USER="cece"
 JENKINS_PORT="8080" to JENKINS_PORT="7750"  cant do 90000 bc  port range= 0,1,2,... to 65535
@@ -267,11 +274,13 @@ once u connect to LDAP sucessfully, u can connect to any other resource in ur en
   If port 8080 in use then Jenkins or tomcat can only start by changing their 
   default ports    
 
-  netstat -tulpn 
+  to check for the ports that are in use
+netstat -tulpn 
+sudo yum install net-tools
 
   http://34.219.46.160:7070 
 
-token :
+2:23:000  token :  for sonar
     <sonar.login>class33</sonar.login> 
     <sonar.password>admin123</sonar.password> 
 
