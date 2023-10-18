@@ -114,14 +114,21 @@ pipeline{
 1:11:40 . someone is aking we hv nt deployed to tomcat ,, we are going to be deploying containerized app, tomcat was an introduction
   1:12:18 all of these is nt happening in one agent , mvn package will tk place in maven build server, sonar,the code quality analysis will talk to a 3rd party server wich is sonarqube server
 
+our jenkins is running in linux
 
 =======================
-SHARED LIBRARIES 
+SHARED LIBRARIES    .. we execute jenkins shared lib to ease hw we write n manage jenkins file, so if i hv 24 jenkins files to write that are performing similar task 
+                           ill use shared lib to simplify my job... 1:26:16
 ==========================
 apps: tesla-be (backend, tesla-myapp,  tesla-fe (frontend, tesla-wepapp
 branches: master, dev. testing, uat, pre-prod, prod  
-no of jobs = 24 jobs requiring 24 Jenkinsfiles   
-common stages: common.groovy  
+no of jobs = 24 jobs requiring 24 Jenkinsfiles ..dis a problem, means we hv to be writing the same jenkins file that is doing similar task like test n build
+we hv what is called common stages, since they are all java projects, we are going to do a stage to do mvn test,clean package, these are all unique stages e.g
+stage1 will be for mvn tesst , stage2 .... etc , most of the stages are common so we can prepare a shared library, which will bring 2geda all the common stages such 
+that we can jst refer to them e.g we can create a shared lib that wil hv in it a common script
+
+i can call this file ..; common stages: common.groovy 
+so hv created a shared lib called common.groovy ,,
   unittesting:
   stage('1RunUnitTests'){ 
     sh  "mvn test" }
@@ -136,17 +143,20 @@ common stages: common.groovy
     sh "mvn deploy" }
   stage('14'){}
 
+ so if am trying to create my pipeline for each of this jobs, my pipeline wil b very simple, si if i wnat to crete a jenkins file 
+illl jst be referring to common. so in all my jenkins file am not repeating code, i hv a shared lib common. groovy wil search for unittesting
+each file will hv their unique git url 
 Jenkinsfile:
 node{
     stage ('1clone'){
         git 'gitURL'
     }
-    stage('unittesting'){
+    stage('unittesting'){  (i.e the stage here is refering to common.grovy and it want to search for unittesting,it wil be done with relative ease
         common{
             stage 'unittesting'
         } 
     }
-   stage('2mavenBuid'){
+   stage('2mavenBuid'){    (i.e the stage here is refering to common.grovy and it want to search for packaging,it wil be done with relative ease
      common{
         stage 'packaging'
      }
@@ -185,30 +195,60 @@ we are managing 4 applications for tesla
     pre-prod  
     Production  
 
-Jenkins security:
+Jenkins security: where we do the changes depends on where jenkins was installed 1>30:40
+
 ==================
-1. changing Jenkins default configurations
+1. changing Jenkins default configurations  by ec2-user
     Jenkins home directory = /var/lib/jenkins   
     Jenkins port number    = 8080  
     Jenkins_user           = jenkins  
-         sudo vi /etc/default/jenkins    [ubuntu]
-         sudo vi /etc/sysconfig/jenkins  [redhat]
+       
+1:33:30  to  effect the changes:  sudo vi /etc/default/jenkins    [ubuntu]
+         sudo vi /etc/sysconfig/jenkins  [redhat]  ... 
+can change JENKINS_HOME="/var/lib/jenkins" to JENKINS_HOME="/app/jenkins"
+JENKINS_USER="jenkins" to JENKINS_USER="cece"
+JENKINS_PORT="8080" to JENKINS_PORT="7750"  cant do 90000 bc  port range= 0,1,2,... to 65535
+if a hacker wants to hack in ur system he knws he can access jenkins on the default user jenkins, also that jenkins listens on 8080 so changing the port makes hacking difficult
 
-2. vi config.xml
+2. vi config.xml   by jenkins jenkins
      <useSecurity>true</useSecurity>
-     <useSecurity>false</useSecurity> 
+     <useSecurity>false</useSecurity>.. changing to false means anyone can access it without paswd ,, also if i forget my passwd, i can also change true to false 
         password not required to access Jenkins on the browser   
 
 
-3. userMgt
+1:50 dashboard-mange jenkins- security
+3. userMgt.. ; everyone shud nt hv the same access in terms of whta they can do in jenkins
      authentication [username/password]  
+jenkins to allows users create users account : tick: Allow users to sign up
 
-     authorization  [rbac] 
+
+authorization  
+matrix-based security 
+project-base matrix authorization : add roles n apply, apply and save ... then dashboard- project and tick Enable project-based security, add users n roles, apply and save 
 
    DevOps Engineers: james landmark  paul 
    developers:       chidi mercy Joy  
 
-  rbac 
+  2;01:40 [rbac]: role base acces control dashboard-manage jenkins-plugins-avilable plugings:install, rolebased acces control-dashboard-security- now we hv rbac option 
+role base strategy
+
+2:03:11  with security we can 
+Secure Jenkins; define who is allowed to access/use the system.
+Credentials
+manage/Configure credentials
+Credential Providers
+Configure the credential providers and types .. ( diff providers we can use, including L type
+Users
+Create/delete/modify users that can log in to this Jenkins
+
+
+2:07 we need users to access  Sonarqube, nexus, jenkins, github, kubernetes. it will be too much manual work to create these users in all the servers so we can integrate
+jenkins with LDAP authentication server,, so we'll hv all the login credentials of users , username n passwd stored in the LDAP then connect LDAP to communicate withjenkins
+and each of the servers.then all the users are able to access jenkins automatically its called a single signup, where the signup credentials is configured in the LDAP server,
+once u connect to LDAP sucessfully, u can connect to any other resource in ur environment. this all securing our jenkins environment. 
+
+2:09:12
+
 
   port numbers for servers  = 65,536 [ 0 - 65535]
    jenkins port  = 8080 
