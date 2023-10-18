@@ -41,6 +41,9 @@ are doing mvn bc mvn is a script wich is found in the bin dir , so we can either
 //sh "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/bin/mvn package"
 or do this :  sh "${mavenHome}/bin/mvn package" ,,, both will work ... 52:15
 
+to write a good code we should avoid repitition and we can avoid repetition by making use of function"${mavenHome}/bin/mvn package
+so the use of function is very important for our devops deployment bt that is scipted pipeline.
+
 scripted Jenkinsfile:   
 node{
   def mavenHome = tool name: 'maven3.9.4'
@@ -60,6 +63,9 @@ node{
   }
 }
 
+for declarative pipeline to flow seamless with relative ease  we hv agent:any, and the agent could be  tools:maven, stages, and post>messages
+1:06:20 by common sense if we are cloning in slave1, we shud also build in slave1
+
 Declarative Jenkinsfile:
 pipeline{
     agent any  
@@ -75,26 +81,27 @@ pipeline{
         }
         stage('2.Build, qualify & upload'){
             agent {
-                label 'slave1'
+                label 'slave1'  .....1:06:20 by common sense if we are cloning in slave1, we shud also build in slave1
             }  
             steps{
-                sh "mvn package" 
+                sh "mvn package"  ... we can equally break these steps down into stages
                 sh "mvn sonar:sonar"
                 sh "mvn deploy"
             } 
         }
         stage('3.Containerise'){
             agent {
-                label 'dockernode'
-            } 
-            steps{
+                label 'dockernode' in this dockernode we are going to be doing docker build to containerize the application,we are building the applictaion, we are containerizing it 
+                       so that we can deploy it as docker containers, once it is containerized, it can now be deployed as a docker container        } 
+            
+       steps{  ......containerizing the application and these are the steps
                 sh "docker build " 
-                sh "docker push " 
+                sh "docker push " this will distribute the application
             }  
         }
       stage('4deploy'){
         agent  {
-            label 'kubernetesnode'
+            label 'kubernetesnode'   ..... i am nt deploying to tomcat, bt am deploying using kubernetes, wich is the production great deployment 
         }
         steps {
             sh "kubectl apply -f app.yml"
@@ -104,10 +111,14 @@ pipeline{
     post  
 }
 
+1:11:40 . someone is aking we hv nt deployed to tomcat ,, we are going to be deploying containerized app, tomcat was an introduction
+  1:12:18 all of these is nt happening in one agent , mvn package will tk place in maven build server, sonar,the code quality analysis will talk to a 3rd party server wich is sonarqube server
+
+
 =======================
 SHARED LIBRARIES 
 ==========================
-apps: tesla-be, tesla-myapp,  tesla-fe, tesla-wepapp
+apps: tesla-be (backend, tesla-myapp,  tesla-fe (frontend, tesla-wepapp
 branches: master, dev. testing, uat, pre-prod, prod  
 no of jobs = 24 jobs requiring 24 Jenkinsfiles   
 common stages: common.groovy  
@@ -148,7 +159,7 @@ node{
    stage('4Upload'){} 
 
 }
-
+we are managing 4 applications for tesla
   tesla-myapp :  
     dev  
     testing  
