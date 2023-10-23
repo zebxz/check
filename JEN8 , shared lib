@@ -2,43 +2,56 @@ mvn package will (validates, compiles, & test before packaging)
 
 git has to be installed  to pull the code and the repository
 
+**** JENKINS SHARED LIB IS THE CONCEPT OF HAVING A COMMON PIPELINE CODE IN THE VERSION CONTROL SYSTEM THAT CAN BE USED BY ANY NUMBER OF PIPELINES JUST BY REFERENCING 
+**** IT. IN FACT, MULTIPLE TEAMS CAN USE THE SAME LIB FOR THEIR PIPELINES.
 
-enkins Shared Libraries:
+
+jenkins Shared Libraries:
   Jenkins pipeline scripts:
   Jenkinsfile
 Programming and scripting languages:
   bash-shell scripting
   groovy 
 
+35.32 go tru the note, the SRC and what the variable files do 
 
-
-JSL:
+HW TO configure jenkins shared lib
   1. Create Shared Libraries 
   2. Configure Library 
        https://github.com/LandmakTechnology/JenkinsSharedLibraries
   3. use library in pipelines script
+
+37:30 **** to config the shared lib -in jenkins- mange jenkins-config sys: global pipelines lib; add: lib name -def ver:master- allow default to over , . include@ lib
+- retrival meth: modern-:git- 39.27 then jen lib repo url- save 
+*******to use the shared lib ...then add new item- pilpe line -  
+
+
+32.00*********************************inside his github repo for jenkins shared lib , he has a dir called var and inside var theres a script called common.groovy 
+
+ 
+JSL:
 ========
 common.groovy
-def call(String stageName){
+def call(String stageName){    *** we are defining a function called call n it wil depend on the string ; stagename.. we are caling the function based on the stage name
   
-  if ("${stageName}" == "Build")
+  if ("${stageName}" == "Build")  ****** we are defining each of the stage i.e if the $ stage name is = to build then mvn package is the command to run
      {
        sh "mvn clean package"
      }
-  else if ("${stageName}" == "SonarQube Report")
+  else if ("${stageName}" == "SonarQube Report") ** we can equaly run multiple stuff here like the 2 e.g below
      {
        sh "echo Running Code Quality Report analysis"
        sh "mvn clean sonar:sonar"
      }
-  else if ("${stageName}" == "Upload Into Nexus")
+  else if ("${stageName}" == "Upload Into Nexus") .. if we hv 10 commands to run then ders no nid for that , just upload into nexus is fine.
      {
        sh "mvn clean deploy"
      }
 }
 
-Jenkinsfile
+42;11 Jenkinsfile  .. starts with 
 //@Library('LibraryName') _ 
-// Declarative pipeline
+we are creating a  // Declarative pipeline
 
 @Library('LandmarkSS-sharedlibs') _
 pipeline {
@@ -50,8 +63,8 @@ tools {
 stages{
 stage('CheckoutCode'){
   steps{
-    git 'https://github.com/LandmakTechnology/web-app'
-}
+    git 'https://github.com/LandmakTechnology/web-app'   *** if am pulling frm a public repo all i nid is the repo name ** 45:43
+}               *our script does nt include the stage for git pull,, it starts with doing a build ...etc ie the common stages
 }
 stage("Build"){ 
   steps{
