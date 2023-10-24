@@ -164,18 +164,21 @@ npm = node package manager
 
 we ar doing a pipeline project for this nodejs appl , we ar writng a simple scripted pipeline script
 1:09 ## new item- pipeline-ok - 
- sudo yum install nodejs npm -y  
+ sudo yum install nodejs npm -y 
 
+the first stage is called codecheckout 
 node{
   stage('CodeCheckout'){                  
-    sh "echo running ebay nodeJS project" 
-    git 'https://github.com/LandmakTechnology/nodejs-application'    ## copy the github project url
+    sh "echo running ebay nodeJS project"     ###1:11:00 echo shud start wit sh, all the command shud follow a shell
+    git 'https://github.com/LandmakTechnology/nodejs-application'    ## we nid the code from github so copy the github project repo (url) for nodejs url
+                                                   its a pulic repo so no nid for cred, cloning directly frm master branch
   }
   stage('UnitTest'){
     //sh "npm test"
   }
-  stage('Build'){
-    sh "echo creating build artifacts"
+  stage('Build'){             #### after the code is clone we'l do a build ,, sh "npm install" we are using node package manager to do a build bt b4 a build is done we nid
+                                                        to install nodejs in jenkins sudo yum install nodejs npm -y 1:14:05
+    sh "echo creating build artifacts"       
     nodejs(nodeJSInstallationName: 'nodejs17') {
         sh 'npm install'
     }
