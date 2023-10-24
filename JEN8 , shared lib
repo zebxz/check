@@ -1,4 +1,4 @@
-
+?/?????????? hw are the APIs generated
 ?????????  we were able to build with just npm install ,,,  that was without nodejs so whats the need of nodejs
 
 mvn package will (validates, compiles, & test before packaging)
@@ -102,7 +102,9 @@ stages.groovy
                               jenkins script to be easily readable bc der cud be 10 steps in our stage so it makes it easy
  1:33:15   what hv u been doing in landmark..  i hv been maintaining jenkins pipeline scripts, shared lib for files, that had been my job, i maintain them, modify, update
 customize them... at ur company most of the files already exits so u dnt nid to rewrite them, jst maintain them.
-##### why do we use sh and not bash since bash has more extensions.. genally we use sh for our jenkins job bt bash also wil work 
+#1:32: is the file name are they syntax or a variable  . anytin u name is wot ull call 
+##### why do we use sh and not bash since bash has more extensions.. genally we use sh for our jenkins job bt bash also wil work, if jenkins was installed on a windows server
+what wil u be using 
 
 
 
@@ -197,22 +199,56 @@ node{
     sh "echo npm packages uploaded"                        & paste in jenkins save n build now then we can check in sonarqube for the report
     nodejs(nodeJSInstallationName: 'nodejs17') {  
         //sh 'npm publish'
-        // Jenkins nexus intergration 
-        // password = admin123  username = admin                 
-        // echo -n 'admin:admin123' | openssl base64
-    }
-  }                             #1:32: is the file name are they syntax or a variable  . anytin u name is wot ull call 
-
-  stage('deployment'){
-    sh "echo Deploying applications"
-    nodejs(nodeJSInstallationName: 'nodejs17') {
+        // Jenkins nexus intergration                   ###nexus default username is admin 
+        // password = admin123  username = admin       ###1:35:20  Jenkins nexus intergration, for jenkins to talk to nexus, jenkins has to be authenticated, so we create           
+        // echo -n 'admin:admin123' | openssl base64       artifactory resp in nexus. . in nexus we create npm hosted repo, name:ebay-npm-repo, copy n paste in package.json
+    }                                                       -pubicconfig:registry.  nxt create a token in a file for admin pW & username using base64 SW. for soanrqube, we 
+  }                      encrypted our PW & For nexus using base64 ill encrypt my username &PW &PIPE It  echo -n 'admin:admin123' | openssl base64, run it in jenkins then cop
+  stage('deployment'){                        the code &paste in the file called npmrc: _auth=YWRtaW46YWRtaW4xMjM=  1:42:16 ,,,u dnt enter confidential info in github
+     sh "echo Deploying applications"                 allowrepublish =true, always auth=true, then save   then copy this stage, paste in genkins &build now
+    nodejs(nodeJSInstallationName: 'nodejs17') {          1:41:25 if u go thru d not
         sh 'npm start'
     }
-  }
-}
+  }                                         1:47:20 #### for deployment ill do npm start, here we used d build server for deployment, we didnt deploy to tomcat bt in docker&
+}                                        kubernetes, we'l revisit dis project bc we hv dis same project then we'l b deploying it as docker containers , we'l see hw to deploy
+                    nodejs appl    .. now we can see nodejs is running,we can access dis appl, http://localhost:9981/landmarktechnologies, its givin me local host bt am 
+                                              assessing this appl on my jenkins server so for me to access this appl ill use my jenkins server url am nt using local host
+                                     i copy the url and paste in the browser http://18.212.53.48:9981/landmarktechnologies
 
 
-node{
+this appl has a port number bt this appl has some rest API  ,, application programming interface
+RESTFUL API = 
+
+http://18.212.53.48:9981/landmarktechnologies  .. this is one of them,, so am i able to access dis end point, yes so if dis API was like an info u wanted to get u shud b able 
+http://18.212.53.48:9981/jsonData                                to access it.....1:52:00 we can go bk to our appl in github and see hw many APIs we hv,, so in app.js we hv-
+http://18.212.53.48:9981/html                                     app.get/html, jsonData, redirect, queryparam
+http://18.212.53.48:9981/redirect                   1:52:50  this is the link to d appl, the port number is 9981, redirect will redirect traffic to mylandmaktech.com website
+http://18.212.53.48:9981/queryparam  .. dis showed undefine
+
+           ####1:55:19   we hv a docker file, if we ar deploying dis appl as a docker container the port number is 9981, developers hv exposed dis appl on dis port, dats why
+   when we ar trying to access dis appl everytin has a port number then a context path , all of this are what we call rest APIs
+
+applications:
+  High availabilit
+####1:56:00 when u v an appl like dis 2tins is going to happen , as a devops engr ur function is to mk sure that this appli is highly available, therefore all of this API shud
+be accessible, this cud be info abt cx account, in the video he'l share wit us we'l see hw to use new relic to create monitoring dashboard 1:57:30 e.g of new relic dashboard
+online, a dashboard wit series of graphs showing u hw available ur appl is,  showing u hw many pipo ar able to access ur appl, the number of rEQ, hw cx are accessing their 
+bank account in the bank , in real time u wnt be coming to click all of dis to find out if they are availabl or nt bc one appl can hv like 50 rest APIs, meaning der are more than 
+50 stuff u can access like resource so u can make some API curves, so hw do u ensure that they ar available, we'l b using monitoring tools.. this is the end to end expectation
+for jenkins.. 
+
+New-Relic 
+  Create monitoring dashboard 
+applications:
+  High availability
+===============
+  New-Relic = 50 MINUTEs 
+  Resume Preparation video = 55 minutes 
+
+ThinBackup plugin --->
+
+
+node{                                               
   stage('CodeCheckout'){
     sh "echo running ebay nodeJS project" 
     git 'https://github.com/LandmakTechnology/nodejs-application'
@@ -249,20 +285,5 @@ node{
     }
 
 
-RESTFUL API = 
 
-http://18.212.53.48:9981/landmarktechnologies
-http://18.212.53.48:9981/jsonData
-http://18.212.53.48:9981/html 
-http://18.212.53.48:9981/redirect
-http://18.212.53.48:9981/queryparam 
 
-New-Relic 
-  Create monitoring dashboard 
-applications:
-  High availability
-===============
-  New-Relic = 50 MINUTEs 
-  Resume Preparation video = 55 minutes 
-
-ThinBackup plugin --->
