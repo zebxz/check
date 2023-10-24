@@ -1,4 +1,4 @@
-?/?????? hw does maven do a build without pulling the code 
+
 ?????????  we were able to build with just npm install ,,,  that was without nodejs so whats the need of nodejs
 
 mvn package will (validates, compiles, & test before packaging)
@@ -163,7 +163,7 @@ npm = node package manager
   src + bs + test cases 
 
 we ar doing a pipeline project for this nodejs appl , we ar writng a simple scripted pipeline script
-1:09 ## new item- pipeline-ok - 
+1:09 ## new item- pipeline-ok - copy the pipeline script and paste in jenkins then build
  sudo yum install nodejs npm -y 
 
 the first stage is called codecheckout 
@@ -173,20 +173,20 @@ node{
     git 'https://github.com/LandmakTechnology/nodejs-application'    ## we nid the code from github so copy the github project repo (url) for nodejs url
                                                    its a pulic repo so no nid for cred, cloning directly frm master branch
   }
-  stage('UnitTest'){
-    //sh "npm test"
+  stage('UnitTest'){   1:16:30     ####  its possible we had a unit test stage b4 the build stage. bt it failed bc no test to apply so we can comment the command
+    //sh "npm test"             #sh "echo tests successful" alos if u try to connect to nexus/sonarqube n it fails jst comment on the command 
   }
   stage('Build'){             #### after the code is clone we'l do a build ,, sh "npm install" we are using node package manager to do a build bt b4 a build is done we nid
-                                                        to install nodejs in jenkins sudo yum install nodejs npm -y 1:14:05
+                                                        to install nodejs in jenkins sudo yum install nodejs npm -y 1:14:05, then paste pipeline script in jenkins n build
     sh "echo creating build artifacts"       
-    nodejs(nodeJSInstallationName: 'nodejs17') {
+    nodejs(nodeJSInstallationName: 'nodejs17') { 
         sh 'npm install'
     }
   }
   stage('Quality'){
     sh "echo CodeQualityReport"
-    nodejs(nodeJSInstallationName: 'nodejs17') {
-        sh 'npm run sonar'
+    nodejs(nodeJSInstallationName: 'nodejs17') {   ##1:20 to use the latest version of nodejs ill configure npm in jenkins -mange jenkins- global conf tools -if nodejs
+        sh 'npm run sonar'         is nt der then install it in plugin -add: name &save. with this command we ar goin to buid using the latest vers or d ver we wnt to 2 use
     }
   }
     stage('UploadArtifacts'){
