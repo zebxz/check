@@ -64,7 +64,7 @@ tools {
 
   }
 stages{
-stage('CheckoutCode'){
+stage('CheckoutCode'){ or to pull the code 
   steps{
     git 'https://github.com/LandmakTechnology/web-app'   *** if am pulling frm a public repo all i nid is the repo name ** 45:43
 }            46:35 *our lib does nt include the stage for git pull,, it starts with doing a build ...etc ie the common stages so in my pipeline script am doing a gitpull
@@ -79,7 +79,7 @@ stage("Build"){
 
 stage("Execute SonarQube Report"){ 
   steps{
-    common("SonarQube Report")
+    common("SonarQube Report") ##1:01 our steps is indicating common bc i am using the common.groovy file in my shared lib, if i was using stages.groovy then it il indicate stages
 }
 }
 stage("Upload Artifacts Into Nexus"){ 
@@ -117,6 +117,22 @@ stage("Build"){
     steps{
       common("Build") 
 }
+}
+stage("Execute SonarQube Report"){ 
+  steps{
+      sh "echo code quality report ok"
+    //common("SonarQube Report")
+}
+}
+stage("Upload Artifacts Into Nexus"){ 
+  steps{
+      sh "echo artifacts uploaded"
+    //common("Upload Into Nexus")
+}
+}
+//=========================
+}// Stages Close
+} // Pipeline Close
 
 
 
