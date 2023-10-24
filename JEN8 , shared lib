@@ -26,7 +26,7 @@ HW TO configure jenkins shared lib
 
 37:30 **** to config the shared lib -in jenkins- mange jenkins-config sys: global pipelines lib; add: lib name -def ver:master- allow default to over , . include@ lib
 - retrival meth: modern-:git- 39.27 then jen lib repo url- save 
-*******to use the shared lib ...then add new item- pilpe line -  
+*******to use the shared lib ...then add new item- pilpe line - copy the pipeline script and paste -build
 
 
 32.00*********************************inside his github repo for jenkins shared lib , he has a dir called var and inside var theres a script called common.groovy 
@@ -67,11 +67,13 @@ stages{
 stage('CheckoutCode'){
   steps{
     git 'https://github.com/LandmakTechnology/web-app'   *** if am pulling frm a public repo all i nid is the repo name ** 45:43
-}               *our script does nt include the stage for git pull,, it starts with doing a build ...etc ie the common stages
+}            46:35 *our lib does nt include the stage for git pull,, it starts with doing a build ...etc ie the common stages so in my pipeline script am doing a gitpull
 }
 stage("Build"){ 
   steps{
-    common("Build")
+    common("Build") ### we can run sh "mvn clean package" bt i dnt wnt to use the trad option, i wnt to use my shared lib, wich hv some common steps, rather ill call a function
+                                      i hv a file called common.groovy, i wnt to call d function, so am calling d build stage of the function alt  der can be 10 commands for this
+                                            only this stage 
 }
 }
 
@@ -93,6 +95,29 @@ stage("Upload Artifacts Into Nexus"){
 common.groovy 
 build.groovy 
 stages.groovy
+
+
+declarative pipeline script                                     47:00 declarative tool is done, it has pull the code,pull was successful 
+
+@Library('LandmarkSS-sharedlibs') _
+pipeline {
+agent any 
+tools {
+    maven "maven"
+    
+  }
+stages{
+stage('gitpull'){
+  steps{
+    sh "echo start of ebay bts project"
+    git 'https://github.com/LandmakTechnology/web-app'
+}
+}
+stage("Build"){ 
+    steps{
+      common("Build") 
+}
+
 
 
 java applications -- java projects 
