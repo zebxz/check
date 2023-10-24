@@ -100,6 +100,10 @@ stages.groovy
                              most of our projects we use jenkins file to run them bc most of our projects ar basically java projects that we support, using maven to do a build
                              for code quality support, uploading to nexus, for al the common stages we v written shared libs to ease the process n mk our pipeline projects, 
                               jenkins script to be easily readable bc der cud be 10 steps in our stage so it makes it easy
+ 1:33:15   what hv u been doing in landmark..  i hv been maintaining jenkins pipeline scripts, shared lib for files, that had been my job, i maintain them, modify, update
+customize them... at ur company most of the files already exits so u dnt nid to rewrite them, jst maintain them.
+##### why do we use sh and not bash since bash has more extensions.. genally we use sh for our jenkins job bt bash also wil work 
+
 
 
 declarative pipeline script                                     47:00 declarative tool is done, it has pull the code,pull was successful 
@@ -183,21 +187,21 @@ node{
         sh 'npm install'
     }
   }
-  stage('Quality'){
+  stage('Quality'){    1:30 ## we ar executing sonarqube report for a nodejs appl
     sh "echo CodeQualityReport"
     nodejs(nodeJSInstallationName: 'nodejs17') {   ##1:20 to use the latest version of nodejs ill configure npm in jenkins -mange jenkins- global conf tools -if nodejs
         sh 'npm run sonar'         is nt der then install it in plugin -add: name &save. with this command we ar goin to buid using the latest vers or d ver we wnt to 2 use
-    }
-  }
-    stage('UploadArtifacts'){
-    sh "echo npm packages uploaded"
-    nodejs(nodeJSInstallationName: 'nodejs17') {
+    }                     ## 1:26 to execute sonarqube report, bc its nt a java project we dnt use pom.xml, we hv a file called sonar-project js, its the file we nid to config
+  }                         and insert my sonarqube server url in serverurl, then for login,we use token- in sonarqube-adminstration-security-users-in administartor:create
+    stage('UploadArtifacts'){                           ## a token : name;nodejs- genaterate- copy n paste in sonar-project js ,, i dnt nid a username, copy d stage for sonarqube
+    sh "echo npm packages uploaded"                        & paste in jenkins save n build now then we can check in sonarqube for the report
+    nodejs(nodeJSInstallationName: 'nodejs17') {  
         //sh 'npm publish'
         // Jenkins nexus intergration 
-        // password = admin123  username = admin 
+        // password = admin123  username = admin                 
         // echo -n 'admin:admin123' | openssl base64
     }
-  }
+  }                             #1:32: is the file name are they syntax or a variable  . anytin u name is wot ull call 
 
   stage('deployment'){
     sh "echo Deploying applications"
