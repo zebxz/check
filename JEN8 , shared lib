@@ -96,6 +96,11 @@ common.groovy
 build.groovy 
 stages.groovy
 
+1:02 QQQQQQQQQQQQQ interview,, whats ur experience using jenkins, dnt start wit i hv config jenkins, start wit v using shared lib, hv used jen shared lib in my environment bc
+                             most of our projects we use jenkins file to run them bc most of our projects ar basically java projects that we support, using maven to do a build
+                             for code quality support, uploading to nexus, for al the common stages we v written shared libs to ease the process n mk our pipeline projects, 
+                              jenkins script to be easily readable bc der cud be 10 steps in our stage so it makes it easy
+
 
 declarative pipeline script                                     47:00 declarative tool is done, it has pull the code,pull was successful 
 
@@ -135,25 +140,70 @@ stage("Upload Artifacts Into Nexus"){
 } // Pipeline Close
 
 
+so far we v seen java applications wich we call java projects
+also we v nodejs application which we call nodejs projects 
+
+the main dif btw java appl and nodejs appl   bc nodejs appl is very key when it commes to my resume
 
 java applications -- java projects 
 
 nodejs applications:  nodeJS Projects
 =======================================
 npm = node package manager 
-
+the command to do a build wit nodejs appl is npm   when ur tryin to build an appl that is written in nodejs we nid a npm, when doing a build with nodejs appl we use package.json
 nodejs-APP   vs   java-app
 --------           -------
-npm =             maven   -->   Build
+npm =             maven/graddle   -->   Build
 package.json      pom.xml -->   Build Script           
-npm install       mvn package =  (creating packages)
+npm install       mvn package =  (creating packages) we do a build by creating packages
 npm test          mvn test      =   run unit test cases 
 npm run sonar     mvn sonar:sonar =  SonarQube CodeQualityReport
 npm publish       mvn deploy       =  uploading artifacts
 npm = node package manager 
   src + bs + test cases 
 
+we ar doing a pipeline project for this nodejs appl , we ar writng a simple scripted pipeline script
+1:09 ## new item- pipeline-ok - 
  sudo yum install nodejs npm -y  
+
+node{
+  stage('CodeCheckout'){                  
+    sh "echo running ebay nodeJS project" 
+    git 'https://github.com/LandmakTechnology/nodejs-application'    ## copy the github project url
+  }
+  stage('UnitTest'){
+    //sh "npm test"
+  }
+  stage('Build'){
+    sh "echo creating build artifacts"
+    nodejs(nodeJSInstallationName: 'nodejs17') {
+        sh 'npm install'
+    }
+  }
+  stage('Quality'){
+    sh "echo CodeQualityReport"
+    nodejs(nodeJSInstallationName: 'nodejs17') {
+        sh 'npm run sonar'
+    }
+  }
+    stage('UploadArtifacts'){
+    sh "echo npm packages uploaded"
+    nodejs(nodeJSInstallationName: 'nodejs17') {
+        //sh 'npm publish'
+        // Jenkins nexus intergration 
+        // password = admin123  username = admin 
+        // echo -n 'admin:admin123' | openssl base64
+    }
+  }
+
+  stage('deployment'){
+    sh "echo Deploying applications"
+    nodejs(nodeJSInstallationName: 'nodejs17') {
+        sh 'npm start'
+    }
+  }
+}
+
 
 node{
   stage('CodeCheckout'){
@@ -190,8 +240,7 @@ node{
     nodejs(nodeJSInstallationName: 'nodejs17') {
         sh 'npm start'
     }
-  }
-}
+
 
 RESTFUL API = 
 
