@@ -1,1 +1,122 @@
+QQQQ WHEN USING jenkins in a windows computer what is the command to run????
 
+Interview Questions on Jenkins
+12:30 ###couldnt log back into jenkins on the browser so vi config.xml & change use security frm true to false then sudo systemctl retart jenksinand ls -l config.xml
+to knw who owns the file
+
+1. What is Jenkins executables?
+  A Jenkins executor is one of the basic building blocks which allow a build to run on a node/agent/slave  (e.g. build server).
+  ##for us to avoid a single point of failue, we configure jenkins master slave archi,& we realize when configuring a job in jenkins we hv the option of restrict whre dis
+project can be built n in doing so we can choose any slave server, so jenkins wil nt be built frm d master, it wil build using a slave n d only reason that is achieved is
+using the jenkins executables/executor
+
+Think of an executor as a single “process ID”, 
+  or as the basic unit of resource that Jenkins executes on an agent/slave/node to run a build.
+
+#####5:56when we were doing a build in d slave, we we didnt instal maven, we only installed java in d slave btjenkins did a build in the slave server n that was 
+possible due to jenkins executables
+
+
+2. Explain the difference betweem freestyle and pipeline projects? .. tnk u so much in landmak we hv both freestyle n pipeline projects we use free mostly for our projects 
+that hv to do with db backups, provisoning , monitoring of servers etc wheres all our projects dat relate to SW development dat relate to jenkins pullin the code frm github,
+talking to maven to do a build , sonarqube for code quality we go via pipeline project 21:00
+
+##21:52 with the help of a jenkins file we can define a node n decide that this node is stage1, so wit pipeline project its easy, bc der wil b a project wher u want mayb d 
+build server to do the build, sonar for codequality so we can integrate all of this servers as slave servers in jenkins,& for each stage we decide d node dat particaular 
+process wil run on, & dat is easily achieved using a pipeline project
+
+
+freestyle option is the legacy build option dat jenkins hv been using, it the first option dat was avaialable when jenkins was first developed as a ci/cd tool& can be used
+to build any project but a pipeline project Orchestrates long-running activities that can span multiple build agents. Suitable for building pipelines 
+(formerly known as workflows) and/or organizing complex activities that do not easily fit in free-style job type.
+pipeline  project is normally preffered for projects that can  is nt fit or can not be used for freestyle project
+freestyle project is basically used for jenkins build& it the first option dat was initially used in jenkins to do a build ,it can even be used to run non SDLC builds (projects
+e.g monitoring servers, database backup, provision servers etc, we can easily intergrate this with a freestyle project but for SDLC builds we run mvn package
+
+PIPELINE: is used for complex projects
+its also Iac= like to do a build i nid my jenkins pipeline script in a file called jenkins& evrytin i nid to do is defined in the file, so the imp of Iac cant be overemphasized
+bc we can easily implement reusable code bc with the jenkins file i can easily modify it
+
+
+3. Is it adviseable to deploy code from the feature branch in production? NO, bc we only deploy code frm master branch to prod, we can create a feature branch, /bugfix hotfix
+ the recommendation wil be if our client wnt a part feature to be added to their appl, then our developers wil create new line/branch of dev frm d master branch.. 
+so WHTAEVER is added,  developers wil develop, once they develop they create a pull(MERGE) rEQ 4 oda devlopers to review wot they hv done , if evertin is ok it shud 
+be thoroughly tested b4 it is integrated into the master branch then from der we deploy to prod 
+
+also its nt adviceable to deploy frm the bugfix branch 26;00
+
+dev branch -- dev environment 
+stage -- staging/UAT/ testing envr
+master-- prod
+
+
+4. Explain Jenkins intergration with GitHub?
+it get to do wit authentication & authurization, jenkin nid to be auth in github using PW& username& by virtue of dat jenkins is now auth to clone codes from github
+& for that to happen w hv to create cred where we authorize jenkins to communicate wit github ,& auth tk place in jenkins server using cred credentials can be 
+token/username or generally PW & username  ..we go to our cred section of github& create our credentials such dat jenkins can easily get authenticated to 
+pull code frm github .... bc gitcloning frm a privte repo we nid authentication & 90% ofd time we'l be 
+cloning frm a private repo30:00 we can go to settings to change a project frm pulic to privat but may nt wrk if the repo has already being forked. 
+
+
+5. Walk-me through the steps you use to install and/or updates plugins in Jenkins?
+
+6. Why do we need an artifactory in the Jenkins build process?
+
+7. Explain the difference between remote repositories and local repositories? 
+
+8. what is sudo in Linux administration?
+
+9. Tell me about the project you are currently managing?
+
+10. What are the syntax in ansible playbook? 
+
+
+
+JENKINS Questions (JENKINS project)
+1. what is jenkins?
+
+2. what are the plugins you have used in Jenkins?
+
+3. How can you migrate jenkins to a new and upgraded server?
+
+4. Which plugins have you used for sonarqube and Code Coverage?
+
+5. what is the re-requisites for Jenkins and Jenkins slaves?
+
+6. Explain how to add slaves nodes to a jenkins master?
+
+7. Can I use different OS to nodes and master?
+
+8. What are different ways to create jobs in jenkins?
+
+9. What are different types of pipeline scripts?
+
+10. what is the difference between scripted and Declarative pipeline?
+
+11. what are 3 important stages in a pipeline job?
+
+12. what are the difference stages of a Jenkins pipeline job?
+
+13. what is the last stage in a pipeline?
+
+14. How can you select a custom Jenkinsfile which is in the project repository?
+
+15. Explain how to configure nexus username and password?
+
+16. Explain how you configure kubernetes and Docker in pipeline script?
+
+17. Where can I configure tools in Jenkins GUI?
+
+18. How you will check whether build is success or not?
+
+19. Explain how you have configure a job completed successfully to trigger another one? 
+
+20. How can you stop particular stage in a pipeline job from being executed?
+
+21. what are the different ways to automate jobs?
+
+22. Any plugin to migrate jobs from one server to another?
+
+23. How many master and slave machine are in your CI-CD projects?
+
+24. Explain Jenkins master and slave architecture?
