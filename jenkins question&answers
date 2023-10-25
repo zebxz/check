@@ -1,5 +1,7 @@
 QQQQ WHEN USING jenkins in a windows computer what is the command to run????
 
+http://34.205.129.202:8080/github-webhook/
+
 Interview Questions on Jenkins
 12:30 ###couldnt log back into jenkins on the browser so vi config.xml & change use security frm true to false then sudo systemctl retart jenksinand ls -l config.xml
 to knw who owns the file
@@ -51,14 +53,25 @@ master-- prod
 
 
 4. Explain Jenkins intergration with GitHub?
-it get to do wit authentication & authurization, jenkin nid to be auth in github using PW& username& by virtue of dat jenkins is now auth to clone codes from github
+1)it get to do wit authentication & authurization, jenkin nid to be auth in github using PW& username& by virtue of dat jenkins is now auth to clone codes from github
 & for that to happen w hv to create cred where we authorize jenkins to communicate wit github ,& auth tk place in jenkins server using cred credentials can be 
 token/username or generally PW & username  ..we go to our cred section of github& create our credentials such dat jenkins can easily get authenticated to 
 pull code frm github .... bc gitcloning frm a privte repo we nid authentication & 90% ofd time we'l be 
-cloning frm a private repo30:00 we can go to settings to change a project frm pulic to privat but may nt wrk if the repo has already being forked. 
+cloning frm a private repo30:00 we can go to settings to change a project frm pulic to privat but may nt wrk if the repo has already being forked.
+credentials : PW & username .. access is difficult to manage bt wit tokens, access can be defined , so we can define what a specific user or token can do.
+ ## 39:50 to manage cred - manage jenkins- credentials
 
+2)#41:43 can also talk abt build triggers -- most importantly web hook, bt b4 dis mk sure u hv created cred for github account in jenkins
+3) identity mgt platforms like LDAP / or identity & access mgt IAM , once the users in the LDAP server are exported to our github account & into our jenkins server,
+it means that those users can easily get authenticated
 
-5. Walk-me through the steps you use to install and/or updates plugins in Jenkins?
+5. Walk-me through the steps you use to install and/or updates plugins in Jenkins? .. we can also completely manage jenkins frm the CLI 
+THE COY IS EMPLOYING u as an engr nt as a student in internship
+##48:22 1st step .. so in landmak the fist tin we do is login to jenkins server bt b4 dis is done a change REQ is created , this implies that the coy wil hv a meeting 
+wher dey say this month, we wnt to update our servers, the plugins in jenkins & as a dev engr ill create a change reQ bc am nt the only one managing the server, then 
+i explain the type of change to creat or confiure e.g to install or updtae some pluggins in jenkins& once its approved,, i login to jenkins server - manage jenkins- mange
+plugins& either update or instal the plugins.
+
 
 6. Why do we need an artifactory in the Jenkins build process?
 
