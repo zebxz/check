@@ -70,35 +70,84 @@ THE COY IS EMPLOYING u as an engr nt as a student in internship
 ##48:22 1st step .. so in landmak the fist tin we do is login to jenkins server bt b4 dis is done a change REQ is created , this implies that the coy wil hv a meeting 
 wher dey say this month, we wnt to update our servers, the plugins in jenkins & as a dev engr ill create a change reQ bc am nt the only one managing the server, then 
 i explain the type of change to creat or confiure e.g to install or updtae some pluggins in jenkins& once its approved,, i login to jenkins server - manage jenkins- mange
-plugins& either update or instal the plugins.
+plugins& either update or instal the plugins... so is it the linux adminstrator that does the plugin installing & updates? can be done by either the develpers 
+or devops engr . bc most companies dnt hire system administrator any longer or their numbers are droping& dats why we started wit linux command so u can
+knw hw to do update .. so if a linux admin is nt working in ur coy,, devops engr can fit in the shoe
 
 
 6. Why do we need an artifactory in the Jenkins build process?
+to helpus backup our build artifacts & in landmak we use nexus as our artifactory, so all our build artifacts ar backed up in nexus such dat is smt goes wrong wit our 
+build server we can always get our artifacts fmr nexus as a amtter of fact we can even deploy the code directly frm our artifcat repo
+
 
 7. Explain the difference between remote repositories and local repositories? 
+56:00  generally, a remote repo is held extrenally, its nt on the local server & a remote repo e.g in git ,in the SDLC in landmak, our developers ar distributed& each of
+this developers hv their own local envir where they ar doing their dev, on dose local envir they hv their local repo where dey commit their codes b4 pushing the commit  
+in the remote repo & our remote repo is held in github.... to get code frm the remote repo to local we run git pull/clone
+also in maven we hv maven local repo & maven remote repo .. maven local repo by default when build artifacts ar created dey can be found in target dir & to get dem here we 
+run mvn package wich will creat the build artifact in target dir 
+58:00 for maven install the build artifacts will be in maven local repo which is .m2/repository, the default maven repo 
+mvn deploy to upload the build artifacts to maven remote repository .... in landmak, its nexus ,, other coy can be jfrog
 
 8. what is sudo in Linux administration?
+this is the right givn to privilege users to run admin task or binary both (bin/sbin files
+
 
 9. Tell me about the project you are currently managing?
+1:49:40  in landmak we ar managing java based projects, we ar working wit team of developers who ar continously doing dev so we ar acheving continous dev& we hv intergratwed 
+our dev envir such that we ar using jenkins to automate the entire envi & as such when develpoers commit any code to github we hv config jenkins to talk to github using
+cred & we ar equally using pull trigers, build trigers like github webhook, so whenever developers commit a code in github, jenkins will immediately pullit^ do a build
+... bt this is jst a skeleton bc as we progress ull realise it has a lot to do wit docker wit jenkins, kubernetes , docker, ansible
 
-10. What are the syntax in ansible playbook? 
+
+###1:02:50 .. most schs jst jump into jenkins& u may jst get to hear of maven a little  but we did maven as a standalone tool
+
+
+10. What are the syntax in ansible playbook? this is a simple file
+#1:03 some playbooks may hv multiple plays, 
+so we hv plays
+the syntax has host
+roles
+ 
+  it has task as part of task it has vars , handlers, 
+with errors .. these are conditions that even wit the error continue
 
 
 
 JENKINS Questions (JENKINS project)
 1. what is jenkins?
+##1:04:45 .. this is an open source CI/cd tool.. java is the prerequisite for jenkins  
 
 2. what are the plugins you have used in Jenkins?
+so many plugins e.g 
+pluggin for pipeline projects
+for jenkins running note
+for safe restart etc
+schedule plugin for building in intervals
 
 3. How can you migrate jenkins to a new and upgraded server?
+tnk u for this question, it falls in line wit a task i had to do ,3months ago, i was assigned to migrate my jenkins server frm a VM to a container, i chieved this using
+job import plugin , wich is usde to import jobs frm one jenkins server to another jenkins server.
 
 4. Which plugins have you used for sonarqube and Code Coverage?
+unfortunately in landmak we dnt use plugins bc we hv a full sonarqube server that weuse for our codequality analysis bc sonarqube & codequality for us is very imp, so for
+jenkins sonarqube integration we ar using a sonarqube server howerevr in the sonarqube server when we ar abt to est code quality review we ar runing sonar;SONAR.. 
+& in sonar:soanr, the first sonar is the  plugin dat does scanning & the 2nd sonar is the goal whic is to excute sonarque report bt then we need a scanner therore we nid 
+to add the pluggin thats why we run sonar;SONAR BC AM INTegrating jenkins&sonarqube
+also occasion we hv equally used a plugin called jacoco.. java code coverage
 
-5. what is the re-requisites for Jenkins and Jenkins slaves?
+5. what is the re-requisites for Jenkins and Jenkins slaves? 
+java must be installed in the master b4 jenkins can start
+error -- java nt installed 
+java must be running in the slaves b4 jenkins executables can run,, java must be running b4 jenkins can fully integrate the master wit the slaves& run jobs wit the slaves
+using jenkins executable
 
 6. Explain how to add slaves nodes to a jenkins master?
+we are using ssh agent plugging and with the help of this w create crednetials:username&PW, username& private key , since our resources ar provisioned in AWS 1:15:15
+we can then do the config and decide if we wnt the slave server to online as much as possible 
 
-7. Can I use different OS to nodes and master?
+7. Can I use different OS to as nodes and master?
+
 
 8. What are different ways to create jobs in jenkins?
 
