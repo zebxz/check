@@ -49,7 +49,7 @@ Regions: us-east-1  = N-Virginia, there are 6 azs in this region
    Network failure  
    wildfire
 
-Examples os aws services: ec2 / efs / eks / ecs / iam / route53 / elb  
+Examples os aws services: ec2 / efs elastic file sys / eks elastic kubernetics serv / ecs elastic container services / iam, identity & access mgt / route53 / elb  
 
 What to consider before creating/hosting resources in aws:
 What to consider before choosing a region in AWS:
@@ -58,47 +58,51 @@ Regions covers: USA, Canada, Americas, Europe, Africa, Asia, Middle East,
                 Australia, 
 
 Can a Lagos based company serve clients around the world with the help AWS ? yes  
-This company will need server resources/services [ec2] from AWS
+for this to happen, This company will need server resources/services [ec2] from AWS
 This company will need AWS container resources/services [eks, ecs, ecr, ] 
 NB: Not all aws services are found in all aws regions.
 
 What to consider before choosing a region in AWS to launch a service or services:
-Availability: elastic cloud compute [ec2]
+
+1)Availability: elastic cloud compute [ec2]   Not all aws services are found in all aws regions, so we hv to mk sure its avail in the region b4 we launch it
               elastic kubernetes service = EKS 
    us-east-1   = 
    af-west-1   = 
 
-High Availability:  
+2) High Availability:  having multiple servers for your applicaction to avoid application outage
   DEPLOY AN Application server  
-   1 application Server  : architecture1 
+   1 application Server  : architecture1  .... you can be a cloud architect, can advice the coy that we cannot hv one app server, so lets hv more than 1 app servers
    4 application Servers : architecture2
+
+hIGH availability can be ACHIEVED BY:
       1. Multiple instances of the servers -- 4 = us-east-1a  
       2. Deploy using Multi AZs = us-east-1a, us-east-1b, us-east-1c, us-east-1f  
-      3. Deploy using Multi Regions  = us-east-1, us-east-2, af-west-1,   
+      3. Deploy using Multi Regions  = us-east-1, VIRGINIA, us-east-2, OHIO, af-west-1,   
       4. Multi-cloud -- AWS/GCP/AZURE
 
  Cloud Service Providers = 
 
-Latency: -- TIME taken TO ACCESS A SERVER/application 
+3) Latency: -- TIME taken TO ACCESS A SERVER/application 
    us-east-2 = Ohio     --- 200ms to access    1
-   us-west-2 = Oregon   --- 100ms to access    2
+   us-west-2 = Oregon   --- 100ms to access    2   .. THE best
    af-west-1 = CapeTown  -- 500ms to access    3  
 
-cost:                          latency              cost  
-   us-east-2 = Ohio     --- 200ms to access    1    $4/hr  
+4) cost:                          latency              base on cost  
+   us-east-2 = Ohio     --- 200ms to access    1    $4/hr  THE BEST
    us-west-2 = Oregon   --- 100ms to access    2    $8/hr 
    af-west-1 = CapeTown  -- 500ms to access    3    $6/hr 
 
-customer Location:
+5) customer Location: IF MY cx AR IN LOndon i will place resources to where the cx are
    Ohio           = us-east-2 = Ohio  
    London         = eu-west-2 = London 
 
-Complaince / Regulations []:
+6)Complaince / Regulations []: this cud restrict a coy,, e.g in china , chinese based coys ar adv to only choose datacenters within AS/china,, so u cant choose a dif location
+when the govt regulations doesnt permit it
 
-Security:
+7)Security:
   Mosco /  
 
-Cloud Service Providers - CSP = AWS / GCP / AZURE 
+####38:55 Cloud Service Providers - CSP = AWS / GCP / AZURE 
 CSP[AWS] Provides computing services / resources 
 including; servers, network, storage, security, etc. 
 over the internet from their Datacenters        
@@ -115,7 +119,7 @@ EC2-Basics
 
 AMI = amazon machine image 
 
-EC2 Instance Purchasing Options:
+###### EC2 Instance Purchasing Options:
   on-demand instances   = most expensive and very flexible
                           studies 
 
