@@ -1,0 +1,211 @@
+why are they called isolated centers?
+
+
+===================================================================
+AWS  Global Infrastructure:
+https://aws.amazon.com/about-aws/global-infrastructure/
+AWS Global Infrastructure Map
+-----------------------------
+The AWS Cloud spans 102 Availability Zones within 32 geographic regions around the world,
+with announced plans for 12 more Availability Zones and 4 more AWS Regions in Canada, 
+Malaysia, New Zealand, and Thailand
+
+what is a region? .... Region  are Logical names  =   
+Availability ZONES - AZs   = Physical locations comprising of 
+                            one or more ISOLATED Datacenters  
+
+ Regions: us-east-1  = N-Virginia  
+          us-east-2  = Ohio  
+          us-west-1  = N. California
+          us-west-2  is  Oregon 
+
+Regions covers: USA, Canada, Americas, Europe, Africa, Asia, Middle East,   
+                Australia, 
+
+Can a Lagos based company serve clients around the world with the help AWS ? yes  
+
+in each regon there are diff azs, the azs are engineered to be independent from each other , e.g us east1a is located independently from us east1b
+
+Regions: us-east-1  = N-Virginia, there are 6 azs in this region
+  Availability ZONES :  
+    us-east-1a --- Arlington
+        jenkins-master            9:20 place my jenkins servers in diff az
+
+    us-east-1b --- Fairfax
+      jenkins-slave1 
+
+    us-east-1c --- Loudoun 
+      jenkins-slave2
+
+    us-east-1f --- Prince William
+      jenkins-slave3
+
+
+11:00 ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS
+1) Availability zones - AZs are engineered to be independent from each other
+2) A disaster in one cannot/shouldn't affect another AZ.  
+   Floods
+   earthquake 
+   Network failure  
+   wildfire
+
+Examples os aws services: ec2 / efs / eks / ecs / iam / route53 / elb  
+
+What to consider before creating/hosting resources in aws:
+What to consider before choosing a region in AWS:
+
+Regions covers: USA, Canada, Americas, Europe, Africa, Asia, Middle East,   
+                Australia, 
+
+Can a Lagos based company serve clients around the world with the help AWS ? yes  
+This company will need server resources/services [ec2] from AWS
+This company will need AWS container resources/services [eks, ecs, ecr, ] 
+NB: Not all aws services are found in all aws regions.
+
+What to consider before choosing a region in AWS to launch a service or services:
+Availability: elastic cloud compute [ec2]
+              elastic kubernetes service = EKS 
+   us-east-1   = 
+   af-west-1   = 
+
+High Availability:  
+  DEPLOY AN Application server  
+   1 application Server  : architecture1 
+   4 application Servers : architecture2
+      1. Multiple instances of the servers -- 4 = us-east-1a  
+      2. Deploy using Multi AZs = us-east-1a, us-east-1b, us-east-1c, us-east-1f  
+      3. Deploy using Multi Regions  = us-east-1, us-east-2, af-west-1,   
+      4. Multi-cloud -- AWS/GCP/AZURE
+
+ Cloud Service Providers = 
+
+Latency: -- TIME taken TO ACCESS A SERVER/application 
+   us-east-2 = Ohio     --- 200ms to access    1
+   us-west-2 = Oregon   --- 100ms to access    2
+   af-west-1 = CapeTown  -- 500ms to access    3  
+
+cost:                          latency              cost  
+   us-east-2 = Ohio     --- 200ms to access    1    $4/hr  
+   us-west-2 = Oregon   --- 100ms to access    2    $8/hr 
+   af-west-1 = CapeTown  -- 500ms to access    3    $6/hr 
+
+customer Location:
+   Ohio           = us-east-2 = Ohio  
+   London         = eu-west-2 = London 
+
+Complaince / Regulations []:
+
+Security:
+  Mosco /  
+
+Cloud Service Providers - CSP = AWS / GCP / AZURE 
+CSP[AWS] Provides computing services / resources 
+including; servers, network, storage, security, etc. 
+over the internet from their Datacenters        
+
+EC2-Basics
+==========
+  Basic Computer vs      aws-EC2 :
+  OS     ----            AMI (OS + Additional Softwares) 
+  Hard Drive             EBS (Elastic Block Store)\
+  RAM                    RAM
+  CPUs[1, 2, 16 core]    Instance type[t2.mirco, t2.medium]
+  Network CARD           IP Addressing 
+  Firewall               Security Groups
+
+AMI = amazon machine image 
+
+EC2 Instance Purchasing Options:
+  on-demand instances   = most expensive and very flexible
+                          studies 
+
+  Reserved instances    = production 
+
+  spot instances - Bids = testing  
+
+AMI = amazon machine image 
+
+  Laptop1: 24 CORES / i9 / 4TB SSD / RAM 128GB  = $9,000 
+  Laptop2: 2 CORES / i3 / 1TB HDD   / 8GB       = $700 
+
+AMI = amazon machine image 
+      comprises of the OS and other softwares and settings  
+  Linux [redhat / centOS / ubuntu / amazonLinux2 / Debian 11 /etc
+          Amazon Linux 2 / ]  
+  WINDOWS
+
+Community AMIs: comprises mostly the OS only  
+                Generally free 
+
+Marketplace AMIs: comprises of the OS and other Licence Softwares 
+   splunk -- Amazon Linux 2 + splunk Softwares    
+   openvpn --- Ubuntu 22.04.1 LTS + 
+               Ubuntu 18 LTS
+
+10GB/S   = 10,000MB/S  
+
+my AMI = Golden AMIs  :
+            vCPUs          RAM      Bandwidth speed  
+  c5.metal  96     x86_64  192G  - - 25 Gigabit/sec  
+  t2.micro  1      x86_64  1G    - - Low to Moderate
+
+Metadata: Data about data 
+- id         = i-08b0ba39aca738105
+  privateIP  = 172.31.27.50
+  publicIP   = 54.187.238.209  / 54.149.128.80   
+  DNS-private= ip-172-31-27-50.us-west-2.compute.internal
+  
+  dns-public = ec2-54-187-238-209.us-west-2.compute.amazonaws.com
+               ec2-54-149-128-80.us-west-2.compute.amazonaws.com
+
+login to your server within your VPC/Network     :
+  We can use private-IP/DNS   
+  ssh -i aws33.pem ec2-user@172.31.27.50       
+  ssh -i aws33.pem ec2-user@ip-172-31-27-50.us-west-2.compute.internal  
+
+login to your server from external Networks     :
+  We can use public-IP/DNS 
+  ssh -i aws33.pem ec2-user@54.187.238.209      
+  ssh -i aws33.pem ec2-user@ec2-54-187-238-209.us-west-2.compute.amazonaws.com
+
+
+When we stop a server the rivate-IP/DNS address cannot changed at restart 
+When we stop a server the public-IP address will changed at restart 
+  use an elasticIP to maintain a static public-IP even after restart 
+
+Ticket044 = Create a and install a webserver in aws.
+
+userData - This is a script that can run while creating/launching the server  
+========
+ #!/bin/bash
+ sudo hostnamectl set-hostname web  
+ sudo yum install httpd -y 
+ sudo systemctl start httpd
+ sudo systemctl enable httpd 
+ sudo echo "<h1> Welcome To LandmarkTech </h1>" >> /var/www/html/index.html
+ sudo echo "<h1> DevOps is good </h1> " >> /var/www/html/index.html
+
+
+ IQ: How many Security Groups can be assigned to an Instance --- 10   
+      sg1_ssh
+      sg2_http  
+
+Metadata:
+  id:       i-0cda0b7ee5e8d9434
+  name/tag: webserver1
+  publicIP: 35.92.51.2
+            35.92.51.2:80  
+            http://35.92.51.2:80  
+
+HTTP = hyper text transfer protocol            = listens on port 80 
+HTTPS = hyper text transfer protocol Secured   = listens on port 443  
+
+http://35.92.51.2/    
+https://mylandmarktech.com/      
+              http           https  
+Data          insecured      secured  
+Transfer      clear text     encrypted  
+certificate   not required   required    
+portNumber    80             443  
+
+password     admin123        */cxx5%%$#@!fdytdcxsfdsyfdiuoiodofsdcp 
