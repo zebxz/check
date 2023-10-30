@@ -120,16 +120,21 @@ EC2-Basics
 AMI = amazon machine image 
 
 ###### EC2 Instance Purchasing Options:
-  on-demand instances   = most expensive and very flexible
-                          studies 
+  on-demand instances   = most expensive and very flexible, servers can be created & deleted any time, u pay for services whrn servers ar running
+           this is gud for studies bc its d only option that supports for free tier bc u ar always expected to terminate ur instabce               studies 
 
-  Reserved instances    = production 
-
-  spot instances - Bids = testing  
+  Reserved instances    =  ,, #####read note, u reserve inatance & u dnt use it u stil pay 4 it, cx can ask for instances to be reserved
+this is gud for deploying to prodution    production 
+  
+spot instances - Bids =   AWS,, will provide based on avail instances so cx wil place a bid after AWS has placed the offer price
+this is gud for testing, like high voltage application
 
 AMI = amazon machine image 
 
-  Laptop1: 24 CORES / i9 / 4TB SSD / RAM 128GB  = $9,000 
+how ARE WE CHARGED FOR EC2.
+53:00 instance type is the power of the instance, the specks
+
+e.g  Laptop1: 24 CORES / i9 / 4TB SSD / RAM 128GB  = $9,000 
   Laptop2: 2 CORES / i3 / 1TB HDD   / 8GB       = $700 
 
 AMI = amazon machine image 
@@ -138,22 +143,40 @@ AMI = amazon machine image
           Amazon Linux 2 / ]  
   WINDOWS
 
-Community AMIs: comprises mostly the OS only  
+58:00####things to consider b4 choosing an AMI, THERE ar 3option to choose from
+what is in the:
+1)Community AMIs: comprises mostly the OS only  
                 Generally free 
 
-Marketplace AMIs: comprises of the OS and other Licence Softwares 
+2)Marketplace AMIs: comprises of the OS and other Licence Softwares 
    splunk -- Amazon Linux 2 + splunk Softwares    
    openvpn --- Ubuntu 22.04.1 LTS + 
                Ubuntu 18 LTS
 
 10GB/S   = 10,000MB/S  
 
-my AMI = Golden AMIs  :
-            vCPUs          RAM      Bandwidth speed  
+3) my AMI = Golden AMIs  :
+         
+1:01:42 splunk enterprise is used to monitor our servers
+
+1:07:14 t3.2xlarge up to 5 gitabit per sec for band width i.e the internet speed
+   vCPUs          RAM      Bandwidth speed  
   c5.metal  96     x86_64  192G  - - 25 Gigabit/sec  
   t2.micro  1      x86_64  1G    - - Low to Moderate
 
-Metadata: Data about data 
+security group is firewALL in front of the server
+james an admin/engineer wil access the server by ssh on port 22, while 
+paul nids to acces some web content on the server by using http on port 80
+for any of them to access this server on our firewall we hv to open http 80 and ssh22  
+
+storage is called ebs volume, after security groups, we configure stored
+the speed for hdd is 10 times slowervthan ssd
+1:19:25  for volume type, magnetic is like a floppy disk wich use to be used many yrs ago, we dnt nid it,,, so we go for general purpose ssd .. gp3
+then launch the instance
+
+
+INF ABOUT METADATA:
+Metadata: Data about data            data about the instance
 - id         = i-08b0ba39aca738105
   privateIP  = 172.31.27.50
   publicIP   = 54.187.238.209  / 54.149.128.80   
@@ -162,8 +185,16 @@ Metadata: Data about data
   dns-public = ec2-54-187-238-209.us-west-2.compute.amazonaws.com
                ec2-54-149-128-80.us-west-2.compute.amazonaws.com
 
-login to your server within your VPC/Network     :
-  We can use private-IP/DNS   
+what is my ipaddress
+1:26:00 it is more secured to configure my ssh22 for a specific person by selecting the/my ip adress in the drop down box option in the security groups.
+outbound rules : all ports are open , so frm the server we can talk with everybody but nt everyone can talk wit us 
+security groups are firewalls in front of ur server & security groups are stakeful bc its assigned or attached to a particular instance
+
+1:28:00 IP addresses : see notes
+
+
+login to your server within your VPC) virtual private cloud/Network     :
+  We can use private-IP/orDNS   
   ssh -i aws33.pem ec2-user@172.31.27.50       
   ssh -i aws33.pem ec2-user@ip-172-31-27-50.us-west-2.compute.internal  
 
@@ -174,7 +205,7 @@ login to your server from external Networks     :
 
 
 When we stop a server the rivate-IP/DNS address cannot changed at restart 
-When we stop a server the public-IP address will changed at restart 
+When we stop a server the public-IP address will changed at restart ,,bc the ip address is released once we stop the server
   use an elasticIP to maintain a static public-IP even after restart 
 
 Ticket044 = Create a and install a webserver in aws.
@@ -190,7 +221,7 @@ userData - This is a script that can run while creating/launching the server
  sudo echo "<h1> DevOps is good </h1> " >> /var/www/html/index.html
 
 
- IQ: How many Security Groups can be assigned to an Instance --- 10   
+######### IQ: How many Security Groups can be assigned to an Instance --- 10   
       sg1_ssh
       sg2_http  
 
