@@ -176,7 +176,7 @@ the speed for hdd is 10 times slowervthan ssd
 then launch the instance
 
 
-INF ABOUT METADATA:
+INF ABOUT METADATA:  
 Metadata: Data about data            data about the instance
 - id         = i-08b0ba39aca738105
   privateIP  = 172.31.27.50
@@ -209,7 +209,8 @@ When we stop a server the rivate-IP/DNS address cannot changed at restart
 When we stop a server the public-IP address will changed at restart ,,bc the ip address is released once we stop the server
   use an elasticIP to maintain a static public-IP even after restart 
 
-########Ticket044 = Create a and install a webserver in aws.
+########Ticket044 = Create a and install a webserver in aws...... webapp can be used to serve some web content
+with the help of ec2 intance we are able to create servers and connect to them
 
 userData - This is a script that can run while creating/launching the server  
 ========
@@ -234,7 +235,7 @@ access it on the webserver, i shud be able to see wlc to landmark
 
 11:57#####then launch the instanc
 
-Metadata:
+Metadata:  data abt data
   id:       i-0cda0b7ee5e8d9434
   name/tag: webserver1
   publicIP: 35.92.51.2
@@ -253,3 +254,13 @@ certificate   not required   required
 portNumber    80             443  
 
 password     admin123        */cxx5%%$#@!fdytdcxsfdsyfdiuoiodofsdcp 
+
+####21:00  in AWS we hv tesla vpc is a large netwrk with 2 small networks
+sutnet1 is public  (with a webserver1) and subnet2 is private with an (app server1).... both in the same ntwrk,, for both to communicate with each oda they can use the
+private ntwrk address
+we hv another engr chidi in a diff ntwrk, he can access the webserver wit the webser pub ip
+also if we hv another webserver2 & appserver in another netwrk, for them to communicate with appser1 & appser2,, they wil use the public ntwrk address
+
+
+
+
