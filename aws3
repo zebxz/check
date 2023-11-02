@@ -1,0 +1,119 @@
+whena server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n its has an advantage ie it is elastic 
+7:10 #####not clear its going to be mouning among others within a roof style system..
+
+the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2   
+
+
+  
+
+storage solutions:
+  ebs volume  = block store
+       Required mounting    
+       
+  efs  volume = file storage
+       Required mounting 
+       sudo yum install nfs-utils
+     
+  s3 bucket   = object storage 
+
+[ec2-user@web ~]$ lsblk
+NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
+xvda      202:0    0   8G  0 disk
+├─xvda1   202:1    0   8G  0 part /
+├─xvda127 259:0    0   1M  0 part
+└─xvda128 259:1    0  10M  0 part /boot/efi
+
+Root [/] directory has other sub-directories
+  /bin /home /etc/ /var /opt / 
+
+Ticket0048:
+  Create, attached & mount 5G to the /tesla directory 
+  Create, attached & mount 7G to the /var/lib/jenkins directory 
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
+Creating ebs volume    
+Attaching EBS  
+Mounting ebs:
+ 1. sudo file -s /dev/xvdf
+
+     sudo lsblk -f
+ 
+ 2. sudo mkfs -t xfs /dev/xvdf
+    sudo yum install xfsprogs
+
+ 3. sudo mkdir /data
+    sudo mkdir /app   
+
+ 3. sudo mount /dev/xvdf /data
+    sudo mount /dev/xvdf1 /data
+    sudo mount /dev/xvdf2 /data 
+
+ 4. sudo unmount /dev/xvdf /data
+    
+  http://54.184.126.45:8080/
+  http://34.219.46.160:8080/
+
+ Break = 9:10pm EST  
+
+ 
+EFS:
+====
+Volume expansion - vertical   [4gb-->7gb] 
+Volume expansion - horizontal [v1=8g, v2=7g, v3=6g]  
+
+Traditional volume mgt and LVM use to require SystemsAdmin  
+skills to perform. Today cloud computing skills are required to 
+simplify and automate the process
+
+IQ: Explain your experience with AWS Storage services ?
+    Explain a project you did which you are proud of  ? --
+
+Lambda functions:
+=================  
+  If we have upto  75% volume usage increase vol by 20%   
+  df -h / 100G/75G  -- 120G 
+
+Disaster Recovery:  
+ cross account 
+    aws account1 = email/password [root access]
+       database servers running   
+
+    aws account2 = email/password [root access]  
+      backup database servers in account2 
+
+We created a snapshot lifecycle policy using Lambda  which
+create sonapshots from our databases from account1 in account2
+ cross region   
+
+efs : file storgae 
+
+efs  volume = file storage / SHARED Storage
+     Required mounting 
+     sudo yum install nfs-utils
+
+google drive-400G = legah@gmail.com  
+files: documents, pictures, videos 
+mounted on: phones, tablets, computers  
+
+NFS = Network file system  = self managed   
+EFS = Elastic File system  = managed by AWS 
+
+
+Amazon Elastic File System (Amazon EFS) provides a simple,
+ scalable, elastic file system for general purpose 
+ workloads for use with AWS Cloud services and on-premises resources.
+  https://youtu.be/AvgAozsfCrY
+
+  efs  volume = file storage
+       Required mounting 
+       sudo yum install nfs-utils
+       sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0027f3e4b8f8187ee.efs.us-west-2.amazonaws.com:/ efs
+       
+
+========================================
+  s3 bucket   = object storage = video 
+===================================== 
+
+VPC   
+
+
