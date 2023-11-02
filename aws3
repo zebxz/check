@@ -1,7 +1,7 @@
 whena server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n its has an advantage ie it is elastic 
-7:10 #####not clear its going to be mouning among others within a roof style system..
+7:10 #####not clear its going to be mouning among others within a root file system..
 
-the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2   
+the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked to the server  
 
 
   
@@ -16,19 +16,23 @@ storage solutions:
      
   s3 bucket   = object storage 
 
-[ec2-user@web ~]$ lsblk
+[ec2-user@web ~]$ lsblk  .... list block command to list the blocks,,, in the lsblk command, we hv our root file system... ie xvda1
 NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
-xvda      202:0    0   8G  0 disk
+xvda      202:0    0   8G  0 disk......... jst one disk & its a block store 21:50
 ├─xvda1   202:1    0   8G  0 part /
 ├─xvda127 259:0    0   1M  0 part
 └─xvda128 259:1    0  10M  0 part /boot/efi
 
+#######16:57 for my file sys i can also execute df -h, we can see xvda1 is mounted on our root file system ie /dev/xvda1
+
 Root [/] directory has other sub-directories
-  /bin /home /etc/ /var /opt / 
+  /bin /home /etc/ /var /opt / ... this is a root file system
 
 Ticket0048:
   Create, attached & mount 5G to the /tesla directory 
   Create, attached & mount 7G to the /var/lib/jenkins directory 
+
+files ar mounted frm d root dir bc /root is wher all oda dir starts bt can i create a specific storage for /teslas? yes
 
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
 Creating ebs volume    
