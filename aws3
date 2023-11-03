@@ -3,8 +3,8 @@ whena server is created, ders a piece of storage attached to it, wich is mounted
 
 the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked to the server  
 
-
-  
+????? for vol settings whats the diff btw general purpose ssd2 and ssd3 
+??????  sudo mkdir -p /var/lib/jenkins ..... why the -p
 
 storage solutions:
   ebs volume  = block store
@@ -34,20 +34,30 @@ Ticket0048:
 
 files ar mounted frm d root dir bc /root is wher all oda dir starts bt can i create a specific storage for /teslas? yes
 
-https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
+the volume to be created can be as large as 16 terabyte
+#38:00 volume state says volume is available so i can attach d vol to an instance , then vol stae changes to in use. can also modify vol by inresing its size bt cant decrea
+we can modify while volume is in use
+##42:14 we can increase from 14gb to 18GB ie VERTICAL increase, 
+mounting is attaching to the server so dat files can be saved on the file system
+
+#https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
 Creating ebs volume    
 Attaching EBS  
 Mounting ebs:
- 1. sudo file -s /dev/xvdf
+ to know the file sys  ,, ie if it has any file or jst an empty dvf
+1. sudo file -s /dev/xvdf
 
+to list all file systems
      sudo lsblk -f
  
- 2. sudo mkfs -t xfs /dev/xvdf
-    sudo yum install xfsprogs
+ to create the file system for the vol
+2. sudo mkfs -t xfs /dev/xvdf
+    sudo yum install xfsprogs  ... if it says command nt found
 
- 3. sudo mkdir /data
-    sudo mkdir /app   
-
+ to create a mount point dir for vol3. sudo mkdir /data
+    sudo mkdir /app   bt mk sure /app or /data doesnt exists
+ 
+to mount
  3. sudo mount /dev/xvdf /data
     sudo mount /dev/xvdf1 /data
     sudo mount /dev/xvdf2 /data 
@@ -58,6 +68,12 @@ Mounting ebs:
   http://34.219.46.160:8080/
 
  Break = 9:10pm EST  
+
+Create, attached & mount 7G to the /var/lib/jenkins directory  ... all our jenkins job will be found here
+
+sudo mkfs -t xfs /dev/xvdg
+ sudo mkdir -p /var/lib/jenkins
+sudo mount /dev/xvdg /var/lib/jenkins/
 
  
 EFS:
