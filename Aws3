@@ -156,22 +156,37 @@ google drive-has a file storage of 400G = legah@gmail.com
 in the drive , i have files: documents, pictures, videos 
 mounted on: phones, tablets, computers  
 after it is mounted, so all i nid to do is login to my email then i can access the files.... therefore it can be called a shared storage
+we can snap pictures with our phone and acces the pictures on several devices due to shared directory& its possible due to elastic file system
 
 NFS = Network file system(traditionally)  = self managed   
 EFS = Elastic File system  = managed by AWS , therfore u hv more time to focus on ur applications
 so nowadays managed solutions is what is driving many companies
 
 
+in the search bar, type efs -name&vpc then create - aws dashbaord-select jenkins server-back to efs:attach-mount via dns- back to jenkins server- mkdir efs- to mount efs:
+paste :sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-00727c0c3be6ea5ea.efs.us-east-1.amazonaws.com:/ efs 
+.. if it doesnt mount, ensure nfs port 2049 is open in jenkins server- in NFS- ntwrk:manage-add security group.
+2:19;24we can watch ls efs/ in the jenkins ami backup server ^when we touch a file e.g sudo touch test in the main jenkins server, we can see it appear in the backup server 
+data can synchronize bc its a shared system  
+the only tin we had to do was to instal the nfs client..ie elastic file system
+hostname -i to see the diff ip of the diff servers
+
 Amazon Elastic File System (Amazon EFS) provides a simple,
  scalable, elastic file system for general purpose 
  workloads for use with AWS Cloud services and on-premises resources.
-  https://youtu.be/AvgAozsfCrY
+  https://youtu.be/AvgAozsfCrY     ... to get some direct inform from aws talking abt efs
 
   efs  volume = file storage
        Required mounting 
        sudo yum install nfs-utils
        sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0027f3e4b8f8187ee.efs.us-west-2.amazonaws.com:/ efs
        
+#### what ar the diff storage solution u hv been exposed to as a devops engr
+hv been exposed to block storages like ebs volume,v been exposed to file storage like elastic file system, netwrk file sys,google drive etc also object storage like s3bucket
+
+
+when unmounting an ebs volume thers a command to run to format the drive that deletes the files in the drive sudo mkfs -t xfs /dev/xvdf,it creates a new file system
+2:28 to avoid formatting run sudo file -s /dev/xvdf to knw if the drive is pertitioned, so if it is, u then skip the formating step & go ahead to mount it sudo mount /dev/
 
 ========================================
   s3 bucket   = object storage = video 
