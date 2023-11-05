@@ -1,3 +1,4 @@
+###IOS- INPUT OUTPUT per sec
 When a server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n its has an advantage ie it is elastic 
 7:10 #####not clear its going to be mouning among others within a root file system..
 
@@ -88,11 +89,18 @@ click created snapshot-action-create image frm snapshot-vol cannot be reduced-cr
 original server wil be in dis new one bc its a bkup, a mirrow of the original server   ....
 create instance-myAMIS-owned by me:select the image frm drop box- t2micro
 
+1:36:12 CREATING A LIFE CYCLE FOR MY INSTANCE
+1:43 bc we ar running multiple jobs in jenkins ,at evry point in time we shud hv 5 backups, so every 24hrs a backup shud be created,evry 24hrs asnapshot is created
+
+TO create a lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE
+life cycle manager-nxt step-instance-target resoure tag:Name &choose tag name frm drop box then add/write tag name-descripption-default role- tag:Name & write tag name-policy
+enable-nxt-select time for every- retention max keep-tick copy tag frm source-review policy- create policy
+
+WE CAN equally automate HW the AMI images a re created via life cycle manager
+
 
 EFS:
 ====
-Volume expansion - vertical   [4gb-->7gb] 
-Volume expansion - horizontal [v1=8g, v2=7g, v3=6g]  
 
 Traditional volume mgt and LVM use to require SystemsAdmin  
 skills to perform. Today cloud computing skills are required to 
@@ -101,14 +109,33 @@ simplify and automate the process
 IQ: Explain your experience with AWS Storage services ?
     Explain a project you did which you are proud of  ? --
 
+##1:51 we can have Volume expansion - vertical   [4gb-->7gb] 
+Volume expansion - horizontal [v1=8g, v2=7g, v3=6g]  
+
+traditionally in thsoe days,we needed a lot of systems admin,Traditional volume mgt and Logic VM use to require SystemsAdmin  to effects, u nid to b a system admin to 
+carry out this stuff, meaning we require systems admin skill to perform ,,  Today cloud computing skills are required to simplify and automate the process
+
+but the interview question is what hv you done when it comes to AWS services, thers a ervice in aws called lamba
 Lambda functions:
 =================  
   If we have upto  75% volume usage increase vol by 20%   
-  df -h / 100G/75G  -- 120G 
+  
+in my envi in one of my projects, i was able to use the lamba function, which was written to expand my project by 20% whenevr usage is 75% 
+### 1:54so if  df -h / 100G/75G  ie avail 100 and used 75, increase by 20% --  so we then hv 120G
+
+1:54:2  7we can also  write a lamba function , lamba function has what is called diasaster recover
+if u work for landmark and we hv aws account1, we hv a database server running , account 2 
+diaster dat can occur , if someelse is able to access d email&paswd & log into aws wit root access, thers a possiblity of a disaster bc dats a serious issue bc they wil hv 
+access to all my servers bt wit account 1 & account 2, our disaster recovery is accont 2, wit our database serververs running in account 1, we back the databases in accout2
+by creating a snapshot lifecycle policy using Lambda  which
+create sonapshots, wich is a replica of account1 from our databases from account1 in account2 cross region , so we ar able to recover frm account2
+SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
+so am proud of that project
+
 
 Disaster Recovery:  
  cross account 
-    aws account1 = email/password [root access]
+    aws account1 = email/password [root access], we nid user name & paswd 
        database servers running   
 
     aws account2 = email/password [root access]  
@@ -118,18 +145,21 @@ We created a snapshot lifecycle policy using Lambda  which
 create sonapshots from our databases from account1 in account2
  cross region   
 
-efs : file storgae 
+### 2:00 efs : file storgae 
 
-efs  volume = file storage / SHARED Storage
-     Required mounting 
+efs  volume = file storage / SHARED Storage.. can be shared by one or more srvers or devices
+     Requires mounting & we can use a software like netwrk file system
      sudo yum install nfs-utils
 
-google drive-400G = legah@gmail.com  
-files: documents, pictures, videos 
+exmaples of file storage 
+google drive-has a file storage of 400G = legah@gmail.com  
+in the drive , i have files: documents, pictures, videos 
 mounted on: phones, tablets, computers  
+after it is mounted, so all i nid to do is login to my email then i can access the files.... therefore it can be called a shared storage
 
-NFS = Network file system  = self managed   
-EFS = Elastic File system  = managed by AWS 
+NFS = Network file system(traditionally)  = self managed   
+EFS = Elastic File system  = managed by AWS , therfore u hv more time to focus on ur applications
+so nowadays managed solutions is what is driving many companies
 
 
 Amazon Elastic File System (Amazon EFS) provides a simple,
