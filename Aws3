@@ -1,0 +1,152 @@
+When a server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n its has an advantage ie it is elastic 
+7:10 #####not clear its going to be mouning among others within a root file system..
+
+the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked to the server  
+
+????? for vol settings whats the diff btw general purpose ssd2 and ssd3 
+??????  sudo mkdir -p /var/lib/jenkins ..... why the -p
+
+storage solutions:
+  ebs volume  = block store
+       Required mounting    
+       
+  efs  volume = file storage
+       Required mounting 
+       sudo yum install nfs-utils
+     
+  s3 bucket   = object storage 
+
+[ec2-user@web ~]$ lsblk  .... list block command to list the blocks,,, in the lsblk command, we hv our root file system... ie xvda1
+NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
+xvda      202:0    0   8G  0 disk......... jst one disk & its a block store 21:50
+├─xvda1   202:1    0   8G  0 part /
+├─xvda127 259:0    0   1M  0 part
+└─xvda128 259:1    0  10M  0 part /boot/efi
+
+#######16:57 for my file sys i can also execute df -h, we can see xvda1 is mounted on our root file system ie /dev/xvda1
+
+Root [/] directory has other sub-directories
+  /bin /home /etc/ /var /opt / ... this is a root file system
+
+Ticket0048:
+  Create, attached & mount 5G to the /tesla directory 
+  Create, attached & mount 7G to the /var/lib/jenkins directory 
+
+files ar mounted frm d root dir bc /root is wher all oda dir starts bt can i create a specific storage for /teslas? yes
+
+the volume to be created can be as large as 16 terabyte
+#38:00 volume state says volume is available so i can attach d vol to an instance , then vol stae changes to in use. can also modify vol by inresing its size bt cant decrea
+we can modify while volume is in use
+##42:14 we can increase from 14gb to 18GB ie VERTICAL increase, 
+mounting is attaching to the server so dat files can be saved on the file system
+
+#https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
+Creating ebs volume    
+Attaching EBS  
+Mounting ebs:
+ to know the file sys  ,, ie if it has any file or jst an empty dvf
+1. sudo file -s /dev/xvdf
+
+to list all file systems
+     sudo lsblk -f
+ 
+ to create the file system for the vol
+2. sudo mkfs -t xfs /dev/xvdf
+    sudo yum install xfsprogs  ... if it says command nt found
+
+ to create a mount point dir for vol3. sudo mkdir /data
+    sudo mkdir /app   bt mk sure /app or /data doesnt exists
+ 
+to mount
+ 3. sudo mount /dev/xvdf /data
+    sudo mount /dev/xvdf1 /data
+    sudo mount /dev/xvdf2 /data 
+
+ 4. sudo unmount /dev/xvdf /data
+    
+  http://54.184.126.45:8080/
+  http://34.219.46.160:8080/
+
+ Break = 9:10pm EST  
+
+Create, attached & mount 7G to the /var/lib/jenkins directory  ... all our jenkins job will be found here
+
+sudo mkfs -t xfs /dev/xvdg
+ sudo mkdir -p /var/lib/jenkins
+sudo mount /dev/xvdg /var/lib/jenkins/
+
+
+$$$$41:09 in aws-jenkins server- actions:image&template 
+elastic block:snapshot-crrate snapshot.. all the data in our jenkins server wil backup in the snapshot
+after snapshot is crested, in action: we can creatse vol, change the availability zone &when we check in volumes we can see the newly created vol
+my original jenkins server was in US west2a bt d vol frm snapshot is in US west2c, & al the data avai in my jenkinsserver is capture in dis snapshot, wich is now in this vol
+wich meanas that if i use this vol my life wil b easy bc dis vol already has jenkins installed, so if am tryin to instal jenkins on a new server, if i use dis vol, wud d vol
+1:19:35 comes wit jenkins already installed? ... yes bc dis vol that has been created frm my jenkins backup, it has all d softwares.
+
+1:21:10 creating my AMI(amazon machine image) =GOLDEN AMIS
+click created snapshot-action-create image frm snapshot-vol cannot be reduced-create-i can go to ec2 instnace &launch a server using the image,&everytin dat was in the
+original server wil be in dis new one bc its a bkup, a mirrow of the original server   ....
+create instance-myAMIS-owned by me:select the image frm drop box- t2micro
+
+
+EFS:
+====
+Volume expansion - vertical   [4gb-->7gb] 
+Volume expansion - horizontal [v1=8g, v2=7g, v3=6g]  
+
+Traditional volume mgt and LVM use to require SystemsAdmin  
+skills to perform. Today cloud computing skills are required to 
+simplify and automate the process
+
+IQ: Explain your experience with AWS Storage services ?
+    Explain a project you did which you are proud of  ? --
+
+Lambda functions:
+=================  
+  If we have upto  75% volume usage increase vol by 20%   
+  df -h / 100G/75G  -- 120G 
+
+Disaster Recovery:  
+ cross account 
+    aws account1 = email/password [root access]
+       database servers running   
+
+    aws account2 = email/password [root access]  
+      backup database servers in account2 
+
+We created a snapshot lifecycle policy using Lambda  which
+create sonapshots from our databases from account1 in account2
+ cross region   
+
+efs : file storgae 
+
+efs  volume = file storage / SHARED Storage
+     Required mounting 
+     sudo yum install nfs-utils
+
+google drive-400G = legah@gmail.com  
+files: documents, pictures, videos 
+mounted on: phones, tablets, computers  
+
+NFS = Network file system  = self managed   
+EFS = Elastic File system  = managed by AWS 
+
+
+Amazon Elastic File System (Amazon EFS) provides a simple,
+ scalable, elastic file system for general purpose 
+ workloads for use with AWS Cloud services and on-premises resources.
+  https://youtu.be/AvgAozsfCrY
+
+  efs  volume = file storage
+       Required mounting 
+       sudo yum install nfs-utils
+       sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0027f3e4b8f8187ee.efs.us-west-2.amazonaws.com:/ efs
+       
+
+========================================
+  s3 bucket   = object storage = video 
+===================================== 
+
+VPC   
+
+
