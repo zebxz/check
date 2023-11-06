@@ -1,0 +1,21 @@
+
+ec2 ..... elastic cloud,, your computer in the cloud ,aws is providing server resorces
+aws services that ar gud for 
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+in compute servser we hv 
+
+efs is nfs managed by aws
+efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws
+efs &nfs are performing the same task 
+
+12:56 if we wnt our data can to sychronizse in our 3 databases, if we wnt the data inputed by endusers to syn in oall our 3db server, we can instal another server called an nfs 
+server, inside it i wil instal nfs software, then in all 3databases ill hv nfs client installed.. then ill create a mount point called e.g/data, ill mk the mount point to be 
+shared to mk data to syn.. ie ill create the same mount point/dir in all 3db servers.... once its done, its my responsibility to ensure that the nfs server is up&running. so 
+once data comes into any of the servers, it syn in the other servers as well. i am the one managing the nfs servers ,, bt if the nfs server goes down data wont syn any more 
+this is a limited solution and is used by most coy oovertime... also if the data storage size for our mount point is 20GB,its nt scalable bc the 20GB limits our data storage 
+size data,,, these are drawbacks of this system....this whole structure is self managed, it is can be called iaas , we hv see saas.,paas
+
+18:58 but with nfs it provides paas... the structure is no longer managed by us,it is a manage platform the nfs is then replaced by efs & so we dnt need servers or masters
+we only nid to cretae our efs, we dnt bother abt the mount point for the efs, bc aws in the backend ar doing the mounting for us, we  also dnt nis to bother abt the storage 
+size bc it can start from 0 and it is growing, it is higly scalable, if more data is needed it increases, it increases base on our nid to inifinity
+#21:24 u nid to be authenticated/permited to write data , port 2049 must be open to write data, if port is nt open , we cant write data
