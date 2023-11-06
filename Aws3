@@ -93,6 +93,7 @@ create instance-myAMIS-owned by me:select the image frm drop box- t2micro
 
 1:36:12 CREATING A LIFE CYCLE FOR MY INSTANCE
 1:43 bc we ar running multiple jobs in jenkins ,at evry point in time we shud hv 5 backups, so every 24hrs a backup shud be created,evry 24hrs asnapshot is created
+the 5 backups is on the 1st in ist out basis..ie by saturday when it makes the 6th backup snapshot, the snapshot dat it made on monday wil b automatically deleted
 
 TO create a lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE
 life cycle manager-nxt step-instance-target resoure tag:Name &choose tag name frm drop box then add/write tag name-descripption-default role- tag:Name & write tag name-policy
@@ -151,7 +152,7 @@ create sonapshots from our databases from account1 in account2
 
 efs  volume = file storage / SHARED Storage.. can be shared by one or more srvers or devices
      Requires mounting & we can use a software like netwrk file system
-     sudo yum install nfs-utils
+     sudo yum install nfs-utils 
 
 exmaples of file storage 
 google drive-has a file storage of 400G = legah@gmail.com  
@@ -190,6 +191,8 @@ hv been exposed to block storages like ebs volume,v been exposed to file storage
 when unmounting an ebs volume thers a command to run to format the drive that deletes the files in the drive sudo mkfs -t xfs /dev/xvdf, creating a new file system
 2:28 to avoid formatting run sudo file -s /dev/xvdf to knw if the drive is pertitioned, so if it is, u then skip the formating step & go ahead to mount it sudo mount /dev/
 
+Ebs is a block storage, it can only be attached to one ec2 instance at a time bc its a block storage, it has to be removed frm one server b4 u can attach it for another server
+it is block bc it is assigned
 
 ========================================
   s3 bucket   = object storage = video 
