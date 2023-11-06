@@ -145,11 +145,11 @@ sh "${mavenHome}/bin/mvn clean package"
         //edit settings.xml with nexus-user login credentials 
        //ensure nexus port is open on firewall
     }
-    stage('5.Deploy2UAT'){
+  54:44  stage('5.Deploy2UAT'){
              //we are runing from stage1 as well
         //use deploy-to-container plugin via pipeline syntax  2:36:32 syntax helps to ease pipeline script writing
 click on syntax - sample step: select deploy container - deploy war: target*/ - add container -credentials: tomcat cred - then copy tomcat server url - click generate 
-so am using the deploy adopters 
+ click on my job up - cong - pipeline-paste in script- save & build now ... so am using the deploy adopters 
         deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
         //Deploying [/var/lib/jenkins/workspace/tesla-app-pipeline/target/tesla.war]
     }
@@ -193,9 +193,11 @@ jenkins file scripted 33
 
 1:24:56
 
+we hv pipeline script that u can write, we also hv pipeline script from scm 
 click new item-paypal project -pipeline - ok
 pipeline:definition: pipeline script from SCM - SCMZ:GIT - PASTE REPO URL -CREDENTIALS:GIThub credentials- scriptpath:(default name 4 jenkins file is jenkins file)
-so we go bk to our git hub and copy our jenkins file name n paste then save then build now ... when u hv a jenkins job, u can use it for any no of jobs
+so we go bk to our git hub and copy our jenkins file name n paste then save then build now ... when u hv a jenkins file, u can use it for any no of jobs, u may nid 2 do some 
+modification
 it is building with exactly what we already wrote n configured.
 
 1:30:00  multiline comment
