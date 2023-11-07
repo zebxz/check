@@ -1,21 +1,296 @@
 
 ec2 ..... elastic cloud,, your computer in the cloud ,aws is providing server resorces
-aws services that ar gud for 
-we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
-in compute servser we hv 
+
 
 efs is nfs managed by aws
 efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws
 efs &nfs are performing the same task 
 
+
+s3 buckets
+===========
+
+AWS Services classification:
+  aws services that ar gud for 
+security  
+  in compute servser we hv 
+compute = 
+     server - ec2 instances  
+     serverless - Lambda / Beanstack / farget profile  
+  Containers:
+     ECS/
+   EKS/  
+
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+
+types of aws services
+  databases 
+  networking 
+  data anylytics 
+
 12:56 if we wnt our data can to sychronizse in our 3 databases, if we wnt the data inputed by endusers to syn in oall our 3db server, we can instal another server called an nfs 
-server, inside it i wil instal nfs software, then in all 3databases ill hv nfs client installed.. then ill create a mount point called e.g/data, ill mk the mount point to be 
+nfs server, inside it i wil instal nfs software, then in all 3databases il v nfs client installed. then ill create a mount point caled e.g/data, il mk the mount point to be 
 shared to mk data to syn.. ie ill create the same mount point/dir in all 3db servers.... once its done, its my responsibility to ensure that the nfs server is up&running. so 
 once data comes into any of the servers, it syn in the other servers as well. i am the one managing the nfs servers ,, bt if the nfs server goes down data wont syn any more 
 this is a limited solution and is used by most coy oovertime... also if the data storage size for our mount point is 20GB,its nt scalable bc the 20GB limits our data storage 
 size data,,, these are drawbacks of this system....this whole structure is self managed, it is can be called iaas , we hv see saas.,paas
 
+
 18:58 but with nfs it provides paas... the structure is no longer managed by us,it is a manage platform the nfs is then replaced by efs & so we dnt need servers or masters
 we only nid to cretae our efs, we dnt bother abt the mount point for the efs, bc aws in the backend ar doing the mounting for us, we  also dnt nis to bother abt the storage 
 size bc it can start from 0 and it is growing, it is higly scalable, if more data is needed it increases, it increases base on our nid to inifinity
 #21:24 u nid to be authenticated/permited to write data , port 2049 must be open to write data, if port is nt open , we cant write data
+
+  storage  solutions:
+   1) - Elastic Block Store       ebs   = block storage   
+  2)  - Elastic File system EFS / NFS= file storage
+    - nfs port = 2049  
+
+  ebs and efs required mounting   but s3 doesnt nid mounting, we use s3 for options e.g log files, images,videos
+##28:00 in ebs files cannot jst become accessible online bt wit s3 i store files and its immediately accseesible by anyone around the world
+
+when efs if created a security group is attached to it , we ar going to modify that secyrity to permit data to be written & in all the clients servers we v to open port 2049
+
+
+3) S3 (Simple Storage Service):
+  object storage 
+Highly Available, Redundant. 
+Basically data loss is not possible bc
+aws guarantess (99.999999999% durability, 99.9  uptime SLA)
+SLA = in Service Level Agreement , aws guarantees 99.99% availability .. for all aws services, ders 99.9 assurance in terms of availabilty & security 
+Tesla     --- s3=test    
+Landmark  --- s3=test
+
+  service 
+       A    B      C    
+SLA   70%  80%   99.99%  
+ 
+
+Hands on:
+
+in s3, data can be stored in buckets 
+#39:30 search bucket in aws- create bucket- buc name- us east vir- Acls enabled -can block/unblock -tag- create buck.then we can upload & copy the link for d uploaded item 
+in permission- ACL: I grant only read access to public.-then click on uploaded item & in object actions:mk public using ACL.. both bucket&object must b public before it 
+can be viewed by the public
+bucket a can have public access while bucket b doesnt hv public access
+
+so wit s3 we can creATE objects & decide who can access the objects 
+https://class32test.s3.amazonaws.com/class33.jpg
+
+
+in creating instances, we can hv instances wit the same name bt s3 bucket names must be globally unique i.e diff 
+File limit is 5TB
+We can create max 100 s3 buckets in one account.
+
+  
+Ticket001
+ 1. create an s3 bucket and add objects without public access 
+2. create an s3 bucket with public access and add objects    
+
+<Error>
+<Code>AccessDenied</Code>
+<Message>Access Denied</Message>
+<RequestId>W7B9W3AKJPTZED85</RequestId>
+<HostId>uMAUebeGfzt3SDQ0X4em6EkxJIKGJEvMNNGSwYb3S3mLgBPGbpP+yFAC0ak11RWtyllhVtiDe7g=</HostId>
+</Error>
+
+Ticket002
+ 1. enable public access on the objects in your s3 bucket   
+
+Permissions in s3 are managed/granted using:
+    1. Access Control List ACLs  
+    2. Permissions [ALLOW PUBLIC]  
+
+  S3 bucket = class32test   
+     object in the s3 bucket = class33.jpg   
+
+IMPORTANT TO TAKE NOTE OF IN S3
+1)Permissions: in permisions, our bucket are genrally private
+  Private access  
+  public access [read/write]  
+
+2)Policies: we can change certain parameters,as far as our bucket properties,policies ar concerned e.g we can decide to enable versioning
+  versioning       click on object- enable versioning.
+  object replication ,ie , i can decide to create a policy that replicates the object in one bucket in another bucket& the repiaction can b in the same or another region
+85:19 action-
+     class32test/class33.jpg  
+     class32b/class33.jpg [The same/different region]         
+
+Destination bucket:
+ s3 bucket URL =   s3://class32b  
+
+source bucket:
+  s3://class32a  
+
+3)Life Cycles Policies:
+s3 storage classes: 
+   Standard - frequent Access    = 0.5$/G/month  300
+   IA (Infrequent Access)        = 0.3$/G/month  350  
+   RRS                           = 0.2$/G/month  400 
+   Glacier                       = 0.1$/G/month  500   
+   deep Glacier [ 15 years   ]
+
+s3 is a paid solution.
+  Netflix  = Black Panter 1  -- 12 months    
+
+
+Snow Ball  -- devices use to store large data  
+  80MB / 80GB  / 
+  80TB = 80,000GB /  
+  80QB = 80,000,000GB 
+  80PB = 80,000,000,000GB 
+
+snow mobile -- 
+
+USE CASES:
+  kubernetes  
+
+
+Regions:
+  us-east-1  -- NV   
+  us-east-2  -- OH  
+  us-west-2  -- ON  
+  us-west-1  -- CA   
+
+ REGIONAL 
+ AZ   
+ GLOBAL  
+
+
+Class33 starting next week saturday
+   11am  
+
+Invite friends
+
+
+ aws - 6 hours  
+   VPC / 
+   ASG / 
+   Load Balancers  
+
+Certified Solutions Architect:
+
+Terraform 
+
+containers - 45-60 hours:
+  Docker 
+  kubernetes
+      prometheus/grafana
+      efk    
+  Ansible  
+
+12 hours weekly lectures [9 + 3videos]
+
+
+  you have an opportunity to be a rich and wealthy Engineer  
+  opportunity cost =  
+
+
+
+
+
+  vpc: virtual private network  
+      cidr block    ip-addresses   
+      10.0.0.0/16  =  65,536    
+      172.0.0.0/24 =  256
+      172.0.0.0/25 =  128
+      172.0.0.0/26 =  64
+      192.0.0.0/28 =   16
+      192.0.0.0/32 =   1
+      10.0.0.0/n where n is the subnet prefix [16, 17, 18,---32] 
+      no of addresses = 2^(32-n) 
+         n=16, = 2^32-16 =2^16 = 65,536
+         n=24, = 2^32-24 = 2^8 =  256 
+         n=28, = 2^32-28 = 2^4 =  16  
+         n=32, = 2^32-32 = 2^0 =  1 
+[140 ip addresses]
+  vpc_tesla_dev 
+     10.0.0.0/24  = 256 addresses 
+    subnets:
+       publicSN1 
+         10.0.0.0/25 = 128 addresses 
+           10.0.0.0, 10.0.0.1, 10.0.0.2, ... 10.0.0.127
+       PrivateSN1
+         10.0.0.128/25 = 128 addresses
+         [10.0.0.128, 10.0.0.129, ..., 10.0.0.255]
+
+AWS ACCOUNT:
+Global resources    
+Regional  resources
+  vpcs---
+     aws default vpc 
+       ec2 instances [jumpserver, appServer]
+     aws custom vpcs [secured and gives users more controls]  
+        ec2 instances [jumpserver, appServer]    
+
+AZ resources
+  subnets  
+
+   [0,1,2,3] = 4
+
+  jumpserver = publicSN 192.0.0.0/25 
+    192.0.0.24 
+    52.91.72.142 
+    ssh -i "dominion.pem" ec2-user@52.91.72.142
+  webServer = = publicSN 192.0.0.0/25 
+    192.0.0.10
+    
+    ssh -i "dominion.pem" ec2-user@54.84.126.250
+  
+  DBSERVER = privateSN, 192.0.0.128/25   
+    192.0.0.186
+    ssh -i "dominion.pem" ec2-user@192.0.0.186
+
+
+Dominion Systems  
+Oct 2021 to May 2022  
+DevOps Engineer
+
+Load Balancers/webservers:
+  nginx  
+  haProxy 
+  http
+  users ----> ELB/LB ---->appServers
+
+    ssh simon@3.138.178.87    
+    http://3.138.178.87:80
+
+
+
+
+
+
+
+
+
+
+
+VPC   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
