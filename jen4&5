@@ -49,3 +49,41 @@ INSTALL MAVEN INTERGRATION PLUGGIN TO RUN JOBS USING MAVEN PROJECTS:
 scm:git:github url,credentials,we can change the branch- select build trigger- apply&save-configure-build:pom.xml-goal:clean package- we acan add postbuild step-
 build setiings:email notification: developers-apply&save
 dnt click build now, if ders a new version of the application, it wil do a build ,,, look at 36:09 workspace
+
+
+42:19 we use ssh client to ssh into jenkins server , our ssh client is mobaxterm
+when we installed jenkins the jenkins software installed a user called jenkins, so we can switch ,,, sudo su - jenkins
+
+
+jenkins options:
+discard old  builds
+40:30 jenkins home dir- JHD=   /var/lib/jenkins
+jenkins user=jenkins
+su - jenkins = run as a normal user
+sudo su - jenkins =run as the root user
+
+maven home dir =/opt/maven
+nexus home dir=/opt/nexus
+
+45:36 we are running job in jenkins, we can see a file called jobs in the jenkins home dir
+46:50 in our jenkins server, we hv a dir called workspace, in our jenkins CLI, IF we ls workspace/ we see our projects been executed , we can ls jobs/ then ls tesla-app/
+the ls jobs/tesla-app/builds to see the no. of builds in the tesla jobs
+
+49:00 a lot of builds affects the performance of the server, bc it consumes the sever resources, so we can use the jenkins options 
+ls plugins/ , ls user/ to see the users, ls conf to see all our configuration <use security>true</use security>, if you change it to false, someone can connect to the 
+server without a password and that is not a good security measure
+
+51:55 we try to connect to github from jenkins, we had to configure the github credentials
+we can vi credentials.xml where we find all the created credentials 
+to add parameter: project-configure-then click the project is parametized
+
+52:50 jenkins options: building in workspace  /var/lib/jenkins/workspace/tesla-app
+discard old builds:no  nid to keep old builds 
+dashboard-project-configure-discard old builds-days 9 and no. of builds to keep
+we ar generally having meetings, so we know how long to keep builds 
+
+58:03 in build env , we can also delete the workspace before build starts... description: choose a branch for your build
+58:20 adding parameters 1) choice parameter, choice can be stage/devlopment/master... you can clone from either one but if u choose stage, it wil clone from stage& viceversa
+we can add several parameters, we can also add  2) strings  ,, name: first name , default value:landmark & click on build with parameters, it wil ask to choose the 
+branch to clone from, click build
+
