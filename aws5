@@ -1,0 +1,169 @@
+
+  vpc: virtual private network  
+      cidr block    ip-addresses   
+      10.0.0.0/16  =  65,536    
+      172.0.0.0/24 =  256
+      172.0.0.0/25 =  128
+      172.0.0.0/26 =  64
+      192.0.0.0/28 =   16
+      192.0.0.0/32 =   1
+      10.0.0.0/n where n is the subnet prefix [16, 17, 18,---32] 
+      no of addresses = 2^(32-n) 
+         n=16, = 2^32-16 =2^16 = 65,536
+         n=24, = 2^32-24 = 2^8 =  256 
+         n=28, = 2^32-28 = 2^4 =  16  
+         n=32, = 2^32-32 = 2^0 =  1 
+[140 ip addresses]
+  vpc_tesla_dev 
+     10.0.0.0/24  = 256 addresses 
+    subnets:
+       publicSN1 
+         10.0.0.0/25 = 128 addresses 
+           10.0.0.0, 10.0.0.1, 10.0.0.2, ... 10.0.0.127
+       PrivateSN1
+         10.0.0.128/25 = 128 addresses
+         [10.0.0.128, 10.0.0.129, ..., 10.0.0.255]
+
+AWS ACCOUNT:
+Global resources    
+Regional  resources
+  vpcs---
+     aws default vpc 
+       ec2 instances [jumpserver, appServer]
+     aws custom vpcs [secured and gives users more controls]  
+        ec2 instances [jumpserver, appServer]    
+
+AZ resources
+  subnets  
+
+   [0,1,2,3] = 4
+
+  jumpserver = publicSN 192.0.0.0/25 
+    192.0.0.24 
+    52.91.72.142 
+    ssh -i "dominion.pem" ec2-user@52.91.72.142
+  webServer = = publicSN 192.0.0.0/25 
+    192.0.0.10
+    
+    ssh -i "dominion.pem" ec2-user@54.84.126.250
+  
+  DBSERVER = privateSN, 192.0.0.128/25   
+    192.0.0.186
+    ssh -i "dominion.pem" ec2-user@192.0.0.186
+
+
+Dominion Systems  
+Oct 2021 to May 2022  
+DevOps Engineer
+
+Load Balancers/webservers:
+  nginx  
+  haProxy 
+  http
+  users ----> ELB/LB ---->appServers
+
+    ssh simon@3.138.178.87    
+    http://3.138.178.87:80
+==============================================================================
+
+
+
+AWS ACCOUNT:
+1. Global resources    
+2. Regional  resources
+     vpcs---
+        aws default vpcs created by AWS 
+          ec2 instances [jumpserver, appServer]
+        aws CUSTOM vpcs created by the user   
+          [secured and gives users more controls]  
+          ec2 instances [jumpserver, appServer]    
+
+3. Availability zones resources  
+      subnets  
+
+  AWS Regions: AZs 
+    us-east-1 =6 [ us-east-1a, us-east-1b, ... us-east-1f  ]  
+    us-east-2 =3
+    us-west-1 =3 
+    us-west-2 =3
+
+  aws ec2 describe-regions
+  aws ec2 describe-regions --all-regions
+
+Ticket0011:
+  Create a VPC for paypal client with 200 addresses   
+  cidr block:  0 - 32 
+    10.0.0.0/16. 
+    172.0.0.0/16  
+    192.0.0.0/16  
+      subnet prefix [ 16, 17,..., 32 ] 
+      10.0.0.0/n  where n is the subnet prefix  
+ no of ipAddresses  = 2^32-n     
+  cidr block:    no of ipAddresses    :  
+1. 10.0.0.0/32    2^32-32=2^0   = 1   
+2. 172.0.0.0/28   2^32-28=2^4   = 16  
+3. 192.0.0.0/24   2^32-24=2^8   = 256  [ 0, 1, 2,..., 255 ]
+4. 10.0.0.0/20    2^32-20=2^12  = 4096  
+5. 172.0.0.0/16   2^32-16=2^16  = 65,536
+
+Ticket0011:
+  Create a VPC for paypal client with 200 addresses in 2 subnets  
+    cidr block:      address range:
+1. 10.0.0.0/32       [10.0.0.0]
+2. 172.0.0.0/28      [172.0.0.0, 172.0.0.1, ..., 172.0.0.15 ]   
+3. 192.0.0.0/24      [192.0.0.0, 192.0.0.1, ..., 192.0.0.255 ]
+4. 10.0.0.0/20
+5. 172.0.0.0/16
+
+Ticket0011:
+  Create a VPC for paypal client with 200 addresses in 4 subnets  
+  vpc      = 10.0.0.0/24    = 256 [0, 1, 2, 3,..., 255 ]    
+  subnet1  = 10.0.0.0/28    = 64 [ 0, 1, 2, ...,    63  ]   
+  subnet2  = 10.0.0.64/28   = 64 [ 64, 65, ...      127  ] 
+  subnet3  = 10.0.0.128/28  = 64 [ 128, 129,, ...,  191  ]   
+  subnet4  = 10.0.0.192/28  = 64 [ 192, 193, ... 255  ] 
+
+    2*2*2*2*2*2=2
+    32-28 = 4 
+  256/4 = 64  
+
+
+
+Ticket0012:
+  Create a VPC for paypal client with atleast 1024 addresses in subnets  
+  NB: The maximum no of addresses a subnet can have is 256  
+      1024/256 = 4  
+  vpc      = 172.0.0.0/22    = 1024    
+  subnet1  = 172.0.0.0/24    = 256  [ 0, 1, 2, ..., 255  ] :
+      172.0.0.0, 172.0.0.1, 172.0.0.255  
+  subnet2  = 172.0.1.0/24    = 256  [ 0, 1, 2 ...,  255  ] :
+     172.0.1.0, 172.0.1.1, 172.0.1.2, 172.0.1.255
+  subnet3  = 172.0.2.0/24    = 256  [ 0, 1, 2, ..., 255  ] :
+      172.0.2.0, 172.0.2.1, ...,  172.0.2.255  
+  subnet4  = 172.0.3.0/24    = 256  [ 0, 1, 2 ...,  255  ] :
+     172.0.3.0, 172.0.3.1, 172.0.3.2, ... , 172.0.3.255
+
+
+  10.0.0.0/25  
+jumpserver:
+  privateIP = 10.0.0.54  
+  publicIP  = 18.191.89.63
+  ssh -i awskey33.pem ec2-user@18.191.89.63
+  ssh -i awskey33.pem ec2-user@10.0.0.54
+
+ security is inherent in our environment    
+
+dbserver:
+  privateIP = 10.0.0.156
+  ssh -i awskey33.pem ec2-user@10.0.0.156
+  ssh -i "awskey33.pem" ec2-user@10.0.0.156
+
+Webserver:
+    10.0.0.220
+    13.59.100.138
+    ssh -i "awskey33.pem" ec2-user@13.59.100.138
+    ssh -i "awskey33.pem" ec2-user@10.0.0.220  
+
+
+  users ---->http/80, https/443 webserver [13.59.100.138]    
+  admin ---->ssh/22 
