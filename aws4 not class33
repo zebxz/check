@@ -1,9 +1,11 @@
+???replica didnt work.. in the destination bucket status says failed 
+
 
 ec2 ..... elastic cloud,, your computer in the cloud ,aws is providing server resorces
 
 
 efs is nfs managed by aws
-efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws
+efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws  
 efs &nfs are performing the same task 
 
 
@@ -110,10 +112,13 @@ IMPORTANT TO TAKE NOTE OF IN S3
   public access [read/write]  
 
 2)Policies: we can change certain parameters,as far as our bucket properties,policies ar concerned e.g we can decide to enable versioning
-  versioning       click on object- enable versioning.
+  versioning       click on UPLOADED object- enable versioning.....   58:19
   object replication ,ie , i can decide to create a policy that replicates the object in one bucket in another bucket& the repiaction can b in the same or another region
-85:19 action-
-     class32test/class33.jpg  
+1;10:31 bucket- mgt- create replictaion rule - rule name -scope:apply to all or limit -create
+replication can tk place across account & accross regions
+1:12:59  AM i role is a security parameter in aws
+
+class32test/class33.jpg  
      class32b/class33.jpg [The same/different region]         
 
 Destination bucket:
@@ -123,15 +128,31 @@ source bucket:
   s3://class32a  
 
 3)Life Cycles Policies:
-s3 storage classes: 
-   Standard - frequent Access    = 0.5$/G/month  300
+s3 storage classes: obj can fall under 
+   Standard - frequent Access    = 0.5$/G/month  300days
    IA (Infrequent Access)        = 0.3$/G/month  350  
-   RRS                           = 0.2$/G/month  400 
+   RRS   rduced redundancy       = 0.2$/G/month  400 
    Glacier                       = 0.1$/G/month  500   
    deep Glacier [ 15 years   ]
+th coy executives can sit down & decide what do w ewant to achieve & hw do we go abt it
+
+1:26:30 click on bucket-mgt-cycle name-apply all-move current versions/or ods options too - standard 365,ie after 365 days,move object to IA, we can add transitions too then
+create
+
+HW TO MANGAE OBJ STORED IN S3
+if u hv an obj that nid frequent access, its stored under standard
 
 s3 is a paid solution.
-  Netflix  = Black Panter 1  -- 12 months    
+  Netflix UP THEIR movies in s3 buckets = Black Panter 1  -- 12 months, after 12months can be moved to infrequent access inorder to reduce the cost
+
+Reduced Redundancy Storage (RRS) is an Amazon S3 storage option that enables customers to store noncritical, reproducible data at lower	levels of redundancy than
+Amazon S3’s standard storage  
+
+Glacier
+this is used to store archival data e.g zip files, tag file, mayb data that is no longer accessed like non critical data e.g tax docs ,, we can store them under glacier/deep
+glacier
+
+
 
 
 Snow Ball  -- devices use to store large data  
@@ -143,7 +164,7 @@ Snow Ball  -- devices use to store large data
 snow mobile -- 
 
 USE CASES:
-  kubernetes  
+  kubernetes  .. s3 wil be extensively ultilized
 
 
 Regions:
