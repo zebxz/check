@@ -158,13 +158,14 @@ vpc      = 10.0.0.0/24    = 256 [0, 1, 2, 3,..., 255 ]
 subnet1  = 10.0.0.0/25   = 128[ 0, 1, 2, ...      127  ] ... so for subnet2 , we wil start with 10.0.0.128/25 bc subnet1 ended with 10.0.0.127/25
 subnet2    = 10.0.0.128/25   = 128 [128, 129, ..., 255 ]    
 
+###### his calcualtion didnt correspond wit the automated result of aws.. i bliv  its is  10.0.0.0/24 =256 then u jst divide 256 by 4=64 ip address for each subnet
 Ticket0011:
   Create a VPC for paypal client with 200 addresses in 4 subnets  
-  vpc      = 10.0.0.0/24    = 256 [0, 1, 2, 3,..., 255 ]    
-  subnet1  = 10.0.0.0/28    = 64 [ 0, 1, 2, ...,    63  ]   
-  subnet2  = 10.0.0.64/28   = 64 [ 64, 65, ...      127  ] 
-  subnet3  = 10.0.0.128/28  = 64 [ 128, 129,, ...,  191  ]   
-  subnet4  = 10.0.0.192/28  = 64 [ 192, 193, ... 255  ] 
+  vpc      = 10.0.0.0/24    = 256 [0, 1, 2, 3,..., 255 ]    256 divided by 4= 64
+  subnet1  = 10.0.0.0/26    = 64 [ 0, 1, 2, ...,    63  ]   no of ipAddresses  = 2^32-n, applying the rule,  ie 32- 26= 6 then 2^6=64
+  subnet2  = 10.0.0.64/26   = 64 [ 64, 65, ...      127  ] 
+  subnet3  = 10.0.0.128/26  = 64 [ 128, 129,, ...,  191  ]   
+  subnet4  = 10.0.0.192/26 = 64 [ 192, 193, ... 255  ] 
 
     2*2*2*2*2*2=2
     32-28 = 4 
@@ -188,19 +189,28 @@ Ticket0012:
      172.0.3.0, 172.0.3.1, 172.0.3.2, ... , 172.0.3.255
 
 1:00:10 my s3 bucket canot be be created in a subnet, e.ginside us east2a subnet ..bc its a regional service i can create it in the us region inside my vpc e.g us east,us west
-1:04:for e.g, if i v app server1 and app server2, to ensure comunication btw the servers i can create a route table, wich detr hw service is routed from one subnet to d oda
+1:04:for e.g, if i v app server1 and app server2, to ensure comunication btw the servers, i can create a route table, wich detr hw service is routed from one subnet to d oda
  inside our vpc we nid internet gateway  it will allow internet to flow into the vpc & it wil allow exteral traffic so if we wnt to acess resourcs out of our vpc, out of our,
-netwrk , we nid to hv internet , ders a kind of internet gateway, it is associated wit our vpc 
+netwrk , we nid to hv internet , using IGW , ders a kind of internet gateway, it is associated wit our vpc.
 
-1:07:00 inside the vpc we'l create route tables, route table1 to support local traffic within my vpc, then route table2, i hv a public subnet wich is wher i place resources 
-wich can be acessed externaly & the route table2 is permitting traffic frm anywher . ie 0.0.0/0, both local& traffic frm the internet..
+1:07:00 inside the vpc we'l create route tables, route table1 for the private subnet to support local traffic within my vpc, then route table2, i hv a public subnet 
+wich is wher i place resources wich can be acessed externaly & the route table2 is permitting traffic frm anywher . ie 0.0.0/0, both local& traffic frm the internet..
+
+1:34:00 if my private app server is trying to access data online e.g ping google.com, il modify route table1, create a NAT gateway  to permit oneway internet traffic,therefore
+the app server can access internet externally, i decide that we can recieve traffic frm the internet but can only happen frm the nAT gateway.
+ the NAT will be created in the public subnet wich hv internet access,, from der, the private subnet is permitted to access internet via the NAT gateway
 
 1:12:24 vpc has some firewall ,2 types of firewall, the first one stands infront of the subnet, like a gateman, netwk acess control list nACL... in naCL, we can create
 some rule e.g open port80 for inbound rules &for outbound open port80 aswell,, we open port 443 as well, wit dis ports open, trafic frm enduser can get to my subnet
-fro trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group, so i v to open port80 , 443 
+for  trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group, so i v to open port80 , 443 
 ****** in  all we hv 2 security parameter
 the 1st is the router for routing, wich permits traffic to be routed to the subnet
 the 2nd is the firewall wich has 2layers of security,, security at the subnet level & security at the server level
+
+1:20:40 ,, u cannot delete a vpc that has dependencies ie servers, u must delete the servers first
+
+1:26:00  create vpc 
+search vps in aws- crreate vpc- vpc&more- auto generate:name - no ipv6-  tenancy:default- no of azs 2/ we can customize - no. of public 2- NAT 1-
 
 
 
