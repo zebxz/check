@@ -218,15 +218,17 @@ when we select vpcm&ore,to create subnet options are avail bt if we select  vpc 
 then a 2nd vpc 10.0.0.128/25 =128ips ,, so in total we hv 256ips in 2subnets.
 2)nxt create internate gateway- internate gate- name- create gateway
 3) to get traffice : internet gateway-actions:atach to vpc- slect vpc - attach.. so my vpc can now get traffic frm the internet
-4)route table-create-name -vpc to use route table - create.. we can edit .. click selected route-action:edit route-target:local- add route- destination:0.0.0/0-select internt GW frm
-drop box:indicating the particular gateway- save changes.
-5)to assocaite the route table to my subnet :click selected subnet(public)-action:edit subnet association- tick the (public) subnet-save ... 1:52:30  
+4)route table-create-name:private/PUB -vpc to use route table - create.. we can edit .. click selected route-action:edit route-
+target:local-add route- destination:0.0.0/0-select internt GW frmdrop box:indicating the particular gateway- save changes.
+5)to assocaite the route table to my subnet :click selected subnet(public)-action:edit subnet association- tick the (public) 
+subnet-save ... 1:52:30  
 6) click private table-action:edit subnet association-tick private subnet-save
 
+create instance- name- linux-micro-create key-edit ntwrk settings: select the vpc created:select public sn, d server nids internet-
+auto assigng pub ip:enable-security grp to alow ssh frm my ip or anywher &ssh custom 10.o.o/24, alowing ssh trafic frm within my vpc
+so dat servers in my vpc can communic, instances can communi wit each oda via ssh- launch
 
-
-##1:50:08 route table- name: private route
-
+1:58:50 the private ip 10.0.0.139 is deter by my cyber block which is 10.0.0.0/25 
 
 
 
@@ -237,8 +239,16 @@ jumpserver:
   ssh -i awskey33.pem ec2-user@18.191.89.63
   ssh -i awskey33.pem ec2-user@10.0.0.54
 
- security is inherent in our environment    
+ 2:00 security is inherent in our environment , WE DNT ALLOW DIRECT acces in our db server, if u wnt to acces it u v to go tru our 
+jump sevrer. traffic goes to the jummpsever bc it has a security grp dat is permitting the trafic, it allows trafic on port22 so  in d
+ SG 22 is open for members of the team & my vpc 10.0.0.0/24,i.e my ip. so my ip & port22 ar d two access
+2:02:13 . security grp in frnt of the db server is only local so u can only access db server via the jumpsevr, the jumpserver acts as 
+the entry point when it comes to ssh access,  frm d jump server u can access the app/ db servers,so any server in the vpc can be accessed
+via the jump server. does d seceurity grp in my db sever permit trafic frm the jumpserver. if am outside the ntwrk of the vpc,to access
+the jumpsever i nid the publicip of the jumpserver 
+2;05:00 to access my jumpserver,ssh jumpservr in mobaxterm.
 
+blob:https://us-east-1.console.aws.amazon.com/5ae6fb03-09f6-4583-b009-0c82c4575908
 dbserver:
   privateIP = 10.0.0.156
   ssh -i awskey33.pem ec2-user@10.0.0.156
