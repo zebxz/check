@@ -1,4 +1,16 @@
-?????? jumpserver, didnt work so i didnt do the db/ jumps serevr connection 
+2:38:10??????nginx , didnt work when i tried to access it in google 
+sudo yum install ngnix
+ngnix is a software for webserver, http is also a software for webserver
+
+he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
+making anoda webserverSO he decided to install ngnix in the jumpserver which is in the publicSN
+
+he installed httpd
+sudo yum install httpd -y
+sudo systemctl enable httpd 
+sudo systemctl status httpd
+using the ip address access apache webserver on google ,, bt we were unable so we had to open the port in inbound rule and open port80 
+http, tcp 80 , frm anywer.. save
 
  AWS Regions: AZs  each region has avail zones
     us-east-1 =6 [ us-east-1a, us-east-1b, ... us-east-1f  ]  
@@ -235,14 +247,6 @@ launch dbserver -name-t2 micro-ntwrk:select vpc created:privatesn-AUTO ASSign:di
 to access dbserver i must connect to my jumpsevre before i can access the dbsever 
 
 
-
-10.0.0.0/25  
-jumpserver:
-  privateIP = 10.0.0.54  
-  publicIP  = 18.191.89.63
-  ssh -i awskey33.pem ec2-user@18.191.89.63
-  ssh -i awskey33.pem ec2-user@10.0.0.54
-
  2:00 security is inherent in our environment , WE DNT ALLOW DIRECT acces in our db server, if u wnt to acces it u v to go tru our 
 jump sevrer. traffic goes to the jummpsever bc it has a security grp dat is permitting the trafic, it allows trafic on port22 so  in d
  SG 22 is open for members of the team & my vpc 10.0.0.0/24,i.e my ip. so my ip & port22 ar d two access  
@@ -263,8 +267,24 @@ we go back to the private route table -i wnt my private subnet to access interne
 the NATgateway that was just created- create
 so my private subnet now has internet traffic via the NATgateway & my dbserver is able to access internet via the NAT gateway.
 
+2:25:00 
+OUR WEBSERVER is found the public subnet,we hv 2layers of security in front of the webserver, the 1st is NACl.. ntwk acess contl list wich wil control the whole ntwrk, 2nd 
+layer of security is the secrutity grp ,, when end user traffic gets to the webserver running in my public subnet, it means the req port has been open , so in my NACL
+inbound rule il open: rule1 port80, port443 for http&https respectively, in my Sg il ALSO OPEN PORT80 &443. so traffic comes to my webserver bc webser is listenig on those
+port number, port80&443... frm here, my appserver runs in private subnet &also my dbserver
+2:28:42 also for my appsevr i hv 2layer of security, one in front linking frm the webservr & one behind linking the dbserver
 
+2:29:18 launch webserver - linux-micro- select VPC created- privateSN-auto:enable- SG:ssh tcp22/custom myip & ssh tcp22 custom 10.0.0.0/24 &ssh orhttp tcp 80 bc users can 
+cm frm anywher &https 443 frm anywher- launch
+since it is within my netwrk , i ssh with my private ip, i use my prive bc i wnt to ssh bt if i wanted endusers to access the webserver, il give them public..
 
+users access our webseevr via ---->http/80, https/443 webserver [13.59.100.138]    
+  admin ---->ssh/22 .. can use either of private or public.. he can use both 
+
+2:38:25 our webserver is running in the public subnet which has route to the internet via the internet gateway
+i think its bettr to use the same key for all the jump,db,&webserver so that  no nid to chmod 400 multiple times,, if i use the same key, once i chmod once for dbserver,
+i dnt nid to chmod again when i ssh the webserver
+  
 my jumpserver:
   privateIP = 10.0.0.244
   publicIP  = 23.20.192.38
@@ -275,7 +295,20 @@ my dbserver:
   ssh -i awskey33.pem ec2-user@10.0.0.37
   ssh -i "awskey33.pem" ec2-user@10.0.0.37=
 
+Webserver:
+10.0.0.60
+   ssh -i "db-jumper.pem" ec2-user@10.0.0.60
+ssh -i "db-jumper.pem" ec2-user@34.224.156.54
 
+
+his own
+
+10.0.0.0/25  
+jumpserver:
+  privateIP = 10.0.0.54  
+  publicIP  = 18.191.89.63
+  ssh -i awskey33.pem ec2-user@18.191.89.63
+  ssh -i awskey33.pem ec2-user@10.0.0.54
 dbserver:
   privateIP = 10.0.0.156
   ssh -i awskey33.pem ec2-user@10.0.0.156
