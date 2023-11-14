@@ -1,0 +1,523 @@
+appServer:
+ publicIP =  3.135.215.21  
+ privateIP=  10.0.0.54
+   users ---->http/80, https/443 webserver [13.59.100.138]    
+  admin ---->ssh/22 
+
+vpc peering connection
+======================
+VPC-1 - 10.0.0.0/16
+   appServer1 [ 10.0.0.66 ]
+VPC-2 - 10.0.0.0/24  
+   webServer1 [ 10.0.0.66 ]
+
+
+ping 10.0.0.66    
+
+vpc peering connection
+======================
+VPC-1 - 10.0.0.0/24
+   appServer1 [ 10.0.0.66 ]
+VPC-2 - 10.10.0.0/24  
+   webServer1 [ 10.10.0.66 ]
+
+ping 10.0.0.66  
+ping 10.10.0.66  
+
+vpc peering connection
+======================
+VPC-1 - cidr block= 10.0.0.0/24
+
+   appServer1 [ 10.0.0.66 ]
+
+VPC-2 - cidr block=  10.10.0.0/24  
+   webServer1 [ 172.0.0.66 ]
+
+   10.0.0.0/16, 
+   172.0.0.0/16, 
+   192.0.0.0/16  
+
+ping 10.0.0.66  
+ping 10.10.0.66  
+
+1. vpc1 request for a peering connection with VPC2   
+2. vpc2 ACCEPT the peering connection from VPC1  
+
+ Ticket0013
+ ===========
+Deploy applications to production for paypal client.   
+  1. 8 production appServers [ 192G RAM / 900GB SSD ]
+
+For best performance ensure that adequate testing is done  
+  2. deploy in your sandbox/test server  
+
+sandbox is running in vpc2:
+  privateIP  =  10.10.0.134
+  chmod 400 aws33.pem
+  ssh -i "aws33.pem" ec2-user@10.10.0.134
+
+jumpserver is running in vpc1:
+  privateIP = 10.0.0.54  
+  publicIP  = 18.191.89.63
+  ssh -i awskey33.pem ec2-user@18.191.89.63
+  ssh -i awskey33.pem ec2-user@10.0.0.54
+
+1. By default, from the jumpserver we can ssh 
+   into the sandbox using the publicIP    
+
+1. from the jumpserver we can ssh into the sandbox using the privateIP 
+   via vpc peering with route tables modified accordingly     
+
+
+====================================
+Running notes for ELB/ASG  starts
+====================================
+
+Elastic Load Balancers = ELB:
+  rules   
+  Listeners 
+  target groups with targets   
+  health check on the targets  
+
+  LB & elb 
+Create your Load Balancers in an aws Region:
+  aws will create 2 instances in 2 AZs  
+  aws will install/configure a Load Balancing sotwares   
+
+
+install tomcat:
+===============
+#!/bin/bash
+# RedHat Server
+# Tomcat installation
+cd /opt 
+sudo hostname tomcat3
+sudo yum install java-1.8.0-openjdk-devel -y
+sudo yum install git wget -y
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz
+sudo tar -xvf apache-tomcat-9.0.80.tar.gz
+sudo rm -rf apache-tomcat-9.0.80.tar.gz
+sudo mv apache-tomcat-9.0.80 tomcat9
+sudo chmod 777 -R /opt/tomcat9
+sudo sh /opt/tomcat9/bin/startup.sh
+
+============================
+#!/bin/bash
+sudo hostnamectl set-hostname docker
+sudo apt update -y
+sudo apt install docker.io -y
+sudo service docker start
+sudo docker info
+sudo usermod -aG docker ubuntu
+docker run --name myapp -d -p 8080:8080 mylandmarktech/spring-boot-mongo 
+docker run --name hello -d -p 80:80 mylandmarktech/hello 
+sudo su - ubuntu  
+
+http://18.117.152.63/
+paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com
+
+http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com/
+
+
+
+
+   18.119.105.192
+   $ sudo yum install net-tools
+
+   nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+   http://nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com/maven-web-app/
+
+
+   users ----> app-Servers
+
+   users ---> elb --- > app-Servers    
+   ns lookup  = 
+   dns lookup nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+   18.191.85.171
+
+   Create hostname = dominionapp.com 
+   Create dns records:
+      dominionapp.com  ---  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+      dominionapps.net ---  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+
+dns records:
+  a records 
+     Hostname: IPaddress
+       simon  --- 4372152483  
+  PTR:    
+  c-name records  [aliases]:
+    landmark --- mylandmarktech   
+
+   domain name servcie   
+
+ Which Region did we create our NLB: us-east-2 [Ohio]
+My domain name: dominionapps.net
+NLB:  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+
+webapp.dominionapps.net --> nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+
+webapp.dominionapps.net/maven-web-app 
+http://webapp.dominionapps.net/maven-web-app/
+http://webapp.dominionapps.net/maven-web-app/ 
+
+  webapp.dominionapps.net/
+  
+  webapp.dominionapps.net/maven-web-app 
+
+  myALB-178479865.us-east-2.elb.amazonaws.com/maven-web-app
+
+  dominionapps.net --- myALB-178479865.us-east-2.elb.amazonaws.com/
+
+  dominionapps.net/maven-web-app
+
+https://www.td.com/ca/en/personal-banking/  [50 appServers]
+
+     prof  = Simon Legah  
+
+   /maven-web-app  
+
+ bought a domain name  :
+  simonlegah.com    
+  olu.com   
+
+applicationS        TargetGroupS
+ maven-web-app      [webappTG]
+ tdapp              [TDappTG]
+ myApp               PayPalappTG
+
+
+We can created a-records  
+
+Host  
+Rule:
+  dominionapps.net          ---Forward TO: webappTG
+  td.dominionapps.net       ---Forward TO: TDappTG
+  pay.dominionapps.net      ---Forward TO: PayappTG
+
+  webapp.dominionapps.net
+  
+http://dominionapps.net/
+
+https://dominionapps.net/  == 
+
+https://dominionapps.net/maven-web-app/  
+
+https://www.td.com/ca/en/personal-banking/
+
+Path
+   / 
+   /maven-web-app   
+   /java-web-app  
+   /my-app  
+   /td-app  
+
+Explain your experience with SSL/TLS certificate  
+
+  http ---> https    
+
+SSL redirect:    
+http://dominionapps.net/  == 
+    https://dominionapps.net/
+
+http://dominionapps.net/ 
+
+ASG / LC / LT:
+
+
+ASG:
+  Horizontal Scaling
+  Hertical Scaling
+
+appServers:
+Scaling Policy
+  Minimun  = 2
+  Desired  = 2
+  Maximum  = 100
+ 
+ add instances if:
+  cpu usage > 75% or    
+  mem usage > 80%
+
+1. Create a Launch configuration  
+   Create a Launch Template  
+2. Use your Launch Template to create your Auto Scaling Group  [ASG]
+3. The auto Scaling group will create the Desired/required number of servers 
+   using Scaling Policy and the Launch Template 
+
+
+Golden AMI:
+My AMI: 
+ ubuntu / redhat  
+
+
+
+Launch instances  = 
+IAM:
+
+EC2  
+storage  [ebs, s3, efs]
+ASG  
+ELB  
+VPCs. 
+IAM = 
+======================================================
+Terraform videos, scripts  and Running notes in GitHub
+======================================================
+Docker and Kubernetes MasterClass
+==================================
+
+
+
+
+5. JENKINS-TOMCAT INTEGRATION:
+============================= 
+1. INSTALL 'Deploy to container' Plugin on Jenkins UI
+       JENKINS uses plugin to extend it functionality
+
+2. ADD A TOMCAT USER in /tomcat9/conf/tomcat-users.xml 
+   vi /tomcat9/conf/tomcat-users.xml 
+   mylandmark landmark 
+
+<user username="landmark" password="admin123" roles="manager-gui,admin-gui,manager-script"/> 
+<user username="dominion" password="admin123" roles="manager-gui,admin-gui,manager-script"/> 
+<user username="LandmarkTechology" password="admin123" roles="manager-gui,admin-gui"/>
+
+
+1. aws cloud computing
+
+What is Cloud Computing ?
+Cloud computing is the delivery of computing services—including 
+  - servers,
+  - storage,  
+  - databases, 
+  - networking, 
+  - software, 
+  - analytics, 
+  - and more
+ over the Internet (“the cloud”)  hosted at a remote data center managed
+ by a cloud services provider (CSP).
+   CSP = aws, GCP, Azure, alibaba, vmware, salesforce, oracle, ibm, 
+
+ aws cloud = 
+  - servers,     = ec2 instances  
+  - severless,   = Lambda functions,
+  - storage,     = ebs, efs, s3, 
+  - databases,   = rds [ mySQL, mariaBD, posgressSQL, arura,  ], nonRDS[ dynamoDB,  ]
+  - networking,  = vpc, 
+  - software,    = ami, SDLC, 
+  - analytics,   = CloudWatch, 
+  - and more
+  - security     = 
+
+  Netflix =   S3  bucket
+
+IAM = 
+=====================
+Netflix ---   
+   DevOps Engineers   
+   Developers 
+
+Cloud Engineering  
+Infrastructure Engineering
+  Infrastructure MGT [ create, view, update, delete, modify, grant access ] 
+===========================
+CONSOLE  = GUI     :
+   Prune to errors 
+   Time consuming 
+   Visibility is challenging  
+   limited automation - 5%  
+
+Commands = CLI  = aws s3 ls :
+   Prune to errors 
+   Time consuming 
+   Visibility is challenging  
+   limited automation - 55%  
+   It cannot be easily replayed or redeployed
+   it can't be version controlled  
+
+IaC  = codes    = files  = IaC / Terraform  :
+   It is not Prune to errors 
+   saves time  
+   Visibility is very easly  
+   great automation - 99%  
+   It can be easily replayed [dev/stage/prod]
+   it can be version controlled   
+
+resource "aws_vpc" "tesla-dev" {
+  cidr_block = "10.10.0.0/24"
+  instance_tenancy = "default"
+  tags{
+    Name = "tesla-be"
+    Environment = "dev"
+  }
+}
+
+resource "aws_vpc" "tesla-stage" {
+  cidr_block = "10.10.0.0/24"
+  instance_tenancy = "default"
+  tags{
+    Name = "tesla-fe"
+    Environment = "stage"
+  }
+}
+=========================================
+Team members can manage resources using the console, cli or IaC.
+However there must be authenticated and authorise    
+
+IAM: This is a key security service in aws used for  
+     authentication  and 
+     authorisation for Engineers and other team members to run different tasks. 
+ aws-account: 
+   root-User =   
+   IAM-USER  = 
+
+Assignement:
+Ticket-AS110:
+  Group aws services covered so far based on Global, Regional and Availability Zones
+  vpc = 
+
+Access management:
+  IAM User groups = 
+    managers [AdminAccess] , 
+    developers, [VPCREADACCESS, S3FULLACCESS, EC2READACCESS ] 
+    Engineers [VPCFULLACCESS, S3FULLACCESS, EC2FULLACCESS]   
+  IAM Users       = simon [VPCREADACCESS] , class33, James[VPCFULLACCESS]   
+  IAM Roles
+  IAM Policies - are Permissions that can be assigned to users/groups/IAM-Roles
+                1. VPCREADACCESS / 2. VPCFULLACCESS  
+
+Ticket00133:
+  Create iam user account access for; Class33, Simon and James  
+  Create user-group access for; managers and developers & Engineers
+  Assign admin access to the managers group    
+  assign VPCFULLACCESS, S3FULLACCESS, EC2FULLACCESS to the Engineers group
+  Add Simon to the manager's group  
+  add james to the developers group  
+  Assign EC2READACCESS to class33 user        
+
+ aws-account: 
+   root-User = 
+      root-email =  landmark@gmail.com 
+      root-password = admin123@001  
+  IAM-USER  = 
+   https://287784533479.signin.aws.amazon.com/console
+    userName = simon  
+    password = Admin@123 
+    accountID= 287784533479
+
+  AdministorAccess  -- ec2, s3, vpc, route53  
+  EC2FullAccess     -- 
+  EC2ReadOnlyAccess -- 
+Security is inherent in our environment 
+we use the principle of least priviledges 
+
+IQ: Which tasks is an IAM user with admin access unable to do? Billing  
+
+Users can have either:
+  console access [userName and password and accountID]  or 
+  programatic access using [accessKey and secretAccessKey]
+  to aws resources    
+
+   accessKey      =  AKIAUGAPXTS7AGZNQ600
+   secretAccessKey=  0OeifliOM4J0lUbOLPvDFDP/Vb4QNwN6haIxyI24
+
+aws configure 
+   accessKey
+   secretAccessKey
+   defaultRegion  
+   output format [table, json]  
+
+aws s3 ls = aws command not found  
+
+$ aws s3 ls
+An error occurred (AccessDenied) when calling the ListBuckets operation: Access Denied
+
+
+aws ec2 describe-instances
+aws ec2 describe-instances --filters "Name=tag:Name,Values=webserver"
+aws ec2 describe-instances --filters "Name=tag:Name,Values=appserver"
+$ aws ec2 terminate-instances --instance-ids i-5203422c
+
+https://www.bluematador.com/learn/aws-cli-cheatsheet
+
+aws ec2 describe-vpcs | jq -r '.Vpcs[]|.VpcId+" "+(.Tags[]|select(.Key=="Name").Value)+" "+.CidrBlock'
+aws ec2 describe-vpcs
+
+aws ec2 terminate-instances --instance-ids i-029abc614ea3dd26c i-0b9c2fae27ed0cc9e
+
+ iamRoles are Policies/Permissions like [ VPCFULLACCESS, EC2FULLACCESS ] 
+ that can be attached to another aws resource like [ ec2, eks, ecs   ]  
+  
+IAM-Roles can be attached to an aws resources [ec2 Instances, eks, ecs,etc.] 
+to permit the resource manage other resources based on the Policies attached 
+to the role 
+  class31-role [S3ReadOnlyAccess]   
+
+like 
+  
+
+https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-help.html
+https://aws.amazon.com/cli/
+
+Identity providers
+Account settings
+
+===================================
+Terraform and other IaC tools to manage aws resources
+=====================================================
+Terraform
+CloudFormation 
+Ansible  
+Terraform:
+=========
+- support Multiple clouds [aws, GCP, Azure]
+- codes/files are used   
+
+Ticket00148 - create a vpc in us-east-1 using:
+  1. console  - netflix-1c
+  2. cli      - netflix-2c
+  3. IaC - Terraform   - netflix-3c 
+terraform codes are written in HCL - HASHICORP configuration lanaguage   
+terraform codes has .tf extentions  
+   .sh[shell script] / 
+   .java[java codes] / 
+   .py [python codes]
+   .tf [terraform codes]
+
+18hours to cover terraform:  
+===========================
+
+Next week = starting  
+  containers 60 hours : 
+    docker     - containerisation and 
+    kubernetes - container orchestration  
+  provisiong and Infrastructure mgt  :
+    Terraform  
+    Ansible  
+  python:
+
+11AM EST / NewYork / Toronto / MD time 
+4PM GMT / LAGOS / DOUALA
+
+   32  aws s3 cp aws33.pem class30b
+   33  aws s3 cp aws33.pem s3://class30b
+   35  aws s3 cp  class30b/Dockerfile .
+   36  aws s3 cp  s3://class30b/Dockerfile .
+   37  ls
+   38  pwd
+   39  aws s3 cp  s3://class30b/Jenkinsfile /home/ec2-user/
+   40  ls
+   41  aws s3 cp  s3://class30b/Jenkinsfile  s3://class33aa
+   42  aws s3 ls class33aa
+
+
+
+
+
+
+
+
+
+
+
+
