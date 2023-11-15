@@ -61,44 +61,17 @@ we attaching these to our publicSN 0.0.0 igw &privateSN 0.0.0.NAT.the access To 
 to establish.
 
 ####51:15 ... SANDBOX .. 
-
-
-
-appServer:
- publicIP =  3.135.215.21  
- privateIP=  10.0.0.54
-   users ---->http/80, https/443 webserver [13.59.100.138]    
-  admin ---->ssh/22 
-
-
-ping 10.0.0.66    
-
-vpc peering connection
-======================
-VPC-1 - cidr block= 10.0.0.0/24
-
-   appServer1 [ 10.0.0.66 ]
-
-VPC-2 - cidr block=  10.10.0.0/24  
-   webServer1 [ 172.0.0.66 ]
-
-   10.0.0.0/16, 
-   172.0.0.0/16, 
-   192.0.0.0/16  
-
-ping 10.0.0.66  
-ping 10.10.0.66  
-
-1. vpc1 request for a peering connection with VPC2   
-2. vpc2 ACCEPT the peering connection from VPC1  
+A sandbox is a test server , the server can be used for testing....yes since we hv done the peer connection, we can connect to the sandbox from the jumpserver
+the envirn wher we perfom testing is called sandbox server, we first deploy in the sandbox if it wrks well then we deploy in the right environ
 
  Ticket0013
  ===========
 Deploy applications to production for paypal client.   
-  1. 8 production appServers [ 192G RAM / 900GB SSD ]
+e.g, i hv 
+  1. 8 production appServers with [ 192G RAM / 900GB SSD ] each
 
 For best performance ensure that adequate testing is done  
-  2. deploy in your sandbox/test server  
+  2. first, deploy in your sandbox/test server  
 
 sandbox is running in vpc2:
   privateIP  =  10.10.0.134
