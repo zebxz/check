@@ -1,19 +1,24 @@
-appServer:
- publicIP =  3.135.215.21  
- privateIP=  10.0.0.54
-   users ---->http/80, https/443 webserver [13.59.100.138]    
-  admin ---->ssh/22 
+vpc is used to create isolated ntwrk
 
-vpc peering connection
-======================
-VPC-1 - 10.0.0.0/16
-   appServer1 [ 10.0.0.66 ]
-VPC-2 - 10.0.0.0/24  
-   webServer1 [ 10.0.0.66 ]
+DIAGRAM:.....15:44
+WHEN U CREATE A VPC, it comes wit its own nTWKR and did is a private ntrk & as a private ntwrk, hw wil the resource communicate with each other e.g dbser commu wit appserve
+11:28 if the app server& dbserver ar in d same ntwrk,ie a local ntwrk e.g vpc1, they can comm wit their pivate ip but if in dif ntwrks e.g one server is in vpc1 & the 
+17:28 oda server is in vpc2 then they can comm wit vpc peering by doing so, we create a private ntwrk btw the two vpcs.. we wnt to pair the 2 vpcs
 
+HOW TO ESTABLISH VPC PEERING
+this can be achieved in the same region and across regions 
+23:25 
 
-ping 10.0.0.66    
+CHECK tELEGRAM FOR steps in the handout ... aws vpc27 pdf
+Step 1)Create 2 VPCs - VPC-A and VPC-B with non-overlapping CIDR range
+e.g of overlapping, is when the 2diff vpcs both v severs with the same ip address as illustated below.. its nt gud when they overlap bc when i ping the ip adress, the 
+broadcast wont know if its searching for appserver1 or appserver2 
+VPC-1 - 10.0.0.0/16......... cIDR blocks 
+   appServer1 [ 10.0.0.66 ]...... ip address
+VPC-2 - 10.0.0.0/24  ...... CIDR block 
+   webServer1 [ 10.0.0.66 ]..... ip address
 
+##### e.g2, without overlapping
 vpc peering connection
 ======================
 VPC-1 - 10.0.0.0/24
@@ -23,6 +28,50 @@ VPC-2 - 10.10.0.0/24
 
 ping 10.0.0.66  
 ping 10.10.0.66  
+
+vpc peering connection.... without overlapping
+======================
+VPC-1 - cidr block= 10.0.0.0/24
+
+   appServer1 [ 10.0.0.66 ]
+
+VPC-2 - cidr block=  10.10.0.0/24  
+   webServer1 [ 172.0.0.66 ]
+
+             
+
+i created the 2nd vpc to pair with in oregon , the first vpc was already created in virginia 
+29:45frm step one above create vpc.. .. vpc^more-name-10.10.0.0/24- AZs:1 - publicSN: 1- privateSN:1- gateway: in 1 AZ- create
+
+1. vpc1 request for a peering connection (private nterk) with VPC2   
+2. vpc2 ACCEPT the peering connection from VPC1  
+
+WE V TO MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established.. 
+
+in virginia, select peering conection- name- selectvpc to pair wit:project pair-..thers anoda option to pair vpc with- rgion:another-go into d other region, copy d vpc id 
+paste it-create- go into the other region in action:accept the connection, meaning we can peer vpcs in d same aws acct or in an anodaaws acct,.in this case we wnt to 
+do it in the same accoutn bt our 2nd vpc is in another region... the pairng vpc cud be in the same region or anoda region 
+
+41:15,, modify the route tables of VPC1 -selsct route tables-tick publicSN of the created vpc:-edit: add 10.10.0.0/24- peer connection-save ... do the same in the privateSN 
+ of the same vpc....TO est conection wit VPC2 via the pairing connection
+46:50 we also go to the other region, the receiving vpc and modify the route table for vPC2- add 10.0.0.0/24 for both the publicSN and privateSN .... so we hv created route
+for secure access by modifying the route tables so that we can v a private secure connection.. by default, the route table will permit local route frm 10.10.0.0/24 local
+& 0.0.0.0igw to permit access tru the igw,, we also v 10.0.0.0/24pc.. this is establshing a private connection uisng the vpc peering connection,by virtue of this modification
+we attaching these to our publicSN 0.0.0 igw &privateSN 0.0.0.NAT.the access To the internet is oneway via the NAT  & we v a pairing connection, this is what we v been able 
+to establish.
+
+####51:15 ... SANDBOX .. 
+
+
+
+appServer:
+ publicIP =  3.135.215.21  
+ privateIP=  10.0.0.54
+   users ---->http/80, https/443 webserver [13.59.100.138]    
+  admin ---->ssh/22 
+
+
+ping 10.0.0.66    
 
 vpc peering connection
 ======================
