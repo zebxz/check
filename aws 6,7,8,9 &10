@@ -63,8 +63,9 @@ to establish.
 ####51:15 ... SANDBOX .. 
 A sandbox is a test server , the server can be used for testing...
 the envirn wher we perfom testing is called sandbox server, we first deploy in the sandbox if it wrks well then we deploy in the right environ
-.yes since we hv done the peer connection, we can connect to the sandbox from the jumpserver privately 
- 
+.yes since we hv done the peer connection, we can connect to the sandbox from the jumpserver privately, we can est a private connecion.
+
+
 Ticket0013
  ===========
 Deploy applications to production for paypal client.   
@@ -76,7 +77,19 @@ For best performance ensure that adequate testing is done
 
 ###55:20 to create a sandbox
 launch instance- linux-micro- pem key- select the created vpc-prvateSN- ip:disable-SG:ssh  custom 10.0.0.0/24, so dat resources in the vpc can comm wit me via ssh, i also
-wnt wnt an ssh connection est in this sandbox so again:ssh custom 10.0.0.0/24, so frm both vpc am able to ssh privately- launch
+wnt wnt an ssh connection est in this sandbox so:ssh custom 10.10.0.0/24, so frm both vpc am able to ssh privately- launch
+the sandbox doesnt hv any public ip, its running in the privateSN
+
+ssh jumpserver in mobaxterm
+1:1:18 to acces my sandbox in mobaxterm
+ssh -i "sand.pem" ec2-user@10.10.0.139
+
+in mobaXT ,in my jumpser,creating a new key,-vi sand.pem :paste- bc my key is open, chmod 400 sand.pem, to change d key permission, then my key is secured- 
+ssh -i "sand.pem" ec2-user@10.10.0.139 ..
+
+
+
+
 
 
 
