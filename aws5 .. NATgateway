@@ -1,7 +1,7 @@
 2:38:10????nginx  didnt work when i tried to access it in google,i couldnt acces apache websever even after opening port80 in inbound rule of d jumpserver ngnix was instaled
 sudo yum install ngnix
 ngnix is a software for webserver, http is also a software for webserver
-
+###2:44:00 we had to open http port80 in jumpserver for ngnix to be accessible
 he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
 making anoda webserverSO he decided to install ngnix in the jumpserver which is in the publicSN
 
@@ -237,9 +237,9 @@ target:local-add route- destination:0.0.0/0-select internt GW frmdrop box:indica
 subnet-save ... 1:52:30  
 6) click private table-action:edit subnet association-tick private subnet-save
 
-create instance- name- linux-micro-create key-edit ntwrk settings: select the vpc created:select public sn, d server nids internet-
+1:55:00 launch jumpserver- create instance- name- linux-micro-create key-edit ntwrk settings: select the vpc created:select public sn, d server nids internet-
 auto assigng pub ip:enable-security grp to alow ssh frm my ip or anywher &ssh custom 10.o.o/24, alowing ssh trafic frm within my vpc
-so dat servers in my vpc can communic, instances can communi wit each oda via ssh- launch
+so dat servers in my vpc can communic, instances can communi wit each oda via ssh- launch ... we opened http 80 for nginx
 
 1:58:50 the private ip  10.0.0.244 is deter by my cyber block which is 10.0.0.0/25 
 
