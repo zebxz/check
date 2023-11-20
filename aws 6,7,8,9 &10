@@ -6,8 +6,9 @@ so does it mean, we then v to create our sand box server to hv a public ip addre
 
 
 vpc is used to create isolated ntwrk
+
 VIDEO 7 .8:33 WE CAN PEER RESOURCES in 2 diff ntwrk providers like gcp & aws .. e.g aws can be our and gcp can be an on premp resource
-bc they ar nt in d same cloud provider platform ..... we can use vpm , aws and etc
+bc they ar nt in d same cloud provider platform ..... using diff options like vpm , aws direct and etc 
 
 DIAGRAM:.....15:44
 WHEN U CREATE A VPC, it comes wit its own nTWKR and did is a private ntrk & as a private ntwrk, hw wil the resource communicate with each other e.g dbser commu wit appserve
@@ -97,11 +98,6 @@ in mobaXT ,in my jumpser,creating a new key,-vi sand.pem :paste- bc my key is op
 ssh -i "sand.pem" ec2-user@10.10.0.139 ..
 
 
-
-
-
-
-
 sandbox is running in vpc2:
   privateIP  =  10.10.0.134
   chmod 400 aws33.pem
@@ -124,6 +120,29 @@ vIDEO  7: Elastic Load Balancers& AUTO SCALLING
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
+13:40 its nt a secured practice to allow dirtc traffi to app servers so we create a web server ..  webserver manages hw traffic is routed... it routes traffic to the backend application servers
+the websever has waht is called target,,, thers a target grp .. e.g target grp for my FB app  ..
+in a situation wher the webserver breaks down that will be a problem
+
+EXAMPLE OF WEBSERVERS/LB SOFTWARE
+nginx
+httpd
+
+16:00 After installing, we v to configure & the configuration has certain parametrs
+webserver has listerners and backend 
+it has listeners to traffic using http 80 protocol or https  443,  from the app users and routes traffic to the  backend  app via their ip address 10.0.0.7 and the server port number e.g 8080 =10.0.0.7:8080
+but the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down but all the configuration constitute a very tidious job
+
+so we can go with a managed service ie paaS... AWS has provided us a manged srvice 
+WE JUST CREATE our elb ... then aws decides the kind of software to install .. whether ngnix, https, they are incharge of that,, 
+
+
+
+
+
+
+
+13:30
 
 Elastic Load Balancers = ELB:
   rules   
