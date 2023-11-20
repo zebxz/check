@@ -120,9 +120,9 @@ vIDEO  7: Elastic Load Balancers& AUTO SCALLING
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
-13:40 its nt a secured practice to allow dirtc traffi to app servers so we create a web server ..  webserver manages hw traffic is routed... it routes traffic to the backend application servers
-the websever has waht is called target,,, thers a target grp .. e.g target grp for my FB app  ..
-in a situation wher the webserver breaks down that will be a problem
+13:40 its nt a secured practice to allow direct traffi to app servers so we create a web server ..  webserver manages hw traffic is routed... it routes traffic to the backend application servers
+the websever has waht is called target,,, ther a target grp .. e.g target grp for my FB apps ..
+bt in a situation wher the webserver breaks down that will be a problem
 
 EXAMPLE OF WEBSERVERS/LB SOFTWARE
 nginx
@@ -135,6 +135,23 @@ but the webserver is a self managed solution & we can hv a situation where we hv
 
 so we can go with a managed service ie paaS... AWS has provided us a manged srvice 
 WE JUST CREATE our elb ... then aws decides the kind of software to install .. whether ngnix, https, they are incharge of that,, 
+in the background, aws will create 2webservers in 2aZs for availability, so u dnt bother whether the server wil fail or not
+so ur tassk is jst to create/config ur listeners/target groups
+thats whAT elb IS ALL ABOUT
+
+23:37 THERS ALSO NTWRK LOAD BALANCER
+it deals with source and destination, & when it comes to d target grp dey ar created using TCp id or protocol & a trget grp can v up
+to 1000 targets and we will do all the config
+this falls under layer4support
+
+24:25  thers also application load balancer(AIB)
+IT will use the http/https protocol,, in dis case , we can v multiple target groups/ diff target grps
+the applications are grouped with the help of a target grp
+the AIB falls under layer7 support.
+
+interview: do u v any experience with layer4 support, nterk load balancers 
+cos once we get into kubernetes, its going to be abt routing traffic to multiple backend application ... . 
+
 
 
 
