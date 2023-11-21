@@ -156,14 +156,19 @@ cos once we get into kubernetes, its going to be abt routing traffic to multiple
 SG: SSH TCP 22  0.0.0/0, HTTP TCP 80 0.0.0/0, SSH TCP22 10.10.0.0/24
 
 create docker-app.. everytin is the same as aPP SERVER THEN PASTE the simple script for instaling docker .. they must be in the same VPC
-SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 10.10.0.0.0/24
+SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
+
 
 
 49:30 CREATE LOAD BALANCER- name-internat facing-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add listener-create target grp:instances-name- TCP:80-IPV4-NEXT-
-select the required apps-portnmber it listens to e.g8080- tick include as pending-create target grp-go back to the load bALancer being created &select the target grp-create
-load balancer
+select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create target grp-go back to the load bALancer being created &select the
+target grp-create load balancer
 
 so if we are trying to access our application, we will access it via the LB,
+
+we can check online to see if our servers were installeed 
+publicIP:8080
+56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
 
 
 
