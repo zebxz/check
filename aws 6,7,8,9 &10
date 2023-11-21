@@ -120,6 +120,8 @@ vIDEO  7: Elastic Load Balancers& AUTO SCALLING
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
+tomcat script didnt install the tomcat
+
 13:40 its nt a secured practice to allow direct traffi to app servers so we create a web server ..  webserver manages hw traffic is routed... it routes traffic to the backend application servers
 the websever has waht is called target,,, ther a target grp .. e.g target grp for my FB apps ..
 bt in a situation wher the webserver breaks down that will be a problem
@@ -164,11 +166,17 @@ SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
 select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create target grp-go back to the load bALancer being created &select the
 target grp-create load balancer
 
+1:02:20
+TO ADD A TARGEt to an existing LBT:CEATE LOAD BALANCER- name-internat facing-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add listener-create target grp:instances-
+name- TCP:80-IPV4-NEXT-select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create target- THEN CLICK Target groups-register
+
 so if we are trying to access our application, we will access it via the LB,
 
-we can check online to see if our servers were installeed 
+we can check online to see if our servers were installed 
 publicIP:8080
 56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
+
+1:03 we can now copy the dns name of our lB to access our app or doecker server and it is more secured accessing our application via the LB 
 
 
 
