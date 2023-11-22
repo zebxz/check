@@ -175,8 +175,9 @@ SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
 
 
 49:30 CREATE LOAD BALANCER- name-internat facing(means it cn receive trafic frm ext sours &route d trafic-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add 
-listener-create target grp:instances-name- TCP:80-IPV4-NEXT-select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create 
-target grp-go back to the load bALancer being created &select thetarget grp-create load balancer
+listener-create target grp:instances-name- TCP:80:80 .(we chose tcp/UDP bc its a ntwrk LB)-IPV4-HEALTH:tcp: we can also click adv:3,3,10,10...ie if the LB Ping the target 
+server 3times &ders no response, it wont route traffic to the target-NEXT-select D required apps-portnmber 
+it listens to e.g8080or 80 for deocker-tick include as pending-create target grp-go back to the load bALancer being created &select thetarget grp-create load balancer
 
 1:02:20
 TO ADD A TARGEt to an existing LBT:CEATE LOAD BALANCER- name-internat facing-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add listener-create target grp:instances-
@@ -287,6 +288,7 @@ the OSI model
 different layers   read power point script
 
 1:04:50 for us to hv content base routing, that wil tk us to application LB 
+1:24:00 CREATE LB
 
 
 
