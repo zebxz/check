@@ -1,4 +1,4 @@
-nnnnn ######prof power point script not complete 1>47>39 ... tomcat script and also create jumpserver and docker server
+ ######prof power point script not complete 1>47>39 ... tomcat script and also create jumpserver and docker server
 Video8a, 1:46:20 .. the video is amnong the docker videos... . .....   what makes a port unhealthy 
 
 the course to knw hw to manage the resources hosted by AWS ,, understanding the process of maanaging the computing services in the AWS environment
@@ -298,7 +298,22 @@ to know the ports that are open  ... netstat -utlpn ... sudo yum install net-sta
 
 
 1:47:50 inside the jumpserver using curl -v public ip of the app server:8080  inside , he checked if the app server port number is healthy  but to check the heath of
-the jumpserver he curl -v localhost:8080 
+the jumpserver he curl -v localhost:8080 ..... so i bliv using the ip address, we can check the health of one server in another server 
+
+1:49:20 install tomcat 
+ users --->talk to --- elb --- > route traffic to --- app-Servers
+users traffic are routed to the app serers via the LB 
+
+quetsion is a jumpserver an instance without an installed applicationn like tomcat, jenkins etc
+###### 1:55:09 DEPLOY AN APP & see how LB wil route traffic to the application
+
+in real time wil use maven to automate the process
+deploy maven web app to tomcat- inside the jumpserver where he installed tomcat -gitclone:clone the repo-ls , we v the maven web app- rename:nwa-ls-cd mwa-
+inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package sudo yum install maven -y (it installs maven & all
+its dependencies like jave) - ls ,we now hv the target dir- we wnt to deploy to mv app to anoda server usimg the SCp bt it will ask for d key - vi key name &paste-
+chmood 400 key name.pem - scp-i key name.pem target/*war ec2-user@publicip:/opt/tomcat9/webapps/ .. we wnt to copy the app code *war in the target dir that was created 
+when we did mvn package to the tomcatserver and i am ec2user and in tomcat we deploy in /opt/tomcat9/webapps/ dir 
+
 
 
 
