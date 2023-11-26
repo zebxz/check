@@ -1,4 +1,6 @@
- ######prof power point script not complete 1>47>39 ... tomcat script and also create jumpserver and docker server
+ ###### i installed my docker server in private SN and it wasnt accesible on google bt when i installed anoda one in publicSN, it worked
+
+######prof power point script not complete 1>47>39 ... tomcat script and also create jumpserver and docker server
 Video8a, 1:46:20 .. the video is amnong the docker videos... . .....   what makes a port unhealthy 
 
 the course to knw hw to manage the resources hosted by AWS ,, understanding the process of maanaging the computing services in the AWS environment
@@ -251,7 +253,13 @@ http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com/
 
 power point script
 
+
+
 VIDEO 8a
+
+############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
+cp target/*war / opt/tomcat9/webapps/
+
 5:47 
 ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
 ELS falls under Paas,,, routing trafic to backend application servers, we dnt v to worry abt installing softwares, load balancing softwares etc
@@ -280,7 +288,7 @@ options route it to this particular target.......  for the lb to knw the target 
 rules will be deinfed, e.g we can config our backend instructing the lb dat if someon types this ip addresss on our listenere port route the traffic to the backend target grps
 it will run health cheack on the tagerts
 target groups with target 
-REQ/traffic frm users goes tru the ELB, and for the it to receive the trafic it listens with its listeners  , it listens on some ports  and protocols 
+REQ/traffic frm users goes tru the ELB, and for the it to receive the trafic it listens with its listeners  , it listens on some ports and protocols 
 34:45 lb is like a server with  some sofware installed in it e.g if u install an ngninx software in a software in a server its an ngnix webserver, ha proxy installed in the
 the server, its an ha proxy LB 
 servers listen on protocol and ports
@@ -310,9 +318,11 @@ quetsion is a jumpserver an instance without an installed applicationn like tomc
 1:55:29 in real time wil use maven to automate the process......... tomcat was installed in the jumpserver
 deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename:nwa-ls-cd mwa-
 inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package sudo yum install maven -y (it installs maven & all
-its dependencies like jave) - ls ,2:00 we now hv the target dir- we wnt to deploy/to mv to d app server & to mv to anoda server usimg d SCp bt it will ask for d key -vi key name &
-paste-chmood 400 key name.pem - scp-i key name.pem target/*war ec2-user@publicip:/opt/tomcat9/webapps/ .. we wnt to copy the app code  ie *war  or file "maven web app.war 
-in the target dir that was created when we did mvn package to the tomcatserver and i am ec2user and in tomcat we deploy in /opt/tomcat9/webapps/ dir  
+its dependencies like jave) - ls,2:00 we now hv the target dir- we wnt to deploy to d app server whose publicip we wil use as the tomcat server & to deploy to anoda server
+usimg d SCp bt it will ask for d key of the app server bc we nid to be authenticated b4 we can copy -vi key name &paste  -  chmood 400 key name.pem - 
+scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied 
+using scp-i, we wnt to copy the app code ie *war  or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
+bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
 
 
 
