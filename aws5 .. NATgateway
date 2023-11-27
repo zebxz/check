@@ -226,13 +226,18 @@ the 2nd is the firewall wich has 2layers of security,, security at the subnet le
 search vps in aws- crreate vpc- vpc&more- auto generate:name -10.0.0/224- no ipv6-  tenancy:default,/dedicated u pay more- no of azs 2/ we can 
 customize -no. of public 2- NAT 1- VPC endpoint:S3 GATeway - then create vpc.
 
+1:43:30
+vpc-subnets-igw & attach the vpc- route table- 
+
 when we select vpcm&ore,to create subnet options are avail bt if we select  vpc only, then we hv to create subnets after the vpc has been created
-1:48:16 to create subnets -subnets-choose vpc for subnet-IPv4 VPC CIDR block:e.g 10.0.0.0/24, =256ips, then we creat 1st subnet: IPv4 subnet CIDR block 10.0.0.0/25 =128ips
-then a 2nd vpc 10.0.0.128/25 =128ips ,, so in total we hv 256ips in 2subnets.
+creating vpc only with 2 subnets by my cidr 10.0.0.0/24.... no ipv6... if u choose dedicated ull pay more
+1:48:16 to create subnets -subnets-choose vpc for subnet-choose avail zone -name pub-IPv4 VPC CIDR block:e.g 10.0.0.0/24, =256ips, 10.0.0.0/25=128ips then we v set 
+1st subnet- 2nd sub: name private-chose avail-IPv4 subnet CIDR block 10.0.0.0/24 =128ips then a 2nd subnet 10.0.0.128/25 =128ips,so in total we v 256ips in 2subnets.
 2)nxt create internate gateway- internate gate- name- create gateway
 3) to get traffice : internet gateway-actions:atach to vpc- slect vpc - attach.. so my vpc can now get traffic frm the internet
 4)route table-create-name:private/PUB -vpc to use route table - create.. we can edit .. click selected route-action:edit route-
 target:local-add route- destination:0.0.0/0-select internt GW frmdrop box:indicating the particular gateway- save changes.
+1:42:00 the public route table is able to access internet via the paypal igw
 5)to assocaite the route table to my subnet :click selected subnet(public)-action:edit subnet association- tick the (public) 
 subnet-save ... 1:52:30  
 6) click private table-action:edit subnet association-tick private subnet-save
