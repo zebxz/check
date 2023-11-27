@@ -142,8 +142,9 @@ httpd
 
 16:00 After installing, we v to configure & the configuration has certain parametrs
 webserver has listerners and backend 
-it has listeners to traffic using http 80 protocol or https  443,  from the app users and routes traffic to the  backend  app via their ip address 10.0.0.7 and the server port number e.g 8080 =10.0.0.7:8080
-but the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down but all the configuration constitute a very tidious job
+it has listeners to traffic using http 80 protocol or https  443,  from the app users and routes traffic to the  backend  app via their ip address 10.0.0.7 and the server
+port number e.g 8080 =10.0.0.7:8080but the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down
+but all the configuration constitute a very tidious job
 
 so we can go with a managed service ie paaS... AWS has provided us a manged srvice 
 WE JUST CREATE our elb ... then aws decides the kind of software to install .. whether ngnix, https, they are incharge of that,, 
@@ -320,9 +321,12 @@ deploy maven web app to tomcat- inside the jumpserver clone the application...in
 inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package sudo yum install maven -y (it installs maven & all
 its dependencies like jave) - ls,2:00 we now hv the target dir- we wnt to deploy to d app server whose publicip we wil use as the tomcat server & to deploy to anoda server
 usimg d SCp bt it will ask for d key of the app server bc we nid to be authenticated b4 we can copy -vi key name &paste  -  chmood 400 key name.pem - 
-scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied 
+scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied|| 
 using scp-i, we wnt to copy the app code ie *war  or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
 bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
+
+ls target/ .. and we can see the maven web app . war
+ then to deploy, we hv to copy 
 
 
 
