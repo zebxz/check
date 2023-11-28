@@ -222,24 +222,23 @@ the 2nd is the firewall wich has 2layers of security,, security at the subnet le
 
 1:20:40 ,, u cannot delete a vpc that has dependencies ie servers, u must delete the servers first
 
-1:26:00  create vpc 
-search vps in aws- crreate vpc- vpc&more- auto generate:name -10.0.0/224- no ipv6-  tenancy:default,/dedicated u pay more- no of azs 2/ we can 
+1:26:00  to create vpc&  more
+search vps in aws- create vpc- vpc&more- auto generate:name -10.0.0/224- no ipv6-  tenancy:default,/dedicated u pay more- no of azs 2/ we can 
 customize -no. of public 2- NAT 1- VPC endpoint:S3 GATeway - then create vpc.
 
 1:43:30
-vpc-subnets-igw & attach the vpc- route table- 
+creat vpc-create subnets- create igw to vpc & attach the vpc- create route table, modify pub route  & attach pub sub to pub route & pri subnets to pri route.
 
 when we select vpcm&ore,to create subnet options are avail bt if we select  vpc only, then we hv to create subnets after the vpc has been created
-creating vpc only with 2 subnets by my cidr 10.0.0.0/24.... no ipv6... if u choose dedicated ull pay more
-1:48:16 to create subnets -subnets-choose vpc for subnet-choose avail zone -name pub-IPv4 VPC CIDR block:e.g 10.0.0.0/24, =256ips, 10.0.0.0/25=128ips then we v set 
-1st subnet- 2nd sub: name private-chose avail-IPv4 subnet CIDR block 10.0.0.0/24 =128ips then a 2nd subnet 10.0.0.128/25 =128ips,so in total we v 256ips in 2subnets.
+creating vpc only" with 2 subnets by my cidr 10.0.0.0/24=256ips dt we can split in 2 subnets with 128ips each.... no ipv6... if u choose dedicated ull pay more
+1:48:16 to create subnets -subnets-choose vpc for subnet-choose avail zone -name:public-IPv4 VPC CIDR block:e.g 10.0.0.0/24,, 10.0.0.0/25=128ips then we v set 
+1st subnet-  then 2nd sub: name:private-chose avail-IPv4 subnet CIDR block 10.0.0.0/24 =128ips then a 2nd subnet 10.0.0.128/25 =128ips,so in total we v 256ips in 2subnets.
 2)nxt create internate gateway- internate gate- name- create gateway
-3) to get traffice : internet gateway-actions:atach to vpc- slect vpc - attach.. so my vpc can now get traffic frm the internet
-4)route table-create-name:private/PUB -vpc to use route table - create.. we can edit .. click selected route-action:edit route-
-target:local-add route- destination:0.0.0/0-select internt GW frmdrop box:indicating the particular gateway- save changes.
-1:42:00 the public route table is able to access internet via the paypal igw
-5)to assocaite the route table to my subnet :click selected subnet(public)-action:edit subnet association- tick the (public) 
-subnet-save ... 1:52:30  
+3) to get traffice : internet gateway-actions:atach to vpc- slect vpc - attach.. so my vpc can now get traffic frm the internet n access the internet
+4)nxt i crete 2 route tables bc vpc created manualy-route table-create-name:private OR PUB-vpc to use route table-create.by defult i see the tables v access to my vpc 10.0./24
+we can edi pub table-click public route-action:edit route-target:i see local ie within my vpc-add route- destination:i wnt to access route frm d internt so :0.0.0/0-select 
+internt GW frmdrop box:indicating d particular gateway- save changes. so it now v access to the internt via d IGW..this is done for only pub route table to get internt acces
+5)to assocaite the route table to my subnet :click public route table-action:edit subnet association- tick the (public) subnet bc it has route to d internet-save ... 1:52:30  
 6) click private table-action:edit subnet association-tick private subnet-save
 
 1:55:00 launch jumpserver- create instance- name- linux-micro-create key-edit ntwrk settings: select the vpc created:select public sn, d server nids internet-
