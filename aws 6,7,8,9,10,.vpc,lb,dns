@@ -270,9 +270,8 @@ power point script
 VIDEO 8a
 
 ############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
-cp target/*war / opt/tomcat9/webapps/ ..because tomcat was also installed in the jumpserver and the appserver ,, scp-i was uased to deploy from the jumpserver to the appser &
-to be able to deploy we had to copy  to ie cp target opt/tomcat9/webapps/  of the jumpserver bc deployment takes place /opt/tomcat9/webapps/
-
+cp target/*war / opt/tomcat9/webapps/ ..because tomcat was also installed in the jumpserver and the appserver ,, scp-i was used to copy from the jumpserver to the appser &
+to be able to deploy we had to copy  to  the webapp dir ie cp target opt/tomcat9/webapps/  of the jumpserver bc deployment takes place in the /webapp dir
 
 5:47 
 ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
@@ -336,14 +335,16 @@ quetsion is a jumpserver an instance without an installed applicationn like tomc
 git clone https://github.com/LandmakTechnology/maven-web-application
 
 1:55:29 in real time wil use maven to automate the process......... tomcat was installed in the jumpserver
-deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename- 
-mv maven-web-application/ nwa-ls-cd mwa-
+deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename the repo- 
+mv maven-web-application/ nwa-ls- then cd mwa-
 inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package (sudo yum install maven -y (it installs maven & all
-its dependencies like jave) - ls,2:00 we now hv the target dir- we wnt to deploy to d app server whose publicip we wil use as the tomcat server & to deploy to anoda server
+its dependencies like jave) - ls,2:00 we now hv the target dir- we wnt to deploy to d app server & to deploy to anoda server
 usimg d SCp bt it will ask for d key of the app server bc we nid to be authenticated b4 we can copy -vi key name &paste  -  chmood 400 key name.pem - 
-scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied|| 
-using scp -i, we wnt to copy the app code ie *war  or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
+scp  -i (key name.pem )target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied
+using scp -i, we wnt to copy the app code ie *war or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
 bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
+then we also want to copy the *war file that was created to the webapp dir of the jumpserver ie cp target/*war /opt/tomcat9/webapps/ ,, when we ls we see the file we copied
+
 
 ls target/ .. and we can see the maven web app . war
  then to deploy, we hv to copy CP THE file to webapps - cp target/*war /opt/tomcat9/webapps/ .. when we ls /opt/tomcat9/webapps/ , we can see the copied file
