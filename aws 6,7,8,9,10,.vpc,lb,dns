@@ -270,7 +270,9 @@ power point script
 VIDEO 8a
 
 ############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
-cp target/*war / opt/tomcat9/webapps/
+cp target/*war / opt/tomcat9/webapps/ ..because tomcat was also installed in the jumpserver and the appserver ,, scp-i was uased to deploy from the jumpserver to the appser &
+to be able to deploy we had to copy  to ie cp target opt/tomcat9/webapps/  of the jumpserver bc deployment takes place /opt/tomcat9/webapps/
+
 
 5:47 
 ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
@@ -314,26 +316,33 @@ different layers   read power point script
 1:44:40 assign hostanme & change shell
 1:46:30   we can use the curl command to knw if the target is healthy .. curl -v ip address:8080 , curl -v localhost:8080
 creae a  redhat app server and paste the install script
-to know the ports that are open  ... netstat -utlpn ... sudo yum install net-stat 
+to know the ports that are open  ... netstat -utlpn ... sudo yum install net-tools
 
 
 1:47:50 inside the jumpserver using curl -v public ip of the app server:8080  inside , he checked if the app server port number is healthy  but to check the heath of
 the jumpserver he curl -v localhost:8080 ..... so i bliv using the ip address, we can check the health of one server in another server 
 
-1:49:20 install tomcat 
+
+
+
+WE WANT TO DEPLOY AN APPLICATION AND SEE HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION
+
+1:49:20 install tomcat ,, to check if tomcat has started netstat -utlpn
  users --->talk to --- elb --- > route traffic to --- app-Servers
 users traffic are routed to the app serers via the LB 
 
 quetsion is a jumpserver an instance without an installed applicationn like tomcat, jenkins etc
 ###### 1:55:09 DEPLOY AN APP & see how LB wil route traffic to the application
+git clone https://github.com/LandmakTechnology/maven-web-application
 
 1:55:29 in real time wil use maven to automate the process......... tomcat was installed in the jumpserver
-deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename:nwa-ls-cd mwa-
-inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package sudo yum install maven -y (it installs maven & all
+deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename- 
+mv maven-web-application/ nwa-ls-cd mwa-
+inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package (sudo yum install maven -y (it installs maven & all
 its dependencies like jave) - ls,2:00 we now hv the target dir- we wnt to deploy to d app server whose publicip we wil use as the tomcat server & to deploy to anoda server
 usimg d SCp bt it will ask for d key of the app server bc we nid to be authenticated b4 we can copy -vi key name &paste  -  chmood 400 key name.pem - 
 scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied|| 
-using scp-i, we wnt to copy the app code ie *war  or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
+using scp -i, we wnt to copy the app code ie *war  or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
 bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
 
 ls target/ .. and we can see the maven web app . war
@@ -354,7 +363,7 @@ its all building infrastruture in the cloud and managing it, like EC2 and other 
 or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
 cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
 
-the course to knw hw to manage the resources hosted by AWS ,, understanding the process of maanaging the computing services in the AWS environment
+the course to knw hw to manage the resources hosted by AWS ,, understanding the process of managing the computing services in the AWS environment
 aWS cloud architecture/ aws solution architect
 
 
