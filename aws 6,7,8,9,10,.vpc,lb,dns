@@ -348,6 +348,42 @@ using scp -i, we wnt to copy the app code ie *war or file "maven web app.war in 
 bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
 then we also want to copy the *war file that was created to the webapp dir of the jumpserver ie cp target/*war /opt/tomcat9/webapps/, when i ls target/ i see d file i copied
 
+2:05:30 now we can access the application via our application LB.. by clicking the LB dns ,, we ar no longer using the ip add of our appserver
+when we copy this information wit the context path (maven-web-app) am able to get a respnse ie 
+
+   nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+   http://nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com/maven-web-app/
+t
+2:0>7 one limitation of ntwrk LB is that it doesnt allow more than one traget grps to be added to a particular LB
+
+users trying to talk to ----> app-Servers
+it goes tru the lb
+   users ---> elb --- > app-Servers   
+HOW WILL THE LB be able to identify the appservers? by the rules we hv defined
+one of the tins that happen is DNS lookup  .. domain name servise
+the traffic frm the access by the enduser is transmitted using the elb ie elb does a dns resolution, resolve the reQ and forwards it to the right appserver
+with the dick or nslookup command i can know that if i type the LB url i can knw what the LB wil be searching for 
+e.g nslookup realfinal-cc4b5a5307424ced.elb.us-east-2.amazonaws.com ... but it didnt wrk in mobxterm .. he ran it successfully in  windows ssh client ... 2:14:00
+
+but it is not good practice to use the dns long detail information,, so we have to create a hostname called dollarways.net
+create hostname =dollarways.net
+ceate dns records: 
+so such dat anyone trying to access our lb will type dollarways.net and it will route the traffic to the appserver
+
+DNS RECORDS; we have
+a records :hostname  matches to ip adresses
+e.g phone contact record : simon .... o7034729002
+PTR records : this is the reverse wher  id addresses matches hostname
+c-name records ( are aliases)
+e.g  landmark  and the alias name is mylandmarktech
+
+2:19:50 CREATING DOMIAN  NAME
+route53- reg a domian- click get started- it prompts to search for the name u want to create-select it- checkout-next-contact type:person-name, billing info- continue & pay
+
+
+2:25:40
+in nxt class .. HOW TO USE LB to route traffic to multiple regions bc LB is works very well in a single region but with the help of route53, we can route to multiple regions
+
 
 
 MY TS EXPERIENCE: I tried installing tomcat with user script ie pasting installation script while launching an inatance but it wasnt working, and the target grp kept
@@ -368,16 +404,7 @@ the course to knw hw to manage the resources hosted by AWS ,, understanding the 
 aWS cloud architecture/ aws solution architect
 
 
-   18.119.105.192
-   $ sudo yum install net-tools
-
-   nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
-   http://nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com/maven-web-app/
-
-
-   users ----> app-Servers
-
-   users ---> elb --- > app-Servers    
+    
    ns lookup  = 
    dns lookup nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
    18.191.85.171
