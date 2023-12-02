@@ -140,6 +140,10 @@ Running notes for ELB/ASG  starts
 ====================================
 tomcat script didnt install the tomcat
 
+some aspect of the class he didnt cover bc nt running in his aws account ,, consult the resource material 
+running note FOR ELB and ASG ,,, auto scaling group ... ..
+
+
 13:40 its nt a secured practice to allow direct traffi to app servers so we create a web server ..  webserver manages hw traffic is routed... it routes traffic to the backend application servers
 the websever has waht is called target,,, ther a target grp .. e.g target grp for my FB apps ..
 bt in a situation wher the webserver breaks down that will be a problem
@@ -272,29 +276,26 @@ power point script
 
 
 
-VIDEO 8a ... some aspect of the class he didnt cover bc nt running in his aws account ,, consult the resource material 
-running note FOR ELB and ASG ,,, auto scaling group ... ..
-
+VIDEO 8b ... 
 ############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
 cp target/*war / opt/tomcat9/webapps/ ..because tomcat was also installed in the jumpserver and the appserver ,, scp-i was used to copy from the jumpserver to the appser &
 to be able to deploy we had to copy  to  the webapp dir ie cp target opt/tomcat9/webapps/  of the jumpserver bc deployment takes place in the /webapp dir
 
-5:47 
-ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
-ELS falls under Paas,,, routing trafic to backend application servers, we dnt v to worry abt installing softwares, load balancing softwares etc
-load balancers can be either netwrk layer4 or application load balancer layer6
-with the help of the target grps we ar able to route traffic to the applica
-the loasd bal runs /performs health check
-LB makes use of listener,, it listens on ports/protocols
-users makeS rEQ like http get reQ, post reQ, delete  REQ
 
-IF WE WANT To access our backend application, it goes tru a ntwrl LB url
-Load balancers & webservers generally go together
-14:50 e.g of load balncers that can b installed
-ngnix
-haproxy
-http
 
+cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
+its all building infrastruture in the cloud and managing it, like EC2 and other required resources
+7:51 PROFF: for any org to operate they nid to manage their applications in a container, we call the containers computers  and the computers can be owned by the company 
+or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
+cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
+
+the course to knw hw to manage the resources hosted by AWS ,, understanding the process of managing the computing services in the AWS environment
+aWS cloud architecture/ aws solution architect
+
+?????/  is it possible to pair across 2 platforms, like a vpc in aws and vcp in gcp,,,
+ANS: if u v resources in aws &gcp, and  e.g u wnt to pair frm aws therefore, aws can be ur cloud and gcp ur onprem resorce,like anyothr onprem resource bc they ar nt in the 
+9:20 same cloud provider platform   ..... u ar goin to use diff options for the pairing like vpn,aws etc
+   
 we hv application servers wher applications ar being deployed
 18:49for traffic to be routed appriopriately, we v to do load balancing, it can be a load bal or ELS
 WE require a software wich helps us achieve load balacing with relative ease e.g ngnix or h ah proxy
@@ -401,21 +402,26 @@ indicating unhealthy bc d https link to install tomcat wasnt the latest version,
 
 
 
+video9
+5:47 
+ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
+ELS falls under Paas,,, routing trafic to backend application servers, we dnt v to worry abt installing softwares, load balancing softwares etc
+load balancers can be either netwrk layer4 or application load balancer layer6
+with the help of the target grps we ar able to route traffic to the applica
+the loasd bal runs /performs health check
+LB makes use of listener,, LB is all about ports,, it listens on ports/protocols
+users makeS rEQ like http get reQ, post reQ, delete  REQ
 
-VIDEO 9
-cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
-its all building infrastruture in the cloud and managing it, like EC2 and other required resources
-7:51 PROFF: for any org to operate they nid to manage their applications in a container, we call the containers computers  and the computers can be owned by the company 
-or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
-cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
+IF WE WANT To access our backend application, it goes tru a ntwrl LB url
+Load balancers & webservers generally go together
+14:50 e.g of load balncers software  that can b installed,, we require this software wich enables us to achieve LB with relative ease
+ngnix
+haproxy
+http
 
-the course to knw hw to manage the resources hosted by AWS ,, understanding the process of managing the computing services in the AWS environment
-aWS cloud architecture/ aws solution architect
 
-?????/  is it possible to pair across 2 platforms, like a vpc in aws and vcp in gcp,,,
-ANS: if u v resources in aws &gcp, and  e.g u wnt to pair frm aws therefore, aws can be ur cloud and gcp ur onprem resorce,like anyothr onprem resource bc they ar nt in the 
-9:20 same cloud provider platform   ..... u ar goin to use diff options for the pairing like vpn,aws etc
-   
+
+
 dns records:
   a records 
      Hostname: IPaddress
