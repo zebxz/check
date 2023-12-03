@@ -424,6 +424,8 @@ NLB:  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
 sub domian : webapps
 this is domain name ---    dominionapps.net
 
+************** steps- create domain name - create hosted zones- then access it on the browser
+
 we search for the dns name in the region it ws created
 ******17:57 TO CREATE RECORD SET/hosted name
 Hosted route -create record-recordname:to create a sub domain-alias:select alias to netwk-select NLB region- select dns- create.
@@ -447,8 +449,49 @@ further explanation, when we run curl -v localhost:8080 , this is d root path bt
 when configuring the health check and it will check it when we run it .... he used only / ,, bc it wasnt accepting /maven-web-app
 
 **** 42:53 create more target grps- now we hv multiple target grps, 1st  port80, targets: app1/jump, 2nd port80, app2,  but 3rd was 8080 all 3targets, 
+the target grps
+webappTG]
+ tdapp              
+ myApp              
 
-45:13 back to nlb. copy dns we can add /maven-web-app ,, when we paste it in the browser, we can see it routing traffic& when we refresh d browser we can see dif ip adresses
+
+***45:13 back to Alb. copy dns we can add /maven-web-app ,,when we paste it in D browser, we can see it routing traffic& when we refresh d browser we can see dif ip adreSes
+
+we cant give cx the NLB dns so to use d domian name created go to 
+*******route53-hosted names- recordname or leave it blank- select alias to appl & classic-region-select Alb dns-
+createthen with the name created we add the pathh to the application ie /maven-web-app and when we paste in the browser, we can access the application
+
+53:45  HOW TO ACCESS OUR MULTIPLE APPLICATIONS 
+
+OUR APPLICATIONs & target grps 
+applicationS        TargetGroupS
+ maven-web-app      [webappTG]
+ tdapp              [TDappTG]
+ myApp               PayPalappTG
+
+so we can create a-Records and define rules 
+e.g if someone types dominionapps.net ,, then ...
+Rule: .. bc ALB gives us this option  AND WE can route traffic based on  host and path  but we are using host here 
+ HOST
+dominionapps.net          ---Forward TO: webappTG
+  td.dominionapps.net       ---Forward TO: TDappTG
+  pay.dominionapps.net      ---Forward TO: PayappTG
+
+we are using the same ALB to route traffic to all the domain
+**** CREATE 2recrd setsthey are ALB plus the NLB we created earlier so dats 3 in total - region the same 
+WE CAN ALSO EDIT Record set e.g for the NLB  record set where we selected "alias to netwk, we can change it to alias application by ticting the record set n edit it
+*****TO decide how traffic shud be route
+
+leave this,, (go bk to LB- SCROL DOWN & click view/edit - GROup level stickyness is off we can up click edit - also we can add a rule 
+click on + -ADD conditios-in host header paste : td.dominionapps.net - tHEN:select D target gr :TDAPPTG & save ,now if trafic comes to td.dominionapps.net it wil route d trafic to TDAPPTG
+we do the same for all 3 
+(#### we were getting 502 bad gateway when we paste the domain hosted name in the browser: if its not working, confirn that the targets created in the target grps are healthy
+
+continue here .. #### he went back to the ALB, deleted the listerner and click add listerner-http 80-add action:forward- select all the target grps- add 
+*****go bk to LB- SCROL DOWN & click view/edit
+here we can insert 2 types of rules : either the host header or the path
+
+
 
 48:12 TO ENSURE A CX FINISHES HIS TASK ON THE SAME SAME BACKEND SERVER
 https://www.td.com/ca/en/personal-banking/  e.g they hv [50 appServers]
@@ -461,6 +504,9 @@ front end :https://www.td.com and that is what is given to cxs because in the ba
 
 
 
+webappTG]
+ tdapp              
+ myApp              
 
 
 
