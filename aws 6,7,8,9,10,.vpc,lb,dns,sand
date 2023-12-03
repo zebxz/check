@@ -390,9 +390,12 @@ in nxt class .. HOW TO USE LB to route traffic to multiple regions bc LB is work
 software routing rules whic are made possible bc of the inherent webserver sofware wich ar configured either by me if am deploying a self mgd webserver/LB bt for if its ELB ,  
 am deploying a serbice that is partly controlled by aws & by myself and its a paas, bc we dnt worry abt the underlying infrastruture ,e.g whether it nids a window infras or
  a linus infrast  and whatever sf it nids aws manages that ,,, so we can now focus on the type of backend target to be attached , listeners  ,, we  deter them
-LB is gud bc it spans accross an entire region bc it spans across an entire region and that means high availability is achieved bc i can hv my target in diff azs , ie if on 
+
+BENEFITS OF LB
+
+1) LB is gud bc it spans accross an entire region bc it spans across an entire region and that means high availability is achieved bc i can hv my target in diff azs , ie if on 
 az is down the other ones can sustain the az that is down 
-LB comes with addistional benefit like redundancy bc aws creates 2servrs in 2 az  so e.g if one server goes down its automatically replaced without ur knowledge
+2) LB comes with addistional benefit like redundancy bc aws creates 2servrs in 2 az  so e.g if one server goes down its automatically replaced without ur knowledge
 
 
 
@@ -412,12 +415,14 @@ the loasd bal runs /performs health check
 LB makes use of listener,, LB is all about ports,, it listens on ports/protocols
 users makeS rEQ like http get reQ, post reQ, delete  REQ
 
-IF WE WANT To access our backend application, it goes tru a ntwrl LB url
-Load balancers & webservers generally go together
-14:50 e.g of load balncers software  that can b installed,, we require this software wich enables us to achieve LB with relative ease
-ngnix
-haproxy
-http
+16:20   dominionapps.net --- myALB-178479865.us-east-2.elb.amazonaws.com/
+this is creating  record set using DNS, wich means that  .. dominionapps.net equals  --- dominionapps.net = nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+this is domain name ---    dominionapps.net
+
+we search for the dns name in the region it ws created
+17:57 TO CREATE RECORD SET
+Hosted route -create record-recordname:to create a sub domain-alias:select alias to netwk-select NLB region- select dns- create.
+
 
 
 
