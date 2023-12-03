@@ -425,11 +425,39 @@ sub domian : webapps
 this is domain name ---    dominionapps.net
 
 we search for the dns name in the region it ws created
-17:57 TO CREATE RECORD SET/hosted name
+******17:57 TO CREATE RECORD SET/hosted name
 Hosted route -create record-recordname:to create a sub domain-alias:select alias to netwk-select NLB region- select dns- create.
 
 TO ACCESS THE APPLICATION 
 the application we cloned is /maven-web-app  so , ==http://webapp.dominionapps.net/maven-web-app/ 
+
+22:17 CAN WE USE ONE NLB FOR MULTIPLE APPLICATION ? ... NO
+NLB goes with tcp protocol and its layer4 support also it  has one/single target grp
+
+**** 27:17 CREATING APP LOAD BALANCER .. protocol is http or https
+
+he used only / ,, bc it wasnt accepting /maven-web-app
+32:12 all our applications are running in virtual private cloud ,, just a free comment
+**select ALB- name-internt facing- ipv4-select vpc: az- SG:443,80, ie the ports users can access our appserver frm,outbound:all traffic- listeners 80- create target grp:name-
+protocl:http or https 80-select vpc-version:http1- health check :http- heath path : /maven-web-app - tick targets-8080- inclue-create-back to creating NLB: select target-grp
+41:39 we can add anoda listener e.g 8080 & create anoda target grp for the listener- create 
+ ie /, makes,  ..webapp.dominionapps.net/ .. the root path to access d application and we can run health check on the root path also webapp.dominionapps.net/maven-web-app, 
+37:00 so we can run health check like dis " /maven-web-app, checking if the application is running 
+further explanation, when we run curl -v localhost:8080 , this is d root path bt we can stil do dis curl -v localhost:8080/maven-web-app,so we can do/add dis /maven-web-app
+when configuring the health check and it will check it when we run it .... he used only / ,, bc it wasnt accepting /maven-web-app
+
+**** 42:53 create more target grps- now we hv multiple target grps, 1st  port80, targets: app1/jump, 2nd port80, app2,  but 3rd was 8080 all 3targets, 
+
+45:13 back to nlb. copy dns we can add /maven-web-app ,, when we paste it in the browser, we can see it routing traffic& when we refresh d browser we can see dif ip adresses
+
+48:12 TO ENSURE A CX FINISHES HIS TASK ON THE SAME SAME BACKEND SERVER
+https://www.td.com/ca/en/personal-banking/  e.g they hv [50 appServers]
+
+front end :https://www.td.com and that is what is given to cxs because in the backend this has being configured with the alias/domain name td.com
+
+49:59 we can use sticky session/stickyness to prevent cx from being moved around diff backend servers when accesisng their account
+
+
 
 
 
