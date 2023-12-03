@@ -341,10 +341,13 @@ quetsion is a jumpserver an instance without an installed applicationn like tomc
 ###### 1:55:09 DEPLOY AN APP & see how LB wil route traffic to the application
 git clone https://github.com/LandmakTechnology/maven-web-application
 
+clone the app : ls we hv d application- mvn package to create the packages (inside webapp dir) :ls we v target ie d packages we creatd n we can deploy to opt/tomcat9/webapps 
+
+deployment takes place in the webapp dir /opt/tomcat9/webapps/ 
 1:55:29 in real time wil use maven to automate the process......... tomcat was installed in the jumpserver
 deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename the repo- 
-mv maven-web-application/ nwa-ls- then cd mwa-
-inside maven web app ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package (sudo yum install maven -y (it installs maven & all
+mv maven-web-application/ nwa-ls- then cd mwa- . i bliv mvn package was done to create target dir wich contains the web-app we cloned, so we can deploy
+inside maven web app dir ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package (sudo yum install maven -y (it installs maven & all
 its dependencies like jave) - ls,2:00 we now hv the target dir- we wnt to deploy to d app server & to deploy to anoda server
 usimg d SCp bt it will ask for d key of the app server bc we nid to be authenticated b4 we can copy -vi key name &paste  -  chmood 400 key name.pem - 
 scp  -i (key name.pem )target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. once authentication is done, below ,we can see the file that was copied
@@ -416,36 +419,26 @@ LB makes use of listener,, LB is all about ports,, it listens on ports/protocols
 users makeS rEQ like http get reQ, post reQ, delete  REQ
 
 16:20   dominionapps.net --- myALB-178479865.us-east-2.elb.amazonaws.com/
-this is creating  record set using DNS, wich means that  .. dominionapps.net equals  --- dominionapps.net = nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+this is creating  record set using DNS, wich means that  .. webapps.dominionapps.net equals  --- dominionapps.net = nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+NLB:  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+sub domian : webapps
 this is domain name ---    dominionapps.net
 
 we search for the dns name in the region it ws created
-17:57 TO CREATE RECORD SET
+17:57 TO CREATE RECORD SET/hosted name
 Hosted route -create record-recordname:to create a sub domain-alias:select alias to netwk-select NLB region- select dns- create.
 
+TO ACCESS THE APPLICATION 
+the application we cloned is /maven-web-app  so , ==http://webapp.dominionapps.net/maven-web-app/ 
 
 
 
 
-dns records:
-  a records 
-     Hostname: IPaddress
-       simon  --- 4372152483  
-  PTR:    
-  c-name records  [aliases]:
-    landmark --- mylandmarktech   
 
-   domain name servcie   
 
- Which Region did we create our NLB: us-east-2 [Ohio]
-My domain name: dominionapps.net
-NLB:  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
-
-webapp.dominionapps.net --> nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
 
 webapp.dominionapps.net/maven-web-app 
 http://webapp.dominionapps.net/maven-web-app/
-http://webapp.dominionapps.net/maven-web-app/ 
 
   webapp.dominionapps.net/
   
