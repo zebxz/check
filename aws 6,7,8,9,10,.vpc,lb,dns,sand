@@ -428,7 +428,8 @@ this is domain name ---    dominionapps.net
 
 we search for the dns name in the region it ws created
 ******17:57 TO CREATE RECORD SET/hosted name
-Hosted route -create record-recordname:to create a sub domain-alias:select alias to netwk-select NLB region- select dns- create.
+Hosted route -create record-recordname:to create a sub domain if u like e.g if u chooose a sub name as pay then uLL v,:pay.dominion.net-alias:select alias to 
+netwk-select NLB region- select dns- create.
 
 TO ACCESS THE APPLICATION 
 the application we cloned is /maven-web-app  so , ==http://webapp.dominionapps.net/maven-web-app/ 
@@ -483,17 +484,48 @@ WE CAN ALSO EDIT Record set e.g for the NLB  record set where we selected "alias
 *****TO decide how traffic shud be route
 
 leave this,, (go bk to LB- SCROL DOWN & click view/edit - GROup level stickyness is off we can up click edit - also we can add a rule 
-click on + -ADD conditios-in host header paste : td.dominionapps.net - tHEN:select D target gr :TDAPPTG & save ,now if trafic comes to td.dominionapps.net it wil route d trafic to TDAPPTG
-we do the same for all 3 
+click on + -ADD conditios-drop box:hostheader and paste :td.dominionapps.net -tHEN:select D target gr :TDAPPTG & save ,now if trafic comes to td.dominionapps.net it
+wil route d trafic to TDAPPTG we do the same for all 3 
 (#### we were getting 502 bad gateway when we paste the domain hosted name in the browser: if its not working, confirn that the targets created in the target grps are healthy
 
 continue here .. #### he went back to the ALB, deleted the listerner and click add listerner-http 80-add action:forward- select all the target grps- add 
-*****go bk to LB- SCROL DOWN & click view/edit
-here we can insert 2 types of rules : either the host header or the path
+*****go bk to LB- SCROL DOWN & click view/edit,,, 
+1:18:00 here we can insert 2 types of rules : either the host header or the path 
+e.g if we v multiple application, using path option :td.dominionapps.net/pay  or td.dominionapps.net/td or td.dominionapps.net/maven-web-app
+the rules didnt work,when he typed the rule in the browser it was 502 bad gateway - only the routing done by adding all the targets grps in the  listeners worked.. 
+when we typed the domain hosted name in google 
+
+MAN IN THE MIDDLE ATTACK someone was asked in an interview... the protocol we use to access information is very  imp
+1:19:12 when tryig to route traffic, in the browseer, it says ur connection tothis site is nt secure...  we ere using http protocol
+he typed td.com and we could see the lock bc it is https ich is secured
+1:20:4 when e type https, it gives us option for what is called ssl, secured layer, or tls ,ssl& tls termination 
+for secured protcol, port 443 is used for https, cop dnt use http to transmit their content bc its nt secured n ALB supports ssl & tls termination.
+data/inf from endusers wil go tru encryption process, it wil b encrypted or coded
+
+HOW TO ENCRYPT DATA
+by using some sf  called certificates, it hides the data, so if someone trys to hacked the account he wil only get garbage.. 
+issued by certified certificate authorities, certificates are used for ssl termination
+when users type info its encrypted bt when it gets to the coy its decrpted.... just free talk .. lb is part of our internal infrastruture
+traffic frm users to the LB is encrypted therefore, so we nid to configure ssl termination for secured trafic using certificate.. we nid ssl/tls certificate
+der sr some many certificate issuing coy we can use, we can use multiple csertifictae isung coy
+e.g aws certificate manger to create certificate
+when the info gets to our LB its decrypted by the LB, so we nid to ensure that the by users access our website via a secured protocol using certificate mangers
+1:27:0 in aws, we hv AWS certificate manger
+certificates from other coy can be imported and used in aws
+
+1:27:3 REQ CERT FRM AWS.......... it will reQ for a domain name, it has to be ur coy domain name that u hv access to 
+seach- certmanger-req cert- req pub-next- domain name: we can list the domain name,or \the sub domain names e.g  dominionappas.net,pay.dominionapps.net, or
+*dominionapps.net and * represents all the sub names we v- dns validtaion-req. 
+TO VALIDATE THE CERT  if ur the owner create(cname record set)
+tick the cert domain name n click on it - creatre record in route 53-create
+
+**** add listener- https:443-default cation:we can select redirect or forward, we selected forward- select target grp-we can add action bt he didnt -default ssl/tsl: 
+we can import, or select ACM,iam,, we select ACM- selsct the certificate we just created in AWS-add- view listeners
+now we can see the certificate routing traffic to our webapp
+t
 
 
-
-48:12 TO ENSURE A CX FINISHES HIS TASK ON THE SAME SAME BACKEND SERVER
+48:12 TO ENSURE A CX FINISHES HIS TASK ON THE SAME SAME BACKEND SERver
 https://www.td.com/ca/en/personal-banking/  e.g they hv [50 appServers]
 
 front end :https://www.td.com and that is what is given to cxs because in the backend this has being configured with the alias/domain name td.com
