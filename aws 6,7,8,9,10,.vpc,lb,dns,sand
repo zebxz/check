@@ -408,7 +408,9 @@ indicating unhealthy bc d https link to install tomcat wasnt the latest version,
 
 
 
-video9
+video9,,  READ UP ADV OF LB,HEALTH CHECK , SECURITY
+####1:54:56 by default, LB route traffic to a single region, so for it to route traffic to multiple regions we v to INTEGRATE ROUTE53
+
 5:47 
 ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
 ELS falls under Paas,,, routing trafic to backend application servers, we dnt v to worry abt installing softwares, load balancing softwares etc
@@ -483,7 +485,7 @@ we are using the same ALB to route traffic to all the domain
 WE CAN ALSO EDIT Record set e.g for the NLB  record set where we selected "alias to netwk, we can change it to alias application by ticting the record set n edit it
 *****TO decide how traffic shud be route
 
-leave this,, (go bk to LB- SCROL DOWN & click view/edit - GROup level stickyness is off we can up click edit - also we can add a rule 
+leave this,, (go bk to LB- SCROL DOWN & click view/edit - (GROup level stickyness is off) we can up click edit - also we can add a rule 
 click on + -ADD conditios-drop box:hostheader and paste :td.dominionapps.net -tHEN:select D target gr :TDAPPTG & save ,now if trafic comes to td.dominionapps.net it
 wil route d trafic to TDAPPTG we do the same for all 3 
 (#### we were getting 502 bad gateway when we paste the domain hosted name in the browser: if its not working, confirn that the targets created in the target grps are healthy
@@ -513,25 +515,70 @@ when the info gets to our LB its decrypted by the LB, so we nid to ensure that t
 1:27:0 in aws, we hv AWS certificate manger
 certificates from other coy can be imported and used in aws
 
-1:27:3 REQ CERT FRM AWS.......... it will reQ for a domain name, it has to be ur coy domain name that u hv access to 
-seach- certmanger-req cert- req pub-next- domain name: we can list the domain name,or \the sub domain names e.g  dominionappas.net,pay.dominionapps.net, or
-*dominionapps.net and * represents all the sub names we v- dns validtaion-req. 
-TO VALIDATE THE CERT  if ur the owner create(cname record set)
+***********1:27:3 REQ CERT FRM AWS.......... it will reQ for a domain name, it has to be ur coy domain name that u hv access to 
+seach- certmanger-req cert- req pub-next- domain name: we can list the domain name,or \the sub domain names e.g  dominionappas.net,pay.dominionapps.net, or*dominionapps.net
+and * represents all the sub names we v- dns validtaion-req. 
+
+*********TO VALIDATE THE CERT  if ur the owner create(cname record set)
 tick the cert domain name n click on it - creatre record in route 53-create
 
 **** add listener- https:443-default cation:we can select redirect or forward, we selected forward- select target grp-we can add action bt he didnt -default ssl/tsl: 
 we can import, or select ACM,iam,, we select ACM- selsct the certificate we just created in AWS-add- view listeners
 now we can see the certificate routing traffic to our webapp
-t
+now we can move  http://dominionapps.net/ to https://dominionapps.net/..... this is now a secured way of transmitting our data ,, this is ssl termination
+*******is asked in INTERVIEW TO ,,, EXPLAIN UR XPERIENCE WITH SSL/TLS CERTIFICATE
+BY USING AWS MANGER, WE ENSURE THE TRAFFIC WE TRANSMIT IS HIGHLY SECURED 
 
+********* SSL REDIRECT
+IF ENDusers are try to access application from an unsecured protocol ie http
+we can do ssl redirect ie http to https by adding condition/rule
+1:40:55 ******** (go bk to LB- SCROL DOWN & click on http:80 rules -view edit rules- edit, it the pencil upthen edith one of the rules  -ADD conditions-drop box:hostheader
+and paste dominonapp.net -action:redirect:443...convertin an unsecured traffic to a secured traffic, so if u type http://dominonapp.net , it will automatically redirect d 
+traffic 
+
+PLACING LB in the frontend gives more security to the backend & we also mk use of managed LB services in AWS like ELS which gives us more options to integrate in our process
+of application deployment 
+
+ASG, auto scaling grp /LC, LAUNCH CONF/LT, launch template
 
 48:12 TO ENSURE A CX FINISHES HIS TASK ON THE SAME SAME BACKEND SERver
+1:45:25 ensuring that cx are only logged out in idling time and not at all times, we can use sticky session/stickyness to prevent that 
+when hes asked for his login details again bc he has been redirected to anoda server , it means stickyness is off
+
+******CONFIGURING SESSION TIME ,, when a user connects 
+click target group-attribute:edit-tick stickness:we can select 5min,meaning if u ar on dat server u cant be moved to anoda server during dat time,bc u ar actively connected.
+to that backend server, save changes - it refused to save , so he - go bk to LB- SCROL DOWN & click on http:80 rules -view edit rules- edit, it the pencil upthen edith d rule 
+assocated with the target group we are enabling stickness for - delete d previously created rule- add action:forward to- grp stickness:5miden-update ..we do the same for all 
+the rules associated with the target grp e.g if we created hhtp:80 or https:443 rule for the target grp we ar enabling stickines on..
+
+####1:54:56 by default, LB route traffic to a single region, so for it to route traffic to multiple regions we v to INTEGRATE ROUTE53
+
+####1:56:18  HW CAN WE AUTO SCALE TO ACHIEVE FULL AUTOMATION
+ALL ALONG WE V BEEN creating our target grps manually, for e.g if ders a spike in one of the target grps and the targets can no longer carry d load and we nid nid to add 
+more targets , we can add manually but we can also automate the process,, equally, if der is downtime,we can also deregistr some targets .
+**** we can automate using autoscaling
+2types.. horizontal & vertical scaling
+******e.g of horizontal ,,we v a t2 large server dat has 8GB & WE convert/change it to T2XLARGE ,,, now d T2large disappears completely &we ar left with T2X ,
+ALSO, if u had 2 t2large servers 200GB each, then u add another 2t2large servers with 500GB ,, it is also horizontal scaling 
+ e.g of vertical scaling .. from T2 large with 200gB to T2large with 500GB.. MOVING TO LARGE CAPACITY SERVER, its tha same sever bt increased in size
+SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
+
+2:03:53 READ THE SCRipt on telegram ... EC2 autoscaling 
+benefits... cost mgt etc
+when u manually provison ur infrastructure withot any autoscaler, the tendency is dat u wil spend more..... read it up
+
+
+
+
+
+
+
 https://www.td.com/ca/en/personal-banking/  e.g they hv [50 appServers]
 
 front end :https://www.td.com and that is what is given to cxs because in the backend this has being configured with the alias/domain name td.com
 
 49:59 we can use sticky session/stickyness to prevent cx from being moved around diff backend servers when accesisng their account
-
+GROup level stickyness
 
 
 
