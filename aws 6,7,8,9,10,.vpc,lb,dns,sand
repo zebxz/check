@@ -567,6 +567,39 @@ SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
 benefits... cost mgt etc
 when u manually provison ur infrastructure withot any autoscaler, the tendency is dat u wil spend more..... read it up
 
+********HW auto scaling works 
+in ths appservers u creat saling policy , u ar saying u nid a minimun of a appservers,max100
+appServers:
+Scaling Policy
+  Minimun  = 2
+  Desired  = 2
+  Maximum  = 100
+
+we can increasr our server base on either CPU usage or men usage e.g 
+ add instances if:
+  cpu usage > 75% or    
+  mem usage > 80%
+
+**********1. Create a Launch configuration  ..............  readup all the script
+   Create a Launch Template , dis is  anew generation of launch configuration 
+2. Use your Launch Template to create your Auto Scaling Group  [ASG]
+3. The auto Scaling group will create the Desired/required number of servers 
+   using Scaling Policy and the Launch Template 
+##### this policy wil create the minimum number of severs ie 2
+
+2:17:00  TO MK A SERVER HIGHLY AVAILABLE
+*****instances- select server- OPEN IT;ACTION:IMAGE& TEMplate:create template- nameversion:1- tick providing guidance, he unticked it,he wil do d autoscaling later-broese
+more amis-tick the machine image used to ccreate our server-confirm changes.-manually select instance type-(d key,SG, everytin has prepopulated)-tag-create launch template.
+2:18:33 in action of the template we jst created, i can select create auto scaling grp, 
+also i can go to auto scaling grps-create auto scaling grp- name-launch template:select the template we created/want-nxt- the same vpc-select all d AZ, ie d autoscaler can
+launch server in any of the AZnxt- we can attach to LB- it can also perform health check-nxtgrp size 2,2,200 - scaling policy:target tracking:70 ie if d avg cpu utilization 
+exceed 70% it shud either ad more inatances or reduce instances- nxt- we can do sms notification -nxt add tag-nxt-create- 
+2:23:21 the launch template has been created
+
+
+
+
+
 
 
 
