@@ -1,3 +1,11 @@
+FOR EC2 , WE WERE able to cover
+storage  [ebs, s3, efs]
+ASG  
+ELB  
+VPCs. 
+IAM  
+
+vpc, vpc peering, route table, routing traffic, B ,auto scaling, launch template
 
 MY TS EXPERIENCE: I tried installing tomcat with user script ie pasting
 installation script while launching an inatance but it wasnt working, and the target grp keptindicating unhealthy bc d https link to install tomcat wasnt the
@@ -138,7 +146,7 @@ vIDEO  7/8: Elastic Load Balancers& AUTO SCALLING
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
-tomcat script didnt install the tomcat
+tomcat script didnt install the tomcat, engr francis helped me resolve it 
 
 some aspect of the class he didnt cover bc nt running in his aws account ,, consult the resource material 
 running note FOR ELB and ASG ,,, auto scaling group ... ..
@@ -330,7 +338,7 @@ the jumpserver he curl -v localhost:8080 ..... so i bliv using the ip address, w
 
 
 
-
+route tables det hw traffic flows and in the route table we can v a local route
 WE WANT TO DEPLOY AN APPLICATION AND SEE HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION
 
 1:49:20 install tomcat ,, to check if tomcat has started netstat -utlpn
@@ -567,7 +575,7 @@ SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
 benefits... cost mgt etc
 when u manually provison ur infrastructure withot any autoscaler, the tendency is dat u wil spend more..... read it up
 
-********HW auto scaling works 
+********HW auto scaling works ...... was able to see the auto scaler creating instances when we deleted some instances, its using the launch template
 in ths appservers u creat saling policy , u ar saying u nid a minimun of a appservers,max100
 appServers:
 Scaling Policy
@@ -595,11 +603,43 @@ also i can go to auto scaling grps-create auto scaling grp- name-launch template
 launch server in any of the AZnxt- we can attach to LB- it can also perform health check-nxtgrp size 2,2,200 - scaling policy:target tracking:70 ie if d avg cpu utilization 
 exceed 70% it shud either ad more inatances or reduce instances- nxt- we can do sms notification -nxt add tag-nxt-create- 
 2:23:21 the launch template has been created
+now the auto scaler is updating capacity,and when we shut down the instances we already created, we can see that the autoscaler hv created instances to replace the one we 
+shut down.
+
+*****2:27:32  CREATING A LAUNCH TEMPLATE FROM THE SCRATCH WITHOUT AN AMI... (we wnt to use it to create and launch tomcat)
+I nid a launch template bc when d autoscaler is been trigger the launch tem conatains default confi, the way i wnt d instances cofigevrytin is defined in the launch template
+
+********LAUNCH TEMPLATE-name- vers:1- can use or nt use source template-machine - browse:redhat linux8-iam freetier-t2 micro-key-ntwrk can be included or nt-SG-
+Advance:paste script-create- auto scaling grp- name :tomcat app ASG-launch temp-
+select temp- vers:1- select vpc- all AZ-NXT- we can attach LB & if we do, we v to choose Targt grp n he did- nxt- 
+1,1,1- policy:appl load targ REQ, IF the target value is 5000 ie if our target is receiving an avg of 5000 req add more instances-scaling policy:none-nxt- creat autoscaler.
+so when we check, we can see the autoscaler creating the tomcat server
+*******2:34:37  when coy ar creating their autoscaling grp they mk use of golden amazon machine image  ... AMI
+WE USE AMI to launch inastances and it comes with operating system like ubuntu,redhat,windows but
+AMI conatins the default AMI plus other configurations like e.g the configured  
 
 
 
+security of VPC........ ROUTE TABLE ACTS AS A SECURITY MEASURE 
+2:46:30 route tables det hw traffic flows and in the route table we can v a local route e.g our vpc  10.0.0/24 SUBNET1has 10.0.0.0/25 , & Subnet2 has 10.0.0.28/25 , in the 
+route table i want to define hw traffic will flow in sub1 so i v a rout tbale that wil route local & internt traffic and anoda table dat route only local traffic.. sub1 
+WHER we v ELB/webser is permited to receive trafic so it has local traficfic 10.0.0./24 ^ internet traffic 0.0.0.0/0 ,, sub2 with app serv is nt permited to receive intent
+trafic dat means the route table hasonly 10.0.0/24 .. therefor the ROUTE TABLE ACTS AS A SECURITY MEASURE ,,.. BC since this subnet is assocaite with the route table without
+internet, thers no way it can receve internt traffic .... now for internet to get into sub1, we v to create igw and attached to the vpc,, also we creat the NAT gateway in the
+public sub. ie sub wit route to d internt,, with d NAT, resources in the private subnetcan v internt access.. bt since we ar mostlt launching servers we nid ELB, Auto scaling
+grps, launch template even targets and we provison our resources inside our vpc/netwrk 
+also a coy can v more than one vpc so to est a private connection btw 2vpcs, we can use vpc peering 
+for multiple vpc and unprem/insiteinfrasture, to ensure 
+unprem servers ar able to taklk with our servers in the cloud, we can use vpn, or aws direct
 
+??????#### some said he was aske din the interview hw he (d interviewer) gave e.g of xray hw do ur private subnet to d outside , hw do u configure that& he told him vpn bt
+at the end he asked theinterviwer what he wud do and he told him endpoint 
+*** prof wil xplain hw to use vpn endpoint and relational endpoint e.g when a database is crsated ina  private subnt and u wnt ot access it in a dif envir like a kubenetes
+cluster then u nid the endpoint of the database
 
+????if i create an account in a server n der are many servers and nxt time am in another server, is der a way to replicate all the data that is on the first server to this 
+present server, ie concerning LB.... prof yes ders a replication process , once an application ar captured,once u access an applica u v d option to write data into the
+application n ders  genearallyy a data base stuff we look at once we get into docker , hw to use databases n mk our life a little more easy.
 
 
 
