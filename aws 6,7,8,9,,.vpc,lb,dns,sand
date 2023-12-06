@@ -1,4 +1,4 @@
-3:00 AWS9 video... UDEMY FOR EC2 , WE WERE able to cover, SO  TRY TO GO TRU .... NO NID TO write exams
+3:00 AWS9 video... UDEMY FOR EC2 , WE WERE able to cover, SO  TRY TO GO TRU .... NO NID TO write exams, no comy uses all the aws services
 vpc peeering cannot work if the vpcs ar overlapping , we v nt hv such occurance in our company
 
 storage  [ebs, s3, efs]
@@ -645,38 +645,157 @@ application n ders  genearallyy a data base stuff we look at once we get into do
 
 
 
+video 10&11
+if u are to xpalin cloud computing and ervytin dt is involved to it , wev bin able to realisee der ar certain elemrnts to that effet wich we can discuss wit relative ease when
+cloud computing is involved...also talking abt cloud and their terms of org or levaraging their resources by a 3rd party ie using a 3rd party infrastructure and those 3rd parties
+in computing languages we call dem  called cloud computing providers and dey can provide ntwrking sevrvices, database services,server services,compute serv... & dis ser ar imp
+to tk note of when it comes to the diff element of cloud computing  our converstion v genral tailored towards that direction n all wev delibrated on is to ensure that end
+to end exercise is been achieved seemlessly wit relative ease. 
+
+"###############the diff aspect we hv been able to cover.......... read up cloudcomputing script
+1. aws cloud computing
+
+What is Cloud Computing ?
+Cloud computing is the delivery of computing services—including 
+  - servers,
+  - storage,  
+  - databases, 
+  - networking, 
+  - software, 
+  - analytics, 
+  - and more
+ over the Internet (“the cloud”)  hosted at a remote data center managed
+ by a cloud services provider (CSP).
+   CSP = aws, GCP, Azure, alibaba, vmware, salesforce, oracle, ibm, 
+
+ aws cloud = 
+  - servers,  e.g    = ec2 instances  
+  - severless, e.g   = Lambda functions,
+  - storage,         = ebs, efs,elastic file system, s3, 
+  - databases,  when we get into conatiner     = rds,relational databases e.g [ mySQL, mariaBD, posgressSQL, arura,  ], nonRDS[ dynamoDB,  ]
+  - networking,  = vpc, creating private ntwrk in aws
+  - software,   to create ec2 instance we nid a sfware to create the server resources = ami, SDLC, hw to automate task in aws
+  - analytics,  hw to analyze waht is happening in aws = CloudWatch, 
+  - and more  
+  - security     =aws security services 
+
+  Netflix = entirely run on S3  bucket, jst one service of aws is makn the coy a multi time billion coy
+wit the help of cloud computing u can easily become a millionaire frm the comfort of ur room if u understand a few of these services
+
+
+21:19  ...IAM = identity and access mgt
+=====================
+e.g if u wrk for netflix
+Netflix ---   
+   DevOps Engineers   
+   Developers .. all these pipo ar granted access to aws resources, therefore who shud access these resource is very imp
+so the serVice that is used to decide who access aws resources is called IAM among others, 
+
+AWS COVERS 2 THINGS: .. so u can finish this course and work as any of this 
+Cloud Engineering  
+Infrastructure Engineering
+so when we ar managing this resources thses ar all the infrat that nids to be managed:servers,
+  - storage,  - databases, - networking,- software,- analytics, - and more
+in managing infrastruture, we can :Infrastructure MGT [ create, view, update, delete, modify, grant access ] 
+and dis can be done using GUI ... E.g chnaging the name of my server , vpc .. we ar managing dis frm the console n u realise when u do dis thers high possiblity of error
+so apart frm using console we can use files 
+===========================
+
+########## HW CAN THESE RESOURCES BE MANAGED???????
+generally WE CAN use 
+CONSOLE  = GUI   e.g creating servers, vpc in aws :
+   Prune to errors 
+   Time consuming 
+   Visibility is challenging  
+   limited automation - 5%  
+
+also using Commands = CLI  = aws s3 ls :
+   Prune to errors 
+   Time consuming 
+   Visibility is challenging  
+   limited automation - 55%  
+   It cannot be easily replayed or redeployed
+   it can't be version controlled  
+
+ ########## THE BEST OPTION .....we can also use IaC and we r going to see d dif level of automation it brings to d table  = codes    = files  = IaC / Terraform  :
+   IAC wil cover terraform, we can use a tool called terraform, wit terform i can create a file,, e.g i can wrote  asimple teraform code to create vpc
+   It is not Prune to errors 
+   saves time  
+   Visibility is very easly  
+   great automation - 99%  
+   It can be easily replayed [dev/stage/prod]
+   it can be version controlled   
+****** IN OUR ENviron, we use all GUI, CLI and IAC, BUT WE  mostly manage infrasture using infrastructure as a code 
+
+resource "aws_vpc" e.g i want to create a vpc for tesla  "tesla-dev" {
+  cidr_block = "10.10.0.0/24", i wnt to crate a vpc wit 200ip addreses
+  instance_tenancy = "default"
+  tags{
+    Name = "tesla-be"
+    Environment = "dev"
+  }
+}
+
+i can easily use dis same file in d stage environment, it can be easily replayed or reployed in the dev,stage &prod, i can version control the file using git wit dif branches
+ie in the script ill change the environ from dev to stage or prod
+
+resource "aws_vpc" "tesla-stage" {
+  cidr_block = "10.10.0.0/24"
+  instance_tenancy = "default"
+  tags{
+    Name = "tesla-fe"
+    Environment = "stage"
+  }
+}
+=========================================
+Team members can manage resources using the console, cli or IaC.
+However for that to happen  there must be authenticated and authorise    
+
+IAM: in AWS , This is a key security service in aws used for  
+     authentication  and 
+     authorisation for Engineers and other team members to run different tasks. 
+ aws-account: U CAN ACCess aws account as a :
+   root-User =   
+   IAM-USER  = 
+changing from vpc to the IAM  dashboard it changes frm ohio to global
+
+vpc= regional and IAM is global 
+
+Assignement:
+Ticket-AS110:
+  Group aws services covered so far based on Global, Regional and Availability Zones
+  vpc = 
+
+Access management: can be accessed to 
+  IAM User groups = we can hv a grop for and assign policies to grps
+    managers [AdminAccess] , ie managers can do evrytin
+    developers, [VPCREADACCESS, S3FULLACCESS, EC2READACCESS ] therfore e.g he can launch ec2 instances ,so d developer must conact the manger or james bc they hv full access
+    Engineers [VPCFULLACCESS, S3FULLACCESS, EC2FULLACCESS]   
+  IAM Users       = simon [VPCREADACCESS] , class33, James[VPCFULLACCESS]   
+  IAM Roles
+ policy is an object in aws that define permission
+  IAM Policies - are Permissions that can be assigned to users/groups/IAM-Roles
+               e.g of policy can be : 1. VPCREADACCESS / 2. VPCFULLACCESS  
+
+Ticket00133:
+  Create iam user account access for; Class33, Simon and James  
+  Create user-group access for; managers and developers & Engineers
+  Assign admin access to the managers group    
+  assign VPCFULLACCESS, S3FULLACCESS, EC2FULLACCESS to the Engineers group
+  Add Simon to the manager's group  
+  add james to the developers group  
+  Assign EC2READACCESS to class33 user        
+
+ aws-account: 
+   root-User = 
+      root-email =  landmark@gmail.com 
+      root-password = admin123@001  
+  IAM-USER  = 
+   https://287784533479.signin.aws.amazon.com/console
+    userName = simon
 
 
 
-https://www.td.com/ca/en/personal-banking/  e.g they hv [50 appServers]
-
-front end :https://www.td.com and that is what is given to cxs because in the backend this has being configured with the alias/domain name td.com
-
-49:59 we can use sticky session/stickyness to prevent cx from being moved around diff backend servers when accesisng their account
-GROup level stickyness
-
-
-
-
-webappTG]
- tdapp              
- myApp              
-
-
-
-
-webapp.dominionapps.net/maven-web-app 
-http://webapp.dominionapps.net/maven-web-app/
-
-  webapp.dominionapps.net/
-  
-  webapp.dominionapps.net/maven-web-app 
-
-  myALB-178479865.us-east-2.elb.amazonaws.com/maven-web-app
-
-  dominionapps.net --- myALB-178479865.us-east-2.elb.amazonaws.com/
-
-  dominionapps.net/maven-web-app
 
 https://www.td.com/ca/en/personal-banking/  [50 appServers]
 
