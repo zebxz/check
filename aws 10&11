@@ -1,10 +1,32 @@
 IAM USERS , POLICIES , 
 IQ: Which tasks is an IAM user with admin access unable to do? Billing  
 
- Assignement:
+?????***  my question, what does regional and global mean ???????//
+Assignement:
 Ticket-AS110:
   Group aws services covered so far based on Global, Regional and Availability Zones
-  vpc = 
+regional=  vpc , route table, subnet
+global =  route53,iam , 
+
+HW SECURITY IS MANAGED... level of security
+ist person is authorized to creats server
+2nd person to perform task on the servers
+
+25:34:00 i v a server hosted in aws, inside the aws account at the global level i v some users, all iam users ,,, in the same account i v created my ntw so now i 
+v my vpc in the vpc i aslo created subnetwrks, in aws we can create resource and to be able to create resources, u v to be authorized like creating an instance.. that
+way not evryone can ,, creating the infastruture itself, u v to be authorized to crate or provisoin the server,, anoda person can be assigned permission to carry 
+out task on the server , now he can try to ssh  in to the server so to get access theres firewall so i hv to open port22,, b4 it is routed , inside my vpc v been able
+to create route tables attached to my subnet which allows routing to take palce inside my vpc within the subnet bt my firewall has to permit the trafifc  to get to 
+wher its going to , bc if the route tabe is nt created n my ports ar open i stil wont b able to route traffic...its like a virtual touter permiting trafic to be 
+routed...then we v another fire wall infront of the server called security grp and once port 22 is open then traffic will be routed to the person to carry out the
+task assigned.
+
+2:24:15 ???? yes...... can we use the cli to list the content of s3 bucket
+aws s3 ls class 33 willl list the content
+
+
+
+
 
 video 10&11
 if u are to xpalin cloud computing and ervytin dt is involved to it , wev bin able to realisee der ar certain elemrnts to that effet wich we can discuss wit relative ease when
@@ -257,43 +279,46 @@ apart from simon being authentictae with the keys he is also authorized via thes
 at work dis 2scenerios wil playout, wher ucan either shh into my server to perform task or i can perform it directly on my windows or
 mac system
 
+USING jumpserver for dis illustration
 **** when i run aws configure, it creates an account, it creats  afile called : .aws
+ll .aws/to see who owns the file
+cat .aws/config to see the configure file inside it 
+cat .aws/credentials
+we can delet rm -rf .aws/
+ls -a to check the list of files that starts wit a ,,,, now ders no .aws
+if we run aws s3 ls .... itv says no credentials 
 
+*********but is der anytin i can do to b able to acess these resource.... ie attaching Iam roles
+yes i can use IAM roles, these are policies/permissions that can be attcahed to another aws resource..[ec2 Instances, eks, ecs,etc.] 
+to permit the resource manage other resources based on the Policies attached to the role
+iamRoles are Policies/Permissions like [ VPCFULLACCESS, EC2FULLACCESS ] 
 
+******* 2:12:50 TO ATTACH IAM ROLES TO MY JUMP SERVER
+select the server-action:secrity:modify iam role-create IAM role-aws service-ec2-nxt-tick any permission- nxt-name of role- create
+we can add more permissions if we wnt- create anoda role   .. roles-create role-aws-use case: select e.g eks-nxt-nxt-rolename-create
+back to the server -select role frm drop box-update 
 
+******** back to my jumpserver, when i run aws s3 ls ,, now we are authenticated
 
-
-
-
-
-aws ec2 describe-instances
-aws ec2 describe-instances --filters "Name=tag:Name,Values=webserver"
-aws ec2 describe-instances --filters "Name=tag:Name,Values=appserver"
-$ aws ec2 terminate-instances --instance-ids i-5203422c
-
-https://www.bluematador.com/learn/aws-cli-cheatsheet
-
-aws ec2 describe-vpcs | jq -r '.Vpcs[]|.VpcId+" "+(.Tags[]|select(.Key=="Name").Value)+" "+.CidrBlock'
-aws ec2 describe-vpcs
-
-aws ec2 terminate-instances --instance-ids i-029abc614ea3dd26c i-0b9c2fae27ed0cc9e
-
- iamRoles are Policies/Permissions like [ VPCFULLACCESS, EC2FULLACCESS ] 
- that can be attached to another aws resource like [ ec2, eks, ecs   ]  
-  
-IAM-Roles can be attached to an aws resources [ec2 Instances, eks, ecs,etc.] 
-to permit the resource manage other resources based on the Policies attached 
-to the role 
-  class31-role [S3ReadOnlyAccess]   
-
-like 
-  
-
+to install aws cli software
 https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-help.html
 https://aws.amazon.com/cli/
 
-Identity providers
+
+Identity providers ... ther arev other identity providers we can use wit aws to mange more access 
 Account settings
+
+
+diff btw s3 bucket and ebs ,,, check the storgae part of the power point 
+check frm pg 34...s3 buckect is na object storage n it doesnt require creating any mount point,, while ebs volume is a block storgae requiring a mount point
+if i share a mnovie in my s3 bucket the whole class/ a thousand plus can can watch it at the same time,, dats why it has multiple gigabyte per sec
+
+ebs is block 
+efs is  file
+s3 is object storage
+
+to tk my aws study to the nxt level
+
 
 ===================================
 Terraform and other IaC tools to manage aws resources
