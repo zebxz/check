@@ -1,0 +1,239 @@
+containerization, docker ... virtualization  ... read powerpoint script
+
+to deploy application, we nid systems to mange the deployment, so either i geta  physical system, it comes wit harddrive/RAM, then on this physical/hardware system we
+install operating sys in the software componant,  e.g of Op system :windowns, linux,,, for the instalation we nid we ill nid some storage like database wher we ll hv all dis
+  inatalled and the storage wil  be captured in the harddrive.. on the storage we v our application running and on the op sys we ar able to deploy our application
+  the op comes with the bin dir wher d commands ar found,opt,sbin etc dir bt what is very imp is the bin dir.. on the op sys we v our application deployed n running like 
+  dbase appl etc n this is called traditional deployment of application and with dis traditional approach we ar heavily depending on a physical sys, physical sys ar used
+  from dis we move to virtualization
+  
+  7:59 VIRTUALIZED DEPLOYMENT
+ON THE PHYSICALsys we already hv, we ar able to create a virtual sys and we ll nid a hypervisor, on the op we install the hpervisor e.g virtual box,hyperV/xen/vmware 
+  this are sofwares that can permit to host a virtual sys on a phy sys
+  e.g of a physical sys is the laptop wit any of the op sys running on it ,, then we instal a guest op sys, we wnt to deploy our appl so we create virtual machines on d 
+    phy sys .. e.g on our laptop the  windows op sys is the host oS  ,, on th host oS i can install a guest OP sys like ubuntu and it wil cm wit its own binaries & lib files
+  so in the guest op we assign 8GB ,,, it is possible to v a guest op sys on the phy sys .. wit the help of softwares called hypervisor... i can v as many guest sys on the 
+  host sys e.g centos, windows2019, ,,on the guest systems i can deploy my appl or multiple web appl 
+  but in the traditional approach all the application wil be installed on jst one op sys and the disadv is that ders no isolation, if ders a problem in one appl it is 
+  possiblre to affect the others bt with virtualized approach we ar able to isolate 
+  trad was very common right uo to the 1980s and virtualized deployment ihas been used right up to the 2000s
+
+  thers a more powerful approach called containers, its very common today
+  with the help of containerized appl deployment 
+
+  so again we hv an op sys that comes wit bin files n lib, running on a phy sys ,, before deploying any appl we install a containerization software and genrally its docker
+18:00  ders ar others as well,, we ar now able to deploy our appl as containers ,, appl are nt deployed in virtual machines bt as containers, light weight conatiners  
+e.g  we hv 90 containers deployed and are running, the appl does nt req an entire guest sys.. e.g d appl size can be for appl 1 ;cpu 400mb n memory of 32mb n its light 
+  weight compared to virtualized
+
+  the virtualized nid an entire guest op sys which comes with its own file n lib but for containerisation, all the containers share the lib n binary file, so virtualzation
+  doesnt require a guest sys
+  therfore ths virtualized system has a faster start time to install 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Docker 
+======
+7 years Experience in IT and DevOps:
+How applications were deployed in the past and today:
+1.  1990S --- 10 years 
+2.  2000S ---   
+3.  TODAY  
+
+ 1) Traditional/Physical Deployment
+ 2) Virtualized Deployment (Hardware level Isolation) 
+ 3) Containerized Deployment(OS/Process level Isolation)
+
+====================================
+Docker -- Is a containerization software use to create, build
+          ship and deploy applications as containers
+            Build applications  
+            ship applications  
+            deploy applications  
+
+IQ: How many environment are you supporting in your CURRENT role??
+         Development environment    
+         Testing/QA environment    
+         Production environment 
+In docker applications run as containers   
+
+Containers --> contains everything required for an application to run create
+               (App Files (code), Dependencies 
+              (Softwares +Libraries), ENV vars & Other Configuration files) 
+              which is required for a piece of application/process to run.
+          app.war   -----> Virtual Machine  
+                           java and Tomcat installed and configured  
+
+
+   app code     = app.war + 
+   Dependencies = tomcat9 + openjdk11+
+
+   app code     = app.ear + 
+   dependencies = openjdk11+ + jboss/wildFly 
+
+   app code     = app.jar + 
+   dependencies = java1.8+    
+ 
+Containerization Software/Runtime --> :
+  Docker, = over 80% usage  
+  Rocket, 
+  Pod man, 
+  CRI-O, 
+  Core-OS,
+  Container-D. 
+
+Docker:  
+  Is a containerization multi-platform software use to;    
+  create, build, ship, share and deploy containerize applications  
+
+O.S --> Cross Platform (Docker can be installed in any O.S)
+        Docker Can Be Installed on Linux, Windows OS, macOS  
+        Desktops as well as servers.
+
+Docker is available in 2 Editions:
+
+ 1) Docker CE: --> Community Edition (Free to use)
+ 2) Docker EE: --> Enterprise Edition (Commercial/Licensed)
+     CE+
+     ---
+      1) Vendor Support = docker.io 
+      2) Additional Features like DTR (Docker Trusted Registry),
+      3) UCP (Universal Control Plane) GUI.
+
+Docker is developed in Go Lang/Go Language. 
+
+Docker Desktop (Local Laptops/Desktops) --> 
+https://docs.docker.com/engine/install/#desktop
+  Developers/DevOps Engineers Systems
+
+Linux Flavors :
+ CentOS
+ Amazon Linux
+ Red Hat   :
+ Ubuntu
+ Debian
+ Fedora
+ SUSE Linux …etc.
+ 
+Officially, Docker CE is not supported for Red Hat. 
+
+Install Docker on  Ubuntu
+###########################
+#!/bin/bash
+sudo apt update -y
+sudo apt install docker.io -y
+sudo service docker start
+sudo docker info
+sudo hostnamectl set-hostname docker 
+sudo usermod -aG docker ubuntu
+sudo su - ubuntu    
+ 
+
+ # Amazon Linux
+###########################
+sudo yum update -y    
+sudo yum install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+sudo su - ec2-user
+
+NB:
+Add Regular users to docker group for them to run docker commands/tasks  
+sudo usermod -aG docker <username>
+
+ex:
+sudo usermod -aG docker ec2-user
+sudo usermod -aG docker ubuntu   
+sudo usermod -aG docker simon   
+
+Ticket011:
+  Containerise the java based application in the SCM repository below;  
+  https://github.com/LandmakTechnology/maven-web-application
+
+Content:
+  source code      = src/main/app.java    
+  JUNitTestCases   = src/test/appTest.java  
+  build script     = pom.xml 
+  Dockerfile :
+    FROM tomcat:8.0.20-jre8
+    COPY target/*.war /usr/local/tomcat/webapps/tesla.war    
+
+Docker Image: --> It's a package which contains
+                 everything (+Application Code + Libraries, Softwares+ENV)
+                 needed to run your application.
+
+Docker containers: Run time instance of a docker image. 
+     If you execute: docker run, 
+     a container is created from the image 
+
+  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
+  docker build -t teslaimage:1 -f Dockerfile-tesla .  
+
+  Dockerfile :
+    FROM tomcat:8.0.20-jre8
+    COPY target/*.war /usr/local/tomcat/webapps/tesla.war    
+  
+  docker build -t teslaimage:1 . 
+
+ubuntu@docker:~/web$ docker images
+REPOSITORY   TAG           IMAGE ID       CREATED          SIZE
+teslaimage   1             13e31c5e87ff   14 seconds ago   498MB
+tomcat       8.0.20-jre8   e88a065848be   8 years ago      493MB
+
+  docker run --name webapp -d -p 80:8080    teslaimage:1  
+  docker run --name app    -d -p 8080:8080  teslaimage:1 
+  docker run --name myapp  -d -p 8000:8080  teslaimage:1  
+  docker run --name nginx  -d -p 9000:80    nginx:latest    
+
+   http://3.22.217.29:80/tesla/
+   http://3.22.217.29:8080/tesla/
+   http://3.22.217.29:8000/tesla/
+   http://3.22.217.29:9000 
+
+docker run --name containerName -d -p hostPort:containerPort image:tag 
+  -d = detachable mode  
+  -p = port Forwarding 
+
+Docker Registry:
+1. DockerHub public [80% usage]
+2. DTR 
+3. AmazonECR 
+4. Nexus/
+5. JFrog
+
+dockerhub.io  
+Create an account and a repository
+docker push markwellams/tesla-web-app:tagname
+
+Ticket012:
+  Create and share a docker image   
+
+docker architechture:
+  - docker client - docker cli = The command line utility for docker   
+      docker build
+      docker tag  
+      docker images  
+      docker run    
+  - docker Registry - Where docker images are stored and distributed    
+  - docker engine - Use by the docker service to execute tasks  
+
+ docker pull mylandmarktech/tesla:1
+
+ docker run --name containerName -d -p hostPort:containerPort image:tag 
+ docker run --name myapp -d -p 7000:8080  mylandmarktech/tesla:1 
+ docker run --name app   -d -p 8080:8080  teslaimage:1
+ docker run --name hello -d -p 80:80    mylandmarktech/hello   
+  
+  http://3.22.217.29  
+  curl -v 3.22.217.29:7000/webapp   = http://3.22.217.29:7000/tesla  
+  curl -v 3.22.217.29:8080/tesla
+  curl -v 3.22.217.29:80 or curl -v 3.22.217.29
+
+  11am - 2pm
