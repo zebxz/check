@@ -115,22 +115,23 @@ Docker is available in 2 Editions:
 
  1) Docker CE: --> Community Edition (Free to use)
  2) Docker EE: --> Enterprise Edition (Commercial/Licensed)
-     CE+
+     EE is the docker CE+ is
      ---
       1) Vendor Support = docker.io 
       2) Additional Features like DTR (Docker Trusted Registry),
-      3) UCP (Universal Control Plane) GUI.
+      3) UCP (Universal Control Plane) GUI. for docker 
+der ar diff options for installing docker
 
 Docker is developed in Go Lang/Go Language. 
 
-Docker Desktop (Local Laptops/Desktops) --> 
+Docker Desktop (Local Laptops/Desktops) --> ,,, this link can be use to install docker desktop 
 https://docs.docker.com/engine/install/#desktop
   Developers/DevOps Engineers Systems
 
-Linux Flavors :
+Linux Flavors :we can install docker on esp CE 
  CentOS
  Amazon Linux
- Red Hat   :
+ Red Hat   : nt for docker CE 
  Ubuntu
  Debian
  Fedora
@@ -138,6 +139,7 @@ Linux Flavors :
  
 Officially, Docker CE is not supported for Red Hat. 
 
+**** go tru the power point note,,, advantgaes of docker
 Install Docker on  Ubuntu
 ###########################
 #!/bin/bash
@@ -148,6 +150,9 @@ sudo docker info
 sudo hostnamectl set-hostname docker 
 sudo usermod -aG docker ubuntu
 sudo su - ubuntu    
+
+#apt or apt-get is package manager for ubuntu /debian systems
+#yum and dnf are package managers for redhat systems
  
 
  # Amazon Linux
@@ -162,10 +167,17 @@ NB:
 Add Regular users to docker group for them to run docker commands/tasks  
 sudo usermod -aG docker <username>
 
-ex:
+ex:the users can be 
 sudo usermod -aG docker ec2-user
 sudo usermod -aG docker ubuntu   
 sudo usermod -aG docker simon   
+
+during installation, bc he commented ..#sudo usermod -aG docker ubuntu.. ie to add ubuntu user to the docker grp 
+after docker installation, he ran.. docker ps ..without sudo bt permision denied 
+ then we run this command as root user ..sudo docker ps: to check containers that are running, and we got a response
+bt for automation, we add ubuntu to the docker grp... sudo usermod -aG docker ubuntu and change the shell
+if we check id ubuntu, can see its in the the docker grp 
+and when we run docker ps we get a response
 
 Ticket011:
   Containerise the java based application in the SCM repository below;  
