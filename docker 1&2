@@ -204,7 +204,7 @@ Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
 
-1:09:00 ***** to containerise this appliction
+**************1:09:00 ***** to containerise this appliction
 1) we clone the repository
 git clone https://github.com/LandmakTechnology/maven-web-application
 ls
@@ -223,27 +223,73 @@ my base image is tomcat:8.0.20-jre8 ,, so i nid tomcat for my appl to run ,, so 
 ***** so we hv tomcat 8.0.20 and java runtime 8
 
 so we wnat to build our image and the command is  
-1:15  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
+  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
   docker build -t teslaimage:1 -f Dockerfile-tesla .  
+
+we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
+am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
+
+
 
 
 Docker containers: Run time instance of a docker image. 
      If you execute: docker run, 
      a container is created from the image 
 
-  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
-  docker build -t teslaimage:1 -f Dockerfile-tesla .  
+ 1:14:00  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
+  docker build -t teslaimage:1 -f Dockerfile-tesla . 
+ docker build -t teslaimage:1 -f Dockerfile . (since am located in the web dir i could jst do a .,ie my docker file is found in my pwd
+ docker build -t teslaimage:1 . (the . means its building frm d docker file bc d defaut name for doecker file is docker file bt if am using a dif name e.g 
+docker build -t teslaimage:1 -fdockerfile-tesla then i must pas the -f option bt if am using docker file wich is d default name i cna decisde nt to pass the -f option
 
-  Dockerfile :
-    FROM tomcat:8.0.20-jre8
+
+so my file is docker file so i can execute this command like this: docker build -t teslaimage:1 
+we wnt to build an image ,, bt lookingat this image,my docker file says copy  the war file frm the target dir and move it to web...
+so wnt to create an image and wit the docker file an image can be created
+
+
+1:14:44 continuing frm the steps above
+2) docker build -t, i wnt to attach a tag to my image :teslaimage: version 1 and my docker file is found in my current working dir 
+docker build -t teslaimage:1 .
+####it downloaded bt it cant find the file so the copying failed, 
+when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the target dir that ends wit .war...
+ COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
+the target dir means we v created the packages
+mvn package , sudo apt instal maven .. if it says mvn not found
+ls target and now our artifact has been creted ... teslar.war
+cat Dockerfile and see ,, a very simple  file ,, this file has 2lines .. it wants to get (FROM tomcat:8.0.20-jre8) which is the base image 
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war    
+if i excecute ...docker build -t teslaimage:1 .) we can see dat we v done a build and it shows successful
+###we can exceute ....docker images) we can see hw the imgae v been created and its size 
   
-  docker build -t teslaimage:1 . 
+   
+  Dockerfile : ....... so wit the help of this file,we created an image called telsa1
+   FROM tomcat:8.0.20-jre8
+    COPY target/*.war /usr/local/tomcat/webapps/tesla.war    ,, so wit the help of this file,we created an image called telsa1
+
+
+Docker Image: --> It's a package which contains
+                 everything (+Application Code + Libraries, Softwares+ENV)
+                 needed to run your application. ... it is shippable
+
+Docker containers: Run time instance of a docker image. 
+     If you execute: docker run, 
+     a container is created from the image 
+
+1:20:26  lets do docker run... 
+we wn to deploy this application.. docker run , -d for detachable conatiner ,-p for port forwarding , port 80: marked to port 8080,wich is the port for tomcat
+i wnt to deploy my appli and i can attach a name to my application (name webapp
+docker run -d -p 80:8080 --name webapp teslaimage:1
+
+
+
+
+ docker build -t teslaimage:1 . 
 
 ubuntu@docker:~/web$ docker images
 REPOSITORY   TAG           IMAGE ID       CREATED          SIZE
 teslaimage   1             13e31c5e87ff   14 seconds ago   498MB
-tomcat       8.0.20-jre8   e88a065848be   8 years ago      493MB
+tomcat       8.0.20-jre8   e88a065848be   8 years ago      493MB ... this the base image wit this tag >>jre8... has the dependencies for this application to run 
 
   docker run --name webapp -d -p 80:8080    teslaimage:1  
   docker run --name app    -d -p 8080:8080  teslaimage:1 
