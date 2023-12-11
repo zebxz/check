@@ -7,7 +7,7 @@ install operating sys in the software componant,  e.g of Op system :windowns, li
   dbase appl etc n this is called traditional deployment of application and with dis traditional approach we ar heavily depending on a physical sys, physical sys ar used
   from dis we move to virtualization
   
-  7:59 VIRTUALIZED DEPLOYMENT
+  7:59 VIRTUALIZED DEPLOYMENT  ... XEN IS an hypervisosr e.g is EC2 INSTANCE VM 
 ON THE PHYSICALsys we already hv, we ar able to create a virtual sys and we ll nid a hypervisor, on the op we install the hpervisor e.g virtual box,hyperV/xen/vmware 
   this are sofwares that can permit to host a virtual sys on a phy sys like laptop, servers, or even in the cloud
   e.g of a physical sys is the laptop wit any of the op sys running on it ,, then we instal a guest op sys, we wnt to deploy our appl so we create virtual machines on d 
@@ -16,7 +16,7 @@ ON THE PHYSICALsys we already hv, we ar able to create a virtual sys and we ll n
   host sys e.g centos, windows2019, ,,on the guest systems i can deploy my appl or multiple web appl 
   but in the traditional approach all the application wil be installed on jst one op sys and the disadv is that ders no isolation, if ders a problem in one appl it is 
   possiblre to affect the others bt with virtualized approach we ar able to isolate 
-  trad was very common right uo to the 1980s and virtualized deployment ihas been used right up to the 2000s
+  trad was very common right uo to the 1980s and virtualized deployment ihas been used7 right up to the 2000s
 
   thers a more powerful approach called containers,
  CONTAINERS its very common today
@@ -34,28 +34,23 @@ e.g  we hv 90 containers deployed and are running, the appl does nt req an entir
 
 *********8READ UP POWER POINT SCRIPT
 
- 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  Docker 
-======
-7 years Experience in IT and DevOps:
-How applications were deployed in the past and today:
-1.  1990S --- 10 years 
-2.  2000S ---   
-3.  TODAY  
+OPTIONS TO USE FOR DEPLYMENT
 
  1) Traditional/Physical Deployment
  2) Virtualized Deployment (Hardware level Isolation) 
  3) Containerized Deployment(OS/Process level Isolation)
 
+
+  
+Docker 
+======
+7 years Experience in IT and DevOps:
+How applications were deployed in the past and today:
+1.  1990S --- 10 years 
+2.  2000S ---   CAN claim 7yrs working xperience
+3.  TODAY  
+
+ 
 ====================================
 Docker -- Is a containerization software use to create, build
           ship and deploy applications as containers
@@ -68,26 +63,40 @@ IQ: How many environment are you supporting in your CURRENT role??
          Testing/QA environment    
          Production environment 
 In docker applications run as containers   
+******33:07 .. e.g we v repos in git hub we wnt to deploy tonthe dev env using our vm/ec2 instances, on the instance, if i wnt to instal tomcat i v to first install all its
+dependencies java then once the tomcat is installed i v my appl running
+then to the test env, the same task is been done , lots of repitition and the same in production
+bt ders the possiblity that smt is workiing in in one stg bt its nt working in the oda n dev can tell u its working in dev env bt when u tk it to prod its nt working n dis
+a serious problem
+we mk use of containers to resolve or avoid all dis issues
 
-Containers --> contains everything required for an application to run create
+Containers --> contains everything required for an application to run create or evry tin req for appl to run 
                (App Files (code), Dependencies 
               (Softwares +Libraries), ENV vars & Other Configuration files) 
               which is required for a piece of application/process to run.
-          app.war   -----> Virtual Machine  
+          app.war   -----> can be deployed ina  Virtual Machine  n in the vm 
                            java and Tomcat installed and configured  
 
 
    app code     = app.war + 
+for a java web app to be deployed
    Dependencies = tomcat9 + openjdk11+
 
    app code     = app.ear + 
+for a ear app, we nid
    dependencies = openjdk11+ + jboss/wildFly 
 
-   app code     = app.jar + 
+   for standalone app , we nid 
+app code     = app.jar + 
    dependencies = java1.8+    
- 
-Containerization Software/Runtime --> :
-  Docker, = over 80% usage  
+
+ *****now the quetsion is whta can be done to be able to package d appl plus its dependencies n kip such dat if i wnt to deploy d appl all i hv to do is ship the app to 
+the deployment enev and it come swit the dependencies alreday packgedmening ders nid going to the dev enev n carry out conf, test n run , wecan easily ship dis appli
+how can we mk this process simplified?
+therefore we will be usisng :
+Containerization Software/Runtime --> : with this we can package an appl code plus its dependencies
+ these ar the dif dockerization software
+Docker, = over 80% usage , in the industry, it has the most level of trust
   Rocket, 
   Pod man, 
   CRI-O, 
