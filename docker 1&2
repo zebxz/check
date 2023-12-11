@@ -314,55 +314,66 @@ docker run --name containerName -d -p hostPort:containerPort image:tag
 
   ****** 1:25:00 to deploy a 2nd conatiner using the d same image 
 docker run --name app -d -p 8080:8080 --name webapp teslaimage:1  .. 2 containers cannot v the same host port number& name  , bt can v the same conatainer num
+host port 80 and container port: 8080 and it doesnt change
+host port must change but container port is nt changing
 
-*** to deploy a 3rd conatiner docker run --name app -d -p 8000:8080 --name webapp teslaimage:1 ... here d port was changed to 8000
+*** to deploy a 3rd conatiner docker run --name app -d -p 8000:8080 --name webapp teslaimage:1 ... here d host port was changed to 8000
 
-run docker ps and we v 3 containers running ,, so we can de
+run docker ps and we v 3 containers running ,, so we can deploy multiple applications wit the same image 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-ubuntu@docker:~/web$ docker images
-REPOSITORY   TAG           IMAGE ID       CREATED          SIZE
-teslaimage   1             13e31c5e87ff   14 seconds ago   498MB
-tomcat       8.0.20-jre8   e88a065848be   8 years ago      493MB ... this the base image wit this tag >>jre8... has the dependencies for this application to run 
-
-  docker run --name webapp -d -p 80:8080    teslaimage:1  
+observing this deployment, we didnt change the container port 80:8080
+##### docker run --name webapp -d -p 80:8080    teslaimage:1 
   docker run --name app    -d -p 8080:8080  teslaimage:1 
   docker run --name myapp  -d -p 8000:8080  teslaimage:1  
   docker run --name nginx  -d -p 9000:80    nginx:latest    
 
-   http://3.22.217.29:80/tesla/
+
+**** I CANT DEPLOY A CONTAINER FRM AN IMAGE I DID NOT CREATE
+i want to deploy a web application frm my image ,,, the name is nginx, -d -p , am deploying nginx on port 9000 frm my host port n the container port for webserver like
+nginx is port 80 and the image is nginx 
+
+docker run --name nginx  -d -p 9000:80    nginx  
+
+now , docker images to knw if we v nginx in our env bt we dnt 
+####we wnt to deploy nginx container and we nid the image  .. docker run --name nginx  -d -p 9000:80 nginx   
+if we dnt write the tag of the imgae as we didnt, it wil choose a default tag and that will be latest  ,, so it will go to d ngnix repository n check for what is 
+called latest 
+now its saying unable to find ngnix locally, so its pulling it frm the ngnix lib in docker hub 
+##### now if i run docker ps  ,,, ngninx is running 
+
+to access my aplications online 
+http://3.22.217.29:80/tesla/
    http://3.22.217.29:8080/tesla/
    http://3.22.217.29:8000/tesla/
    http://3.22.217.29:9000 
 
-docker run --name containerName -d -p hostPort:containerPort image:tag 
-  -d = detachable mode  
-  -p = port Forwarding 
+also i v to open the the specific ports on my SG to be able to acceess the appl onl
 
-Docker Registry:
+with the use docker Registry : how do we deploy ngnix when we dnt v the docker image ,, the nginx image was pulled frm the docker registry
+Docker Registry: this is where we can ship docker images.. examples:
 1. DockerHub public [80% usage]
 2. DTR 
 3. AmazonECR 
 4. Nexus/
 5. JFrog
 
-dockerhub.io  
-Create an account and a repository
+developers committheir code in github , while in docker they mostly use docker hub
+
+dockerhub.io  ... docker is the worlds easiest way to create mange and deliver your teams conatiner applications 
+you can Create an account and a repository or jst cm here to explore 
+
+1:39:00 with the help of the repository u can push images to therepository
 docker push markwellams/tesla-web-app:tagname
 
-Ticket012:
+with the help of my github account ders a lot i can do when it comes to managing ....
+
+1:42 we v a build server,with the ssrver we executing mvn package, creating package , we ar also building images  using docker file, docker build n once dat is done we
+can distribute these images , we can use dockerhub or nexus ,or amazon ecr or jfrog to distribute the images .. these images are push into the image registry and frm
+the registery a lot can be made to happen ,, we can pull the images and deploy appls in any enev, therfore ,we can pull the images for deployment, docker pull to pull
+d image n docker run to deploy the application, in the deployment server we v the pull n run and dats where deployment is taking place and this can take place in
+multiple env like dev, stage and prod,, the same image ,, we can deploy in any number of env... once they ar built these images are shared/distributed
+ 
+40 :00 Ticket012:
   Create and share a docker image   
 
 docker architechture:
