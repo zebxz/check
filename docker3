@@ -165,7 +165,34 @@ COPY target/*.war /usr/local/tomcat/webapps/tesla.war
   ######### if the docker file has a diff name must pass == docker build -t teslaimage:1 -f Dockerfile_TESLA /home/ubuntu/web 
 ****** successfully built twsla image
 
-3)
+47:43
+when we uploadd war files into nexus we can download, when we upload artifacts into nexus if we ar using docker, while containerizing i can pull the articfacts directly frm 
+nexus for docker to build an image, we can get d image frm is d maven build server n if its done locally in jenkins we can aslo get it frm jenkins or directly frm nexus 
+### we cannot get the image frm tomcat,, we deploy using tomcat or docker
+the images are either found in the build server or the artifactory ,wich is eithr maven, jenkins or the artcifaory wich is nexus or jfrog
+
+         WE use add if u want to download some softwares or add some files, files ar found in http location
+3)  #ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
+we v a key word called ADD, we v a war file in nexus server https, the ip address/port num , mylandmarktech/landmark.war, this is d file i wnat to copy bt i wnt to downlod
+the war file frm my nexus server
+also we ar copying evrytin that ends wit *war to  ..  /opt/jboss/wildfly/standalone/deployments/landmark.war
+# in jboss deployment takes place in the deployments dir 
+
+
+*************the keyword here is ***** FROM
+ vi JBOSS
+FROM jboss/wildfly
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/
+# in jboss deployment takes place in the deployments dir
+# in tomcat deployment take place in the webapps dir
+#ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
+
+
+
+
+
+
+
 ubuntu@docker:~/web/tesla$ cat Dockerfile_JBOSS
 FROM jboss/wildfly
 ADD target/*war /opt/jboss/wildfly/standalone/deployments/
