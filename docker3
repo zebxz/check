@@ -141,7 +141,7 @@ e88a065848be
         
 
 we git cloned the repository maven-web-application in previous class frm github and we rename it to web 
-cd web/
+cd web/  .. this is the repository containtaing imp files , can alson see target dir if packages hv been created before
 mk dir tesla : mkdir tesla
 to copy src dir to tesla dir  : cp -r src/ tesla/
 copy pom.xml to tesla dir : cp pom.xml tesla/
@@ -156,12 +156,16 @@ ubuntu@docker:~/web/tesla$ cat Dockerfile
 FROM tomcat:8.0.20-jre8
 COPY target/*.war /usr/local/tomcat/webapps/tesla.war
 
-1. docker build -t teslaimage:1 . 
+1) mvn package
+1. docker build -t teslaimage:1 . ,, we run this n the dot shows that our docker file is in the pwd
        where "." = pwd
        build is from the default Dockerfile name = Dockerfile 
-   docker build -t teslaimage:1 /home/ubuntu/web  
-   docker build -t teslaimage:1 -f Dockerfile_TESLA /home/ubuntu/web 
+   we can also do this == docker build -t teslaimage:1 /home/ubuntu/web
+##### we can also do this bt its longer == docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/tesla/
+  ######### if the docker file has a diff name must pass == docker build -t teslaimage:1 -f Dockerfile_TESLA /home/ubuntu/web 
+****** successfully built twsla image
 
+3)
 ubuntu@docker:~/web/tesla$ cat Dockerfile_JBOSS
 FROM jboss/wildfly
 ADD target/*war /opt/jboss/wildfly/standalone/deployments/
