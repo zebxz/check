@@ -1,5 +1,372 @@
 DOCKER FLOW
 we build the image from the file n the process of building the image is called containerization IE PACKAGING THE APPL with all its DEPENCIEDS IN AN IMAGE N FRM DER WE AR
 ABle to run containers/ deploy applications
+6:00 when an image is built, we push it to an image registry , either nexus, ecr,dockerhub, jfrog,, then we can pull the images in diff envri n do a deployment
 
-when an image is built i
+1:42 we v a build server,with the ssrver we executing mvn package, creating package , we ar also building images  using docker file, docker build n once dat is done we
+can distribute these images , we can use dockerhub or nexus ,or amazon ecr or jfrog to distribute the images .. these images are push into the image registry and frm
+the registery a lot can be made to happen ,, we can pull the images and deploy appls in any enev, therfore ,we can pull the images for deployment, docker pull to pull
+d image n docker run to deploy the application, in the deployment server we v the pull n run and dats where deployment is taking place and this can take place in
+multiple env like dev, stage and prod,, the same image ,, we can deploy in any number of env... once they ar built these images are shared/distributed
+ 
+40 :00 Ticket012: DOCKER 1 VIDEO
+  Create and share a docker image   
+
+hw does the docker architec works
+docker architechture:
+  - docker client - is the  docker cli = The command line utility for docker   
+      the  docker client/CLI has stuffs like : 
+   docker build
+      docker tag  ,, we can tag an image
+      docker images  .,,, list images
+      docker run    
+  - docker Registry - Where docker images are stored and distributed    
+  - docker engine==- - Use by the docker service to execute tasks  e.g when u run docker build, u ar inform the daocker engine, tk dis instruction n build a docker image
+the emgnine tks the instructions n assihn a tag to an image 
+
+
+7:00 DOCKER IMAGES RELATED COMMANDS
+
+Docker images commands:
+  docker build  
+  docker tag 
+  docker images
+  docker pull  
+  docker push  
+Docker containers commands:
+  docker run  
+  docker ps   
+  docker rm  
+Docker images :
+Docker containers  
+Dockerfile 
+Docker Networks 
+Docker volumes  
+Docker compose  
+Docker swarm 
+
+Ticket013:
+  1. prepare a jenkins ci job for maven-web-application 
+  //Jenkisfile for maven-web-app ci job
+node{
+    stage('1.CloneCode'){}
+    stage('2.mvnBuild'){}
+    stage('3.CodeQuality'){}
+    stage('4.UploadArtifacts'){}
+}
+
+  2. prepare a jenkins cd job for maven-web-application  
+
+//Jenkisfile for maven-web-app cd job
+node{
+    stage('5.createDockerImage'){
+        sh "docker build -t "
+    }
+    stage('6.PushImageDockerhub'){}
+    stage('7.Deploy2UAT'){}
+    stage('8.approval'){}
+    stage('8.Deploy2Prod'){}
+}
+
+then this wil b the upstream ..: Jenkisfile for maven-web-app ci job
+
+Ticket014:
+Prepare a jenkins ci/cd job for maven-web-application 
+
+1. cloning the latest version of the application - SCM/github 
+2. building using maven   
+3. running code quality analysis with sonarQube  
+4. uploading artifacts in nexus  
+5. pre-deployment
+      1. containerizing the application by creating 
+         docker images using   Dockerfile
+      2. distributing the images in docker image Registry   
+        like  dockerhub/Nexus/JFrog   
+6. Deployment TO UAT environment using kubernetes    
+7. APPROVAL[manual: continuos delivery  or auto continous deployment] 
+8. Deployment to Production environment using kubernetes
+9. email/slack notification  if ders a problem , to inform us smt is going wrong
+
+
+Docker images commands:
+  docker build  
+  docker tag 
+  docker images
+  docker pull  
+  docker push  
+
+docker build vs  docker image build,docker image history, docker image imort 
+Commands:
+  build       Build an image from a Dockerfile
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Display detailed information on one or more images
+  load        Load an image from a tar archive or STDIN
+  ls          List images
+  prune       Remove unused images
+  pull        Download an image from a registry
+  push        Upload an image to a registry
+  rm          Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+
+
+Docker images commands:
+  docker build    = create a docker image from a Dockerfile  
+  docker tag      = assigns repository name to images 
+  docker images   = list images
+  docker image ls = list images
+  docker images -q = list image ids ONLY 
+
+ubuntu@docker:~$ docker images
+REPOSITORY             TAG           IMAGE ID       CREATED        SIZE
+teslaimage             1             13e31c5e87ff   5 days ago     498MB
+nginx                  latest        61395b4c586d   3 weeks ago    187MB
+mylandmarktech/tesla   1             6da8acdc7fc9   2 months ago   498MB
+mylandmarktech/hello   latest        31e17b0746e4   7 years ago    17.8MB
+tomcat                 8.0.20-jre8   e88a065848be   8 years ago    493MB
+
+  docker images -q  
+
+  docker rmi imageName/imageID /imagetag      = DELETE AN IMAGE   
+   FORCE DELETE AN IMAGE = docker rmi -f mylandmarktech/hello:latest = FORCE DELETE AN IMAGE  
+                            docker rmi -f mylandmarktech/hello:latest 
+                            docker rmi -f  
+  to list image ids only = ubuntu@docker:~$ docker images -q  
+61395b4c586d
+e88a065848be
+33:26  DELETE ALL IMAGES = ubuntu@docker:~$ docker rmi -f $(docker images -q)
+                 
+   deletes selected images = docker rmi -f  13e31c5e87ff 6da8acdc7fc9 e88a065848be
+        
+
+we git cloned the repository maven-web-application in previous class frm github and we rename it to web 
+cd web/
+mk dir tesla : mkdir tesla
+to copy src dir to tesla dir  : cp -r src/ tesla/
+copy pom.xml to tesla dir : cp pom.xml tesla/
+copy dockerfile: cp DOckwerfile tesla/
+the 3 documents copied ar sufficient for my project
+ls tesla, we see d 3 files wwe copied 
+cd tesla 
+cat docke rfilr : we can see its a 2line file
+we can build an image  with the help of the docker file
+
+ubuntu@docker:~/web/tesla$ cat Dockerfile
+FROM tomcat:8.0.20-jre8
+COPY target/*.war /usr/local/tomcat/webapps/tesla.war
+
+1. docker build -t teslaimage:1 . 
+       where "." = pwd
+       build is from the default Dockerfile name = Dockerfile 
+   docker build -t teslaimage:1 /home/ubuntu/web  
+   docker build -t teslaimage:1 -f Dockerfile_TESLA /home/ubuntu/web 
+
+ubuntu@docker:~/web/tesla$ cat Dockerfile_JBOSS
+FROM jboss/wildfly
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/
+# in jboss deployment takes place in the deployments dir
+# in tomcat deployment take place in the webapps dir
+#ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
+
+ docker build -t teslaimage:jb2 -f Dockerfile_JBOSS .  
+
+ubuntu@docker:~/web/tesla$
+
+
+ubuntu@docker:~/web/tesla$ docker images
+REPOSITORY      TAG           IMAGE ID       CREATED          SIZE
+teslaimage      jb2           9b6cf25392ee   17 seconds ago   742MB
+teslaimage      1             a47c73fd7b22   9 minutes ago    498MB
+jboss/wildfly   latest        856694040847   2 years ago      736MB
+tomcat          8.0.20-jre8   e88a065848be   8 years ago      493MB
+
+
+docker push mylandmarktech/maven-web-app:tagname
+docker push mylandmarktech/maven-web-app:jb1  
+docker push teslaimage:jb2     
+
+docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1    
+docker tag teslaimage:1 mylandmarktech/maven-web-app
+docker push mylandmarktech/maven-web-app:jb1  
+docker login -u mylandmarktech
+docker login -u username/EMAIL -p password   
+docker push mylandmarktech/maven-web-app:jb1 
+
+   docker pull nginx:stable-perl
+
+index.html  
+echo "DevOps is good" >> /var/www/html/index.html   
+echo "With Landmak Technologies" >> /var/www/html/index.html  
+
+Pull images from Public registry [dockerhub] : 
+    No athentication is required
+
+Pull images from private registry [ecr/dockerhub/nexus/JFrog] :
+    Authentication is required   
+    docker login -u username -p password 
+
+push images to Public registry [dockerhub] :
+      Authentication is required   
+      docker login -u username -p password 
+
+push images to private registry [dockerhub] :
+      Authentication is required   
+      docker login -u username -p password 
+
+Nexus private docker registry:
+==============================
+https://8.200.55.9:8081/tesla/  
+ docker tag mylandmarktech/tesla:1 8.200.55.9:8081/tesla/tesla-web-app:1 
+ docker login -u admin -p admin123  
+ docker push 8.200.55.9:8081/tesla/tesla-web-app:1 
+
+aws ecr private docker registry:
+===============================
+Retrieve an authentication token and authenticate your Docker client to your registry.
+Use the AWS CLI:
+
+
+
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 287784533479.dkr.ecr.us-east-2.amazonaws.com
+
+docker build -t web-app .
+
+docker tag web-app:latest 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:latest
+
+docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+
+
+docker push 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+
+
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v5s8z0t3
+
+docker tag teslaimage:jb2 public.ecr.aws/v5s8z0t3/web-apps:1  
+docker push public.ecr.aws/v5s8z0t3/web-apps:latest
+docker push public.ecr.aws/v5s8z0t3/web-apps:1 
+
+
+public.ecr.aws/nginx/nginx:stable-perl
+
+docker pull public.ecr.aws/v5s8z0t3/web-apps:1   
+
+docker pull public.ecr.aws/v5s8z0t3/web-apps:1
+
+
+delete all images using: docker rmi -f $(docker images -q) 
+===========================
+docker images -q  = List image IDs  
+docker rmi $( docker images -q )   
+docker rmi -f $(docker images -q)  
+
+docker build/pull/scan/push/inspect/rmi/prune/tag  
+
+
+docker build/ps/images     
+
+docker container commands:
+============================
+docker ps    = List running containers  
+docker ps -a = List all containers [running and stopped/excited] 
+docker ps -q   = List running containers IDs
+docker ps -aq  = List all containers IDs 
+docker stop containerName/ID  
+docker stop
+
+List Running Containers
+=======================
+docker ps -a --filter  status="running" 
+docker ps 
+docker container ls
+
+List All Containers
+==================
+docker ps -a
+docker container ls -a
+
+List ONLY stopped Containers
+=================================
+docker ps -aq --filter  status="exited" 
+docker ps -a --filter  status="exited" 
+
+List only running container ids
+==============================
+docker ps -q
+docker container ls -q
+
+
+List all container ids
+==============================
+docker ps -aq
+docker container ls -aq
+
+
+deletes stopped containers 
+===========================
+docker rm containerName/ID  
+docker rm $(docker ps -aq --filter status='exited' ) 
+
+Force Delete a running container  
+===============-----------------
+docker rm -f containerName/ID 
+ docker rm -f $(docker ps -aq --filter  status="running") 
+
+Delete an exited/stopped container  
+===============-----------------
+docker rm containerName/ID  
+
+Delete all exited/stopped container
+====================================  
+docker rm $(docker ps -aq --filter status='exited' )
+
+Delete all  container
+====================================  
+docker rm -f $(docker ps -aq )
+
+
+Delete all excited/stopped Containers
+================================
+docker rm $(docker ps -aq --filter  status="exited")
+
+Ticket014:
+  Deploy an application from the mylandmarktech/java-web-app image.
+Method1:  
+1. docker pull mylandmarktech/java-web-app
+2. docker scan mylandmarktech/java-web-app  
+3. docker run --name webapp -d -p 8000:8080  mylandmarktech/java-web-app  
+
+Method2:
+1. docker pull mylandmarktech/java-web-app
+2. docker scan mylandmarktech/java-web-app  
+3. docker create --name webapp -d -p 8000:8080  mylandmarktech/java-web-app 
+4. docker start  webapp 
+
+Method3:
+  docker run --name webapp -d -p 8000:8080  mylandmarktech/java-web-app 
+  http://3.22.217.29:8000/java-web-app 
+
+Ticket0015 -  :
+1. https://github.com/LandmakTechnology/python-flask-app
+2. docker pull mylandmarktech/python-flask-app
+  Deploy a pythonapp application using docker: 
+    1. use/Create/modify a Dockerfile   
+    2. Use the Dockerfile to build a docker image  
+    3. Push the image to an image registry[dockerhub/ecr/nexus/JFrog]
+    4. pull, inspect and scan the docker image
+    5. deploy the application using the image [docker run]  
+
+
+git clone https://github.com/LandmakTechnology/python-flask-app  
+
+FROM python:3.7
+WORKDIR /opt/app
+COPY . .
+RUN pip install --no-cache-dir -r requirements-prod.txt
+EXPOSE 5000
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+
+
+docker tag pythonimage:1 mylandmarktech/python-flask-app:33  
+docker push mylandmarktech/python-flask-app:33  
+
