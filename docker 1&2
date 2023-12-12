@@ -1,4 +1,5 @@
 containerization, docker ... virtualization  ... read powerpoint script
+script for build and deployment process
 
 to deploy application, we nid systems to mange the deployment, so either i geta  physical system, it comes wit harddrive/RAM, then on this physical/hardware system we
 install operating sys in the software componant,  e.g of Op system :windowns, linux,,, for the instalation we nid we ill nid some storage like database wher we ll hv all dis
@@ -211,7 +212,7 @@ ls
 rename .... mv maven-web-application/ web
 ls
 cd web/
-vi docker file and delete all except the 2lines ofcode FROM&COPY and change maven-web-application to tesla.war
+vi docker file and delete all except the 2lines ofcode FROM&COPY and change maven-web-application to tesla.war (i bliv dats d name of d image we clone)
 THE KEYWORD *FROM IS used to get the base image and the base image comes from some softwaers smoe depencies that are req forthe appl to run .. nomrlaly, we deploy web app
 in the web apps dir
 my base image is tomcat:8.0.20-jre8 ,, so i nid tomcat for my appl to run ,, so my teslar web app depends on this base image
@@ -258,7 +259,7 @@ when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the 
  COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 the target dir means we v created the packages
 3)mvn package , sudo apt instal maven .. if it says mvn not found
-ls target and now our artifact has been creted ... teslar.war
+ls target and now our artifact has been created ... teslar.war
 cat Dockerfile and see ,, a very simple  file ,, this file has 2lines .. it wants to get (FROM tomcat:8.0.20-jre8) which is the base image 
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war    
 if i excecute ...docker build -t teslaimage:1 .) we can see dat we v done a build and it shows successful
@@ -376,25 +377,46 @@ multiple env like dev, stage and prod,, the same image ,, we can deploy in any n
 40 :00 Ticket012:
   Create and share a docker image   
 
+hw does the docker architec works
 docker architechture:
-  - docker client - docker cli = The command line utility for docker   
-      docker build
-      docker tag  
-      docker images  
+  - docker client - is the  docker cli = The command line utility for docker   
+      the  docker client/CLI has stuffs like : 
+   docker build
+      docker tag  ,, we can tag an image
+      docker images  .,,, list images
       docker run    
   - docker Registry - Where docker images are stored and distributed    
-  - docker engine - Use by the docker service to execute tasks  
+  - docker engine==- - Use by the docker service to execute tasks  e.g when u run docker build, u ar inform the daocker engine, tk dis instruction n build a docker image
+the emgnine tks the instructions n assihn a tag to an image 
 
- docker pull mylandmarktech/tesla:1
-
- docker run --name containerName -d -p hostPort:containerPort image:tag 
+ Create and share a docker image  
+1) docker pull mylandmarktech/tesla:1
+now we v an image  called , mylandmarktech/tesla:1
+2) wit the image we v pulled in our deployment evnv, we can run a container wit the image ,,to delete previous containers .... docker rm -f (container name)
+ ***docker run --name containerName -d -p hostPort:containerPort image:tag 
  docker run --name myapp -d -p 7000:8080  mylandmarktech/tesla:1 
  docker run --name app   -d -p 8080:8080  teslaimage:1
- docker run --name hello -d -p 80:80    mylandmarktech/hello   
-  
-  http://3.22.217.29  
-  curl -v 3.22.217.29:7000/webapp   = http://3.22.217.29:7000/tesla  
+ docker run --name hello -d -p 80:80    mylandmarktech/hello   ,, initially he used host port 8080 bt we cudnt access d appl bc this is an ngnix base image, so changed to 80
+
+#### if we execute docker run and the image does nt exists like mylandmarktech/hello, if it cant find it ,it wil pull the image frm the image registry
+to deploy the 3applications , i can vi deploy.sh  ,, then  sh deploy.sh
+  if i run docker ps .. all the appl ar all running
+
+http://3.22.217.29  
+  curl -v 3.22.217.29:7000/tesla   =  we were getting 404 error when we tried to access it onlin bc the path to the appl is webapp nt tesla 3.22.217.29:7000/webapp   
   curl -v 3.22.217.29:8080/tesla
   curl -v 3.22.217.29:80 or curl -v 3.22.217.29
 
-  11am - 2pm
+we cudnt access, the container name my apps, so i can acces the appl by run: docker exec myapp ls 
+then docker exec myapp ls webapps,, n  we can see the root path  , so we must watch for the direct appl path
+ROOT
+docs
+examples
+host-manager
+manager
+webapp
+
+2:08:00
+when endusers try to access our appli they ar entering the host ip & host port number , if the container has its own ip address , for traffic to get to my containers/server
+the host server receives the traffic n its transmiyted to the appli/conatiners so when it gets in the containers it uses the container ip address n the port number , therfor
+if the container listens on port 8080 and i change it to 8000, it will nt work .. this is port forwarding , this is routed internally frm the docker deployment server
