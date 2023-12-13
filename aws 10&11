@@ -1,3 +1,5 @@
+didnt practice this video
+
 IAM USERS , POLICIES , etc
 
 UDEMY VIDEO
@@ -163,7 +165,7 @@ Ticket00133:
   add james to the developers group  
   Assign EC2READACCESS to class33 user   
 
-59:000 CREATE IAM USER
+*******59:000 CREATE IAM USER
 ****IAM create user-name -provide access:if i dnt tick it d user cant come to aws axccount, he can only access aws resources tru the console or cli ,iaC- USER TYPE:IAM -
 CUSTOM pass-user must neww pss:untick-nxt-add uyser to grp- CREATE
 when we logged the user in he it indicated u are nt authorixed to....
@@ -219,7 +221,7 @@ we can choose table or jason-, run aws s3 ls and we can see/list the  s3 bucket 
  if we say ...sudo yum remove awscli and run aws s3 ls , it says no such file
 sudo yum install awscli ... aws  --version   .. 
 
-******8we can grant and restrict access.... if we remove simon frm the mangers grp if he run aws s3 ls, he  cant get a response bc d acess keys are his n hes removed 
+*****we can grant and restrict access.... if we remove simon frm the mangers grp if he run aws s3 ls, he  cant get a response bc d acess keys are his n hes removed 
 ## we can go to iam,-users- simons- permission: we can add him to a grp , or we can attach policies directly :amazons3readonly-add 
 now if he run thwe command again , he gets a response
 **** ** aws s3 mb s3://class33 ... name is class33....he trys to create bucket bt he cant bc he can list but not create 
@@ -234,10 +236,11 @@ we can use permision to ensure that users can be able to perform specific tasks
 1:42,, 
 *****yes ,,,,   CAN I MANAGE MY AWS RESOURCES DIRECTLY WITHOUT CONNECTING TO ANY SERVER THAT HV CREATED IN AWS  
 
-google, aws ec2 command line list instances, ,, all the commands are availble, i dnt v to cram dem,, 
+google, aws ec2 command line list instances, ,, all the commands are availble online, i dnt v to cram dem,, 
 https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html
 
 still using simon credential who doesnt v ecs instance permisison
+i  bliv dis comman is to describe a particular instance
 1:45:50 ******aws ec2 describe-instances --filters "Name=tag:Name,Values=MyInstance" now we can replace my instance with 
 aws ec2 describe-instances --filters "Name=tag:Name,Values=webserver" ,, we can decribe inrances like dis
 now paste in mobaxterm ,,unknown output type: jason ... then he typed aws configure and  json for default output format   
@@ -248,6 +251,9 @@ so nnow in mobaxterm we can see all d instances wit d name appserver, all their 
 
 ##### we can also terminate instances from the command line ,
 jst copy n pate this command with the ipadresses attached  
+aws ec2 terminate-instances --instance-ids i-5203422c
+
+
 
 aws ec2 describe-vpcs | jq -r '.Vpcs[]|.VpcId+" "+(.Tags[]|select(.Key=="Name").Value)+" "+.CidrBlock'
 to describe vpc ...aws ec2 describe-vpcs
@@ -260,7 +266,7 @@ we can from the command line n with the iac
 2:00 aws eks get-clustters
 aws eks list-clusters
 
-**8***88  I DNT understand
+**8***88  I DNT understand ,,  then below i understood
 2:06:00 I CAN PERFORM MY TASK DIRECXTLY ON MY WINDOWS SYSTEM WITHOUT CONNECTING TO MY EC2 INSTANCE
 
 WHEN am working frm gitbash am working directly on my windows system,, am using my windows system to manage aws resources
