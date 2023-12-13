@@ -161,7 +161,7 @@ e88a065848be
    deletes selected images = docker rmi -f  13e31c5e87ff 6da8acdc7fc9 e88a065848be
         
 
-we git cloned the repository maven-web-application in previous class frm github and we rename it to web 
+we git cloned the repository maven-web-application that contains the docker file n other files in previous class frm github and we rename it to web 
 cd web/  .. this is the repository containtaing imp files , can alson see target dir if packages hv been created before, bt we stil hv to do mvn package to create the image 
 if we get an error when we run the create image command ie  docker build -t teslaimage:1 
 mk dir tesla : mkdir tesla
@@ -177,6 +177,12 @@ we can build an image  with the help of the docker file
 ubuntu@docker:~/web/tesla$ cat Dockerfile
 FROM tomcat:8.0.20-jre8
 COPY target/*.war /usr/local/tomcat/webapps/tesla.war
+
+##########steps TO MK image distributable
+clone the repo , 2)build the image, 1)mvn package so that the build is possible, 5)Docker tag , 5)then push
+
+######but if am not cloning the file frm the repo,, then follow step number:
+3) create the docker file 4) build the image 5) docker tag and push
 
 1) mvn package
 2) BUILD THE IMAGE, (we CALLED it teslaimage) from d DOCKER file we got when we cloned the maven-web-appl: docker build -t teslaimage:1 ., we run this n d dot shows that our
@@ -241,7 +247,7 @@ tomcat          8.0.20-jre8   e88a065848be   8 years ago      493MB
 ##### the default expectation is *****the more ur creating images the tag number wil be increasing
 
 
-5) PUSH 
+####### 5) before PUSHING 
 *****56:20 i wnt to tag the image bc i nid to push this image to my docker registry wich is found in docker hub
 so i long into docker hub n copy the push commnad : docker push mylandmarktech/maven-web-app:tagname
 now i wnt to push the image to maven- web-app
@@ -254,7 +260,7 @@ so i wnt to mk my image distributable so i must first create a tag
 push commnad : docker push mylandmarktech/maven-web-app:tagname
 the tag name made is jb1
 
-#### MAKING THE IMAGE DISTRIBUTABLE 
+#### 5)TAGGING/MAKING THE IMAGE DISTRIBUTABLE 
 1:00:18 ******** docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1 
 after we run the above command 
 we can run docker images and we can see the tag  * mylandmarktech/maven-web-app jb1 ...  among the images
@@ -358,6 +364,7 @@ https://8.200.55.9:8081/tesla/
  docker login -u admin -p admin123  
  docker push 8.200.55.9:8081/tesla/tesla-web-app:1 
 
+******* yes, we can push images to nexus registry bt must first tag the image accordingly, docker tag
 aws ecr private docker registry:
 ===============================
 Retrieve an authentication token and authenticate your Docker client to your registry.
