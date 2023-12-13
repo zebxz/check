@@ -231,7 +231,7 @@ but ADD can also be used to copy files from other remote locations
     FROM tomcat:8.0.20-jre8
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 
-
+      ###### FOR NO. 4, WE DIDNT nid to run mvn package again
 *******4) we WNT TO BUILD THE IMAGE  for the 2nd Docker file we created in no.3 above .. .... (tHIS IS A 2ND IMAGE WE AR creating)
 53:30 *******when we run , we can see it pulling frm JBOSS ,,,, its copying the war file into the deployment dir
  docker build -t teslaimage:jb2 -f Dockerfile_JBOSS .  ( HERE the name of the file is Dockerfile_JBOSS, so we pass -f and the dot. is bc the file is in the pwd)
@@ -336,7 +336,7 @@ it was successful
 so i v pulled an image from docker hub n used it to create my own image 
 ### the image we pulled is http, its the base image bc it contains my depencies
 
-this didnt work $$$$ ################## now we can deploy the application
+###########################################this didnt work, HE SAID mayb the script wasnt written well $$$$ ################## now we can deploy the application
 ******docker run  --name webS -d -p 5500:80 http:landmark1
 
 1:27:00 
@@ -359,16 +359,54 @@ push images to private registry [dockerhub] :
 
 Nexus private docker registry:
 ==============================
-https://8.200.55.9:8081/tesla/  
+https://8.200.55.9:8081/tesla/  ,, nexus repo
  docker tag mylandmarktech/tesla:1 8.200.55.9:8081/tesla/tesla-web-app:1 
- docker login -u admin -p admin123  
- docker push 8.200.55.9:8081/tesla/tesla-web-app:1 
+#### this is the image ... mylandmarktech/tesla:1      ,, so tag it to the nexus repositoty  ,,   8.200.55.9:8081/tesla/tesla-web-app:1
+docker login -u admin -p admin123  .. authenticate to the nexus repository before u can 
+ docker push 8.200.55.9:8081/tesla/tesla-web-app:1     ,, then push
 
 ******* yes, we can push images to nexus registry bt must first tag the image accordingly, docker tag
+
+
+############# TO PUSH IMAGES TO AWS AMAZON ECR
+
 aws ecr private docker registry:
 ===============================
 Retrieve an authentication token and authenticate your Docker client to your registry.
 Use the AWS CLI:
+
+1:29:11   .. this deployment was successful
+vi Docker_WEB
+FROM httpd
+COPY index.html /var/www/html/index.html
+COPY index.html  /usr/local/apache2/htdocs/
+
+CREATE AN inage
+docker build -t web:1 -f Dockerfile_WEB .
+
+DEPLOY THE APPL/RUN CONTAINERS
+docker run --name web11 -d -p 3000:80 web:1
+
+
+############# TO PUSH CODE TO AWS AMAZON ECR  ,,, ELASTIC CONTAINER registry
+
+aws ecr private docker registry:
+===============================
+Retrieve an authentication token and authenticate your Docker client to your registry.
+Use the AWS CLI:
+
+*********1:35:12  
+in aws- ecr-create repository- private or public- 
+
+
+
+
+
+
+
+
+
+
 
 
 
