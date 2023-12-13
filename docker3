@@ -396,39 +396,58 @@ Retrieve an authentication token and authenticate your Docker client to your reg
 Use the AWS CLI:
 
 *********1:35:12  
-in aws- ecr-create repository- private or public- 
+CREATE PUBLIC REPO : in aws- ecr-create repository- private or public- -public means evryone can v access- name:webapps -i can upload repository logo- create
+PRIVATE: create - private - name - crreate
 
-
-
-
-
-
-
-
-
-
-
-
-
+###########to push to private 
+click on private repo- select linux - copy authentication command and any other commands like listed below
 aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 287784533479.dkr.ecr.us-east-2.amazonaws.com
-
 docker build -t web-app .
-
-docker tag web-app:latest 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:latest
-
-docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
-
-
 docker push 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
 
 
-aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v5s8z0t3
+push steps as follow
+docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+he also run the docker tag for the public repo
+then authenticate -- aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 287784533479.dkr.ecr.us-east-2.amazonaws.com
+### it says cli nt installed , bc we cant run aws command until aws cli is installed 
+sudo apt install awscli -y
+##########bt it still says you can configure credentials by running "aws configure
+ since i dnt v aws configure, i need my access credential so i go bk to severs n i can add iam role for my docker server 
+under actions - security- attach iam role- update
+now bcak to mobaxtem, when i run the authentication command it was successful
+##### i also authenticate for the public repo, also succesful
+then push to private n public was successsful
+checked the repository in aws and the pushed image was sucessful for both privae  n public
+if smt is wrong we can also scan 
 
-docker tag teslaimage:jb2 public.ecr.aws/v5s8z0t3/web-apps:1  
+
+to create private tag
+the tag we created, the image was from the image we created above:
+docker tag web-app:latest 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:latest
+docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+
+
+
+########to push to public:
+select public repo - copy authentication
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v5s8z0t3
+docker tag teslaimage: public.ecr.aws/v5s8z0t3/web-apps: 
 docker push public.ecr.aws/v5s8z0t3/web-apps:latest
+
+
+to push now we create the tag
+docker tag teslaimage:jb2 public.ecr.aws/v5s8z0t3/web-apps:1  
+
+##### we cana slo pull, select ecr- pulic gallery
+then copy the pull link
+
+
+
+
 docker push public.ecr.aws/v5s8z0t3/web-apps:1 
 
-
+public.ecr.aws/nginx/nginx:mainline-alpine
 public.ecr.aws/nginx/nginx:stable-perl
 
 docker pull public.ecr.aws/v5s8z0t3/web-apps:1   
