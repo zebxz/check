@@ -106,22 +106,25 @@ also using Commands = CLI  = aws s3 ls :
    it can be version controlled   
 ****** IN OUR ENviron, we use all GUI, CLI and IAC, BUT WE  mostly manage infrasture using infrastructure as a code 
 
+34:25 #########CREATING A VPC USING Terraform but he didnt really go deep 
+
 resource "aws_vpc" e.g i want to create a vpc for tesla  "tesla-dev" {
   cidr_block = "10.10.0.0/24", i wnt to crate a vpc wit 200ip addreses
   instance_tenancy = "default"
-  tags{
+  tags{               ie creating a tag name e.g tesla-fe
     Name = "tesla-be"
     Environment = "dev"
   }
 }
-
+  THE QUESTION IS 
+if u have a terafform like dis , can i use the same file to create vpcs in other environments ?????
 i can easily use dis same file in d stage environment, it can be easily replayed or reployed in the dev,stage &prod, i can version control the file using git wit dif branches
 ie in the script ill change the environ from dev to stage or prod
 
 resource "aws_vpc" "tesla-stage" {
   cidr_block = "10.10.0.0/24"
-  instance_tenancy = "default"
-  tags{
+  instance_tenancy = "default"  ... hw do we wnt the tenancy to look like , it can be default or dedicated bt if u dnt put default, its going to still choose default
+  tags{                    
     Name = "tesla-fe"
     Environment = "stage"
   }
