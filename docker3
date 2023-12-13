@@ -162,7 +162,8 @@ e88a065848be
         
 
 we git cloned the repository maven-web-application in previous class frm github and we rename it to web 
-cd web/  .. this is the repository containtaing imp files , can alson see target dir if packages hv been created before
+cd web/  .. this is the repository containtaing imp files , can alson see target dir if packages hv been created before, bt we stil hv to do mvn package to create the image 
+if we get an error when we run the create image command ie  docker build -t teslaimage:1 
 mk dir tesla : mkdir tesla
 to copy src dir to tesla dir  : cp -r src/ tesla/
 copy pom.xml to tesla dir : cp pom.xml tesla/
@@ -178,7 +179,7 @@ FROM tomcat:8.0.20-jre8
 COPY target/*.war /usr/local/tomcat/webapps/tesla.war
 
 1) mvn package
-2) BUILD THE IMAGE CALLED tesla image from the DOCKER file we got when we cloned the maven-web-appl:   docker build -t teslaimage:1 . ,, we run this n the dot shows that our
+2) BUILD THE IMAGE, (we CALLED it teslaimage) from d DOCKER file we got when we cloned the maven-web-appl: docker build -t teslaimage:1 ., we run this n d dot shows that our
 docker file is in the pwd
        where "." = pwd
        build is from the default Dockerfile name = Dockerfile 
@@ -251,8 +252,9 @@ push commnad : docker push mylandmarktech/maven-web-app:tagname
 ########i cant push the image * telasimage:jb2 , without the repository tag , bc this repository , tesla image is only found on my local build server
 so i wnt to mk my image distributable so i must first create a tag 
 push commnad : docker push mylandmarktech/maven-web-app:tagname
-the tag made is jb1
+the tag name made is jb1
 
+#### MAKING THE IMAGE DISTRIBUTABLE 
 1:00:18 ******** docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1 
 after we run the above command 
 we can run docker images and we can see the tag  * mylandmarktech/maven-web-app jb1 ...  among the images
@@ -293,20 +295,40 @@ e.g docker pull nginx:stable-perl
 
 ****  docker pull httpd   this is my webserver image
 
-1:12:14, CREATE A DOCKER FILE (i bliv he wanted to say container) USING httpd image we pulled 
-we can use the httpd to run a conatiner 
+****1:12:14, CREATE A DOCKER FILE USING httpd image we pulled 
+we can use the httpd to run a conatiner (  wihout creating a customized image )
 
 docker run -d -p 80:8080 --name webapp teslaimage:1
 
 docker run  --name web -d -p 5000:80 httpd
 the container has been created 
 to access the application
-*** curl -v publicip of the docker server:5000 ie the port of the httpd
+*** curl -v publicip of the docker server:5000 *******ie the port of the httpd
+******* this was done wihout creating a customized image 
+############################
 
+follow the steps below to create the file
+1:13:51 ... CREATE THE FILE , the file will echo Devops is good and its redirected into /var/www/html/index.html  
 
-index.html  
+*********THE  file is called : index.html  , the file wil
 echo "DevOps is good" >> /var/www/html/index.html   
-echo "With Landmak Technologies" >> /var/www/html/index.html  
+echo "With Landmak Technologies" >> /var/www/html/index.html 
+
+#### for html code it will be diff ..echo "<h1> Welcome to Landmak Technologies <h1/>" 
+
+***vi index.html  , then copy  (frm echo) n  paste the file, then
+**** vi Dockerfile_WEB .... Ie am creating a docker file call WEB , and the file has 2lines
+in the file my keyword is FROM 
+
+1:18:28 *** FROM httpd
+COPY  idex.html /var/www/html/index.html ... guess dis is the base image 
+
+******* next , create the image 
+docker build -t http:landmark1 -f Dockerfile_WEB .
+it was successful
+#####so we hv created our custom image 
+so i v pulled an image from docker hub n used it to create my own image 
+### the image we pulled is http, its the base image bc it contains my depencies
 
 Pull images from Public registry [dockerhub] : 
     No athentication is required
