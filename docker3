@@ -158,7 +158,8 @@ FROM tomcat:8.0.20-jre8
 COPY target/*.war /usr/local/tomcat/webapps/tesla.war
 
 1) mvn package
-1. docker build -t teslaimage:1 . ,, we run this n the dot shows that our docker file is in the pwd
+2) BUILD THE IMAGE CALLED tesla image from the DOCKER file we got when we cloned the maven-web-appl:   docker build -t teslaimage:1 . ,, we run this n the dot shows that our
+docker file is in the pwd
        where "." = pwd
        build is from the default Dockerfile name = Dockerfile 
    we can also do this == docker build -t teslaimage:1 /home/ubuntu/web
@@ -172,42 +173,43 @@ nexus for docker to build an image, we can get d image frm is d maven build serv
 ### we cannot get the image frm tomcat,, we deploy using tomcat or docker
 the images are either found in the build server or the artifactory ,wich is eithr maven, jenkins or the artcifaory wich is nexus or jfrog
 
+
          WE use ADD if u want to download some softwares or add some files, files ar found in http location
-3)  #ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
+*********  #ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
 we v a key word called ADD, we v a war file in nexus server https, the ip address/port num , mylandmarktech/landmark.war, this is d file i wnat to copy bt i wnt to downlod
 the war file frm my nexus server
-also we ar copying evrytin that ends wit *war to  ..  /opt/jboss/wildfly/standalone/deployments/landmark.war
+this is goin to b found in the target dir, also we ar copying evrytin that ends wit *war to  ..  /opt/jboss/wildfly/standalone/deployments/
 # in jboss deployment takes place in the deployments dir 
+our base image is JBOSS
 
-
-ADD and COPY are kEYWORDS IN the dockerfile
-
+########## ADD and COPY are kEYWORDS IN the dockerfile
 *************the keyword here is ***** FROM
- vi JBOSS .....            ONLY line one &line 2 wil be executed ie from and ADD
+
+*******3) WE WANT TO create another Docker file
+vi JBOSS .....             when we create an image ONLY line one &line 2 wil be executed ie from and ADD,
 FROM jboss/wildfly
 ADD target/*war /opt/jboss/wildfly/standalone/deployments/
+#this is goin to b found in the target dir, also we ar copying evrytin that ends wit *war to  ..  /opt/jboss/wildfly/standalone/deployments/
 # in jboss deployment takes place in the deployments dir
 # in tomcat deployment take place in the webapps dir
 #ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
 
 
-##### this was our first file, we used it in docker1 video, 
+
+##### below is our first file, we used it to create the first image above and also in docker1 video, 
 COPY or ADD is used to copy the war file from the docker build file to the image
 but ADD can also be used to copy files from other remote locations
 
-**the docker file contains 2key words FROM and COPY
+**the docker file contains 2key words ******FROM and COPY
     FROM tomcat:8.0.20-jre8
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 
 
- we WNT TO BUILD THE IMAGE .. .... (tHIS IS A 2ND IMAGE WE AR creating)
+*******4) we WNT TO BUILD THE IMAGE  for the 2nd Docker file we created in no.3 above .. .... (tHIS IS A 2ND IMAGE WE AR creating)
 53:30 *******when we run , we can see it pulling frm JBOSS ,,,, its copying the war file into the deployment dir
  docker build -t teslaimage:jb2 -f Dockerfile_JBOSS .  ( HERE the name of the file is Dockerfile_JBOSS, so we pass -f and the dot. is bc the file is in the pwd)
 
-
-ubuntu@docker:~/web/tesla$
-
-
+*******below  are images we v created and we can use any one to deploy our application
 ubuntu@docker:~/web/tesla$ docker images
 REPOSITORY      TAG           IMAGE ID       CREATED          SIZE
 teslaimage      jb2           9b6cf25392ee   17 seconds ago   742MB
@@ -215,19 +217,65 @@ teslaimage      1             a47c73fd7b22   9 minutes ago    498MB
 jboss/wildfly   latest        856694040847   2 years ago      736MB
 tomcat          8.0.20-jre8   e88a065848be   8 years ago      493MB
 
+##### the default expectation is *****the more ur creating images the tag number wil be increasing
 
-docker push mylandmarktech/maven-web-app:tagname
-docker push mylandmarktech/maven-web-app:jb1  
-docker push teslaimage:jb2     
 
-docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1    
-docker tag teslaimage:1 mylandmarktech/maven-web-app
-docker push mylandmarktech/maven-web-app:jb1  
-docker login -u mylandmarktech
-docker login -u username/EMAIL -p password   
+5) PUSH 
+*****56:20 i wnt to tag the image bc i nid to push this image to my docker registry wich is found in docker hub
+so i long into docker hub n copy the push commnad : docker push mylandmarktech/maven-web-app:tagname
+now i wnt to push the image to maven- web-app
+
+i nid to assign a tag name ,,, thi sis the name of my account * mylandmarktech and the name of my repository ** maven-web-app
+push commnad : docker push mylandmarktech/maven-web-app:tagname
+
+########i cant push the image * telasimage:jb2 , without the repository tag , bc this repository , tesla image is only found on my local build server
+so i wnt to mk my image distributable so i must first create a tag 
+push commnad : docker push mylandmarktech/maven-web-app:tagname
+the tag made is jb1
+
+1:00:18 ******** docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1 
+after we run the above command 
+we can run docker images and we can see the tag  * mylandmarktech/maven-web-app jb1 ...  among the images
+so now i v the my docker hub image repository and the tag is jb1 
+now i can push the image 
+**b4 i push i must first run docker login command .. docker login -u mylandmarktech,,then it asked for paswd to be auteticate .. i can pull bt to push i must be autenticated
+******* authentiacting command ...  docker login -u username/EMAIL -p password   
+then push 
 docker push mylandmarktech/maven-web-app:jb1 
 
-   docker pull nginx:stable-perl
+
+1:02:17**** CREATING ANOTHER TAG
+i wnt to tag this image teslaimage:1 with this repository inf 
+ **** docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1
+i run the tag command without a tag name and the docker demon assigned a tagname called latest 
+when i run docker images i can see the tagname : latest
+now i can push the image but i will push without a tag name 
+***docker push mylandmarktech/maven-web-app
+
+therfore i hv distributed my images, the images are now found in dockerhub so now my life is easy bc i can use the images to deploy appl in any envr
+ ## now that i v created my images n pushed them to a remote repository, then thers no nid to kip them locally inorder nt to consume my resources so i can delte my images
+if i dnt nid them 
+
+1:08:15
+to pull e.g
+*** Docker pull alpine
+*** Docker pull nginx
+
+bc i didnt indicate the version of the nginx or the alpine i wnt to download
+##### when i run docker images i can see the docker demon downloaded the latest version  """LATEST
+bc i pulled frm a public repository,  it didnt rEQ for authentication
+but if i want to push even though its a public repository, i must be authenticated
+
+we dnt own ngnix .. it says maintained by the NGINX Docker maintenance
+
+***** if i want to download a diff version of nginx, i can just copy the tag frm the docker hub repo
+e.g docker pull nginx:stable-perl
+
+****  docker pull httpd   this is my webserver image
+
+1:12:14, CREATE A DOCKER FILE USING httpd image we pulled 
+we can use the httpd to run a conatiner 
+
 
 index.html  
 echo "DevOps is good" >> /var/www/html/index.html   
