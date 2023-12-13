@@ -320,15 +320,21 @@ echo "With Landmak Technologies" >> /var/www/html/index.html
 **** vi Dockerfile_WEB .... Ie am creating a docker file call WEB , and the file has 2lines
 in the file my keyword is FROM 
 
-1:18:28 *** FROM httpd
-COPY  idex.html /var/www/html/index.html ... guess dis is the base image 
+1:18:28 *** FROM httpd  ...  ... dis is the base image 
 
+COPY  idex.html /var/www/html/index.html
 ******* next , create the image 
 docker build -t http:landmark1 -f Dockerfile_WEB .
 it was successful
 #####so we hv created our custom image 
 so i v pulled an image from docker hub n used it to create my own image 
 ### the image we pulled is http, its the base image bc it contains my depencies
+
+################## now we can deploy the application
+******docker run  --name webS -d -p 5500:80 httpd
+
+ 
+docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/tesla/
 
 Pull images from Public registry [dockerhub] : 
     No athentication is required
