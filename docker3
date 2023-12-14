@@ -19,7 +19,7 @@ host port must change ie we hv to choose a port nmuber for each contaoiner but c
 
 
 *****************************************************
-LDOCKER FLOW
+DOCKER FLOW
 we build the image from the file n the process of building the image is called containerization IE PACKAGING THE APPL with all its DEPENCIEDS IN AN IMAGE N FRM DER WE AR
 ABle to run containers/ deploy applications
 6:00 when an image is built, we push it to an image registry , either nexus, ecr,dockerhub, jfrog,, then we can pull the images in diff envri n do a deployment
@@ -375,7 +375,7 @@ aws ecr private docker registry:
 Retrieve an authentication token and authenticate your Docker client to your registry.
 Use the AWS CLI:
 
-1:29:11   .. this deployment was successful
+1:29:11   .. .....(this deployment was successful)
 vi Docker_WEB
 FROM httpd
 COPY index.html /var/www/html/index.html
@@ -400,16 +400,16 @@ CREATE PUBLIC REPO : in aws- ecr-create repository- private or public- -public m
 PRIVATE: create - private - name - crreate
 
 ###########to push to private 
-click on private repo- select linux - copy authentication command and any other commands like listed below
+*****click on private repo- select linux - copy authentication command and any other commands like listed below
 aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 287784533479.dkr.ecr.us-east-2.amazonaws.com
 docker build -t web-app .
-docker push 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+##docker push 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
 
 
 push steps as follow
-docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+###docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
 he also run the docker tag for the public repo
-then authenticate -- aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 287784533479.dkr.ecr.us-east-2.amazonaws.com
+###then authenticate -- aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 287784533479.dkr.ecr.us-east-2.amazonaws.com
 ### it says cli nt installed , bc we cant run aws command until aws cli is installed 
 sudo apt install awscli -y
 ##########bt it still says you can configure credentials by running "aws configure
@@ -419,42 +419,43 @@ now bcak to mobaxtem, when i run the authentication command it was successful
 ##### i also authenticate for the public repo, also succesful
 then push to private n public was successsful
 checked the repository in aws and the pushed image was sucessful for both privae  n public
-if smt is wrong we can also scan 
+if smt is wrong we can also scan , jst click repositories, images, n u see scan up 
+d images can  be deployed in any env
+##### we can also pull, select ecr- pulic gallery
+then copy the pull link
 
 
 to create private tag
 the tag we created, the image was from the image we created above:
 docker tag web-app:latest 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:latest
-docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
+####docker tag teslaimage:jb2 287784533479.dkr.ecr.us-east-2.amazonaws.com/web-app:1
 
 
 
 ########to push to public:
 select public repo - copy authentication
-aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v5s8z0t3
+###aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v5s8z0t3
 docker tag teslaimage: public.ecr.aws/v5s8z0t3/web-apps: 
 docker push public.ecr.aws/v5s8z0t3/web-apps:latest
+##docker push public.ecr.aws/v5s8z0t3/web-apps:1
+##docker pull public.ecr.aws/v5s8z0t3/web-apps:1
+
 
 
 to push now we create the tag
 docker tag teslaimage:jb2 public.ecr.aws/v5s8z0t3/web-apps:1  
 
-##### we cana slo pull, select ecr- pulic gallery
+##### we can also pull, select ecr- pulic gallery
 then copy the pull link
 
-
-
-
-docker push public.ecr.aws/v5s8z0t3/web-apps:1 
-
+e.g to pull nginx
 public.ecr.aws/nginx/nginx:mainline-alpine
 public.ecr.aws/nginx/nginx:stable-perl
 
-docker pull public.ecr.aws/v5s8z0t3/web-apps:1   
 
-docker pull public.ecr.aws/v5s8z0t3/web-apps:1
+u cant delete an image that is linked to a container
 
-
+i can also delte all my images bc i v pushed them already to private registry
 delete all images using: docker rmi -f $(docker images -q) 
 ===========================
 docker images -q  = List image IDs  
@@ -462,9 +463,11 @@ docker rmi $( docker images -q )
 docker rmi -f $(docker images -q)  
 
 docker build/pull/scan/push/inspect/rmi/prune/tag  
-
+docker system prune
 
 docker build/ps/images     
+
+VIDEO 4
 
 docker container commands:
 ============================
@@ -504,11 +507,11 @@ docker container ls -aq
 
 
 deletes stopped containers 
-===========================
+===========================zs
 docker rm containerName/ID  
 docker rm $(docker ps -aq --filter status='exited' ) 
 
-Force Delete a running container  
+zForce Delete a running container  
 ===============-----------------
 docker rm -f containerName/ID 
  docker rm -f $(docker ps -aq --filter  status="running") 
@@ -530,11 +533,11 @@ Delete all excited/stopped Containers
 ================================
 docker rm $(docker ps -aq --filter  status="exited")
 
-Ticket014:
+#######Ticket014:.... we can create containers wit these 3 approaches
   Deploy an application from the mylandmarktech/java-web-app image.
 Method1:  
 1. docker pull mylandmarktech/java-web-app
-2. docker scan mylandmarktech/java-web-app  
+2. docker scan mylandmarktech/java-web-app  ... to mk sure the image is free frm vulnerability we scan 
 3. docker run --name webapp -d -p 8000:8080  mylandmarktech/java-web-app  
 
 Method2:
@@ -543,13 +546,21 @@ Method2:
 3. docker create --name webapp -d -p 8000:8080  mylandmarktech/java-web-app 
 4. docker start  webapp 
 
-Method3:
+Method3: .. docker run is equals to docker create n docker start (docker run will pull the image,create n start the container)
   docker run --name webapp -d -p 8000:8080  mylandmarktech/java-web-app 
-  http://3.22.217.29:8000/java-web-app 
+  to access the appl online .. http://3.22.217.29:8000/java-web-app 
+we can aslo curl 
 
-Ticket0015 -  :
-1. https://github.com/LandmakTechnology/python-flask-app
-2. docker pull mylandmarktech/python-flask-app
+**** 22:37 in the aws repository, we can config automatic scanning, wher it can scan the image at all time, it wil scan d image b4 we even pull to our env and if
+der ar issues we"l be notified
+
+
+
+Ticket0015 -  : this is a github repository ,, apart from github we also v a dockerhub account
+1. the github repo , wher the codes ar found , wher develpers ar pushing code 
+https://github.com/LandmakTechnology/python-flask-app
+2. the python flex application
+  docker pull mylandmarktech/python-flask-app     ,,,in an image registry
   Deploy a pythonapp application using docker: 
     1. use/Create/modify a Dockerfile   
     2. Use the Dockerfile to build a docker image  
@@ -558,8 +569,11 @@ Ticket0015 -  :
     5. deploy the application using the image [docker run]  
 
 
-git clone https://github.com/LandmakTechnology/python-flask-app  
+36:59 we didnt do any mvn package for this python bc python web appl is nt java, we only build using maven for java appli ,, python is diff, so with java appl
+like the examples above, we had to go tru that process 
+ 
 
+#####the docker file
 FROM python:3.7
 WORKDIR /opt/app
 COPY . .
@@ -568,6 +582,28 @@ EXPOSE 5000
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
 
 
-docker tag pythonimage:1 mylandmarktech/python-flask-app:33  
+#### we can jst clone the repo since it has the docker file
+git clone https://github.com/LandmakTechnology/python-flask-app  
+ls
+cp -r python-flask-app/ pfa
+cd pfa
+ls
+with the help of the docker file we
+****build/create
+docker build -t pythonimage:1 
+therfore we ar containerizing this appl using python
+this appl was developed using python
+now wwe can deploy the applic using the python image
+****** docker run -d -p 7000:5000 pythonimage:1
+the appl is deployed
+docker ps n we can see the python application runing
+to access the appl, we go back to github and in the python appli open the code...  app.py
+ther ar some rest APIs (wil display diff statements) and we can also see the root path '/' and it wil response as (apps works!!)
+so to access the python appl pubicip:7000 ... we can see apps works!!
+###bt my image is stil found in my local server, i wnt to mk d image distributable frm d build server so i hv to push to dockerhub so it is acesible to oda member
+first we tag
+###docker tag pythonimage:1 mylandmarktech/python-flask-app:33  
 docker push mylandmarktech/python-flask-app:33  
 
+
+i bliv we can see the dockerpull and docker push in the docker hub/repository
