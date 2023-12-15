@@ -1,4 +1,5 @@
-23:16we couldnt push to a 
+#### 23:16 even after authenticating we couldnt push to a private repo bc he nids to upgrade his account,its a payment issue , so we used anoda public repo
+
 image contain software, os, appl code
 
 FROM python:3.7
@@ -19,7 +20,7 @@ and when you run/create a container it starts the applica
 
 we wnt to containerize the appli, n with the help of the docker file we ar able to 
 
-clone the github repo
+clone the github repo , its a private repo n we cloned successfully
 ls
 cd nodejs-application/
 ls , n we can see d docker file
@@ -28,12 +29,20 @@ docker ps , to check for containers
 i wn to build a node image
 docker build -t nodeapp:1 .   , to build a docker image ........   ( nodeapp:1  ,ie   version 1)
 
-docker tag nodeapp:1 mylandmarktech/nodejs-fe-app:33
+docker tag nodeapp:1 mylandmarktech/nodejs-fe-app:33    ,,, tagging successful
 docker push nodeapp:1 mylandmarktech/nodejs-fe-app:33
 error pushing so we authenticate
 docker login -u mylandmarktech
+#### 23:16 even after authentiacting we couldnt push to the private repo bc he nids to upgrade his account,its a subscription issue , so we used anoda public repo
+so we created tag for our image for a diff public repo in github
+docker tag nodeapp:1 mylandmarktech/nodejs-app:2, to mk it distributable
+docker push nodeapp:1 mylandmarktech/nodejs-app:2
 
+## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port , so to deploy the application:
+docker run --name nodeapp -d -p 7777:9981 nodeapp:1
 
+docker ps -q to list containers id
+to stop the containers docker stop container ids
 
 
 
