@@ -40,7 +40,7 @@ docker push nodeapp:1 mylandmarktech/nodejs-app:2    ... image name: push nodeap
 #### we deleted all d images
 so this:nodeapp:1 is no longer in our local servrer bt we hv shared it in our register when we created the tag above bt we didnt push it
 
-## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port , so to deploy the application:
+## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding, so to deploy the application:
 
 docker run --name nodeapp -d -p 7777:9981 nodeapp:1
 bt this : nodeapp:1 is nolonger in our local servrer bt we v shared it in our register when we created d tag above bt we didnt push it, so we dnt v nodeapp:1 anywhere
@@ -54,6 +54,9 @@ bt this : nodeapp:1 is nolonger in our local servrer bt we hv shared it in our r
 so we v to use the image that is found in my registry the version2
 docker run --name nodeapp -d -p 7777:9981 nodeapp:2  ,, i dnt hv hv nodeapp:2 in my local server bt i have it in my registry, in my image remote registry
 29:58 so when i execute docker run,this will pull/use the image to create n start the container
+
+36:24 ## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding,so frm my docker engine, its forwarding the port to this
+container, the port is forwarded internally b172.170.2:9981
 
 
 
