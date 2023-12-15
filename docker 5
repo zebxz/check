@@ -1,7 +1,52 @@
-
+23:16we couldnt push to a 
 image contain software, os, appl code
 
+FROM python:3.7
+WORKDIR /opt/app
+COPY .  .
+RUN pip install --no-cache-dir -r requirements-prod.txt
+EXPOSE 5000
 
-pwd gave us /home/ubuntu/pfa (the customized name for the 
+pwd gave us /home/ubuntu/pfa (we renamed the repository file we cloned to  pfa)
 so thta means we ar in home/ubuntu/pfa
-COPY . . means to copy every tin frm my pwd to the pwd of my image 
+COPY . . means to copy every tin frm my pwd of my home server to the pwd of my image am creating
+COPY . . is similar to mvn package wher d artifcars ar been created, bc this is a python application so when creatingb the image it runs this for us: 
+RUN pip install --no-cache-dir -r requirements-prod.txt
+and when you run/create a container it starts the applica
+
+7:35 TICKET0016
+9:20 we v  a github and dockerhub repo for this project ?? does it mean we can use any of the repo ?????? 
+
+we wnt to containerize the appli, n with the help of the docker file we ar able to 
+
+clone the github repo
+ls
+cd nodejs-application/
+ls , n we can see d docker file
+cat docke file
+docker ps , to check for containers 
+i wn to build a node image
+docker build -t nodeapp:1 .   , to build a docker image ........   ( nodeapp:1  ,ie   version 1)
+
+docker tag nodeapp:1 mylandmarktech/nodejs-fe-app:33
+docker push nodeapp:1 mylandmarktech/nodejs-fe-app:33
+error pushing so we authenticate
+docker login -u mylandmarktech
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
