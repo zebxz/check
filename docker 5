@@ -3,7 +3,7 @@
 host port changes but :container port doesnt
 
 image contain software, os, appl code
-
+DOCKER FILE
 FROM python:3.7
 WORKDIR /opt/app
 COPY .  .
@@ -18,6 +18,18 @@ RUN pip install --no-cache-dir -r requirements-prod.txt
 and when you run/create a container it starts the applica
 
 7:35 TICKET0016
+Ticket0016
+==============
+  Deploy a nodeJS web application using docker: 
+    1. use/Create/modify the Dockerfile   
+    2. Use the Dockerfile to build a docker image  
+    3. Push the image to an image registry[dockerhub/ecr/nexus/JFrog]
+    4. pull, inspect and scan the docker image
+    5. deploy applications using the image  
+GithubRepo    =  https://github.com/LandmakTechnology/nodejs-application
+dockerhubRepo =  mylandmarktech/nodejs-fe-app
+                 docker push mylandmarktech/nodejs-fe-app:tagname
+
 9:20 we v  a github and dockerhub repo for this project ?? does it mean we can use any of the repo ?????? 
 
 we wnt to containerize the appli, n with the help of the docker file we ar able to 
@@ -43,7 +55,7 @@ docker push nodeapp:1 mylandmarktech/nodejs-app:2    ... image name: push nodeap
 so this:nodeapp:1 is no longer in our local servrer bt we hv shared it in our register when we created the tag above bt we didnt push it
 
 ## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding, so to deploy the application:
-
+ 
 docker run --name nodeapp -d -p 7777:9981 nodeapp:1
 bt this : nodeapp:1 is nolonger in our local servrer bt we v shared it in our register when we created d tag above bt we didnt push it, so we dnt v nodeapp:1 anywhere
 
@@ -53,7 +65,7 @@ to stop the containers:   docker stop container ids
 to remove stopped container : docker rm container ids
 
 docker run --name nodeapp -d -p 7777:9981 nodeapp:1
-bt this : nodeapp:1 is nolonger in our local servrer bt we hv shared it in our register when we created the tag above bt we didnt push it
+###### bt this : nodeapp:1 is nolonger in our local servrer bt we hv shared it in our register when we created the tag above bt we didnt push it
 so we v to use the image that is found in my registry the version2
 docker run --name nodeapp -d -p 7777:9981 nodeapp:2  ,, i dnt hv hv nodeapp:2 in my local server bt i have it in my registry, in my image remote registry
 29:58 so when i execute docker run,this will pull/use the image to create n start the container
@@ -62,17 +74,77 @@ docker run --name nodeapp -d -p 7777:9981 nodeapp:2  ,, i dnt hv hv nodeapp:2 in
 container, the port is forwarded internally b172.170.2:9981
 
 host port changes but port address :container port doesnt
+###### TO KNW WHAT PORT NUMBER TO USE AS THE HOST PORT 
+      
 to check the ports in use, we can run netstat -tulpn , n i can see the all the ports in use
 to install netstat : sudo apt install net-tools
+A servers has 2^16=65536 ports/addresses [0,1,2,3...,65635]
+    nodeapp   =  7777 ,, WE delete this container n 
+    nodeapp2  =  7777   deployed this on 7077
+
+    netstat -tulpn 
 
 43:38
+to acccess the restful APIs,  we go to the application file in github , w can see a file called app.js
+in it there are some restful APIs 
+se are some get req ie when developers develop the appl, its developed such that users are able to access diff restful APIs, 
 
 
+RestFulAPIs .. ........ 52.08 ... this ARE jst get inf wher u can get some json details, account login etc
+ ===========
+   app.get('/landmarktechnologies
+   app.get("/html
+   app.get("/jsonData
+   httpGetRequests:
+     3.22.217.29:7777/  ...  this is the rootpath 
+     3.22.217.29:7777/landmarktechnologies
+     3.22.217.29:7777/html   
+     3.22.217.29:7777/jsonData 
+     http://3.22.217.29:7777/jsonData
+     https://3.22.217.29:7777/jsonData 
+
+ RestFulAPIs
+ ===========
+   httpGetRequests:
+      https://boa.com/login  
+
+   httpPostRequests:
+      https://boa.com/login 
+         userName= 
+         password= 
+
+   httpPostRequests:..  also http post req bc u can edith info 
+      https://boa.com/edit 
+        delete account details  
+        modify details 
+         password= 
+#####so developers ar developing the appl such that u can perform diff tasks, so dey create some restful APIs
+
+Bank of America  : ....these ar all inf for users to access it
+  https://www.bankofamerica.com/smallbusiness/ 
+  https://www.bankofamerica.com/login/  
+  https://www.bankofamerica.com/accounts/
+  https://www.bankofamerica.com/mortgages/
+    if ders a problem we ar able to understand it , in the backend  we will create monitoring dashboard  to mk sure the links ar up n running 
+Monitoring dashboards :
+
+if they are unable to access these links if ders  u'll get this 
+https Errors and httpsError codes:
+  httpStatus codes:
+  400 errors = client side errors  
+    401 = not authorised  
+    402 = permission denied
+    403 = forbidden
+    404 = not found 
+  500 errors = server side errors  
+    501 / 502 / 503 =  mayb the server is down
+  200 = in the 200 family means its ok  
+  300 = redirect 
+     mylandmarktech.com/live  ---> zoom  , this wil redirect to our zoom meeting 
+     mylandmarktech.com/join  ---> registrationForm   , if u want to register
 
 
-
-
-
+57:38
 
 
 
