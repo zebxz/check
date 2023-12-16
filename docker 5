@@ -125,7 +125,8 @@ Bank of America  : ....these ar all inf for users to access it
   https://www.bankofamerica.com/login/  
   https://www.bankofamerica.com/accounts/
   https://www.bankofamerica.com/mortgages/
-    if ders a problem we ar able to understand it , in the backend  we will create monitoring dashboard  to mk sure the links ar up n running 
+   
+####if ders a problem we ar able to understand it , in the backend  we will create monitoring dashboard  to mk sure the links ar up n running 
 Monitoring dashboards :
 
 if they are unable to access these links if ders  u'll get this 
@@ -145,6 +146,176 @@ https Errors and httpsError codes:
 
 
 57:38
+
+RESTful API is an application programming interface (API) 
+that uses HTTP requests to GET, PUT, POST, and DELETE data
+
+ httpPostRequests: we can post req  
+ httpDeleteRequests:resultin frm permission 
+ httpPutRequests:
+
+Monitoring dashboards :  if ders a problem , u dnt wnt ur cx to cm complaining,, u wnt to b aware b4 ur cx ar aware 
+so we reate a monitoring dashboard dat ,monitors and report if der are issues
+
+In tomcat applications are deployed in heavy weight virtual machines VMs:
+In docker applications are deployed in lightweight containers:
+================================================================= 
+How to resolves issues occuring in a docker container??
+How to troubleshoot or debug applications running as docker containers? :
+nodejsapp  
+webapp mobileapp        = 1b client requests   
+EnterpriseApp 
+  object1=5kgs 
+  object2=50kgs 
+  19/20 persons [ 100KGs /  ] trying to loose weight
+  deploying application as a container or deploying in a VM , THe applications ar performing similarly .they ar ok
+1:02:35 but light weight containers are easy to manage compared to heavy weight virtual machines
+thats why containerization technology is very important as ad evops engr
+
+#######How to resolves issues occuring in a docker container??
+first run :
+1. docker ps -a 
+     This will check if the container is running, paused or stopped/exited
+     if stopped you should restart to resolve the issue  ,, bc we cant access the container if its nt running
+     if paused you should unpause to resolve the issue  
+     docker unpause; docker start 
+
+2. docker inspect containerNAME/or ID                  host:containerPort
+   docker run --name nodeapp1 -d -p 7000:9000 mylandmarktech/nodejs-app:2  ,,,container port is suppose to be 9981 thats why we ar unable to access the contAiner bc when it
+   forwards d trafic to port 9000 the application does nt listen on port9000 in d container
+                    so when we run container inspect, we can see the wrong container port number,so we can compare if its d ryt port we were suppose to use 
+   3.22.217.29:7000/landmarktechnologies 
+   "State": {
+            "Status": "running", ,, although we can see d container is running, we cant access d conatiner bc it has an problem called out of memory, if ders no memory d  
+            "Running": true,                                         container can be killed
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 54586,   ,, the process id of the container running
+            "ExitCode": 0,
+            "Error": "",
+ e.g we access   webserver=80/443
+ssh=22/32  
+
+3. docker logs containerNAME/ or ID  
+  ubuntu@docker:~$ docker logs nodeapp1
+  Node JS app is running at http://localhost:9981/landmarktechnologies
+  ubuntu@docker:~$
+  Node JS app is running at http://localhost:9981/landmarktechnologies
+  Node JS app is running at http://localhost:9981/landmarktechnologies
+
+4. docker top containerNAME/ID = check resources/processes  
+
+5. docker stats containerNAME/ID = = check resources 
+      "OOMKilled": false,  (out of memeory)
+
+6. docker exec  = run commands inside the container , to troubleshoot a container we can run commands inside the container
+  docker exec , the container name /iD and the command u wnt to execute
+   e.g docker exec webapp ls logs 
+e.g docker exec app pwd
+   docker run --name app -d -p 6000:8080 mylandmarktech/java-web-app 
+   docker run --name webapp -d -p 8080:8080 mylandmarktech/maven-web-app 
+  DockeR logs container name/id to Check if ders a problem
+
+7. access in interactive mode ,, ie to interact with the container
+   docker exec -it containerNAME/ID bash    
+   docker exec -it webapp bash ,, once i run this, i am inside the container , am interacting with the contaimeer
+i:30:06    i can ls webapps/
+bt we cudnt vi into a file
+
+to access the container:  curl 3.22.217.29:8080/maven-web-app    
+                        http://3.22.217.29:8080/maven-web-app
+***************but we got 404 error 
+bc when we run docker exec webapp ls webapps ,, we can see the name of the application is tesla so the war file is tesla.war, so we cant use /maven-web-app
+so we wer successfull using  :  curl 3.22.217.29:8080/tesla
+                        http://3.22.217.29:8080/tesla
+
+copy from a container:
+now executing this command inside my container, 
+we run docker exec webap ls webapps/tesla ,, inside webapps we hv tesla 
+docker exec webapp ls webapps/tesla
+images 
+META-INF
+jsps
+and inside tesla we v /jsp ,,, 
+docker exec webapp ls webapps/tesla/jsps
+home.jsp
+i wnt to copy this file called home.jsp n modify smt 
+docker exce webapp ls webapps/tesla/jsps/home.jsp
+now ders a command called docker cp
+  this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .
+
+1:40;34 **** so we use the absolute path 
+docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp .
+  docker cp webapp:/usr/local/tomcat/webapps . 
+copy file to a container:
+docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
+
+docker cp = copy files from a container and to a container
+  docker cp 
+
+What is docker commit?
+Using docker commit we can create image from a continer.
+docker commit <containerId/Name> <imageName>
+docker commit webapp newimage:1 
+
+ docker commit webapp mylandmarktech/maven-web-app:class34  
+
+
+Can we set CPU,RAM limit for the containers while creating?
+Yes We set using options while creating a container.
+docker run -d --name app -p 8000:8080 mylandmarktech/maven-web-app
+docker diff contianerName/ID   
+
+docker commit app image2  
+
+
+docker container commands:
+  docker run/create/start/stop/kill/inspect/logs/top/stats/
+  docker diff/update/cp/commit/pause/unpause/ps/ps-a/exec
+  docker rm/rm-f/ps -q/   
+
+docker images commands:
+  docker build/login/push/pull/tag/images/images prune/  
+  docker rmi/rmi -f/system prune 
+
+docker images --help   
+docker containers --help 
+
+Dockerfiles:
+============ 
+FROM  base image containing dependencies & Softwares  
+
+python web applications 
+  FROM python3.7    
+nodejs application 
+  FROM node11  
+.net application    
+
+java web application 
+  FROM tomcat:8.0.20-jre8 
+  EXPOSE 8080 
+  
+  FROM jboss/wildfly:latest 
+  EXPOSE 8080  
+
+java Enterprise application 
+  FROM jboss/wildfly:latest 
+  EXPOSE 8080  
+
+java standalone application 
+  FROM openjdk11      
+
+   docker run = pull/create/start   
+
+   docker kill/stop  = admin / process  
+   OOMKilled  
+   
+    t2-micro  = 1GB  
+    T2-MEDIUM = 4GB  
+
+
 
 
 
