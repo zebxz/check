@@ -220,8 +220,8 @@ e.g docker exec app pwd
 
 7. access in interactive mode ,, ie to interact with the container
    docker exec -it containerNAME/ID bash    
-   docker exec -it webapp bash ,, once i run this, 
-i:30:06    i can ls webapps/
+   docker exec -it webapp bash ,, enter the shell like bash ,,, once i run this, i am inside the container 
+########i:30:06    i can ls webapps/
 bt we cudnt vi into a file
 
 to access the container:  curl 3.22.217.29:8080/maven-web-app    
@@ -230,24 +230,62 @@ to access the container:  curl 3.22.217.29:8080/maven-web-app
 bc when we run docker exec webapp ls webapps ,, we can see the name of the application is tesla so the war file is tesla.war, so we cant use /maven-web-app
 so we wer successfull using  :  curl 3.22.217.29:8080/tesla
                         http://3.22.217.29:8080/tesla
+
+##########copy from a container:  
 ****************#copy from a container:
 docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
 docker cp webapp:/usr/local/tomcat/webapps .
 
-##########copy from a container:  **** check again
+STILL PRACTICALISING DOCKER COMMANDS
 now executing this command inside my container,  
-we run docker exec webapp ls webapps/tesla ,, inside webapps we hv tesla 
-docker exec webapp ls webapps/tesla
+   docker exec -it webapp bash , i can see it changed me to 
+root@a56bc88daeec:/usr/local/tomcat#
+ls , i can see
+bin, conf, lib, logs, temp, webapps , work
+where am i now? ,, i am inside dis container i jst created above so i can interact with the container, i can even ls logs , lemme ls the webapps n see what is der
+ls webapps/    , i can see            ( WEBAPPS IS WHER DEployment takes place in tomacat)
+ROOT, docs, manager, tesla  , tesla.war
+inside webapps we hv tesla
+ls webapps/tesla
+and inside tesla we v /jsp and other files 
 images 
 META-INF
 jsps
-and inside tesla we v /jsp ,,, 
+dont do ######vi webapps/tesla/jsps/home.jsp
+command nt found
+exit
+dont do ##### docker exec webapp vi webapps/tesla/jsps/home.jsp
+failed
+bt i can copy the file 
+######## 1:31:50  docker exec webapp ls webapps
+ROOT
+docs
+manager
+tesla
+tesla.war
+****** tried to acess the applicaton curl 3.22.217.29:8080/maven-web-app
+but 404 ERROR
+########application are deployed in the webapps 
+***** and ls webapps ie wher applications are deployed in tomcat shows us the name of the application is tesla, so the war file is tesla.war
+using this ... ****** tried to acess the applicaton curl 3.22.217.29:8080/tesla
+its successful and i can see the content 
+WELCOME TO TESLAS WEB APPLICATION PROJECT
+
+******** BUT  if i want to modify the content displayed
+
+**************** this is wher he now applied this command 
+##########copy from a container:  
+copy from a container:
+docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
+docker cp webapp:/usr/local/tomcat/webapps .
+
 docker exec webapp ls webapps/tesla/jsps
 home.jsp
 i wnt to copy this file called home.jsp n modify smt 
 docker exce webapp ls webapps/tesla/jsps/home.jsp
 now ders a command called docker cp
-  this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is the container we ar copying frm
+  this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is wher deployment takes place in tomcat
+ WE run decker exec webapp pwd ,, we can see the root path to use, wich is the absolute path
 
 1:40;34 **** so we use the absolute path 
 docker cp webapp:/usr/local/tomcat/webapps .
