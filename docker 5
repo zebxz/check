@@ -1,3 +1,12 @@
+modify docker file- build image- push- pull - deploy 
+hw to knw what port is in use
+restful APIs
+types of ERROR
+#######How to resolves issues occuring in a docker container??
+Monitoring dashboards
+copy files to container
+QUESTIONS n ANswers
+
 #### 23:16 even after authenticating we couldnt push to a private repo bc he nids to upgrade his account,its a payment issue , so we used anoda public repo
 
 host port changes but :container port doesnt
@@ -40,11 +49,11 @@ cd nodejs-application/
 ls , n we can see d docker file
 cat docke file
 docker ps , to check for containers 
-i wn to build a node image
-docker build -t nodeapp:1 .   , to build a docker image ........   ( nodeapp:1  ,ie   version 1)
+     i wn to build a node image
+1) docker build -t nodeapp:1 .   , to build a docker image ........   ( nodeapp:1  ,ie   version 1)
 
 docker tag nodeapp:1 mylandmarktech/nodejs-fe-app:33    ,,, tagging successful
-docker push nodeapp:1 mylandmarktech/nodejs-fe-app:33
+2)docker push nodeapp:1 mylandmarktech/nodejs-fe-app:33
 error pushing so we authenticate
 docker login -u mylandmarktech
 #### 23:16 even after authentiacting we couldnt push to the private repo bc he nids to upgrade his account,its a subscription issue , so we used anoda public repo
@@ -64,7 +73,7 @@ docker ps -q to list containers id
 to stop the containers:   docker stop container ids
 to remove stopped container : docker rm container ids
 
-docker run --name nodeapp -d -p 7777:9981 nodeapp:1
+5)docker run --name nodeapp -d -p 7777:9981 nodeapp:1
 ###### bt this : nodeapp:1 is nolonger in our local servrer bt we hv shared it in our register when we created the tag above bt we didnt push it
 so we v to use the image that is found in my registry the version2
 docker run --name nodeapp -d -p 7777:9981 nodeapp:2  ,, i dnt hv hv nodeapp:2 in my local server bt i have it in my registry, in my image remote registry
