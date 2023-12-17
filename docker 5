@@ -264,14 +264,14 @@ manager
 tesla
 tesla.war
 ****** tried to acess the applicaton curl 3.22.217.29:8080/maven-web-app
-but 404 ERROR
+but 404 ERROR bc its nt the ryt path to our application context path
 ########application are deployed in the webapps 
 ***** and ls webapps ie wher applications are deployed in tomcat shows us the name of the application is tesla, so the war file is tesla.war
 using this ... ****** tried to acess the applicaton curl 3.22.217.29:8080/tesla
-its successful and i can see the content 
+its successful and i can see the context 
 WELCOME TO TESLAS WEB APPLICATION PROJECT
 
-******** BUT  if i want to modify the content displayed
+******** BUT  if i want to modify the context displayed
 
 **************** this is wher he now applied this command 
 ##########copy from a container:  
@@ -285,7 +285,7 @@ i wnt to copy this file called home.jsp n modify smt
 docker exce webapp ls webapps/tesla/jsps/home.jsp
 now ders a command called docker cp
   this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is wher deployment takes place in tomcat
- WE run decker exec webapp pwd ,, we can see the root path to use, wich is the absolute path
+ WE run decker exec webapp pwd ,, we can see,  /usr/local/tomcat   ,   wich is the absolute path
 
 1:40;34 **** so we use the absolute path 
 docker cp webapp:/usr/local/tomcat/webapps .
