@@ -18,6 +18,8 @@ docker exec app 1s docker exec -it app
 8)99﻿﻿﻿docker attach containerNAME/ID
 ﻿﻿﻿netstat -tulpn
 
+26:24 , also is der ar issues in the container, we can track them frm the log files
+
   to TS 
 the first command to run is docker ps to check if the container is running
 1) then docker ps -a ,to check if it stopped
@@ -64,14 +66,30 @@ docker exec -it app bash
 ls
 pwd  ,, we can seee we ar inside the container
 
+16:39 docker cp = used to copy files into the container from the dockerhost and vice versa
+#### i can also get the commands online
+docker cp foo.txt container_id:/foo.txt
+docker cp , file name, container name/id: root dir 
+docker cp web app:/usr/local/tomcat/
 
+26:49##### to copy frm the container to the local host
+we wnt to copy the log files to the home of ubuntu and  
+docker cp app:/usr/local/tomcat/logs /home/ubuntu
+if home/ubuntu is wher we ar currently carrying out our task, means we wnt to copy to our pwd so i can jst put a dot
+docker cp app:/usr/local/tomcat/logs .
+also if i dnt wnt to put a dot i can use the ¬ , the tilter sign
 
+28:49 
+#### when the process in a container is running der ar obviously some changes
+when u deploy a container, der wil b some changes btw the container n the image wich was used to create the cointainer e.g we v copied some files into the container
 
+**** TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER
+docker diff container name/id
+its the diff btw the image used to create the container n the changes tahe v occurred in the container
 
-
-
-
-
+###### to maintain the changes in future application , we can commiit the changes
+docker commit 
+enables us to extract an image frm a running container
 
 
 
@@ -91,6 +109,14 @@ now if i wnt to copy that exact file that is inside webapps (/tesla/jsps/home.js
   docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
 successfully copied , we can see /home.jsp ,,,, i bliv this was copied to the pwd ,, i understand bt i can still ask ??????????????????????????????????????????????????????
 COPIED TO  /home/ubuntu/ .
+
+
+*******1:45:28 copy file to a container:
+docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
+now we v successfully copied it to the webapp conatiner 
+it shows :COPIED TO webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
+and when we check in the browser we can see the line that we changed
+
 
 
 
