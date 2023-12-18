@@ -118,7 +118,17 @@ it shows :COPIED TO webapp:/usr/local/tomcat/webapps/tesla/jsps/
 and when we check in the browser we can see the line that we changed
 
 
+******What is docker commit?
+Using docker commit we can create image from a continer.
+docker commit <containerId/Name> <imageName>
+docker commit webapp newimage:1 
 
+***** docker commit webapp mylandmarktech/maven-web-app:class34  
+then when i run docker image, i can see the new image with tag class34
+**** then push to my docker hub account so members of my team can understand/see the change
+docker push mylandmarktech/maven-web-app:class34  ,, now if u go to my docker repo u wil find thi simage 
+**** create a container wit the imge 
+docker run -d --name app -p 8088:8080 mylandmarktech/maven-web-app
 
 ===============================================
 
@@ -138,7 +148,7 @@ Dockerfiles are input use to build docker images
 Docker images are input needed/used to create containerised applications  
 
 1#
-FROM tomcat:8.0.20-jre8
+FROM tomcat:8.0.20-jre8      e.g the this docker file is tryng to containerize this application using FROM tomcat:8.0.20-jre8  , as the base iamge
 COPY target/*war /usr/local/tomcat/webapps/tesla.war
 2#
 FROM tomcat:8.0.20-jre8  
@@ -153,14 +163,17 @@ ADD target/*war /opt/jboss/wildfly/standalone/deployments/
 DockerImage: --> It's package which contains application code 
         + all it's dependencies(Software+ENV Varibles + Config Files) 
         together.
-java-based projects:
+so the docker file is written to achieve this objective
 
+what type of projects do you support in your env
+java-based projects:
+                                                                                   59:49
   curl -v localhost:6000/landmark 
   curl -v 44.211.75.85:6000/landmark 
 
-Dockerfile keywords:
+Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
 ===================
-FROM
+FROM   ,, this defines the dependencies
 MAINTAINER
 COPY
 ADD
