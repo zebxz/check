@@ -1,0 +1,61 @@
+docker ps  to list the runing containers
+to stop the container u can execute 
+   docker kill/stop  
+and once the containeer is stopped, you can start the container
+BUT DPCKER Stop is recommemnded bc it will give a warning b4 stopping whie docker kill doesnt give a warning
+
+How to troubleshoot or debug applications running as docker containers?
+1. docker ps -a =
+= will check if the container is running, paused or exited
+ docker start/unpause
+﻿﻿﻿2) docker top = check resources
+﻿﻿﻿3) docker stats containerNAME/ID
+﻿﻿﻿4) docker logs containerNAME/ID
+5) ﻿﻿﻿docker exec = run command inside the container
+docker exec app 1s docker exec -it app
+/bin/bash
+7)﻿﻿﻿docker inspect containerNAME/ID
+8)99﻿﻿﻿docker attach containerNAME/ID
+﻿﻿﻿netstat -tulpn
+
+  to TS 
+the first command to run is docker ps to check if the container is running
+1) then docker ps -a ,to check if it stopped
+if its in stop state , u strt the container
+but if it not stopped but the process is stopped u hv to unpause it
+2) docker inspect  ... "will show us network ie is the container in a ntwrk" does it v ip adress, a container thats running we shud see the ip address in networks
+and we can see the state as shown below that the container is nt running based on my inspeection, so we can start the container to solve the problem bc d container is exited
+e.g
+"State": {
+"Status": "exited"
+"Running": false,
+"Paused": false,
+"Restarting": false,
+"OOMKilled": false,
+"Dead": false,
+"Pid": 0,
+"ExitCode": 143,
+"Error". ""
+"StartedAt"? "2023-01-23T11:43:20.4499908057"
+"FinishedAt": "2023-01-27Т00:14:15.
+
+### most of the time when we look at networking after we kill a container n start a container, we ll see the ipaddresss will change
+
+3) docker top container name/id  ...to check the process running inside a container 
+
+4) docker stats ... resources being consumed by the cointainer process
+5) docker update container name/id
+
+13:13 to run command inside a container
+﻿﻿﻿docker exec app pwd 
+﻿﻿﻿docker exec app ls   .. to see the files
+we can actually get into the container to execute command by accessing the container in intercative mode
+docker exec -it app   .. for interactive mode
+to interact with the container we nid a shell
+so we can use a bash shell  .. : docker exec -it app bash
+or bond shell sh
+docker exec -it app sh
+then pwd : 
+/usr/local/tomcat      :shows me wher i am
+but when i tried to exit it says not found
+so we can see the bo
