@@ -58,4 +58,591 @@ docker exec -it app sh
 then pwd : 
 /usr/local/tomcat      :shows me wher i am
 but when i tried to exit it says not found
-so we can see the bo
+so we can see the bond shell is limited compared to the bash shell
+now we change to bash shell
+docker exec -it app bash
+ls
+pwd  ,, we can seee we ar inside the container
+
+
+
+===============================================
+
+Dockerfile running notes starts 
+
+Watch and practive the video below paying attention on the
+Dockerfile section of the video.
+NB: Watch the dockerfile video before Saturday's class.
+
+We shall start with docker networks and Micro-services on Saturday.
+===================================================================
+
+
+Dockerfiles:
+============ 
+Dockerfiles are input use to build docker images    
+Docker images are input needed/used to create containerised applications  
+
+1#
+FROM tomcat:8.0.20-jre8
+COPY target/*war /usr/local/tomcat/webapps/tesla.war
+2#
+FROM tomcat:8.0.20-jre8  
+COPY target/app.ear /usr/local/tomcat/webapps/app.war  
+3#
+FROM jboss/wildfly:latest  
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/
+
+            "ExposedPorts": {
+                "8080/tcp": {}
+
+DockerImage: --> It's package which contains application code 
+        + all it's dependencies(Software+ENV Varibles + Config Files) 
+        together.
+java-based projects:
+
+  curl -v localhost:6000/landmark 
+  curl -v 44.211.75.85:6000/landmark 
+
+Dockerfile keywords:
+===================
+FROM
+MAINTAINER
+COPY
+ADD
+RUN
+CMD
+ENTRYPOINT
+WORKDIR
+ENV
+EXPOSE
+USER
+VOLUME
+LABEL
+ARG
+
+Base image generally contains Libraries and dependencies  :
+    java-standalone applications
+FROM  openjdk11
+   java-web applications
+FROM  tomcat:9.0.7-openjdk11 
+FROM  jboss/wildfly
+  
+  docker pull tomcat:9.0.71-jdk17-corretto-al2
+
+FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
+ like centos,alpine,ubuntu or any programatic language(java,python,node,go) 
+ or some other sofwares like tomcat,nginx,mysql..etc. Using base image 
+ we can create our own image. All sub subsequent instructions(Layers) 
+ will be executed/created on top of base image
+layers.
+
+
+Syntax: 
+FROM  <ImageName>
+Ex:
+FROM tomcat:8.0.20-jre8
+FROM openjdk:8-alpine
+FROM nginx
+FROM node
+FROM python
+
+MAINTAINER --> It's will be used as comments to describe 
+author/owner who is maintaning the docker file.
+This instruction allows you to set the Author/Owner of the Image.
+
+MAINTAINER <name>
+MAINTAINER <LandmakTechnology mylandmarktech@gmail.com>
+MAINTAINER <Docker Community>
+
+COPY  --> Using COPY we can copy files/folders to the image. 
+Files/Folders will be copied to the image while building an image.
+Using COPY instruction we can COPY local(build context) files or directories(folders) to the image while building image.
+
+COPY target/tesla.war /usr/local/tomcat/ 
+COPY . . 
+
+SYTNAX:
+======
+COPY <source>                <destination> 
+      ServerFile/FolderPath   PathInsideImage
+
+ADD -->
+     ADD also can copy files to the image while creating image. 
+     ADD can copy local files from host server(build context) 
+     and also  can download files from remote HTTP/S locations 
+     while creating a image.
+
+     https://8.25.3.9:8081/repo/tesla/tesla.war  
+
+ADD https://8.25.3.9:8081/repo/tesla/tesla.war /usr/local/tomcat/  
+
+FROM ubuntu
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
+
+
+RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts.
+These RUN,CMD,ENTRYPOINT can be defined in 2 forms.
+
+1) -#Shell Form
+
+RUN <command> <arg1> <arg2>
+     mkdir /opt/class  
+CMD <command> <arg1> <arg2>
+      catalina.sh  start  
+ENTRYPOINT <commond> <arg1> <arg2>
+      /bin/bash -c catalina.sh  start 
+     /bin/bash -c catalina run 
+
+2) -#Executable Form
+
+RUN ["command/executable" , "arg1","arg2"]
+    ["mkdir" , "/opt/class30"]
+
+CMD ["commond/executable" , "arg1","arg2"]
+    ["catalina" , "run"]
+
+ENTRYPOINT ["commond/executable" , "arg1","arg2"]
+           ["catalina" , "run"]
+
+RUN --> RUN instruction will  execute commands/scripts.
+        RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image). 
+        Next to run you can mention any command based on base os of image.
+        We can have number of RUN instructions in a docker file 
+        all the RUN instructions will be exectued one after the other from top to bottom.
+
+  Dockerfile_RUN:  
+  FROM tomcat:9.0.71-jdk8-corretto-al2
+  ADD target/tesla.war  /usr/local/tomcat/   
+  CMD sh catalina.sh run 
+  CMD ["catalina", "run"]
+
+Dockerfile_CMD:  
+FROM ubuntu
+RUN mkdir /opt/class30
+RUN touch /opt/class30/jobs
+ADD . /opt/class30
+CMD pwd  
+CMD ["echo", "I am rich"]
+
+docker build -t image2 -f Dockerfile_CMD . 
+
+
+
+What is difference b/w RUN & CMD?
+
+RUN instructions will be executed while creating a image. 
+CMD Instructions will be executed while creating a container.
+We can have more than one RUN keyword in a docker file.
+All the RUN keywords will be processed while creating an image in the defined order(top to bottom).
+
+Can we have more than one CMD in dockerfile?
+Yes you can have. But only the last one/recent one in the order will be proccessed 
+while creating a container.
+
+
+
+ENTRYPOINT --> ENTRYPOINT configures a container that will run as an executable.
+           ENTRYPOINT is a command or script that is executed when you run the docker container.
+
+
+Dockerfile_EP:  
+FROM ubuntu
+RUN mkdir /opt/class30
+RUN touch /opt/class30/jobs
+ADD . /opt/class30  
+ENTRYPOINT ["echo", "I am rich from ENTRYPOINT"]
+
+How is ENTRYPOINT different from CMD?
+1. Both are command instructions executed while creating a container 
+2. ENTRYPOINT can't be over riden while we can over ride CMD 
+
+ENV --> ENV instruction sets the environment variable and this sets the environment for the subsequent build instructions. It takes two forms: one with a single variableENV <key> <value> and another with multiple variables ENV <key> =<avlue> <key> = <value>.
+
+
+
+ARG -> ARG Instruction defines a variable that can be passed at build time. Once it is defined in the Dockerfile you can pass with this flag --build-arg while building the image. We can have multiple ARG instruction in the Dockerfile. ARG is the only instruction that can precede the FROM instruction in the Dockerfile.
+
+ARG values are not available after the image is built. A running container won’t have access to an ARG variable value
+
+
+EX:
+
+ARG TAG=latest
+FROM centos:$TAG
+docker build -t <image-name>:<tag> --build-arg TAG=centos8 .
+
+
+WORKDIR --> WORKDIR  is used to define the working directory of a Docker container at any given time. The command is specified in the Dockerfile.It is optional (default is / , but base image might have set it), but considered a good practice. Subsequent instructions in the Dockerfile, such as RUN , CMD and ENTRYPOINT will operate in this dir.
+
+Ex:
+
+WORKDIR /app
+
+
+LABEL
+
+The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. To include spaces within a LABEL value, use quotes and backslashes as you would in command-line parsing. A few usage examples:
+
+
+LABEL branch=develop
+
+LABEL description="This text illustrates"
+
+
+An image can have more than one label. You can specify multiple labels on a single line.
+
+LABEL label1="value1" label2="value2" other="value3"
+
+
+
+USER 
+
+The USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile
+
+
+  
+  
+EXPOSE
+
+The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime.
+
+The EXPOSE instruction does not actually publish the port. It functions as a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published. To actually publish the port when running the container, use the -p flag on docker run to publish and map one or more ports.
+
+EXPOSE 8080  
+
+
+Dockerfile Best practices:
+==========================
+1. We should use executable over shell form for CMDs and ENTRYPOINTs instructions 
+2. Reduce the number of RUN instructions as much as possible. 
+   This will reduce the number Layers and keep our images light weight.  
+3. Use Official/Trusted docker base images in your Dockerfile 
+    FROM ubuntu/tomcat 
+4. Use light weight alpine linux where ever possible
+   https://hub.docker.com/_/alpine
+   ubuntu/centos/alpine   
+5. scan images before usage 
+     docker scan imageID/Name 
+
+6) Don't install/have unnecassary packages(Softwares) & Don't
+   copy unnecassary files & Folders .
+
+7) Don't run container process as root user. Start container
+   process(Application) as non root user. 
+
+8) Try to Scan images for fulnerabilites(Clair ,Anchor or Trivy or Inbuilt Scaning in ECR/GCR/ACR).
+
+9) Try to use multi Stage Docker files to reduce size of the image where ever it's applicable 
+https://github.com/LandmakTechnology/Dockerfiles
+
+10. Keywords should be in uppercase to distinguish it from arguments 
+
+multi Stage Docker files:
+1. Clone  
+2. Build  
+3. DeployAsContainer 
+
+FROM ubuntu:git 
+WORDIR /home/ubuntu/
+RUN clone https://git/repo/webapps \ 
+    && cd  webapps
+    && mvn install 
+FROM tomcat:71-jdk8-corretto-al2   
+
+
+#git
+FROM alpine/git as repo
+MAINTAINER mylandmarktech@gmail.com
+WORKDIR /app
+RUN git clone https://github.com/LandmakTechnology/maven-web-application
+
+#Maven
+FROM maven:3.5-jdk-8-alpine as build
+WORKDIR /app
+COPY --from=repo /app/maven-web-application  /app
+RUN mvn install
+
+#Tomcat
+FROM tomcat:8.0.20-jre8
+#COPY  /app/target/*war /usr/local/tomcat/webapps/maven-web-app.war
+COPY --from=build /app/target/*war /usr/local/tomcat/webapps/
+
+ubuntu@docker:~/web/laps$ docker system prune
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all dangling images
+  - all dangling build cache
+
+
+
+FROM ubuntu:latest
+RUN apt-get -y update && apt-get -y upgrade \
+RUN apt-get -y install openjdk-8-jdk wget
+RUN mkdir /usr/local/tomcat
+RUN wget http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar.gz -O /tmp/tomcat.tar.gz
+RUN cd /tmp && tar xvfz tomcat.tar.gz \
+    && cp -Rv /tmp/apache-tomcat-8.5.46/* /usr/local/tomcat/
+EXPOSE 8080
+CMD /usr/local/tomcat/bin/catalina.sh run
+
+FROM ubuntu:latest
+RUN apt-get -y update && apt-get -y upgrade \
+    && apt-get -y install openjdk-8-jdk wget \
+    &&  mkdir /usr/local/tomcat \
+    && wget http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar.gz -O /tmp/tomcat.tar.gz
+    && cd /tmp && tar xvfz tomcat.tar.gz \
+    && cp -Rv /tmp/apache-tomcat-8.5.46/* /usr/local/tomcat/
+EXPOSE 8080
+CMD /usr/local/tomcat/bin/catalina.sh run
+
+Dockerfile keywords/instructions:
+=================================
+FROM  
+COPY  
+ADD 
+RUN 
+CMD 
+ENTRYPOINT 
+WORKDIR ENV  
+LABEL  
+ARG 
+USER 
+EXPOSE   
+VOLUME  
+MAINTAINER  
+
+Micro-services and 
+Docker networks   
+volumes and 
+Docker compose  
+docker swarm
+
+http://44.211.75.85:3000/landmarktechnologies
+
+curl -v 44.211.75.85:3000/html  
+
+docker run -d -p 30000:9981  mylandmarktech/nodejs-fe-app
+
+
+FROM amazoncorretto:8-al2-jdk
+
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH
+RUN mkdir -p "$CATALINA_HOME"
+WORKDIR $CATALINA_HOME
+
+ARG 
+FROM 
+
+ARG TAG=latest
+FROM centos:$TAG
+
+docker build -t <image-name>:<tag> --build-arg TAG=centos8 .
+
+Docker networks & Micro-services:
+===================================
+What is a network ?
+Group of servers/devices connected to each other in a specific network. If Servers
+are in same network each one can talk to another server.
+
+Docker network
+=============
+If One Container has to talk to another Container 
+Using ContainerIP/Name(DNS) in Docker.
+Both has to created under same docker network.
+
+If Containers are in two different networks. 
+They can't access each other.
+
+How to list networks in docker?
+
+ubuntu@docker:~$ docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+7403f6b74f30   bridge    bridge    local
+f9f9a99c2c85   host      host      local
+0f1d053a3f91   none      null      local
+
+Default bridge network 
+
+custom bridge network
+host network
+none network
+
+ebay webapp: monolithic architecture 
+   login/registration/cart/pay/order/return  
+
+microservices architecture:
+ ebay.war  = decoupled   
+   login.jar
+   registration.jar
+   cart.jar
+   pay.jar
+   order.jar
+   return.jar  
+
+easy to manage/
+  monolithic = ebay / 20,000 lines of code 
+
+  microservices architecture:
+   login 2,000 lines of code 
+   registration 4,000 lines of code 
+   cart 2,000 lines of code 
+   pay 6,000 lines of code 
+   order 2,000 lines of code 
+   return 8,000 lines of code   
+easy to  scale  :
+    login=20m - 28m /
+    reg=20 /
+    cart=8m /
+    pay=7m/
+    order=7m /
+    returns=1m ] 
+
+better/efficient resource usage : 
+
+versioning is easier to manage with microservices
+
+We support Java based applications:
+===================================
+We support nodeJS and .net based applications:
+==============================================
+Ticket024:
+  Deploy a microservice application for tesla.  
+  - GitHub repository
+    https://github.com/LandmakTechnology/spring-boot-docker
+  - dockerHub repository
+    mylandmarktech/sping-boot-mongo
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      host: dbserver
+      port: 27017
+      username: devdb
+      password: devdb123
+      database: users
+      authentication-database: admin
+
+we need to deploy the springapp and the database - mongo
+vi sp.sh    
+  docker pull mylandmarktech/sping-boot-mongo
+  docker pull mongo
+  docker network create tesla
+  docker run --name springapp -d -p 8080:8080
+  docker run --name mongodb    
+
+
+vi sp.sh    
+  docker pull mylandmarktech/sping-boot-mongo
+  docker pull mongo
+  docker network create tesla
+  
+docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123   
+
+docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+ database:  HOSTNAME      USERNAME       PASSWORD   network  
+            mongodb       devdb          devdb@123   tesla    
+1.spingapp: mongodb       devdb          devdb@123   tesla  
+
+
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+
+
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+
+ 3.22.217.29:8080/
+docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -v /tmp/mydata:/data/db mongo 
+
+docker run --name app -d -p 8000:8080 --network tesla mylandmarktech/java-web-app 
+docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
+
+
+ubuntu@docker:~$ docker network
+
+Usage:  docker network COMMAND
+
+Manage networks
+
+Commands:
+  connect     Connect a container to a network
+  create      Create a network
+  disconnect  Disconnect a container from a network
+  inspect     Display detailed information on one or more networks
+  ls          List networks
+  prune       Remove all unused networks
+  rm          Remove one or more networks
+
+ docker network connect webapp tesla  
+
+docker run --name app -d -p 8000:8080 mylandmarktech/java-web-app 
+
+docker network create/inspect/ls/disconnect/connect/rm/prune:
+============================================================
+
+-# Remove unused networks
+docker network prune 
+
+-# Remove Network
+docker network rm <networkNameOrId>
+
+Docker Host Network.:
+If we create containers in host network. 
+Container will not have IP Address.
+ Container will be created in a system network.
+
+docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
+
+docker run --name javaapp -d --network host mylandmarktech/java-web-app
+   ContainerPort: 8080 
+
+docker run --name apps -d --network host mylandmarktech/java-web-app
+   ContainerPort: 8080 
+
+docker run --name hello -d --network host mylandmarktech/hello  
+  ContainerPort: 80
+
+
+
+ContainerPort: 8080    
+
+We can't create more than one container with same container port in host network.
+   landmark-web-app  = containerPort,  EXPOSE=8080  
+   java-web-app      = containerPort,  EXPOSE=8080  
+   maven-web-app     = containerPort,  EXPOSE=8080  
+
+Docker none/null network
+========================
+If we create container in none/null network. Container will not have IP Address.
+We can't access  containers in this network  
+docker run --network none                     
+Internal or external 
+
+docker run --name hello -d --network none mylandmarktech/hello   
+
+Isolation
+  docker run --ebay host -d --name hello mylandmarktech/hello   
+  docker disconnect hello ebay  
+  docker connect hello none  
+
+
+docker volumes and docker compose:
