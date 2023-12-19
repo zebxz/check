@@ -147,33 +147,57 @@ Dockerfiles:
 Dockerfiles are input use to build docker images    
 Docker images are input needed/used to create containerised applications  
 
-1#
+
 FROM tomcat:8.0.20-jre8      e.g the this docker file is tryng to containerize this application using FROM tomcat:8.0.20-jre8  , as the base iamge
 COPY target/*war /usr/local/tomcat/webapps/tesla.war
-2#
-FROM tomcat:8.0.20-jre8  
-COPY target/app.ear /usr/local/tomcat/webapps/app.war  
-3#
-FROM jboss/wildfly:latest  
-ADD target/*war /opt/jboss/wildfly/standalone/deployments/
+
 
             "ExposedPorts": {
                 "8080/tcp": {}
 
+THE INTENTIONN OF ANY DOCKER FILE that we ar trying to create is to be able to package the application plus all its dependencies
 DockerImage: --> It's package which contains application code 
         + all it's dependencies(Software+ENV Varibles + Config Files) 
         together.
 so the docker file is written to achieve this objective
 
-what type of projects do you support in your env
+what type of projects do you support in your env ,,,, we support java base projects 
 java-based projects:
                                                                                    59:49
-  curl -v localhost:6000/landmark 
+
+53;40 #### this is another java or docker file
+FROM tomcat:8.0.20-jre8  ....  tomcat is nt the ryt dependency
+COPY target/app.ear /usr/local/tomcat/webapps/app.war
+   in this example,  since we ar passing tomcat, the application code cannot be copied in a tomcat base image
+bc its nt the right dependency , tomcat is nt the ryt dependency, we cannot deploy ear on a tomcat base image
+we should be copying from  jboss/wildfly , as shown below and this is nt the home directory for jboss (/usr/local/tomcat), and (/webapps) is nt the deployment dir for jboss 
+to deploy in jboss, its deployed in deployments dir
+FROM jboss/wildfly ....  
+ADD target/maven-web-app.war /opt/jboss/wildfly/standalone/deployments/
+
+
+1#   .... this is correct
+FROM tomcat:8.0.20-jre8     
+COPY target/*war /usr/local/tomcat/webapps/tesla.war
+2#
+FROM tomcat:8.0.20-jre8   .. this is nt correct , we cannot deploy ear on a tomcat base image , the tomcat base image is nt the ryt dependency 
+COPY target/app.ear /usr/local/tomcat/webapps/app.war  
+
+3# this is correct
+FROM jboss/wildfly:latest   .... when no tag is chosen, the latest wil b downloaded
+ADD target/maven-web-app.war /opt/jboss/wildfly/standalone/deployments/
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/   .. we can also deploy a *war file in jboss,, we can deploy web aplication in j
+
+
+COPY target/*war /usr/local/tomcat/webapps/tesla.war
+
+
+curl -v localhost:6000/landmark 
   curl -v 44.211.75.85:6000/landmark 
 
 Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
 ===================
-FROM   ,, this defines the dependencies
+FROM   ,, this defines the dependencies , this is the most imp key work 
 MAINTAINER
 COPY
 ADD
