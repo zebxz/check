@@ -1,3 +1,5 @@
+CREATING DODCKER FILES
+
 docker ps  to list the runing containers
 to stop the container u can execute 
    docker kill/stop  
@@ -152,8 +154,7 @@ FROM tomcat:8.0.20-jre8      e.g the this docker file is tryng to containerize t
 COPY target/*war /usr/local/tomcat/webapps/tesla.war
 
 
-            "ExposedPorts": {
-                "8080/tcp": {}
+           
 
 THE INTENTIONN OF ANY DOCKER FILE that we ar trying to create is to be able to package the application plus all its dependencies
 DockerImage: --> It's package which contains application code 
@@ -184,12 +185,106 @@ FROM tomcat:8.0.20-jre8   .. this is nt correct , we cannot deploy ear on a tomc
 COPY target/app.ear /usr/local/tomcat/webapps/app.war  
 
 3# this is correct
-FROM jboss/wildfly:latest   .... when no tag is chosen, the latest wil b downloaded
+FROM jboss/wildfly:latest   .... when no tag is chosen, docker wil download the latest version
 ADD target/maven-web-app.war /opt/jboss/wildfly/standalone/deployments/
-ADD target/*war /opt/jboss/wildfly/standalone/deployments/   .. we can also deploy a *war file in jboss,, we can deploy web aplication in j
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/   .. we can also deploy a *war file in jboss,, we can deploy web aplication in jboss
 
 
-COPY target/*war /usr/local/tomcat/webapps/tesla.war
+
+57:29
+if we run docker pull jboss/wildfly
+.... it shows : usinng default tag: latest
+latest: pulling from jboss/wildfly
+we can see it pulled the latest of the image 
+cd web/
+docker images
+now we can seee the image was successsfully downloaded
+### to check how to better use the image
+we run docker inspect docker image id  
+****** THINGS TO LOOK OUT FOR IN THE IMAGE, when we run docker inspect  *******************************   SCREEEN SHOT COPy n paste
+58:25 
+1) we can see java is installed
+jbooss depends on java 
+2) the working dir " /opt/jboss
+3jboss hm dir /opt/jboss/wildfly
+4) jboss image is exposed on : 
+     "ExposedPorts": {
+                "8080/tcp": {}      ... so this is the container port , it cannot be changed
+the jboss is  now the base image 
+i can use the image to containerize the appplication 
+
+FROM jboss/wildfly:latest 
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/ 
+am copying the file with the keyword ADD n am changing the file
+ls 
+
+1:01:30
+vi Dockerfile_JB
+CREATing a new dockerfile , i will containerize the application n what eva is in the file wil b deployed
+FROM jboss/wildfly:latest  (am copying this file n whateva name is here is going to change to landmark.war
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/  ,, whateva is here is going to be copied and deployed as landmark.war
+am copying the file with the keyword ADD n am changing the name 
+##### docker file created ,, exit
+i wnt to build anod aimage , custom image that will v all my application
+docker build -t jblandmark:1 -f Dockerfile_JB .
+1:03:09
+#### earlier, we pulled the docker image n when we run docker image , we can see the docker file name is teslar.war
+now after we build a new image frm the new file we created (file name landmark.war) and run docker image, we can see the name for the new image we created as :
+jblandmark
+SO I V CONTAINERIZE MY APPLICATION
+
+### JBOSS/wildfly image... size is 742MB
+jblandmark  image . ..  size is 736MB 
+so i can delete  the jboss , i dnt nid it anymore ,, i only needed it to containerize my appl  , my appli has been containerized wit all its dependencies
+
+1:04;30 
+docker rmi -f jboss/wildfly  ,, we can delete without stating the tag  which is latest
+bt i must stage the tag if its not latest
+e.g  docker rmi -f image2:1
+
+we ar deleting to free up my cpu space  
+to check memory usgae :  df-h
+
+### now i can deploy my application with the jblandmark image bc  i v containerize my appli , it has been packaged in an image 
+docker run -d -p 6000:8080 --name jbapp jblandmark:1
+we cant deploy anoda application on the same host port number, it has to change 
+e.g 
+docker run -d -p 8888:8080 --name jbapp2 jblandmark:1
+docker run -d -p 8880:8080 --name jbapp3 jblandmark:1
+docker run -d -p 81110:8080 --name jbapp4 jblandmark:1    ,, but this wil nt work bc the port range for addresses is (0-65535) ,, 81110, is out of range
+
+of course at work u wnt be accessing application frm the console , it wil be frm the CLI
+curl localhost:6000/landmark
+the application path is /landmark as seen in the docker file we created ( cat Dockerfile_JB)
+i can also run 
+i can also make it to be verbose : curl -v localhost:6000/landmark
+to access it externally,  on the browser publicip:6000/landmark  ,, 1:16:00 ,, site cant be reached on the browser
+curl -v publicip:6000/landmark
+******** bt very soon i wont need to check stuffs externally bc am now a DEVOPS engr.
+#### if i wnt to knw if my appl is running or nt i can run commands inside my docker container
+ to knw the path to my application path, i can run: 
+docker exec jbapp pwd
+/opt/jboss
+docker exec jbapp ls /opt/jboss
+wildfly
+docker exec jbapp ls /opt/jboss/wildfly   ,, inside wildfly, deployment is taking place in standalone
+bin
+READme.
+docs
+stanalone
+docker exec jbapp ls /opt/jboss/wildfly/standalone    ,, inside stanalone we v deployments
+lib
+configuration
+log
+deploymenbts
+docker exec jbapp ls /opt/jboss/wildfly/standalone/deployments  ... now we can see landmark.war was deployed
+landmark.war
+
+
+1:16:30
+
+
+
 
 
 curl -v localhost:6000/landmark 
