@@ -229,15 +229,14 @@ FROM jboss/wildfly:latest (am copying this JBoss file we pulled n whateva name i
 ADD target/*war /opt/jboss/wildfly/standalone/deployments/landmark.war  ,, whateva is here is going to be copied and deployed as landmark.war
 am copying the file with the keyword ADD n am changing the name 
 ##### docker file created ,, exit
-i wnt to build anod aimage , custom image that will v all my application
+i wnt to build anod aimage , custom image that will v all my application .. the image name we ar building is jblandmark
 docker build -t jblandmark:1 -f Dockerfile_JB .
 1:03:09
 #### earlier, we pulled the docker image n when we run docker image , we can see the docker file name is teslar.war
-now after we build a new image frm the new file we created (to deploy as landmark.war) and run docker image, we can see the name for the new image we created as :
+now after we build a new image frm the new file we created (name landmark.war) it will deploy as landmark.war
+we run docker image, we can see the name for the new image we created as :
 jblandmark********************************************************************************************** iMAGE HAS BEEN CREATED ......
 SO I V CONTAINERIZE MY APPLICATION
-1:10:09 so if i want to check th epart of my appliaction, the path is landmark
-curl -v localhost:6000/landmark
 
 ### JBOSS/wildfly image... size is 742MB
 jblandmark  image . ..  size is 736MB 
@@ -262,11 +261,12 @@ docker run -d -p 81110:8080 --name jbapp4 jblandmark:1    ,, but thisa wil nt wo
 
 of course at work u wnt be accessing application frm the console , it wil be frm the CLI
 curl localhost:6000/landmark
-the application path is /landmark as seen in the docker file we created ( cat Dockerfile_JB)
+the application path is /landmark as seen in the docker file we created ( cat Dockerfile_JB) ***** landmark.war but so the path is landmark
 i can also run 
 i can also make it to be verbose : curl -v localhost:6000/landmark
 to access it externally,  on the browser publicip:6000/landmark  ,, 1:16:00 ,, site cant be reached on the browser
 curl -v publicip:6000/landmark
+curl -v 44.211.75.85:6000/landmark 
 
 ******** bt very soon i wont need to check stuffs externally bc am now a DEVOPS engr.
 #### if i wnt to knw if my appl is running or nt i can run commands inside my docker container
@@ -292,11 +292,6 @@ landmark.war
 1:16:30
 
 
-
-
-
-curl -v localhost:6000/landmark 
-  curl -v 44.211.75.85:6000/landmark 
 
 Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
 ===================
