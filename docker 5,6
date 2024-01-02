@@ -107,7 +107,7 @@ we wnt to copy the filw called home.jsp to the container called webapp
  WE run decker exec webapp pwd ,, we can see,  /usr/local/tomcat   ,   wich is the absolute path
 
 1:40;34 **** so we use the absolute path 
-docker cp webapp:/usr/local/tomcat/webapps .
+docker cp webapp:/usr/local/tomcat/webapps ***** here we copied the webapps dir to the container webapp
 and it says successfully copied to /home/ubuntu/.   ,, we wre unable to copy bc we wre using the relative path
 ls n we can see /webapps  ...... i bliv this was copied to the pwd ,, i understand bt i can still ask ??????????????????????????????????????????????????????
 now if i wnt to copy that exact file that is inside webapps (/tesla/jsps/home.jsp)
@@ -224,25 +224,27 @@ ls
 
 1:01:30
 vi Dockerfile_JB
-CREATing a new dockerfile , i will containerize the application n what eva is in the file wil b deployed
-FROM jboss/wildfly:latest  (am copying this file n whateva name is here is going to change to landmark.war
-ADD target/*war /opt/jboss/wildfly/standalone/deployments/  ,, whateva is here is going to be copied and deployed as landmark.war
+CREATing a new dockerfile , i will containerize the application n what eva name was here before(tesla.war) is going to change to landmark.war ie deployed as landmark.war
+FROM jboss/wildfly:latest (am copying this JBoss file we pulled n whateva name is here is going to change to landmark.war, bc dats wot we indicted it to deploy as when we created the new file
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/landmark.war  ,, whateva is here is going to be copied and deployed as landmark.war
 am copying the file with the keyword ADD n am changing the name 
 ##### docker file created ,, exit
 i wnt to build anod aimage , custom image that will v all my application
 docker build -t jblandmark:1 -f Dockerfile_JB .
 1:03:09
 #### earlier, we pulled the docker image n when we run docker image , we can see the docker file name is teslar.war
-now after we build a new image frm the new file we created (file name landmark.war) and run docker image, we can see the name for the new image we created as :
-jblandmark
+now after we build a new image frm the new file we created (to deploy as landmark.war) and run docker image, we can see the name for the new image we created as :
+jblandmark********************************************************************************************** iMAGE HAS BEEN CREATED ......
 SO I V CONTAINERIZE MY APPLICATION
+1:10:09 so if i want to check th epart of my appliaction, the path is landmark
+curl -v localhost:6000/landmark
 
 ### JBOSS/wildfly image... size is 742MB
 jblandmark  image . ..  size is 736MB 
 so i can delete  the jboss , i dnt nid it anymore ,, i only needed it to containerize my appl  , my appli has been containerized wit all its dependencies
 
 1:04;30 
-docker rmi -f jboss/wildfly  ,, we can delete without stating the tag  which is latest
+docker rmi -f jboss/wildfly  ,, we can delete without stating the tag, if it is latest and in this case , it is latest
 bt i must stage the tag if its not latest
 e.g  docker rmi -f image2:1
 
@@ -250,12 +252,13 @@ we ar deleting to free up my cpu space
 to check memory usgae :  df-h
 
 ### now i can deploy my application with the jblandmark image bc  i v containerize my appli , it has been packaged in an image 
+                                container name:jbapp $ image name: jblandmark
 docker run -d -p 6000:8080 --name jbapp jblandmark:1
 we cant deploy anoda application on the same host port number, it has to change 
 e.g 
 docker run -d -p 8888:8080 --name jbapp2 jblandmark:1
 docker run -d -p 8880:8080 --name jbapp3 jblandmark:1
-docker run -d -p 81110:8080 --name jbapp4 jblandmark:1    ,, but this wil nt work bc the port range for addresses is (0-65535) ,, 81110, is out of range
+docker run -d -p 81110:8080 --name jbapp4 jblandmark:1    ,, but thisa wil nt work bc the port range for addresses is (0-65535) ,, 81110, is out of range
 
 of course at work u wnt be accessing application frm the console , it wil be frm the CLI
 curl localhost:6000/landmark
@@ -264,6 +267,7 @@ i can also run
 i can also make it to be verbose : curl -v localhost:6000/landmark
 to access it externally,  on the browser publicip:6000/landmark  ,, 1:16:00 ,, site cant be reached on the browser
 curl -v publicip:6000/landmark
+
 ******** bt very soon i wont need to check stuffs externally bc am now a DEVOPS engr.
 #### if i wnt to knw if my appl is running or nt i can run commands inside my docker container
  to knw the path to my application path, i can run: 
@@ -275,13 +279,13 @@ docker exec jbapp ls /opt/jboss/wildfly   ,, inside wildfly, deployment is takin
 bin
 READme.
 docs
-stanalone
+stanalone 
 docker exec jbapp ls /opt/jboss/wildfly/standalone    ,, inside stanalone we v deployments
 lib
 configuration
 log
 deploymenbts
-docker exec jbapp ls /opt/jboss/wildfly/standalone/deployments  ... now we can see landmark.war was deployed
+docker exec jbapp ls /opt/jboss/wildfly/standalone/deployments  ...******************************** now we can see landmark.war was deployed
 landmark.war
 
 
