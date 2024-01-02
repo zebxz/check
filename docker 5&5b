@@ -294,10 +294,11 @@ home.jsp
 i wnt to copy this file called home.jsp n modify smt 
 docker exce webapp ls webapps/tesla/jsps/home.jsp
 now ders a command called docker cp
-  this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is wher deployment takes place in tomcat
+we wnt to copy the filw called home.jsp to the container called webapp
+this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is wher deployment takes place in tomcat
  WE run decker exec webapp pwd ,, we can see,  /usr/local/tomcat   ,   wich is the absolute path
 
-1:40;34 **** so we use the absolute path 
+1:40;34 **** so we use the absolute path ,, here we copied the webapps dir to the container webapp
 docker cp webapp:/usr/local/tomcat/webapps .
 and it says successfully copied to /home/ubuntu/.   ,, we wre unable to copy bc we wre using the relative path
 ls n we can see /webapps  ...... i bliv this was copied to the pwd ,, i understand bt i can still ask ??????????????????????????????????????????????????????
