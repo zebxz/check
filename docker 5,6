@@ -88,18 +88,21 @@ when u deploy a container, der wil b some changes btw the container n the image 
 **** TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER
 docker diff container name/id
 its the diff btw the image used to create the container n the changes tahe v occurred in the container
-
+ 
 ###### to maintain the changes in future application , we can commiit the changes
 docker commit 
 enables us to extract an image frm a running container
 
 
 
-docker exec webapp ls webapps/tesla/jsps
+**********(i copied this frm the previous video 5/5b )*************************************************
+          webapp is the container name 
+docker exec webapp ls webapps/tesla/jsps ... **** this is interacting with the container
 home.jsp
 i wnt to copy this file called home.jsp n modify smt 
 docker exce webapp ls webapps/tesla/jsps/home.jsp
 now ders a command called docker cp
+we wnt to copy the filw called home.jsp to the container called webapp
   this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is wher deployment takes place in tomcat
  WE run decker exec webapp pwd ,, we can see,  /usr/local/tomcat   ,   wich is the absolute path
 
@@ -112,12 +115,13 @@ now if i wnt to copy that exact file that is inside webapps (/tesla/jsps/home.js
 successfully copied , we can see /home.jsp ,,,, i bliv this was copied to the pwd ,, i understand bt i can still ask ??????????????????????????????????????????????????????
 COPIED TO  /home/ubuntu/ .
 
-
 *******1:45:28 copy file to a container:
 docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
 now we v successfully copied it to the webapp conatiner 
 it shows :COPIED TO webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
 and when we check in the browser we can see the line that we changed
+*********************************************************************************************************************************************************
+
 
 
 ******What is docker commit?
