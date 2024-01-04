@@ -289,13 +289,14 @@ docker exec jbapp ls /opt/jboss/wildfly/standalone/deployments  ...*************
 landmark.war
 
 
-1:16:30
+1:16:30 ... READ UP POWER POINT SCRIPT
 
 
 
 Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
 ===================
 FROM   ,, this defines the dependencies , this is the most imp key work 
+FROM:   The FROM instruction initializes a new build stage and sets the Base Image for subsequent instructions
 MAINTAINER
 COPY
 ADD
@@ -310,14 +311,20 @@ VOLUME
 LABEL
 ARG
 
-Base image generally contains Libraries and dependencies  :
-    java-standalone applications
-FROM  openjdk11
-   java-web applications
-FROM  tomcat:9.0.7-openjdk11 
-FROM  jboss/wildfly
-  
-  docker pull tomcat:9.0.71-jdk17-corretto-al2
+Base image generally contains Libraries and dependencies  :1:19:14
+ E.g for a:   java-standalone applications
+FROM  openjdk11     , we use this to determine our base image
+ 
+then  for: java-web applications
+FROM  tomcat:9.0.7-openjdk11 ,    we use this to determine our base image
+FROM  jboss/wildfly        ,        we use this to determine our base image
+
+
+****************** he went into docker hub repository and typed tomcat in the search bar, When u click tag,we see the diff tomcat tags, that v been pushed then he click any
+one :
+docker pull tomcat:9.0.71-jdk17-corretto-al2
+***** then copy my application code and am gud to go
+
 
 FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
  like centos,alpine,ubuntu or any programatic language(java,python,node,go) 
@@ -325,7 +332,6 @@ FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
  we can create our own image. All sub subsequent instructions(Layers) 
  will be executed/created on top of base image
 layers.
-
 
 Syntax: 
 FROM  <ImageName>
@@ -336,36 +342,84 @@ FROM nginx
 FROM node
 FROM python
 
+
 MAINTAINER --> It's will be used as comments to describe 
 author/owner who is maintaning the docker file.
 This instruction allows you to set the Author/Owner of the Image.
+so if ders a problem 
 
 MAINTAINER <name>
 MAINTAINER <LandmakTechnology mylandmarktech@gmail.com>
-MAINTAINER <Docker Community>
+MAINTAINER <Docker Community> ..e.g,we can have docker community as the maintainer, so if ders an issue with the image we should contact the docker community 
+
 
 COPY  --> Using COPY we can copy files/folders to the image. 
-Files/Folders will be copied to the image while building an image.
+COPY : this keyword is used to copy files from the host to the container 
+using COPY, Files/Folders will be copied to the image while building an image.
 Using COPY instruction we can COPY local(build context) files or directories(folders) to the image while building image.
 
 COPY target/tesla.war /usr/local/tomcat/ 
-COPY . . 
+i can aslo do : COPY . .  (this means it wil copy all the files in my pwd into the working dir of the container) 
 
+
+***********************************************************************************************************************************
+COPY . .        1:32:30
+applying : COPY . .
+e.g 
+ubuntu@docker:¬/web$ ls
+Dockerfile          jnekinsfileDeclarative   jenkinsfile_tesla                pom.xml
+Dockerfile_JB       jenkinsfileJuly2021      JenkinsfiledeclarativeJuneBathc  src
+Jenkinsfile         jenkinsfile_docker       jenkinsfiles-declarative29       target
+Jenkinsfile-ebay    jenkinsfie_paypal28      deploy-k8s.yml
+
+e.g 
+echo  FROM ubuntu > Dockerfile_copy 
+echo COPY .. >> Dockerfile_copy
+*** if i cat Dockerfile_copy  ,, i can see 2lines
+FROM Ubuntu  
+COPY . .          this is hw simple docker files are
+********** COPY .. means it will copy all the files and folder in my pwd to my container and in this case, i am building an ubuntu container 
+so if i execute this Dockerfile_copy  to build my image , it wil copy all the files above but if i dnt want to copy a particular file, to ensure that all the files ar copied
+exceppt a particular file e.g src
+e.g i dnt want to copy: src then i wil create a new file called .Dockerignore , then any file i dnt wnt to copy, i can move it into this file 
+ubuntu@docker:¬/web$  touch .Dockerignore 
+ubuntu@docker:¬/web$  vi .Dockerignore
+then write  src      , when i cat, i can see src
+ubuntu@docker:¬/web$ cat .Dockerignore 
+src
+
+**** once the file have been moved into .Dockerignore, if i run COPY . . , those files will not be copied 
+
+FROM Ubuntu    (this is our build image)
+COPY . .
+******** this can be used to create an image 
+docker build -t imageone:1 -f Dockerfile_copy .                                      *********** 1:38:00
+and we can also use the image to build a container then when we run ls, we can see all the files that were copied **** bt the src was stil copied, bt the .DOckerignore file
+is used for files we dnt wnt to copy, dnt knw why it didnt work
+
+this is the sytnax
 SYTNAX:
 ======
 COPY <source>                <destination> 
       ServerFile/FolderPath   PathInsideImage
 
+Docker ADD does the same tin as docker COPY but it has some advantages bc it can be used to copy files from external sources e.g to download files
 ADD -->
      ADD also can copy files to the image while creating image. 
      ADD can copy local files from host server(build context) 
      and also  can download files from remote HTTP/S locations 
      while creating a image.
 
-     https://8.25.3.9:8081/repo/tesla/tesla.war  
+  e.g if my WAR file is somewhere in    https://8.25.3.9:8081/repo/tesla/tesla.war , and i want to copy this information while creating my container 
+                                          d server ip/neuxs server port/repository and in the repo, i v created a repo called tesla and inside tesla ders tesla.war
+therefore i can use the keyword ADD , 
+ADD https://8.25.3.9:8081/repo/tesla/tesla.war /usr/local/tomcat/   ,, this way we can download files from remote https location
+this is the source:       https://8.25.3.9:8081/repo/tesla/tesla.war
+and i want it to be in   /usr/local/tomcat/  
 
-ADD https://8.25.3.9:8081/repo/tesla/tesla.war /usr/local/tomcat/  
-
+e.g, i want to download this tomcat9 to my server:     https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
+the file is found in a https location, so ill use the keyword ADD
+I WANT To install the tomcat from ubuntu  and download it into /opt 
 FROM ubuntu
 ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
 
