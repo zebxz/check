@@ -358,6 +358,8 @@ COPY : this keyword is used to copy files from the host to the container
 using COPY, Files/Folders will be copied to the image while building an image.
 Using COPY instruction we can COPY local(build context) files or directories(folders) to the image while building image.
 
+e.g
+to copy a file in the target dir to /usr/local/tomcat/ 
 COPY target/tesla.war /usr/local/tomcat/ 
 i can aslo do : COPY . .  (this means it wil copy all the files in my pwd into the working dir of the container) 
 
@@ -371,6 +373,7 @@ Dockerfile          jnekinsfileDeclarative   jenkinsfile_tesla                po
 Dockerfile_JB       jenkinsfileJuly2021      JenkinsfiledeclarativeJuneBathc  src
 Jenkinsfile         jenkinsfile_docker       jenkinsfiles-declarative29       target
 Jenkinsfile-ebay    jenkinsfie_paypal28      deploy-k8s.yml
+Jenkinsfile11       jenkinsfile_sep22        docker-compose.yml
 
 e.g 
 echo  FROM ubuntu > Dockerfile_copy 
@@ -392,7 +395,7 @@ src
 
 FROM Ubuntu    (this is our build image)
 COPY . .
-******** this can be used to create an image 
+******** this build image and COPY.. Which is the content of  Dockerfile_copy .  can be used to create an image 
 docker build -t imageone:1 -f Dockerfile_copy .                                      *********** 1:38:00
 and we can also use the image to build a container then when we run ls, we can see all the files that were copied **** bt the src was stil copied, bt the .DOckerignore file
 is used for files we dnt wnt to copy, dnt knw why it didnt work
@@ -418,11 +421,24 @@ this is the source:       https://8.25.3.9:8081/repo/tesla/tesla.war
 and i want it to be in   /usr/local/tomcat/  
 
 e.g, i want to download this tomcat9 to my server:     https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
-the file is found in a https location, so ill use the keyword ADD
+the file is found in a https location, so ill use the keyword ***** ADD
 I WANT To install the tomcat from ubuntu  and download it into /opt 
 FROM ubuntu
-ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/ 
 
+TO COPY THE PRVIOUS DOCKER FILE 
+cp Dockerfile_copy Dockerfile_ADD
+TO BUILD AN IMAGE WITH THE FILE Dockerfile_ADD
+docker build -t imageone:2 -f Dockerfile_ADD
+
+1:46:50
+if i decide to put another ADD In my  Dockerfile like this  ie (ADD target /opt)
+FROM ubuntu
+ADD target /opt              **************  its going to copy from the host in the container in the opt dir
+ADD https://dlcdn.apache.org/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
+******** its going to copy from the host in the container in the opt dir
+
+        1:48 :40
 
 RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts.
 These RUN,CMD,ENTRYPOINT can be defined in 2 forms.
