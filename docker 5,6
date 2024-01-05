@@ -437,8 +437,11 @@ FROM ubuntu
 ADD target /opt              **************  its going to copy from the host in the container in the opt dir
 ADD https://dlcdn.apache.org/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz /opt/
 ******** its going to copy from the host in the container in the opt dir
-
-        1:48 :40
+then run 
+docker build -t imageone:2 -f Dockerfile_ADD
+when i run :docker run imageone:2 ls /opt
+i can see the files were copied to /opt
+        1:49:46
 
 RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts.
 These RUN,CMD,ENTRYPOINT can be defined in 2 forms.
