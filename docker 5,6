@@ -120,6 +120,16 @@ docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
 now we v successfully copied it to the webapp conatiner 
 it shows :COPIED TO webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
 and when we check in the browser we can see the line that we changed
+
+*************************THIS IS FRM DOCKER I&2 VIDES
+
+so we wnat to build our image and the command is  
+  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
+  docker build -t teslaimage:1 -f Dockerfile-tesla .  
+
+we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
+am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
+
 *********************************************************************************************************************************************************
 
 
@@ -375,7 +385,13 @@ Jenkinsfile         jenkinsfile_docker       jenkinsfiles-declarative29       ta
 Jenkinsfile-ebay    jenkinsfie_paypal28      deploy-k8s.yml
 Jenkinsfile11       jenkinsfile_sep22        docker-compose.yml
 
-e.g 
+ubuntu@docker:¬/web$ Docker images
+REPOSITORY                  TAG    IMAGE ID    CREATED   SIZE     
+jblandmark                   1
+Ubuntu                       latest
+mylandmarktech/sping-boot-    latest
+
+e.g   (from ubuntu below means we are creating this new image from Ubuntu 1:52:50) 
 echo  FROM ubuntu > Dockerfile_copy 
 echo COPY .. >> Dockerfile_copy
 *** if i cat Dockerfile_copy  ,, i can see 2lines
@@ -447,7 +463,11 @@ i can see the files were copied to /opt
 RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
 These RUN,CMD,ENTRYPOINT can be defined in 2 forms.
 
-Docker history (image name 
+Docker history (image name OR image ID) : this will define all the layers on/of the image e.g files that were added on the image 
+if i want create images, i can decide to use RUN instructions to add to the layers
+e.g 
+
+
 
 1) -#Shell Form
 
