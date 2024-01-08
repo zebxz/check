@@ -468,11 +468,35 @@ if i want create images, i can decide to use RUN instructions to add to the laye
 e.g 
 ubuntu@docker:¬/web$ Docker images
 REPOSITORY                  TAG    IMAGE ID    CREATED   SIZE     
+imageone                     2
+imageone                     1
 jblandmark                   1
 Ubuntu                       latest
 mylandmarktech/sping-boot-    latest
 
+CREATING A DOCKER FILE FOR RUN INSTRUCTIONS    1:53:35
+vi Docker_RUN 
+FROM imageone
+RUN mkdir /opt/class30    ie mkdir /opt and i wnt to call the dir class30
+RUN touch /opt/class30/jobs    ie i wnat to touch a file insideinside /opt and i want to call the file jobs 
+ADD . /opt/class30             ie add all the files in my pwd and add them in my container in this dir
+RUN apt install tree wget unzip -y    ( we use apt bc imageone is running on ubuntu ie we created imageone from ubuntu as seen above )
+exit
+then run docker build -t imageone:3 -f Dockerfile_RUN
+***** build wasnt successful bc some RUN command failed e.g apt install failed: WARNING apt does nt have a stable CLI interface. Use with caution in scripts, dis i bc the
+base image is minimal, it contains just relevant libraries
+********* now we vi into  Docker_RUN again and remove the apt command then our build was successful
+now when we run docker history imageone:3 , we can see the 3 new layers that were added as well as the previous layers (ie imageone layers)
+so when a RUN command is executed, a layer is added , they are added ontop of the previous layers that exited before   1:58:51
 
+thats why we say: RUN instruction will  execute commands/scripts.
+        RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image)
+ Next to run you can mention any command based on base os of image.... (he didnt xplain this)
+        We can have number of RUN instructions in a docker file 
+        all the RUN instructions will be exectued one after the other from top to bottom.
+
+1:59:40 *************HOW CAN WE PASS THESE INSTRUCTIONS
 
 1) -#Shell Form
 
@@ -498,7 +522,7 @@ ENTRYPOINT ["commond/executable" , "arg1","arg2"]
 RUN --> RUN instruction will  execute commands/scripts.
         RUN commands or instructions will be executed while creating an image on top 
         of the previous layers(Image). 
-        Next to run you can mention any command based on base os of image.
+        Next to run you can mention any command based on base os of image.... (he didnt xplain this)
         We can have number of RUN instructions in a docker file 
         all the RUN instructions will be exectued one after the other from top to bottom.
 
