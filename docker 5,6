@@ -1,4 +1,6 @@
-CREATING DODCKER FILES
+CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, to run command inside a
+container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER COMMIT, 
+TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE, DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, 
 
 docker ps  to list the runing containers
 to stop the container u can execute 
@@ -461,8 +463,17 @@ i can see the files were copied to /opt
 
                  READUP POWERPOINT
 RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
-These RUN,CMD,ENTRYPOINT can be defined in 2 forms.
+These RUN,CMD,ENTRYPOINT can be defined in 2 forms. we can pass them in 2forms  either we use the shell form or the executable form 
+****** he then continued later 1:59:50 
 
+RUN --> RUN instruction will  execute commands/scripts.
+        RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image). 
+        Next to run you can mention any command based on base os of image.... (he didnt xplain this)
+        We can have number of RUN instructions in a docker file 
+        all the RUN instructions will be exectued one after the other from top to bottom.
+
+***************** LAYERS EXPLAINED   ***************************************************
 Docker history (image name OR image ID) : this will define all the layers on/of the image e.g files that were added on the image 
 if i want create images, i can decide to use RUN instructions to add to the layers
 e.g 
@@ -497,6 +508,7 @@ thats why we say: RUN instruction will  execute commands/scripts.
         all the RUN instructions will be exectued one after the other from top to bottom.
 
 1:59:40 *************HOW CAN WE PASS THESE INSTRUCTIONS
+we can either use shell form or executable form 
 
 1) -#Shell Form
 
