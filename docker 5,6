@@ -2,11 +2,16 @@ CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How
 container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER COMMIT, 
 TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE, DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, 
 
-docker ps  to list the runing containers
+QUESTION
+WHAT problem have you encountered in ur project before
+when i joined my team, they had particularly entry point and CMD instructions that were written uisng shell form for taht reason they were nt running as the parent process
+so they were killed unnoticed
+**************************************************************************************************************
+docker ps  to list the running containers
 to stop the container u can execute 
    docker kill/stop  
 and once the containeer is stopped, you can start the container
-BUT DPCKER Stop is recommemnded bc it will give a warning b4 stopping whie docker kill doesnt give a warning
+BUT DOCKER Stop is recommemnded bc it will give a warning b4 stopping whie docker kill doesnt give a warning
 
 How to troubleshoot or debug applications running as docker containers?
 1. docker ps -a =
@@ -473,7 +478,9 @@ RUN --> RUN instruction will  execute commands/scripts.
         We can have number of RUN instructions in a docker file 
         all the RUN instructions will be exectued one after the other from top to bottom.
 
+*****layers means: when you create a docker image, it is created on multiple layers depending on the instruction that have been passed
 ***************** LAYERS EXPLAINED   ***************************************************
+
 Docker history (image name OR image ID) : this will define all the layers on/of the image e.g files that were added on the image 
 if i want create images, i can decide to use RUN instructions to add to the layers
 e.g 
@@ -508,35 +515,65 @@ thats why we say: RUN instruction will  execute commands/scripts.
         all the RUN instructions will be exectued one after the other from top to bottom.
 
 1:59:40 *************HOW CAN WE PASS THESE INSTRUCTIONS
+RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
 we can either use shell form or executable form 
+e.g 
+ubuntu@docker:¬/web$ ls
+when u execute command like this, a shell is been used to excute the command 
+also
+ubuntu@docker:¬/web$ echo $SHELL
+/bin/bash  ........******************* so this is the shell that is been used to execute commands
+ubuntu@docker:¬/web$ /bin/bash -c pwd   (using the bash shell to see our pwd)
+/home/ubuntu/web 
+ubuntu@docker:¬/web$ /bin/sh -c pwd     (using the bond shell to see our pwd, we also get a response )
+/home/ubuntu/web 
+**************************** so when u execute a command when creating images or container,  u can pass ur instruction using shell form or executable form
+
 
 1) -#Shell Form
-
+and for shell form, we can have command and argument
 RUN <command> <arg1> <arg2>
-     mkdir /opt/class  
+  **************** e.g   mkdir /opt/class  
 CMD <command> <arg1> <arg2>
       catalina.sh  start  
 ENTRYPOINT <commond> <arg1> <arg2>
       /bin/bash -c catalina.sh  start 
-     /bin/bash -c catalina run 
+     /bin/bash -c catalina run ******** as  a child process, it can be killed unnoticed, so the recommendation is to run it as a parent process
 
 2) -#Executable Form
 
 RUN ["command/executable" , "arg1","arg2"]
-    ["mkdir" , "/opt/class30"]
+    ["mkdir" , "/opt/class30"  a single argument ]   ************* we can hv mulitiple argument or a single argument
 
 CMD ["commond/executable" , "arg1","arg2"]
     ["catalina" , "run"]
 
 ENTRYPOINT ["commond/executable" , "arg1","arg2"]
-           ["catalina" , "run"]
+           ["catalina" , "run"] 
 
-RUN --> RUN instruction will  execute commands/scripts.
-        RUN commands or instructions will be executed while creating an image on top 
-        of the previous layers(Image). 
-        Next to run you can mention any command based on base os of image.... (he didnt xplain this)
-        We can have number of RUN instructions in a docker file 
-        all the RUN instructions will be exectued one after the other from top to bottom.
+WHATS THE DIFF BTW SHELL FORM AND Executable form 
+the main difference is :
+when u run a command using the shell form (/bin/bash), the principal process is the shell
+e.g
+ubuntu@docker:¬/web$ ps 
+PID TTY        TIME CMD
+12752 pts/0   00:00:00 bash    **** ( this bash is the principal  OR the parent process) 
+19837 pts/0   00:00:00 ps
+************ the shell becomes the principal process or the parent process and the command becomes a child process
+ubuntu@docker:¬/web$ /bin/sh -c pwd  (and as can be seen here as well ... -c pwd)
+thats the problem when u execute using shell form 
+2:05:51  **************************   and as a child process, it can be killed unnoticed,so the recommendation is to run it as a parent process
+
+####### WHILE FOR EXECutaBLE FORM , 
+the command ( CMD or RUN instruction wil run as a parent process ) 
+e.g to start a command in tomcat: 
+CMD ["commond/executable" , "arg1","arg2"]
+    ["catalina" , "run"
+
+QUESTION
+WHAT problem have you encountered in ur project before
+when i joined my team, they had particularly entry point and CMD instructions that were written uisng shell form for taht reason they were nt running as the parent process
+so they were killed unnoticed
 
   Dockerfile_RUN:  
   FROM tomcat:9.0.71-jdk8-corretto-al2
