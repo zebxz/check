@@ -993,8 +993,24 @@ my experience inclues writing docker files, maintaining docker files, to contain
 application on a CI/CD platform and before we run the application , we nid a odcker file to containerize it as part of the CI/CD process , so i am task to write and modify 
 docker files and when i do so, i mk use of key Docker words like: FROM for my base image , COPY to copy files from the host to the container,RUN to execute commands ,CMD and
 ENTRYPOINT instruction to execute command while creating d container and it is important for me to make mention tht in writing my docker file in our env we mk use of docker
-of best
-practices and these practices that we implement in our env include ensuring that our images are light weight 
+ file  best practices and these practices that we implement in our env include ensuring that our images are light weight and for that to happen, we are adviced nt to 
+download unnecessary packages, nt to copy unnessary files into our containers, nt to use multiple run instructios, so we use the && instructor as much as possible and that
+reduces the number of layers and by so doing we are going to be creating light weight portaBLE images.
+also we only make use of official images as our base images, so docker official images those are the ones that we choose. in an attempt to keep our images as light weight as 
+possible, in our env we use alpine images as much as possible bc linux alpine is the lightest OS for linux that u can get bc docker is intended to be light weight
+In Passing our CMD and ENTRYPOINT Instructions, we are using executable form over shell form this will be enable our application process to run as a parent process and as 
+such, it cannot be killed unnoticed
+We also enabled scanning in our env, such that everytin is autoscanned and if thers any issue, pull REQ are been deployed for us to take remedial action 
+*************docker is intended to be light weight bt then u nid to do smt to mk it light weight by making the right choices
+
+WHAT IS SOME OF THE PROBLEMS U HAVE FCAED IN UR ENVR RECENTLY AS A DEVOPS ENGR.
+we hv some of our docker files which we hv used to build and deploy applications and we had issues wher  applications were failing, endusers were complaining, so i had
+to TS , ha sto check hw the docker files were written and i realized that our CMD were been passed in shell form and as a result, the applications process were been killed
+unnoticed and i quickly modify the dockerfile, changed it from shell form to executable form such that the application will run as a parent process. 
+
+there are some things u are going to explain, that will be the end of the interview , they wil knw that u knw, bc ther are some intricacies that somebody who is at work
+whose hands are dirty like yours, u ar going to be making mention of them n they will knw this guy his hand is really dirty when it come sto containerization with docker
+
 Docker networks & Micro-services:
 ===================================
 What is a network ?
@@ -1009,7 +1025,7 @@ Both has to created under same docker network.
 
 If Containers are in two different networks. 
 They can't access each other.
-
+ 
 How to list networks in docker?
 
 ubuntu@docker:~$ docker network ls
