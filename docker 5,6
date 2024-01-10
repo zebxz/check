@@ -1,12 +1,15 @@
 CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, to run command inside a
 container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER COMMIT, 
-TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE, DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, 
+TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE N THE RYT DEPENDENCY, CREATING A DOCKER FILE FOR RUN INSTRUCTIONS    
+DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, 
+****************** MUST be able to explain WHATS THE DIFF BTW SHELL FORM AND Executable form
 
 QUESTION
 WHAT problem have you encountered in ur project before
 when i joined my team, they had particularly entry point and CMD instructions that were written uisng shell form for taht reason they were nt running as the parent process
 so they were killed unnoticed
-**************************************************************************************************************
+************************************************************************************************************** START
+
 docker ps  to list the running containers
 to stop the container u can execute 
    docker kill/stop  
@@ -136,6 +139,15 @@ so we wnat to build our image and the command is
 
 we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
 am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
+
+FRM DOCKER1 video: 
+ 1:14:00  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
+  docker build -t teslaimage:1 -f Dockerfile-tesla . 
+ docker build -t teslaimage:1 -f Dockerfile . (since am located in the web dir i could jst do a .,ie my docker file is found in my pwd
+ docker build -t teslaimage:1 . (the . means its building frm d docker file bc d defaut name for doecker file is docker file bt if am using a dif name e.g 
+docker build -t teslaimage:1 -fdockerfile-tesla then i must pas the -f option bt if am using docker file wich is d default name i cna decisde nt to pass the -f option
+
+
 
 *********************************************************************************************************************************************************
 
@@ -601,12 +613,11 @@ Dockerfile_RUN:
   ADD target/tesla.war  /usr/local/tomcat/
 sh catalina.sh run
 
-???????????????????????????????????????????????????????????????QUESTION:
+???????????????????????????????????????????????????????????????QUESTION:???????????????????????????????????????????????????????????????????????????????????????
 is this catalina.sh run and this catalina.sh run both shell forms ??????????????????
 
+2:13:50
 
-
-Dockerfile_CMD:  
 FROM ubuntu
 RUN mkdir /opt/class30
 RUN touch /opt/class30/jobs
@@ -615,7 +626,11 @@ CMD pwd
 CMD ["echo", "I am rich"]
 
 docker build -t image2 -f Dockerfile_CMD . 
-
+*********** BUild was successful bt the CMD is nt excuted bc CMD instructions are nt executed when ur creating ur image bt run instruction ar executed when creatin d image
+*********if u want to create ur container, the run command , the CMD instruction wil be executed bt only the last CMD will be executed while when creatin an image all the run
+command wil be executed
+####################################################i see i can create my image severally ie i can run docker build -t image2 -f Dockerfile_CMD . severally , especially if i
+change or add /smt in the docker file
 
 
 What is difference b/w RUN & CMD?
@@ -630,9 +645,9 @@ Yes you can have. But only the last one/recent one in the order will be proccess
 while creating a container.
 
 
-
+                         (entry point and CMD do the same tin)
 ENTRYPOINT --> ENTRYPOINT configures a container that will run as an executable.
-           ENTRYPOINT is a command or script that is executed when you run the docker container.
+           ENTRYPOINT is a command or script that is executed when you run the docker container. (that is executed when creating a container)
 
 
 Dockerfile_EP:  
@@ -642,17 +657,56 @@ RUN touch /opt/class30/jobs
 ADD . /opt/class30  
 ENTRYPOINT ["echo", "I am rich from ENTRYPOINT"]
 
-How is ENTRYPOINT different from CMD?
+docker build -t image3 -f Dockerfile_EP
+(he first run mkdir lap and cd lap) before he run docker build -t image3 -f Dockerfile_EP
+
+2:25:30
+How is ENTRYPOINT different from CMD? .. WHAT IS THE diff btw entrypoint and CMD
 1. Both are command instructions executed while creating a container 
-2. ENTRYPOINT can't be over riden while we can over ride CMD 
+2. ENTRYPOINT can't be over riden while we can over ride CMD (as seen below)
+the use cases:wher u hv an application and u wnat it to be DynAmic  then use CMD (Ie while running the application u wnat the result to be dynamic, choose CMD)
 
-ENV --> ENV instruction sets the environment variable and this sets the environment for the subsequent build instructions. It takes two forms: one with a single variableENV <key> <value> and another with multiple variables ENV <key> =<avlue> <key> = <value>.
+################# (docker file for image2 has the CMD command while Dockerfile for image3 has the ENTRYPOINT command ) 
+so when we run docker run image3, we can see the last command in the docker file bt when we run anoda command docker run image3 pwd , we see its nt executed bc EntryPOINT 
+cant be overriden bt when we run ocker run image2 pwd, we see it is executed bc CMD can be overidden
+
+docker@docker:~/web/Laps$ docker run image3
+am rich from ENTRYPOINT 
+ubuntuddocker:~/web/Laps$
+ubuntu@docker:~/web/laps$ docker run image3 pwd
+I am rich from ENTRYPOINT pwd
+ubuntu@docker:~/web/Laps$ 
+ubuntu@docker:~/web/laps$ docker run image2
+I am rich
+ubuntu@docker:~/web/laps$ docker run image2 pwd
+/ 
+ubuntu@docker:~/web/laps$
+ubuntu@docker:~/web/laps$ docker run image2 whoami
+root ******************************** ************************by default, it wil run the container as root user but we can stil change the user
+ubuntu@docker:~/web/laps$
+ubuntu@docker:~/web/laps$ docker run image3 whoami
+I am rich from ENTRYPOINT whoami 
+ubuntu@docker:~/web/laps$
+ubuntu@docker:~/web/laps$|
 
 
+ENV --> ENV instruction sets the environment variable and this sets the environment for the subsequent build instructions.
+It takes two forms: one with a single variableENV <key> <value> and another with multiple variables ENV <key> =<avlue> <key> = <value>.
 
-ARG -> ARG Instruction defines a variable that can be passed at build time. Once it is defined in the Dockerfile you can pass with this flag --build-arg while building the image. We can have multiple ARG instruction in the Dockerfile. ARG is the only instruction that can precede the FROM instruction in the Dockerfile.
+*****************we are passing environmental variable
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH      ***** this is the path to the executables
+RUN mkdir -p "$CATALINA_HOME"    ******* a run instruction is been pass here
+WORKDIR $CATALINA_HOME
 
-ARG values are not available after the image is built. A running container won’t have access to an ARG variable value
+*******************RUN mkdir -p "$CATALINA_HOME" ie we wnt to mk dis dir "$CATALINA_HOME, which is /usr/local/tomcat dir is been created and we use the -p to create both 
+the child and the parent dir(i bliv /usr/local) and we ar now stating that the working dir wher our job wil be carried out is:  $CATALINA_HOME
+
+
+ARG -> ARG Instruction defines a variable that can be passed at build time. Once it is defined in the Dockerfile you can pass with this flag --build-arg while building the 
+image. We can have multiple ARG instruction in the Dockerfile. ARG is the only instruction that can precede the FROM instruction in the Dockerfile.
+
+ARG values are not available after the image is built. A running container won’t have access to an ARG variable value00
 
 
 EX:
@@ -661,8 +715,11 @@ ARG TAG=latest
 FROM centos:$TAG
 docker build -t <image-name>:<tag> --build-arg TAG=centos8 .
 
-
-WORKDIR --> WORKDIR  is used to define the working directory of a Docker container at any given time. The command is specified in the Dockerfile.It is optional (default is / , but base image might have set it), but considered a good practice. Subsequent instructions in the Dockerfile, such as RUN , CMD and ENTRYPOINT will operate in this dir.
+                         WE Can see the the wORKDIR: IN docker hub (tomcat overview) in the docker file
+WORKDIR --> WORKDIR  is used to define the working directory of a Docker container at any given time. The command is specified in the Dockerfile.It is optional 
+(default is / , but base image might have set it), but considered a good practice. Subsequent instructions in the Dockerfile, such as RUN , CMD and ENTRYPOINT will operate
+in this dir.
+WORKDIR-----   this is used to der wher task will be executed
 
 Ex:
 
@@ -671,8 +728,9 @@ WORKDIR /app
 
 LABEL
 
-The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. To include spaces within a LABEL value, use quotes and backslashes as you would in command-line parsing. A few usage examples:
-
+The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. To include spaces within a LABEL value, use quotes and backslashes as you would in
+command-line parsing. A few usage examples:
+e.g to set our branch name
 
 LABEL branch=develop
 
@@ -683,36 +741,65 @@ An image can have more than one label. You can specify multiple labels on a sing
 
 LABEL label1="value1" label2="value2" other="value3"
 
-
+VOLUME: we wil look at Docker Volume when we get to volume
 
 USER 
-
-The USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile
-
+The USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that 
+follow it in the Dockerfile
+ubuntu@docker:~/web/laps$ docker run image2 whoami
+root ******************************** by default, it wil run the container as root user but we can stil change the user with d keyword user as well  2:31:22
 
   
   
-EXPOSE
+EXPOSE: used to der the port the process wil listen on OR the application is going to be running on 
 
 The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime.
 
-The EXPOSE instruction does not actually publish the port. It functions as a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published. To actually publish the port when running the container, use the -p flag on docker run to publish and map one or more ports.
+The EXPOSE instruction does not actually publish the port. It functions as a type of documentation between the person who builds the image and the person who runs the 
+container, about which ports are intended to be published. To actually publish the port when running the container, use the -p flag on docker run to publish and map one or
+more ports.
 
 EXPOSE 8080  
 
+ARG : we can also pass some arguments while tryin to create our containers as well
 
-Dockerfile Best practices:
+Dockerfile Best practices: 2:32:40
 ==========================
-1. We should use executable over shell form for CMDs and ENTRYPOINTs instructions 
-2. Reduce the number of RUN instructions as much as possible. 
-   This will reduce the number Layers and keep our images light weight.  
+1. We should use executable over shell form for CMDs and ENTRYPOINTs instructions (so our process will be running as parent process n cant be killed unnoticed)
+2. Reduce the number of RUN instructions as much as possible. bc the more the number of layers the lager the image size
+   This will reduce the number Layers and keep our images light weight.  bc we expect our images to be light weight
+*************play around with this**********************************
+https://github.com/landmakTechnology/Dockerfiles
+
+2:37:15:   ALL the run instruction here is not necessary, we can reduce them with the && operator
+FROM ubuntu:latest
+RUN apt-get -y update && apt-get -y upgrade \
+RUN apt-get -y install openjak-8-jak wget
+RUN mkdir /usr/local/tomcat
+RUN wet http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar•gz -0 /tmp/
+RUN cd / tmp && tar xvfz tomcat. tar•gz \
+    && cp - Rv /tmp/apache-tomcat-8.5.46/* /usr/local/tomcat/
+EXPOSE 8080
+CMD /us/local/tomcat/bin/catalina. sh run
+
+********************************************************* we can reduce them like this : this wil mk the image to be light weight
+FROM ubuntu:latest
+RUN apt-get -y update && apt-get -y upgrade \
+   && apt-get -y install openjak-8-jak wget \
+   &&  mkdir /usr/local/tomcat \
+   &&  wget http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar•gz -0 /tmp/
+   &&  cd / tmp && tar xvfz tomcat. tar•gz \
+   &&  cp - Rv /tmp/apache-tomcat-8.5.46/* /usr/local/tomcat/
+EXPOSE 8080
+CMD /us/local/tomcat/bin/catalina. sh run
+
 3. Use Official/Trusted docker base images in your Dockerfile 
-    FROM ubuntu/tomcat 
+    FROM ubuntu/tomcat  bt mk sure  it is official
 4. Use light weight alpine linux where ever possible
    https://hub.docker.com/_/alpine
    ubuntu/centos/alpine   
 5. scan images before usage 
-     docker scan imageID/Name 
+     docker scan imageID/Name  
 
 6) Don't install/have unnecassary packages(Softwares) & Don't
    copy unnecassary files & Folders .
