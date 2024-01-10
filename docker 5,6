@@ -1,7 +1,7 @@
 CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, to run command inside a
 container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER COMMIT, 
 TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE N THE RYT DEPENDENCY, CREATING A DOCKER FILE FOR RUN INSTRUCTIONS    
-DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, 
+DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, multi Stage Docker files:
 ****************** MUST be able to explain WHATS THE DIFF BTW SHELL FORM AND Executable form
 
 QUESTION
@@ -794,39 +794,64 @@ EXPOSE 8080
 CMD /us/local/tomcat/bin/catalina. sh run
 
 3. Use Official/Trusted docker base images in your Dockerfile 
-    FROM ubuntu/tomcat  bt mk sure  it is official
-4. Use light weight alpine linux where ever possible
+    FROM ubuntu/tomcat  bt mk sure  it is official (can search in dockerhub tomcat , then tag then copy, i can also search for the jboss, ubuntu, alpine etc )
+
+4. Use light weight alpine linux where ever possible  ...its light weight
    https://hub.docker.com/_/alpine
-   ubuntu/centos/alpine   
+   ubuntu/centos/alpine   (linux distributors)
+
 5. scan images before usage 
      docker scan imageID/Name  
+also, in dockerhub, i can enable scanning (in my docker hub repository, in his repository we can see, scanning enabled , to enable go to settings, i cann also enable
+webhook : vulnerability reporting so that if ders any vulnerability i wil be alerted
+e.g 2;48:50
+docker scan image3 .......********************** bt it didnt work 
+he pulled nginx in his other system wher he said he already downloaded scanner and it workd 
+irrevent ##################i guess we can use or not use the tag ,, therfore, it wil pull the latest  (he just did docker pull nginx and it worked )
+then : Docker scan nginx    ...........it worked 
 
-6) Don't install/have unnecassary packages(Softwares) & Don't
-   copy unnecassary files & Folders .
+********so i can scan my image using docker scan command n der are some software i can use to enbale scanning in my image registry
+
+(6) Don't install/have unnecassary packages(Softwares) & Don't
+   copy unnecassary files & Folders . .. bc that wil create heavy weight images n that wil challenge the purpose of docker 
 
 7) Don't run container process as root user. Start container
    process(Application) as non root user. 
 
-8) Try to Scan images for fulnerabilites(Clair ,Anchor or Trivy or Inbuilt Scaning in ECR/GCR/ACR).
+8) Try to Scan images for fulnerabilites(Clair ,Anchor or Trivy or Inbuilt Scaning in amazon ECR: elastic container/GCR: google container/ACR:asure conatiner registry). all
+have inbuilt scanning
+even dockerhub has inbuilt scanning if ur paying for it, thats why his inbuilt scanning is enabled
+
+????????????????WILL U B charged if u use amazon  ECR
+dnt forget that in interview u wont be answering these qiestions like someone who is a student bt one who is working in landmark and 
+in landmark project we dnt car eif we ar going to be charged or nt bc the charges cannot b compared to the benefit 
 
 9) Try to use multi Stage Docker files to reduce size of the image where ever it's applicable 
 https://github.com/LandmakTechnology/Dockerfiles
 
 10. Keywords should be in uppercase to distinguish it from arguments 
 
-multi Stage Docker files:
+multi Stage Docker files: 
+in this file our target is that we wnat to :
 1. Clone  
 2. Build  
 3. DeployAsContainer 
-
-FROM ubuntu:git 
+****************************** for us to mk this application light weight, we ar going to use a multi Stage Docker files,bt if i dnt want to use multi Stage Docker files
+then ill hv to : 
+FROM ubuntu:git   (in this ubuntu server, for me clone my code i nid git, so i can download an ubuntu server that has git installed, we can go to ubuntu n search d ubuntu
+that has gitwith any desired version , i can also search for tomcat that comes with java,jdk with any version 
 WORDIR /home/ubuntu/
+******* may also nid to run some command to be able to install maven 
 RUN clone https://git/repo/webapps \ 
     && cd  webapps
     && mvn install 
+******************************thistype of docker file wil be very complicated, so we wil use the multi stage docker file for this task 
+********************** advicable to use a multi Stage Docker files wherver necessary
+e.g for tomcat
 FROM tomcat:71-jdk8-corretto-al2   
 
-
+ multi stage docker file  : it has multiple FROM keyword
+from build, it will copy the war file in the target dir 
 #git
 FROM alpine/git as repo
 MAINTAINER mylandmarktech@gmail.com
@@ -843,6 +868,8 @@ RUN mvn install
 FROM tomcat:8.0.20-jre8
 #COPY  /app/target/*war /usr/local/tomcat/webapps/maven-web-app.war
 COPY --from=build /app/target/*war /usr/local/tomcat/webapps/
+
+ubuntu@docker:~/web/laps$ vi multi-stageDF             40.00 
 
 ubuntu@docker:~/web/laps$ docker system prune
 WARNING! This will remove:
