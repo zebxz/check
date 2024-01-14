@@ -136,7 +136,7 @@ better/efficient resource usage :
 
 ****************versioning is easier to manage with microservices (bc we hv to modify some codes)
 also if thers a new version of the appl that relates with only the login e.g we ar changing the login interface, then we dnt nid to modify the the entire 20,000 line of 
-code as with monolithic but only the 2,000lines of code for login in microservices
+codes as with monolithic but only the 2,000lines of code for login for microservices
 
 
 
@@ -151,10 +151,11 @@ Ticket024:
   - dockerHub repository
     mylandmarktech/sping-boot-mongo
 
+########copied frm the file in github:
 spring:
   data:
     mongodb:
-      host: ${MONGO_DB_HOSTNAME}
+      host: ${MONGO_DB_HOSTNAME} ..... add codede values
       port: 27017
       username: ${MONGO_DB_USERNAME}
       password: ${MONGO_DB_PASSWORD}
@@ -165,18 +166,42 @@ server:
 spring:
   data:
     mongodb:
-      host: dbserver
+      host: dbserver 
       port: 27017
       username: devdb
       password: devdb123
       database: users
       authentication-database: admin
 
-we need to deploy the springapp and the database - mongo
-vi sp.sh    
+56:00 *********** while deploying this appl, it need a database, developers wil nid to pass hostname of db, user name of db and PW
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      host: dbserver  ********** these values(dbserver,devdb,devdb123) are add coded bc add values hv already been given, its nolonger dynamic
+      port: 27017
+      username: devdb
+      password: devdb123
+      database: users
+      authentication-database: admin
+*************** bt we want to write images that dynamic, images that can run in any environment, so we can jst use diff envr variables 
+this an an application that is being deployed and some inf needs to be captured so a database is needed.
+58:0000            #################so this application needs 2things 
+
+we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
+  ie developers are  recommending the mongo database                                                                                     mongodb:
+
+For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
+so once i pull this 2images am able to deploy my application
+
+we need to deploy the springapp and the database - mongo 
+###########i wnt to deploy my application, first i v to pull pull the 2 imgae ( so create a file to achieve this)
+vi sp.sh  ....... we wnt to create a file for this deployment
   docker pull mylandmarktech/sping-boot-mongo
   docker pull mongo
-  docker network create tesla
+ ################ after pulling, we wnt to create a ntwrk for tesla: 
+ docker network create tesla (DIS is hw to create a ntwrk in tesla, custom brideg ntwrk bc i wnt d containers to comm wit both name n IDS ) &docker netwrk ls to list ntwrks
   docker run --name springapp -d -p 8080:8080
   docker run --name mongodb    
 
