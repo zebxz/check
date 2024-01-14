@@ -30,6 +30,10 @@ f9f9a99c2c85   host      host      local
 0f1d053a3f91   none      null      local
 
 1) Default bridge network 
+2) host network
+3) none network
+
+1) Default bridge network 
 if i hv 2 containers in this ntwrk, hw do they communicate 
 e.g if am managing a micro service application, these app can either be deployed under
 e.g we hv an ebay webapplication
@@ -51,6 +55,7 @@ microservices architecture: for it to be a microservices , we hv each of theses 
 and we will see why such a decision can be arrived at using nttwrk
 
 
+HE XPLAINED USING A DIAGRAM
 my docker host server, on it we v containers e. a webaapp deployed, i hv a data base container thas suppose to wrk wit the web app 
 before we start to build the application, it has gone tru the devlopment stage wher debelopers ar writing code n comiting it to a scm , so we hv an scm tool github and inside g
 github we hv a repo called ebay, now once this appli is developed , it goes tru a build phase n in the build server we ar doing the docker buld n mvn package frm this build
@@ -60,32 +65,65 @@ when we execute mvn package, we create ebay.war n when we execute docker build w
 docker hub , so if we ar going to do a deployment, this image shud be pulled from docker hub
 
 20:40 bt now, this ebay appl we decide to decouple it into microservices and when that happens 
-we hv a situtaion wer dev ar writing code n committing to github and when it comes to github it wil no longer be ebay, this appl is being broken doewn into login, so we hv 
+we hv a situtaion wer dev ar writn code n committing to github &when it comes to github it wil no longer be ebay(repo), this appl is being broken doewn into login, so we hv 
 a repo for login, a repo registrtaion, a repo to cretae a cart, a repo for returns , these ar the diff repo we hv created when it comes to this projeect, so when we pull this
 image we ar creating multiple packages e.g login.jar up to retruns.jar, these ar packages, artifcats hv been created n frm here we building images, diff versions like 
-login:1, reg:1 , returns:1  .. we can push this image to the registry and frm der we ar able to deploy the application./
-still in the build server we executing docker build, if we exceute docker build 
+login:1, reg:1 , returns:1  .. we can push this image to the registry and frm der we ar able to deploy the application , we ar albe to deploy appl in the deployment server.
 
+#### 25:19 my docker host server, on it we v containers e. a webaapp deployed, i hv a data base container thas suppose to wrk wit the web app 
+so the idea is if u v 2 containers like this, hw do we ensure they  commnunicate wit each oda. so hw can they first commu icta wit ecah oda
+for them to bale able to comnunicate in docker, thenetwrk concept is important. 
+so we hv docker ntwrk concept
+first the 2ntwrks must be in the same ntwrk 
 
+we hv default bridge ntwrk 
+in this ntwrk containers wil commuincate with each other using containerIPS , SO WITH THE HELP OF CONTAinerips  thye can communicate with ecah oda
 
-custom bridge network
-2) host network
-3) none network
+PROBLEMS WITH DEFAULT BRIDGE NTWRK
+e.g a if containers was dead and it comes bk to life  e.g smt goes wrong n its recreated, it come sbk to life with a new IP address and as such communication will be broken
+so for that reason, we use what is called custom bridge ntwrk. 
 
+**************  CUSTOM BRIDGE NTWRK
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate 
+*****in the custom bridge ntwrk we can create a ntwrk called e.g EBAY NETWRK
 
+AGAIN, we ar talking abt a situation were der are multiple micro services
+e.g in the above case were a couple of images hv been created 
+so the imaegs hv been pushed to the image registry e.g docker hub
+we wnt to do a deployment , now this is our deployment server, this containers need to communicate with each oda, we wnt to deploy our containers in these deployment server
+e.g the login container, wich nid to communicate with registaration container ,cart container needs to communicate with pay container, we also v a db container etc and all
+of this is captured in the dabase container ,, therefore a custom bridge ntwrk is the best to create for the containers to communicate with each other.using d container name
+so we deploy the containers in a custom bridge ntwrk 
+BUT this entirely is called microservices, its called microservice deployent. 
+we wn tto deploy our app uisng micro services , so we hv decoupled frm monlitic to microservices
 
-easy to manage/
-  monolithic = ebay / 20,000 lines of code 
+34:09 WHY IS IT IMP TO DECOUPLE
+A Micor service architecture is easy to manage, 
+its also easy to scale
 
-  microservices architecture:
+e.g if ur dealing wit a monolitic appl and ur code is in github 
+if ur using just ebay, ebay could hv 
+monolithic = ebay / 20,000 lines of code 
+
+then for micro services wich ebay has been decoupled
+microservices architecture:
    login 2,000 lines of code 
    registration 4,000 lines of code 
    cart 2,000 lines of code 
    pay 6,000 lines of code 
    order 2,000 lines of code 
    return 8,000 lines of code   
+*********************************************** therfore micro services is easier to manage:
+
+38:47 just a free talk *****************using the traditional approach, deploying with tomcat
+we hv tomcat app sevr1 , tomcat app server 2, for ebay and we v users trying to access our applictaion 
+at the moment we v s0m users trying to user bt when they increase frm 20M to 30m, that means we ar scaling , so we hv another anoda app server ie tomcat app server3
+ussers are accessing the appl with a webserver, its probably nginx or an elastic loadbalancer ,, therefore traffic is being routed
+now this is a monlithic architecture bc inside github, we hv a single repository wich is for ebay only
+when its nt decoupled its nt easy to scale compared to microservices wher we v the dif components,a repo for login, a repo registrtaion, a repo to cretae a cart, a repo for
+returns , 
 easy to  scale  :
-    login=20m - 28m /
+    login=20m - 28m /  e.g in a case wher the login increases frm 20m to 28m then i nid to scale login only, i dnt v to scale/modify the entire appl
     reg=20 /
     cart=8m /
     pay=7m/
@@ -93,12 +131,18 @@ easy to  scale  :
     returns=1m ] 
 
 better/efficient resource usage : 
+********e.g in a case wher the login increases frm 20m to 28m then i nid to scale login only, i dnt v to scale/modify the entire appl
+    so micro services leads to better use of resource bc when u scale jst a component, it means the overall resources to be used wil be smaller 
 
-versioning is easier to manage with microservices
+****************versioning is easier to manage with microservices (bc we hv to modify some codes)
+also if thers a new version of the appl that relates with only the login e.g we ar changing the login interface, then we dnt nid to modify the the entire 20,000 line of 
+code as with monolithic but only the 2,000lines of code for login in microservices
 
-We support Java based applications:
+
+
+46:20 ************************************************** We support Java based applications:
 ===================================
-We support nodeJS and .net based applications:
+We support nodeJS and .net based applications: (also some python base appl, like we saw when we were doing container, we deployed a python base application)
 ==============================================
 Ticket024:
   Deploy a microservice application for tesla.  
