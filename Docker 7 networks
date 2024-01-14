@@ -243,14 +243,29 @@ vi sp.sh
 1:18:00*************THE USERNAME MUST BE THE SAME:
 **********1:11:37... MY APPLI NEEDS TO CONNECT TO THIS DATABASE, bc am deploying an application called springapp, for springapp to connect to the database then springapp 
 needs to enter the right information e.g the correct hostname, usrnmame, password , they are in the same ntwrk so we can connect to the database
-database:  HOSTNAME      USERNAME       PASSWORD   network  
-            mongodb       devdb          devdb@123   tesla    
-1.spingapp: mongodb       devdb          devdb@123   tesla  
-
+database:  HOSTNAME      USERNAME       PASSWORD   network  ENV
+            mongodb       devdb          devdb@123   tesla  dev     *********all of this is happening in dev dev env, inf entered for both database n ppl must b ethe same 
+1.spingapp: mongodb       devdb          devdb@123   tesla      *******for the applica to be able to talk with d database so that data can be wriiten, the the credentials
+                                                                      must be valid, appli must pass the right credentials of the database 1:32:00
 
 #############  to ACCESS THE APPLICATION *********************************1:21:15
  3.22.217.29:8080/
 docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -v /tmp/mydata:/data/db mongo 
+
+1;26:20
+springapp.sh didnt work when deployed so he ran the command manually
+now we shud be able to access the application n write data in the database
+############### the containers are able to communicate with each other bc the name we gvae the container mongodb, THERFORE, the name of our database HOSTNME IS mongodb
+
+*******1:32:40 if i remove my dATA BASE  or smt goes wrong wit the database I WONT BE ABLE TO ACCES the DATA, der will be dats loss..bc der sno database running at the moment 
+we can redeploy the database bt th eoriginal data is gone.. ie e.g users info or history 
+
+1:34:10
+WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS
+now we hv 2 containers, the mongo container for database and the springapp container which is a STATELESS APP, bt d database is STATEFUL n needs to maintain its state meaning
+ and when it is STATEFUL, it needs a piece of storage 
+
+
 
 docker run --name app -d -p 8000:8080 --network tesla mylandmarktech/java-web-app 
 docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
