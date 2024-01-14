@@ -1,45 +1,78 @@
-Docker networks & Micro-services:
+u8  Docker networks & Micro-services:
 ===================================
 What is a network ?
 Group of servers/devices connected to each other in a specific network. If Servers
 are in same network each one can talk to another server.
 
-
+#########if i hv devices i can create a ntwrk ,wit the help of a router we can ntwrk ..  a grp of devices communicating with each other
+with the help of the router it wil det hw the traffic is routed
+u ensure that resources in ur ntwrk can communicate wit each oda.. they can communicate wit each oda bc thers a router and this bc becomes ur ntwrk
+### so when we talk abt a ntwrk its ensuring the devices are able to communicate with each other 
 
 Docker network
 =============
 If One Container has to talk to another Container 
 Using ContainerIP/Name(DNS) in Docker.
-Both has to created under same docker network.
+Both has to be created under same docker network.
 
 If Containers are in two different networks. 
-They can't access each other.
+They can't communicate/access each other.
  
 How to list networks in docker?
 
+
+difff ntwrks to tk note of 
+3kinds of ntwrks were listed
 ubuntu@docker:~$ docker network ls
 NETWORK ID     NAME      DRIVER    SCOPE
-7403f6b74f30   bridge    bridge    local
+7403f6b74f30   bridge    bridge    local        ***** the default network
 f9f9a99c2c85   host      host      local
 0f1d053a3f91   none      null      local
 
-Default bridge network 
-
-custom bridge network
-host network
-none network
+1) Default bridge network 
+if i hv 2 containers in this ntwrk, hw do they communicate 
+e.g if am managing a micro service application, these app can either be deployed under
+e.g we hv an ebay webapplication
 
 ebay webapp: monolithic architecture 
-   login/registration/cart/pay/order/return  
+   if u wnt to acces thhis appl, it has cm with diff component : so when u acces this appl, u can login/registration/cart/pay/order/ and if ders a problem you can return  
+this type of appl wher everytin is coupled together we call it monolithic architecture, so it is developed using monolithic architecture 
 
-microservices architecture:
- ebay.war  = decoupled   
+12:52 bt now we can decide to use microservices , with microservices, this ebay application is decoupled
+microservices architecture: for it to be a microservices , we hv each of theses appl  components decoupled
+ ebay.war  = decoupled  , they are now stanalone entities
    login.jar
    registration.jar
    cart.jar
    pay.jar
    order.jar
    return.jar  
+************** so we hv decouples these appl from a monolithic to a micorservice appli
+and we will see why such a decision can be arrived at using nttwrk
+
+
+my docker host server, on it we v containers e. a webaapp deployed, i hv a data base container thas suppose to wrk wit the web app 
+before we start to build the application, it has gone tru the devlopment stage wher debelopers ar writing code n comiting it to a scm , so we hv an scm tool github and inside g
+github we hv a repo called ebay, now once this appli is developed , it goes tru a build phase n in the build server we ar doing the docker buld n mvn package frm this build
+server we ar creating packages and doing docker push.. so we hv our docker image , a docker image is being created n frm the docker image what ar we able to ? 
+now we hv our deployment server wher we execute docker run to create the contianer n start it 
+when we execute mvn package, we create ebay.war n when we execute docker build we create ebay image e.g verion1  ,, ebay:1 , we push the image n it goes to the registry e.g
+docker hub , so if we ar going to do a deployment, this image shud be pulled from docker hub
+
+20:40 bt now, this ebay appl we decide to decouple it into microservices and when that happens 
+we hv a situtaion wer dev ar writing code n committing to github and when it comes to github it wil no longer be ebay, this appl is being broken doewn into login, so we hv 
+a repo for login, a repo registrtaion, a repo to cretae a cart, a repo for returns , these ar the diff repo we hv created when it comes to this projeect, so when we pull this
+image we ar creating multiple packages e.g login.jar up to retruns.jar, these ar packages, artifcats hv been created n frm here we building images, diff versions like 
+login:1, reg:1 , returns:1  .. we can push this image to the registry and frm der we ar able to deploy the application./
+still in the build server we executing docker build, if we exceute docker build 
+
+
+
+custom bridge network
+2) host network
+3) none network
+
+
 
 easy to manage/
   monolithic = ebay / 20,000 lines of code 
