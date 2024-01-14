@@ -155,7 +155,7 @@ Ticket024:
 spring:
   data:
     mongodb:
-      host: ${MONGO_DB_HOSTNAME} ..... add codede values
+      host: ${MONGO_DB_HOSTNAME} .. this is dynamic bc no values were given
       port: 27017
       username: ${MONGO_DB_USERNAME}
       password: ${MONGO_DB_PASSWORD}
@@ -163,10 +163,13 @@ spring:
       authentication-database: admin
 server:
   port: 8080
+#####################..... 55:39 .. this application is developed using the spring boot framework
+
+
 spring:
   data:
-    mongodb:
-      host: dbserver 
+    mongodb:               if developers hv developeed this application where the values are already given then its no longer dynamic
+      host: dbserver  ********** these values(dbserver,devdb,devdb123) are add coded bc add values hv already been given, its nolonger dynamic
       port: 27017
       username: devdb
       password: devdb123
@@ -174,17 +177,7 @@ spring:
       authentication-database: admin
 
 56:00 *********** while deploying this appl, it need a database, developers wil nid to pass hostname of db, user name of db and PW
-server:
-  port: 8080
-spring:
-  data:
-    mongodb:
-      host: dbserver  ********** these values(dbserver,devdb,devdb123) are add coded bc add values hv already been given, its nolonger dynamic
-      port: 27017
-      username: devdb
-      password: devdb123
-      database: users
-      authentication-database: admin
+
 *************** bt we want to write images that dynamic, images that can run in any environment, so we can jst use diff envr variables 
 this an an application that is being deployed and some inf needs to be captured so a database is needed.
 58:0000            #################so this application needs 2things 
@@ -192,44 +185,70 @@ this an an application that is being deployed and some inf needs to be captured 
 we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
   ie developers are  recommending the mongo database                                                                                     mongodb:
 
-For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
+For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image for db (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
 so once i pull this 2images am able to deploy my application
-
+**********************************************************************************************************************
 we need to deploy the springapp and the database - mongo 
 ###########i wnt to deploy my application, first i v to pull pull the 2 imgae ( so create a file to achieve this)
-vi sp.sh  ....... we wnt to create a file for this deployment
-  docker pull mylandmarktech/sping-boot-mongo
-  docker pull mongo
+1) vi spring.sh  (and paste number2 to number 5)....... we wnt to create a file for this deployment
+2)  docker pull mylandmarktech/sping-boot-mongo
+3)  docker pull mongo
  ################ after pulling, we wnt to create a ntwrk for tesla: 
  docker network create tesla (DIS is hw to create a ntwrk in tesla, custom brideg ntwrk bc i wnt d containers to comm wit both name n IDS ) &docker netwrk ls to list ntwrks
   docker run --name springapp -d -p 8080:8080
-  docker run --name mongodb    
+  docker run --name mongodb   
 
+###########QUESTION, HW DO WE KNOW WHICH ENV VARIABLE VALUE TO USE ,, BC here both the applictaion(spring) has its env var & the database has its own env ???????
+ ########## i bliv it doesnt matter bc u will v to choose the values yourself
+
+1:06:40 *******************************THIs is OUR ENVIRONMENTAL VARIABLES for for our application (spring)***************************(gotten frm the image info in docker)
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+
+*******************ENV VARIABLE FOR MONGO**************************************** (gotten frm the image info in docker)
+     MONGO_INITDB_ROOT_USERNAME: root
+     MONGO_INITDB_ROOT_PASSWORD: example
+
+********************************************
 
 vi sp.sh    
   docker pull mylandmarktech/sping-boot-mongo
   docker pull mongo
   docker network create tesla
-  
-docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123   
 
-docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+********************************************APPLYING THE ENV VARIABLES************************************
+****************************I ALSO HV TO PUT BOTH OF THEM IN THE SAME NTWRK(network tesla) bc i wnat them to comunicate with each oda ********
 
- database:  HOSTNAME      USERNAME       PASSWORD   network  
+#########DEPLOYING THE DATABASE                                                                     ****image name is mongo
+4) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
+                                                  
+
+###########DEPLOYING THE APPLICATION
+                                          
+                                  *******HOSTNAME is the name of the data base that is being deployed                                      ********** THIS IS THE IMAGE 
+5) docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+####################we didnt pass any tag for the dockerrun, so the latest image will be downloaded for us 
+
+6) sh spring app.sh  to deploy *************************1:18:32
+*************************************************************************************************************************************************
+
+1:18:00*************THE USERNAME MUST BE THE SAME:
+**********1:11:37... MY APPLI NEEDS TO CONNECT TO THIS DATABASE, bc am deploying an application called springapp, for springapp to connect to the database then springapp 
+needs to enter the right information e.g the correct hostname, usrnmame, password , they are in the same ntwrk so we can connect to the database
+database:  HOSTNAME      USERNAME       PASSWORD   network  
             mongodb       devdb          devdb@123   tesla    
 1.spingapp: mongodb       devdb          devdb@123   tesla  
 
 
-      host: ${MONGO_DB_HOSTNAME}
-      port: 27017
-      username: ${MONGO_DB_USERNAME}
-      password: ${MONGO_DB_PASSWORD}
-
-
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-
+#############  to ACCESS THE APPLICATION *********************************1:21:15
  3.22.217.29:8080/
 docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -v /tmp/mydata:/data/db mongo 
 
