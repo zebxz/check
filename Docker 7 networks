@@ -270,7 +270,7 @@ docker run --name mongodb -d --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb
 we can redeploy the database bt th eoriginal data is gone.. ie e.g users info or history 
 
 1:34:10
-WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS
+*****************************   WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS
 haven passed the ENV variables correctly,and deployed the application bt thers a data loss problem
 now we hv 2 containers that hv been deployed, the mongo container for database and the springapp container which is a STATELESS APP, bt d database is STATEFUL n needs to 
 maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the dockerhost server,
@@ -279,11 +279,13 @@ it will give me the mount point(where data is stored ) and it syas /data/db, so 
 1:37:00 i can change it to /tmp/mydb, this type of data storage is called bymount(its under volume concept in docker) 
 having done this, in deploying my mongo contianer , we'l use the -V /tmp/mydata:/data/db mongo
 
-********ORIginally der was no volume indicated, now we ar passing volume 
-so we remove the mongo container .... dockeer rm -f mongodb 
+********ORIginally der was no volume indicated, now we ar passing volume so we remove the mongo container .... dockeer rm -f mongodb 
 ############ now we redeploy it again ( he used the springapp.sh script dis time n it worked , bt commented oon the pull REQ and docker run for spring)
+docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -v /tmp/mydata:/data/db mongo 
+************************* having redeployed it sucessfully, we enter some data and remove the mongo container again dockeer rm -f mongodb 
+then we redeploy the container again and when we check, we can still see the previous data... so NO MORE DATA LOSS
 
-
+1:47:32 
 
 
 
