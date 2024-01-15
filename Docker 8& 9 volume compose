@@ -1,1 +1,354 @@
+docker kill hello   .. container name hello
+
+docker volumes and docker compose:
+==================================
+Docker:
+  We use Docker for containerization
+  We use Kubernetes for container orchestration/MGT   
+
+************  so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
+
+
+
+We install the docker containerization software:
+In Linux/Windows/MacOS  
+  docker client / wich is the cli, command line interface that permits u to run docker commands    = docker build/push/pull/run  (and this docker client generally starts with
+                                                                                                     docker e.g we use the docker client to execute diff commands)
+                                                                                                         e.g docker pull, docker push etc
+
+WE also have docker daemon
+docker daemon/service =  this enforces the command that is run, e.g when u run docker build, the docker deamon knowns he has to create an image etc                                                                                   
+  docker registry  , wher we ship images to and make them distributable0      = ship/share[dockerhub/ecr(elastic container registry) /nexus]    
+
+
+Application architecture: .. we also saw we can use docker to containerize both monolithic and microservices application
+  Monolithic architecture '
+  Micro-services architecture ' ... bt docker will shine more when it comes to micro services bc they ar very light weight & docker containers are light weight
+
+************************Which kind of applications can be containerised??  
+  - All applications [java/python/nodeJS/nginx, etc.]
+
+*************************What is needed to containerise an application :
+1) ensure that docker installed
+2) must hv a Dockerfile -- Instructions on how to build the desired image   or any image 
+3) Docker Image -- is a package with apps code + dependencies
+
+
+************************ ONCE THE applications are containerized, we ar able to run containers
+  containers -- apps or running instance/process of a docker image 
+ and we need  networks---  for the containers to communicate with each other communication[internal or external]  
+
+  docker run --network none --name webapp mylandmarktech/hello 
+  docker run --network host --name webapp mylandmarktech/hello
+  docker run --network ebay --name webapp mylandmarktech/hello 
+  docker run --name webapp mylandmarktech/hello
+
+ docker networks:
+  Default bridge
+  custom bridge
+  non  
+  host  
+
+docker:
+  image      = contains packaging 
+  containers = process of the image 
+  networks   = communication
+  volumes    = storage/mounts for the containers
+
+docker Volumes .................................10:44
+==============
+ statless applications .... does nt store data
+ stateful applications ........ needs to maintain its state, data nids to be stored.this include data bases , applications like jenkins
+    databases / jenkins, we sue jenkis to be able to deploy a lot of works, so we hv jobs in jenkins
+
+the first volume we ar discusiing about is :
+Bind Mounts:
+Bind mounts may stored data anywhere on the host system. 
+They may even be important system files or directories. 
+
+docker run --name mongo -d --network tesla -v /tmp/mongo:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+
+docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+18:50     *****************springapp is passing the env variable so the inf must be valid like the passwd, hostname they must be the same 
+
+vi app.sh 
+copy and paste the run command aBOVE
+ sh app.sh  ... deploy the containers
+dockes ps ........ we can see the containers
+20:48******************* curl 3.22.217.29:8080 *********************** how did u know the container ip address
+he checked on his browser and we can access the application , the application can write/communicate in the database
+############################################   SO THE BIND MOUNT WAS SUCCESSFUL######################
+
+22**************** In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
+ubuntu@docker:¬ $  ls /tmp/mongo/
+inside this dir, the data that is captured is frm the inf entered, inf entered by e.g enusers is captured here 
+
+################# bt this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the process is not
+managed by docker and as such it could be accidentally deleted
+if we ls /tmp , we can see the mount point mongo that we created .... so what happens if its deleted by a non docker process
+
+**************** lets assume thats our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker start mongo we ar
+now able to access the data
+now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
+now lets redeploy the database, then we can still see the the previous data.. 
+this is because of bind mount 
+******* 27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is destroyed completely
+if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
+BUT DERS A PROBLEM HERE 
+if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
+at the moment our vol is nt managed by the docker process ,
+lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
+if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted unnoticed
+
+
+30:23  ************** HOW TO DEPLOY USING THE DOCKER PROCESS**********
+
+
+Non-Docker processes on the Docker host can modify 
+Bind Mounts volumes at any time unnoticed.
+######### so we nid to introduce persistence vol 
+
+NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
+
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
+
+DHD = /var/lib/docker
+
+BindMount: can store your data anywher 
+  /tmp/mongo:/data/db
+  /home/ubuntu/data:/data/db
+
+Docker Peristent Volumes(Docker Named Volumes)
+=============================================
+docker volume create mongodata  ... we hv to create our own vol; mongodata .... this is now using persistent vol which is being manged by docker
+docker volume create mongodata -d local   ... ..  here am passing a driver 
+docker volume create mongo33   ............ here am nt 
+docker volume create -d local data 
+docker volume ls  
+
+************* so i no longer nid to craetw a mount point  /tmp/mongo:/ like we did for bind mount
+docker run --name mongo -d --network tesla \
+  -v /tmp/mongo:/data/db \
+  -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
+  -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
+**************************************************************************************************
+
+ ###################################################  this is what i need to do  
+docker run --name mongo -d --network tesla \
+  -v mongodata:/data/db \
+  -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
+  -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
+OR
+docker run --name mongo -d --network tesla \
+  -v data33:/data/db \     *********** BT if i execute this command when i v nt created docker vol create data33 , will it be executed????? lets check d vol we v already
+  -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \                                                                                                 docker volume ls
+  -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
+
+35;00
+1) create volume: 
+docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
+docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
+docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for the driver to be local
+so when u DNT CHOOSE driver it is going to crate under the local driver 
+
+ he removed mongo ....     docker rm -f mongo 
+ 
+37:40
+ubuntu@docker:~$ docker volume prune
+WARNING! This will remove anonymous local volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+
+
+Mountpoint": "/var/lib/docker/volumes/data33/_data  
+
+docker volume rm volumeName  
+docker volume rm data33  
+
+Volumes are the best way to persist data in Docker.:    
+
+External volumes:
+ ===== Network Volumes Using AWS EBS ==========
+ 
+https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/
+Rexray docker-plugins for storage:
+
+IAM = Authorisation  
+
+docker plugin install rexray/ebs \
+  EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
+  EBS_SECRETKEY=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
+
+docker volume create -d rexray/ebs ebs33 
+docker volume create ebs33
+docker volume create -d local ebs33  
+
+docker run --name mongo -d --network tesla \
+  -v ebs33:/data/db \
+  -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \
+  -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
+
+Docker Compose
+==============
+Docker Compose is a tool for defining/declaring and running multiple 
+   containerised micro-services applications.
+In real time one application can have more than 7 micro-services:
+ebay.com: 
+An e-commerce java based web application for ebay or 
+ebay-web-application:
+    Login
+    Registration
+    cart
+    checkout
+    Payment
+    Order
+    mysql db  
+
+docker run --name login -d -p 80:8080 --network ebay login 
+docker run --name reg -d -p 80:8080 --network ebay registration 
+docker run --name cart -d -p 80:8080 --network ebay cart
+docker run --name checkout -d -p 80:8080 --network ebay checkout
+docker run --name pay -d -p 80:8080 --network ebay payment 
+docker run --name order -d -p 80:8080 --network ebay order 
+
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=admnin123 -d \
+--network ebay mysql
+
+docker objects:
+  - images 
+  - networks 
+  - volumes 
+  - environmental variables 
+
+ubuntu@docker:~$ docker-compose
+Command 'docker-compose' not found, but can be installed with:
+sudo snap install docker          # version 20.10.24, or
+sudo snap install docker          # version 20.10.24
+sudo apt  install docker-compose  # version 1.29.2-1
+See 'snap info <snapname>' for additional versions.
+
+docker --version 
+Docker version 20.10.12,    build 20.10.12-0ubuntu4
+Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
+3.1                         1.13.1+
+3.1                         20.10.12
+
+Docker version 20.10.12
+docker-compose.yml  
+------------------
+version: '3.1'
+services: 
+  springapp:
+    image: mylandmarktech/sping-boot-mongo   
+    restart: always    
+    ports:
+    - 6000:8080     
+    networks:
+    - fintech     
+    environment:
+    - MONGO_DB_HOSTNAME=mongodb
+    - MONGO_DB_USERNAME=proddb
+    - MONGO_DB_PASSWORD=proddb@123         
+  mongodb:
+    image: mongo     
+    restart: always     
+    networks:
+    - fintech   
+    - tesla   
+    volumes:
+    - data11:/data/db
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=proddb
+    - MONGO_INITDB_ROOT_PASSWORD=proddb@123       
+volumes:
+  data11:
+    driver: rexray/ebs           
+networks:
+  tesla: 
+    external: true 
+  fintech:
+    driver: bridge  
+
+docker volume create -d rexray/ebs data11    
+docker network create fintech  
+
+docker run --name mongo -d --network tesla \
+-v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \
+-e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+
+docker run --name springapp -d -p 8080:8080 --network tesla \
+-e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
+-e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+
+             dev     uat      prod   
+USERNAME   devdb     uatdb    proddb   
+hostname   mongo     mymongo  mongodb  
+password   dev@123   uat@123  admib@#123  
+
+docker compose file with default name [docker-compose.yml ]. 
+  # Create Services/Contianers
+   docker-compose up -d  
+  
+  # Remove Services/Contianers 
+    docker-compose down
+  
+docker compose file with custom name.  
+docker-compose -f <CustomeComposeFileName>.yml <command>
+
+Ex:
+docker-compose -f docker-compose-springapp.yml config
+docker-compose -f docker-compose-springapp.yml up -d
+docker-compose -f docker-compose-springapp.yml down
+
+docker-compose-springapp.yml
+
+
+Docker Compose Commands:
+
+  Ex:
+docker-compose default file: docker-compose.yml
+docker-compose -f docker-compose.yml up -d 
+docker-compose up -d 
+docker-compose up -d
+docker-compose config 
+
+Commands:
+  build              Build or rebuild services
+  config             Validate and view the Compose file
+  create             Create services
+  down               Stop and remove resources
+  events             Receive real time events from containers
+  exec               Execute a command in a running container
+  help               Get help on a command
+  images             List images
+  kill               Kill containers
+  logs               View output from containers
+  pause              Pause services
+  port               Print the public port for a port binding
+  ps                 List containers
+  pull               Pull service images
+  push               Push service images
+  restart            Restart services
+  rm                 Remove stopped containers
+  run                Run a one-off command
+  scale              Set number of containers for a service
+  start              Start services
+  stop               Stop services
+  top                Display the running processes
+  unpause            Unpause services
+  up                 Create and start containers
+  version            Show version information and quit
+
+docker swarm:  2video tomorrow
+================================
+Saturday = kubernetes  = 4hours classes  
+
+
+
+
+
+
+
 
