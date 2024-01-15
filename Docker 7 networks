@@ -283,6 +283,20 @@ i call the storage temp/db, bt wot is the container mount point,i must check the
 it will give me the mount point(where data is stored ) and it syas /data/db, so on the image i cannot change it bt i can change it in the host server if i want to e.g,
 1:37:00 i can change it to /tmp/mydb, this type of data storage is called bymount(its under volume concept in docker) 
 having done this, in deploying my mongo contianer , we'l use the -V /tmp/mydata:/data/db mongo
+******************************2:33:04************************************************************************
+QUESTION
+in trying to acces the application, when u input ur information in the app, u can see it in the database,, ...hw does this relate to API???????????? bc API is suppose to be 
+used for communications btw programmes ,, so is it the same thing or they ar diff
+ANS:
+its the same thing, All  those applications have endpoints, so they are restful API that u nid to acces the application on... so its basically the same stuff in this example
+which implies that if u were deploying an application that u nid to access it, the ar 2things here: u hv an application thet is classified as a STATELESS application, it
+permits cx to acess/query some data ovea the internet, dat can expose dem to access their bank account etc bt when they access their bank account, they nid to enter stuff like 
+their email address, phone number,DOB etc when this information is entered, it nids to be captured in the database so der nid to b a comm btw the dtabase n the application 
+server,,,................that the first part of it
+*********** the 2nd part is that: for the endusrs to even access the application there ar some APIs to query, so if u type landmark.spring app. com. u wnt to query taht API
+and that API nid to be available before u can access it .... thats why U NID TO ENSURE THAT these applications are MONITORED. FOR HIGH AVAILABILITY
+
+
 
 ********ORIginally der was no volume indicated, now we ar passing volume so we remove the mongo container .... dockeer rm -f mongodb 
 ############ now we redeploy it again ( he used the springapp.sh script dis time n it worked , bt commented oon the pull REQ and docker run for spring)
