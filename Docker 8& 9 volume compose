@@ -1,4 +1,9 @@
 docker kill hello   .. container name hello
+QUESTION
+how did u know the container ip address
+*****************************************************************************************************************************************
+
+DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), 
 
 docker volumes and docker compose:
 ==================================
@@ -77,6 +82,8 @@ copy and paste the run command aBOVE
  sh app.sh  ... deploy the containers
 dockes ps ........ we can see the containers
 20:48******************* curl 3.22.217.29:8080 *********************** how did u know the container ip address
+
+*************QUESTION
 he checked on his browser and we can access the application , the application can write/communicate in the database
 ############################################   SO THE BIND MOUNT WAS SUCCESSFUL######################
 
@@ -114,7 +121,7 @@ NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want 
 Docker Volumes
 Volumes stored data in a part of the host filesystem managed by docker
 
-DHD = /var/lib/docker
+Docker home dir :  DHD = /var/lib/docker
 
 BindMount: can store your data anywher 
   /tmp/mongo:/data/db
@@ -128,7 +135,7 @@ docker volume create mongo33   ............ here am nt
 docker volume create -d local data 
 docker volume ls  
 
-************* so i no longer nid to craetw a mount point  /tmp/mongo:/ like we did for bind mount
+************* am not creating any mount point  /tmp/mongo:/ like we did for bind mount ... ( i think he meant dir /tmp/mongo 
 docker run --name mongo -d --network tesla \
   -v /tmp/mongo:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
@@ -146,6 +153,7 @@ docker run --name mongo -d --network tesla \
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \                                                                                                 docker volume ls
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 
+***************************************************************************************
 35;00
 1) create volume: 
 docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
@@ -160,17 +168,40 @@ ubuntu@docker:~$ docker volume prune
 WARNING! This will remove anonymous local volumes not used by at least one container.
 Are you sure you want to continue? [y/N] y
 
-
+'################# WEredeploy the database
+2) create the database 
+vi app.sh  and paste the run command 
+docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+then deploy sh app.sh   ... SUCCESSFUL , WE CAN access the data
+docker volume ls     .... we can see  local data33 wwe just created
+docker inspect data33      and we can see the mount point: /var/lib/docker     .********* the docker home dir is var/lib/docker 
+..... Driver" : "local"
 Mountpoint": "/var/lib/docker/volumes/data33/_data  
+ubuntu@docker: ¬ $ sudo ls /var/lib/docker/volumes/data33/_data  
 
+41:21
+Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume 
+and whatever is stored in this dir is managed by docker n it leads to what is called pesistent  volume , bc it i smanged by tah docker process
+
+*********************************** THE ONLY TO REMOVE THIS VOLUME is to execute : it must be deleted by a docker process
 docker volume rm volumeName  
 docker volume rm data33  
 
-Volumes are the best way to persist data in Docker.:    
+******************************Volumes are the best way to persist data in Docker.:    
 
-External volumes:
+External volumes:   ********************43:26
+ther are external vol pluggin ,that can be installed in docker
  ===== Network Volumes Using AWS EBS ==========
- 
+
+we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 bucket, google persistent disk, also sdsure disk 
+so when i hv my container mount point : /data/db/, i can mount it with an external vol 
+
+
+
+
+
+
+
 https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/
 Rexray docker-plugins for storage:
 
