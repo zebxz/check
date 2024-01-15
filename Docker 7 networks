@@ -1,3 +1,4 @@
+MICRO SERVICES, MONOLITHIC, CUSTOM NTWRK , BRIDGE NTWRK , ISOLATING CONTAINERS, 
 DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, USING  Both the container name and IP address
 
 Docker networks & Micro-services:
@@ -285,18 +286,47 @@ docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e
 ************************* having redeployed it sucessfully, we enter some data and remove the mongo container again dockeer rm -f mongodb 
 then we redeploy the container again and when we check, we can still see the previous data... so NO MORE DATA LOSS
 
-1:47:32 
+1:47:32  (SECOND example)
+docker run --name app -d -p 8000:8080 --network tesla mylandmarktech/java-web-app .................. RUNNING IN THE tesla ntwrk
+docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app *************** this is running in the default bridge ntwrk 
+******************************** INSPECTING*****************************************
+we can inspect the netwrk the container is running on by: 
+docker inspect tesla    ( the ip address 172.18.0.4/16)
+docker inspect bridge              (172.17.02/16
+can also docker inspect tesla | grep 172
+can also docker inspect bridge | grep 172    
 
+***************************1:56:00 
+docker exec app ping webapp 
+ping : unknown host because  the 2 containers (app) and (webapp) cannot communicate with each other bc they are in 2 different ntwrks
+therfore:
+ubuntu@docker:~$ docker network connect tesla webapp 
+docker exec app ping webapp  .............NOW ITS SUCCESSFUL ....... we ar inside the (webapp)
+ubuntu@docker:~$ docker exec -it webapp bash
+root@3e143cbcde73:/usr/local/tomcat#
+root@3e143cbcde73:/usr/local/tomcat# ping app ............... was sucesssful  **** we ar able to communicate wit the (app) container 1:58:20
+root@3e143cbcde73:/usr/local/tomcat# ping springapp ................. was succesful aas well 
 
+############ now we deleted the app cointainer and created it now in the bridge ntwrk 
+docker run --name app -d -p 8000:8080  mylandmarktech/java-web-app 
+root@3e143cbcde73:/usr/local/tomcat# ping app   ............ we ping app now bt its nt successful bc containers that are  nt in the same ntwrk cant communicate wit each oda
+ping : unknown host
 
+QUESTION, Why is it not able to ping , thought thats one of the adv of custom ntwrk, if a container is recreated it can stil be in the same ntwrk bc it can connect with either 
+IP addresss or container name and in this case, the cointainer was recreated with the same name. 
 
+2:00:22 HOW TO ISOLATE APPLICATION USING DOCKER
+BY placing the applications in diff ntwrks 
 
+2:01: 00********************** CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK ???????????
+YES....
+Docker netwrk create ebay 
+docker network connect ebay app
+docker inspect app | grep 172 ......................  now, we can see the diff Gateways and IPAddress ie the dif ntwrks its connected to ****************
+therfore, docker exec -it webapp bash  ............................ SUCCESSFUL BT  before it wasnt succesful
+root@3e143cbcde73:/usr/local/tomcat#
+root@3e143cbcde73:/usr/local/tomcat# ping app  ....... SUCCESSFUL 
 
-
-
-
-docker run --name app -d -p 8000:8080 --network tesla mylandmarktech/java-web-app 
-docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
 
 
 ubuntu@docker:~$ docker network
@@ -313,8 +343,8 @@ Commands:
   ls          List networks
   prune       Remove all unused networks
   rm          Remove one or more networks
+cant delete a ntwrk that has containers connected to it, must first disconnect the container from the netwrk 
 
- docker network connect webapp tesla  
 
 docker run --name app -d -p 8000:8080 mylandmarktech/java-web-app 
 
@@ -327,6 +357,9 @@ docker network prune
 -# Remove Network
 docker network rm <networkNameOrId>
 
+
+
+**************************************2:07:33 
 Docker Host Network.:
 If we create containers in host network. 
 Container will not have IP Address.
