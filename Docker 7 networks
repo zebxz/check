@@ -1,4 +1,8 @@
-MICRO SERVICES, MONOLITHIC, CUSTOM NTWRK , BRIDGE NTWRK , ISOLATING CONTAINERS, 
+QUESTION, Why is it not able to ping , thought thats one of the adv of custom ntwrk, if a container is recreated it can stil be in the same ntwrk bc it can connect with either 
+IP addresss or container name and in this case, the cointainer was recreated with the same name. app
+*************************************************************************************************************************************************
+
+MICRO SERVICES, MONOLITHIC, CUSTOM NTWRK , BRIDGE NTWRK , ISOLATING CONTAINERS, Docker Host Network ,Docker none/null network
 DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, USING  Both the container name and IP address
 
 Docker networks & Micro-services:
@@ -322,7 +326,7 @@ BY placing the applications in diff ntwrks
 YES....
 Docker netwrk create ebay 
 docker network connect ebay app
-docker inspect app | grep 172 ......................  now, we can see the diff Gateways and IPAddress ie the dif ntwrks its connected to ****************
+docker inspect app | grep 172 ......................  now, we can see the diff Gateways and IPAddress ie the dif ntwrks connected to  it8****************
 therfore, docker exec -it webapp bash  ............................ SUCCESSFUL BT  before it wasnt succesful
 root@3e143cbcde73:/usr/local/tomcat#
 root@3e143cbcde73:/usr/local/tomcat# ping app  ....... SUCCESSFUL 
@@ -359,22 +363,34 @@ docker network rm <networkNameOrId>
 
 
 
+                              host port: container name mh /'
+ 2 containers cannot v the same host port number& name  , bt can v the same conatainer num
 **************************************2:07:33 
-Docker Host Network.:
+
+2) Docker Host Network.:
 If we create containers in host network. 
-Container will not have IP Address.
+Container will not have IP Address. and we cant do port forwarding -p
  Container will be created in a system network.
 
 docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
 
-docker run --name javaapp -d --network host mylandmarktech/java-web-app
-   ContainerPort: 8080 
+*********************************************CREATING HOST NTWRK*********************************************
+docker run --name javaapp -d --network host mylandmarktech/java-web-app    ***** when using host ntwrk, no need for -p , therfor no port forwardn bc it is in the host ntwrk
+   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080     
+                                                           2:12:00
+docker run --name apps -d --network host mylandmarktech/java-web-app    ************ THIS WIL NT RUN BC this image mylandmarktech/java-web-app, has a container port of 8080
+   ContainerPort: 8080                                               &WHATEVA PORT the container is having dats what wil be assigned to the host 
+                                        can run the netstat -tulpn command to see the ports already in use.. when endusers ar tryin to acess this java-web-app, now the 
+host ntwrk is in use, we ar nt defining any port publishing bt when endusers traffic gets here,the container is running on the host ntwrk, therfor, it inherits the same port
+its using the host ntwrk, so trafic wil b routed to the first container (javaapp) 
+*************when we run :docker inspect javaapp | grep 172.1    ..... ders no IP address bc the container makes use of the host IP n dats why i cant deploy another container
+with the same port
 
-docker run --name apps -d --network host mylandmarktech/java-web-app
-   ContainerPort: 8080 
+************* tryin to deploy anoda container with the same contiazner port  bt when we run docker ps , we cant see the container bc of binding exception bc we cannot do 
+port forwarding in the host ntwrk
 
-docker run --name hello -d --network host mylandmarktech/hello  
-  ContainerPort: 80
+docker run --name hello -d --network host mylandmarktech/hello  ************ this got a diff container port number thats why its working, i think dis is a diff application 
+ContainerPort: 80                                                                                                                                mylandmarktech/hello
 
 
 
@@ -385,10 +401,14 @@ We can't create more than one container with same container port in host network
    java-web-app      = containerPort,  EXPOSE=8080  
    maven-web-app     = containerPort,  EXPOSE=8080  
 
-Docker none/null network
+3) Docker none/null network
 ========================
+docker inspect none
+
 If we create container in none/null network. Container will not have IP Address.
-We can't access  containers in this network  
+We can't access  containers in this network  Internal or external 
+****************** we can use this ntwrk to isolate containers
+
 docker run --network none                     
 Internal or external 
 
@@ -399,5 +419,8 @@ Isolation
   docker disconnect hello ebay  
   docker connect hello none  
 
+
+2:29:15 when in a file press the esc key to be in command mode
+to delete a row press dd
 
 docker volumes and docker compose:
