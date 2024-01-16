@@ -264,7 +264,7 @@ now we shud be able to access the application n write data in the database
 ############### the containers are able to communicate with each other bc the name we gvae the container mongodb, THERFORE, the name of our database HOSTNME IS mongodb
 
 
-.. 1:40;10, bt even wit manually it was giving us an infinite LOOP bc it wasnt deployed in detachable
+.. 1:40;10, bt even wit manually it was giving us an infinite LOOP bc it wasnt deployed in -d detachable
 mode bc wasnt deploying it in detachable mode , 
 docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
 #########################to detach the process frm the server then 
@@ -281,7 +281,7 @@ now we hv 2 containers that hv been deployed, the mongo container for database a
 maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the dockerhost server,
 i call the storage temp/db, bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
 it will give me the mount point(where data is stored ) and it syas /data/db, so on the image i cannot change it bt i can change it in the host server if i want to e.g,
-1:37:00 i can change it to /tmp/mydb, this type of data storage is called bymount(its under volume concept in docker) 
+1:37:00 i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called bind mount(its under volume concept in docker) 
 having done this, in deploying my mongo contianer , we'l use the -V /tmp/mydata:/data/db mongo
 
 ******************************2:33:04************************************************************************
