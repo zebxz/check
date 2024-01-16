@@ -279,10 +279,14 @@ we can redeploy the database bt th eoriginal data is gone.. ie e.g users info or
 haven passed the ENV variables correctly,and deployed the application bt thers a data loss problem
 now we hv 2 containers that hv been deployed, the mongo container for database and the springapp container which is a STATELESS APP, bt d database is STATEFUL n needs to 
 maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the dockerhost server,
+he is the guy hosting all our containers.
 i call the storage temp/db, bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
 it will give me the mount point(where data is stored ) and it syas /data/db, so on the image i cannot change it bt i can change it in the host server if i want to e.g,
 1:37:00 i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called bind mount(its under volume concept in docker) 
-having done this, in deploying my mongo contianer , we'l use the -V /tmp/mydata:/data/db mongo
+having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
+this is the mount point for my container: /data/db   and 
+this is the mount point for my docker host server: /tmp/mydata
+
 
 ******************************2:33:04************************************************************************
 QUESTION
@@ -302,7 +306,7 @@ and that API nid to be available before u can access it .... thats why U NID TO 
 
 ********ORIginally der was no volume indicated, now we ar passing volume so we remove the mongo container .... dockeer rm -f mongodb 
 ############ now we redeploy it again ( he used the springapp.sh script dis time n it worked , bt commented oon the pull REQ and docker run for spring)
-docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -v /tmp/mydata:/data/db mongo 
+docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -v /tmp/mydata:/data/db mongo (MONGO IS the image name)
 ************************* having redeployed it sucessfully, we enter some data and remove the mongo container again dockeer rm -f mongodb 
 then we redeploy the container again and when we check, we can still see the previous data... so NO MORE DATA LOSS
 
