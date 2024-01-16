@@ -3,7 +3,8 @@ QUESTION
 how did u know the container ip address
 *****************************************************************************************************************************************
 
-DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), external volumes
+DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), external volumes, USING EXTERNAL VOLUME TO DEPLOY OUR APPLICATION
+
 
 docker volumes and docker compose:
 ==================================
@@ -189,6 +190,8 @@ docker volume rm data33
 
 ******************************Volumes are the best way to persist data in Docker.:    
 
+
+      EXTERNAL VOLUMES
 *************************************************************************External volumes:   ********************43:26
 ther are external vol pluggin ,that can be installed in docker
  ===== Network Volumes Using AWS EBS ==========
@@ -211,6 +214,8 @@ docker plugin install rexray/ebs \
   EBS_ACCESSKEY= abc\
   EBS_SECRETKEY=123/
 
+
+                       USING EXTERNAL VOLUME TO DEPLOY OUR APPLICATION
 48:50
 ####in this case we nid an aws acces key and an aws sacred access key, this access key shud be authenticated ie it sud hv the right authorization to  create vol in docker
 so we go to our aws account .. hes in his root account , it have the req acces 
@@ -272,14 +277,20 @@ docker run --name mongo -d --network tesla \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 ************************************************** didnt work, we couldnt access the data 
 
-############# so he used the file app.sh  and paste the below command 
-docker volume cfraete ebs3 -d rexray/ebs
+3) ############# so he used the file app.sh  and paste the below command 
+docker volume craete ebs3 -d rexray/ebs
 docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
 then  deploy: sh app.sh
 
 ************* successful,  he checked in aws and we can see the  volume we see both ebs3 and ebs33 that we created n we can access the application n write data
+docker volume ls and we see ebs33 n ebs3
+************** can delete with docker volume prune OR docker rm volume name 
+****************************************************************************************************************************************
 
-Docker Compose
+
+
+
+Docker Compose **********************************************************
 ==============
 Docker Compose is a tool for defining/declaring and running multiple 
    containerised micro-services applications.
