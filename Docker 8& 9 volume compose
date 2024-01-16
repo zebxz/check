@@ -71,7 +71,7 @@ Bind Mounts:
 Bind mounts may stored data anywhere on the host system. 
 They may even be important system files or directories. 
 
-docker run --name mongo -d --network tesla -v /tmp/mongo:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+docker run --name mongo -d --network tesla -v /tmp/mongo:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
 
 docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
@@ -93,14 +93,14 @@ inside this dir, the data that is captured is frm the inf entered, inf entered b
 
 ################# bt this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the process is not
 managed by docker and as such it could be accidentally deleted
-if we ls /tmp , we can see the mount point mongo that we created .... so what happens if its deleted by a non docker process
+***************if we ls /tmp , we can see the mount point mongo that we created .... so what happens if its deleted by a non docker process
 
 **************** lets assume thats our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker start mongo we ar
 now able to access the data
 now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
 now lets redeploy the database, then we can still see the the previous data.. 
 this is because of bind mount 
-******* 27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is destroyed completely
+******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is destroyed completely
 if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
 BUT DERS A PROBLEM HERE 
 if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
@@ -124,7 +124,7 @@ Volumes stored data in a part of the host filesystem managed by docker
 Docker home dir :  DHD = /var/lib/docker
 
 BindMount: can store your data anywher 
-  /tmp/mongo:/data/db
+  /tmp/mongo:/data/db     ....(mount point for d docker host server /tmp/mongo and /data/db is the mount point for the container/ we got it frm d official image inf in dockerhub) 
   /home/ubuntu/data:/data/db
 
 Docker Peristent Volumes(Docker Named Volumes)
@@ -135,14 +135,14 @@ docker volume create mongo33   ............ here am nt
 docker volume create -d local data 
 docker volume ls  
 
-************* am not creating any mount point  /tmp/mongo:/ like we did for bind mount ... ( i think he meant dir /tmp/mongo 
+************* for this bind mount, we nid to create a mount point /tmp/mongo
 docker run --name mongo -d --network tesla \
   -v /tmp/mongo:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 **************************************************************************************************
 
- ###################################################  this is what i need to do  
+ ###########################this is what i need to do,just the vol name:mongodata , am not creating any mount point  /tmp/mongo:/ like we did for bind mount 
 docker run --name mongo -d --network tesla \
   -v mongodata:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
