@@ -295,7 +295,7 @@ Docker Compose **********************************************************
 Docker Compose is a tool for defining/declaring and running multiple 
    containerised micro-services applications.
 In real time one application can have more than 7 micro-services:
-ebay.com: 
+E.G ebay.com: 
 An e-commerce java based web application for ebay or 
 ebay-web-application:
     Login
@@ -305,13 +305,23 @@ ebay-web-application:
     Payment
     Order
     mysql db  
+****** ****************if u hv an aplication like dis n u nid to deploy it, hw many run command will u execute are we going to execute , very long command, we ar going to v 
+multiple run command:
 
-docker run --name login -d -p 80:8080 --network ebay login 
+docker run --name login -d -p 80:8080 --network ebay login            ,,, to create login container
 docker run --name reg -d -p 80:8080 --network ebay registration 
 docker run --name cart -d -p 80:8080 --network ebay cart
 docker run --name checkout -d -p 80:8080 --network ebay checkout
 docker run --name pay -d -p 80:8080 --network ebay payment 
 docker run --name order -d -p 80:8080 --network ebay order 
+docker run --name mysql -d -p 80:8080 --network ebay mysql
+
+
+**************** so this ebay web appl has been decoupled into micro services for login, reg, cart order, now all this inf needs to be captured in some database
+so my database her is mysql , we ar using mysql
+docker run --name mysql -d -p 80:8080 --network ebay mysql ,,.............  image is msql 
+*********if we ar going to be deploying using mysql,  we may need so env variable bt lets just consider what we see here
+
 
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=admnin123 -d \
 --network ebay mysql
