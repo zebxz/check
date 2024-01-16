@@ -3,7 +3,7 @@ QUESTION
 how did u know the container ip address
 *****************************************************************************************************************************************
 
-DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), 
+DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), external volumes
 
 docker volumes and docker compose:
 ==================================
@@ -123,8 +123,8 @@ Volumes stored data in a part of the host filesystem managed by docker
 
 Docker home dir :  DHD = /var/lib/docker
 
-BindMount: can store your data anywher 
-  /tmp/mongo:/data/db     ....(mount point for d docker host server /tmp/mongo and /data/db is the mount point for the container/ we got it frm d official image inf in dockerhub) 
+BindMount: can store your data anywher                                                             this inf is frm the previous video
+ /tmp/mongo:/data/db ....(mount point for d docker host server /tmp/mongo and /data/db is the mount point for the container/ we got it frm d official image inf in dockerhub) 
   /home/ubuntu/data:/data/db
 
 Docker Peristent Volumes(Docker Named Volumes)
@@ -135,7 +135,7 @@ docker volume create mongo33   ............ here am nt
 docker volume create -d local data 
 docker volume ls  
 
-************* for this bind mount, we nid to create a mount point /tmp/mongo
+************* for this bind mount, we nid to create a mount point for the host server /tmp/mongo
 docker run --name mongo -d --network tesla \
   -v /tmp/mongo:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
@@ -193,14 +193,14 @@ External volumes:   ********************43:26
 ther are external vol pluggin ,that can be installed in docker
  ===== Network Volumes Using AWS EBS ==========
 
-we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 bucket, google persistent disk, also sdsure disk 
+we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 bucket, google persistent disk, also sdsure disk, rexray plugin for docker storage 
 so when i hv my container mount point : /data/db/, i can mount it with an external vol 
+########### 45:00 so we can do smt like this : .... we wnt to create a mount point , frm this point, we could have external mounting , we can mount it externally
+we can use extenal vol for this same purpose, we can also hv multiple mount points
 
 
 
-
-
-
+anothe external storage we can use is :
 
 https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/
 Rexray docker-plugins for storage:
