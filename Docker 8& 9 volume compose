@@ -3,7 +3,7 @@ QUESTION
 how did u know the container ip address
 *****************************************************************************************************************************************
 
-DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), external volumes, USING EXTERNAL VOLUME TO DEPLOY OUR APPLICATION
+DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), external volumes, USING EXTERNAL VOLUME TO DEPLOY OUR APPLICATION , docker compose
 
 
 docker volumes and docker compose:
@@ -370,7 +370,7 @@ docker compose -version to see the version of docker compose that we v created  
  ********************** lets see hw the version has an impact
 
 docker --version 
-Docker version 20.10.12,    build 20.10.12-0ubuntu4   
+Docker version 20.10.12,    build 20.10.12-0ubuntu4    ########################################## he didnt xplain this part
 Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
 3.1                         1.13.1+          
 3.1                         20.10.12
@@ -388,8 +388,12 @@ docker-compose.yml
 we can use version 3.1 for docker engine  1.                                   ..... 1:26:44
 what dis means is that  ...       Docker version 20.10.12  .. this is my docker version
  so if i wnat to write a docker compose file, this is hw it goes 
-------------------
-version: '3.1'
+------------------      ####################### if ur trying to deploy ur application using docker compose it cud fall under stuff like dis 1:27:40
+
+                                  THIS IA A .yml file                                                                                1:33:00
+so in deployn dis spring app, i nid d image, smt like restart,if d container stops wot hapens, i nid ports, its a list i pair port 6000 to 8080, ntwrks too is a lis, env var
+                             for d db service , i nid the image, retsrt if it stops, ntwrks, vol, env.
+version: '3.1'             
 services: 
   springapp:
     image: mylandmarktech/sping-boot-mongo   
@@ -405,7 +409,7 @@ services:
   mongodb:
     image: mongo     
     restart: always     
-    networks:
+    networks:       ...... ..... ..... you cud hv multiple nterk cos a container cud be multiple ntwrk
     - fintech   
     - tesla   
     volumes:
@@ -418,15 +422,15 @@ volumes:
     driver: rexray/ebs           
 networks:
   tesla: 
-    external: true 
+    external: true    ...    true means the ntwrk is already available
   fintech:
     driver: bridge  
 
 docker volume create -d rexray/ebs data11    
 docker network create fintech  
 
-docker run --name mongo -d --network tesla \
--v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \
+docker run --name mongo -d --network tesla \      *************************** this is depolying the database and the aplication using command while the decompose is 
+-v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        deploying using a file ..1:31:18
 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
 
 docker run --name springapp -d -p 8080:8080 --network tesla \
