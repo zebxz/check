@@ -158,7 +158,7 @@ docker run --name mongo -d --network tesla \
 1) create volume: 
 docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
 docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
-docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for the driver to be local
+docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
 so when u DNT CHOOSE driver it is going to crate under the local driver 
 
  he removed mongo ....     docker rm -f mongo 
@@ -189,34 +189,95 @@ docker volume rm data33
 
 ******************************Volumes are the best way to persist data in Docker.:    
 
-External volumes:   ********************43:26
+*************************************************************************External volumes:   ********************43:26
 ther are external vol pluggin ,that can be installed in docker
  ===== Network Volumes Using AWS EBS ==========
 
-we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 bucket, google persistent disk, also sdsure disk, rexray plugin for docker storage 
+we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 simple storage system, google persistent disk, also sdsure disk, rexray plugin for 
+docker storage 
 so when i hv my container mount point : /data/db/, i can mount it with an external vol 
 ########### 45:00 so we can do smt like this : .... we wnt to create a mount point , frm this point, we could have external mounting , we can mount it externally
 we can use extenal vol for this same purpose, we can also hv multiple mount points
 
-46:30    ************************another external storage we can use is :
+46:30    ************************another external storage we can use is : rexray plugin for docker storage 
 
 https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/  , here we also see d docker plugins installatin command, if u dnt choose d version it wil go for d latest version
 Rexray docker-plugins for storage:
 
-IAM = Authorisation  
+ther are many examples of external storage we can use, bt in this case, i wnat ti go for EBS
+ 
+********************************** DOCKER volume plugin ******************* 48:19
+docker plugin install rexray/ebs \
+  EBS_ACCESSKEY= abc\
+  EBS_SECRETKEY=123/
+
+48:50
+####in this case we nid an aws acces key and an aws sacred access key, this access key shud be authenticated ie it sud hv the right authorization to  create vol in docker
+so we go to our aws account .. hes in his root account , it have the req acces 
+click on the top right corner n frm the drop box, click on security credentials ................49:20 
+scrol down to access key and create access key  then copy, both access n sacred key
 
 docker plugin install rexray/ebs \
   EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
   EBS_SECRETKEY=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
 
-docker volume create -d rexray/ebs ebs33 
-docker volume create ebs33
+before we execute this commnad let us execute another command: 
+docker plugin ls  ..... we can seee no plugin has intially been installed
+
+51:13 ********************************* whY ARE WE USING ACCESS KEY AND SECRED  ACCES KEY
+this is a plugin called rexray/ebs , THis plugin is intendd to help us create external volumes, this means that we can create an external vol,
+docker volume create -d rexray/ebs ebs33 .. ...........d is for driver, the driver is rexray/ebs .... am creatin a vol called ebs33
+if u execute this command, it wil go to ur aws account under volumes and create a vol called ebs33
+################this process cannot happen if u dnt hv the right IAM authorization
+bc we are using IAM = Authorisation  to autorize this rexray to be able to create and manage volumes in our aws account,, for this to happen IAM Is reQUired
+
+1) now we deploy this pluging :
+docker plugin install rexray/ebs \
+  EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
+  EBS_SECRETKEY=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
+
+*****************next
+docker volume create -d rexray/ebs ebs33 .............. bc it is rexray we hv to pass  the driver 
+docker volume create ebs33 ...... ............. if u dnt pass driver, it wil create it under local driver 
 docker volume create -d local ebs33  
+
+2) create the volume 
+docker volume create -d rexray/ebs ebs33  ... it will tk a while bc this is an external vol
+            docker volume ls   .. we see the vol is created
+           Docker inspect ebs33 
+    driver : rexray/ebs:latest
+     Scope: global
+     size: 16
+     type:gp2,      ie 16 gp2
+************************************ now we can use this vol to create the container/deploy my application
+
+59:25 *************** he tried to run multiple volume mount point but it didnt work 
+
+ubuntu@docker:~$ docker run --name mongo -d --network tesla \
+  -v data33:/data/db \
+  -v ebs33:/data/db \
+  -v /tmp/db33:/data/db \
+  -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \
+  -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
+docker: Error respnse frm deamon: duplictae mount points: /data/db.
+see 'docker run --help'.
+****************************** he said it seems the vol property does nt permit multiple mount point
+
+59:51*********************************************************************************************** we are creating our database container 
+the container is creating the volume 
 
 docker run --name mongo -d --network tesla \
   -v ebs33:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
+************************************************** didnt work, we couldnt access the data 
+
+############# so he used the file app.sh  and paste the below command 
+docker volume cfraete ebs3 -d rexray/ebs
+docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
+then  deploy: sh app.sh
+
+************* successful,  he checked in aws and we can see the  volume we see both ebs3 and ebs33 that we created n we can access the application n write data
 
 Docker Compose
 ==============
