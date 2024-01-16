@@ -3,6 +3,8 @@ QUESTION
 how did u know the container ip address
 *****************************************************************************************************************************************
 
+what are syntax
+
 DOCKER VOLUMES, Docker Peristent Volumes(Docker Named Volumes), external volumes, USING EXTERNAL VOLUME TO DEPLOY OUR APPLICATION , docker compose
 
 
@@ -77,7 +79,7 @@ docker run --name mongo -d --network tesla -v /tmp/mongo:/data/db -e MONGO_INITD
 docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
 18:50     *****************springapp is passing the env variable so the inf must be valid, e.g the hostnmae on for the database is mongo bt the hostname on the springapp was
-showing ie momgodb (frm previous class) so we changed it to mongo ...then springapp passwd is showing devdb@123 bt database is showing dev123, so we changed it to devdb@123
+showing momgodb ie (frm previous class) so we changed it to mongo ...then springapp passwd is showing devdb@123 bt database is showing dev123, so we changed it to devdb@123
 
 
 vi app.sh 
@@ -392,9 +394,11 @@ what dis means is that  ...       Docker version 20.10.12  .. this is my docker 
  so if i wnat to write a docker compose file, this is hw it goes 
 ------------------      ####################### if ur trying to deploy ur application using docker compose it cud fall under stuff like dis 1:27:40
 
-                                  THIS IA A .yml file                                                                                1:33:00
+1) Creating the docker compose file
+                                              THIS IA A .yml file                                                                       1:33:00
 so in deployn dis spring app, i nid d image, smt like restart,if d container stops wot hapens, i nid ports, its a list i pair port 6000 to 8080, ntwrks too is a lis, env var
                              for d db service , i nid the image, retsrt if it stops, ntwrks, vol, env.
+                                WE AR CREATING OUR VOLUMes, netwrks and services
 version: '3.1'             
 services: 
   springapp:
@@ -411,25 +415,54 @@ services:
   mongodb:
     image: mongo     
     restart: always     
+                       (no space here, i jst did it like that) under port, we wnt be allocating any port for our db bc we wont be accessing it externally so i tk it out 
     networks:       ...... ..... ..... you cud hv multiple nterk cos a container cud be multiple ntwrk
-    - fintech   
+    - fintech  k9                     ***** d 2application shud b in the same ntwrk bt i can place database in anoda ntwrk bc one container can b in more than one ntwrk)
     - tesla   
     volumes:
-    - data11:/data/db
+    - data11:/data/db:rw         *********** what is rw 1:40:43
     environment:
     - MONGO_INITDB_ROOT_USERNAME=proddb
     - MONGO_INITDB_ROOT_PASSWORD=proddb@123       
-volumes:
+volumes:                                           i want the vol created, it doesnt exist, i want it craeted extrnally
   data11:
-    driver: rexray/ebs           
+    driver: rexray/ebs     c
 networks:
   tesla: 
     external: true    ...    true means the ntwrk is already available
   fintech:
     driver: bridge  
 
-docker volume create -d rexray/ebs data11    
-docker network create fintech  
+2)docker volume create -d rexray/ebs data11      ********************** we hv to also create dis volume and ntwrk fintech b4 we can start deploying the apl
+3)docker network create fintech  
+
+1:38:20 ################################  you can use a file like this its easy bc this transaction can be easily repeated , now the docker compose.yml file is done
+                                                                    we can deploy the containers ie springapp and mongo using dockr compose  .. 1:41;19
+4) next
+vi docker-compose.yml  and paste the file 
+
+
+**************** nxt
+5) check if the syntax are ok
+docker-compose config      ................if ders an errror, it will tell you
+
+6) create the containers/DEPLOY THE APPLICATION
+docker-compose up -d 
+       docker ps .... the containers are running
+  
+....... application deploy bt we cudnt acces it in goolge bt when we curl on the comandline it responds, he asaid ders no path to the appl, its suppose to
+                                                              respond accordingly .......1:45:30 .... he even checked aws security groups, said all d ports are open
+
+
+
+######################### since we are using docker compose, we can deploy in multiple env, like dev, uat, prod using diff env variables
+
+             dev     uat      prod   
+USERNAME   devdb     uatdb    proddb   
+hostname   mongo     mymongo  mongodb  
+password   dev@123   uat@123  admib@#123  
+
+
 
 docker run --name mongo -d --network tesla \      *************************** this is depolying the database and the aplication using command while the decompose is 
 -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        deploying using a file ..1:31:18
@@ -440,19 +473,25 @@ docker run --name springapp -d -p 8080:8080 --network tesla \
 -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
 
-             dev     uat      prod   
-USERNAME   devdb     uatdb    proddb   
-hostname   mongo     mymongo  mongodb  
-password   dev@123   uat@123  admib@#123  
+
+    ***************************CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION  ***********************1:42:08
 
 docker compose file with default name [docker-compose.yml ]. 
   # Create Services/Contianers
-   docker-compose up -d  
-  
-  # Remove Services/Contianers 
+   docker-compose up -d          ****** used when deploying an application using the default name, ie docker compose.yml
+
+ Ex:
+docker-compose default file: docker-compose.yml
+docker-compose -f docker-compose.yml up -d 
+docker-compose up -d 
+docker-compose up -d
+docker-compose config 
+
+
+# Remove Services/Contianers  .................  to destroy the containers
     docker-compose down
-  
-docker compose file with custom name.  
+
+#docker compose file with custom name.  
 docker-compose -f <CustomeComposeFileName>.yml <command>
 
 Ex:
@@ -460,17 +499,53 @@ docker-compose -f docker-compose-springapp.yml config
 docker-compose -f docker-compose-springapp.yml up -d
 docker-compose -f docker-compose-springapp.yml down
 
-docker-compose-springapp.yml
+so we can create a docker compose file and call it: docker-compose-springapp.yml
+i can also rename my docker compose file ie the file we deployed already  .... mv  docker compose.yml docker-compose-springapp.yml
+
+then:  he changed port to 8080:8080 and dreiver:local
+                              
+version: '3.1'             
+services: 
+  springapp:
+    image: mylandmarktech/sping-boot-mongo   
+    restart: always    
+    ports:
+    - 8080:8080     
+    networks:
+    - fintech     
+    environment:
+    - MONGO_DB_HOSTNAME=mongodb
+    - MONGO_DB_USERNAME=proddb
+    - MONGO_DB_PASSWORD=proddb@123         
+  mongodb:
+    image: mongo     
+    restart: always     
+    networks:       
+    - fintech                  
+    volumes:
+    - data11:/data/db
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=proddb
+    - MONGO_INITDB_ROOT_PASSWORD=proddb@123       
+volumes:                                           
+  data11
+    driver: local
+networks:
+  tesla: 
+    external: true    ...    true means the ntwrk is already available
+  fintech:
+    driver: bridge  
+
+then 
+docker-compose -f docker-compose-springapp.yml config
+with dis new file name to deploy will be  ........................... 1:53:20
+docker-compose -f docker-compose-springapp.yml up -d
+
+########################## now we were able to access the application online
 
 
-Docker Compose Commands:
 
-  Ex:
-docker-compose default file: docker-compose.yml
-docker-compose -f docker-compose.yml up -d 
-docker-compose up -d 
-docker-compose up -d
-docker-compose config 
+Docker Compose Commands: will give u all the docker compose command
 
 docker compose commands 
 Commands:
