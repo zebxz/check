@@ -314,7 +314,7 @@ docker run --name cart -d -p 80:8080 --network ebay cart
 docker run --name checkout -d -p 80:8080 --network ebay checkout
 docker run --name pay -d -p 80:8080 --network ebay payment 
 docker run --name order -d -p 80:8080 --network ebay order 
-docker run --name mysql -d -p 80:8080 --network ebay mysql
+
 
 
 **************** so this ebay web appl has been decoupled into micro services for login, reg, cart order, now all this inf needs to be captured in some database
@@ -331,17 +331,32 @@ $ docker run --name some-mysql \     .. ENV VARIABLE -e  , lets assume the root 
 -e MYSQL_ROOT_PASSWORD=my-admin -d mysql
 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
+******************* of course all of this can be in one line************************
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+so we ar deploying this database,  bt we hv to put it in the same ntwrk 
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=admnin123 -d \
---network ebay mysql
+docker run --name login -d -p 80:8080 --network ebay login          
+docker run --name reg -d -p 80:8080 --network ebay registration 
+docker run --name cart -d -p 80:8080 --network ebay cart
+docker run --name checkout -d -p 80:8080 --network ebay checkout
+docker run --name pay -d -p 80:8080 --network ebay payment 
+docker run --name order -d -p 80:8080 --network ebay order 
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql 
+
+1:19:10 ************** bt what we are saying is that when ur trying to deploy an application, a lot of objects ar involved in this deployment.
+hw many objects or micro services ar involved in this deployment ???  however for the objects
+in trying to deploy this application what are the objects that ar ivolved ? 
 
 docker objects:
-  - images 
-  - networks 
-  - volumes 
-  - environmental variables 
+  - u must use the right images   , each of the micro services must be deployed with the right image 
+  - it must be in the right networks ,  so if we nid this containers to comm with each oda they must be in the same ntwrk
+  - must assign volumes accordingly ,  if any of the containers nids to maintain its state we must introduce docker volume
+  - environmental variables   ,   for us to deploy it in any env , we must use env variable 
 
+****************************************** 1:21:10 
 ubuntu@docker:~$ docker-compose
 Command 'docker-compose' not found, but can be installed with:
 sudo snap install docker          # version 20.10.24, or
@@ -349,14 +364,30 @@ sudo snap install docker          # version 20.10.24
 sudo apt  install docker-compose  # version 1.29.2-1
 See 'snap info <snapname>' for additional versions.
 
+ubuntu@docker:~$ sudo apt  install docker-compose -y      ... successful
+docker compose -version to see the version of docker compose that we v created  ... the version we installed : sudo apt  install docker-compose  # version 1.29.2-1
+
+ ********************** lets see hw the version has an impact
+
 docker --version 
-Docker version 20.10.12,    build 20.10.12-0ubuntu4
+Docker version 20.10.12,    build 20.10.12-0ubuntu4   
 Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
-3.1                         1.13.1+
+3.1                         1.13.1+          
 3.1                         20.10.12
 
-Docker version 20.10.12
+
+1:25:29  ####### the rule says when u want to write a docker compose file .. went on break, didnt continue that ... 
+
+click on the menu box , select doc, click on references , compose cli, compose file references and legacy versions then version 3
+when we look at docker compose, u want to look at the  docker compose like version3 references and hw it relates to the docker engine with the docker software
+
+
+Docker version 20.10.12  .. this is my docker version
 docker-compose.yml  
+
+we can use version 3.1 for docker engine  1.                                   ..... 1:26:44
+what dis means is that  ...       Docker version 20.10.12  .. this is my docker version
+ so if i wnat to write a docker compose file, this is hw it goes 
 ------------------
 version: '3.1'
 services: 
@@ -435,6 +466,7 @@ docker-compose up -d
 docker-compose up -d
 docker-compose config 
 
+docker compose commands 
 Commands:
   build              Build or rebuild services
   config             Validate and view the Compose file
