@@ -24,23 +24,122 @@ on top of it  we v a database and the image is mtsql
 6) docker run --name checkout --network ecommerce -d mylandmarktech/checkout
 7) docker run --name payment  --network ecommerce -d mylandmarktech/payment 
 8) docker run --name order  --network ecommerce -d mylandmarktech/order 
-9) docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql  
+9) docker run --name -mysql - network ecommerce -v datas:/var/lib/mysql mysql       for mysql
+ docker run --name  mongo --network ecommerce -v datas:/ data/db mongo -         then we nid to pas some env var
 
 someone jst reminded me , we also nid to pass env var   -e
-in real time 
+
 ***********16:33 
 17:22*********************
 lets check in dockerhub and find out if we ar going to use mysql , what is going to be the env variable to be defined, remember, we v seen mongodb , dis time around
 when u start working what is used in ur env is nt mongodb bt mqsl ..
 in docker hub, we can see the command, hw to deploy it, the paswd, env var, wher data is stored , if i wnat to create a mount point /var/lib/mysql , so we ar pasin env var
 
+so for us to be able to manage all of this we wil use a docker compose file and the we'll see hw wit the use of my docker compose file can create my ntwrk for me, create my
+volume and create all this containers and will call all the containers services
+21:29 ####### & what u nid at this time of the course shud nt b a problem bc if u google wot is docker compse the link goes to docker hub, it gives overview, hw to install
+and we nid to knw our docker version, docker engine version, to knw the docker compose version to use
+and if u nid  a docker compose file, we can hv smaples of  a docker compose file...
+***************** and docekr compose file is a .yml file
+docker-compose .yml
+we'll start studying a new language called yml and its the simplest language ucan study in programing
+ the firts tin to start in this file is version
+generally for any programming language 
+
+23:17  ***********languages
+yml
+xml    , in xml e.g if u want to get some inf abt servers , multiple servers
+<servers></servers>    , this is hw code is managed in xml
+inside this server, i v multiple servers
+<servers>
+ <servers>
+<servers>nexus</servers> 
+<servers>jenkins</servers> 
+<servers>tomcat</servers>        now i hv a gud number of servers , so inside my servers, i v nexus, jenkins and tomact
+</servers>                     this is xml, this is a list servers
+
+lets ASSUME THAT I WNT TO ENTA SOME PARAMETERS LIKE , SERVER ID 
+<servers>
+ <servers>
+   <id>nexus</id> 
+   <login>admin</login>                   this is hw xml is written 
+   <password>admin</password>
+  <password>$pwd</password>             i can enter tha passwd as a variable, ie am caling the pw frm somewhere else, wich means the pw is defined somewher else bc its nt very
+</servers>                                                                    secured for u to pass PW like this,  bt this is external so similarly
+<servers>
+  <id>jenkins</id>
+  <login>jenkins</jenkins>
+  <password>admin</password>
+  </servers> 
+<servers>tomcat</servers>      
+</servers>   
 
 
+*******29:27 
+the simplest laguage u can think of is the yml language
+generally in any programming lanugae, we v the diff kind of data u can eneter, what we call:
+data types
+interger     example of interger
+    age: 60
+string    ... usually put in single of double quote "
+   name: "landmark"
+dictionary  (key:value pairs)
+   name:"simon"
+   age : 55
+   pob: "lagos"
+list/array         under list we can hv diff attributes like age ...
+  students:
+   -name: simon
+    age:
+    salary:
+  -name: pau
+  -name: keren
+maps
+objects
+class
 
+34:00  ******************* we wnt to create a docker compose.yml
+Before u create this file, the first tin is the diff version w ecan use , u nid to knw the version of docker to decide the version of docker compose that u nid
 
+HOW TO GET UR DOCKER VERESION TAHT IS RUNNING
+ docker info , will give the verssion that is running OR 
+docker --version
+e.g u can use dokcer compose 3.1 for any docker 1.13.1+
+our docker vesiron : 20.10.7 
 
+version : '3.1'    the nxt tin we v is ,,, bc yml wil nid spacing a lot
+services:
+  mongo
+login
+registration
+check 
+cart
 
+    ************** bt in this example, we'll jsut hv our database and a single service , voumes and ntwrk
 
+version : '3.1'    the nxt tin we v is ,,, bc yml wil nid spacing a lot
+services:       **************** i can create any numbe rof micro services under this version of docker compose e.g mongo and springapp
+  mongodb        in deployin d database, i wnt to use the image             *************38:58                            maintain 2spacing
+    image: mongo
+    networks:            in deployin the appl we nid ntwrk ,, we can v multiple ntwrks
+    - ecommerce
+    -fintech:
+    volumes:              we nid volume 
+    - mongo-data:/data/db
+    environment:
+    -MONGO_DB_                            4*:12  we ar nt doing port publishing bt if we were to do it , we 'l v a keyword called port
+    -MONGO_DB_ 
+  springapp                   48:24                             
+volumes:   can create multiple volumes 
+   mongo-data:                                                                 maintain 2spacing
+     driver: local
+    ebs-data        this is external data
+      driver: rexray
+networks:
+  ecommerce:   for the netwrk i nid the driver
+    driver: dridge
+  fintech:                                                                                                                    41:00
+     external: true      . when i say driver is dridge and external is true , that means the ntwrk already exists so i wnt to use an existing ntwrk am nt craeting the ntwrk
 
 
 
