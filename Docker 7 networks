@@ -417,9 +417,14 @@ ContainerPort: 80                                                               
 ContainerPort: 8080    
 
 We can't create more than one container with same container port in host network.
+we nid to do port publish to access containers..............generally           2:19 :15
+
+if we hv containers like this , they cannot be deployed in the host ntwrk , they can only be deployed in the bridge ntwrk
    landmark-web-app  = containerPort,  EXPOSE=8080  
    java-web-app      = containerPort,  EXPOSE=8080  
    maven-web-app     = containerPort,  EXPOSE=8080  
+
+
 
 3) Docker none/null network
 ========================
@@ -439,6 +444,7 @@ Isolation
   docker disconnect hello ebay  
   docker connect hello none  
 
+################################ na me write am ......... docker logs to check when container is nt running
 
 2:29:15 when in a file press the esc key to be in command mode
 to delete a row press dd
