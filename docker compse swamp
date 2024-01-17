@@ -7,11 +7,44 @@ order
 
  we ar passing an ecommerce ntwrk, we wnt the appl to all tlak to each other, so we v to deploy them in the same ntwrk 
 the container can only talk to ecah other if they ar in the same ntwrk, using their hostname if they ar in d same ntwrk
+we ar deploying in detachable mode -d 
+                                                                this is the login image
+ 3) docker run --name login --network ecommerce -d -p 5000:8080 mylandmarktech/login    
+         *********************** for the other containers, we nt using any port number 
 
-docker run --name login --network ecommerce -d -p 5000:8080 mylandmarktech/login          
-docker run --name  registration --netwrk  ecommerce -d mylandmarktech/registration 
-docker run --name cart --netwrork ecommerce -d mylandmarktech/cart
-docker run --name checkout --network ecommerce -d mylandmarktech/checkout
-docker run --name payment  --network ecommerce -d mylandmarktech/payment 
-docker run --name order  --network ecommerce -d mylandmarktech/order 
-docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql  
+ ############### these ar multiple commands that we ar doing  , and dis ar d dif images we ar using bc we hv decopled d appl into micro serv, so we v multiple micro services
+on top of it  we v a database and the image is mtsql
+ b4 deployin dis app, we nid to creat d ntwrk 
+1) docker network create ecommerce ( custm bridge ntwk) and we nid the vol, we nt to mount d vol to our container, so we  ar creating  the vol
+2) docker volume create datas
+*************** total of 9c0mmands to creATE DIS APP, ...... THIS IS A CHALLENGING TASK
+
+4) docker run --name  registration --netwrk  ecommerce -d mylandmarktech/registration 
+5) docker run --name cart --netwrork ecommerce -d mylandmarktech/cart
+6) docker run --name checkout --network ecommerce -d mylandmarktech/checkout
+7) docker run --name payment  --network ecommerce -d mylandmarktech/payment 
+8) docker run --name order  --network ecommerce -d mylandmarktech/order 
+9) docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql  
+
+someone jst reminded me , we also nid to pass env var   -e
+in real time 
+***********16:33 
+17:22*********************
+lets check in dockerhub and find out if we ar going to use mysql , what is going to be the env variable to be defined, remember, we v seen mongodb , dis time around
+when u start working what is used in ur env is nt mongodb bt mqsl ..
+in docker hub, we can see the command, hw to deploy it, the paswd, env var, wher data is stored , if i wnat to create a mount point /var/lib/mysql , so we ar pasin env var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
