@@ -1,1 +1,17 @@
+an e-commerce java based web application for ebay 
+ligin 
+registreation
+checkout
+payment
+order
 
+ we ar passing an ecommerce ntwrk, we wnt the appl to all tlak to each other, so we v to deploy them in the same ntwrk 
+the container can only talk to ecah other if they ar in the same ntwrk, using their hostname if they ar in d same ntwrk
+
+docker run --name login --network ecommerce -d -p 5000:8080 mylandmarktech/login          
+docker run --name  registration --netwrk  ecommerce -d mylandmarktech/registration 
+docker run --name cart --netwrork ecommerce -d mylandmarktech/cart
+docker run --name checkout --network ecommerce -d mylandmarktech/checkout
+docker run --name payment  --network ecommerce -d mylandmarktech/payment 
+docker run --name order  --network ecommerce -d mylandmarktech/order 
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql  
