@@ -90,8 +90,9 @@ PROBLEMS WITH DEFAULT BRIDGE NTWRK
 e.g a if containers was dead and it comes bk to life  e.g smt goes wrong n its recreated, it come sbk to life with a new IP address and as such communication will be broken
 so for that reason, we use what is called custom bridge ntwrk. 
 
-**************  CUSTOM BRIDGE NTWRK
-containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate 
+**************28:30     CUSTOM BRIDGE NTWRK
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
+each other.
 *****in the custom bridge ntwrk we can create a ntwrk called e.g EBAY NETWRK
 
 AGAIN, we ar talking abt a situation were der are multiple micro services
@@ -207,6 +208,8 @@ we need to deploy the springapp and the database - mongo
 
 ###########QUESTION, HW DO WE KNOW WHICH ENV VARIABLE VALUE TO USE ,, BC here both the applictaion(spring) has its env var & the database has its own env ???????
  ########## i bliv it doesnt matter bc u will v to choose the values yourself
+******************he answered it in the nxt video , the application passes the variable, ie the input used for the application shud b d same used for the bd e.g password
+but the hostname comes from the db
 
 1:06:40 *******************************THIs is OUR ENVIRONMENTAL VARIABLES for for our application (spring)***************************(gotten frm the image info in docker)
 spring:
@@ -237,7 +240,7 @@ vi sp.sh
 4) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
                                                   
 
-###########DEPLOYING THE APPLICATION
+########### DEPLOYING THE APPLICATION
                                           
                                   *******HOSTNAME is the name of the data base that is being deployed                                      ********** THIS IS THE IMAGE 
 5) docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
@@ -338,6 +341,7 @@ ping : unknown host
 
 QUESTION, Why is it not able to ping , thought thats one of the adv of custom ntwrk, if a container is recreated it can stil be in the same ntwrk bc it can connect with either 
 IP addresss or container name and in this case, the cointainer was recreated with the same name. 
+mY ANS: the app dat was deleted was recreated with the same name bt the netwrk wasnt stated, so that means it was recreated in the bridge netwrk nt the intial custom ntwrk
 
 2:00:22 HOW TO ISOLATE APPLICATION USING DOCKER
 BY placing the applications in diff ntwrks 
