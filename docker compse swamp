@@ -141,7 +141,17 @@ networks:
   fintech:                                                                                                                    41:00
      external: true      . when i say driver is dridge and external is true , that means the ntwrk already exists so i wnt to use an existing ntwrk am nt craeting the ntwrk
 
-
+springapp:
+    image: mylandmarktech/sping-boot-mongo   
+    restart: always    
+    ports:
+    - 6000:8080     
+    networks:
+    - fintech     
+    environment:
+    - MONGO_DB_HOSTNAME=mongodb
+    - MONGO_DB_USERNAME=proddb
+    - MONGO_DB_PASSWORD=proddb@123 
 
 
 
