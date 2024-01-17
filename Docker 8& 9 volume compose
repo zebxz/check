@@ -580,7 +580,108 @@ docker swarm:  2video tomorrow
 Saturday = kubernetes  = 4hours classes  
 
 
+QUESTIONS:
 
+1)u hv been redeploying on a new port but
+cant a container be deployed on the same port for e.g u nid to update what was already deployed
+
+2) bc for the web app u did build u used maven as abuild tool, i understand that for pythonthey also hv build tool bt i didnt see us doing a build, does it mean that we actually
+depend totally on the docker file bc for the web app we did see that we were copying the .war files n deploying it into the tomcat 
+not all applications are deployed in the same manner like d way we deployed python appli was diff frm d way we deployed oda appl like java based app
+1:02:00  .. LET ME SHOW U SMT ... when u install dis docker file, it does a build while running the docke file
+
+FROM python:3.7
+WORKDIR /opt/app
+
+COPY . .
+
+RUN pip install --no cache dir -r requirements-prod.txt       .... this is the command that wil do a build , its doing a build wit pip installed 
+                                                              whil creatin the image, pip instal is like deploying the applic
+EXPOSE 5000
+
+CMD { "python, -m, flask / run  --host=0.0.0.0"]        ,,,,   to start the container
+
+**********************let me show u smt in docker files 
+we hv docker file for wildfly for e.g
+
+FROM jboss/wildfly
+ADD target/maven-web-app.war /opt/jboss/wildfly/standalon/deployments/
+
+this base image , for jboss to function, it rEQ java bt the base image already v java embedded in it
+
+***************** also , look at this base image what do u see here:
+FROM tomcat:8.0.20-jre8  ..    tomcat, it syas 8.0.20 java run time env 8 ,, so the  tag here is tomcat wit java8  , this base image has tomcat and java, they ar both embeded 
+                                                                                       together bc dats hw base images are     
+
+RUN     sed -i user usrname= "admin" password" roles , manger -script"/> /usr/local/tomcat/conf/tomcat-user                                                                   
+and this has a run instruction which is assigning pw, roles , and it is redirecting it io the /usr/local/tomcat/conf/tomcat-user
+so while deploying ur app u can use the run instruction to assign a user name 
+COPY java-web-app.war /usr/local/tomact/webapps/graddle-web-app.war    ].... and now we ar  copying the war files
+
+******************** for the multistage  docker file
+
+WORKDIR /app
+RUN git clone https://github.com/LandmakTechnology/maven-web-application.git
+
+#Maven
+FROM maven:3.5-jdk-8-alpine as build
+WORKDIR / app
+COPY --from=repo /app/maven-web-application /app
+RUN mvn install       .........     here we ar doing mvn install, wich implies that will ceating the image, the app code is being craeted as well,its like doing mvn package
+
+#Tomcat
+FROM tomcat:8.0.20-jre8
+#COPY /app/target/*war /usr/local/tomcat/webapps/maven-web-app.war
+COPY --from=build /app/target/*war /usr/local/tomcat/webapps/
+
+***************** for nodejs app 
+all of this appli are found in a docker hub account
+this is nodejs, it has a docker file
+
+FROM node:10
+WORKDIR /usr/app
+COPY ..
+RUN npm install      whendeploying  uusing nodejs, this is the command  npm install
+EXPOSE 9981
+CMD   "node" , app.js     the command to start the app
+
+
+3) whats the integration btw the tomcat and the docker file bc we just deploy at one 
+
+
+
+4) when we were using the plugin to create the eps is der a way to create and encrpt the eps at the same time while we ar doingthat?
+ANS : i thinkits possible , i share the link jst go tru it
+
+we previously integrated jenkins with tomcat, maven, where does docker come in that process
+ANS; no its easy, i think we did that when we started docker, we had some stages
+can u see this jenkins file:
+. prepare a jenkins cd job for maven-web-application
+
+//Jenkisfile for maven-web-app cd job
+ node{
+stage ('5. createDockerImage' ){}
+stage ('6. PushImageDockerhub' ){}
+stage('7.Deploy2UAT'){}
+stage('8. approval'){}
+stage '8.Deploy2Prod'){}
+
+
+Ticket014:     
+﻿﻿﻿﻿Prepare a jenkins ci/cd job for maven-web-application
+         **************************************************IN the pipeline stage one is to clone frm scm , ur building using maven9
+1.cloning the latest version of the application = SCM/github
+2. building using maven
+3. running code quality analysis with sonarQube
+4. uploading artifacts in nexus
+5. pre-deployment
+     1. containerizing the application by creating
+       docker images using Dockerfile
+      distributing the images in docker image Registry
+       dockerhub/Nexus/JFrog
+6. Deployment TO UAT environment using kubernetes
+7. APPROVAL[manual or auto] 8. Deployment to Production environment using kubernetes
+9. email/slack notification
 
 
 
