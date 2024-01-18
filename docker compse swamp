@@ -101,8 +101,9 @@ class
 34:00  ******************* we wnt to create a docker compose.yml
 Before u create this file, the first tin is the diff version w ecan use , u nid to knw the version of docker to decide the version of docker compose that u nid
 
-HOW TO GET UR DOCKER VERESION TAHT IS RUNNING
- docker info , will give the verssion that is running OR 
+#######################################################################    HOW TO GET UR DOCKER VERESION TAHT IS RUNNING
+
+docker info , will give the verssion that is running OR 
 docker --version
 e.g u can use dokcer compose 3.1 for any docker 1.13.1+
 our docker vesiron : 20.10.7 
@@ -116,6 +117,8 @@ check
 cart
 
     ************** bt in this example, we'll jsut hv our database and a single service , voumes and ntwrk
+****************************************************************************************************************
+
 
 version : '3.1'    the nxt tin we v is ,,, bc yml wil nid spacing a lot
 services:       **************** i can create any numbe rof micro services under this version of docker compose e.g mongo and springapp
@@ -128,30 +131,97 @@ services:       **************** i can create any numbe rof micro services under
     - mongo-data:/data/db
     environment:
     -MONGO_DB_                            4*:12  we ar nt doing port publishing bt if we were to do it , we 'l v a keyword called port
-    -MONGO_DB_ 
-  springapp                   48:24                             
-volumes:   can create multiple volumes 
-   mongo-data:                                                                 maintain 2spacing
-     driver: local
-    ebs-data        this is external data
-      driver: rexray
-networks:
-  ecommerce:   for the netwrk i nid the driver
-    driver: dridge
-  fintech:                                                                                                                    41:00
-     external: true      . when i say driver is dridge and external is true , that means the ntwrk already exists so i wnt to use an existing ntwrk am nt craeting the ntwrk
-
-springapp:
+    -MONGO_DB_    48:24  
+springapp      
     image: mylandmarktech/sping-boot-mongo   
     restart: always    
     ports:
     - 6000:8080     
     networks:
+    - ecommerce
     - fintech     
     environment:
     - MONGO_DB_HOSTNAME=mongodb
-    - MONGO_DB_USERNAME=proddb
-    - MONGO_DB_PASSWORD=proddb@123 
+    - MONGO_DB_USERNAME=devdb
+    - MONGO_DB_PASSWORD=devdb123 
+    depends_on:   this means that springapp depend on mongodb  therfore our dabase shud be created first before i bliv ... spring appli    
+    mongodb                                           ie our spring application port to be created depends on the database port mm,,..  .. 54:20
+volumes:   can create multiple volumes 
+   mongo-data:                                                                 maintain 2spacing
+     driver: local
+    ebs-data       ......... this is external data
+      driver: rexray
+networks:
+  ecommerce:   ..........  for the netwrk i nid the driver
+    driver: bridge
+  fintech:                                                                                                                    41:00
+     external: true      . when i say driver is bridge and external is true , that means the ntwrk already exists so i wnt to use an existing ntwrk am nt craeting the ntwrk
+##############################################################################################################
+
+NEXT:
+
+54:22 ###### we copy this docker compose file ..we want to deploy using a 'file' a file is imp bc a file gets to do wit infrastructure as a code wich is very imp
+
+1) i want to create a dir               1200 1 bed  ,, 1400 2bed
+mkdir app26 ; cd app26
+2) vi docker-compose.yml                             55:40
+then paste  the above file and save
+
+**************** dnt freak out bc this code is part of our project already, if u go to the project that we v for this stuff we already v d code ther
+                  is oin our github repository, this docker compose file is already ther, most of the time it wil b part of ur source code bt u nid to understand if u nid 
+               to change anytin like the image version and so on 
+
+** now v created my docker compose file bt before i can run any docker compose command , i will be reQ to instal dodcker compose
+ so first docker compose i can run to check if my file is ok 
+3) docker-compose config      ....************* am told to  install docker compose 
+4) sudo apt install docker-compose;
+ NOW docker-compose config  TO check if the file is ok:    ..... file is ok
+now we ar told that its going to create ntwork called ecommers then it wil use na existing ntwrk and it wil create dis services, then a local and ebs vol & a local vol
+next 
+we deploy the appliaction
+5) docker-compose up -d    .... its going to create app26_ebs-data" with/using the  rexray driver" in  our aws account
+                              ERROR:  it says NONEXISTENT DRIVER REXRAY 
+*****************  so docker plug in ls    ... to check why w ev the error                                           i didnt go bk to d file to correct it
+so its telling us thta this particular driver dis particuale driver does nt exist bc we v defined rexray instead of rexray/ebs & i can also pass the version  59:59
+
+*************** NOW EVERYTHING HAS BEEN DEPLOYED ***********************
+if i run docker-compose down   .... it wil delete everytin that we created bt fintech didnt delete bc it is external. ie was created b4 we created/deployed the file
+can also run docker volume prune to delete local volumes then ill be left with just the external volumes
+###################  so docker compose is very imp, its easily manageable to use in deploying ur application and commands ############
+e.g if u go to our github account we still v dis file, eveytin is der as it was originally defined, if u want to change smt u jsut go and change the version
+
+*** in rreal time we ar going to be using dodcker compose file to do our deplyment 
+
+1:04  docker compose ps   oR docker ps
+shows my containers are up 
+
+***************** we can see the a prefix app26;springapp_1  , thats bc it inherited the dir name we created in step no. 1 ... app26
+
+curl if config.co   ... to access tha application 
+
+ 1;05:48
+
+
+
+
+
+
+#######################################################################################################################
+EXAMPLE:
+
+        an e-commerce java based web application for ebay 
+login 
+registreation
+checkout
+payment                          EXAMPLE: OM,                                                                             53:30
+order        so we can equally say here that order depends on :login,reg,checkout,, so if ders no checkout order cannot be placed
+depends on:
+-login 
+-registreation
+-checkout
+-payment
+
+
 
 
 
