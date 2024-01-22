@@ -133,7 +133,7 @@ services:       **************** i can create any numbe rof micro services under
     -MONGO_DB_                            4*:12  we ar nt doing port publishing bt if we were to do it , we 'l v a keyword called port
     -MONGO_DB_    48:24  
 springapp      
-    image: mylandmarktech/sping-boot-mongo   
+    image: mylandmarktech/spring-boot-mongo     ..  ..1:11:07    spring-boot-mongo is the name of the service
     restart: always    
     ports:
     - 6000:8080     
@@ -143,7 +143,7 @@ springapp
     environment:
     - MONGO_DB_HOSTNAME=mongodb
     - MONGO_DB_USERNAME=devdb
-    - MONGO_DB_PASSWORD=devdb123 
+    - MONGO_DB_PASSWORD=devdb123                                                                        ( 53:00 .... example below)
     depends_on:   this means that springapp depend on mongodb  therfore our dabase shud be created first before i bliv ... spring appli    
     mongodb                                           ie our spring application port to be created depends on the database port mm,,..  .. 54:20
 volumes:   can create multiple volumes 
@@ -197,12 +197,39 @@ shows my containers are up
 
 ***************** we can see the a prefix app26;springapp_1  , thats bc it inherited the dir name we created in step no. 1 ... app26
 
-curl if config.co   ... to access tha application 
+to access tha application , it shows the application  container ip address ... 1:05:00
+ubuntu@dockerbuild:~/app26$ curl if config.co   ... 
+3.93.218.173
+curl -v localhost:6000          ,we were able to connect to the application 
+**********************bt we couldnt connect online,, someone said smt and he said i think this  #file 7= does nt v any application path
+someone said bc port 6000 has been used previous bt he said dats nt a problem bc if u create a container n delete it the port becomes available
+bt lets find out : netstat -tlunp    ie tcp , upd port number
 
- 1;05:48
+*********** howevre his main point is for us to see ew ecan usea docker compos efile and der ar multiple commands that we can run 
+thers a scenerio were if u were trying to deploy dis application , like let me assume that , am goin to copy this file, he copied a docker file frm  his repo in github n 
+vi into a file then paste the copied file
 
+version: '3.1'
+services:
+springboot:     
+    image: mylandmarktech/java-web-app
+    restart: always    
+    ports:
+    - 9090:8080     
+    networks:
+    - mavenapp     **************** if u dnt indictae d driver ,e.g driver:bridge it is going to be created in the brige ntwrk 
+     driver:bridge               so i wnat to create a ntwrk for maven app and this is the custom bridge
+****  so to deploy d appl, 
+docker-compose -f docker- compose_mwa.yml config... to check if d file is ok. (docker-compose -f docker- compose_mwa.ym) bc its nt d default docker file name: docker-compose
+******* 1:15:08  .....******************** u can deploy anytin using docker compose
+he accessed the application on the CLI: curl -L localhost:9090/java-web-app
 
+docker-compose --help  ... give sthe list of commands  ........... 1:17:40
 
+EVEN THough we v been able to deploy our application in docker using vol, netwrk, env var n deploying multiple containers, we v realised that it is very easy fro us 
+to put all of those containers in a particular file called docker compose file bt the question is can i scale my application when i use docker? ,, w ecannot do that n
+this is bc docker does nt support  multi hosting , a multi host netwrk architecture, n so we nid to see hw we can use the option that support multi hosting bc we wnt a
+situation were we can hv severs in a cluster n for us to that 
 
 
 
