@@ -1,3 +1,5 @@
+################## just me remember to study the docker commands ,, telling myself
+
 an e-commerce java based web application for ebay 
 ligin 
 registreation
@@ -221,6 +223,8 @@ springboot:
      driver:bridge               so i wnat to create a ntwrk for maven app and this is the custom bridge
 ****  so to deploy d appl, 
 docker-compose -f docker- compose_mwa.yml config... to check if d file is ok. (docker-compose -f docker- compose_mwa.ym) bc its nt d default docker file name: docker-compose
+then docker-compose -f docker- compose_mwa.yml .....................................to deploy 
+and docker-compose -f docker- compose_mwa.yml down ...............................  to  delete the application
 ******* 1:15:08  .....******************** u can deploy anytin using docker compose
 he accessed the application on the CLI: curl -L localhost:9090/java-web-app
 
@@ -321,9 +325,33 @@ routed bc ininternally it is doin LB   ... 1:33;35
 10) rolling updates
 
 QUESTION: what happens if a node is down???
-remember in real time, w ecan v like 3 masters , we can v a forum wher we v like 3 masters n 11 replicas so if one master is down d oda master is available to support
+remember in real time, w ecan v like 3 masters , we can v a forum/quarum wher we v like 3 masters n 11 replicas so if one master is down d oda master is available to support
 
-$$$$$$$$$$ 1:34:15 Intalling docker swamp 
+$$$$$$$$$$ 1:34:15 Intalling docker swamp , very easy bc kubernetes is kubersome 
+ubuntu@dockerbuild:~/app26$ docker node ls    ,,, i wnt to list the number of nodes
+This node is not a swarm manager. use Docker swarm init or docker awarm join to connect this node to swarm and try again.
+now i want to create this guy, i wnt this node ubuntu@docker to be my manger, let me jst create a new hostname for this node 
+ubuntu@dockerbuild:~/app26$ sudo hostname master    ................. so now my host name is manager
+ubuntu@dockerbuild:~/app26$ docker swarm init ...................i wnat to initialize this docker server to become my manger
+immediately i nitialize, it gives me a token i can use to add other worker node, it also says to add a manager to this swarm, run docker swarm token join manger ....1;36:13
+so i can v 3managers here running the docker swarm join manager and follow the instructions  
+so if i wnat to add another server to be another master so both of them wil be performing admi task this is what i wil do ... bt i wont now ,, i wnt to do this 
+ubuntu@dockerbuild:~/app26$ he pasted the token to add worker node   .. am going to xplain smt cos this takes us to security 
+************************ 1:37:01  ##############we wnt to initialize docker swarm , we v a command like this initializing docker swarm 
+##################
+
+steps:
+the first tin to do is:
+to add any worker node to the swarm we are going to
+sudo apt update -y             ................      
+sudo apt install docker.io -y    .................   install docker in the node
+sudo usermod -aG docker ubuntu   .................  add ubuntu user to the docker group
+sudo docker swarm join --token ....................  then add the node to the cluster
+..................  thentoken .................
+
+ubuntu@dockerbuild:~/app26$   docker node ls
+i v jsut one node called master
+
 
 
 
