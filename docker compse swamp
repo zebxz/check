@@ -226,13 +226,6 @@ he accessed the application on the CLI: curl -L localhost:9090/java-web-app
 
 docker-compose --help  ... give sthe list of commands  ........... 1:17:40
 
-EVEN THough we v been able to deploy our application in docker using vol, netwrk, env var n deploying multiple containers, we v realised that it is very easy fro us 
-to put all of those containers in a particular file called docker compose file bt the question is can i scale my application when i use docker? ,, w ecannot do that n
-this is bc docker does nt support  multi hosting , a multi host netwrk architecture, n so we nid to see hw we can use the option that support multi hosting bc we wnt a
-situation were we can hv severs in a cluster n for us to that 
-
-
-
 #######################################################################################################################
 EXAMPLE:
 
@@ -247,6 +240,94 @@ depends on:
 -registreation
 -checkout
 -payment
+#########################################################################################################################################
+
+docker-compose --help  ... give sthe list of commands  ........... 1:17:40
+
+EVEN THough we v been able to deploy our application in docker using vol, netwrk, env var n deploying multiple containers, we v realised that it is very easy fro us 
+to put all of those containers in a particular file called docker compose file bt the question is can i scale my application when i use docker? ,, w ecannot do that n
+this is bc docker does nt support  multi hosting , a multi host netwrk architecture, n so we nid to see hw we can use the option that support multi hosting bc we wnt a
+situation were we can hv severs in a cluster n for us to that we will look at docker swamp 
+""""""""#####################################################:::' READUP POWERPOINT""""""""""\|||||#########################################
+
+1:19:52 ... hw does swamp work 
+THE TRADITIONAL MODEL;
+traditional docker is running with independent servers n each of the independent docker machine v their docker cli where we run d diff docker commands Bt if u v a docker
+server like this that goes down then that means ur applications are down, so ders no option to resolve such issue so what are we going to do ?
+we v a swamp , a swamp is going to be a cluster
+A swamp is a cluster that comprises of master node and worker node 1:20:00
+so far we v been using docker as our containerization tool bt we realized that whan we craete containers, wecannot scale,  e.g w ev sooo much traffic, that traffic we
+cannot scale n dats why we talk abt docker swamp
+Docker swamp is simply a container oschestrator
+so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
+**********************************FEATURES ............................ readup
+SWAMP FEATURES
+1)Cluster mgt : here we v
+masternodes + worker nodes... ..  here we can v like 3 masters and 3 workers in one swamp,, so all these workers are together in one cluster n onces we put dem together,
+doskser runs on all of them, what tk place is dat u can deploy ur app n it is goin to be scahedules in any of thses nodes,
+
+1:24:01  ............*  USING A DIAGRAM  , he explained
+we v a manger, ie i bliv a msater , the manger wil talk to diff nodes (worker node) and in all the nodes docker engine is running in all the nodes, so all the nodes v docker
+engine, we ll mk sure taht doscke ris running in al the nodes n same in the master, we v docker running in the master
+wot happens is that when we create containers, the mastr wil b able to lB BT when we ar trying to crate conatiners d masterwil server asa manager an ochestrator so he wil
+b able to scheduel containers to be created in the nodes, it wil act a s amanger,  n part of the task that it does is scheduling.e.g if we nid like 50 replicas of our 
+container running, it is goin to place the conatiners in d nodes that are avilabe ,, this is what a swamp does..  
+
+
+2) it has a decentralixed design
+3) declarative service model:( docker-compose file) when  u cretae a file(likw we did above) wher u can declare everytin u wnt to deploy , its a declaratibe approach to do
+deployment bt when u
+run command thats d imperative approach , so we can declare everytin we wnt to deploy in a single file
+4)scaling :  e.g we can hv 100replicas of our conatiners runing
+5)dESIRED state reconciliation : e.g if i v 100replicas runing n i want to change my replica state to 200, it means that my desired state is now 200, d swamp wil ensure 
+that i v 200replicas running  ,, so it muts reconcile
+6) multi-host netwrk : called (overlay)  ... 1:26:40
+7)service discovery 1:27:26  ,,e.g we v this services  , we wnt to run the container bt what do i nid to run the contianers,, the image ,the image is the most imp tin  to
+deply a container ,bc , container is the runnimg instance of the image, so for login, rg,payment,ordeer ,mongodb, we nid the image. n hw wil d containers communicate with 
+each other, bc we ar talkin abt service discovery, hw wil login discover reg, hw wil reg discover payment n talk to payment, hw wil payment discover order n talk to order
+hw will d database tlak to the applications ,, so network becomes imp. 
+Docker-compose-myapp.yml
+version:'3.1'
+services:
+ login:
+   image:
+   networks:
+ registration:
+    image:
+    networks:
+ payment:
+   image:
+   networks:
+   order:
+   image:
+   networks:
+ mongodb:
+   image:
+   networks:
+dns resolution is done using service names and IP
+1:31:00
+ we v to ensure thay ar in the same ntwrk (if nt they wil be created in d default bridge ntwrk n they wil b able to talk using only their ip adress wich is dangerous)
+so in docker swamp, our DNS resolution is done using service names  , this service name is like the application name, it is nt done using service ip . 
+NOW IF login wnats to talk to registration, it wiltalk to it using the name n not the IP address.
+
+$$$$$$$$$$ with docker ochestrators , be it docker swamp, kubernetes etc, they cm wit advanced networking that permits the containers to talk to each other even if we dnt pass 
+ntwrks in d file, once ur deployn in a docker swamp, they ar goin to easily talk wit each oda via service discovery.bc d dns resolution is done using d service names e.g d 
+micro service appl can talk to the database using the name n thats why in our env var we ar very careful wit dis data  ..... 1:32:51
+
+8)load balancing: e.g we ar receiving a lot of trafic. endusers traffic are mounting , so when it mounts n users r trying to access thsi appl, e.g i wnt to create 60 replicas
+of my appl, d master wil schedule d replica to be created in any of this worker node including the master, so it does lb n when trafic equally is coming xtranally,it wil be 
+routed bc ininternally it is doin LB   ... 1:33;35
+9) secure by default
+10) rolling updates
+
+QUESTION: what happens if a node is down???
+remember in real time, w ecan v like 3 masters , we can v a forum wher we v like 3 masters n 11 replicas so if one master is down d oda master is available to support
+
+$$$$$$$$$$ 1:34:15 Intalling docker swamp 
+
+
+
+
 
 
 
