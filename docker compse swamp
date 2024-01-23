@@ -528,9 +528,65 @@ using Replica mode:  in this mode u dnt nid to state taht u are using replica mo
 
 Global ---> All the nodes (3servers 1 manager+2workers)
           use for monitoring softwares deployments
-          New Relic / Prometheus / Cloudwatch
+          New Relic / Prometheus / Cloudwatch /EFK / logmgt
 
 with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3master + 11 workers)
+if u v a 14 node cluster n u want to deploy an appl using the global mode what wil happen is that a replica wil be created in each of this node 
+so if i v a 14node cluster n i deploy using (Replica mode),meant to say global mode its goin to deploy using deploy 14replicas meanin it wil schedule 1replica in al d nodes
+
+2:15:11 ################## DDEPLOYING IN global mode 
+#docker service create --name logmgt-p 8000:8080 --mode=global\
+mylandmarktech/hello
+
+now deploy
+ubuntu@dockerbuild:~/app26$ #docker service create --name logmgt-p 8000:8080 --mode=global mylandmarktech/hello
+successful
+ubuntu@dockerbuild:~/app26$ docker service ls   
+we see services that are rnning and for logmgt, w ecan see 3/3 replicas
+docker node ls 
+we hv 1master , node1 and node2
+his is bc i bliv Global ---> All the nodes (3servers 1 manager+2workers)
+*************************************in the global mode we cannot scale
+so if i run : docker service scale logmgt=5
+but it says scale can only be used with replicated-job mode
+
+*************will xplain why we wil mostly use logmgt service for such particular Global mode deployment
+
+#################### use cases of global mode ################### 51:33
+assume u v deployed an appl in this server ,now u wnat to deploy a monitor, u want smt that can tell u hw ur appl are behaving , so u want to deploy a logmgt container
+how can that be done:   ... to deploy ur log mgt container
+we are goin to use the global mode bc we wnt the container to be running in all the nodes n telling us hw the containers ar behaving 
+with global mode, this conatainer is deployed in all the nodes 
+
+QUESTION################################################
+1) WHAT WILL YOU DO , IF U WANT TO DO DEPLOYMENT IN DOCKER and u want to deploy a monitoring service that should be running in all the nodes
+which deplyment mode wil you use,?
+i wil use global mode bc docker wil mk surethat the service  has one replica runnin in all the nodes.
+i wil deploy in Global mode bc this manger(master) schedules ur container to all diff nodes depending on the available resources like cpu ,it goin to scheduled the container
+
+2) what is service in docker or docker swarm?
+service is nothing but a collection of one or more replicas(containers)of same the  type(image)
+ubuntu@dockerbuild:~/app26$ docker service ls                                 2:23:26
+ID                  NAME           MODE         REPLICAS          IMAGE                                          PORTS
+kb9yek1jaeez        javawebapp     replicated     4/4           mylandmarktech/java-web-app:latest               7000->8080/
+
+*************so here we can see we v a javawebapp conatiner n the image we ar using, so the replicas 4/4 are using the same image, therfore, if i wnt to talk to any of
+the containers running i wil use the service name : javawebapp
+
+**************dns resolution is done using serviceName 
+
+3) what is stack in docker or docker swarm?
+stack is nothing but a collection of one or more service 
+##########################################################################
+
+47:000
+
+
+
+
+
+
+
 ###############################################################################
 what is service in docker or docker swarm?
 service is nothing but a collection of one or more replicas(containers)of same type(image)
