@@ -247,6 +247,10 @@ depends on:
 #########################################################################################################################################
 
 docker-compose --help  ... give sthe list of commands  ........... 1:17:40
+######################################################################################
+###############################################################################
+
+
 
 EVEN THough we v been able to deploy our application in docker using vol, netwrk, env var n deploying multiple containers, we v realised that it is very easy fro us 
 to put all of those containers in a particular file called docker compose file bt the question is can i scale my application when i use docker? ,, w ecannot do that n
@@ -340,17 +344,226 @@ ubuntu@dockerbuild:~/app26$ he pasted the token to add worker node   .. am going
 ************************ 1:37:01  ##############we wnt to initialize docker swarm , we v a command like this initializing docker swarm 
 ##################
 
-steps:
+
+.............
+
+################################################################################################.... STEPS
+steps:    ... on only ubuntu server
+MASTER:
+docker swarm init
+
+worker nodes:
+#!/bin/bash
+sudo hostname node1               
+sudo apt update -y          
+sudo apt install docker.io -y  
+sudo usermod -aG docker ubuntu 
+
+1)install docker community Edition in all the 3 servers
+   And Add user (ubuntu) to docker group 
+2) open below ports in Aws Security Groups
+  Tcp PORT 2377 FOR CLUSTER MGT COMMUNICATIOMNS
+  Tcp and UDP port 7946 for communication among nodes
+ UDP port 4789 for overlay netwrk traffic
+
+if you are planning on creating an overlay netwrok with encryption   (--opt encrypted), you will also need to ensure ip protocol 50 (ESP) traffic is allowed
+
+3) execute below command to inintiate docker swarm manager in one system
+#initialize docker swarm cluster
+  docker swarm init
+#Get worker token
+  docker swarm join-token worker
+#Get manager token to add another node as secondary manager
+docker swarm join-token manager
+4) Add workkers machines to cluster
+# Execute join token(worker token from manager) in all worker machines
+5) display docker cluster nodes in manager machine 
+  # docker node ls
+6) deploy sample docker application in docker swarm cluster
+ docker service create --name webserver -- replicas 2 -p 80:80 httpd
+############################################################################################################
 the first tin to do is:
 to add any worker node to the swarm we are going to
 sudo apt update -y             ................      
-sudo apt install docker.io -y    .................   install docker in the node
-sudo usermod -aG docker ubuntu   .................  add ubuntu user to the docker group
+ sudo apt install docker.io -y    .................   install docker in the node
+ sudo usermod -aG docker ubuntu   .................  add ubuntu user to the docker group
 sudo docker swarm join --token ....................  then add the node to the cluster
-..................  thentoken .................
+..................  thentoken .....................
 
 ubuntu@dockerbuild:~/app26$   docker node ls
-i v jsut one node called master
+  i v jsut one node called master
+
+1:39:29   we want to deploy a swarm server 
+i will add a hostname to this commands 
+
+#!/bin/bash
+sudo hostname node1                so we wnt to add this node1 to our swarm
+sudo apt update -y          
+1) sudo apt install docker.io -y  
+3) sudo usermod -aG docker ubuntu   
+4) sudo docker swarm join --token 
+..................  the token ....................................... 
+
+we go to the aws account , to create node1
+am deploying docker swarm frm ubuntu server
+launch instance 
+in aws he went to the choose image frm the list of images , t2 micro 
+if u want to run configuration during launch , you use a user data 1:43:00
+paste the user data , wich wil assign a host name , install docker in the server n its goin to add the server(node1) to my cluster
+sudo hostname node1                
+sudo apt update -y          
+sudo apt install docker.io -y  
+sudo usermod -aG docker ubuntu   
+sudo docker swarm join --token 
+..................  the token ....................................... 
+
+add tag: node1
+2) security:  Read up power point for ports rEQ to be open. 
+they shsdu be open for easy communication within the cluster
+******* he then used the security grp that already had all d reQ ports open
+launch server 
+he launced 2 more servers
+
+#####################################################################################################
+commands
+syntax check
+ docker-compose config
+docker-compose  -f bossy.yml config   ......  for  files not using the default docker file name
+create services/container
+docker-compose up -d
+
+Remove Services/containers
+docker-compose down
+###############################################################################################
+
+1:46:50 
+5) ubuntu@dockerbuild:~/app26$ docker node ls
+i now v 3nodes and 1 master   ....... so we ar now in a cluster
+ubuntu@dockerbuild:~/app26$   dodcker netwrk ls
+we now v a new netwrk ... overlay   ,,, bc whenever we ar deploying in a swarm, our containers wil be created in the overlay netwrk.. overlay ntwrk means that u can 
+communicate wit dif nodes, the master can communicate with multiple nodes using the overlay netwrk, with overlay the container in node1 can talk with the conatinters in 
+all the other nodes.
+1:56: 
+at this time we hv installed a docker swarm cluster  and one of the tin we are benefitting of this clustering is that it comes with 
+H.A ---> High Availability ... bc we v multiple docker host server, if one server goes down we knw der ar other servers that are available
+F.T ---> Fault Tolerance 
+Scalabilty
+L.B
+
+we wil see hw fault tolerance will be able to work within this cluster
+
+To deploy in normal stanalone server:  .. we use the docker run command 
+#in normal (stanalon) Docker server we can use below command to create a container.
+docker run -d -p <hostport>:<containerPort> --name <containerName> <imageName>
+
+##in normal (stanalon) Docker server we can use below command to create a container.
+ docker-compose up-d   ... using docker-compose file
+
+6) to deploy application in the swarm cluster:
+#In Docker swarm we wil use below command to deploy service.
+docker service create --name <serviceName> -p <hostport>:<containerPort> <imageName>
+
+#In Docker swarm we wil use below command to deploy service using docker compose file
+docker stack deploy --compose-file docker-compose.yml <stackName>
+
+1:59:32   ........................... we are creating  a service, the name is called java web app
+#   docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
+netstat nltup ...to check if port 7000 is in use
+now create the service called java web app
+6) docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
+docker service ls
+docker service ps javawebapp  ..... we can see its in the master node 
+########## someone said we can use :....... netstat -an | grep 7000  ... we ran it n it showed listening
+now
+when we create a service, we can achieve scaling, i can scale up and scale down my service
+
+################### HOW TO SCALE UP AND SCALE DOWN########################################
+now we v this service that is running on the master node, we can run:
+ubuntu@dockerbuild:~/app26$ docker service scale javawebapp =3
+now we v scaled to 3
+i desire to v 3replicas and now i v 3 replicas that are running
+i can equally scalled up to any desired number ....
+ubuntu@dockerbuild:~/app26$ docker service scale javawebapp =4
+now i v 4
+
+************ so using docker swarm we are able to scale
+ubuntu@dockerbuild:~/app26$ docker service ps javawebapp
+we can see the all the replicas
+2 running in master 
+1 was scheduled in node1 
+the other was scheduled in node 2
+so we can be able to achieve scaling when it comes to docker 
+
+2:09:17
+ this is a normal docker run command 
+docker service ps javawebapp
+docker service ls
+docker service ps javawebapp
+
+we also use docker compose file to create containers
+
+##in normal (stanalon) Docker server we can use below command to create a container.
+ docker-compose up -d   ...... using the docker compose file
+
+similarly, 
+#In Docker swarm we wil use below command to deploy service using docker compose file
+we re going to be deploying a stack
+docker stack deploy --compose-file docker-compose.yml <stackName>
+
+note: open REQ ports in AWS Security Groups ####################y
+
+###################### HOW TO DEPLOY APPLICATION IN DOCKER SWARM
+
+docker swarm has 2modes:
+Replicas ---> it will deploy based on replictaed number    (we v used this mode to deploy above)
+***** this is the default mode & with this mode, it wil deploy base on the number of replicas that you want     ... 2:11:24
+ ********** scaling is achieveable
+***** we can run docker service scale javawebapp=5
+    we deploy custom applications using this mode  ..
+most of the applictaion we wil be deploying, we wil be using the replica mode
+
+using Replica mode:  in this mode u dnt nid to state taht u are using replica mode
+#docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
+
+
+Global ---> All the nodes (3servers 1 manager+2workers)
+          use for monitoring softwares deployments
+          New Relic / Prometheus / Cloudwatch
+
+with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3master + 11 workers)
+###############################################################################
+what is service in docker or docker swarm?
+service is nothing but a collection of one or more replicas(containers)of same type(image)
+what is stack in docker or docker swarm?
+stack is nothing but a collection of one or more services 
+##################################################################################
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
