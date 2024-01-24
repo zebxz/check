@@ -599,14 +599,14 @@ services:
 working_dir: / opt/app
 depends_on:
   - mongo
-deploy: # This will be considered only in docker swarm.
-  replicas: 3              ********we wnt 3 replicas, what is the consideration
-  update _config: 
-    parallelism: 
-    delay: 20s
-  restart_policy:
-    condition: on-failure
-    delay: 10s
+deploy: ###################### This will be considered only in docker swarm.
+  replicas: 4             ********we wnt 3 replicas, what is the configuration?  ... 
+  update _config:        ********  d configuration is that we v here parallel 1 replica, dis means that .. let me show u smt , when u are doin deployment wit docker swamp
+    parallelism:         u can do rolling update, so we ar defining paralel as 1, by default rollingupdate is the deployment strategy, hw dis works is that when u ar tryin
+    delay: 20s           to deploy a new appl, like a new version of d appli , e.g we v 4replicas wot happens is dat when a new version is released since parallel is 1, it
+  restart_policy:        wil bring down 1replica of old apli version n bring up 1replica of the new appl, once d replica of d new version of d appl taken up is running, we
+    condition: on-failure      bring down a 2nd replica of d old appl n bring up the 2nd replica of the new appli ,we continue d process of roling out d old version on a piece by piece base until 
+    delay: 10s               
     max_attempts: 5
 mongo:
   image: mongo 
