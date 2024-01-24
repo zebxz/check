@@ -466,6 +466,18 @@ docker service create --name <serviceName> -p <hostport>:<containerPort> <imageN
 #In Docker swarm we wil use below command to deploy service using docker compose file
 docker stack deploy --compose-file docker-compose.yml <stackName>
 
+#i can also update the service with the new image name:
+docker service update --image <newImage> appliction name 
+docker service update --image mylandmarktech/myapp:6 javawebapp 
+
+#create a service with volume mapping   ************ i couldnt see the command completely
+docker service create -p <hostPort>:<containerPort> --name <serviceName 
+
+#create a service with a rolling update policy
+  Deployment = 40
+     version 1 -= 25%
+     version 2 += 25%
+
 1:59:32   ........................... we are creating  a service, the name is called java web app
 #   docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
 netstat nltup ...to check if port 7000 is in use
@@ -577,6 +589,28 @@ the containers running i wil use the service name : javawebapp
 
 3) what is stack in docker or docker swarm?
 stack is nothing but a collection of one or more service 
+
+4) How many docker swarm nodes do you have in production? and what is their capacity?
+            11 worker nodes =60GB memory and 20TB 
+            03 master nodes =
+                $200, 000
+
+e.g  2:42:29
+ubuntu@dockerbuild:~/app26$    free -m
+          total      used        free     shared     buff/cache        available
+mem:     32111       5762     25058             1       1290          26036
+swap:        0         0          0
+ubuntu@dockerbuild:~/app26$     free -g
+          total     used           free      shared      buff/cache     available
+mem:       31          5               24        0               1          25
+swap      0            0               0
+
+MY DOCKER SERVR HA 31gb
+
+QUESTION: 
+what do you use in production, this is the type of servers that we use that come with 32GB
+************  my docker servers comeS with 31GB 
+
 ##############################################################################################################################################.
 
 47:00
@@ -595,7 +629,7 @@ services:
    -﻿﻿MONGO_DB_USERNAME=devdb
 ﻿﻿   -MONGO_DB_PASSWORD=devdb123 
    ports:
-      -﻿﻿9000:8080
+      -﻿﻿7000:8080
 working_dir: / opt/app
 depends_on:
   - mongo
@@ -605,32 +639,69 @@ deploy: ###################### This will be considered only in docker swarm.
     parallelism:         u can do rolling update, so we ar defining paralel as 1, by default rollingupdate is the deployment strategy, hw dis works is that when u ar tryin
     delay: 20s           to deploy a new appl, like a new version of d appli , e.g we v 4replicas wot happens is dat when a new version is released since parallel is 1, it
   restart_policy:        wil bring down 1replica of old apli version n bring up 1replica of the new appl, once d replica of d new version of d appl taken up is running, we
-    condition: on-failure      bring down a 2nd replica of d old appl n bring up the 2nd replica of the new appli ,we continue d process of roling out d old version on a piece by piece base until 
-    delay: 10s               
-    max_attempts: 5
+    condition: on-failure     bring down a 2nd replica of d old appl n bring up d 2nd replica of the new appli ,we continue d process of roling out d old version on a piece
+                               by piece base until d deployment is complete n all replicas of version2 ie the new version is running.2:30:57
+                               so when we ar defining dis, we use all of dis configuration.
+    delay: 20s         *************wit d 1st replica of the appl running, u wait for 20s for it to run b4 u bring down d nxt replica of d old version ie d minmun delay sec
+    max_attempts: 5      *********in bringing up each replica of d new version if it fials u v to try again 5times, after 5th attempt u can send out some signal trigger an
+                            alert that smt is going wrong. ju8
 mongo:
   image: mongo 
   environment:
  -﻿﻿MONGO_INITDB_ROOT_USERNAME=devdb
 ﻿﻿ -MONGO_INITDB_ROOT_PASSWORD=devdb123
+volumes:
+   -mongodb:/data/db
+  restart: always       ******************** by ddefault, we dnt need restart 
+volumes:
+  mongodb
+    driver: local
 
+*********************************  HOW TO ACHIEVE THE DEPLOYMENT USING A STACK***********************************************2:23:18
+ubuntu@dockerbuild:~/dc$ docker stack deploy --compose-file dc.yml springmongo
+ whil edeploying we can see :  creating network springmongo default     , ,,, it created this ntwrk 
+                                creating service springmongo_springapp
+                               creating service springmongo_mongo
 
+  ubuntu@dockerbuild:~/dc26$  docker network ls    .. we can see
+    NETWORK ID          NAME                          DRIVER           SCOPE
+                      springmongo_aws-network          bridge          local   ,,,,   i think this was from previous deployment
+                      springmongo_default              overlay         swarm       ,, it created an overlay ntwrk for us
 
+ubuntu@dockerbuild:~/dc26$  docker stack ls
+NAME              SERVICES            ORCHESTRATOR
+springmongo        2                    Swarm      *********** this is the stack that we v and ist been ochestrated by the docker swarmn it has 2 services
 
+ubuntu@dockerbuild:~/dc$  docker services ls           .... these ar the services we jsut deployed.
+ID                NAME                   MODE                     REPLICAS            IMAGE      ************************************************* 2:37:08
+PORTS
+kb9yek1jaeez      javawebapp              replicated                 4/4               mylandmarktech/java-web-app:latest
+ q0bif39858bs    springmongo_mongo       replicated                 1/1                mongo:latest
+qz400yewjt6p     springmongo_springapp    replicated                 4/4             mylandmarktech/spring-boot-mongo:latest
 
-###############################################################################
-what is service in docker or docker swarm?
-service is nothing but a collection of one or more replicas(containers)of same type(image)
-what is stack in docker or docker swarm?
-stack is nothing but a collection of one or more services 
-##################################################################################
+################## we can access the application online  using the port number 7000 as stated in the file above
+***************************so we v been able to deploy with a docker compose file 
 
+i can also update the service with the new image name:
+docker service update --image mylandmarktech/myapp:6 javawebapp     ******** once i do this am changing my image name, dis wil do a rolling update  , ,, so am updating the 
+service with the new image name this wasnt possible with docker .
+************ the strategy to be used for the update is rolling update  
+by default, the default version to do a roll out and roll back is rolling update 
+this means that when u update this services, its going to be bringing down jst one replica at a time, when it brings it down it brings up version 2 and waits for 20secs for
+version 2 to get ruuning if it doesnt it wil repeat the process 5times.
 
+ubuntu@dockerbuild:~/dc$ docker service update --image mylandmarktech/myapp:6 javawebapp 
+successfully updated.. 
+ubuntu@dockerbuild:~/dc$ docker service ls    .....**********now we can see the image has changed
+ID                NAME                   MODE                     REPLICAS            IMAGE 
+kb9yek1jaeez       javawebapp              replicated                 4/4                mylandmarktech/myapp:6
+ q0bif39858bs    springmongo_mongo       replicated                 1/1                mongo:latest
+qz400yewjt6p     springmongo_springapp    replicated                 4/4             mylandmarktech/spring-boot-mongo:latest
 
- 
-
-
-
+http://3.93.218.173:7000/
+###################we can also access the application online and see the new version of the application and it maintains the same port 7000
+**************************
+so with docker swarm we can do rolling update, 
 
 
 
