@@ -558,7 +558,7 @@ how can that be done:   ... to deploy ur log mgt container
 we are goin to use the global mode bc we wnt the container to be running in all the nodes n telling us hw the containers ar behaving 
 with global mode, this conatainer is deployed in all the nodes 
 
-QUESTION################################################
+QUESTION##########################################################################################################################################
 1) WHAT WILL YOU DO , IF U WANT TO DO DEPLOYMENT IN DOCKER and u want to deploy a monitoring service that should be running in all the nodes
 which deplyment mode wil you use,?
 i wil use global mode bc docker wil mk surethat the service  has one replica runnin in all the nodes.
@@ -577,11 +577,42 @@ the containers running i wil use the service name : javawebapp
 
 3) what is stack in docker or docker swarm?
 stack is nothing but a collection of one or more service 
-##########################################################################
+##############################################################################################################################################.
 
-47:000
+47:00
 
+DEPLOYING  A STACK
 
+2:26;14   When we were using docker compose to deploy in docker env we did nt use deploy
+so in deploy what is our deployment strategy?, our deployment strategy, we ar saying the number of replicas we wnt
+
+version:'3.1'
+services:
+  springapp:
+    image: mylandmarktech/spring-boot-mongo: latest 
+   environment:
+   -﻿﻿MONGO_DB_HOSTNAME=mongo
+   -﻿﻿MONGO_DB_USERNAME=devdb
+﻿﻿   -MONGO_DB_PASSWORD=devdb123 
+   ports:
+      -﻿﻿9000:8080
+working_dir: / opt/app
+depends_on:
+  - mongo
+deploy: # This will be considered only in docker swarm.
+  replicas: 3              ********we wnt 3 replicas, what is the consideration
+  update _config: 
+    parallelism: 
+    delay: 20s
+  restart_policy:
+    condition: on-failure
+    delay: 10s
+    max_attempts: 5
+mongo:
+  image: mongo 
+  environment:
+ -﻿﻿MONGO_INITDB_ROOT_USERNAME=devdb
+﻿﻿ -MONGO_INITDB_ROOT_PASSWORD=devdb123
 
 
 
