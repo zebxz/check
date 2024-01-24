@@ -452,6 +452,8 @@ L.B
 
 we wil see hw fault tolerance will be able to work within this cluster
 
+
+##############################################################################################################################
 To deploy in normal stanalone server:  .. we use the docker run command 
 #in normal (stanalon) Docker server we can use below command to create a container.
 docker run -d -p <hostport>:<containerPort> --name <containerName> <imageName>
@@ -459,7 +461,7 @@ docker run -d -p <hostport>:<containerPort> --name <containerName> <imageName>
 ##in normal (stanalon) Docker server we can use below command to create a container.
  docker-compose up-d   ... using docker-compose file
 
-6) to deploy application in the swarm cluster:
+ to deploy application in the swarm cluster:
 #In Docker swarm we wil use below command to deploy service.
 docker service create --name <serviceName> -p <hostport>:<containerPort> <imageName>
 
@@ -477,6 +479,24 @@ docker service create -p <hostPort>:<containerPort> --name <serviceName
   Deployment = 40
      version 1 -= 25%
      version 2 += 25%
+
+#scale services                        2:43:04
+docker servce scale javawebapp=3
+docker service ps javawebapp    ... to see all the replicas
+
+#to remove 
+ docker service rm javawebapp
+
+#Add labels to node 
+docker node update  --label-add key=value <nodeid>
+e.g                            can cal d key:server
+docker node update --label-add server=node2   node2      
+docker node update --label-add server=dbnode  node1    
+
+#Drain nodes in Cluster (swarm wil not create containers in drained nodes)
+docker node update --availability drain <NodeID/nodeName>
+#######################################################################################################################################
+
 
 1:59:32   ........................... we are creating  a service, the name is called java web app
 #   docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
@@ -577,7 +597,7 @@ i wil use global mode bc docker wil mk surethat the service  has one replica run
 i wil deploy in Global mode bc this manger(master) schedules ur container to all diff nodes depending on the available resources like cpu ,it goin to scheduled the container
 
 2) what is service in docker or docker swarm?
-service is nothing but a collection of one or more replicas(containers)of same the  type(image)
+service is nothing but a collection of one or more replicas(containers)of same the  type(image)     
 ubuntu@dockerbuild:~/app26$ docker service ls                                 2:23:26
 ID                  NAME           MODE         REPLICAS          IMAGE                                          PORTS
 kb9yek1jaeez        javawebapp     replicated     4/4           mylandmarktech/java-web-app:latest               7000->8080/
@@ -586,6 +606,8 @@ kb9yek1jaeez        javawebapp     replicated     4/4           mylandmarktech/j
 the containers running i wil use the service name : javawebapp
 
 **************dns resolution is done using serviceName 
+
+2:43:35   *********** service creates containers and manges containers    , we wil see in kubernertes we will realise that service is diff
 
 3) what is stack in docker or docker swarm?
 stack is nothing but a collection of one or more service 
@@ -703,7 +725,96 @@ http://3.93.218.173:7000/
 **************************
 so with docker swarm we can do rolling update, 
 
+*************************************************************************************************************************
+2:45:00
+#Add labels to node 
+docker node update  --label-add key=value <nodeid>
+e.g                            can cal d key:server
+docker node update --label-add server=node2   node2      
+docker node update --label-add server=dbnode  node1 
 
+ubuntu@dockerbuild:~/dc$  docker node ls   
+lists the nodes
+
+ubuntu@dockerbuild:~/dc$ docker inspect node1        ******************* i can inspect a node  
+i can decide to label the node 
+ubuntu@dockerbuild:~/dc$ docker node update --label-add server=nodeone qmdh9tgvdef99sryhez
+& when u add label, u can decide to create a container on a particular node that u v labelled , thats very possible and thats where u use what is called constraint in docker.
+
+#use label and constraints to create in a particular node 
+docker service create -p 8000:8080 --name myapp --replicas 2 --constraint 'node.labels.server==nodetwo' mylandmarktech/maven-web-app
+**************if i dnt indicate the number of replica, i replica wil be deployed
+
+ie this is docker service create, i wnat to create myapp, replica is 2 , i wnt to constraint dis service, node labels to be run on only node2
+
+so if i wnt to cretae a database service and i want it created on a particular node , i wil use label and constraint
+
+ubuntu@dockerbuild:~/dc$ docker node update --label-add server=dbnode  node1 
+ubuntu@dockerbuild:~/dc$  docker inspect node1       ****** i can see
+ID ": "OLC3P2C8795GSWJGYCMKUYOLP"
+labels":
+     "server:"dbnode"
+
+so we v created a label for the node 
+
+**************** so if we wnt to create a database on this node 
+docker service create -p 8000:8080 --name myapp --replicas 2 --constraint 'node.labels.server==dbnode' mylandmarktech/maven-web-app
+************* am constrainin it to be created in dbnode
+
+anoda e.g ... i wnat to deploy a db     ,, since its a db, i dnt need a port
+docker service create --name mydb --replicas 2 --constraint 'node.labels.server==dbnode' mongo
+ubuntu@dockerbuild:~/dc$ docker service create --name mydb --replicas 2 --constraint 'node.labels.server==dbnode' mongo
+ubuntu@dockerbuild:~/dc$ docker service ps mydb
+and we can see both replicas running in node1
+
+##############  so we can use label and constraint to be able to deploy specific containers in specific nodes
+this is very useful if for example ur node is configured for databases  , so i can v my node1 configured for databases.
+
+QUESTION:
+CAN WE have this a couple of nodes carying the same label?????
+yes we can have 3diff nodes with the same label.
+
+2:51:32
+*************************     also:
+ubuntu@dockerbuild:~/dc$ dockeer node ls
+ID                       HOSTNAME                      STATUS                 AVAILABILITY         MANAGER       STATUS   ENGINE VERSION
+jjdh7667hhshjnfnn        master                          ready                    active              leader      20.10.7
+                          node1                          ready                    active
+                          node2                          ready                    active
+
+******************* now master is the leader bt w ev some node/containers running on master , if i dnt want ot place any containers in master am goin to drain d master
+when u drain a node, docker can longer schedule containers on that node ..
+
+when to drain a node ,,why  do i nid to drian a node .......  READ UP MYSELF , GOOgle, browse
+i dnt knw what is wrong with him in the video he said we wil get the note bt he will work on it first so we get al we nid , bt when i asked him he
+said thers no note 
+
+ubuntu@dockerbuild:~/dc$ docker node drain master   ........**************** wasnt working
+ubuntu@dockerbuild:~/dc$  docker node drain --help  ,,,, someone told him the command 
+ubuntu@dockerbuild:~/dc$ docker node update --availability drain node2
+successuful
+node2 is drained , once its drained, no container wil be scheduled on on node2 and if der were any containers running in node2, they wil be rescheduled in node1 and the 
+master 
+
+ubuntu@dockerbuild:~/dc$ docker service ls    
+ID                NAME                   MODE                     REPLICAS            IMAGE 
+kb9yek1jaeez       javawebapp              replicated                 4/4                mylandmarktech/myapp:6
+ q0bif39858bs    springmongo_mongo       replicated                 1/1                mongo:latest
+qz400yewjt6p     springmongo_springapp    replicated                 4/4             mylandmarktech/spring-boot-mongo:latest
+
+***************lets find out what we v for  this service : javawebapp   
+ubuntu@dockerbuild:~/dc$ docker service ps javawebapp
+w ecan see it shutting down services that were running on node2, all the services wil be shut down bc w ev drained node2
+
+
+QUESTIONN:   2:55:02
+Why do we need to drain a node???
+we can drain a node if mayb we trying to do some patching
+want to update the software
+want to install some packages   ....... in that case u wil v  to drain the node 
+
+
+####################################################################################################################################
 
 
 
