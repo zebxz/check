@@ -871,12 +871,12 @@ we hv one other project where we do jenkins docker swarm integration
 
       **********THE PROJECT IS SMT LIKE THIS *************************
 In this docker compose file, we v a jenkins file like this below, in the jenkins file we are defining functions like the maven home
-
+                         so when u are doing a build, here is the docker compose file u ar going to refer to do a deployment
 docker-compose.yml 
 version: '3.1'
 services:
   springboot:
-    image: mylandmarktech/maven-web-app: VERSION
+    image: mylandmarktech/maven-web-app:$buildNumber   ,, so in the jenkins job, we v smt like this where dis is $, buildNumber 
     restart: always
     ports:
     -﻿﻿9090:8080
@@ -885,38 +885,50 @@ services:
 networks:
    mavenappbridge:
 ニニニニニニニニニニニニニニニニ
+  **********************************the dodcker compose file ends here.............
+
+
 ==                *********************** in the jenkins file we are defining functions like the maven home
 
 Jenkisfile
  node{
    def mavenHome = tool name: "maven3.8.4"    , we v the tool name 
-   def buildNumber = env.BUILD_NUMBER       ... here is our build number, so we ar defining build numbe r
-    ${ENV.BUILD_NUMBER}
+   def buildNumber = env.BUILD_NUMBER    ... here is our build no., we v a function build no.,so we ar defining build number as a variable,so dis build number is a varibale 
  }
 stage( 'git'){
 echo"Jenkins Job Number ${buildNumber}"
-git "https://github. com/LandmakTechnology/maven-web-application"
-}
-stage ( 'mavenBuid'){
-    sh"${mavenHome}/bin mvn clean package"
+git "https://github. com/LandmakTechnology/maven-web-application"     ,, wil clone the code frm repository n while cloning the code, it executes echo jenkins job buildNumber
+}                                                                u knw when u are doing build in jenkins, it comes with number , so dis is d build ,once d build takes place
+stage ( 'mavenBuid'){                                   once we clone, we do maven build as part of the jenkins job 
+    sh"${mavenHome}/bin mvn clean package"                      nd i hv skipped my sonarqube report, nexus, i go straight to docker
+｝                                                        
+stage docker budid t mylandmarktech/maven-web-app: (buildNumber)™    so in docker build, we are doing docker build, wit d help of a docker build command n when u do that d 
+}                               build number is represented as this variable( buildNumber) frm the jenkins file, so dis becomes d version no.,so when u wnt to tag it u do 
+                                smt like this in the jenkins job :stage docker budid t mylandmarktech/maven-web-app: (buildNumber)
+stage('dockerPush' ){           
+sh "docker push mylandmarktech/maven-web-app:${buildNumber}"    then we do docker push like this , if u do docker push like this , u wil v stage, we wnt to deploy
 ｝
-stage docker budid t mylandmarktech/maven-web-app: (buildNumber)™
-}
-stage('dockerPush' ){
-sh "docker push mylandmarktech/maven-web-app:${buildNumber}"
-｝
-stage ('deploy' ){
-  sh"docker-compose up -d"
+stage ('deploy' ){                           if u wnat to deploy it will now depends on (what type of script is this? its scripted   ********he didnt finish dis statement 
+  sh"docker-compose up -d"    we v deployed ,, so it is deploying the application for you , dis is when u are deploying using docker compose 
+  
+  sh" docker stack deploy --compose-file docker-compose.yml webapp"                        *********** if u are deploying using odcker swarm
+                           so i wnat to deploy this webapp, docker stack deploy, its going to mk use of this file  docker-compose.yml
+  
+sh" docker service create -p <hostPort>:<containerPort> --name <serviceName "
 
+         and as part of your code , we want to deploy compose file bc mayb the compose file(docker-compose.yml)is having the docker compose file itself as we can see d 
+compose file before the jenkinks file
 
+########################this is jenkins docker swarm intergration 
 
+and someon also said we can also do docker service create 
+it means we deploying using just what ? .. 
+we will not use a file 
 
-
-
-
-
-
-
+bc we saw the option to use doing a deploy
+either u use a file or you go without  a file 
+and if u go without a file its going to be docker service create  
+docker service create -p <hostPort>:<containerPort> --name <serviceName   .. in this case ur just using imperative approach..
 
 
 
