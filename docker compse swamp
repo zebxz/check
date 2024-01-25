@@ -814,11 +814,99 @@ want to update the software
 want to install some packages   ....... in that case u wil v  to drain the node 
 
 
+2:57:00   is docker compose the advance version of docker file ,, can we run containers and basic process and use docker jst by uisng docker compose n not the file???
+
+ANS:
+there are 2files that are independent, we v the 
+docker file and
+docker-compose.yml
+docker-compose is nt the advanced version of the docker file , docker-compose is just a file that we can use if we ar trying to deploy multiple services, we can jsut 
+declare all what we want to create incluing volumes ntwrk, services by justing writing a script and doing docker compose up, its going to deploy all the u wnt to deploy,
+deploy the applications, create d volumes n netwrks, dats whta the file does..
+but docker file is a file that contains lists of instructions which is used to create a docker image , thats the difference
+so we can use the docker compose file without the actual docker file. 
+bc we nid the docker file to create the image and once the image is created, we nid dodcker-compose to deploy the application, so docker-compose is replacing the multiple
+docker runs command and  and docker run create, docker vol create, docker-compose replaces those, so rather thsn u running multiple commands, u just declare everytin in a 
+file and it will create whatever u wnt to create in the docker compose file once u v declared them.
+
+
+
+****** WHEN U RUN DOCKER SWAM init, 
+it creates an overlay ntwrk, the overlay ntwrk is what permits your docker server to communicate in a cluster like this bc in normal docker der is no overlay ntwrk for that
+reason, you cannot v docker servers in a cluster like this bc node1 cannot talk to node2 in normal docker
+so once u v the overlay ntwrk, when u create ur containers , when you create ur services, those services can talk to each other irrespective of whether thay ar created in 
+node1 or node10 bc of the overlay ntwrk n the DNS registration is done using the service names
+
+
+IS THERS AN ORDER OF COMMUNICATION??????
+when you install docker swamp, it comes with an overlay netwrk, the overlay ntwrk permits communication to flow within the cluster n when u deply ur services, ie the 
+containers that u deployed....the master can schedule those containers on any nodes, he can wqually schedule it on the master node, so if u v  diff appli or the same 
+application runing on a diff node, the question is HOW WILL THIS CONTAINERS DISCOVER EACH OTHER,?????????....  service discovery
+they are going to be doing Resolution using the service name , SO WITH that, your logmgt container can talk to ypour app container as well with relative ease  bc they 
+use the service name 
+
+********** this is just a foundation for u to understand kubernetes bc in kubernetes, we are going to be taking a piece by piece analysis, we v kuberntes for 27hrs, wich is
+3wks nonstop n we will really tk it on a gradual note so that u can esaily underatnd hw this relates to service discovery in the kubernetes, how is service managed in the
+overlay ntwrk,,????????????
+it is managed by overlay netwrk permit traffic between all the nodes to talk to each other and you are equally required to open the ports and all the servers can talk to 
+each other with relative ease
+
+********IS THERE A LIMIT TO THE NUMBER OF NODES THAT CAN BE LINKED TO THE MASTER
+ANS:
+THERe is no limit, you can add as many node as u nid to add bt u just add based on your work load ,, normal u add node base on the application you'l b deploying in that 
+particular cluster
+
+******
+WHAT DOES THIS APPLICATION WE DEPLOYED DO?????????????????
+Its an online bnaaking app where it collects data, u hardly see what it dosewhat it does, if u can understand what the appli we do does , u should be able to undertsand any
+other function that any other application can do ,,, bt is ia an online app , u users can login ,credit their account , get authenticated n stuff
+
+
 ####################################################################################################################################
 
 
+3:03:50
+we hv one other project where we do jenkins docker swarm integration
 
 
+      **********THE PROJECT IS SMT LIKE THIS *************************
+In this docker compose file, we v a jenkins file like this below, in the jenkins file we are defining functions like the maven home
+
+docker-compose.yml 
+version: '3.1'
+services:
+  springboot:
+    image: mylandmarktech/maven-web-app: VERSION
+    restart: always
+    ports:
+    -﻿﻿9090:8080
+    networks:
+    -﻿﻿mavenappbridge
+networks:
+   mavenappbridge:
+ニニニニニニニニニニニニニニニニ
+==                *********************** in the jenkins file we are defining functions like the maven home
+
+Jenkisfile
+ node{
+   def mavenHome = tool name: "maven3.8.4"    , we v the tool name 
+   def buildNumber = env.BUILD_NUMBER       ... here is our build number, so we ar defining build numbe r
+    ${ENV.BUILD_NUMBER}
+ }
+stage( 'git'){
+echo"Jenkins Job Number ${buildNumber}"
+git "https://github. com/LandmakTechnology/maven-web-application"
+}
+stage ( 'mavenBuid'){
+    sh"${mavenHome}/bin mvn clean package"
+｝
+stage docker budid t mylandmarktech/maven-web-app: (buildNumber)™
+}
+stage('dockerPush' ){
+sh "docker push mylandmarktech/maven-web-app:${buildNumber}"
+｝
+stage ('deploy' ){
+  sh"docker-compose up -d"
 
 
 
