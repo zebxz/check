@@ -1,0 +1,355 @@
+when we talk abt kub, we classify an all imp tool bc of its imp  of to me as a devops engr, its so important that one of the jobs i can do is a kubernetes administrator 
+
+
+WHAT IS KUBERNEYES??????????????????????????
+IT is an ochestration engine, an open source platform for managing containerized applications... kubernetes is responsible for container deployment, scaling, descaling of
+containers and lB.. 
+so u can deploy ur containers using kuber, u can scale, descale  and u can LB traffic
+actually, kubernetes is nt a replacement for docker bt can be considered as a 
+
+
+Kubernetes:
+Containerization:
+ --> Docker, Rocket(Rkt),Container-d
+   Containerization involves writing/modifying Dockerfiles and using those files
+   to create images and shipping the images to image registries.  
+   From the registries these images can be distributed to any environment.  
+
+  We could also use Containerization softwares like Docker to deploy 
+  and manage Containers
+
+
+Container Orchestration Tools --> :
+   Docker Swarm,
+   Kubernetes,
+   OpenShift
+
+Kubernetes:
+  10 years 
+  July 2015  --- 2023  = 8years  
+
+chartGPT started in 2023.     
+
+kubernetes architecture:
+controlPlane/MasterNodes:
+  apiServer
+  etcd  
+  scheduler  
+  controllerManagers   
+workerNodes:
+  kubelet   
+  container runtime [Container-d]
+  kube-proxy
+kubernetes-client:
+  kubectl  :
+     kubectl create/delete/get/describe/apply/run/expose 
+     kubeconfig [.kube/config ] file will authenticate the admin  
+                                 the caller admin/Developer/Engineer  
+  ui- DASHBOARD  
+  api 
+=====================================
+kubernetes: 
+   cluster:
+   nodes:  
+   pods:  
+   containers :  
+
+cluster ---> nodes ---> pods  ---> containers  :
+
+kubernetes security - RBAC:
+  Developers [ Paul, Joyce, Chidi ] 
+  Engineers  [ James, Dominion, Janet ] 
+
+authentication via kubeconfig : 
+authorisation via RBAC:
+
+Installation:
+============
+K8S=Kubernetes
+Local K8s Cluster(Single Node K8s Cluster)
+------------------------------------------
+   minikube
+       choco install minikube  = windows   
+       brew install minikube   = macOS  
+       minikube start  
+   Kind   = 
+   Docker Desktop 
+      https://docs.docker.com/desktop/kubernetes/
+  POC = 
+
+Multi Nodes Kubernetes Clusters:
+================================
+1. Self Managed Kubernetes [k8s] Cluster = IaaS--EC2  :
+    kubeadm --> We can setup multi node k8's cluster using kubeadm.
+    kubespray --> We can setup multi node k8s cluster using kubespray
+     (Ansible Playbooks Used internally by kubespray).
+WITH  Self Managed Kubernetes [k8s] Clusters both the    
+     controlPlane: [apiServer, etcd, scheduler, Controller Managers] 
+      and 
+     workerNodes: [  kubelet, containerRuntime-Container-d, kube-proxy]  
+  are managed by the Admin/Kubernetes/DevOps Engineers
+
+2. Managed k8s Cluster  (Cloud Services) = PaaS  : 
+   The controlPlane is managed by a cloud provider or third party.  
+   The controlPlane and all it components are managed by the Cloud provider 
+   The workerNodes are managed by the Admins
+   EKS --> Elastic Kubernetes Service(AWS)
+   AKS --> Azure Kubernetes Service(Azure)
+   GKE --> Google Kubernetes Engine(GCP)
+   IKE --> IBM K8s Engine(IBM Cloud)
+    Kubernetes Cluster = k8s  
+
+3. KOPS: is a software use to create production GRADE/ready k8s in AWS and  
+         azure for the kops beta version  
+         It creates a highly available kubernetes services in Cloud like AWS.
+            KOPS will leverage Cloud Sevices like:
+              vpc, 
+              AutoScaling Groups, 
+              LoadBalancer, 
+              Launch Template/configuration
+              ec2-instances nodes [workerNodes and masterNodes]
+              s3  
+
+ kops create cluster --name mycluster --az us-east-2b nodes-4 master 3    
+
+    iam role/user  
+
+Rancher: - Using Rancher we can deploy both managed and self managed k8s
+           Rancher serves as a glass to access and manage multiple k8s  
+           from the rancher dashboard [UI]  - rancher dashboard 
+           authentication and authorisation: EKS/AKS/GKE/IKE 
+           IAM Role for EKS 
+
+Ticket 001:
+  Setup a multi nodes self Managed kubernetes cluster using kubeadm.
+  requirements -- 
+
+1. check the kubernetes official documentation  :
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+2. check the company's documentation for kubeadm setup    : 
+https://github.com/LandmakTechnology/package-management/blob/master/kubeadm/READme.md
+
+
+master publicIP= 3.128.206.139
+
+node  
+node9 publicIP = 3.148.106.135  
+
+
+docker resources/objects use to deploy applications:
+  Dockerfiles/images/networks/volumes/docker-compose.yml/etc.
+
+ticket002
+========
+Deploy workloads in kubernetes;
+kubernetes resources/objects used to deploy application includes:
+kubernetes Orchestrate and managed containerised Applications  
+This applications run as containers  
+These containers are housed in pods  
+Pods are housed in nodes    
+nodes are housed in the cluster   
+
+kubernetes resources/objects used to deploy application include:
+   Pod :
+or    
+ controllerManagers:
+      Replication Controller
+      ReplicaSet
+      DaemonSet
+      StatefulSets
+      Deployment
+      Volume
+      Job       
+
+Exposing/accessing applications = Service Discovery:
+    Service Types:
+    ClusterIP
+    NodePort
+    LoadBalancer
+    ExternalName  
+  ingress 
+  networkPolicy 
+
+
+Namespace:
+  It is a virtual cluster inside your cluster 
+     [ dev / uat / prod ],
+     [sales, accounts, cs, payroll]
+  pros:
+    isolation  
+    permissions 
+       dev  - Developers
+       prod - Engineers
+    resource utilisation  
+       dev  - cpu=5Gi mem=1000Mi 
+       prod - cpu=1000Gi mem=8000Mi 
+    performance
+       High priority 
+    RBAC - Security: 
+      NameSpace
+      Role   = dev [list/read]
+      RoleBinding  
+         Users  
+         groups  
+         ServiceAccounts  
+  ClusterRole  
+  ClusterRoleBinding
+  ServiceAccounts  
+
+ubuntu@master:~$ kubectl get ns
+NAME              STATUS   AGE
+default           Active   57m
+kube-node-lease   Active   57m
+kube-public       Active   57m
+kube-system       Active   57m
+
+Ticke3:
+  Create fintech and ecommerce Namespaces   
+kubernetes uses the kubectl client or the UI to run workloads.
+  kubectl get namespace
+  kubectl get ns 
+
+ create create namespace fintech --v=8 
+ create create namespace dev         
+
+ubuntu@master:~$ kubectl get nodes
+NAME     STATUS   ROLES           AGE   VERSION
+master   Ready    control-plane   61m   v1.28.2
+node1    Ready    <none>          50m   v1.28.2
+node5    Ready    <none>          42m   v1.28.2
+node9    Ready    <none>          47m   v1.28.2
+ubuntu@master:~$ kubectl get pod
+No resources found in default namespace.
+ubuntu@master:~$ kubectl get pod -A
+NAMESPACE     NAME                             READY   STATUS    RESTARTS      AGE
+kube-system   coredns-5dd5756b68-75vwg         1/1     Running   0             61m
+kube-system   coredns-5dd5756b68-qmtz8         1/1     Running   0             61m
+kube-system   etcd-master                      1/1     Running   0             61m
+kube-system   kube-apiserver-master            1/1     Running   0             61m
+kube-system   kube-controller-manager-master   1/1     Running   0             61m
+kube-system   kube-proxy-9bhvd                 1/1     Running   0             42m
+kube-system   kube-proxy-cl4lt                 1/1     Running   0             47m
+kube-system   kube-proxy-jbkcx                 1/1     Running   0             51m
+kube-system   kube-proxy-wnf8k                 1/1     Running   0             61m
+kube-system   kube-scheduler-master            1/1     Running   0             61m
+kube-system   weave-net-9d22b                  2/2     Running   1 (42m ago)   42m
+kube-system   weave-net-nnhrk                  2/2     Running   1 (58m ago)   58m
+kube-system   weave-net-qwg7q                  2/2     Running   1 (46m ago)   47m
+kube-system   weave-net-rzndz                  2/2     Running   0             51m
+
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+For very large clusters NB:
+   No more than 5,000 nodes
+   No more than 110 pods per node
+   No more than 150,000 total pods
+   No more than 300,000 total containers
+
+we deploy workloads using Imperative and declarive approaches    
+-#Create Name Space Using Imperative approach =  Command
+    kubectl create namespace <nameSpaceName>
+    kubectl create namespace dev  
+
+-declarive approach = files and less commands  
+-# Using Declarative Manifest file 
+
+Ticket4: Create prod namespace using the declarive approach.  
+========
+kubectl create namespace prod    
+
+apiVersion: v1    
+kind: Namespace
+metadata:
+   name: prod  
+================
+  kubectl apply -f ns.yml  
+
+PODS:
+====
+POD --> Pod is the smallest building block use to deploy applications in k8s.
+Pod represents running processes. Pod can contains one or more containers.
+These container will share same network, storage and any other specifications.
+Pod will have unique IP Address in k8s cluster. 
+
+Pods
+ SingleContainerPods --> Pod will have only one container.       98%
+ 
+ MultiContainerPods(SideCar) --> POD with two or more containers. 2%  
+         application Container :
+           webapp  
+         SideCar containers:
+           logMgt  container  
+           utility Container [ Truck = ]
+         
+
+How to deploy run/execute tasks/workloads in kubernetes??
+   1. Imperative  approach 
+        By using commands 
+
+   2. Declarative approach
+        By using files [manifests files]  
+
+-# Create POD Using Command
+kubectl run <podName> --image=<imageName> --port=<containerPort> -n <namespaceName>
+kubectl run hello --image=mylandmarktech/hello --port=80 -n dev  
+
+Docker images = dockerHub other registries:
+-- python-web-app
+   nodeweb-app 
+   net-webapp 
+   mylandmarktech/hello
+   nginx 
+   mysql  
+   mongo  
+   jenkins  
+   sonarqube  
+   nexus 
+
+Use the declarive approach to deploy workloads in kubernetes:
+  Manifest files = kams 
+  Manifest files are written in yaml/yml language 
+
+key:value  pairs 
+name: simon    
+dictionary: number of key:value  pairs 
+list:
+
+
+pod.yml template
+======
+apiVersion: v1    
+kind: Pod     
+metadata:
+  name: <podName>
+  namespace: <namespaceName>
+  lables:
+    key: <value> 
+    key: <value> 
+spec:
+  containers:
+  - name: containerName   
+    image: imageName  
+    ports:
+    - containerPort: podNumber
+
+    
+pod.yml  
+=======
+kind: Pod  
+apiVersion : v1   
+metadata:
+   name: webapp    
+   labels:
+     app: web  
+     tier: fe  
+   namespace: dev  
+spec:
+   containers:
+   - name: web 
+     image: mylandmarktech/hello   
+     ports:
+     - containerPort: 80  
+
+   - name: logmgt 
+---
+EXPOSE 80     
