@@ -53,20 +53,41 @@ Container Orchestration Tools --> :
    Kubernetes,
    OpenShift
 
-7:58
-Kubernetes:  began in 2015 which implies that it has been around for 
-  10 years 
-  July 2015  --- 2023  = 8years    10:00
+7:58    ###########################
+Kubernetes:  began in 2015 which implies that it has been around for 8yrs, so if u go to an interview u cant claim that u have 10years kuber exp
+  these are things to tk note of ..... bc the way dis course is deployed by d time u go tru kub u ar like somebody with atleast 7years of kub exp
+  July 2015  --- 2023  = 8years    
 
+
+we also hv tools like : that began 2023 ..... so u cant go to an interview n tell dem u v 10yrs of experience in it
 chartGPT started in 2023.     
 
-kubernetes architecture:
-controlPlane/MasterNodes:
-  apiServer
-  etcd  
-  scheduler  
-  controllerManagers   
-workerNodes:
+*************************************    10:59 
+NOW LETS LOOK AT HW POWERFUL KUB is with a diagramatic illustration:
+when we did docker we realise that if u hv docker there wil be docker engine, with d help of the engine we ar abl to crtae images n run containers
+now if i run my containere.g webapp der ar some problems that dodcker has : if i run my container and thers a problem with the container it goes offline, docker is nt able 
+to recreate the container , so i shud nt deploy my appl using a system that will nt intervenene in a diaster wher a sys is down bt cannot be recreated,,, 
+we can use docker to do 2things: e.g , we v a docker build server wer we ar executing command like docker build, so in d build server, we ar creating images , frm the build 
+server we wnt to run containers in the deployment sevrer ...
+with docker i cannot v more than 1 replica of webapp for e.g u are deploying ur appl n ders a spike , no i cant v multiple replicas in docker , e.g: so if u decide to run
+docker run -name webapp -replicas 5 , ie trying to get the number of replicas u wnat, it wont work.. docker doesnt support it
+also, if my engine goes down , my contaiiners will stop running 
+also docker doesnt support a scenario wher i can v multiple serveers in a cluster  e.g docker engine1 (with container), docker engine2(with containers) such that if one 
+engine is down the 2nd engine can support it ,, docker doesnt v such sys bc the docker ntwrk dose nt support multi hostng wger we can v a cluster of servers, docker 
+netwrking sys doesnt support multi hosting and thats a big problem ,, the docker system doesnt v an overlay ntwrk wher u can v a cluster of server, no overlsy ntwrk support
+and d worst is that when appl ar deplloyed, to expose them to endusers is very limited and we wil see hw it is diff with kub... bc in docker we do port forwarding bt we wil
+see what kub brings to the table
+
+
+16:00
+kubernetes architecture:  why are we doing kub and why is kub imp in my devops journey , that in all thy knowings u must knw kub
+                                ############  kubernetes comes with a cluster in the cluster we v :
+controller noder or controlPlane/MasterNodes: this has some components to tk note of:
+  apiServer  : this is the main entry point into the cluster, it performs admin task in the cluster
+  etcd  : the key value store ,,, this is like a database
+  scheduler  : 
+  controllerManagers   : 
+workerNodes:  this is wher appl are running and here we can v node1, to node11
   kubelet   
   container runtime [Container-d]
   kube-proxy
