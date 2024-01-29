@@ -1,3 +1,9 @@
+i will practice it 
+Ticket 001:
+  Setup a multi nodes self Managed kubernetes cluster using kubeadm.
+  requirements -- 
+
+
 when we talk abt kub, we classify an all imp tool bc of its imp  of to me as a devops engr, its so important that one of the jobs i can do is a kubernetes administrator 
 
 
@@ -185,10 +191,10 @@ Local K8s Cluster(Single Node K8s Cluster) ..  , ,,......... we can use single n
 
 Multi Nodes Kubernetes Clusters:  ............ ............ .... for production great deployment, we nid multi node k8 cluster 
 ================================
-the first of its kind which w ecan install is :
-1. Self Managed Kubernetes [k8s] Cluster = IaaS--EC2  :
-    kubeadm --> We can setup multi node k8's cluster using kubeadm.
-    kubespray --> We can setup multi node k8s cluster using kubespray
+the first of its kind which w ecan install is : 
+1. Self Managed Kubernetes [k8s] Cluster = IaaS--EC2  :  thess ar infrastructure as a service , we can launch of k8 cluster on a grp of ec2 instances, using kubeadm
+    kubeadm --> We can setup multi node k8's cluster using kubeadm.  ... kubeasm is a sfware that is used to launch a k8, both d control plane n worker node
+    kubespray --> We can setup multi node k8s cluster using kubespray , it uses ansible playbook
      (Ansible Playbooks Used internally by kubespray).
 WITH  Self Managed Kubernetes [k8s] Clusters both the    
      controlPlane: [apiServer, etcd, scheduler, Controller Managers] 
@@ -196,20 +202,30 @@ WITH  Self Managed Kubernetes [k8s] Clusters both the
      workerNodes: [  kubelet, containerRuntime-Container-d, kube-proxy]  
   are managed by the Admin/Kubernetes/DevOps Engineers
 
+*************** so if u have a self managed cluster u hv to ensure that the control plane wit all its components re healthy n functionin and also the components of the 
+woker nodes are all running and healthy, it is ur function
+
+we v anoda class of clusters wich are  manged by 3rd party, u will nt bother abt he mgt
 2. Managed k8s Cluster  (Cloud Services) = PaaS  : 
    The controlPlane is managed by a cloud provider or third party.  
    The controlPlane and all it components are managed by the Cloud provider 
-   The workerNodes are managed by the Admins
+   ***************  howerever,   The workerNodes are managed by the Admins or engineers
+TYPES OF CLOUD manged service:
    EKS --> Elastic Kubernetes Service(AWS)
    AKS --> Azure Kubernetes Service(Azure)
    GKE --> Google Kubernetes Engine(GCP)
    IKE --> IBM K8s Engine(IBM Cloud)
     Kubernetes Cluster = k8s  
 
+########### so u can deploy your cluster using, either a manged or a self managed sfware
+ideally, companies will prefer to go for managed bc it will give rhem more time to focus on the app , bc if u nid to focus on the architecture, it wil mean taht u wil need
+to spend more time ensuring that ur cluster is running than managing containerized appl,,   ,, bt more time shud be dedicated to appl management.
+
+*******************we also v another clas of cluster thatcan be installed 
 3. KOPS: is a software use to create production GRADE/ready k8s in AWS and  
          azure for the kops beta version  
-         It creates a highly available kubernetes services in Cloud like AWS.
-            KOPS will leverage Cloud Sevices like:
+         It creates a highly available kubernetes services (he said cluster, mayb a mistake) in Cloud like AWS.
+            KOPS will leverage Cloud Sevices like: .. so when u deploy wit kops, it comes along with all dis services n its very esay to craate a kops cluster 
               vpc, 
               AutoScaling Groups, 
               LoadBalancer, 
@@ -217,17 +233,29 @@ WITH  Self Managed Kubernetes [k8s] Clusters both the
               ec2-instances nodes [workerNodes and masterNodes]
               s3  
 
+its very esay to craate a kops cluster ... bt first u must be authorized , hw is securtiy managed in the aws account.. hw do we authroize 
  kops create cluster --name mycluster --az us-east-2b nodes-4 master 3    
 
+we authorize using IAm ... identity and access mgt
+so we nid to create a roles or policies that will permit the user to vps, autoscaling grps, LB, S3 bucket etc
     iam role/user  
 
-Rancher: - Using Rancher we can deploy both managed and self managed k8s
+A TOOL WE CAN USE TO MANAGE MULTIPLE CLUSTER 
+Rancher: - Using Rancher we can deploy both managed and self managed k8s CLUSTER
            Rancher serves as a glass to access and manage multiple k8s  
-           from the rancher dashboard [UI]  - rancher dashboard 
-           authentication and authorisation: EKS/AKS/GKE/IKE 
-           IAM Role for EKS 
+           from the rancher dashboard [UI]  - rancher dashboard  ,,,, frm rancher i can create a cluster in EKS/AKS/GKE/IKE 
+           authentication and authorisation: EKS/AKS/GKE/IKE  ... bt u v to be authorized
+         to be authorized to create an aws EKS cluster in aws, i can create an IAM Role for EKS , this wil permit us to create and manage an EKS cluster
+it wil be the same thing for Azure AKS, goodle GKE and Ibm cloud
 
-Ticket 001:
+************* so if i v like 10clusters that i wnt to manage, wich i wnat to be observing hw dey are performing at all times then i need to instal the rancher sfware so i 
+ca use it to access those clusters
+
+
+
+**********************************************************************************************************************
+
+Ticket 001: 53;12
   Setup a multi nodes self Managed kubernetes cluster using kubeadm.
   requirements -- 
 
@@ -236,6 +264,8 @@ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-ku
 
 2. check the company's documentation for kubeadm setup    : 
 https://github.com/LandmakTechnology/package-management/blob/master/kubeadm/READme.md
+
+*******************in our env, we v created github repo, n we v summarized this REQ there
 
 
 master publicIP= 3.128.206.139
