@@ -4,6 +4,11 @@ Ticket 001:  ... remember to change token durimg practice
   requirements -- 
 
 
+HISTORY OF KUBERNETES, K8 ARCHITECTURE , security: authen/author, controller manager, INSTALLATION, installing single or multi node cluster, types of self manged cloud 
+service, rancher , steps to setup muli node self managed cluster, deploying workload in K8, deploy appl using this cluster
+#############################################################################################################################################
+
+
 when we talk abt kub, we classify an all imp tool bc of its imp  of to me as a devops engr, its so important that one of the jobs i can do is a kubernetes administrator 
 
 
@@ -265,7 +270,7 @@ https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-ku
 2. check the company's documentation for kubeadm setup    : 
 https://github.com/LandmakTechnology/package-management/blob/master/kubeadm/READme.md
 
-*******************in our env, we v created github repo, n we v summarized this REQ there
+*******************in our env, we v created github repo, n we v summarized this REQuirement there, evrytin i nid to deploy my cluster is xplained ther
 
 
 57: 08
@@ -311,31 +316,31 @@ so successfully we v installed our k8 cluster
 we need to add worker node to the cluster 
 to launch node1:
 
-to launch node1:
+*************** to launch node1:   ***************
 
 8)  Generate the master join token on the master node
 so am going to generate the master token on the master node
 kubeadm token create --print-join-command                                                                               1:14:44
 once the token is created,
-vi node1.cst
-i go bk to the repo and copy all the command again to launch node1 (bc d script says copy and run in all master n worker nodes)sethost name to node1 
+i)  vi node1.cst
+ii) i go bk to the repo and copy all the command again to launch node1 (bc d script says copy and run in all master n worker nodes)sethost name to node1 
 wasnt commented on... then at the end of the script paste 
-#add worker node to the cluster 
+iii) #add worker node to the cluster 
 then pate the token that was generated
 ##### then go back to AWS 
-we will launch anoda inatance .... instance name : node1 , t2 micro , the same key we choose for master ,,, they shud be in the smae vpc, the same security grp
+iv)  we will launch anoda inatance .... instance name : node1 , t2 micro , the same key we choose for master ,,, they shud be in the smae vpc, the same security grp
 under advance details, in user data , i paste the script and launch node1
-i also launch node2 with the same steps except i dnt paste the user data
+v) i also launch node2 with the same steps except i dnt paste the user data
 
-TO CONNECT TO NODE9  ...................... 1:19:20
-in mobaxterm ,, new session  to 
+vi) TO CONNECT TO NODE9  ...................... 1:19:20
+in mobaxterm ,, new session 
 i copy the node9 publicip  
 node9 publicIP = 3.148.106.135  
 *********************** WE V TO RUN THE command as root user.... 
 so , sudo -i
 
-i copy the entire script and vi k8-node9.sh and paste the script and change: sethost name to node1 to sethost name to node9
-thne sh k8-node9.sh
+vii) i copy the entire script and vi k8-node9.sh and paste the script and change: sethost name to node1 to sethost name to node9
+then sh k8-node9.sh
 **************** while this is happening lets check our master node 
 kubectl get node 
 now i can see node1 has joined the cluster , so we used user data for node1 to join the cluster , so we can use userdata to mk our life easy
@@ -344,22 +349,30 @@ few moments we can see node9 has joined the cluster  and in the node9 cli we can
 ************* we can add one more node 
 in aws in instances  .... instance name node5 and the same steps we used for node1 including the user data  bt change sethost name to node1 to node5
 once i launch, it will create and add node 5 to the cluster
-successfully added
-1:26:00
+successfully added                                                                1:26:00
+******************** ************** so we v successfully deployed a cluster using kubeabm  ... and the the cluster is having multiple nodes
 
+1:30:30
 
-docker resources/objects use to deploy applications:
+HOW Did WE DEPLOY A WORK LOAD IN DOCKER ??
+we had to use docker resources or objects to deploy applications like docker file we use it to build images n we can now deploy our appl wit the help of ntwrks, vols,
+using the docker-compose file.
+........docker resources/objects use to deploy applications:
   Dockerfiles/images/networks/volumes/docker-compose.yml/etc.
 
-ticket002
+****************************************WE WANT TO DEPLOY WORK LOAD IN k8
+***ticket002
 ========
-Deploy workloads in kubernetes;
+************************************************************    Deploy workloads in kubernetes;
 kubernetes resources/objects used to deploy application includes:
 kubernetes Orchestrate and managed containerised Applications  
 This applications run as containers  
 These containers are housed in pods  
 Pods are housed in nodes    
 nodes are housed in the cluster   
+********therfore if u are going to deploy any appl in k8, it is going to be deployed in a pod
+
+now we v created our k8 cluster ,how are we able to deploy appl using this cluster ,, ????????????? dats some of the things we wil be able to look at:
 
 kubernetes resources/objects used to deploy application include:
    Pod :
@@ -373,41 +386,48 @@ or
       Volume
       Job       
 
+*******************************when u deploy appl in k8, u v to make the appl accessible ie exposing appl/accessing appl
 Exposing/accessing applications = Service Discovery:
-    Service Types:
-    ClusterIP
+    Service Types:  it will route service to our appl n their replicas ,
+    ClusterIP :  it performs LB  , its used for internal communication inside the cluster.
     NodePort
     LoadBalancer
     ExternalName  
   ingress 
   networkPolicy 
 
-
+1:34:30  **********************generally for this deployment to tk place even in k8, we will make use of a namespace
+how DO WE ENSURE THE APPL ARE ABLE TO COMMUNICATION  & all of that , ders a concept in k8 called:
 Namespace:
-  It is a virtual cluster inside your cluster 
-     [ dev / uat / prod ],
-     [sales, accounts, cs, payroll]
+  It is a virtual cluster inside your cluster  ,,, we can create a name space for dev stage, uat stage , prod stage , sales ... dependn on d project u are managing
+     [ dev / uat / prod ],                            if u create a namespace for e.g, u wnat a situatn wher what dev ar doin does nt affect what is runin in uat &prod
+     [sales, accounts, cs, payroll]                so we can use name spaces for isolation, we'l isolate d dev env frm uat, frm prod using namespaces
   pros:
-    isolation  
-    permissions 
-       dev  - Developers
+    isolation                                                                                                               1:39:36
+    permissions                   also for permisions e.g for d dev namespace we assign  deveopers to mange the dev namespace for prod engineers, so developers ar permitted 
+       dev  - Developers                     to run their workload in the dev namespace while engineers ar runnin ther workload in the prod namespace
        prod - Engineers
-    resource utilisation  
-       dev  - cpu=5Gi mem=1000Mi 
+    resource utilisation                          
+       dev  - cpu=5Gi mem=1000Mi      e.g we can decide that in the dev namespace we ar assigning cpu of 5G , MEM OF 1000mi
        prod - cpu=1000Gi mem=8000Mi 
-    performance
-       High priority 
-    RBAC - Security: 
-      NameSpace
-      Role   = dev [list/read]
-      RoleBinding  
-         Users  
-         groups  
-         ServiceAccounts  
-  ClusterRole  
-  ClusterRoleBinding
-  ServiceAccounts  
 
+  *********************    ADVANTAGES OF NAMESPACES
+High  performance                
+       High priority 
+    RBAC - Security:           name space is also good for sevurity, with the help of namespacing, security is very strong
+      NameSpace              also for role base access control wher we create roles 
+      Role   = dev [list/read]        you create a namespace and in that namespace you create a role e.g i can create arole for developers whic grants them access to read
+      RoleBinding                i can bind the role to a particular user or a grp of users like developers, ############ role & rolebinging is for a single namespace 
+         Users  
+         groups                                                                                                                     dats what d role binding is all abt
+         ServiceAccounts     or i can bind it to an account, like a service account, once u bind the role its like u create a security grp &u attach that grp to a server
+  ClusterRole              ########## clusterRole &clusterRolebinding is for the entire cluster 
+  ClusterRoleBinding                 
+  ServiceAccounts  
+#####################################################################################################################
+
+1:42:04
+HOW MANY NAMESPACES DO WE HAVE IN OUR CLUSTER
 ubuntu@master:~$ kubectl get ns
 NAME              STATUS   AGE
 default           Active   57m
@@ -421,8 +441,19 @@ kubernetes uses the kubectl client or the UI to run workloads.
   kubectl get namespace
   kubectl get ns 
 
- create create namespace fintech --v=8 
- create create namespace dev         
+ kubectl create namespace fintech --v=8      . V , MEANS   in verbose
+ kubectl create namespace dev     
+ kubectl delete namespace dev
+
+ubuntu@master:~$ kubectl create namespace dev --v=8              **********this is verbose
+I1029 01:37:06.096876   6650 loader.go:395} config loaded from file: /home/ubuntu/.kube/config     
+************namespace/dev created    ,   this is verbose, i wnat to create the namespace in verbose mode, i am told that when i run this command,it gets me authenticated 
+using :   config loaded from file: /home/ubuntu/.kube/config  .. so it is making that rEQ , thers a http post request to create the nameSpace , so the REQ has been created,
+it has been ACCepted, which means that the user is authorized to carry out the task
+
+ubuntu@master:~$ kubectl create ns fintech
+created
+
 
 ubuntu@master:~$ kubectl get nodes
 NAME     STATUS   ROLES           AGE   VERSION
@@ -430,7 +461,7 @@ master   Ready    control-plane   61m   v1.28.2
 node1    Ready    <none>          50m   v1.28.2
 node5    Ready    <none>          42m   v1.28.2
 node9    Ready    <none>          47m   v1.28.2
-ubuntu@master:~$ kubectl get pod
+ubuntu@master:~$ kubectl get pod     ..************ this means it wil search for the pod in the default nameSPace
 No resources found in default namespace.
 ubuntu@master:~$ kubectl get pod -A
 NAMESPACE     NAME                             READY   STATUS    RESTARTS      AGE
@@ -449,30 +480,38 @@ kube-system   weave-net-nnhrk                  2/2     Running   1 (58m ago)   5
 kube-system   weave-net-qwg7q                  2/2     Running   1 (46m ago)   47m
 kube-system   weave-net-rzndz                  2/2     Running   0             51m
 
+#####################
+****************** SOMEONE ASKED how many pods can we create in one node ???????????????
+
+lets look at k8 BEST PRACTICES FOR LARGE CLUSTERS     *********** so if u have a very large cluster you can click on this link, u wil get more info
 https://kubernetes.io/docs/setup/best-practices/cluster-large/
-For very large clusters NB:
+For very large clusters NB: dnt create :
    No more than 5,000 nodes
    No more than 110 pods per node
    No more than 150,000 total pods
    No more than 300,000 total containers
 
+1:50:00 ********************************* HOW DO WE DEPLOY WORKLOAD IN K8 ????????????????
+
 we deploy workloads using Imperative and declarive approaches    
 -#Create Name Space Using Imperative approach =  Command
-    kubectl create namespace <nameSpaceName>
+   LIKE:
+kubectl create namespace <nameSpaceName>
     kubectl create namespace dev  
 
--declarive approach = files and less commands  
+-declarive approach =  makes use of files and less commands  
 -# Using Declarative Manifest file 
 
 Ticket4: Create prod namespace using the declarive approach.  
 ========
-kubectl create namespace prod    
+imperative:  kubectl create namespace prod    
 
-apiVersion: v1    
+*****************************declarative:
+apiVersion: v1      (THE api version we want to create is V1)
 kind: Namespace
 metadata:
-   name: prod  
-================
+   name: prod     ( the namespace is prod)
+================...................***********once i create dis file, i can use it to create my namespace with the command :
   kubectl apply -f ns.yml  
 
 PODS:
