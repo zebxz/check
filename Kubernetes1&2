@@ -26,7 +26,7 @@ problem, u can rollback
 5)WITH kuber DERS no nid to worry about netwrkn n communicatn bc kub wil automatically assign ip address to containers n a single dns name for a set of containers that can LB
 TRAFFIC inside the cluser .... 5:00
 containers get their ips so u can put a set of containers behind a single L Balancer ... this is a very key aspect service discovery n LB , hw powerful is that 
-6)it also supports storage ochestration, u can mount the storage system of your choice , u can either opt for local storage or cjoose a public cloud 
+6)it also supports storage ochestration, u can mount the storage system of your choice , u can either opt for local storage or choose a public cloud 
 
 
 
@@ -268,10 +268,84 @@ https://github.com/LandmakTechnology/package-management/blob/master/kubeadm/READ
 *******************in our env, we v created github repo, n we v summarized this REQ there
 
 
-master publicIP= 3.128.206.139
+57: 08
+having checked the requirements in the companys documentation
+in aws
+1) he launched the 3ubuntu servers , he used the vps he created himself, auto assign is enabled
+having checked the required ports in the power point script, he choose a security grp with the rwq ports opened (all TCP open)
 
-node  
+2) using mobax he connected to the master node ..... we wil be deploying our cluster with the help of the master node
+master publicIP= 3.128.206.139
+3)then set hostname to master  and sudo i to switch to root user 
+as root user i wnat to deploy my cluster , and ders a script that i can just copy and run
+4)copied the script  and said he wil smake some changes . commented sethost name to node1 
+in the script first, we v to 
+we nid to diasable swap n kernel setting,so we wil disable swap memory so that we can enhnace performance in our k8 cluster , then nxt, we ar adding kernel details n instal
+container-d, first instal container-d n its dependecies bc our runtime (to b able to start&runour conatiners) is nt docker bt it is container-d, once it is installed, we 
+will proceed to start container-d  afterwhcih we wil instal kublet, kubeabm and kubectl,, after that we wil start the kublet service
+i will run this as a script and i nid to be root user
+vi into k8.sh and paste the script he copied    ...... 1:03:50 
+then 
+# Initialize Kubernetes control plane by running the below commond as root user.
+sudo kubeadm init
+****************** but am a root user, so i dnt nid sudo. ... just run kubeadm init 
+and for us to be able to initialize this control plane the req port must be opened. 
+************************** SUCCESSFUL... now i can process as a regular user
+5)to continue as a regular user , i can exit or sudo su - ubuntu
+6)then to start using : 
+run the 3commands as stated in the success notification in my cli  (mkdir -p $HOME/.kube .......)
+we can cat .kube/config  file, we can see its content n this is d file authenticatingus to acrry out tasks and d  user now is the admin , so he has adminaccess in d  cluster
+
+we run : kubectl get node  or kubectl get pod
+it shows the master node is not ready
+7) so to ensure its ready we v to deploy the ntwrk plugging
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+************now it has created certain components 
+now if we execute kubectl get node .............. our master node is ready
+for containers .... kubectl get pod    .. we dnt v any pod running
+lets check all the pods in the cluster ..... kubectl -A 
+we can see we v some pods running 
+so successfully we v installed our k8 cluster 
+
+********************* kubectl get node ,    we only have the control plane ie only the master node
+we need to add worker node to the cluster 
+to launch node1:
+
+to launch node1:
+
+8)  Generate the master join token on the master node
+so am going to generate the master token on the master node
+kubeadm token create --print-join-command                                                                               1:14:44
+once the token is created,
+vi node1.cst
+i go bk to the repo and copy all the command again to launch node1 (bc d script says copy and run in all master n worker nodes)sethost name to node1 
+wasnt commented on... then at the end of the script paste 
+#add worker node to the cluster 
+then pate the token that was generated
+##### then go back to AWS 
+we will launch anoda inatance .... instance name : node1 , t2 micro , the same key we choose for master ,,, they shud be in the smae vpc, the same security grp
+under advance details, in user data , i paste the script and launch node1
+i also launch node2 with the same steps except i dnt paste the user data
+
+TO CONNECT TO NODE9  ...................... 1:19:20
+in mobaxterm ,, new session  to 
+i copy the node9 publicip  
 node9 publicIP = 3.148.106.135  
+*********************** WE V TO RUN THE command as root user.... 
+so , sudo -i
+
+i copy the entire script and vi k8-node9.sh and paste the script and change: sethost name to node1 to sethost name to node9
+thne sh k8-node9.sh
+**************** while this is happening lets check our master node 
+kubectl get node 
+now i can see node1 has joined the cluster , so we used user data for node1 to join the cluster , so we can use userdata to mk our life easy
+kubectl get node -w to watch how node9 will join the cluster
+few moments we can see node9 has joined the cluster  and in the node9 cli we can see it says node9 has joine dthe cluster     
+************* we can add one more node 
+in aws in instances  .... instance name node5 and the same steps we used for node1 including the user data  bt change sethost name to node1 to node5
+once i launch, it will create and add node 5 to the cluster
+successfully added
+1:26:00
 
 
 docker resources/objects use to deploy applications:
