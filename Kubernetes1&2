@@ -34,7 +34,7 @@ use container managers or ochestration tools like docker swarm kub n open sheet.
 when we studied dodcker, we deployed appl using docker bt what are the limitations using docker to deploy applications .,.. we ar going to look at that shortly 7: 43 
 bt these ar the contarization software
 
-
+################################### refer to powerpoint script#################
 
 
 Kubernetes:
@@ -139,38 +139,53 @@ so if u wnat to access the appl, it wil be routed via the service, we call this 
 now this entire netwroking wher appls can accessed with relative ease is been suported by a ntwrk agent kube-proxy.
 
 ###########if u can xplain dis kub architecture, u ar as good as done 37:26
+
 ====================================================================
-kubernetes: 
-   cluster:
-   nodes:  
-   pods:  
+TK NOTE OF THIS TREE
+kubernetes:    kub has a cluster , 
+   cluster: it is a grp of nodes
+   nodes:  in the nodes ther are pods 
+   pods:  in the pods ther ar containers ..  
    containers :  
 
+therfore in kub we can say that nodes are the subset of the cluster , pods are subset of the nodes and containers are the subset of the pods
 cluster ---> nodes ---> pods  ---> containers  :
 
+
+WHO CAN DO WHAT, who can perform what task .. ,, THIS WILL BE SUPPOERTED BY KUB SECURITY  .. 40: 26
 kubernetes security - RBAC:
   Developers [ Paul, Joyce, Chidi ] 
-  Engineers  [ James, Dominion, Janet ] 
+  Engineers  [ James, Dominion, Janet ]    .... we can assign them diff functions
 
 authentication via kubeconfig : 
 authorisation via RBAC:
 
+42:40 .. cONTROLLER MANAGER.. >>>>>>>>>
+E.G IF U deploy ur appl and you want 3pods to be deployed , lets assume 2pods shud be running, if 1pod is down, the controller manger has been instructed to create 2pods, if
+one pod goes down, it will automatically create the pod, those are the function of controller mangers
+
+
 Installation:
+you can install a single node cluster,  bt we shudnt use a single node to creat k8 cluster to avoid the risk of failure
+with single node cluster u wont optimize the functions of k8 that permits you to have multiple nodes
 ============
-K8S=Kubernetes
-Local K8s Cluster(Single Node K8s Cluster)
+K8S=Kubernetes    ......kub is represented with k8s
+Local K8s Cluster(Single Node K8s Cluster) ..  , ,,......... we can use single node for testing , e.g if u wnat to test smt, u can test it on a single node
 ------------------------------------------
-   minikube
+ 1)  minikube                ......................  we can install it uisng minikube
        choco install minikube  = windows   
        brew install minikube   = macOS  
-       minikube start  
-   Kind   = 
-   Docker Desktop 
+       minikube start      .... once it is installed, run minikube start, u v began a cluster on ur windows or mac computer
+ 2)  Kind   =      ... we also hv kind , which can also be installed........
+  3) Docker Desktop     ...... 
       https://docs.docker.com/desktop/kubernetes/
-  POC = 
+  POC = .............. didnt say anytin
 
-Multi Nodes Kubernetes Clusters:
+##############********************dis is aour main interest
+
+Multi Nodes Kubernetes Clusters:  ............ ............ .... for production great deployment, we nid multi node k8 cluster 
 ================================
+the first of its kind which w ecan install is :
 1. Self Managed Kubernetes [k8s] Cluster = IaaS--EC2  :
     kubeadm --> We can setup multi node k8's cluster using kubeadm.
     kubespray --> We can setup multi node k8s cluster using kubespray
