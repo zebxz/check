@@ -6,6 +6,7 @@ Ticket 001:  ... remember to change token durimg practice
 
 HISTORY OF KUBERNETES, K8 ARCHITECTURE , security: authen/author, controller manager, INSTALLATION, installing single or multi node cluster, types of self manged cloud 
 service, rancher , steps to setup muli node self managed cluster, deploying workload in K8, deploy appl using this cluster
+How to deploy run/execute tasks/workloads in kubernetes
 #############################################################################################################################################
 
 
@@ -493,7 +494,8 @@ For very large clusters NB: dnt create :
 
 1:50:00 ********************************* HOW DO WE DEPLOY WORKLOAD IN K8 ????????????????
 
-we deploy workloads using Imperative and declarive approaches    
+WE DEPLOY workloads using Imperative and declarive approaches    
+
 -#Create Name Space Using Imperative approach =  Command
    LIKE:
 kubectl create namespace <nameSpaceName>
@@ -511,8 +513,11 @@ apiVersion: v1      (THE api version we want to create is V1)
 kind: Namespace
 metadata:
    name: prod     ( the namespace is prod)
-================...................***********once i create dis file, i can use it to create my namespace with the command :
+================...................***********once i create dis file, i can use it to deploy my namespace with the command :
   kubectl apply -f ns.yml  
+
+ubuntu@master:~$ kubectl apply -f ns.yml  
+created
 
 PODS:
 ====
@@ -525,13 +530,14 @@ Pods
  SingleContainerPods --> Pod will have only one container.       98%
  
  MultiContainerPods(SideCar) --> POD with two or more containers. 2%  
-         application Container :
-           webapp  
-         SideCar containers:
-           logMgt  container  
-           utility Container [ Truck = ]
-         
-
+e.g, we can v the  the application container and like a sidecar container
+       application Container :
+          e.g  webapp    , e.g u v a container running and u wnat to ensure this appl doesnt v any problem, so u attach a logmgt container so that whatsover is 
+       SideCar containers:                                                                             happening in the appl, this log is reporting it
+            e.g  logMgt  container   ... like a container that is collecting log from ur application
+           utility Container [e.g u have a Truck that is transportin some goods n u v a car infront of that truck, d car can help wit traffic n give warning signs to oda ]
+       road users to inform dem that der is a large truck on d road b careful,its like a side car ,it can also be useful to transfer fuel when the main truck run out of fuel
+                    
 How to deploy run/execute tasks/workloads in kubernetes??
    1. Imperative  approach 
         By using commands 
@@ -543,6 +549,25 @@ How to deploy run/execute tasks/workloads in kubernetes??
 kubectl run <podName> --image=<imageName> --port=<containerPort> -n <namespaceName>
 kubectl run hello --image=mylandmarktech/hello --port=80 -n dev  
 
+ubuntu@master:~$  kubectl get po    ...... ........ 
+no resources found in default namespace 
+ubuntu@master:~$ kubectl get po -n dev
+no resources found in dev namespace 
+ubuntu@master:~$ kubectl run hello --image=mylandmarktech/hello --port=80 -n dev  
+pod/hello created
+ubuntu@master:~$ kubectl get pod
+no resources found in default namespace 
+ubuntu@master:~$ kubectl get po -n dev
+NAME    READY      STATUS       RESTARTS      AGE
+hello     1/1      running         0            11s
+*********************************we have been able to deploy this application
+############ we use this image : -image=mylandmarktech/hello   .. to deploy the application.. the image is found in our image registry
+
+ubuntu@master:~$ kubectl get svc -n dev      .... to check for services
+no resources found in dev namespace 
+
+
+in our image registry , we have applications like 
 Docker images = dockerHub other registries:
 -- python-web-app
    nodeweb-app 
@@ -553,36 +578,43 @@ Docker images = dockerHub other registries:
    mongo  
    jenkins  
    sonarqube  
-   nexus 
+   nexus          ..... these are all images we can use to depploy our appli in k8
 
-Use the declarive approach to deploy workloads in kubernetes:
-  Manifest files = kams 
+#################### Use the declarive approach to deploy workloads in kubernetes:
+  Manifest files = kams       ........ we use manifest files to deploy in ddeclarative approach
   Manifest files are written in yaml/yml language 
 
-key:value  pairs 
-name: simon    
-dictionary: number of key:value  pairs 
+
+pod.yml  : in this yml language, it deals with stuffs like :
+key:value  pairs     
+dictionary: number of key:value pairs 
 list:
 
+hw do we consider keyvalue pair 
+**************for e.g when u want to create a manifest file, it has this acronym, comes :   where comes stands for kind, api version, metadata and spec
+kind is a key value pair bc for example ; kind is pod , this is a key value pair, it has a key & a value  ,,, so key &value ,, kind:pod
+for e.g , key value pair could be  name and the value is simon
+key:value  pairs 
+name: simon   
 
 pod.yml template
 ======
-apiVersion: v1    
+apiVersion: v1       (this is also a key value pair)
 kind: Pod     
-metadata:
+metadata:          (this is a dictionary that contains a number of keyvalue pairs) wher we v name, labels and we can decide the namespace we want to create the pod in
   name: <podName>
   namespace: <namespaceName>
-  lables:
+  lables:           (this is another dictionary)                    he didnt specify the guy
+    key: <value>                               2:04:24 .. if u look at dis guy, we ar creatin this objects, the acronmy is comes...kind,apiversion,metadata &spec
     key: <value> 
-    key: <value> 
-spec:
-  containers:
-  - name: containerName   
+spec:                                        
+  containers:         ... under spec, we want to create containers, a pod can v 1 or more containers
+  - name: containerName                                         container is a list
     image: imageName  
     ports:
     - containerPort: podNumber
 
-    
+    ############ this is the manifest file
 pod.yml  
 =======
 kind: Pod  
@@ -593,13 +625,49 @@ metadata:
      app: web  
      tier: fe  
    namespace: dev  
-spec:
+spec:                         we want to create containers, a pod can v 1 or more containers,, 
    containers:
-   - name: web 
-     image: mylandmarktech/hello   
-     ports:
-     - containerPort: 80  
+   - name: web                          e.g container1 caller web
+     image: mylandmarktech/hello              
+     ports:                              container port is a list also bc we are tryin to list
+     - containerPort: 80       ..... this container port is determined by d image bc when the imsge is being built, d keyword used to defined container port in d dockerfile
 
-   - name: logmgt 
----
+   - name: logmgt                        contianer2 , called logmgt
+---                                      it can also still v container3
 EXPOSE 80     
+
+
+###############2:07:20
+vi pod.yml and paste the mainfest file 
+
+ubuntu@master:~$ kubectl apply -f pod.yml
+pod/webap created
+ubuntu@master:~$ kubectl get po -n dev
+NAME      READY      STATUS       RESTARTS      AGE
+hello     1/1       running         0            8m38s
+webapp    1/1       running         0             12s
+
+
+############################################################# we can use this template to create any pod
+
+pod.yml template
+======
+apiVersion: v1       
+kind: Pod     
+metadata:          
+  name: <podName>
+  namespace: <namespaceName>
+  lables:           
+    key: <value>                               
+    key: <value> 
+spec:                                        
+  containers:         ... 
+  - name: containerName                                         
+    image: imageName  
+    ports:
+    - containerPort: podNumber
+
+
+
+
+
