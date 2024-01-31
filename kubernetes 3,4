@@ -1,4 +1,4 @@
-1:27 ........we studied devops with aws, linux and k8
+1:27 ........we studied devops with aws, linux and k8  9058901010  2400
 
 ubuntu@master:~$ kubectl get po 
 no resources found in the default namespace    ****************************** this is set to my current context , its my current name space
@@ -115,6 +115,7 @@ ClusteriP
 targetport80       when u create a service, wher u v the container port will be represented by the target port, so d servixe is targeting port80
  so the webapp wants to com with thw helloapp , d webbapp can nt comm with d helloapp directly in the cluster, its nt supported in k8, so hw is the com to be established?,
 via service discovery..
+
 lets assume the webapp pod has its own label:
 webapp
 app:web
@@ -134,8 +135,8 @@ kubernetes Service:
   will be allocated for that serivce and DNS entry will be created for that IP.
   So internally we can access using service name(DNS).
 
-
-########CREATING SERVICE FOR HELLPAPP
+2174  2409
+########CREATING SERVICE FOR HELLoAPP
 hellosvc.yml  
 =========== kams    ..... .....acronmy
 kind: Service  
@@ -143,19 +144,49 @@ apiVersion: v1
 metadata:
   name: hellosvc    ... i can assign a servicename
 spec:
-   type: ClusterIP  
-   selector: 
-      app: hello  
-   ports:
-   - port: 80  
-     targetPort: 80  
+   type: ClusterIP    ...service type
+   selector:   ... hw wil the service be identified or hw will it identify the app that its suppose to route traffic to ., it wil be based on the label of the appl
+      app: hello     .... its hello bc refferring to the manifest/identifictaion file we used to create the hello pod above ,, the label says app:hello
+   ports:                                                                              therefore, my selector will be hello, so it can route traffic to the appl
+   - port: 80           ......service port  bc our container port in the manifest file is we used to create the pod is 80
+     targetPort: 80        
 
+#############we can create a new file or add it to the existing manifest file we already have  by ,, (--- to seperate the files)
 
-50 landmark drive Dallas
+******************************************************************
 
-10 landmark drive Dallas
+kind: Pod   
+apiVersion: v1    
+metadata: 
+   name: hello
+   labels:
+     app: hello     
+spec:
+   containers:
+   - name: hello   
+     image: mylandmarktech/hello  
+     ports: 
+---
+kind: Service  
+apiVersion: v1  
+metadata:
+  name: hellosvc    
+spec:
+   type: ClusterIP    
+   selector:   
+      app: hello     
+   ports:                                                                              
+   - port: 80           
+     targetPort: 80        
 
-kubectl get svc -n <namespace>
+**********************************************************************
+ubuntu@master:~$ kubectl apply -f manifest/
+pod/hello unchanged
+service/hellosvc created
+ubuntu@master:~$ kubectl get all 
+we see both opd n service 
+ubuntu@master:~$  kubectl get events               37:53
+
 kubectl get svc -n dev  
 kubectl describe svc  
 kubectl get ep  
