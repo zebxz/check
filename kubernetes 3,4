@@ -1,28 +1,52 @@
 1:27 ........we studied devops with aws, linux and k8
 
 ubuntu@master:~$ kubectl get po 
+no resources found in the default namespace    ****************************** this is set to my current context , its my current name space
 
+ubuntu@master:~$ kubectl get po -n dev    ............**************** we can see some pod that v been  deployed in the dev namespace
+NAME      READY      STATUS       RESTARTS      AGE
+hello     1/1       running         0            8m38s
+webapp    1/1       running         0             12s
+
+ WHEN I RUN  kubectl get po  i want it TO LIST THE pods in my (dev namespace) in the default namespace
 ----
-kubectl config set-context --current --namespace=dev
+at the moment the default namespace is my current namespace, thats why when i execute  kubectl get po , it says no resources in the default namespace bt once i run :
+kubectl config set-context --current --namespace=dev       **v modified my current workspace such that if i execute  kubectl get po it lists d pods in the dev namespace
 
+ubuntu@master:~$ kubectl get po     ....******************************  kubectl get po it lists d pods in the dev namespace, so d dev namespace has become my current  
+NAME      READY      STATUS       RESTARTS      AGE                                                                                    namespace
+hello     1/1       running         0            8m38s
+webapp    1/1       running         0             12s
+
+**************originally, it was the default namespace that was the current namspace but i v changed my context to dev
+
+
+########################### MORE PODS COMMANDS ............7:25
 kubectl get all
 kubectl get events
+kubectl delete po (podname)
 kubectl delete all --all 
 kubectl delete all --all -n dev     
-kubectl delete pod --all
-kubectl get pods 
-kubectl get pods -o yaml  
+kubectl delete pod --all                                                                                               interpretin , creatin &mangin d pod 
+kubectl get pods                               Anotation is a metadata info abt ur pod that is set by d sys/k8 service n it is what d sys wil understan when it comes to
+kubectl get pods -o yaml   ...   will present the pod in that are runnin in our clustera yml file, we can see annotation,bt when we made d file to create d pod der was no anotation
 kubectl get pods --show-labels
-kubectl get pods -o wide
+kubectl get pods -o wide           **************** gives more inf abt the pods
 kubectl get pods -o wide --show-labels
+kubectl get node
+kubectl get node -o wide    *************** we see d nodes we v , the k8 version, the kernel version and the runtime which is containerd and not docker .(tk note)
+kubectl delete node node5   ******************* to delete node5
 
-kubectl  describe pod <podName>
+in docker we run: docker inspect  to get more info abt the container
+kubectl  describe pod <podName>      *********to get more info abt the pod 
 kubectl  describe pod <podName> -n <namespace>
 
-kubectl run app --image=mylandmarktech/hello --port=80
+16:10:00
+kubectl run app --image=mylandmarktech/hello --port=80              ... dis wil deploy a pod called hello
 
-hello.yml  
-=========   kams  
+
+hello.yml       >>>>>>>>>>>>>>>>   using the declaractive approach  ....  (20:50) *************WE want to creat/deploy an appl called pod
+=========   kams     ........ this is the acronmy, it stands for kind,apiversion, metadata, spec
 kind: Pod   
 apiVersion: v1    
 metadata: 
@@ -33,10 +57,21 @@ spec:
    containers:
    - name: hello   
      image: mylandmarktech/hello  
-     ports:
-     - containerPort: 80  
+     ports:                                          *********with dis definition file, we can deploy our application ,,,
+     - containerPort: 80      #######  we did nt declacre our  namespace so.. but what is our current namespace???/ wher wil d app wil be deployed (dev namespace bc we made)
+                                                                                                        it our default namespace by modifing it above
+***********************************************************************************************************************************************************
+kubectl api-resources   *********** to get the apiresources for our pod,, we can see so many api resources , ...
+kubectl api-resources | grep pod      ....  so to specify n grep for pod , we see we can either call it pods or po and the apiversion is v1
+******************************************************************************************
 
-kubectl api-resources | grep pod  
+########## to deploy the manifestfile  we cfeated above 
+mkdir manifests
+vi manifest/hello.yml  and paste the file 
+kubectl apply -f manifest
+
+
+
 
 ServiceDicovery:
 ===============
