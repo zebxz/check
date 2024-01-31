@@ -70,18 +70,61 @@ mkdir manifests
 vi manifest/hello.yml  and paste the file 
 kubectl apply -f manifest
 
+ubuntu@master:~$ kubectl apply -f manifest
+error: unable to edcode "manifest/hello.yml:json cannot unmarshla array into 
+       GO struct field ObjectMeta.metadata.labels of type map[string}string
 
+************************so he vi again into the file and saw taht he listed metadata bt its suppose to be a dictionary not a list 
+    metadata: 
+   name: hello
+   labels:
+     -app: hello     .....so he corrected it to  app: hello
+  
+ubuntu@master:~$ kubectl apply -f manifest
+pod/hello created
+ubuntu@master:~$ kubectl get all
+NAME            READY       STATUS      RESTARTS       AGE
+Pod/hello         1/1        Running     0              18s               *********** the pod is running bt hw do we discover the pod in our clutser?  service discovery
 
 
 ServiceDicovery:
-===============
+==============
+*********the first service type is:
 ClusterIP is the default kubernetes service type that support
 communication within the cluster. 
-
+************** to communicate within our cluster, we will use a clusterip service type                                             LEts cal it 
+e.g we v the hello app on node1,& d webapp on node9 ,, for webapp to comm with hekllo app, we v to create a service for our helloapp, helloSVC n D sevice type is clusterip
+if u look at the pod we created in the definition file , we v a label; app is mapped to hello
 POD=labels:
-  app: hello     
+  app: hello            *******........... app is mapped to hello
 Serice = selectors:  
    app: hello  
+
+********************* for a service to deiscove rany pod, its going to be using labels, so what is the label of the pod
+so we v labelas n we also v selectors...  so ders a label that says app is mappsed to label , its under the pod, so we v pot label
+under service, we ar goin to v sevice selectors
+in my k8 cluster der wil b many sevices,  hw wil the servoice be able to identify this pod,, it nids to create a selector that matches this pod like that so ... (hello)
+#########so in the hello service (helloSVC), ther will be a selector, n the selector s saying app, bc this selector depends on the pod, so in the app pod, we v a label n app
+is mapped to hello 
+*******************
+webService                                 hello
+hellSVC                                    labels
+selector                                   app:hello
+app:hello               d app has a container port  80
+ClusteriP                 
+targetport80       when u create a service, wher u v the container port will be represented by the target port, so d servixe is targeting port80
+ so the webapp wants to com with thw helloapp , d webbapp can nt comm with d helloapp directly in the cluster, its nt supported in k8, so hw is the com to be established?,
+via service discovery..
+lets assume the webapp pod has its own label:
+webapp
+app:web
+8080           container port
+so the webapp wants to com with thw helloapp, the comm is goin to be est via the helloSVC ,webapp is goin to route traffic to the service that is controlling the hello pod
+once it does that, then the service will comm with the pod in this order
+this is service within the cluster
+in k8 we can create a service and we will look at theta very soon 
+
+lets talk abt k8 SVC:  .........,30:52
 
 kubernetes Service:
   In Kubernetes Service makes our pods accessible/discoverable 
@@ -91,12 +134,14 @@ kubernetes Service:
   will be allocated for that serivce and DNS entry will be created for that IP.
   So internally we can access using service name(DNS).
 
+
+########CREATING SERVICE FOR HELLPAPP
 hellosvc.yml  
-=========== kams   
+=========== kams    ..... .....acronmy
 kind: Service  
 apiVersion: v1  
 metadata:
-  name: hellosvc  
+  name: hellosvc    ... i can assign a servicename
 spec:
    type: ClusterIP  
    selector: 
