@@ -1,4 +1,4 @@
-1:27 ........we studied devops with aws, linux and k8  9058901010  2400
+\1:27 ........we studied devops with aws, linux and k8  9058901010  2400
 
 ubuntu@master:~$ kubectl get po 
 no resources found in the default namespace    ****************************** this is set to my current context , its my current name space
@@ -186,7 +186,33 @@ service/hellosvc created
 ubuntu@master:~$ kubectl get all 
 we see both opd n service 
 ubuntu@master:~$  kubectl get events        38:00
-with the help of the container runtime, w esee it created n started the container  
+with the help of the container runtime, w esee it created n started the container 
+
+We can check the service 
+   Kubectl  get svc 
+NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         
+Hellosvc           ClusterIP           10.105.209.246              none              80/TCP      97s
+          
+To get the end point 
+Kubectl get ep
+NAME                    ENDPOINTS                  AGE
+Hellosvc                  10.36.0.1.:80             105s
+
+Kubectl  get svc –o wide
+NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         SELECTOR
+Hellosvc           ClusterIP           10.105.209.246              none              80/TCP      116s         app=hello
+          
+ (which is the service ip)
+Curl  cluster-ip   10.105.209.246        ,, and we successfully communicated with the app usin d service ip address
+When I wnt to curl, we curl on port 80 cos if my service port was smt else then I v to write the port number but since it is 80 , I can curl without it
+
+So my hellosvc is a clusterip service  and it has a service ip address, so when the webapp is trying to comm wit it its going to use this service n the webapp talks to the service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number wich is also port80 in this case
+
+Other commands regarding service
+
+kubectl get svc -n <namespace>       (svc is service)
+kubectl get svc -n dev  
+
 
 kubectl get svc -n dev  
 kubectl describe svc  
