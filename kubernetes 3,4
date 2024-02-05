@@ -309,7 +309,7 @@ ubuntu@master:~$ kubectl get po
 NAME            READY       STATUS      RESTARTS       AGE
 hello            1/1         Running      0             32m
 
-********web wasnt recreateed bc when u use pod to deploy k8 objects, pods cannot be recreaed and it cannot be scaled
+********web wasnt recreated bc when u use pod to deploy k8 objects, pods cannot be recreaed and it cannot be scaled
 e.g we can decide to have more replicas of hello if we ar going to be using pod
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod    .....
 (we shud use controllers like Replica Sets, Deployment, Deamon sets to keep pod alive)
@@ -351,15 +351,23 @@ myapp-master      1/1        running     0              21s
 my app              1/1       running     0             64s        ***** immediately the file was created, a static pod was created.
 
 ubuntu@master:~$  kubectl describe po myapp
+ubuntu@master:~$ kubectl delete po --all
+pod hello deleted
+pod myapp deleted
+pod myapp-master deleted    ************ all pods deleted 
 
+ubuntu@master:~$ kubectl get po
+NAME            READY       STATUS      RESTARTS       AGE                the pod was recreated
+myapp-master     1/1         Running      0             8s     ...  this pod is still running bc it is a static pod wich is controlled by the kuberlete service 
+                                                                  so long as the manifest file exists, it wil be restarted
 
-
+************to delete a static pod , we v to delete the manifest file..
 ---
 NB:
 We should not create pods directly to deploy applications.
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
-
+                ######################CONTROLLERS****************************************1:05:00
 controllerManagers:
   ReplicationControllers 
   ReplicaSets, 
@@ -375,44 +383,92 @@ For example, once a pod is running in your
 cluster and the node hosting the pod fails then pods running on the node
 will fail. Kubernetes treats that level of failure as final. 
 You would need to create a new Pod to recover,even if the node later becomes healthy.
+************Therfore we nid to use controller mangers such that if this  node goes down a controler manger will ensure that this pod is rescheduled on another node 
+
+1:07:00   ################ HOW TO CREATE A REPLICATION controller, that wil be creating a particular pod
 
 ReplicationControllers = rc 
 =========================== kams 
-kind: ReplicationController
+kind: ReplicationController      ......keypair
 apiVersion: v1   
-metadata:  
-   name: apprc 
-   namespace: dev   
+metadata:    ..... dictionary
+   name: apprc                    .....app replication controller ,,it wil control d state of my pod,for it to select d pod, for selector,app is mapped to web, so the RC wil
+   namespace: dev                                            be selectin any pod dat has the label app=web n it wil ensure 3replicas are running  ...1:14:53
    labels:
-      app: apprc  
+      app: apprc          ..... this is my replication controller label
 spec:
    selector:
       app: web  
    replicas: 3    
-   template:  #podTemplate  
+   template:     #podTemplate   ... this is my pod template
       metadata: 
-         name: webapp 
+         name: webapp       ...... my pod here is webapp          1;10;56
          labels: 
            app: web    
       spec:
          containers:
          - name: app  
-           image: mylandmarktech/java-web-app
-           ports:
-           - containerPort: 8080 
----
-kind: Service  
+           image: mylandmarktech/java-web-app       ......  .... THIS IMAGE is on a tomcat base image  n the container port is 8080 
+           ports:                                  this replication controller we ar creating called apprc, its menat to mange this pod info here ie the pod template ..
+           - containerPort: 8080                                 now for replica we want 3 n d pod label is web,so selector label is also web
+---                                
+kind: Service                              ###### AS part of this deployment, we wnt to create a service as well           
 apiVersion: v1  
 metadata:
-  name: webappsvc  
+  name: webappsvc       **********name of service 
 spec:
-   type: NodePort  
+   type: NodePort         *********this app nids to be accessed externally so we change this from ClusterIP to NodePort  ... . ..1:17:25
    selector: 
-      app: web    
+      app: web             ********this is alos based on the pod template
    ports:
    - port: 80  
-     targetPort: 8080
-     nodePort: 31000 #30000-32676 
+     targetPort: 8080               >>************target port is the smae as container port
+     nodePort: 31000 #30000-32676            *****isnce we hv node port, i can also decide the node pod to us so 31000 .... nodport range frm 30000 - 32676
+                                                    if i dnt choose a pod n #nodePort:, the system wil dynamically assign a port n it will be with the port range
+
+vi manifests/app.yml   and paste file 
+kubectl apply -f manifest/app.yml     .......deploy application
+successful
+
+ubuntu@master:~$ kubectl get all
+NAME                 READY       STATUS      RESTARTS       AGE
+pod/apprc-kgh2g        1/1         Running      0             20m
+pod/apprc-tmlz8        1/1        running      0              20s  
+pod/apprc- zncll          1/1       running     0             20s       
+
+#############AL the pods are running ,, 3pods are running bc in the manifest file we defined 3replicas
+
+ubuntu@master:~$  kubectl get rc 
+NAME        DESIRED    CURRENT      READY        AGE 
+apprc        3            3           3          80s
+
+ubuntu@master:~$  kubectl describe rc apprc       ..... to see more info
+ubuntu@master:~$    kubectl get events
+ubuntu@master:~$   kubeectle get svc -0 wide 
+NAME            TYPE           CLUSTERIP            EXTERNAL     PORTS        AGE          
+hellosvc       clusterip       10.105.209.246         none         80/TCP
+webappsvc       Nodeport         10.99.250.229        none        80:31000/TCP
+                            this is the service ip
+
+ubuntu@master:~$ kubectl get ep
+NAME             ENDPOINTS
+hellosvc            none               **** the hello pod is nt running bc we deleted the pods so this service doesnt v any endpoint
+webappsvc          10.36.0.1:8080, 10.36.2:8080, 10.44.0.2:8080      *********** webappsc has 3endpoints , we hv 3ports here if i wnt to comm wit them it has to be done
+                                                                       via the sservice
+ubuntu@master:~$ kubectl get all
+NAME                 READY       STATUS      RESTARTS       AGE
+pod/apprc-kgh2g        1/1         Running      0             3m9s
+pod/apprc-tmlz8        1/1        running      0              3m9s  
+pod/apprc- zncll          1/1       running     0             3m9s       
+
+ubuntu@master:~$  curl 10.99.250.229  (this is the serviceip)
+successful
+
+&************* we hv 3ports here if i wnt to comm wit them it has to be done via the sservice  but we v a nod eport that has been created
+with  the node port service called webappSVC
+WE V 3REPLICAS E.G     webapp1 , webapp2, webapp3    ,, bt when der ar some many names der can be a problem,, but when it comes to our service that is routing traffic to 
+al dis pods 
+
 
 masterIP = 3.128.206.139
 NODE9-IP= 3.148.106.135
