@@ -1,4 +1,7 @@
-\1:27 ........we studied devops with aws, linux and k8  9058901010  2400
+\1:27 ........we studied devops with aws, linux and k8  
+****************************************************************************************************
+kubernetes Service , FQDN = Fully Qualified Domain name.
+********************************************************************************************************************
 
 ubuntu@master:~$ kubectl get po 
 no resources found in the default namespace    ****************************** this is set to my current context , its my current name space
@@ -196,7 +199,7 @@ Hellosvc           ClusterIP           10.105.209.246              none         
 To get the end point 
 Kubectl get ep
 NAME                    ENDPOINTS                  AGE
-Hellosvc                  10.36.0.1.:80             105s
+Hellosvc                  10.36.0.1.:80             105s           .... it has just one end point  43:40
 
 Kubectl  get svc –o wide
 NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         SELECTOR
@@ -206,7 +209,8 @@ Hellosvc           ClusterIP           10.105.209.246              none         
 Curl  cluster-ip   10.105.209.246        ,, and we successfully communicated with the app usin d service ip address
 When I wnt to curl, we curl on port 80 cos if my service port was smt else then I v to write the port number but since it is 80 , I can curl without it
 
-So my hellosvc is a clusterip service  and it has a service ip address, so when the webapp is trying to comm wit it its going to use this service n the webapp talks to the service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number wich is also port80 in this case
+So my hellosvc is a clusterip service  and it has a service ip address, so when the webapp is trying to comm wit it its going to use this service n the webapp talks to the
+service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number wich is also port80 in this case
 
 Other commands regarding service
 
@@ -216,23 +220,78 @@ kubectl get svc -n dev
 
 kubectl get svc -n dev  
 kubectl describe svc  
-kubectl get ep  
-kubectl describe svc   
+kubectl get ep      ... we can get the end point.. one/ A single service can route traffic/LB to multiple replicas of an appl  43:20
+kubectl describe svc     gives more info abt the service
 kubectl delete svc
 
-What is FQDN?
-FQDN = Fully Qualified Domain name. 
+ubuntu@master:~$  kubectl describe svc hellosvc
+Name:             hellosvc
+Nmaespace;         dev
+Labels;            none
+selector          app=hello
+IP                 10.1 05.209.246
+IPS:               10.105.209.246
+Endpoints:          10.26.0.1:80
+
+ubuntu@master:~$  curl  10.26.0.1:80   --------> 10.36.0.1:80 
+when we curl on port 80, the service route the traffic to the container IP address  ie we curl to acces the container on that iP address
+
+
+                     #########################  FQDN
+
+*******************************
+What is FQDN?               ..........           45:21   in kubernetes by default we create containers in the samenamespace to enable them comm wit each oda, however, 
+FQDN = Fully Qualified Domain name.                                                     if pods ar nt in the same namespace we have to use the FQDN
 If one POD need to access service & which are in different names space 
 we have to use the FQDN of the service.
-Syntax: <serivceName>.<namespace>.svc.cluster.local
-ex: myappsvc.dev.svc.cluster.local
+******************Syntax: <serivceName>.<namespace>.svc.cluster.local
+                 ex: myappsvc.dev.svc.cluster.local
 
-curl hellosvc.dev.svc.cluster.local
+ ubuntu@master:~$    curl hellosvc.dev.svc.cluster.local 
+curl: (6) could not resove host: hellosvc.dev.svc.cluster.local                                                                47:30
+*************this is bc this is nt hw am suppose to run this command, am suppose to run it in a diff appli bc that is going to be within the clutser,, if we v more than one
+container or more than one pod running we can execute this command in one other pod so that we ar able to access the appl that runs in a completely diff Namespace.
 
 serviceNAME  = hellosvc   
-service FQDN = hellosvc.dev.svc.cluster.local
+service FQDN = hellosvc.dev.svc.cluster.local    
 
+    ############################################################TO USE FQDN 
+
+let me jst use a command to create a new pod   in the default namespace
 kubectl run web --image=mylandmarktech/java-web-app --port=8080 -n default  
+
+ubuntu@master:~$ kubectl get po
+NAME            READY       STATUS      RESTARTS       AGE
+hello            1/1         Running      0              4s           
+web               1/1        running     0               10s       .... we see web running
+
+ubuntu@master:~$  kubectl get po -0 wide -n default 
+NAME            READY      STATUS      RESTARTS      AGE     IP            NODE      NOMINATED NODE
+web                1/1      running      0            48s    10.44.0.1      node1
+
+ubuntu@master:~$ kubectl get svc 
+NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         
+Hellosvc           ClusterIP           10.105.209.246              none              80/TCP    14m
+
+********i cud a command in this pod  just like docker  kubectl exec web,  or interactive  (kubectl exec -it web) its the same in k8
+ubuntu@master:~$   kubectl exec -it web -n default bash         .....  now, i v a pod, the name of my container is web, in default namespace
+kubectl exec [POD] {COMMAND] is DEPRECIATED and will be removed in a future version.
+root@web:/usr/local/tomcat#                *************now we are inside the container and it is running in the default name space 
+     #### i want to comm with my hello container using the FQDN
+
+root@web:/usr/local/tomcat#  curl hellosvc.dev.svc.cluster.local        52:47   
+we successfully commu with the container (they are in 2diff name space)
+
+root@web:/usr/local/tomcat#  curl hellosvc
+curl: (6) could not resolve host: hellosvc    ,,,  whne i use just the service name am unable bc they ar in diff namespaces, so u hv to use the FQDN when d containers ar 
+running in  diff namespaces.
+                                                                                                                                                                    container
+root@web:/usr/local/tomcat#  exit              54:10  ####remember earlier we config our default namespace to be dev n now we didnt indicate default so its in dev lik hello
+ubuntu@master:~$  kubectl exec -it web bash             ......these are now containers in the same namespace n using just the service name am able to comm
+root@web:/usr/local/tomcat# curl hellosvc        *******now am accessing a container that are in the same namespace .. in the same namespace wit just d service name it wil work n 
+successfully communicated                                                                 also with the FQDN it wil work ..
+
+
 
 
 IQ: what is Static Pods ?
