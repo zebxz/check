@@ -1,5 +1,6 @@
 \1:27 ........we studied devops with aws, linux and k8  
 ****************************************************************************************************
+1:51:20   ****he said we are talking abt hw we deploy applictaions in k8 
 kubernetes Service , FQDN = Fully Qualified Domain name.,,  what is Static Pods ?,, controllers
 ********************************************************************************************************************
 
@@ -361,7 +362,7 @@ NAME            READY       STATUS      RESTARTS       AGE                the po
 myapp-master     1/1         Running      0             8s     ...  this pod is still running bc it is a static pod wich is controlled by the kuberlete service 
                                                                   so long as the manifest file exists, it wil be restarted
 
-************to delete a static pod , we v to delete the manifest file..
+************to delete a static pod , we v to delete the manifest file..   .... I BLIV HE DELEted the manifest file
 ---
 NB:
 We should not create pods directly to deploy applications.
@@ -468,12 +469,31 @@ successful
 with  the node port service called webappSVC
 WE V 3REPLICAS E.G     webapp1 , webapp2, webapp3    ,, bt when der ar some many names der can be a problem,, but when it comes to our service that is routing traffic to 
 all dis pods ,,, the target port is 8080 and we v a master node as part of the cluster and our service is nodeport and this menas it can process external traffic 
+e.g der ar 25million users trying to acces the appli , what happens is that each of this node has an IP address (a node IP address) he login to aws n got the ip adress
+(we had deleted node5 earlier so now he deleted it in aws)                         (nodeport)
+1:34:18  .. so the users are typing any of the node ip e.g masterIP = 3.128.206.139:31000 , now when traffic gets into this cluster , rmeber that in our clusters, we v 
+kubeproxy running and as such, it will immediately identify that this traffic is meant for a particular service n so it wil be routed immediately to the service concerned 
+frm the service, which  now has endpoints ie our pods/containers, so traffic gets to the endpoints
 
-
+in our cluster we have
 masterIP = 3.128.206.139
 NODE9-IP= 3.148.106.135
+                                  *************this is service disCOVERY, WHICH IS AVERY KEY aspect to take note of 
+3.148.106.135:31000  ... accessed online successful, momentarily, we can see d trafic routed as it switches btw d pod names: pod/apprc-kgh2g ,pod/apprc-tmlz8,pod/apprc- zncll 
+
+ubuntu@master:~$ kubectl get all
+NAME                 READY       STATUS      RESTARTS         AGE       IP           NODE         NOMINATED NODE       READINESS
+pod/apprc-kgh2g        1/1         Running      0             15m      10.36.0.2      ndde9         none                none
+pod/apprc-tmlz8        1/1        running      0              15m      10.36.0.1      node9          none
+pod/apprc- zncll          1/1       running     0             15m      10.44.0.2       node1             none
+
+1:39:44 ###################### # ##########READ UP
+Kubernetes Objects
+NodePort - Exposes the service on each Node's IP at a static port. A ClusterIP service, to which the NodePort service will route, is automatically created. You'll be ableito contact the NodePort service, from outside the cluster, by using
+"<NodelP>:<NodePort›".
 
 
+ ##########more COMMANDS FOR REPLICATOR CONTROLLERS
 labels:    app: web   = address: gra  
 selectors: app: web   = address: gra  
 replicas = 3  
@@ -484,24 +504,83 @@ kubectl get rc
 kubectl get rc -o wide  
 kubectl get rc -n <namespace>
 kubectl get all
-kubectl scale rc <rcName> --replicas <noOfReplicas>
-kubectl scale rc apprc --replicas 4  
+kubectl scale rc <rcName> --replicas <noOfReplicas>   ..     **************** ..... WE CAN ASLO SCALE the replication controller 
 
+kubectl scale rc apprc --replicas 4     
 kubectl describe rc <rcName>
 kubectl delete rc <rcName>
 
-kubectl scale  pod app --replicas 4    = NO        
+###################   **********.................. EXAMPLE
+ubuntu@master:~$ kubectl delete po --all
+deleted    ************ all pods deleted 
+pod/apprc-kgh2g        deleted
+pod/apprc-tmlz8        deleted
+pod/apprc- zncll       deleted
+
+ubuntu@master:~$ kubectl get po
+NAME                 READY       STATUS      RESTARTS       AGE
+pod/apprc- 7jr9m      1/1         Running      0            12s
+pod/apprc-ffv25       1/1        running      0             12s  
+pod/apprc- hdd8r      1/1       running     0            12s    ............. all the pods have been rescheduled/recreated bc my pods are been manged by a replication
+                                                                      controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
+                                                            selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state  
+                                                         of my appli which is 3 
+
+
+####################################WE CAN SCALE ..... SO IN deploying i shud nt deploy using a pod as an object  but rather controllers managers like RC
+
+ubuntu@master: ~$
+ubuntu@master:~$ kubectl scale rc appre -- replicas 4
+replicationcontroller/appre scaled
+ubuntu@master: ~$
+ubuntu@master: ~$ kubectl get po
+NAME            READY       STATUS           RESTARTS           AGE
+apprc -64d27     1/1      Running                               7s
+apprc-7jr9m       1/1     Runn ing                              2m3s
+apprc-ffv25       1/1      Running                              2m3s
+appre-hdd8r       1/1      Running                               2m3s
+
+ubuntu@master: ~$
+ubuntu@master:~$ kubectl scale rc appre --replicas 0
+replicationcontroller/apprc scaled
+ubuntu@master:~$
+ubuntu@master:~$
+ubuntu@master: ~$
+ubuntu@master:~$
+ubuntu@master: ~$ kubectl get po
+No resources found in dev namespace.
+ ubuntu@master: ~$
+ubuntu@master: ~$
+ubuntu@master: ~$
+ubuntu@master:~$ kubectl scale rc appre -- replicas 2
+replicationcontroller/appre scaled
+ubuntu@master: ~$
+ubuntu@master: ~$ kubectl get po
+NAME            READY       STATUS           RESTARTS           AGE
+apprc -fsfsk     1/1        Running                                 4s
+apprc-lzmdn      1/1       Runn ing                                4s
+
+
+kubectl scale  pod app --replicas 4    = NO        ,, we cant scale pod ..................1:46:41
 kubectl scale  rc apprc --replicas 1   = YES  
 kubectl scale  rc apprc --replicas 4   = YES  
 kubectl delete rc apprc
 
-1 replicas running and serving 10m requests from users    
+
+###################******************* we can scle depending on demand 
+1 replicas running and serving 10m requests from users       ... ...****** if request incresases to 50m users we can then scale up to 5
 5 replicas running and serving 50m requests from users   
 spike 
-  docker is use to containerise  
-  kubernetes is used to Orchestrate containers  
+     but we cant sacel in docker , thats why in our env, we use docker to:
+  docker is use to containerise                    
+  kubernetes is used to Orchestrate containers     .. .. .with k8, we can scale,, if a junior engr mistakenly delete our pods, k8 will automatically recreate them 
 
- containers are running in pods   
+1:49:30**************** ..... there is no component in docker that is capable of recreating containers,, so we shudnt use a software taht is limited ,but docker is nt 
+completely useless, so we are studying docker bc we dnt need to use k8 to create docker files and build images, k8 does nt use docker files to build n share images in image 
+registry so we nid docker to be able to create a docker file,build images and share those images to docker registry so that k8 can pull the images to deploy application
+
+ 
+containers are running in pods   
  pods can be deployed/managed by using:
  1. pods as a kubernetes objects  
  2. controllerManagers kubernetes objects   
