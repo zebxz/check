@@ -592,48 +592,50 @@ pods can be deployed/managed by using:
  2. controllerManagers kubernetes objects   
   How POD is manage  
 
-ReplicaSet = RS :
+ReplicaSet = RS :   ...  ****************HOW TO USE REPLICA SET TO deploy our application    ......1:53:50
 ==========
 What is difference b/w replicaset and replication controller?
 RS is the next generation of replication controllers 
 The only difference as now is the selector support.
 
-RC --> Supports only equality based selectors.
-key == value(Equal Condition)
+RC --> Supports only equality based selectors.    ......equality based is equal conditions
+key == value(Equal Condition)    
 selector:
     app: javawebapp
     tier: fe    
     client: tesla  
-
-RS --> Supports eqaulity based selectors and set based selectors.  
+###while
+RS --> Supports eqaulity based selectors and set based selectors.  ,(set based is that we can hv keys in multiple volumes)
 eqaulity based:
 key == value(Equal Condition)  
 set based:
-  key in [ value1, value2, value3 ]
+  key in [ value1, value2, value3 ]   
 
+      e.g for replication controller
 selector:
    matchLabels:   -# Equality Based
     key: value
     app: javawebapp
     tier: fe    
     client: tesla
-
-   matchExpressions: -# Set Based
-   - key: app
+WHILE RS                                for set base we can have one key that is equal to multiple values or a set of values
+   matchExpressions: -# Set Based  ,   under selectors: it can either be  matchlabels which is Equality conditions OR matchexpression which is set based where we can have
+   - key: app              ********* we can hv key, operator, values , so 'app' alone can match to javawebapp,myapp and fe  ... .....1:56:50
      operator: in
      values:
      - javawebpp
      - myapp  
      - fe  
-rs.yml  = kams 
+**************************************************************************************************************
+rs.yml  = kams      ******************************** CREATING a rePLICA SET  .. this is the template
 --------------
 kind: ReplicaSet
 apiVersion: apps/v1  
 metadata : 
    name: rsName  
-spec:
+spec:                                      spec, can start with template bt for best practice we also hv it in this order...............1:58:12
    replicas: noOfReplicas  
-   selector:
+   selector:                *********************   we can either hv equality based selector or set based selector
       matchLabels:
          <key>: <value>
          <app>: myapp
@@ -656,14 +658,15 @@ spec:
          image: <imageName:tag>
          ports:
          - containerPort: containerPortNumber  
----
+******************************************************************************************************DEPLOYING appl using RS
+---                            WE wnat to DEploy rs.yml
 rs.yml   
 kind: ReplicaSet
 apiVersion: apps/v1  
 metadata:
-  name: pythonapprs    
+  name: pythonapprs            ... we are deploying a python web applictaion
 spec:
-  replicas: 1 
+  replicas: 1       ... if we dnt pass any replica, its going to crreate 1replica
   selector:
     matchLabels:
       app: python    
@@ -675,11 +678,11 @@ spec:
     spec:
       containers:
       - name: web 
-        image: mylandmarktech/python-flask-app:2    
+        image: mylandmarktech/python-flask-app:2       .. we are puling this frm docker hub
         ports:
-        - containerPort: 5000      
+        - containerPort: 5000        ... as seen in the file in docker hub
 ---
-kind: Service  
+kind: Service          ********* we wnt to create a service that can access this appli externally
 apiVersion: v1  
 metadata:
   name: pythonsvc    
@@ -689,19 +692,57 @@ spec:
       app: python       
    ports:
    - port: 80  
-     targetPort: 8080
-     nodePort: 31100 #30000-32676 
+     targetPort: 5000   ...... shud be the smae as container port
+     nodePort: 31100 #30000-32676  ......... we already used port 31000 earlier, so now we use can use a diff port like 31100
 
-masterIP = 3.128.206.139
+now ,,, vi rs.yml  and paste the file ..........  (its a yml file, manifest file are written in a language called yml)
+kubectl apply -f rs.yml  
+successful
+
+ubuntu@master:~$  get all 
+NAME                          READY       STATUS                RESTARTS           AGE
+pod/apprc -986bl                  1/1        Running                  0               4s
+pod/apprc-ffmtc                   1/1       Runn ing                  0            4s
+pod/pythonapprs-94dfl            0/1      containerCreating           0
+
+ubuntu@master:~$  kubectl get ep
+NAME             ENDPOINTS                 AGE 
+hellosvc          none                     112m
+pythonsvc         10.36.0.2:5000            23s
+webappsvc     10.36.0.1:8080,10.44.0.2:8080      69m
+
+ubuntu@master:~$  kubectl get po -o  wide
+
+ubuntu@master:~$  kubectl get svc -o wide
+NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         
+Hellosvc           ClusterIP           10.105.209.246              none              80/TCP    114m
+python svc          nodeport             10.99.232.74               none
+webappsvc           nodeport            10.99.250.229               none
+
+***********nternally, i created a nodeport service for python but that nodeport  service also has a cluster IP assigned to it, so if i wnat to access my python appl, i 
+can curl, using the clusterip ,to  access the appl internally
+
+ubuntu@master:~$ curl 10.99.232.74
+App Works!!! ubuntu@master:~$              .......2:10:06
+
+i can also curl by using one of the IP addresses of my servers
+in our cluster we have
+masterIP = 3.128.206.139           ... i think we already deleted master
 NODE9-IP= 3.148.106.135
 
-  curl 3.148.106.135:31100 
+ubuntu@master:~$ curl 3.148.106.135:31100
+App Works!!! ubuntu@master:~$   
+
+also on the browser :3.148.106.135:31100
+successful
+
+***************appl successfully deployed using replica set*******************************
 
 docker pull mylandmarktech/nodejs-app:2  
 docker tag mylandmarktech/nodejs-app:2 mylandmarktech/nodeapp
 docker push mylandmarktech/nodeapp  
 
-node-rs.yml  
+node-rs.yml            (he tried to pull an image from a private repository then he made teh repo public so that we can access it)
 ==========
 kind: ReplicaSet
 apiVersion: apps/v1  
