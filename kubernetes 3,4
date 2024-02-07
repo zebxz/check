@@ -3,7 +3,8 @@
 1:51:20   ****he said we are talking abt hw we deploy applictaions in k8 
 kubernetes Service , FQDN = Fully Qualified Domain name.,,what is Static Pods ?,, controllers, CONTROL MANAGERS, HOW TO CREATE A REPLICATION controller, that wil be creating a particular pod
 
-HOW POD IS MANGED
+HOW POD IS MANGED ,create a secret for dockerhub
+
 
 ********************************************************************************************************************
 
@@ -770,7 +771,7 @@ spec:
         app: node    
     spec:
       imagePullSecrets:
-      - name: dockerHublogin
+      - name: dockerhublogin
       containers:
       - name: nodeapp  
         image: mylandmarktech/nodeapp   
@@ -807,19 +808,67 @@ buntu@master:~$  kubectl decribe po node-rs-cz9t2
 authorization and this is bc we ar tyring to pull the image froom a private image registry .. therefore we nid to create a secret for dockerhub
 
    
-when we run kubec
-################################################sUCCESSFULLY deployed..........
-
-kubectl create secret docker-registry regcred
- --docker-server=<your-registry-server> 
- --docker-username=<your-name> 
- --docker-password=<your-pword>
- --docker-email=<your-email>
+kubectl create secret docker-registry regcred     ...****************** docker-registry is the name of the secret which we call regcred 
+ --docker-server=<your-registry-server>  docker.io
+ --docker-username=<your-name>  mylandmarktech
+ --docker-password=<your-pword>   admin123
+ --docker-email=<your-email>     ********************************can enter email but without email it will work
 
 
-kubectl create secret docker-registry dockerhublogin \
+*******i will run this in my k8  CLI server        ....................2:37:40
+
+kubectl create secret docker-registry dockerhublogin \             **************      we called it dockerhublogin
     --docker-server=docker.io --docker-username=mylandmarktech \
     --docker-password=admin123  
+
+ubuntu@master:~$ kubectl get secret
+and now i can see the secret    .... now i can pull images
+ubuntu@master:~$    kubectl describe secret dockerhublogin
+i can also dercribe the secret
+
+*************** i will go back to my file above and under spec, i will add :imagepullsecrets; name:dockerhublogin
+
+ubuntu@master:~$  vi node-rs.yml 
+replicaset.apps/node-rs configured
+service/nodesvc unchanged
+buntu@master:~$
+ubuntu@master:~$ get po
+NAME                          READY       STATUS                RESTARTS           AGE
+pod/apprc -986bl                  1/1        Running                  0             64m
+pod/apprc-ffmtc                   1/1       Runn ing                  0             64m    
+node-rs-cx9t2                     0/1        ErrImagepull             0             10s
+pythonapprs-94dfl                 1/1        Running                  0
+buntu@master:~$
+buntu@master:~$  kubectl delete po node-rs-cz9t2
+pod"node-rs-cz9t2" deleted
+buntu@master:~$
+buntu@master:~$  kubectl get po
+NAME                          READY       STATUS                RESTARTS           AGE
+pod/apprc -986bl                  1/1        Running                  0             73m
+pod/apprc-ffmtc                   1/1       Runn ing                  0             73m    
+node-rs-jtmrb                     0/1        containerCreating             0             8s          ..... the new container is being created n later we see its running
+pythonapprs-94dfl                 1/1        Running                  0              33m
+
+################################################sUCCESSFULLY deployed..........  2:41:15
+
+ubuntu@master:~$  kubectl get svc -o wide
+NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         
+Hellosvc           ClusterIP           10.105.209.246              none              80/TCP    114m
+python svc          nodeport             10.99.232.74               none
+webappsvc           nodeport            10.99.250.229               none
+nodesvc             Nodeport             10.99.250.229              none           80/TCP
+
+
+ubuntu@master:~$  kubectl get ep
+NAME             ENDPOINTS                 AGE 
+hellosvc          none                     112m
+pythonsvc         10.36.0.2:5000            23s
+webappsvc     10.36.0.1:8080,10.44.0.2:8080      69m
+nodesvc         10.44.0.3:9981                10m            ************* the nodesvc  routing traffic to this endpoint
+
+
+############if we ar trying to access the nodesvc,  we can check in github, he checked in the repo we pulled the image frm, we wnt to access our nodejs appl, the ppl has
+some resful API
 
  RESTFULAPIs:
    /landmarktechnologies
