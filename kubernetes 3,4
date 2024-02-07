@@ -727,7 +727,7 @@ App Works!!! ubuntu@master:~$              .......2:10:06
 
 i can also curl by using one of the IP addresses of my servers
 in our cluster we have
-masterIP = 3.128.206.139           ... i think we already deleted master
+masterIP = 3.128.206.139           ... i think we already deleted master  earlier2
 NODE9-IP= 3.148.106.135
 
 ubuntu@master:~$ curl 3.148.106.135:31100
@@ -736,14 +736,24 @@ App Works!!! ubuntu@master:~$
 also on the browser :3.148.106.135:31100
 successful
 
-***************appl successfully deployed using replica set*******************************
+***************appl successfully deployed using replica set 
+*******************************
 
-docker pull mylandmarktech/nodejs-app:2  
+
+2:20:00 (he tried to pull an image from a private repository then he made teh repo public so that we can access it) 
+he then created a new private repo.. pull the nodejs image frm github, tag and pushed the same image to the new repo he created  
+2:26:32  .......   my job with docker is to containerize
+
+
+'###############ALL this is done in the docker server 
+docker pull mylandmarktech/nodejs-app:2  ............           .2:24:00
 docker tag mylandmarktech/nodejs-app:2 mylandmarktech/nodeapp
 docker push mylandmarktech/nodeapp  
 
-node-rs.yml            (he tried to pull an image from a private repository then he made teh repo public so that we can access it)
-==========
+
+######################## IN the k8 server, we ar deploying in k8 , docker only help us containerize n share the images in image registry
+node-rs.yml            
+==========                            deploying using replica set
 kind: ReplicaSet
 apiVersion: apps/v1  
 metadata:
@@ -780,6 +790,26 @@ spec:
      targetPort: 9981
      nodePort: 30500   #30000-32676  
 ---
+2:31:28
+ubuntu@master:~$  vi node-rs.yml 
+replicaset.apps/node-rs created
+service/nodesvc created
+buntu@master:~$
+ubuntu@master:~$ get po
+NAME                          READY       STATUS                RESTARTS           AGE
+pod/apprc -986bl                  1/1        Running                  0             64m
+pod/apprc-ffmtc                   1/1       Runn ing                  0             64m      #########error  pulling image
+node-rs-cx9t2                     0/1        ErrImagepull             0             10s
+pythonapprs-94dfl                 1/1        Running                  0
+buntu@master:~$
+buntu@master:~$  kubectl decribe po node-rs-cz9t2
+##############we the pod is controlled by 'a ReplicaSet'....can see the pod is in pending state bc of the image pull error: failed to pull image; access denied, may reQ 
+authorization and this is bc we ar tyring to pull the image froom a private image registry .. therefore we nid to create a secret for dockerhub
+
+   
+when we run kubec
+################################################sUCCESSFULLY deployed..........
+
 kubectl create secret docker-registry regcred
  --docker-server=<your-registry-server> 
  --docker-username=<your-name> 
