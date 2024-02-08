@@ -888,8 +888,8 @@ some resful API
 we run this online and successful
 
 
-   
-apiVersion: v1
+################################################################################################ this is probably for nxt class we didnt use this in this video   
+apiVersion: v1                                                   
 kind: Pod
 metadata:
   name: private-reg
@@ -899,7 +899,9 @@ spec:
     image: <your-private-image>
   imagePullSecrets:
   - name: regcred
+#########################################################################################
 
+i
 kubectl get rs 
 kubectl get rs -n <namespace>
 kubectl get rs -o wide  
@@ -912,7 +914,7 @@ kubectl delete rs <rsName>              ********** all the pod associated wit th
 kubectl scale rs nodeapp --replicas 3 
 kubectl scale rs nodeapp --replicas 0
 
-a
+
   landmarktechnologies
 
    http://34.219.16.213:31500/landmarktechnologies
@@ -920,28 +922,32 @@ a
     http://34.219.16.213:32000
 
 
-deployment of applications using ReplicaSet in kubernetes:  .. replica set is a controller manger bc applications are running in a pod4r
+deployment of applications using ReplicaSet in kubernetes:  .. replica set is a controller manger bc applications are running in a pod
+                                 THIS IS A POD TEMPLATE, and the pod is controlled by the replica set
 ReplicaSet:
    selector:
       matchLabels:
-         app:  node    
+         app:  node                                    the replica set wil identify the application based on the label
    template:
       metadata:
-         name: webapp  
+         name: webapp                          the name of the pod
          labels:
-            app: node  
+            app: node                            the replica set wil identify the application based on the label
       spec:
          containers: 
          - name: webapp  
            image: mylandmarktech/hello  
            ports: 
-           - containerPort: 80  
+           - containerPort: 80                we are tryin to deploy this container wich is running in a pod  n the name of the pod is webapp
 ---
 spec:
    type: NodePort  
    selector:
       app: node   
 
+
+
+############he said we will look at set based selectors as we progress with the course
 
 DaemonSet:
 ==========
