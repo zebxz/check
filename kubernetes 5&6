@@ -1,0 +1,642 @@
+
+
+Cluster ---> Nodes ----> Pods  ----> containers
+Deploying applications[creating pods] using Pod as a kubernetes object:   
+Deploying applications[creating pods] using controllerManagers as a kubernetes objects:   
+
+PodTemplate:
+spec:
+   metadata: 
+     name:  app   
+     labels:
+       app: fe    
+   spec:
+      containers:
+      - name: web    
+        image: mylandmarktech/hello   
+        ports:
+        - containerPort: 80    
+
+ReplicaSets:
+   replicas: 4   
+   selector:
+      matchLabels:
+        app: fe    
+      matchExpressions
+ReplicationControllers:
+   replicas: 4   
+   selector: 
+      app: fe  
+
+DaemonSets:
+==========
+https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+we deployed/provisioned a cluster:
+   nodes [ node1/node2/node3 ]  
+   nodeGroups :
+     dbnodes  [ dbnode1, dbnode2, dbnode3  ]
+     appnodes [appnode1, appnode2, appnode3]
+     webnodes [webnode1, webnode2, webnode13]
+
+ds.yml  = kams 
+-=====--------
+kind: DaemonSet    
+apiVersion: apps/v1    
+metadata: 
+  name: <dsName> 
+  labels: 
+    <key>: <value1> 
+spec:
+   selector:
+      matchLabels: # equality based
+        <key1>: <value1>  
+      matchExpressions: # set based
+      - key: <key>
+        operator: <in/not-in>
+        values:
+        - <value1>
+        - <value2>
+   template:  # podTemplate  
+     metadata: 
+       name: podName
+       labels:
+         key1: value1     
+     spec:
+       containers:
+       - name: containerName  
+         image: containerImage  
+         ports: 
+         - containerPort: 80 
+
+ds.yml 
+=====
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: pythonappds
+spec:
+  selector:
+    matchLabels:
+      app: python
+  template:
+    metadata:
+      name: webapp
+      labels:
+        app: python
+    spec:
+      containers:
+      - name: web
+        image: mylandmarktech/python-flask-app:2 
+        ports:
+        - containerPort: 5000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pythonsvc
+spec:
+   type: NodePort
+   selector:
+      app: python
+   ports:
+   - port: 80
+     targetPort: 5000
+     nodePort: 31100 #30000-32676
+
+Ticket6:
+========
+Explain the kubernetes objects recommended to ensure the scheduler schedule a pod  
+in each node or a group of selected node/nodeGroup
+- DaemonSets is the ONLY recommended object for pods to be scheduled in each node  
+Use cases: 
+   - logmgt applications - EFK/ELK    
+   - databaseBackup application    
+
+9 worker nodes: = 
+    dbnode1, dbnode2, dbnode3, appnode1, appnode2, appnode3
+    webnode1, webnode2, webnode13
+
+nodeGroups :
+    3 dbnodes  [ dbnode1, dbnode2, dbnode3  ]
+
+    3 appnodes [appnode1, appnode2, appnode3]
+    3 webnodes [webnode1, webnode2, webnode13]
+
+
+9 worker nodes: = 
+    dbnode1, dbnode2, appnode2, appnode3
+    webnode1, webnode2, webnode3
+
+    dbnode3, appnode1,
+
+DaemonSets: 
+   taint  
+
+master node   = tainted    
+worker Nodes  = untainted  
+
+kubectl describe node node1 
+kubectl describe node master  
+
+kubectl describe node node1  | grep -i taint 
+kubectl describe node master | grep -i taint  
+
+Ticket7:
+--------
+Provide a lecture on how pods can be scheduled on tainted nodes.
+In Kubernetes we use tolerations to schedule pods on tainted nodes.    
+Ticket8:
+ Deploy the logmgt application on all nodes including tainted nodes    
+----
+===========
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logmgt
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      name: hello
+      labels:
+        app: hello
+    spec:
+      tolerations:
+      - operator: Exists
+        effect: "NoSchedule"
+      containers:
+      - name: hello
+        image: mylandmarktech/hello
+        ports:
+        - containerPort: 80  
+Master node is tainted / taint  
+=============================  
+  -- recommissioning / upgrades / updates / patching  
+
+kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]
+kubectl taint nodes node1 key1=value1:NoSchedule-    [untaint the node]
+
+kubectl apply -f <ds-filename.yml>
+kubectl delete -f <ds-filename.yml>
+kubectl get ds 
+kubectl get ds -n <namespace>
+kubectl get all
+
+kubectl describe ds <dsName>
+kubectl delete ds <dsName>
+
+kubectl get/describe/delete/edit/apply/  
+
+Deployments  
+==========
+Deployment is a kubernetes object. 
+Deployment is the recommended kubernetes object deploying applications,  
+running workloads and managing/contolling pods in our environment.   
+
+Advantages:
+     Deploy/rollout a RS.
+     Updates pods (PodTemplateSpec).
+     Rollback to older Deployment versions.
+     Scale Deployment up or down.
+     Pause and resume the Deployment.
+     Use the status of the Deployment to determine state of replicas.
+     Clean up older RS that you don’t need anymore.
+
+---
+kind: Deployment   
+apiVersion: apps/v1    
+metadata:
+  name: <deploymentName> 
+  labels:
+    <key>: <value> 
+spec:
+  strategy:
+    rollingUpdates   
+    recreate  
+  selector:
+    matchLabels:
+      <key>: value           
+    matchExpressions:
+    - key: <key>
+      operator: <in /not in>  
+      values: 
+      - <value1> 
+      - <value3>      
+  template:
+    metadata:
+      name: podName  
+    labels:
+      <key>: <vales>  
+    spec:
+      containers:
+      - name: containerName
+---
+kind: Deployment
+apiVersion: apps/v1  
+metadata:
+  name:  webapp 
+  namespace: dev    
+  labels:
+    app: be  
+spec: 
+  replicas: 1     
+  selector:
+    matchLabels:
+      app: web  
+  template:
+    metadata:
+      name: webapp 
+      labels: 
+        app: web  
+    spec: 
+      containers:
+      - name: webappc
+        image: mylandmarktech/maven-web-app  
+        ports:
+        - containerPort: 8080  
+---
+kind: Service  
+apiVersion: v1  
+metadata:
+  name: appsvc  
+spec:
+  selector:
+    app: web  
+  type: NodePort 
+  ports:
+  - port: 80 
+    targetPort: 8080
+    nodePort: 31400 #[30000-32676]  
+
+ curl 3.148.106.135:31400/maven-web-app    
+
+Update Deployment Image using command 
+rolling out a new version of the application  
+--------------------------------------
+kubectl set image deployment <deploymentName> <containerName>=<imageNameWithVersion> --record
+
+kubectl set image deployment webapp mylandmarktech/maven-web-app:v6 --record  
+
+
+
+44.192.109.203:31000/maven-web-app  
+
+curl 44.192.109.203:31000/java-web-app  
+
+
+-# Deployment ReCreate
+---------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello 
+  strategy:
+    type: Recreate    
+  template:
+    metadata:
+      name: hello
+      labels:
+        app: hello  
+    spec:
+      containers:
+      - name: helloworld    
+        image: 
+        ports:
+        - containerPort: 80   
+
+hello-svc.yml  
+-------------
+kind: Service  
+apiVersion: v1  
+metadata:
+  name: hellosvc  
+spec:
+  selector:
+    app: hello   
+  type: NodePort 
+  ports:
+  - port: 80 
+    targetPort: 80
+    nodePort: 32000 #[30000-32676]  
+
+44.192.109.203:32000 
+
+Update Deployment Image using command 
+--------------------------------------
+kubectl set image deployment <deploymentName> <containerName>=<imageNameWithVersion> --record
+
+kubectl set image deployment hello mylandmarktech/hello:1 --record  
+
+kubectl rollout status deployment <deploymentName>
+kubectl rollout history  deployment <deploymentName>
+kubectl rollout history  deployment <deploymentName> --revision 1  
+kubectl rollout undo  deployment <deploymentName> --to-revision=1  
+kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
+
+kubectl rollout history deployment hello --revision 1    
+
+mylandmarktech.com/success 
+
+
+ReCreate strategy  --- 
+   It comes with downtime  
+
+RollingUpdates strategy
+   no downtime 
+
+-# Deployments  Rolling Update
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+       maxSurge: 1
+       maxUnavailable: 1
+  minReadySeconds: 30   
+  selector:
+    matchLabels:
+      app: myapp 
+  template:
+    metadata:
+      name: myapp
+      labels:
+        app: myapp  
+    spec:
+      containers:
+      - name: myappc  
+        image: mylandmarktech/maven-web-app:29 
+        ports:
+        - containerPort: 80 
+
+https://github.com/LandmakTechnology/kubernetes-manifests
+
+Blue Green deployment Technique : 
+Canary deployment Technique : 
+  youth 
+  adults  
+Lagos  / Douala / Accra / Dallas / London  
+
+  users--ROW                               = 75% of traffic 
+  users--Lagos[ newApplication version ]   = 25% 
+
+Resource, requests and limits:
+--------------------------
+
+eqaulity based selectors:
+  ReplicationControllers  
+    key:values   
+    app: myapp  
+Set based selectors:
+  Deployments  
+  ReplicaSets  
+  DaemonSets 
+  StatefulSets  
+  NodeSelectors 
+  NodeAffinity  
+key: app 
+value in:
+  - javawebpp  
+  - myapp 
+
+kubernetes.io     
+
+ Deployments  :
+    strategy [ReCreate and RollingUpdates]
+    techniques [Blue/Green, Canary]
+
+
+Resource, requests and limits:
+--------------------------
+
+eqaulity based selectors:
+  ReplicationControllers  
+    key:values   
+    app: myapp  
+Set based selectors:
+  Deployments  
+  ReplicaSets  
+  DaemonSets 
+  StatefulSets  
+  NodeSelectors 
+  NodeAffinity  
+key: app 
+value in:
+  - javawebpp  
+  - myapp 
+
+kubernetes.io     
+
+Hello Engineers,
+
+Date: August 5, 2023,
+
+Please watch and practice the video above for today's class. 
+The video is tagged;
+   kubernetes 5 & 6  = DeamonSets & Deployment1 — May 15, 2023
+
+Thanks. 
+
+Reconnect at 11:30am after watching the video for questions and answer session:
+====================================================   
+
+
+kubernetes objects are used to run workloads or deploy apps.:
+Examples of objects:
+===================
+Pods / 
+ReplicationControllers / 
+replicasets
+DaemonSet  
+Deployments 
+statefulsets
+secrets   
+configMaps  
+Volumes:
+   Persistent Volumes   
+   Storage Classes 
+   Persistent Volumes Claims
+
+Kubernetes objects used to expose/discover applications:
+or kubernetes ServiceDicovery objects:
+   ClusterIP   
+   NodePort  
+   LoadBalancer
+   ExternalName   
+   ingress 
+   networkPolicy
+
+Ticket0045:
+=========
+Write a simple deployment manifest file
+kams
+========
+kind: Deployment  
+apiVersion: apps/v1    
+metadata: 
+   name: myappdeployment      
+spec: 
+   selector:
+      matchLabels:
+         app: myapp
+   template:
+      metadata:
+         name: app  
+         labels:
+            app: myapp 
+      spec:
+         containers:
+         - name: app
+           image: mylandmarktech/hello:2     
+           ports:
+           - containerPort: 80 
+
+what is the default deployment strategy in kubernetes??
+RollingUpdates is the default deployment strategy in kubernetes
+
+what is the default deployment strategy in kubernetes??
+
+
+kubectl api-resources
+kubectl api-resources  | grep -i Deployment 
+
+====================================================
+Pods / 
+ReplicationControllers / 
+replicasets
+DaemonSet  
+Deployments 
+statefulsets
+
+stateless applications
+
+Deployments:
+   Create ReplicaSets   
+   Create Pods 
+   RollOut   = 
+   Rollback  
+   pause deployment   
+replicasets
+
+Manifest-files:
+==============
+kind: Pod  
+apiVersion: v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   containers:
+   - name: app 
+     image: mylandmarktech/hello   
+     ports: 
+     - containerPort: 80 
+
+kind: ReplicationController    
+apiVersion: v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   selector:
+      app: web  
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+
+
+kind: ReplicaSet    
+apiVersion: apps/v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: web
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+---
+kind: DaemonSet    
+apiVersion: apps/v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   selector:
+      matchLabels:
+         app: web
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+---
+kind: ReplicaSet    
+apiVersion: apps/v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   strategy:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: web
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+
