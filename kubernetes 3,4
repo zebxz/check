@@ -870,21 +870,25 @@ nodesvc         10.44.0.3:9981                10m            ************* the n
 ############if we ar trying to access the nodesvc,  we can check in github, he checked in the repo we pulled the image frm, we wnt to access our nodejs appl, the ppl has
 some resful API
 
- RESTFULAPIs:
+ RESTFULAPIs:                     
    /landmarktechnologies
    /html
    /jsonData
 
-  curl 3.148.106.135:30500/landmarktechnologies   
-
-    curl 3.148.106.135:30500/jsonData   
-
-
-
-   boa.com/login   
+ like in BOA ...  these are REstful apis
+    boa.com/login   
    boa.com/transfers  
    boa.com/mortgages  
 
+
+#############we run this in our CLI ,, we get a response ..... welcome to Landmark technologies
+  curl 3.148.106.135:30500/landmarktechnologies   
+
+    curl 3.148.106.135:30500/jsonData   
+we run this online and successful
+
+
+   
 apiVersion: v1
 kind: Pod
 metadata:
@@ -902,11 +906,13 @@ kubectl get rs -o wide
 kubectl get all
 kubectl scale rs <rsName> --replicas <noOfReplicas>
 
-kubectl describe rs <rsName>
-kubectl delete rs <rsName>
+kubectl describe rs <rsName>           ************** once we deleted, the replica set controller manger will recreate it bc it has a desired state of 1replica
+kubectl delete rs <rsName>              ********** all the pod associated wit the controller will be deleted and not recreated bc the controller was deleted
 
 kubectl scale rs nodeapp --replicas 3 
+kubectl scale rs nodeapp --replicas 0
 
+a
   landmarktechnologies
 
    http://34.219.16.213:31500/landmarktechnologies
@@ -914,7 +920,7 @@ kubectl scale rs nodeapp --replicas 3
     http://34.219.16.213:32000
 
 
-deployment of applications using ReplicaSet in kubernetes:
+deployment of applications using ReplicaSet in kubernetes:  .. replica set is a controller manger bc applications are running in a pod4r
 ReplicaSet:
    selector:
       matchLabels:
