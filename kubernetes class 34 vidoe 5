@@ -1,3 +1,53 @@
+1:07:10
+ubuntu@master:~$ kubectl get rs -o wide 
+NAME            DESIRED               CURRENT            READY           AGE       CONTAINER      IMAGES                                     SELECTOR 
+node-rs             1                      1                 1            31m       nodeapp         mylamdmarktech/nodeapp                      app=node
+pythonapprs         2                      2                 2            42m         web            mylandmark/python-flask-app:2                 app=python
+
+ubuntu@master:~$ cat pp.yml
+apiVersion: v1    
+kind:pod
+metadata: 
+   name: nodeapp   
+labels: pod
+  metadata:
+     name: nodeapp  
+      labels:
+        app: node
+      spec:
+         containers:
+         - name: nodeapp
+           image: mylandmarktech/nodeapp
+           imagePullSecrets:
+          -nmae: dockerhublogin
+ubuntu@master:~$  
+
+WE CANT CREATE CONTAINERS WITH THE SAME NAME:
+    ####### The above file wants to create a container with the name nodeapp but it couldnt deploy bc earlier, we had created a container with the name nodeapp ,, therefore 
+we need change the name of the new container we are trying to create 
+after changing it ... SUCCESSFULLY DEPLOYED..
+
+
+1:15:30                     CAN WE ROLL BACK WITH REPLICA SET
+
+ubuntu@master:~$ kubectl get rs -o wide 
+NAME            DESIRED               CURRENT            READY           AGE       CONTAINER      IMAGES                                     SELECTOR 
+node-rs             1                      1                 1            31m       nodeapp         mylamdmarktech/nodeapp                      app=node
+
+
 
 you cant roll back  to a previous set with ReplicaSet
-with deployment u can run kubectl undo deployment but we cant undo REplicSet 
+with deployment u can run kubectl undo deployment but we cant undo REplicSet
+
+
+
+
+
+
+
+
+
+
+
+
+
