@@ -789,7 +789,7 @@ spec:
    ports:
    - port: 80  
      targetPort: 9981
-     nodePort: 30500   #30000-32676  
+     nodePort: 30500   #30000-32676    .... when u dnt assign a node port, one will be assigned to you
 ---
 2:31:28
 ubuntu@master:~$  vi node-rs.yml 
@@ -807,7 +807,12 @@ buntu@master:~$  kubectl decribe po node-rs-cz9t2
 ##############we the pod is controlled by 'a ReplicaSet'....can see the pod is in pending state bc of the image pull error: failed to pull image; access denied, may reQ 
 authorization and this is bc we ar tyring to pull the image froom a private image registry .. therefore we nid to create a secret for dockerhub
 
-   
+
+
+
+Create a secret that will authenticate kubernetes to pull  
+images from dockerHub/nexus/jfrog  
+dockerHublogin
 kubectl create secret docker-registry regcred     ...****************** docker-registry is the name of the secret which we call regcred 
  --docker-server=<your-registry-server>  docker.io
  --docker-username=<your-name>  mylandmarktech
@@ -952,3 +957,6 @@ spec:
 DaemonSet:
 ==========
 https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+
+
+
