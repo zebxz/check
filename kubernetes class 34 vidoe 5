@@ -293,7 +293,7 @@ master   Ready    control-plane   5d10h   v1.28.2
 node1    Ready    <none>          5d10h   v1.28.2              we hv 2workker nodes 
 node9    Ready    <none>          5d10h   v1.28.2                2nd worker node
 
-ubuntu@master:~$ kubectl taint nodes key1=value1:NoSchedule ...... am  tainting this node wit no schedule which means pod cannot be scheduled on the node     ...1:35:55
+ubuntu@master:~$ kubectl taint nodes node1 key1=value1:NoSchedule ...... am  tainting this node wit no schedule which means pod cannot be scheduled on the node  ...1:35:55
 
 ubuntu@master:~$ kubectl get ds     
 NAME                    DESIRED          CURRENT           READY          UP-TO-DATE      AVAILABLE     NODE SELECTOR        AGE 
@@ -376,16 +376,27 @@ Unscheduled: false        .. ********* false means with toration we can scedule 
 =============================  
 we can also taint a node when we want to do :
   -- recommissioning / upgrades / updates / patching  
-kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]
+kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]   .................  to taint a node
 kubectl taint nodes node5 key2=value2:NoExecute      [taint the node]
-kubectl taint nodes node1 key1=value1:NoSchedule-    [untaint the node]
+kubectl taint nodes node1 key1=value1:NoSchedule-    [untaint the node] ..................  to untaint a node
+
 
 e.g we have 
   node1/2/3/4/5/6/7/8/9/0
 so if we wnat to update node5, we can taint node5 with no schedule or no execute im 
+1:46:18
+###########TOloration is a (key) set so if you taint with no execute, the operator has to be no execute  for pod to be scheuled on the tainted node
+alos if you use no schedule to taint a node, the operator should be no schedule for pod to be scheduled on the node
 
-kubectl apply -f <ds-filename.yml>
-kubectl delete -f <ds-filename.yml>
+********* if there are pods running on a node and you run :kubectl taint nodes node5 key2=value2:NoExecute on the node .... all the pods running on the nod will be removed
+bc u hv instructed no execution, ... ie no container should be running on the pod
+ubuntu@master:~$ kubectl get po -o wide 
+u see the pods are removed
+
+###########  so we can use no execute when we want all the pods on the node to go  down for recommissioning/ upgradig the node,kk etc.......
+
+kubectl apply -f <ds-filename.yml>   to run the daemon file
+kubectl delete -f <ds-filename.yml>  
 kubectl get ds 
 kubectl get ds -n <namespace>
 kubectl get all
@@ -409,7 +420,8 @@ Use cases:
     dbnode1, dbnode2, dbnode3, appnode1, appnode2, appnode3
     webnode1, webnode2, webnode13
 
-nodeGroups :
+nodeGroups : in this case, if you have a grp of dbnodes, appnodes, webnodes,, i can schedule pods to be created on only dbnodes grp by passing a node selector, to  say ok,
+select only data base  node or a node affirmity for the specific/selected node i want pods to be created only on.
     3 dbnodes  [dbnode1, dbnode2, dbnode3  ]
     3 appnodes [appnode1, appnode2, appnode3]
     3 webnodes [webnode1, webnode2, webnode13]
@@ -438,91 +450,10 @@ spec:
     spec:
       tolerations:
       - operator: Exists
-        effect: "NoSchedule"
+        effect: "NoSchedule"     ,,,,(no sheduled used when i tainted a node with noschedule)
       containers:
       - name: hello
         image: mylandmarktech/hello
         ports:
         - containerPort: 80  
-
-Deployments  
-==========
-Deployment is a kubernetes object. 
-Deployment is the recommended kubernetes object for deploying applications,  
-running workloads and managing/contolling pods in our environment.   
-
-Advantages:
-     Deploy/rollout a RS.
-     Updates pods (PodTemplateSpec).
-     Rollback to older Deployment versions.
-     Scale Deployment up or down.
-     Pause and resume the Deployment.
-     Use the status of the Deployment to determine state of replicas.
-     Clean up older RS that you don’t need anymore.
----
----
-kind: Deployment   
-apiVersion: apps/v1    
-metadata:
-  name: <deploymentName> 
-  labels:
-    <key>: <value> 
-spec:
-  strategy:
-    rollingUpdates   
-    recreate  
-  selector:
-    matchLabels:
-      <key>: value           
-    matchExpressions:
-    - key: <key>
-      operator: <in /not in>  
-      values: 
-      - <value1> 
-      - <value3>      
-  template:
-    metadata:
-      name: podName  
-    labels:
-      <key>: <vales>  
-    spec:
-      containers:
-      - name: containerName
----
----
-deploy.yml   
-===========
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: myapp
-spec:
-  selector:
-    matchLabels:
-      app: myapp
-  template:
-    metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-      - name: myapp
-        image: mylandmarktech/hello:1    
-        ports:
-        - containerPort: 80
-
-what is the default deployment strategy?
-  RollingUpdates  
-
-kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
-kubectl scale deployment myapp --replicas 2    
-
-
-
-
-
-
-
-
-
 
