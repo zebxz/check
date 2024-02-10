@@ -1,0 +1,254 @@
+Deployments  
+==========
+Deployment is a kubernetes object. 
+Deployment is the recommended kubernetes object for deploying applications,  
+running workloads and managing/contolling pods in our environment.   
+
+Advantages:
+     Deploy/rollout a RS.
+     Updates pods (PodTemplateSpec).
+     Rollback to older Deployment versions.
+     Scale Deployment up or down.
+     Pause and resume the Deployment.
+     Use the status of the Deployment to determine state of replicas.
+     Clean up older RS that you don’t need anymore.
+---
+---
+kind: Deployment   
+apiVersion: apps/v1    
+metadata:
+  name: <deploymentName> 
+  labels:
+    <key>: <value> 
+spec:
+  strategy:
+    rollingUpdates   
+    recreate  
+  selector:
+    matchLabels:
+      <key>: value           
+    matchExpressions:
+    - key: <key>
+      operator: <in /not in>  
+      values: 
+      - <value1> 
+      - <value3>      
+  template:
+    metadata:
+      name: podName  
+    labels:
+      <key>: <vales>  
+    spec:
+      containers:
+      - name: containerName
+---
+---
+deploy.yml   
+===========
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: mylandmarktech/hello:1    
+        ports:
+        - containerPort: 80
+
+what is the default deployment strategy?
+  RollingUpdates  
+
+kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
+kubectl scale deployment myapp --replicas 2    
+
+Deployment strategies:
+======================
+ReCreate strategy  --- 
+  It comes with downtime because the current application version is destroy entirely
+  before creating the new version  
+
+   8 pods of version1 running 
+   deploy 8 pods of version2 
+-------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: mylandmarktech/hello:1    
+        ports:
+        - containerPort: 80
+---
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: appsvc
+spec:
+  selector:
+    app: myapp
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 31400 #[30000-32676]
+
+# Create Deployment
+kubectl apply -f deploy/app.yml  
+
+# Verify Deployment
+kubectl get deployments
+kubectl get deploy 
+
+# Describe Deployment
+kubectl describe deployment <deployment-name>
+kubectl describe deploy deploymentname    
+
+# Verify ReplicaSet
+kubectl get rs
+
+# Verify Pod
+kubectl get po
+
+Scaling a Deployment
+====================
+# Scale Up the Deployment
+kubectl scale --replicas=20 deployment/<Deployment-Name>
+kubectl scale --replicas=20 deployment/myapp 
+
+# Verify Deployment
+kubectl get deploy
+
+# Verify ReplicaSet
+kubectl get rs
+
+# Verify Pods
+kubectl get po
+
+# Scale Down the Deployment
+kubectl scale --replicas=2 deployment/myapp  
+kubectl get deploy
+
+Expose Deployment as a Service
+==============================
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: appsvc
+spec:
+  selector:
+    app: myapp
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 31400 #[30000-32676]
+
+RollingUpdates strategy:   no downtime 
+-# Deployment RollingUpdate
+---------------------
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+       maxSurge: 1
+       maxUnavailable: 1
+  minReadySeconds: 30   
+  selector:
+    matchLabels:
+      app: myapp 
+  template:
+    metadata:
+      name: hello
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: helloworld
+        image: mylandmarktech/hello:1
+        ports:
+        - containerPort: 80
+
+Update Deployments
+Introduction
+    We can update deployments using two options
+        Set Image
+        Edit Deployment
+
+# Update Deployment - SHOULD WORK NOW
+kubectl set image deploy Deployment-Name> <Container-Name>=<Container-Image> --record=true
+kubectl set image deploy web helloworld=mylandmarktech/hello:2 --record=true
+
+Rollback to previous version
+============================
+# Undo Deployment
+kubectl rollout undo deployment/web  
+
+# List Deployment Rollout History
+kubectl rollout history deployment/web    
+
+Blue Green deployment Technique : 
+   version1/blue running in production
+   version2/green deployed in production  
+   we deploy version2 in the test environment and observe its performance 
+   Once the performance is good then we deploy version2/green in production          
+
+Canary deployment Technique : 
+   - TRAFFIC MGT   
+   - 25% traffic VERSION2 goes to Canada  
+   - 75% traffic VERSION1 goes to USA  
+   - VERSION1 -- 40% to version1   
+   - VERSION2 -- 60% to version2           
+   - 40years+   75% traffic VERSION1
+   - 18-39years 25% traffic VERSION2
+
+
+
+
+Ticket 007:
+  Setup a multi nodes kubernetes cluster using the kops software.
+
+Ticket 017:
+  Setup a kubernetes cluster using the amazon EKS? .
+
+Ticket 019:
+  Instal tree, unzip, git and nano in a windows system and an ubuntu.
+
+kubernetes 3 Video
+====================   
+Imparative approach - Pods/Deployments  
+Delarative approach - Pods/ReplicationControllers
+ClusterIP and NodePort Services
+Jan 28, 2024  
+ 
