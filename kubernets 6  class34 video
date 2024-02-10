@@ -239,9 +239,9 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-       maxSurge: 1   ****************** ie the max number of pod that can b
-       maxUnavailable: 1
-  minReadySeconds: 30   
+       maxSurge: 1   ****************** ie the max number of pod that can be created at once is 1 
+       maxUnavailable: 1    *********** the ma xnumber of pod that can be brought down is 1
+  minReadySeconds: 30   *************when it brings up a new pod, it waits for 30second for the pod to get ready b4 bringing down the next pod
   selector:
     matchLabels:
       app: myapp 
