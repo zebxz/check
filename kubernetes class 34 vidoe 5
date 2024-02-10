@@ -365,13 +365,24 @@ spec:
     matchLabels:
       app: hellos
 
+1:41:49
+#################################      ####################  Master node is tainted by default
 
-Master node is tainted by default
+ubuntu@master:~$ kubectl describe node master
+under Annotations
+taints :we see master node is tainted
+Unscheduled: false        .. ********* false means with toration we can scedule pods on the node
+
 =============================  
+we can also taint a node when we want to do :
   -- recommissioning / upgrades / updates / patching  
 kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]
 kubectl taint nodes node5 key2=value2:NoExecute      [taint the node]
 kubectl taint nodes node1 key1=value1:NoSchedule-    [untaint the node]
+
+e.g we have 
+  node1/2/3/4/5/6/7/8/9/0
+so if we wnat to update node5, we can taint node5 with no schedule or no execute im 
 
 kubectl apply -f <ds-filename.yml>
 kubectl delete -f <ds-filename.yml>
@@ -384,7 +395,6 @@ kubectl delete ds <dsName>
 
 kubectl get/describe/delete/edit/apply/  
 
-  node1/2/3/4/5/6/7/8/9/0
 
 Ticket6:
 ========
