@@ -156,7 +156,6 @@ ubuntu@master:~$ kubectl get node
 NAME     STATUS   ROLES           AGE     VERSION
 master   Ready    control-plane   5d10h   v1.28.2
 node1    Ready    <none>          5d10h   v1.28.2
-node5    Ready    <none>          5d10h   v1.28.2
 node9    Ready    <none>          5d10h   v1.28.2
                                                                                                    1:26:53
 buntu@master:~$    *********** **************** for example: we can see the app pod we deployed above was scheduled on node1 and node9
@@ -166,10 +165,74 @@ app-5svbr      1/1           running          o             99s        10.44.0.2
 app-snckl       1/1           running         0             99s         10.36.0.1         node9
 node-rs-rccl8    1/1           running         0            12m          10.44.0.1         node1
 
+for example: we can see the app pod we deployed above was scheduled on node1 and node9
 #################so the scheduler here is scheduling based on resources
 
+but if we use daemonset it will sched each pod in a node
+e.g if we also hv a node5  , it willschedule in node1, node5 and node9
+ubuntu@master:~$ kubectl get node
+NAME     STATUS   ROLES           AGE     VERSION
+master   Ready    control-plane   5d10h   v1.28.2
+node1    Ready    <none>          5d10h   v1.28.2
+node5    Ready    <none>          5d10h   v1.28.2
+node9    Ready    <none>          5d10h   v1.28.2
 
-ds.yml  = kams 
+############################## e.g deploying with daemonSEt (we will take the replica out, no replicas will be there bc it wil schedule each pod in a node)
+
+ds.yml  
+======
+kind: DaemonSet  
+apiVersion: apps/v1  #   = kubectl api-resources | grep rs     
+metadata:
+  name: appds    
+spec:
+  template: 
+    metadata:
+      name: hellos  
+      labels:
+        app: hellos    
+    spec:
+      containers:
+      - name: hellos   
+        image: mylandmarktech/hello 
+        ports:
+        - containerPort: 80   
+  selector: 
+    matchLabels:
+      app: hellos       
+
+
+vi ds.yml n paste the file
+############ kubectl apply -f ds.yml
+created
+
+ubuntu@master:~$ kubectl get po
+NAME           READY     STATUS         RESTARTS     AGE    
+app-5svbr       1/1         RUNNING          0         4M33S
+app-snckl       1/1         running         0          4m33s
+appds-jbv8g     1/1         running         0          9s
+appds-pv8nv      1/1         running        0           9s
+node-rs-eccl8     1/1        running         0          15m
+
+ubuntu@master:~$ kubectl get ds
+NAME     DESIRED     CURRENT           READY          UP-TO-DATE      AVAILABLE     NODE SELECTOR        AGE 
+appds      2           2                 2              2                 2         NONE                 23s
+
+ubuntu@master:~$ kubectl get  kubectl scale ds appds --replicas=5  **************************WE cant scale daemonset
+Error from server (notfound): the server could not find the requested resource
+ubuntu@master:~$ 
+ubuntu@master:~$ kubectl scale rs app --replicas=1 ******************************we can scale replicaset but cant scale daemonSet
+replicaset.apps/app scaled
+ubuntu@master:~$ 
+ubuntu@master:~$ kubectl get rs
+NAME          DESIRED         CURRENT     READY        AGE    
+app            1                 1           1          5m46s
+node-rs         1                 1          1            56m
+
+
+
+###################WE cant scale daemonset ,, so this is hw  daemonset template looks like : exactly as we saw with replicaset  ........1:31:49
+ds.yml  = kams                                        and we can also deploy a service for the deployment bc at the moment, when we run get pod we dnt hv any service
 -=====--------
 kind: DaemonSet    
 apiVersion: apps/v1    
@@ -199,29 +262,45 @@ spec:
          ports: 
          - containerPort: 80 
 
-ds.yml  
-======
-kind: DaemonSet  
-apiVersion: apps/v1  #   = kubectl api-resources | grep rs     
-metadata:
-  name: appds    
-spec:
-  template: 
-    metadata:
-      name: hellos  
-      labels:
-        app: hellos    
-    spec:
-      containers:
-      - name: hellos   
-        image: mylandmarktech/hello 
-        ports:
-        - containerPort: 80   
-  selector: 
-    matchLabels:
-      app: hellos       
+kubectl delete rs --all
+kubectl delete svc --all
+kubectl delete all -all
 
+deploy it again 
+ubuntu@master:~$ apply -f ds.yml
+buntu@master:~$ kubectl get all
+NAME                 READY     STATUS         RESTARTS     AGE    
+pod/appds-l7mqp      1/1         RUNNING          0         10S
+pod/appds-xzldf      1/1         running         0          10s
 
+NAME                    DESIRED     CURRENT           READY          UP-TO-DATE      AVAILABLE     NODE SELECTOR        AGE 
+daemonset.apps/appds      2           2                 2              2                 2         NONE                 11s
+
+************it has created 2replicas but we did not define number of replicas
+ubuntu@master:~$
+ubuntu@master:~$  kubectl get po -o wide            *******it created replicas in each node
+NAME          READY         STATUS           RESTARTS       AGE            IP            NODE
+appds-l7mqp     1/1           running          o             99s        10.36.0.1       node1
+appds-xzldf       1/1           running         0            99s        10.44.0.1        node9
+
+ubuntu@master:~$ kubectl get node
+NAME     STATUS   ROLES           AGE     VERSION
+master   Ready    control-plane   5d10h   v1.28.2
+node1    Ready    <none>          5d10h   v1.28.2              we hv 2workker nodes 
+node9    Ready    <none>          5d10h   v1.28.2                2nd worker node
+
+ubuntu@master:~$ kubectl taint nodes key1=value1:NoSchedule ...... am  tainting this node wit no schedule which means pod cannot be scheduled on the node     ...1:35:55
+
+ubuntu@master:~$ kubectl get ds     
+NAME                    DESIRED          CURRENT           READY          UP-TO-DATE      AVAILABLE     NODE SELECTOR        AGE 
+appds                     1                1                 1                1              1                none            16s
+
+ubuntu@master:~$  kubectl get po -o wide       ***********bc we tainted node1 with no schedule, node1 was not scheduled     
+NAME          READY         STATUS           RESTARTS       AGE            IP            NODE              NOMINATED NODE      READINESS GATES
+appds-mwnh7    1/1           running          o             3m22s        10.36.0.1       node9                 none                  none
+
+**************we tainted node1 with no schedule so no pod can be scheduled on the pod ,for  a pod to be scheduled on the tainted node we nid to add tolerations in the spec:
+                                                                                                                          1:37:01
 kind: DaemonSet
 apiVersion: apps/v1  #   = kubectl api-resources | grep rs
 metadata:
@@ -233,8 +312,8 @@ spec:
       labels:
         app: hellos
     spec:
-      tolerations:
-      - operator: Exists
+      tolerations:                         ********we wnt to tolorate/allow pod to be scheduled even on node that are tainted
+      - operator: Exists                       we v operators like exists, effect 
         effect: "NoSchedule"
       containers:
       - name: hellos
@@ -245,6 +324,18 @@ spec:
     matchLabels:
       app: hellos
 ---
+ubuntu@master:~$  vi ds.yml and add toloration
+ubuntu@master:~$  kubectl apply -f ds.yml    (deploying with the toloration)
+daemonset.apps/appds configured
+ubuntu@master:~$  
+ubuntu@master:~$  kubectl get po -o wide        *****************we hv 3pods now bt originally pods were nt being scheduled on master bc by default d matser node is tainted
+NAME            READY         STATUS           RESTARTS       AGE            IP            NODE          NOMINATED NODE      READINESS GATES
+appds-4r7nl      1/1           running          o             99s        10.32.0.4         master          none                 none
+appds-bghdd      1/1           running         0            99s          10.36.0.1         node9           none                 none
+appds-ccxfr       1/1          running         0            6s           10.44.0.1         node1            none                 none
+
+
+
 kind: DaemonSet
 apiVersion: apps/v1  #   = kubectl api-resources | grep rs
 metadata:
@@ -269,6 +360,8 @@ spec:
   selector:
     matchLabels:
       app: hellos
+
+
 Master node is tainted by default
 =============================  
   -- recommissioning / upgrades / updates / patching  
