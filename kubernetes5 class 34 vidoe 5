@@ -83,6 +83,35 @@ Cluster ---> Nodes ----> Pods  ----> containers
 Deploying applications[creating pods] using Pod as a kubernetes object:   not RECOMMENDED
 Deploying applications[creating pods] using controllerManagers as a kubernetes objects:  .....RECOMMENDED
 
+************************************************************************************************************
+
+####################################################### from class33  k8video 5&6
+Cluster ---> Nodes ----> Pods  ----> containers
+ie  ....   k8s ---> Nodes ----> Pods  ----> containers      .... k8 is managing containerized appli
+********
+ HOW CAN WE DEPLOY CONtainerised appli ations in K8?
+we use kubernetes objects to deploy workloads in k8:       if u use pod as a k8 object to deploy ur app that is goin to b limited so 
+1. pods
+    scaling is nt supported
+    life is very short
+    lacks self-healing capacities
+ControllerManagers: 
+     kubectl scale rc/rs/deploy  
+2 ReplicationControllers
+3 ReplicaSets
+4 DaemonSets
+5  Deployment (as an object)
+6 StatefulSets
+
+Deploy an app which must hv a pod running in each node = we use: daemonSet
+e.g of diff app that shud hv a pod in each node    e.g logmgt/ logshipper
+deploy an appl with scaling option = we  use : rc/rs/deployment/statefulsets
+***********we cant use pod for  deployment with scaling  capabilities.... although the appl runs inside the pod, we shud nt use pod directly to deploy appl.
+we shud nt use pod as an object for deployment
+
+*********************************************************************************************************************
+
+
 WHEN U USE CONTROLLER MANGERS WE ARE going to have pod template like this: to deploy application
 
 PodTemplate:
