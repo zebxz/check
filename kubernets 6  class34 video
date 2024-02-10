@@ -91,7 +91,18 @@ spec:
     targetPort: 80
     nodePort: 31400 #[30000-32676]
 
-**************kubectl apply -f deploy/ ...... to deploy the file
+**************kubectl apply -f deploy/ ...... to deploy the file  ......................   .21:33
+ubuntu@master:~ kubectl apply -f deploy/
+deployment.apps/myapp created
+service/appsvc created
+ubuntu@master:~ 
+ubuntu@master:~ kubectl get deploy 
+ubuntu@master:~ kubectl describe deploy   ..... we can see 1replica created and strategy type: RollingUpdate
+ubuntu@master:~ kubectl get svc........we can see the appsvc service routing service to the backend application
+and we can access the appl online 
+ubuntu@master:~ kubectl scale deployment myapp --replicas 2    
+
+
 
 what is the default deployment strategy?
   RollingUpdates  
@@ -100,13 +111,14 @@ kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
 kubectl scale deployment myapp --replicas 2    
 
 Deployment strategies:
-======================
+====================== ..........................  ******************       25:33
 ReCreate strategy  --- 
   It comes with downtime because the current application version is destroy entirely
   before creating the new version  
 
-   8 pods of version1 running 
-   deploy 8 pods of version2 
+   8 pods of version1 running and you want to 
+   deploy 8 pods of version2 , recreate will first destroy all the 8pods of the current version
+therfore ther will be downtime
 -------------------
 apiVersion: apps/v1
 kind: Deployment
@@ -130,7 +142,6 @@ spec:
         ports:
         - containerPort: 80
 ---
----
 kind: Service
 apiVersion: v1
 metadata:
@@ -144,7 +155,21 @@ spec:
     targetPort: 80
     nodePort: 31400 #[30000-32676]
 
+---
+ubuntu@master:~ kubectl apply -f deploy/
+deployment.apps/myapp configured
+service/appsvc unchanged
+ubuntu@master:~  kubectl get deploy  ......... we see 4replicas running
+ubuntu@master:~ kubectl describe deploy myapp  ... and the strategy type is recreate
+we can also access it online
+we can also deploy version2 but der wil be some downtime bc all the applications will go offline
+
+
 # Create Deployment
+kubectl create deployment <deployment-Name> --image=<Container-Image>
+kubectl create deployment my-first-deployment --image=mylandmarktech/hello
+
+##### but since we are using apply:
 kubectl apply -f deploy/app.yml  
 
 # Verify Deployment
@@ -180,9 +205,10 @@ kubectl get po
 kubectl scale --replicas=2 deployment/myapp  
 kubectl get deploy
 
-Expose Deployment as a Service
+### Expose Deployment as a Service
+we can expose by creating the service
 ==============================
----
+---     we were able to create a service lik ethis for our deployment
 kind: Service
 apiVersion: v1
 metadata:
@@ -199,6 +225,8 @@ spec:
 RollingUpdates strategy:   no downtime 
 -# Deployment RollingUpdate
 ---------------------
+vi ru.yml and paste
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -211,7 +239,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-       maxSurge: 1
+       maxSurge: 1   ****************** ie the max number of pod that can b
        maxUnavailable: 1
   minReadySeconds: 30   
   selector:
