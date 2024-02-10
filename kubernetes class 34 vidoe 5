@@ -20,7 +20,11 @@ labels: pod
            image: mylandmarktech/nodeapp
            imagePullSecrets:
           -nmae: dockerhublogin
-ubuntu@master:~$  
+           containers:
+          - name: mylandmark/nodeapp
+           ports:
+         -containerPort:9981
+ubuntu@master:~$  kubectl apply -f pp.yml
 
 WE CANT CREATE CONTAINERS WITH THE SAME NAME:
     ####### The above file wants to create a container with the name nodeapp but it couldnt deploy bc earlier, we had created a container with the name nodeapp ,, therefore 
@@ -28,19 +32,383 @@ we need change the name of the new container we are trying to create
 after changing it ... SUCCESSFULLY DEPLOYED..
 
 
-1:15:30                     CAN WE ROLL BACK WITH REPLICA SET
+1:15:30                      WE CAN ROLL OUT A NEW VERSION OF THE APPLICATION but WITH REPLICA SET WE CANT ROLL BACK
 
 ubuntu@master:~$ kubectl get rs -o wide 
 NAME            DESIRED               CURRENT            READY           AGE       CONTAINER      IMAGES                                     SELECTOR 
 node-rs             1                      1                 1            31m       nodeapp         mylamdmarktech/nodeapp                      app=node
 
+apiVersion: v1    
+kind:pod
+metadata: 
+   name: nodeapp   
+labels: pod
+  metadata:
+     name: nodeapp  
+      labels:
+        app: node
+      spec:
+         containers:
+         - name: nodeapp
+           image: mylandmarktech/nodeapp   ... now am using the latest version of my image , but can i roll out a neew version?????  ....YES 
+           imagePullSecrets:
+          -nmae: dockerhublogin
+           containers:
+          - name: mylandmark/nodeapp
+           ports:
+         -containerPort:9981
+ubuntu@master:~$  
+
+*********i can go back to github and check for version2 of the image, then in my file, i change the image to ==  image: mylandmarktech/nodejs-app:2 ,, 
+
+ubuntu@master:~$ kubectl get rs -o wide 
+NAME            DESIRED               CURRENT            READY           AGE       CONTAINER      IMAGES                                     SELECTOR 
+node-rs             1                      1                 1            31m       nodeapp         mylamdmarktech/nodejs-app:2                     app=node
+
+************SUCCESSFULLY ROLLED OUT
+but with replica set you cant roll back to a previous version/set 
+
+1:18:46
+##########with deployment we can run kubectl undo deployment but we cant undo replicaset
+to undo replica set, it will have to be destroyed before it can be recreated and we will see hw deployment resolves theta issue and that is why we use deployment as an object
+over replica set
 
 
-you cant roll back  to a previous set with ReplicaSet
-with deployment u can run kubectl undo deployment but we cant undo REplicSet
+
+Cluster ---> Nodes ----> Pods  ----> containers
+Deploying applications[creating pods] using Pod as a kubernetes object:   not RECOMMENDED
+Deploying applications[creating pods] using controllerManagers as a kubernetes objects:  .....RECOMMENDED
+
+WHEN U USE CONTROLLER MANGERS WE ARE going to have pod template like this: to deploy application
+
+PodTemplate:
+spec:
+   metadata: 
+     name:  app   
+     labels:
+       app: fe    
+   spec:
+      containers:
+      - name: web    
+        image: mylandmarktech/hello   
+        ports:
+        - containerPort: 80  
+
+ReplicaSets:
+   replicas: 4   
+   selector:
+      matchLabels:
+        app: fe    
+      matchExpressions
+ReplicationControllers:
+   replicas: 4   
+   selector: 
+      app: fe  
+
+1:21:00
+(we can run kubectl api-resources, pipe it and grep for rs to get the API version )
+kubectl api-resources | grep rs    
+
+rs2.yml  
+======
+kind: ReplicaSet  
+apiVersion: apps/v1      ## = kubectl api-resources | grep rs     (we can run kubectl api-resources, pipe it and grep for rs to get the API version )
+metadata:
+  name: app    
+spec:
+  template: 
+    metadata:
+      name: hello  
+      labels:
+        app: hello    
+    spec:
+      containers:
+      - name: hello   
+        image: mylandmarktech/hello 
+        ports:
+        - containerPort: 80   
+  selector: 
+    matchLabels:
+      app: hello      ,, bc am using equality based selector, app should be mapped to hello
+  replicas: 2  
+
+ubuntu@master:~$ kubectl apply -f rss.yml
+replicaset.apps/app created
+ubuntu@master:~$
+ubuntu@master:~$ kubectl get rs
+NAME            DESIRED               CURRENT            READY           AGE       
+app                2                    2                  2              7s
+node-rs            1                     1                 1              51m
+
+SUCCESSFUL
+
+can check daemonset using this link on k8 website
+https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+
+DaemonSets:
+==========
+https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+we deployed/provisioned a cluster:
+   nodes [ node1/node2/node3 ]  
+
+daemonset is a controller manger that permit a pod to be scheduled on each node
+ubuntu@master:~$ kubectl get node
+NAME     STATUS   ROLES           AGE     VERSION
+master   Ready    control-plane   5d10h   v1.28.2
+node1    Ready    <none>          5d10h   v1.28.2
+node5    Ready    <none>          5d10h   v1.28.2
+node9    Ready    <none>          5d10h   v1.28.2
+                                                                                                   1:26:53
+buntu@master:~$    *********** **************** for example: we can see the app pod we deployed above was scheduled on node1 and node9
+ubuntu@master:~$  kubectl get po -o wide
+NAME          READY         STATUS           RESTARTS      AGE            IP            NODE
+app-5svbr      1/1           running          o             99s        10.44.0.2         node1
+app-snckl       1/1           running         0             99s         10.36.0.1         node9
+node-rs-rccl8    1/1           running         0            12m          10.44.0.1         node1
+
+#################so the scheduler here is scheduling based on resources
 
 
+ds.yml  = kams 
+-=====--------
+kind: DaemonSet    
+apiVersion: apps/v1    
+metadata: 
+  name: <dsName> 
+  labels: 
+    <key>: <value1> 
+spec:
+   selector:
+      matchLabels: # equality based
+        <key1>: <value1>  
+      matchExpressions: # set based
+      - key: <key>
+        operator: <in/not-in>
+        values:
+        - <value1>
+        - <value2>
+   template:  # podTemplate  
+     metadata: 
+       name: podName
+       labels:
+         key1: value1     
+     spec:
+       containers:
+       - name: containerName  
+         image: containerImage  
+         ports: 
+         - containerPort: 80 
 
+ds.yml  
+======
+kind: DaemonSet  
+apiVersion: apps/v1  #   = kubectl api-resources | grep rs     
+metadata:
+  name: appds    
+spec:
+  template: 
+    metadata:
+      name: hellos  
+      labels:
+        app: hellos    
+    spec:
+      containers:
+      - name: hellos   
+        image: mylandmarktech/hello 
+        ports:
+        - containerPort: 80   
+  selector: 
+    matchLabels:
+      app: hellos       
+
+
+kind: DaemonSet
+apiVersion: apps/v1  #   = kubectl api-resources | grep rs
+metadata:
+  name: appds
+spec:
+  template:
+    metadata:
+      name: hellos
+      labels:
+        app: hellos
+    spec:
+      tolerations:
+      - operator: Exists
+        effect: "NoSchedule"
+      containers:
+      - name: hellos
+        image: mylandmarktech/hello
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: hellos
+---
+kind: DaemonSet
+apiVersion: apps/v1  #   = kubectl api-resources | grep rs
+metadata:
+  name: appds
+spec:
+  template:
+    metadata:
+      name: hellos
+      labels:
+        app: hellos
+    spec:
+      tolerations:
+      - operator: Exists
+        effect: "NoSchedule"
+      - operator: Exists
+        effect: "NoExecute"
+      containers:
+      - name: hellos
+        image: mylandmarktech/hello
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: hellos
+Master node is tainted by default
+=============================  
+  -- recommissioning / upgrades / updates / patching  
+kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]
+kubectl taint nodes node5 key2=value2:NoExecute      [taint the node]
+kubectl taint nodes node1 key1=value1:NoSchedule-    [untaint the node]
+
+kubectl apply -f <ds-filename.yml>
+kubectl delete -f <ds-filename.yml>
+kubectl get ds 
+kubectl get ds -n <namespace>
+kubectl get all
+
+kubectl describe ds <dsName>
+kubectl delete ds <dsName>
+
+kubectl get/describe/delete/edit/apply/  
+
+  node1/2/3/4/5/6/7/8/9/0
+
+Ticket6:
+========
+Explain the kubernetes objects recommended to ensure the scheduler schedule a pod  
+in each node or a group of selected node/nodeGroup
+- DaemonSets is the ONLY recommended object for pods to be scheduled in each node  
+Use cases: 
+   - logmgt applications - EFK/ELK    
+   - databaseBackup application  
+
+9 worker nodes: = 
+    dbnode1, dbnode2, dbnode3, appnode1, appnode2, appnode3
+    webnode1, webnode2, webnode13
+
+nodeGroups :
+    3 dbnodes  [dbnode1, dbnode2, dbnode3  ]
+    3 appnodes [appnode1, appnode2, appnode3]
+    3 webnodes [webnode1, webnode2, webnode13]
+
+
+Ticket7:
+--------
+Provide a lecture on how pods can be scheduled on tainted nodes.
+In Kubernetes we use tolerations to schedule pods on tainted nodes.    
+Ticket8:
+Deploy the logmgt application on all nodes including tainted nodes  
+===========
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logmgt
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      name: hello
+      labels:
+        app: hello
+    spec:
+      tolerations:
+      - operator: Exists
+        effect: "NoSchedule"
+      containers:
+      - name: hello
+        image: mylandmarktech/hello
+        ports:
+        - containerPort: 80  
+
+Deployments  
+==========
+Deployment is a kubernetes object. 
+Deployment is the recommended kubernetes object for deploying applications,  
+running workloads and managing/contolling pods in our environment.   
+
+Advantages:
+     Deploy/rollout a RS.
+     Updates pods (PodTemplateSpec).
+     Rollback to older Deployment versions.
+     Scale Deployment up or down.
+     Pause and resume the Deployment.
+     Use the status of the Deployment to determine state of replicas.
+     Clean up older RS that you don’t need anymore.
+---
+---
+kind: Deployment   
+apiVersion: apps/v1    
+metadata:
+  name: <deploymentName> 
+  labels:
+    <key>: <value> 
+spec:
+  strategy:
+    rollingUpdates   
+    recreate  
+  selector:
+    matchLabels:
+      <key>: value           
+    matchExpressions:
+    - key: <key>
+      operator: <in /not in>  
+      values: 
+      - <value1> 
+      - <value3>      
+  template:
+    metadata:
+      name: podName  
+    labels:
+      <key>: <vales>  
+    spec:
+      containers:
+      - name: containerName
+---
+---
+deploy.yml   
+===========
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: mylandmarktech/hello:1    
+        ports:
+        - containerPort: 80
+
+what is the default deployment strategy?
+  RollingUpdates  
+
+kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
+kubectl scale deployment myapp --replicas 2    
 
 
 
