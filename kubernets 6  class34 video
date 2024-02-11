@@ -301,8 +301,8 @@ kubectl rollout undo deployment/web
 
 # List Deployment Rollout History
 kubectl rollout history deployment/web    
-
-DEPLOYMENT TECHNIQUE  ************************************............1:08:44
+                                                                    2:21:21
+DEPLOYMENT TECHNIQUE  ************************************(this is under using deployment not deploymnet as an object) ............1:08:44
 Blue Green deployment Technique :    
    version1/blue running in production
    version2/green deployed in production  
@@ -329,6 +329,7 @@ Canary deployment Technique :
    - VERSION2 -- 60% to version2              and  40% go to version2 and we observe for an extended period and if its sactisfactory we move all the traffic to version2
    - 40years+   75% traffic VERSION1    OR  we could use the cx age group
    - 18-39years 25% traffic VERSION2
+   -we can alsouse based on biometrics e.g sex or ages
 
 QUESTION......1:24:35
 1) can a file be use to taint a node or must it be only commands in the CLI
@@ -372,6 +373,54 @@ bt that shud only happen if the node is nt under any maintenance, if its under m
 6) hw do we rollback to a specific version???  ..
 . go to k8 and check it out so that  in the  nxt class u can give us a briefing on that
 kubectl rollout undo deployment hello --to revision=1 OR revision2 n so on   ..... class33 video 5&6
+
+
+class33 video5&6
+1) when we create toloration, can we create it so it doesnt create pods in the master node??
+ans: YES, we can do that, ther are many other options when it comes to toloration, which means we have  diff operators and diff keys and wil look at that when we look at
+scheduling, how pods are scheduled on a node.
+
+2) why will we want to schedule pod on a tainted node
+e.g we want to  ensure a particular pod is scheduled on all nodes including master bc the pod wil be gathering logs on the master node to tell us if the node is healthy or nt
+the master node for e.g is tainted by default but we can use toloration to allow a pod to be scheduled on the master node probbaly bc the pod will be gathering logs on the 
+master node
+
+3) what is the actual function of the selector support function of the replica set bc when we were doin the controller managers we had the replication controller n u then
+showed us the replica set and u said the replica set has a selector support but when we did both of them the only diff that i notice is in d format we wrot e our API veerison
+ie in the replica set and also that match label key that we used
+ANS: 
+
+we hv equality based selectors and it is used for what?  
+   ReplicationCOntrollers
+key:values       ********** eaulity based selectors talk abt equal conditions like key:values
+app:myapp
+Set base selectors: is used for ;
+  Deployments
+  Replica Seta
+  DaemonSets
+  StatefulSets
+  NodeSelectors
+  NodeAffinity
+key: app                    for set base we can have key , value in .. lets assume the key is app , value in:javawebapp could be my app
+value in:                            so 1key can hv multiple value , dats why we say setbase selsctor and it basiclaly comes wit stuff like daemonset,RS, deployment etc
+   -javawebapp                     its jst that all the examples we hv done so far we v not needed to get to get into set base selector bt as we progress, we are going to
+   -myapp                          look at set base selector and if u hv any problem jst wqually go to the k8 official documentation
+                                    kubernetes.io abi na oi
+
+4) is der any scenario that will rEQ us to create stactic pods manged by the kubelete service as opposed to using the controller managers bc static pod itself has healing 
+capabilities ACTIVATED 
+ANS: YES , BT Static pod cannot scale, so if it created a pod is just a single replica
+2ndly, static pod are used to create components that manage k8 like kube proxy, dns, all of those pod that manges your cluster, we use that pod to create them so that they 
+will always be recreated even by the kublete service.
+
+5) what det the object we use in deployment, is it coy base ??/ wxcept daemonSeT cos i understand its used for e.g logmgt
+so what det the obj w euse for deployment
+ANS:
+the obj to be used depends on the diff/other components that obj will bring to the table 
+deployment is said to be the recommended object for deployment in k8 or for running/deploying workload in k8 bc when u create a deployment, it creates a replica set so
+it records whatevr u created such that if anything is wrong it can always rollback, thats why most of the time we use deployment bc deployment will rollout a replica set
+u can rollout n rollback ,,, so from a very strong perspective we use deploymentas the recommended obj to deploy workload in k8
+****************************************************************************************************
 
 Ticket 007:
   Setup a multi nodes kubernetes cluster using the kops software.
