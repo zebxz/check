@@ -27,6 +27,36 @@ if you are done recommissioning a node a simply remove the taint
 3) what is the default deployment strategy in kubernetes??
 RollingUpdates is the default deployment strategy in kubernetes
 
+5) INORDER FOR US to update the new versionin on the deployment session on k8, that is done by webhook or pull ACM 
+*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a build ...32:17
+ ans : 
+another tin u shud knw is that our jobs are trigered frm JENkins, jenkins is our CI/CD pipeline, so frm jenkins if u are runin job1 , we can pass the job number to become
+the default version number of the image that is goin to be pushed to dockerhub such that when k8 is goin to pull, it is goin to dynamically get the latest image version
+that was pushed to dockerhub
+
+6) is ther a way to add a msg such that u see what ur rollin back to
+il illustrate that particular aspect in our subsequent classes, when u are rollin out a new version u pass an option that says --record so u can like tag a particular msg
+to that such that you can easily xplain what happened in a particular deployment such that if u ar goin to be rollin back to previous verisons, u can be able to get that msg 
+so u can use theat particular concept and if u want to rollout new versions u can create msgs to ease the processes as well
+
+7)is it possible to integrate our workflow iwth pool REQ so that in our work env at work , someone doesnt just change the deployment witout any approval frm say lead engr
+ANS:
+its very possible,,, and thats what actually happens in our env, dats why we did pool rEQ under git such that if ders a new version of the app, developers aaare nt comitin 
+dicrectly to d master branch, they are developin to probably the dev branch and from that branch they nid to create a pool for other members to be able to review b4 it is 
+commited to the master branch n it is only in the master branch that once der is a new commit github webhook wil b trigered to be able to do a buil, do a test, uplosd artifact,
+run sonarqude code, dockerize, push to regitry and deploy in a k8 cluster.
+
+8) am a devops engr, i work for a coy, which k8 object shud i use n what will deter my choice object,,, any of this objects can be used for ur deployment
+based on our env deployment is what we use as our object for deployment bc it :
+creates 
+Deployments: ... these are the options that deployment comes with
+   Create ReplicaSets   
+   Create Pods 
+   RollOut   = 
+   Rollback    .... this in particular is smt that is very diff wit an object like pod, RC , RS , (pod is even out of the question) bc if u use RS to rollout der wil b a 
+   pause deployment                                                                down time, u wll suffer frm appl outage, so cx cant access appl at that time
+replicasets
+
 
 4) this is a deployment manifest file 
 i want to create a deployment,so what name am i assign to the deployment?? it can be anythin at all
