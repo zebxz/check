@@ -322,29 +322,38 @@ Blue Green deployment Technique :
    version1/blue running in production
    version2/green deployed in production  
    we deploy version2 in the test environment and observe its performance 
-   Once the performance is good then we deploy version2/green in production       
+   Once the performance is good then we deploy version2/green in production    
+the problem with blue green deployment is that it makes use of lot of ressources bc we need to hv 2sets of deployment running.. each set is consuming resources
 
 e.g using rollingupdate deployment, you release a medicapp for an hospital then you realise ders an error and need to rollback but before you can rollback lives are gone
 so we dnt want to deploy using rolling update, we want to deploy using blue green...
 so using blue green deploying we have version1 running in production , then we deploy version2 , so  version2 is green and its deployed in the testing/UAT env, which cud
-be in a diff name space and while its deployed, further test is being done , we are observing hw its performing, we can decide to test it on a client with less severe cases
-or some rabbit and by the time the testing is saticfactory, we need it to be running in production and in k8 we expose it using a service.the application already
- runing in prod is being accessed using d service its a nodePortSVC MEDSVC (selector app:medic) wich is routin traffic .the deployment runing in UAT has label=app:med
+be in a diff name space(in k8 we use namespace to isolate clusters) and while its deployed (ders anoda service use o expose it), further test is being done ,we are observing
+hw its performing, we can decide to test it on a client with less severe cases or some rabbit & by the time d testing is saticfactory, we need it to be running in production
+and in k8 we expose it using a service.the application already runing in prod is being accessed using d service its a nodePortSVC MEDSVC (selector app:medic) wich is routin 
+traffic .the deployment runing in UAT has label=app:med
 NOW for the service MEDSVC to  start routing traffic to the appl in UAT and stop routing traffic to the appl in deployment, i will need to change my selector in the service
 from medic to med and immediately the appl in UAT is now being exposed in production and traffic is no longer routed to the previous appl  and they can be brought down...
 thats how blue green works by switching the service over once we are sactisfied with testing. .... this  is not just a quick switch , this is an ultra fast switch
  1:19:46
 
 
-Canary deployment Technique :  
+**********with roling update we can decide to push out 10 replicas of the new version and keep 10 replicas of the old version to that xtent ders a kind of trafic mgt 
+and trafic is flowing to both version1 and version2 bt we cant deter who is goin to get version1 and who gets version2 like we ar able to det in deployment technique
+anoda problem of rollin updtae is that even after completely deploying version2 if ders a problem, you still v to rollback
+
+*********testing in UAT doesnt mean that ther is no possibilty that der could still be a problem n we wud need to roll back.....1:14:30
+
+Canary deployment Technique :  this gives you a longer time to test ur appl ... (class33 video7a....1:12:35)
    - TRAFFIC MGT   
    - 25% traffic VERSION2 goes to Canada  , and if we are sactisfied with how its running we can then switch all the traffic to to version2
    - 75% traffic VERSION1 goes to USA  
    - VERSION1 -- 40% to version1    ...e.g we can decide that we hv version1 runing we can decide that since we ar rolling out vesion2 let 40% of our traffic go to version1
    - VERSION2 -- 60% to version2              and  40% go to version2 and we observe for an extended period and if its sactisfactory we move all the traffic to version2
-   - 40years+   75% traffic VERSION1    OR  we could use the cx age group
+   - 40years+   75% traffic VERSION1    OR  we could use the cx age group (using canary setting u can set all that up,, der are some appl that ask for your date of birth etc
    - 18-39years 25% traffic VERSION2
    -we can alsouse based on biometrics e.g sex or ages
+
 
 QUESTION......1:24:35
 1) can a file be use to taint a node or must it be only commands in the CLI
@@ -436,6 +445,40 @@ deployment is said to be the recommended object for deployment in k8 or for runn
 it records whatevr u created such that if anything is wrong it can always rollback, thats why most of the time we use deployment bc deployment will rollout a replica set
 u can rollout n rollback ,,, so from a very strong perspective we use deploymentas the recommended obj to deploy workload in k8
 ****************************************************************************************************
+
+class33 video7a....1:17:10)
+hw is trafic manged wit canry is dis  solely on the k8 side or we are goin to be depending on the cloud provider like aws to manage the taffic
+ANS;
+for canry we are goin to be use what is called a k8 operator  der are k8 operator like estil that wil enable us to deploy canary so its nt abt cloud side or whatever, u jst 
+need to deploy a particular operator or an add on to your cluster that wil permit that to happen.
+
+2) is there a duration for wich blue green deployment can last 
+ANS: for blue green, its nt very wide, u cud hva testing period for mayb 7day or 30day bt that may
+nt really detect all the problems bt with canary we cud run a canary deployment for asl long as 6months so at a higher level of security we cud want to consider more of 
+canary
+
+most critical appl, we use blue green to deploy them e.g u want to test a vaccine , in this type of scenario we use blue green bc we cant be carrying out n operation on a
+client and then realise that ther is a fault, the new version is nt as gud as the previous one and you need to roll back , that rollbk cud be diasterous, so w edeploy a 
+blue green env and run a test on maybe guinea pig etc , we observer hw itruns and if it is very sucesful, we deploy to production knwing thta it shud nt fail
+even wit tha ther cud stil b afailure bc the tasting period is nt like inifinte for blue green, its nt very wide, u cud hva testing period for mayb 7day or 30day bt that may
+nt really detect all the problems bt with canary we cud run a canary deployment for asl long as 6months so at a higher level of security we cud want to consider more of 
+canary
+
+1:21:30
+is it that each time you refresh it takes you to a diff replica set???
+ANS:
+************here is our cluster ,, whta is manging this pod manifest????
+we are using deployment as the object. .. our deployment is hello , this deployment is manging this 2pods , bt it doesnt manges the pod directly, it manges it via ,
+bt it doesnt mange the pod directly, it manges it via a replica set so when u rol out this deployment, it creates a replica set, SO FOr each version that is rolled out it
+creates a replica set for it and the previous replica set becomes 0  bt they stil exists such that if you want to roll back its done with relative ease.
+
+if am logged in and an upgrade is done will i be logged out such taht i hv to login again into a new replica set
+ANS:
+if its a 0downtime technique that we are using , you wont be logged out
+**************************************************************************************************************************************
+
+
+
 
 Ticket 007:
   Setup a multi nodes kubernetes cluster using the kops software.
