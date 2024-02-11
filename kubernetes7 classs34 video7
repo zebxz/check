@@ -1,0 +1,691 @@
+Deployment is making the application available in pods/containers
+by using different kubernetes objects:  
+  Pods or    
+  ReplicationControllers / 
+  ReplicaSets/ 
+  daemonsetS
+  StatefulSets / 
+  deployments
+
+ServiceDicovery is exposing the applications to endUsers 
+by using Kubernetes services such as:  
+  ClusterIP / 
+  NodePort  / 
+  LoadBalancers / 
+  HeadLess Service  
+  ExternalName
+We can also use kubernetes add-ons/plugins to expose 
+applications such as:  
+   ingress 
+   serviceMesh & Istio     
+
+We manage java based projects written in java programming 
+language by our team Developers. 
+We also use the spring-boot framework in Developement.  
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+server:
+  port: 8080
+
+This comes with 2 microserivces (springapp and mongodb)   
+-use deployment kubernetes object for springapp deployment  
+-use replicaset kubernetes object for mongodb deployment
+-springapp is stateless while mongodb is stateful    
+-We can also use StatefulSets with HeadLess service for mongodb
+-write deployment manifest files for springapp and mongodb  
+=============================================================
+springapp.yml 
+============
+apiVersion: apps/v1  
+kind: Deployment
+metadata:
+  name:  springapp
+  labels:
+    name:  spa     
+spec:
+  selector: 
+    matchLabels:
+      name: spring  
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name:  spring
+    spec:
+      containers:
+      - image:  mylandmarktech/spring-boot-mongo  
+        name:  springapp
+        env:
+        - name:  MONGO_DB_HOSTNAME
+          value:  mongosvc
+        - name:  MONGO_DB_USERNAME
+          value:  devdb
+        - name:  MONGO_DB_PASSWORD
+          value:  devdb@123
+        ports:
+        - containerPort:  8080
+
+
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+
+apiVersion: apps/v1  
+kind: ReplicaSet  
+metadata:
+  name:  mongors     
+spec:
+  selector: 
+    matchLabels:
+      name: mongo    
+  template:
+    metadata:
+      labels:
+        app:  mongo  
+    spec:
+      containers:
+      - name:  mongoapp    
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value:  devdb
+        - name:  MONGO_INITDB_ROOT_PASSWORD
+          value:  devdb@123
+---
+kind: Service  
+apiVersion: v1  
+metadata:
+  name: mongosvc    
+spec:
+  selector:
+    app: mongo    
+  ports:
+  - port: 80  
+    targetPort: 27017  
+---
+springapp ----mongosvc---- mongodb  
+
+
+running notes for kubernetes 8/9 video follows:
+===============================================
+app.yml  
+=======
+host
+
+destroy options :
+  terraform destroy --auto-approve  
+  terraform destroy --target local_file.test      
+  terraform destroy --target aws_instance.web         
+How have you applied terraform in your environment/landmark??? 
+
+
+output block:
+   create ec2-instances :
+      metadata = 
+        ipAddresses
+        az/ami/dns/
+        Instance ID
+       
+   vpc : vpc-id  / cidr block   
+   eks cluster:
+     kubeconfig    
+
+kubernetes
+=========
+  -- Kubernetes CLUSTER = Group of servers working together - k8s  
+  -- k8s -- nodes -- pods[containers]  
+pods for deployment:
+  -- pods has short lifecycle      
+
+kubernetes features:
+   - scaling  
+   - self healing capabilities  - dead pods are authomatically restarted 
+   - service discovery & load balancing  :
+         - ClusterIP / NodePort  / LoadBalancer  / ExternalName / HeadLess Service
+         - ingress  
+
+kubernetes objects:
+   - pods[v1]  = we shouldn't use pod to deploy applications in kubernetes
+                 use controllerManagers to deploy and manage pods/applications 
+   - ReplicationControllers[v1]
+   - ReplicaSets [apps/v1] 
+   - DaemonSets  [apps/v1] 
+   - Deployments [apps/v1] 
+
+  selector supports:
+   ReplicationControllers - old version = equality based selectors 
+   ReplicaSets/DaemonSets/Deployments - selectors:
+        - equality based selectors = key1:value1
+        - set based selectors:
+             key1:
+               values:
+                 value1  
+                 value2  \
+                 value3  
+
+  kubectl scale deployment/rc/rs --replicas 10   = manual scaling   
+  kubectl scale ds --replicas 10   = manual scaling   
+
+IQ: How can scaling be automated in kubernetes? 
+    By installing a guage API [ metric-server ] in our cluster and using 
+       1. HorizontalPodAutoscaler[HPA] for pods   
+       2. VerticalPodAutoscaler[VPA] for pods 
+       3. CUSTER Autoscaler[CAS] for nodes  
+
+metrics-server    
+Resources / Limits / Requests / ResourceLimits  
+==========================================================
+https://github.com/LandmakTechnology/spring-boot-docker
+-# Spring App & Mongod DB as POD without volumes
+Stateless applications deployment doesn't require to maintain it state   :
+  Use deployment as the choice kubernetes object  
+  ReplicaSets/ReplicationController:  
+Stateful applications maintained their state. Examples are  :
+  databases, Jenkins, 
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+server:
+  port: 8080
+
+   ssh username@hostname [ It will request for the password ]  
+    mongodb:
+      host: mongo
+      port: 27017
+      username: devdb  
+      password: devdb123  
+  ssh devdb@mongo  
+
+mongo database:
+===============
+  1. use StatefulSets as the choice kubernetes object for Stateful  
+     application deployments   
+  2. USE ReplicaSets/ReplicationController/deployment StateLESS  
+     application deployments   
+
+Stateless
+--- springapp.yml/
+Stateful
+--- mongo.yml/
+
+springapp.yml: kams   
+kind: Deployment  
+apiVersion: apps/v1   
+metadata:
+   name: spingapp    
+spec:
+   replicas: 2  
+   selector:
+     matchLabels:
+       app: spring    
+   template:  
+      metadata:
+         labels:
+            app: springapp    
+      spec:  
+         containers:
+         - name: app  
+           image: mylandmarktech/spring-boot-mongo  
+           ports: 
+           - containerPort: 8080
+           env:
+           - name: MONGO_DB_HOSTNAME  
+             value: mongosvc  
+           - name: MONGO_DB_USERNAME 
+             value: devdb   
+           - name: MONGO_DB_PASSWORD
+             value: devdb@123   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springappsvc
+spec:
+  type: NodePort
+  selector:
+    app: springapp
+  ports:
+  - port: 80
+    targetPort: 8080
+
+mongo.yml  = kams:  
+=========
+kind: ReplicaSet   
+apiVersion: apps/v1  
+metadata:  
+  name: mongors    
+spec:
+  selector:
+    matchLabels:
+      app: mongo     
+  template:
+    metadata:  
+      labels:
+        app: mongo    
+    spec: 
+      containers:
+      - name: mongodbcontainer    
+        image: mongo      
+        ports:
+        - containerPort: 27017    
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: devdb
+        - name: MONGO_INITDB_ROOT_PASSWORD 
+          value: devdb@123
+---
+kind: Service 
+apiVersion:  v1  
+metadata:  
+   name: mongosvc 
+spec:
+  selector:
+    app: mongo    
+  ports:
+  - port: 27017 
+    targetPort: 27017  
+
+---
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+           env:
+           - name: MONGO_DB_HOSTNAME  
+             value: mongosvc  
+           - name: MONGO_DB_USERNAME 
+             value: devdb   
+           - name: MONGO_DB_PASSWORD
+             value: devdb@123   
+
+1. image: mongo   
+2. image: mylandmarktech/spring-boot-mongo     
+
+repository to clone:
+1. https://github.com/LandmakTechnology/kubernetes-notes
+2. https://github.com/LandmakTechnology/kops-k8s
+3. https://github.com/LandmakTechnology/kubernetes-manifests
+=========================================================
+
+kubernetes volumes:
+===================
+mongovol.yml  
+kind: ReplicaSet   
+apiVersion: apps/v1  
+metadata:  
+  name: mongors    
+spec:
+  selector:
+    matchLabels:
+      app: mongo     
+  template:
+    metadata:  
+      labels:
+        app: mongo    
+    spec: 
+      volumes:
+      - name: mongodbhostvol    
+        hostPath:
+          path: /mongodata  
+      containers:
+      - name: mongodbcontainer    
+        image: mongo      
+        ports:
+        - containerPort: 27017    
+        volumeMounts:
+        - name: mongodbhostvol  
+          mountPath: /data/db 
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: devdb
+        - name: MONGO_INITDB_ROOT_PASSWORD 
+          value: devdb@123
+
+kubectl taint nodes node9 key1=value1:NoSchedule     [taint the node]
+kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
+
+  hostPath volume will store data ONLY on the node where the POD is scheduled
+  This can result data lost and data inconsistency 
+
+  NFS 
+
+      volumes:
+      - name: mongodbhostvol    
+        hostPath:
+          path: /mongodata 
+      volumes:
+      - name: mongodbhostvol    
+        nfs:
+          path: /mongodata 
+
+
+awsElasticBlockStore 
+azureDisk
+azureFile 
+configMap 
+emptyDir g
+cePersistentDisk
+gitRepo (deprecated) 
+hostPath
+nfs 
+persistentVolumeClaim 
+secret
+
+
+Configuration of NFS Server
+===========================
+Step 1: 
+
+Create one Server for NFS
+
+Install NFS Kernel Server in 
+Before installing the NFS Kernel server, we need to update our system’s 
+repository index with that of the Internet through the following apt command as sudo:
+
+nfs server: 3.17.179.30  / 10.0.0.76
+---------------------
+mongo-nfs.yml  
+==================
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mongors
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      name: myapp
+      labels:
+        app: mongo
+    spec:
+      volumes:
+      - name: mongodbvol
+        nfs:
+          server: 10.0.0.76
+          path: /mnt/share
+      containers:
+      - name: mongodbcontainer
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: devdb
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: devdb@123
+        volumeMounts:
+        - name: mongodbvol
+          mountPath: /data/db
+
+
+kubectl taint nodes node9 key1=value1:NoSchedule     [taint the node]
+kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
+
+Persistent volumes 
+===================
+
+deploy a kubernetes using Kops  
+
+
+PV --> It's a piece of storage (hostPath, nfs,ebs,azurefile,azuredisk) in k8s cluster. 
+PV exists independently from from pod life cycle form which it is consuming.
+
+PersistentVolumeClaim -->
+   It's request for storage(Volume).Using PVC we can request(Specify) 
+   how much storage u need and with what access mode u need.
+
+Persistent Volumes are provisioned in two ways, Statically or Dynamically.:
+
+1) Static Volumes (Manual Provisionging)
+    A k8's Administrator can create a PV manually so that pv's can be available for PODS which requires.
+    Create a PVC so that PVC will be attached PV. We can use PVC with PODS to get an access to PV. 
+
+2) Dynamic Volumes (Dynamic Provisioning)
+     It's possible to have k8s provision(Create) volumes(PV) as required. 
+     Provided we have configured A storageClass [sc].
+     So when we create PVC if PV is not available Storage Class will Create PV dynamically.        
+
+PVC: If pod requires access to storage(PV),it will get an access using PVC.
+     PVC will be attached to PV.
+
+PersistentVolume – the low level representation of a storage volume.
+PersistentVolumeClaim – the binding between a Pod and PersistentVolume.
+Pod – a running container that will consume a PersistentVolume.
+StorageClass – allows for dynamic provisioning of PersistentVolumes.
+
+PV Will have Access Modes:
+============================
+ReadWriteOnce=RWO – the volume can be mounted as read-write by a single node = EBS 
+ReadOnlyMany=ROM  – the volume can be mounted read-only by many nodes
+ReadWriteMany=RWM – the volume can be mounted as read-write by many nodes = NFS 
+
+
+Claim Policies
+================
+A Persistent Volume Claim can have several different claim policies associated with it including
+Retain – When the claim(PVC) is deleted, the volume(PV) will exists.
+Recycle – When the claim is deleted the volume remains but in a state where the data can be manually recovered.
+Delete – The persistent volume is deleted when the claim is deleted.
+
+The claim policy (associated at the PV and not the PVC) is responsible for what happens to the data when the claim is deleted.
+
+mongo-pv-hostpath.yml   
+---------------------
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/kube"
+
+---
+# Mongo db pod with PVC
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/kube"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+# Mongo db pod with PVC
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mongors
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+     metadata:
+       name: mongodbpod
+       labels:
+         app: mongo
+     spec:
+       volumes:
+       - name: mongodb-pvc
+         persistentVolumeClaim:
+           claimName: pvc-hostpath
+       containers:
+       - name: mongodbcontainer
+         image: mongo
+         ports:
+         - containerPort: 27017
+         env:
+         - name: MONGO_INITDB_ROOT_USERNAME
+           value: devdb
+         - name: MONGO_INITDB_ROOT_PASSWORD
+           value: devdb@123
+         volumeMounts:
+         - name: mongodb-pvc
+           mountPath: /data/db
+
+mongo-pv-pvc-nfs.yml   
+===================
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-pv1
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <nfs server ip>
+    path: "/mnt/share"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nfs-pv1
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+pv-pvc-mongo-hostpath.yml  
+=========================
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/kube"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+pv-pvc-hostpath.yml   
+==================
+# Mongo db pod with PVC
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-pv1
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.0.0.76
+    path: "/mnt/share"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nfs-pv1
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mongors
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+     metadata:
+       name: mongodbpod
+       labels:
+         app: mongo
+     spec:
+       volumes:
+       - name: mongodb-pvc
+         persistentVolumeClaim:
+           claimName: pvc-nfs-pv1
+       containers:
+       - name: mongodbcontainer
+         image: mongo
+         ports:
+         - containerPort: 27017
+         env:
+         - name: MONGO_INITDB_ROOT_USERNAME
+           value: devdb
+         - name: MONGO_INITDB_ROOT_PASSWORD
+           value: devdb@123
+         volumeMounts:
+         - name: mongodb-pvc
+           mountPath: /data/db
+
+kubernetes volumes  :
+==========================
