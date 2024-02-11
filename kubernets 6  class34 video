@@ -1,4 +1,4 @@
-deployment as an object , RollingUpdate , deployment techniques , 
+deployment as an object ,deployment strategy: ReCreate strategy , RollingUpdate.  Deployment techniques , 
 
 Deployments  
 ==========
@@ -21,6 +21,15 @@ with deployment as an object :2 rplicas of the appl wil b deployed &2pods for d 
 and new pods but the previous replicas will be zero (0) bc the pods wil be 0 bt the replicas stil exists and the webapp for each version still exists, this is the same 
 process for each version that is rolled out and so we can easily delelete or roll back to a previous set bc their replica sets were recorded
 ---
+
+************************************************************ CLASS 33 vide 5&6.... 52:30 .... i will watch the video later...........
+for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with docker push to the image 
+registry 
+#########can i use vscode to create my deployment ?????  ..... YES 
+MY QUESTION: .. WHAT is vscode????????
+********************************************************************************........................
+
+
 #### i can use IDES to generate a file and just copy then jst use what i nid v... integrated development env
 *****strategy can be rolling update or recreate... 
 rolling update is the default startegy  so if u dnt enter a strategy, it wil be uisng rolling update
@@ -362,7 +371,7 @@ bt that shud only happen if the node is nt under any maintenance, if its under m
 
 6) hw do we rollback to a specific version???  ..
 . go to k8 and check it out so that  in the  nxt class u can give us a briefing on that
-
+kubectl rollout undo deployment hello --to revision=1 OR revision2 n so on   ..... class33 video 5&6
 
 Ticket 007:
   Setup a multi nodes kubernetes cluster using the kops software.
