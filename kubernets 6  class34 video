@@ -23,10 +23,22 @@ process for each version that is rolled out and so we can easily delelete or rol
 ---
 
 ************************************************************ CLASS 33 vide 5&6.... 52:30 .... i will watch the video later...........
-for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with docker push to the image 
-registry 
+************* for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with docker push to
+the image registry 
 #########can i use vscode to create my deployment ?????  ..... YES 
 MY QUESTION: .. WHAT is vscode????????
+
+this is an extract of the entire CI/CD process  .......7:58 ....(qusetion n answer vidoe 5&6)
+b4  we containerize, containerize, b4 we ar creatin images, we had gone tru code quality analysis, and depending on the type of project, der are projects were we execute sonar
+qube analysis b4 even creating packages wit mavin,, so if u do that u are good to go, so dis is jst a summary  bc we didnt hv nexus or sonar qube connected in this k8 but on 
+our CI/CD pipeline, we hv developers write code, developing new update of the appl, and once they do that they commit to github and we can connect github to soanat cloud wer
+once der is a new commit, sonar cloud wil run code quality analysis, its only when that process passes, wher our sonarqube or sonar cloud report indicates that it has gone 
+tru all our quality threshold, evrytin is fine , der are no vulnerability in the code, no smell, bug n issues , then once we v realised that then we now bring in maven wich 
+then creates packges , once maven is done we upload artifacts into nexus and frm ther we can now build our image using docker, once image is built we use k8 4 deployment.
+
+*******i will share the jenkins kubernetes integration, it covers evrytin am tryin to xplain to u now, ,, a lot of folks have had jobs by just goin tru that video, hw all
+this tools connect to ecah other
+
 ********************************************************************************........................
 
 
