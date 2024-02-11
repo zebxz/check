@@ -1,3 +1,7 @@
+*********************************** ASK FOR THE JENKINS KUBERNETES INTERGARTION VIDEO 9:54:00
+
+
+
 No Schedule  ... caplital N and capital S
 
 
@@ -18,4 +22,218 @@ ALSO, we can taint a node to keep it on reserve, such that we could have some re
 scheduler to stil schedule a pod or pods on the node
 if you are done recommissioning a node a simply remove the taint
 
-2)
+2) When we use tolorations to shedule pods we can still acess the pods,, when nodes are tainted they are nt fshut down e.g master node
+
+3) what is the default deployment strategy in kubernetes??
+RollingUpdates is the default deployment strategy in kubernetes
+
+
+4) this is a deployment manifest file 
+i want to create a deployment,so what name am i assign to the deployment?? it can be anythin at all
+kind:deployment
+metadata:
+  name: myapp
+
+
+EXAMPLES OF OBJECTS:
+pods
+RC
+RS
+Deplyments
+Statefulseta
+secret
+ConfigMaps  ,,,, we will b lookin at this
+Volumes;
+   Persistent Volumes
+   Storage Classes
+   Persstent volumes Claims
+
+
+Kubernetes objects used to expose/discover applications:
+or kubernetes ServiceDicovery objects:
+   ClusterIP   
+   NodePort  
+   LoadBalancer
+   ExternalName   
+   ingress 
+   networkPolicy
+
+
+Ticket0045:
+=========
+Write a simple deployment manifest file
+kams
+========
+kind: Deployment       ********** when i wnat to use the default strategy then i dnt need to indicate anytin in kind
+apiVersion: apps/v1          ************kubectl api-resources  | grep -i Deployment  ..... we can grep  for deployment to get the api version for deployment
+metadata: 
+   name: myappdeployment       .. assigning a name for my deployment
+spec: 
+   selector:
+      matchLabels:
+         app: myapp
+   template:                    ***************** this is the pod template
+      metadata:                   so am creating a deployment for what???  .. the deployment is for my pod
+         name: app                 so what is the name of the pod i wnat to create ?? app
+         labels:                        
+            app: myapp 
+      spec:                     in the pod template we v meta data and spec and in spec we see containers, image, ports
+         containers:
+         - name: app
+           image: mylandmarktech/hello:2     
+           ports:
+           - containerPort: 80 
+
+what is the default deployment strategy in kubernetes??
+RollingUpdates is the default deployment strategy in kubernetes
+
+
+kubectl api-resources    ... this will list all the resources
+kubectl api-resources  | grep -i Deployment  ..... we can grep  for deployment to get the api version for deployment
+
+====================================================
+Pods / 
+ReplicationControllers / 
+replicasets
+DaemonSet  
+Deployments 
+statefulsets
+
+stateless applications
+
+Deployments:
+   Create ReplicaSets   
+   Create Pods 
+   RollOut   = 
+   Rollback  
+   pause deployment   
+replicasets
+
+Manifest-files:
+==============
+kind: Pod  
+apiVersion: v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   containers:
+   - name: app 
+     image: mylandmarktech/hello   
+     ports: 
+     - containerPort: 80 
+
+kind: ReplicationController    
+apiVersion: v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   selector:
+      app: web  
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+
+
+kind: ReplicaSet    
+apiVersion: apps/v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: web
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+---
+kind: DaemonSet    
+apiVersion: apps/v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   selector:
+      matchLabels:
+         app: web
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+---
+kind: ReplicaSet    
+apiVersion: apps/v1   
+metadata:  
+   name: app32
+   namespace: dev    
+   labels:
+      tier: fe  
+spec:
+   strategy:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: web
+   template:
+      metadata:
+         name: app 
+         labels:
+            app: web  
+      spec:
+         containers:
+         - name: app 
+           image: mylandmarktech/hello   
+           ports: 
+           - containerPort: 80 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
