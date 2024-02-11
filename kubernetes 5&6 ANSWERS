@@ -1,1 +1,21 @@
+No Schedule  ... caplital N and capital S
 
+
+1) what are the circumstance for wich we can taint a node and then tolorate the scheduler for pods to be scheduled on the node 
+when will a node be tainted?
+e.g we v a k8 cluster running with abt 11worker nodes, and it is runnin a particular version of kubectl bc kubectl is a software, remember when we configured our k8 cluster
+we install a lot of packages in the cluster, like kubectl was insatlled kubelete ,API server, etcd, scheduler, controller managers , all of these are conrainers that have 
+specific versions or software, now want to recommision this server which means that we wnt to remove d current version of any of the software that is runnin and replace it
+with a current versione.g kublete service from version 1.9 to version 1.11, now the process of recommissioning the server it wil nt b gud to allow pods to be scheduled
+ on that particular worker node so we are going to taint the node so once you taint the node , it means you are instructin k8 scheduler nt to scheudel aNY POD DON THE node,
+you are also instructing k8 to evict ANY POD that is currently runin on the node, so if der were any pods currently running on the node they wil be evicted and probably 
+rescheduled on another node.
+also, THE NODE COULD BE HAVING MEmory leakage , ders a problem with the node so we need to troubleshoot and resolve the problem so before we start to TS we will taint the node
+so that no pod shud be scheduled on the nodde
+also generally, the amster node is tainted by default bt we hv a particular logmt appl that we want to deploy which shud gather logs even from the master node, so we need to 
+use toloration to allow pods to be schedule on the master node 
+ALSO, we can taint a node to keep it on reserve, such that we could have some redundancy bt whenever we decide to assign node to the pod, we now use toloration,ie torqtaing k8
+scheduler to stil schedule a pod or pods on the node
+if you are done recommissioning a node a simply remove the taint
+
+2)
