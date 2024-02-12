@@ -1,2 +1,282 @@
 
 in k8 we use namespace to isolate clusters ............. class 33 vdeo7a
+
+
+
+1:36:00
+we can use a vscode to help when it come sto the manifest file 
+but we also hv a github repository that conatins almost all the manifest file tha you may need
+prof is der any file you have written that i can go there and copy and use them even at work? ...YES
+CLONE THIS REPOSITORY
+https://github.com/LandmakTechnologies/Kubernetes-manifests       .... almost everytin that we v done so far u wil find it here, when ur trying to deploy appli
+                                                                   most of the tins tat we v been able to cover in k8, u can see then here, like hw to deploy in mysql db 
+                                                                   with configmap and secret , all of that, al d manifest files that we wil stil be loking at u wil find 
+                                                                      them here when it comes to k8
+
+---------------------------------------------
+https://github.com/LandmakTechnology/kubernetes-manifests   
+
+one tin i wanted us to look at .... creating a pod and making use of request, RESOURCE,and limit
+whenu want to create a resourec in k8 generally, we need to decide hw much resources is goin to be asssigned
+when you assign resources to your pod for that pod to be scheduled on a node, the node must have the requested resources available.
+**bt while d container is running, if d container need to optimize d resource d  maximum d conatiner can use is what hasbeen defined aslimit
+
+
+Resource, requests and limits:
+--------------------------
+Requests and limits are the mechanisms Kubernetes uses to control resources
+such as CPU and memory. 
+Requests are what the container is guaranteed to get. 
+If a container requests a resource, 
+Kubernetes will only schedule it on a node that can give it that resource.
+
+Limits, on the other hand, make sure a container never goes above
+a certain value. The container is only allowed to go up to the limit, 
+and then it is restricted.
+
+Resource request:
+---------------
+A request is the amount of that resources that the system 
+will guarantee for the container, and Kubernetes will use this value 
+to decide on which node to place the pod. 
+
+Resource Limit:  .. a container wil never go above a certain value
+A limit is the maximum amount of resources that 
+Kubernetes will allow the container to use.
+
+pod.yml  
+=======
+kind: Pod  
+apiVersion: v1   
+metadata:  
+   name: webapp   
+spec:
+   containers:
+   - name: webapp    
+     image: mylandmarktech/java-web-app     
+     ports:
+     - containerPort: 8080     
+     resources:
+       requests:
+         memory: "128Mi"
+         cpu: "500m" 
+       limits:       
+         memory: "128Mi"        **bt while d container is running, if d container need to optimize d resource d  maximum d conatiner can use is what hasbeen defined aslimit
+         cpu: "500m" 
+---
+cluster  :  node1 [ mem=120Mi ] 
+            node2 [ mem=8000Mi / 32000m ]   
+
+scaling in kubernetes:
+   manual scaling:
+      kubectl scale deployment/rs/rc/sts/ app --replicas 4      
+   automated scaling:
+      Horizontal Pod AutoScaling  - HPA  :
+      ============================
+POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number 
+pod replicas available at any time & based on the observed CPU/Memory utilization
+on pods it can scale PODS.
+HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
+based on observerd CPU & Memory utilization base the target specified. 
+
+What is difference b/w Kubernetes AutoScaling(POD AutoScaling) & AWS AutoScaling?
+  AutoScaling group in aws :
+     min     = 5
+     desired = 5 
+     max     = 100
+ 
+ scaling policies aws :
+    memory utilization   
+       mem > 70% add servers      
+    cpu utilization   
+       cpu > 70% add servers 
+
+  ScalingPolicy:
+     memory utilization
+       cpu -gt 80% 
+       cpu -lt 40%     
+     cpu utilization
+difference b/w Kubernetes AutoScaling(POD AutoScaling) 
+                   & AWS AutoScaling?
+
+
+resources:
+   requests:
+     memory: "128Mi"
+     cpu: "500m" 
+deployment:
+   replicas: 5  
+hpa:
+   min: 5 + 1 =   
+   max: 50   
+kubectl top pods  
+kubectl top nodes  
+
+error: Metrics API not available
+    kubernetes addons/plugins:
+      Metrics Server
+
+Configure a Metrics Server on our Cluster4??
+===========================================
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+
+https://github.com/LandmakTechnology/metric-server
+git clone https://github.com/LandmakTechnology/metric-server
+kubectl apply -f metric-server/metrics-server-deploy.yml
+=====================================================
+
+ubuntu@master:
+~$ kubectl apply -f metric-server/metrics-server-deploy.yml
+serviceaccount/metrics-server unchanged
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader unchanged
+clusterrole.rbac.authorization.k8s.io/system:metrics-server unchanged
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader unchanged
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator unchanged
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server unchanged
+service/metrics-server unchanged
+deployment.apps/metrics-server configured
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io unchanged
+
+metrics-server:
+  nodes  
+  pods 
+
+RBAC objects:
+  serviceaccount metrics-server 
+     - user  
+     - groups 
+     - pods     
+  clusterrole
+     - pods/nodes [get/watch/list] 
+  clusterrolebinding
+     - 
+  rolebinding
+Deployment with HPA
+==================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpadeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: hpapod
+  template:
+    metadata:
+      labels:
+        name: hpapod
+    spec:
+      containers:
+        - name: hpacontainer
+          image: k8s.gcr.io/hpa-example
+          ports:
+          - name: http
+            containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "256Mi"
+
+---
+apiVersion: autoscaling/v2 
+kind: HorizontalPodAutoscaler  
+metadata:
+  name: autoapp        
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment 
+    name: hpaapp  
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 40
+  - type: Resource
+    resource:
+     name: memory
+     target:
+      type: Utilization
+      averageUtilization: 40
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hpaclusterservice
+  labels:
+    name: hpaservice
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    name: hpapod
+  type: ClusterIP
+
+-# Create temp POD using below command interatively and increase the 
+-# load on demo app by accessing the service.
+
+kubectl run -i --tty load-generator --rm  --image=busybox /bin/sh
+
+-# Access the service to increase the load.
+
+while true; do wget -q -O- http://hpaclusterservice; done  
+
+Vertical Pod AutoScaling : 
+Horizontal Pod AutoScaling  :
+Cluster AutoScaling:
+
+
+kubernetes = 15 hours   :
+   kops / helm  /    
+   stateless and stateful applications   
+   volumes  
+   configMaps and Secrets 
+   EFK  / 
+   Prometheus and Grafana  
+   AMAZON EKS   
+   Kubernetes Security     
+
+
+Date  Local time  Change
+
+Nov 05, 2023   2:00 am  -1 hour to standard time
+Days: Mondays/Tuesdays/Saturdays  
+Times: 7pm - 11pm EST Toronto/NewYork  Time     
+Nigeria/Cameroon: 1am - 5am   
+UK: 12am - 4am   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
