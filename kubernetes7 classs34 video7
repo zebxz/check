@@ -48,13 +48,24 @@ IS IT POSSIBLE TO HV APPL OUT of YOUR CLUSTER COMMUNICATING WITH APPLications IN
 
 23:09   LETS TRY TO DEPLOY ONE OF OUR LEGACY APPL in github
 remember, one of our legacy appl has a github repository,  as a matter of fact all our projects have a github repo
+the application with the database, requiring the database ,, if you type docker, it is going to appear, spring boot docker, here is our legacy appl
 
-
-
-
+in our env,
 We manage java based projects written in java programming 
 language by our team Developers. 
 We also use the spring-boot framework in Developement.  
+
+so w eare using a framwrk called springboot framewrk , so developers are deveeloping this appl using the springboot framewrok, thats why its called spring boot docker bc of
+the framewrk used in developin this project.
+
+
+its a spring appl, a spring java appl,  or a javabased appl developed via the spring boot framewrk
+we need to deploy this appl in k8
+this is an example of a microservice appl, when uhv many appl that you need to deploy and those appl has to comm with each other 
+so we wnt to see hw to manage this appl with relative ease
+
+************this project has 2micro services, w ehv the springapp and mongo database (mongodb)..........27:38
+
 
 spring:
   data:
@@ -71,10 +82,14 @@ server:
 This comes with 2 microserivces (springapp and mongodb)   
 -use deployment kubernetes object for springapp deployment  
 -use replicaset kubernetes object for mongodb deployment
--springapp is stateless while mongodb is stateful    
--We can also use StatefulSets with HeadLess service for mongodb
--write deployment manifest files for springapp and mongodb  
-=============================================================
+-springapp is stateless while mongodb is stateful  , therfore 
+-We can also use StatefulSets with HeadLess service for mongodb bt for now we will use replica set and cm bk to this later on.
+-write deployment manifest files for springapp and mongodb  , we can aslo use existing manifest file , most of the time u ar goin to use existin manifest file, if i alrady 
+hv a manifest file exitsing then i shudnt write a new one..... i can also use an IDE to simplify hw to write my manifest file.if u hv vscode, i type deployment n delete 
+the lines i dnt need, since it is stateless i dnt need volume so ill tk it out., am nt assignin resources for now.
+
+
+=============================================================     .... we want to deploy a legacy appl
 springapp.yml 
 ============
 apiVersion: apps/v1  
@@ -98,7 +113,7 @@ spec:
         name:  springapp
         env:
         - name:  MONGO_DB_HOSTNAME
-          value:  mongosvc
+          value:  mongosvc              *********** form communication btw the databse and the the sprinapp the hostname has to be the same as the database servicename 
         - name:  MONGO_DB_USERNAME
           value:  devdb
         - name:  MONGO_DB_PASSWORD
@@ -109,8 +124,8 @@ spec:
 
       host: ${MONGO_DB_HOSTNAME}
       port: 27017
-      username: ${MONGO_DB_USERNAME}
-      password: ${MONGO_DB_PASSWORD}
+      username: ${MONGO_DB_USERNAME}  ... this is nt hardcoded
+      password: ${MONGO_DB_PASSWORD}   ... this is nt hardcoded
 
 apiVersion: apps/v1  
 kind: ReplicaSet  
@@ -131,24 +146,29 @@ spec:
         ports:
         - containerPort: 27017
         env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          value:  devdb
+        - name: MONGO_INITDB_ROOT_USERNAME             ....hw do i knw the env variable for this image?, where the image is found in docker hub, so i can go to dockerhub
+          value:  devdb                                                                          and search for mongo
         - name:  MONGO_INITDB_ROOT_PASSWORD
-          value:  devdb@123
+         value:  devdb@123
+                                      ********************ther wil b no container port, am nt passing any container port,,...44:15
 ---
-kind: Service  
+kind: Service       ****************if i dnt define my service type, the default service :clusterip will be created ....51:40
 apiVersion: v1  
 metadata:
-  name: mongosvc    
+  name: mongosvc      ..to expose appl in k8 we use the database SERVICE NAME...........  48:20
 spec:
   selector:
     app: mongo    
   ports:
   - port: 80  
-    targetPort: 27017  
+    targetPort: 27017      ***********i cud also check thsi info frm dcokerhub,HOW TO USE THE IMAGE, if ders any port that its expose on, he checked n we see
+                           the mongoDB server in the image listens on the standard amaongoDB port, 27017
 ---
 springapp ----mongosvc---- mongodb  
 
+
+
+i was goin to share a video with you guys explaining the concept of volume 
 
 running notes for kubernetes 8/9 video follows:
 ===============================================
