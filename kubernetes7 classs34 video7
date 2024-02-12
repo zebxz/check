@@ -19,6 +19,39 @@ applications such as:
    ingress 
    serviceMesh & Istio     
 
+
+11:22
+this is like a multi tier appl
+this is my aplli,runing in my cluster, webapp pod deployed in the cluster, i also have a database(mysql) pod deployed both runing on node5 n node 7.. its a multi tier appl
+such that end users need to acces the appl, this is a k8 cluster bt end user trafic cant go straight to the pod, so bc its an external access, we v diff typ of services
+to mk the appl discovery (endusers can be external or internal) ,  for external user w euse the nodeport service such that when trafic gets to the cluster frm enduser, it 
+gets to the node so we v to use a nodeIP, a webSVC , To accept extrnal traffic, therfore when the traffic gets to the node , we v kubeproxy&kubelete running in the node 
+these are all services that ae runin in the node,they are diff agents in my node,we also v coontainer runtime, container dp  ... bt let me focus on this guy for now bc i 
+want to talk abt smt imp, netwroking ,,,... which of these agents is responsible for netwroking, its kubeproxy
+kubeproxy is responsible for networking , so when traffic comes into any of the node , kubeproxy identifies that this trafffic from xternal users, (cos when we create dis 
+nodePort service we assign a pod number, and a clusterip as well, we nid the nodeport service for trafic to get into the cluster   ) once it is inside the cluster, service 
+will be routed frm the nodeport service to the the webapp .
+also he web appl need sto talk to the datbase pod, (rmember that the node service is doin lb), its routing trffic to all the pods , 
+now webapp nid to talk to db pod , bc it neeed sto write data, the webapp is the enduser of the database appl, it needs to write data in the database,  how will that happen?
+evn thouh they ar in the smae cluster they cant talk to each other like that,, we need another service , so we create another service for database
+because it is internal communication, we create a clusterIP service, so our database is clusterIP, SO for webapp to talk to database(pod), it wil be via the database service
+and database service wil talk to the database pod.
+19:44 ...let us assume  we v anoda database that is out of our cluster , we wnta situation wher this appli shud persist data, therfor it shud hv multiple replica of data
+such that my webapp need to also write data in the external database outsid emy cluster , so i have anoda database msql,outside my cluster, how wil this work???
+for this to work, we will create an externalName service (externalName SVC) in our cluster .. THERFORE frm this ectrnal service am creating a service for the external msql
+so for my webapp to talk to the external msql, my webapp wil talk to the external service contrling the database once the communication is established, frm my webapp this 
+communication is being established, therfore from this external service we can communicate with the external database msql.
+
+22:28   .......INTERVIEW QUSTION
+IS IT POSSIBLE TO HV APPL OUT of YOUR CLUSTER COMMUNICATING WITH APPLications INSIDE YOUR CLuster
+*************so YES, it can be exposed via the externalName SVC, its very possible to have appl outside communiacting with appl insdie the cluster
+
+23:09   LETS TRY TO DEPLOY ONE OF OUR LEGACY APPL in github
+remember, one of our legacy appl has a github repository,  as a matter of fact all our projects have a github repo
+
+
+
+
 We manage java based projects written in java programming 
 language by our team Developers. 
 We also use the spring-boot framework in Developement.  
