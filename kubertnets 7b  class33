@@ -52,17 +52,18 @@ but then when shud it scal? .....  so we hv scaling policy
 difference b/w Kubernetes AutoScaling(POD AutoScaling) 
                    & AWS AutoScaling?
 8:50 
-for us to be able to understand hw mch resources are been consumed, we nid to check hw much resources the pods are already consuming
+for us to be able to understand hw mch resources are been consumed, we nid to check hw much resources the pods are already consuming, similarly, we can do this in k8
+we cus decide we wnt to scale our pod..
 
 resources:
-   requests:
-     memory: "128Mi"
+   requests:     under resources, a pod is able to reqest for this much 
+     memory: "128Mi"   
      cpu: "500m" 
-deployment:
-   replicas: 5  
-hpa:
-   min: 5 + 1 =   
-   max: 50   
+deployment:     lets assume this req is created undera controler manger wich is deployment an dthe deployment has replica as 5
+   replicas: 5    if my replica is 5, hw much resources is each of d replica suppose to consume? for memoery 128mi and cpu:500m, thi sis hw much resources a pod can consume
+hpa:                 ************* we deploy an hpa and we say min number of pod 5
+   min: 5 + 1 =    and say min number of pod is 5      (so we hv a deployment we are deployin and an HPA) 
+   max: 50           and max is 50 pod 
 kubectl top pods  
 kubectl top nodes  
 
