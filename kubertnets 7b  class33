@@ -64,28 +64,38 @@ deployment:     lets assume this req is created undera controler manger wich is 
 hpa:                 ************* we deploy an hpa and we say min number of pod 5
    min: 5 + 1 =    and say min number of pod is 5      (so we hv a deployment we are deployin and an HPA) 
    max: 50           and max is 50 pod 
-kubectl top pods  
+                      based on this deploymnt, the HPA wil maintain 5replicas, however if the 5replicas are all using 128 each, it will add anoda pod bc the vol of resources
+                       being usedby the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
+
+kubectl top pods    : to knw  hw much the pods are consuming , but we dnt hv any operator in aws that is able to check hw much resources our pods are consuming
 kubectl top nodes  
 
-error: Metrics API not available
+error: Metrics API not available     ..... we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
     kubernetes addons/plugins:
       Metrics Server
 
-Configure a Metrics Server on our Cluster4??
+Configure a Metrics Server on our Cluster4??     14:29 .. ..    metric server is a k8 operator or pluggin
 ===========================================
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 
 wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
-
+*********OR CHECK OUR Github repository wher we hv metric server script already 
 https://github.com/LandmakTechnology/metric-server
+***********to clone the repository:
 git clone https://github.com/LandmakTechnology/metric-server
-kubectl apply -f metric-server/metrics-server-deploy.yml
+***************** to create a metrics server:
+kubectl apply -f metric-server/metrics-server-deploy.yml     
 =====================================================
 
-ubuntu@master:
-~$ kubectl apply -f metric-server/metrics-server-deploy.yml
+*************** TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
+                               kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
+                               creating a cluster role for metrics server, using rbac, it wil ceate all this service.
+    
+ubuntu@master: vi metric-server/metrics-server-deploy.yml   
+
+ubuntu@master:~$ kubectl apply -f metric-server/metrics-server-deploy.yml          **********all this objects were deployed to get the metrics server running
 serviceaccount/metrics-server unchanged
 clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader unchanged
 clusterrole.rbac.authorization.k8s.io/system:metrics-server unchanged
@@ -96,22 +106,36 @@ service/metrics-server unchanged
 deployment.apps/metrics-server configured
 apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io unchanged
 
+to check if our metrics server is running;
+ubuntu@master:  kubectl get po -A
+********TO check the metrics of our pod:
+ubuntu@master: kubectl top po 
+
+
+18:36****************so all of this hv been created,der is s deployment for our metric server n this metrics server is functional and and it has been deployed such that it
+is able to get into my cluster, we hv given him the permission using RBAC , we are permiting metric server to check all our node, all our pod and report the metrics.. so 
+it can gather metrics and if u lok at some of the objects eployed, we v stuff like metric server can check ur node on yr pod 
+
 metrics-server:
   nodes  
   pods 
 
 RBAC objects:
-  serviceaccount metrics-server 
-     - user  
+  serviceaccount metrics-server : we can have 
+     - user        ......*******so we can create a service account for a user , for a grp or  a pod 
      - groups 
      - pods     
-  clusterrole
+  clusterrole             ************ we create a cluster role that is permoting  certain tasks to b done on pods n nodes
      - pods/nodes [get/watch/list] 
-  clusterrolebinding
+  clusterrolebinding             ....  all of this hv been deployed
      - 
-  rolebinding
+  rolebinding      ....   all of this hv been deployed
+
+****************************************DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00 
 Deployment with HPA
 ==================
+vi hpa.yml
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -128,7 +152,7 @@ spec:
     spec:
       containers:
         - name: hpacontainer
-          image: k8s.gcr.io/hpa-example
+          image: k8s.gcr.io/hpa-example              ******* this is a cutom appl that has a k8 image  ... k8.io 
           ports:
           - name: http
             containerPort: 80
@@ -139,17 +163,18 @@ spec:
             limits:
               cpu: "100m"
               memory: "256Mi"
-
----
-apiVersion: autoscaling/v2 
+   
+******************************************* as part of thsi deployment, we wnt to auto scale the application.... ..... 21:59
+---                                                   HW DO WE AUTO scale the application
+apiVersion: autoscaling/v2                **************we are deploying  an autoscalin/v2
 kind: HorizontalPodAutoscaler  
 metadata:
   name: autoapp        
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment 
-    name: hpaapp  
+    apiVersion: apps/v1               ************** this must  be the same name as above
+    kind: Deployment                   ************** this must  be the same name as above
+    name: hpaapp                  ************** this must  be the same name as above
   minReplicas: 2
   maxReplicas: 5
   metrics:
@@ -165,7 +190,7 @@ spec:
      target:
       type: Utilization
       averageUtilization: 40
----
+---                              *************we are creating a srvice for our cluster autoscaler
 apiVersion: v1
 kind: Service
 metadata:
@@ -179,6 +204,17 @@ spec:
   selector:
     name: hpapod
   type: ClusterIP
+*********************************** to deploy our cluster autoscaler immediately
+ubuntu@master:~$ kubectl apply -f hpa.yml                        ........ 25:00
+horizontalpodautoscaler.autoscaling/autoapp created        .....  ******* resources created
+ubuntu@master:~$ kubectl get hpa
+we see hpa running 
+ubuntu@master:~$  kubectl get deploy
+ubuntu@master:~$ kubectl get po
+pods are running 
+
+********************************** so we hv deployed all the objects including the autoscaler
+~~~~~~~~~~ next we create/generate a load    .. 25:53 
 
 -# Create temp POD using below command interatively and increase the 
 -# load on demo app by accessing the service.
