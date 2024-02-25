@@ -213,23 +213,32 @@ ubuntu@master:~$  kubectl get deploy
 ubuntu@master:~$ kubectl get po
 pods are running 
 
+since the pods are running lets see hw we ar going to the autoscaler is goin to wrk
 ********************************** so we hv deployed all the objects including the autoscaler
 ~~~~~~~~~~ next we create/generate a load    .. 25:53 
 
+TO CREATE A LOAD:
 -# Create temp POD using below command interatively and increase the 
 -# load on demo app by accessing the service.
 
-kubectl run -i --tty load-generator --rm  --image=busybox /bin/sh
+creatin the pod in interative mode:
+ubuntu@master:~$ kubectl run -i --tty load-generator --rm  --image=busybox /bin/sh
+If you dnt see  a command prompt, try pressing enter
+/#
+......the pod has been created, w ewnt to access d service so that we can generate load on this pod
 
 -# Access the service to increase the load.
+/# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why lo...**** idnt knw what he said ..
+**********.... load is been generted     (it was printing ...OK! OK!)
+min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been genertad, this
+is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
 
-while true; do wget -q -O- http://hpaclusterservice; done  
-
+TYPES OF AUTOSCALING:   ... WE ILL LOOK AT the rest of the autoscaling as far as k8 is concerned
 Vertical Pod AutoScaling : 
 Horizontal Pod AutoScaling  :
 Cluster AutoScaling:
 
-
+we will stil hv to cover 
 kubernetes = 15 hours   :
    kops / helm  /    
    stateless and stateful applications   
@@ -238,8 +247,12 @@ kubernetes = 15 hours   :
    EFK  / 
    Prometheus and Grafana  
    AMAZON EKS   
-   Kubernetes Security     
+   Kubernetes Security
+of course probes will be covered as well, wich is health check in k8 , to ensure tins ar workin and nothin is broken
 
+
+thers a high possiblty that we will cover this , bc ther are stuffs here we nid to knw b4 we get done wit k8
+infrastructure and configuration MGT with Terraform and ANsible  , beging frm monday n by the time we ar done wit this we wil cm bk and get done wit k8
 
 Date  Local time  Change
 
