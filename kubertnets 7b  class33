@@ -260,6 +260,173 @@ Nov 05, 2023   2:00 am  -1 hour to standard time
 Days: Mondays/Tuesdays/Saturdays  
 Times: 7pm - 11pm EST Toronto/NewYork  Time     
 Nigeria/Cameroon: 1am - 5am   
+
+
+i bliv this isn for terraform , i copied it from the kubernetes34-7 .Terraform.Ansible.yml file
+##############################################################################################
+
+1. Terraform   -- Provisioning
+-------------------------------
+1) Infrastructure as Code (IaC)
+o Understand Problems with Traditional way of Managing Infrastructure
+    - GUI/console   
+    - commands  
+o How IaC with Terraform Solves them
+
+o Infrastructure as Code (IaC) VS Configuration Management
+o Install Tools on Mac OS, Linux OS and Windows OS
+o Command Basics
+    terraform init
+    terraform plan  
+    terraform validate   
+    terraform apply   
+    terraform destroy   
+    terraform import   
+    terraform fmt 
+    terraform show/ cat terraformstate.tf    
+       remote backend like s3 
+       simon / 
+       mary / 
+       kelvin     
+
+
+o HCL Language Syntax
+
+2) Terraform Top Level Blocks
+o Fundamental Blocks
+o terraform block
+o providers block
+     aws / azure / github / local  
+o resources block
+o Variable Blocks
+o Input Variables
+o Output Values
+o Local Values
+o Referencing Block
+o Data sources Block
+o Modules Block
+
+ AWS:
+   ec2-instances  \ VPC / EKS  / S3  / ETC.  
+   installing terraform on windows and linux systems 
+    define scope / 
+    init / 
+    writing & modifying terraform scripts [ vars.tf main.tf modules]   
+
+
+2. Ansible  is a Configuration Management tool  
+
+    appServers = 50  
+    webservers = 40  
+    dbservers  = 44 
+    kubernetes = 5  
+
+    deployment of applications in the 50 appServers 
+    commissioning the 50 appServers 
+    securing the  50 appServers
+    installing tomcat in the 50 appServers
+  tasks that ansible can perform/run on its hosts:
+    FileMGT  
+    userMGT  
+    deployment  
+    securityMGT  
+    system monitoring  
+    patching  
+    packageMGT  
+ How to perform the tasks and ansible workflow:
+   modules 
+   playbooks:
+     variables  
+     plays   
+     tasks  
+     handlers   
+     modules [ yum / copy / service / template / apt / package / shell ] 
+               command / setup / systemd / 
+     roles    
+   roles    
+   inventory/host file  
+     [ appServer ]
+       10.10.0.55
+       10.10.0.91
+     [ dbServer ]
+       10.10.0.77
+       10.10.0.100
+
+     [ k8s ]
+       10.10.0.10
+       10.10.0.30
+
+app.yml  
+=======
+host
+
+destroy options :
+  terraform destroy --auto-approve  
+  terraform destroy --target local_file.test      
+  terraform destroy --target aws_instance.web         
+How have you applied terraform in your environment/landmark??? 
+
+
+output block:
+   create ec2-instances :
+      metadata = 
+        ipAddresses
+        az/ami/dns/
+        Instance ID
+       
+   vpc : vpc-id  / cidr block   
+   eks cluster:
+     kubeconfig    
+
+kubernetes vm  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 UK: 12am - 4am   
 
 
