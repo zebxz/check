@@ -15,7 +15,8 @@ How do we scale?
  we have Manual scaling and automated Scaling
 How do we scale manually in k8 If you deployin your application for you to scale manually, you can run the command:
 kubectl scale deployment/rs/rc/sts
-ie we can scale rs , deployment, rc, stateful set, ...... these ar the scalable objs in k8
+ie we can scale rs , deployment, rc, stateful set, ...... these ar the scalable objs in k8 and these scaling can be done maually
+we can also scale automatically, in k8 using another object Callled HPA .
 
 scaling in kubernetes:
    manual scaling:
@@ -25,18 +26,20 @@ scaling in kubernetes:
       ============================
 POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number 
 pod replicas available at any time & based on the observed CPU/Memory utilization
-on pods it can scale PODS.
+on pods, it can scale PODS automatically.
 HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
 based on observerd CPU & Memory utilization base the target specified. 
 
 What is difference b/w Kubernetes AutoScaling(POD AutoScaling) & AWS AutoScaling?
-  AutoScaling group in aws :
-     min     = 5
-     desired = 5 
-     max     = 100
- 
- scaling policies aws :
-    memory utilization   
+ when we did aws, we also saw how we can auto scale by creating auto scaling grp 
+AutoScaling group in aws : so we can have min, desired , max 
+     min     = 5          the max
+     desired = 5      so these are the no. of servers that we epxect
+     max     = 100              max, so it  cant create more than 100 ,,, so scalin policy hS a tARGET, THE target can b memory utilzation or cpu ultilization ...... 8:14
+
+but then when shud it scal? .....  so we hv scaling policy
+ scaling policies in aws : it can scale based on 
+    memory utilization    ... we can say that if mem exceeds 70% add servers 
        mem > 70% add servers      
     cpu utilization   
        cpu > 70% add servers 
@@ -48,7 +51,8 @@ What is difference b/w Kubernetes AutoScaling(POD AutoScaling) & AWS AutoScaling
      cpu utilization
 difference b/w Kubernetes AutoScaling(POD AutoScaling) 
                    & AWS AutoScaling?
-
+8:50 
+for us to be able to understand hw mch resources are been consumed, we nid to check hw much resources the pods are already consuming
 
 resources:
    requests:
