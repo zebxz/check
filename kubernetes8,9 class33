@@ -1,93 +1,3 @@
-So we've been looking at k8 And one of the things that we discuss about k8, we realize that k8 is an orchestration.
-
-Is an open source orchestration too.
-
-That's k8, open source, or ochectration  tool which is used to orchestrate containerized applications.
-
-So when applications are containerized using order tools like docker, we use k8 to orchestrate the containers, we use k8 to manage the containers.
-
-So we also realize that k8 is not a replacement for docker.
-
-Okay, because we need, we stil need docker to containerize our application.
-
-But k8 could  be a replacement for order orchestrates, like Doctor Swan.
-
-Now, we saw the architecture of k8, and we realize that when we talk about k8, we are talking about a system that has, you know, it has control plane, and work on node, that
-is the architecture.
-So , you know, there is a server that is controlling other, okay, servers, and we have the workeer   node where the applications are running.
-
-Now we went ahead to discuss how do we deploy work load in  k8.
-
-How is work load deploy?
-
-So we realize that generally, when we talk about k8 and work load, okay, is a very sensitive aspect to take note of when we talk about k8 and workload.
-So E.G., we are managing containers, so containerized applications are deployed in k8 . we are deploying containerized application inside our k8 cluster
-
-And for that to happen, We saw stuff where .
-
-We have Worker node. And, you know, that is our application are deployed in import.
-
-That's where they are deployed.
-
-But now, should we just deploy our application directly in a port?
-
-The answer is no. So k8. So in k8, we have a k8 cluster, 
-
-And this is a group of one group of savers working together.
-
-Okay, now we have a cluster, okay. And this cluster, we can can call it, k8s.
-
-Now, inside the inside the cluster, what do we have? We have nodes.
-
-Inside the notes, we have pods.
-
-And inside the pots, we have one containers.
-
-So this is the diagram. The cluster is made up of a group of note.
-
-The node is housing pods, and the pod is housing containers.
-
-So now you know what is the smallest building block of k8 when it comes to objects and k8?
-
-What is the smallest building block? The smallest building block for k8 are pods?
-
-, that is the smallest building block they are  pods.
-
-Because our continentalized application are okay. Deployed in pods,bt  we  notice that if we deploy our application in pods, there's going to be a problem.why?
-
-How would that problem occur, e.g., the life cycle of a pod, okay, port.
-
-Has a short life cycle i. So the life cycle of the pod is short.
-
-Now, the second thing about the pod is that, if a pot dies, okay, the pot can not be restarted.
-
-So the pot does not benefit from k8 Features. What are some advantages of k8?
-
-Some of the features of k8?
-
-What are some of the features of k8, k8 features that we saw?
-
-We realize that k8 has self healing.
-
-What that means is that now, in k8, okay, now, dead port, dead ports are automatically.
-
-It's automatic, automatically restarted But this will not happen if we're going to use sport for deployment here.
-
- So if we use  pods for deployment now,there is a problem.
-
-pod has a short life cycle now, pod does not benefit from the entire features of k8.
-
-And we also saw that in k8, there is load balancing.
-
-Okay, and load balancing comes with service discovery, service discovery.
-
-Now, services discovery n load balancing.
-
-We can easily use a service to discover our applications that are running in the cluster.
-
-Now, by virtue of that, when we talk about service discovery and load balancing, what are some of the examples of services to take note of?  .. 6:24
-
-
 
 1. Terraform   -- Provisioning
 -------------------------------
@@ -201,6 +111,58 @@ output block:
    vpc : vpc-id  / cidr block   
    eks cluster:
      kubeconfig    
+
+                                   ##########  STARTED HERE ########################
+*********************************************************************************************************************************************************
+So we've been looking at k8 And one of the things that we discuss about k8, we realize that k8 is an orchestration.Is an open source orchestration too.
+That's k8, open source, or ochectration  tool which is used to orchestrate containerized applications.
+So when applications are containerized using order tools like docker, we use k8 to orchestrate the containers, we use k8 to manage the containers.
+So we also realize that k8 is not a replacement for docker.Okay, because we need, we stil need docker to containerize our application.
+But k8 could  be a replacement for order orchestrates, like Doctor Swan.
+Now, we saw the architecture of k8, and we realize that when we talk about k8, we are talking about a system that has, you know, it has control plane, and work on node, that
+is the architecture.So , you know, there is a server that is controlling other, okay, servers, and we have the workeer   node where the applications are running.
+Now we went ahead to discuss how do we deploy work load in  k8.How is work load deploy?
+So we realize that generally, when we talk about k8 and work load, okay, is a very sensitive aspect to take note of when we talk about k8 and workload.
+So E.G., we are managing containers, so containerized applications are deployed in k8 . we are deploying containerized application inside our k8 cluster
+And for that to happen, We saw stuff where .We have Worker node. And, you know, that is our application are deployed in import.That's where they are deployed.
+But now, should we just deploy our application directly in a port?The answer is no. So k8. So in k8, we have a k8 cluster, And this is a group of one group of 
+savers working together Okay, now we have a cluster, okay. And this cluster, we can can call it, k8s. Now, inside the inside the cluster, what do we have? We have nodes.
+Inside the notes, we have pods.And inside the pots, we have one containers.So this is the diagram. The cluster is made up of a group of note.
+The node is housing pods, and the pod is housing containers.
+So now you know what is the smallest building block of k8 when it comes to objects and k8? What is the smallest building block? The smallest building block for k8 are pods?
+that is the smallest building block they are  pods.Because our continentalized application are okay. Deployed in pods,bt  we  notice that if we deploy our application in
+pods, there's going to be a problem.why? How would that problem occur, e.g., the life cycle of a pod, okay, port.Has a short life cycle i. So the life cycle of the pod is 
+short.Now, the second thing about the pod is that, if a pot dies, okay, the pot can not be restarted.So the pot does not benefit from k8 Features. What are some advantages 
+of k8?Some of the features of k8? What are some of the features of k8, k8 features that we saw?We realize that k8 has self healing.
+What that means is that now, in k8, okay, now, dead port, dead ports are automatically.It's automatic, automatically restarted But this will Not happen if we're going to use PODS 
+for deployment here.So if we use  pods for deployment now,there is a problem.pod has a short life cycle now, pod does not benefit from the entire features of k8.And we also
+saw that in k8, there is load balancing.Okay, and load balancing comes with service discovery, service discovery.Now, services discovery n load balancing.
+We can easily use a service to discover our applications that are running in the cluster.Now, by virtue of that, when we talk about service discovery and
+load balancing, what are some of the examples of services to take note of?  .. 6:24
+
+EXAMPLES OF SERVICE DISCOVERY
+
+1)CLUSTER IP  2)  noodeport  service  3)loadbalancer  service  4)External name  
+5)headless service
+
+these Are the different services in communities.
+
+So with these, we can use any of these  to discover our application.
+Therefore, we saw again, this diagram, where, with the help of a service, am I able to access, you know,access some  pods that are deployed in  my cluster.
+Look at this diagram,  Look at this service. I have a cluster I-P service here okay now Let's.
+Assume this my web service for my web application is able to route traffic and load balance traffic to all of this pods, to the group of pods so this service acts as a 
+single DNS resolver.(domain name service) .. 8:00
+What that means is that, now, if I want to access this pod, I want to call, okay, like, this pod will have, like, maybe Web port one.
+Did you see that? Web port one?Now observe something This web pod one.,This pod two.Okay. Now if you want to access all of this pod, web, pod three., web pod4
+Now do I need to be calling Web for one Web, web port2,No, I-I don't have to do that so I can use one name to call all of this pod,
+so wish Name would be using i will use, the name of the service.So, because my servicename is, is constant.So DNS domain name is resolver.So  it, it is going to achieve 
+domain name resolution.Okay, to all of the set of parts that are linked to this service now.So how do we call this pods in  k8 that are linked to a service?
+We call them What end points? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four and point.
+Now, for my scale, if need be can I scale?  if there is need to scale, am I able to scale to have maybe more pod, Can the number of end point increase?The answer is yes.
+The number of end point, okay, can increase.and once it increases
+The same service is going to be achieving DNS resolution. The same service because that's what services are all about It's good to be achieving DNS resolution, .
+
+
 
 kubernetes
 =========
