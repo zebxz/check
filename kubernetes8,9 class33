@@ -258,10 +258,13 @@ therfore, the same pod that was using cpu of 500m & processing 20m REQ has grown
 metrics-server    
 Resources / Limits / Requests / ResourceLimits  
 all of this are what we discussd and today we want to deploy  our legacy application called spring boot mongo db and a database pod
+Stateless applications deployment doesn't require to maintain it state   :
+  Use deployment as the choice kubernetes object  
+  ReplicaSets/ReplicationController:  
+Stateful applications maintained their state. Examples are  :
+  databases, Jenkins, 
 
-  
-
-
+*******************************
 kubernetes
 =========
   -- Kubernetes CLUSTER = Group of servers working together - k8s  
@@ -315,6 +318,16 @@ Stateless applications deployment doesn't require to maintain it state   :
 Stateful applications maintained their state. Examples are  :
   databases, Jenkins, 
 
+
+1. image: mongo   
+2. image: mylandmarktech/spring-boot-mongo     
+
+repository to clone:
+1. https://github.com/LandmakTechnology/kubernetes-notes
+2. https://github.com/LandmakTechnology/kops-k8s
+3. https://github.com/LandmakTechnology/kubernetes-manifests
+
+######this is a springboot application that requires a database, it has has been developed by our developers usin the springboot framewrk
 spring:
   data:
     mongodb:
@@ -338,10 +351,12 @@ server:
 mongo database:
 ===============
   1. use StatefulSets as the choice kubernetes object for Stateful  
-     application deployments   
-  2. USE ReplicaSets/ReplicationController/deployment StateLESS  
-     application deployments   
-
+     application deployments   , however,
+  2. USE ReplicaSets/ReplicationController/deployment StateLESS      
+     application deployments                                                       
+                                                                                
+if we decide to deploy this application some objects ar goin to be affected  ..... 49:01 
+we wnt to deploy our stateless appli called springboot mongo n we alos  deploy our stateful application wich is a mongo db, so we ar goin to create 2files.
 Stateless
 --- springapp.yml/
 Stateful
@@ -436,13 +451,7 @@ spec:
            - name: MONGO_DB_PASSWORD
              value: devdb@123   
 
-1. image: mongo   
-2. image: mylandmarktech/spring-boot-mongo     
 
-repository to clone:
-1. https://github.com/LandmakTechnology/kubernetes-notes
-2. https://github.com/LandmakTechnology/kops-k8s
-3. https://github.com/LandmakTechnology/kubernetes-manifests
 =========================================================
 
 kubernetes volumes:
