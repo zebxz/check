@@ -543,10 +543,10 @@ spec:
       labels:
         app: mongo    
     spec:       .. ******  under spec, we add volumes
-      volumes:
+      volumes:        *********vol is a list so we can v more than one vol e.g we can v, name: vol2 ,hostpath:  and path can jst be /data n also multiple mount point
       - name: mongodbhostvol    
         hostPath:
-          path: /mongodata        *****if the db pod was created on node1, a mountpoint will be created on node1 and it wil be called /mongodata
+          path: /mongodata        *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
       containers:
       - name: mongodbcontainer    
         image: mongo      
@@ -554,7 +554,7 @@ spec:
         - containerPort: 27017    
         volumeMounts:    ******* we wnt to mount the vol  ,,,  we ar creatin a host path vol  .. 1:41:10
         - name: mongodbhostvol           *******name of vol been mounted
-          mountPath: /data/db    ******** in dockerhub we see data is stored in /data/db therfore in our db container, data will be stored /data/db
+          mountPath: /data/db    ******** in the file in dockerhub we see data is stored in /data/db therfore in our db container, data will be stored /data/db
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           value: devdb
@@ -563,16 +563,21 @@ spec:
 
 ########we ar deployin our appl and making use of volumes
 ubuntu@master:~$  vi spring/mongovol.yml
-ubuntu@master:~$  kubectl apply -f sp
+ubuntu@master:~$  kubectl apply -f spring/mongovol.yml
+replicaset.apps/mongors created
+ubuntu@master:~$  
+#########now if the db pod is deleted, once it is created we still hv access to the inf created before bc the pod is created on the same node it existed b4 it was deleted.
 
 
 kubectl taint nodes node9 key1=value1:NoSchedule     [taint the node]
 kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
 
-  hostPath volume will store data ONLY on the node where the POD is scheduled
-  This can result data lost and data inconsistency 
+###### e.g if  smt happens to node 9 or we taint node9 where our db is created , the db pod has been recreated on node1, what will happen to our stored data ???, it wil 
+result in data loss because we are using hostpath volume :
+  hostPath volume will store data ONLY on the node where the POD is scheduled .. ie inf entered while d db pod was on d node cant be transfered to anoda node if d db is
+  This can result data lost and data inconsistency                                                         recreated on anoda node
 
-  NFS 
+  NFS         2:01:20
 
       volumes:
       - name: mongodbhostvol    
