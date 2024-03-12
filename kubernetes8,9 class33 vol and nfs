@@ -656,13 +656,13 @@ sudo mkdir -p /mnt/share/
 sudo chown nobody:nogroup /mnt/share/         ... now the dir is owned by nobody and d dir has read write permissions
 sudo chmod 777 /mnt/share/
 
-Step 3: Assign server access to client(s) through NFS export file
+Step 3: Assign server access to client(s) through NFS export file   ***** in dis file we ar goin to decide who wil v access to our nfs server, to read n write
 
 sudo vi /etc/exports
 
 =#/mnt/share/ <clientIP or Clients CIDR>(rw,sync,no_subtree_check,no_root_squash)
  #Ex:
-    and paste
+    and paste in the file then go to my vpc in aws n copy the CIDR (ipv4CIDR) N PASte it after the * , for access within the vpc
 /mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
 
 /mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
