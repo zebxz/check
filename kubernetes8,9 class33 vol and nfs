@@ -648,12 +648,12 @@ $ sudo apt install nfs-kernel-server -y   ...   2:13:20
 
 Step 2: Create the Export Directory
 
-sudo mkdir -p /mnt/share/       ** this is a shared dir , can run ll /mnt/share/
+sudo mkdir -p /mnt/share/       ** this is a shared dir , can run ll /mnt/share/  to see who owns the dir
 
 =# As we want all clients to access the directory,
     we will remove restrictive permissions.
 sudo mkdir -p /mnt/share/
-sudo chown nobody:nogroup /mnt/share/
+sudo chown nobody:nogroup /mnt/share/         ... now the dir is owned by nobody and d dir has read write permissions
 sudo chmod 777 /mnt/share/
 
 Step 3: Assign server access to client(s) through NFS export file
