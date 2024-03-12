@@ -113,7 +113,12 @@ output block:
      kubeconfig    
 
 
-DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes
+DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes , NFS ...
+without nfs :*if the db pod(ie the database container) was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
+in the file in dockerhub we see data is stored in /data/db therfore in our db container, data will be stored /data/db , ie the mountpath in our manifest file
+if we introduce any of these, then we are goin to create an nfs server & ther wil be a mount poinT on d node& nfs server then data is captured in both the db container and 
+the nfs server such that evEN if the container is recreated on another node, once the container syncronizes with the nfs server all the data that was captured in the Nfs 
+server wil reflect in the container and this wil result in data consistency
 
                                    ##########  STARTED HERE ########################
 *********************************************************************************************************************************************************
@@ -577,7 +582,14 @@ result in data loss because we are using hostpath volume :
   hostPath volume will store data ONLY on the node where the POD is scheduled .. ie inf entered while d db pod was on d node cant be transfered to anoda node if d db is
   This can result data lost and data inconsistency                                                         recreated on anoda node
 
-  NFS         2:01:20
+
+DEPLOYING OUR VOL Uing NFS
+######## ******************    2:01:20  ..   netwoRK FILE SYSTEM OR EFS
+
+NFS    
+if we introduce any of these, then we are goin to create an nfs server & ther wil be a mount poinT on d node& nfs server then data is captured in both the db container and 
+the nfs such that evEN if the container is recreated on another node, once the container syncronizes with the nfs server all the data that was captured in the Nfs server wil 
+reflect in the container and this wil result in data consistency
 
       volumes:
       - name: mongodbhostvol    
