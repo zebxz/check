@@ -662,14 +662,34 @@ sudo vi /etc/exports
 
 =#/mnt/share/ <clientIP or Clients CIDR>(rw,sync,no_subtree_check,no_root_squash)
  #Ex:
-    and paste in the file then go to my vpc in aws n copy the CIDR (ipv4CIDR) N PASte it after the * , for access within the vpc
-/mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
+    and paste the below in the file then go to my vpc in aws n copy the CIDR (ipv4CIDR) N PASte it in place of the * , for access within the vpc but if i dnt use CIDR, it 
+means am allowing access frm anywher
+/mnt/share/ 10.0.0.0/24(rw,sync,no_subtree_check,no_root_squash)    *acess within vpc
 
-/mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
+/mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)         ******** accesss frm anywher
 
 
+Step 4: Export the shared directory
 
-nfs server: 3.17.179.30  / 10.0.0.76
+$ sudo exportfs -a
+
+sudo systemctl restart nfs-kernel-server
+
+Step 5: Open firewall for the client (s) PORT 2049
+
+
+Configuring the Client Machine  .. ie client are my worker nodes, i can also instal in on my master, so we installed on both master n worker node1&9, or all nodes in d cluster
+==========================       so on my master &worker node1,9, we are just going to update n instal nfs client wich is nfs common, thats all... 
+                             rather than doing this installation manually, we could hv used ansible to automate the process
+Step 1: Install NFS Common
+Before installing the NFS Common application, we need to update our system’s repository index with that of the Internet through the following apt command as sudo:
+
+$ sudo apt-get update && sudo apt-get install nfs-common -y
+
+$ sudo apt-get install nfs-common
+
+
+nfs server: public n private ip 3.17.179.30  / 10.0.0.76
 ---------------------
 mongo-nfs.yml  
 ==================
