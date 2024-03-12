@@ -1,4 +1,7 @@
+DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes , NFS ... ............  persistent vol and claim policy
 
+
+*************************************************************************************************
 1. Terraform   -- Provisioning
 -------------------------------
 1) Infrastructure as Code (IaC)
@@ -113,7 +116,7 @@ output block:
      kubeconfig    
 
 
-DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes , NFS ...
+DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes , NFS ... ............  persistent vol and claim policy
 without nfs :*if the db pod(ie the database container) was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
 in the file in dockerhub we see data is stored in /data/db therfore in our db container, data will be stored /data/db , ie the mountpath in our manifest file
 if we introduce any of these, then we are goin to create an nfs server & ther wil be a mount poinT on d node& nfs server then data is captured in both the db container and 
@@ -450,7 +453,7 @@ ubuntu@master:~$ curl 3.16.75.61:32136    ... or  in google 3.16.75.61:32136 , w
 docker to containerize
 ***** right now our database has nt been deployed n so ders no database that the appl is able to comm with.
 
-*********now we deploy our database
+*********8*************now we deploy our database
 mongo.yml  = kams:  
 =========
 kind: ReplicaSet   
@@ -614,7 +617,7 @@ persistentVolumeClaim
 secret
 
 
-*********************   Configuration of NFS Server
+*********************   ************Configuration of NFS Server
 ===========================
 Step 1: 
 Create one Server for NFS
@@ -624,8 +627,7 @@ the server has to be launched in the same vpc like the other servers ie k8 serve
 can creaye a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
 then connect the server in mobaxterm
 
-
-Install NFS Kernel Server in 
+######***********************then Install NFS Kernel Server in 
 Before installing the NFS Kernel server, we need to update our system’s 
 repository index with that of the Internet through the following apt command as sudo:
 
@@ -691,7 +693,7 @@ $ sudo apt-get install nfs-common
 
 nfs server: public n private ip 3.17.179.30  / 10.0.0.76
 ********************************************************************HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
----------------------
+---------------------   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
 mongo-nfs.yml  
 ==================
 apiVersion: apps/v1
@@ -711,7 +713,7 @@ spec:
       volumes:
       - name: mongodbvol
         nfs:
-          server: 10.0.0.76
+          server: 10.0.0.76          ********using the private ip bc they ar in the same vpc ie both my nfs server & k8 nodes
           path: /mnt/share
       containers:
       - name: mongodbcontainer
@@ -727,12 +729,25 @@ spec:
         - name: mongodbvol
           mountPath: /data/db
 
+************TO DEPLOY
+vi spring/mongo-nfs.yml n paste manifest file
+kubectl delete rs mongors  ... ie the db
+kubectl apply -f spring/mongo-nfs.yml
+kubectl get po -o wide    ......  ... we see the pods n the node they are running on
+
+######### with this nfs deploymnet we dnt have issues with data loss / inconsistency .............2:33
+***********************can chech the power point script as well 
+
+############WE CAN USE EFS instead of NFS, but we used NFS without any issues here
 
 kubectl taint nodes node9 key1=value1:NoSchedule     [taint the node]
 kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
 
-Persistent volumes 
+
+****************************************************  
+*********************************************************** Persistent volumes 
 ===================
+this are simply a piece of storage in your cluster
 
 deploy a kubernetes using Kops  
 
@@ -744,7 +759,7 @@ PersistentVolumeClaim -->
    It's request for storage(Volume).Using PVC we can request(Specify) 
    how much storage u need and with what access mode u need.
 
-Persistent Volumes are provisioned in two ways, Statically or Dynamically.:
+Persistent Volumes are provisioned in two ways, Statically or Dynamically.:  ... 2:35:40  ... power point script
 
 1) Static Volumes (Manual Provisionging)
     A k8's Administrator can create a PV manually so that pv's can be available for PODS which requires.
@@ -778,6 +793,14 @@ Recycle – When the claim is deleted the volume remains but in a state where 
 Delete – The persistent volume is deleted when the claim is deleted.
 
 The claim policy (associated at the PV and not the PVC) is responsible for what happens to the data when the claim is deleted.
+
+2:37:13
+**********************************CREATING THE DATABASE POD USING PERSISTENT VOL 
+inside my cluster, i wil create persistent vol, now my db nids this vol n the vol can only be assigned using persistent vol claim ,,, PVC, with the PVC we are able to mount
+we ar able to create a mount point btw the container n the persistent vol, the PVC permits the container to claim the persistent vol
+*************with this system ders no data loss if db container goes down bc persistent vol is anoda k8 object whic is independent of my pod lifecycle
+##########we wil use retain claim policy most of the time
+
 
 mongo-pv-hostpath.yml   
 ---------------------
