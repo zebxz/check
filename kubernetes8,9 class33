@@ -112,6 +112,9 @@ output block:
    eks cluster:
      kubeconfig    
 
+
+DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes
+
                                    ##########  STARTED HERE ########################
 *********************************************************************************************************************************************************
 So we've been looking at k8 And one of the things that we discuss about k8, we realize that k8 is an orchestration.Is an open source orchestration too.
@@ -440,7 +443,7 @@ ubuntu@master:~$
 ubuntu@master:~$ curl 3.16.75.61:32136    ... or  in google 3.16.75.61:32136 , w ecan access the application
   ###we can see this appl is a springbootapp thet needs the mondodb  databse and we can automate it using jenkins,docker & k8 , and we are using k8 now, we already used
 docker to containerize
-***** right now our database has nt been deployed n soders no database that the appl is able to comm with.
+***** right now our database has nt been deployed n so ders no database that the appl is able to comm with.
 
 *********now we deploy our database
 mongo.yml  = kams:  
@@ -473,12 +476,28 @@ kind: Service
 apiVersion:  v1  
 metadata:  
    name: mongosvc 
-spec:                 the default service type is clusterip so even if i dnt write it, the clusterip type will be created.
+spec:                 the default service type in k8 is clusterip so even if i dnt write it, the clusterip type will be created. type:clusterip
   selector:
     app: mongo    
   ports:
   - port: 27017 
     targetPort: 27017  
+
+#############to deploy the db 
+ubuntu@master:~$ vi spring/mongo.yml n paste the  db manifest file
+ubuntu@master:~$ kubectl apply -f spring/
+replicaset.apps/mongors created
+service/mongosvc created            ****** we see the service created 
+deployment.apps/springapp unchanged
+service/springappsvc unchanged
+ubuntu@master:~$
+ubuntu@master:~$ kubetcl get all 
+we can see mongosvc is running  ...... n when we check in google we can see its running, so we are able to deploy our stateful appl n stateless appli
+so this process can be automated
+if we run kubectl delete pod mongors-966hc
+we can see a new pod is being created automatically.. n this is permitted bc it has a controller manger which is our mongors but if u run: kubectl delete rs mongors, db wnt
+although it was automTICALLY CREATED, we cant get back data that was previously created                       be recreated bc the controller was deleted.
+for us to be able to capture data we hv to look at volume concept in k8
 
 ---
 1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
@@ -498,6 +517,16 @@ spec:                 the default service type is clusterip so even if i dnt wri
 
 =========================================================
 
+IMP REPOSITORIES TO CLONE
+repository to clone:
+1. https://github.com/LandmakTechnology/kubernetes-notes
+2. https://github.com/LandmakTechnology/kops-k8s
+3. https://github.com/LandmakTechnology/kubernetes-manifests
+
+****IF U ARE TRYING to deploy a stateless appl we hv to mk use of k8 volumes  ...  1:3540
+since we are deployin a database we nid to ensure that a piece of storage is created..
+we ar goin to see hw to use vol for example:   .. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around eith volume
+
 kubernetes volumes:
 ===================
 mongovol.yml  
@@ -513,24 +542,29 @@ spec:
     metadata:  
       labels:
         app: mongo    
-    spec: 
+    spec:       .. ******  under spec, we add volumes
       volumes:
       - name: mongodbhostvol    
         hostPath:
-          path: /mongodata  
+          path: /mongodata        *****if the db pod was created on node1, a mountpoint will be created on node1 and it wil be called /mongodata
       containers:
       - name: mongodbcontainer    
         image: mongo      
         ports:
         - containerPort: 27017    
-        volumeMounts:
-        - name: mongodbhostvol  
-          mountPath: /data/db 
+        volumeMounts:    ******* we wnt to mount the vol  ,,,  we ar creatin a host path vol  .. 1:41:10
+        - name: mongodbhostvol           *******name of vol been mounted
+          mountPath: /data/db    ******** in dockerhub we see data is stored in /data/db therfore in our db container, data will be stored /data/db
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           value: devdb
         - name: MONGO_INITDB_ROOT_PASSWORD 
           value: devdb@123
+
+########we ar deployin our appl and making use of volumes
+ubuntu@master:~$  vi spring/mongovol.yml
+ubuntu@master:~$  kubectl apply -f sp
+
 
 kubectl taint nodes node9 key1=value1:NoSchedule     [taint the node]
 kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
