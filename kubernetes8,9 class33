@@ -319,8 +319,8 @@ Stateful applications maintained their state. Examples are  :
   databases, Jenkins, 
 
 
-1. image: mongo   
-2. image: mylandmarktech/spring-boot-mongo     
+1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
+2. image: mylandmarktech/spring-boot-mongo               ********this is maintained by us
 
 repository to clone:
 1. https://github.com/LandmakTechnology/kubernetes-notes
@@ -328,25 +328,34 @@ repository to clone:
 3. https://github.com/LandmakTechnology/kubernetes-manifests
 
 ######this is a springboot application that requires a database, it has has been developed by our developers usin the springboot framewrk
+this was not hardcoded, our developers left the hostname, username,passwd as a variable, meaning that if i am deployin in the dev, uat, prod env, i can use diff values based 
+on my project requirement....   .. 53:15
+
 spring:
   data:
     mongodb:
       host: ${MONGO_DB_HOSTNAME}
-      port: 27017
+      port: 27017       ******** the db listens on 27017
       username: ${MONGO_DB_USERNAME}
       password: ${MONGO_DB_PASSWORD}
       database: users
       authentication-database: admin
 server:
-  port: 8080
+  port: 8080    .... ******the spring appl listens on 8080
 
+if u run this command:
    ssh username@hostname [ It will request for the password ]  
+hostname is a variable.
+                                              
+however if we v an e.g like dis wher d variables hv been given,it means its hardcoded then it becomes a problem bc we cant use it acros multiple env &can result in code smell
+if we are to run sonarqube code analysis/review
     mongodb:
       host: mongo
       port: 27017
       username: devdb  
       password: devdb123  
-  ssh devdb@mongo  
+  ssh devdb@mongo   , we can run smt like this.. to ssh
+
 
 mongo database:
 ===============
@@ -361,6 +370,9 @@ Stateless
 --- springapp.yml/
 Stateful
 --- mongo.yml/
+
+*********the default deployment strategy in k8 is rolling update
+now since am using the default strategy,i wnt put a value for strategy bc the default wil be used
 
 springapp.yml: kams   
 kind: Deployment  
@@ -389,26 +401,55 @@ spec:
              value: devdb   
            - name: MONGO_DB_PASSWORD
              value: devdb@123   
----
+---                                         #######the deployment also requires a service, to write a service manifest file is no big deal
 apiVersion: v1
 kind: Service
 metadata:
-  name: springappsvc
-spec:
-  type: NodePort
-  selector:
-    app: springapp
-  ports:
-  - port: 80
-    targetPort: 8080
+  name: springappsvc                               1:22:30
+spec:                         for us to be abble to acces athe  springapp pod, 
+  type: NodePort      ,, we created  a service , nodeport service:nodeportsvc and the service name is called springappsvc n the service has a label; app:springapp
+  selector:             since its a nodeportservice, we can hv external users and their traffic can get into the cluster either thru any of d worker nodes or the master node
+    app: springapp       bc we v kubeproxy running ,the trafic doesnt leave d node n talk to d pods directly, it goes tru the service n once it recieves d msg it does dns 
+  ports:                          resolution, it routes the traffic n it lb to all d end points.. now dis appl nids to write in the db so we ar deployin a db pod n 4 d 
+  - port: 80                          comm to b est they wil communicate tru a service, dis  is internal comm so we nid clusterip service, so we create a mongosvc;app:mongo
+    targetPort: 8080               so for springapp to talk to d db it wil be resolved via the service name of the db  ... 1:26:40
 
+*********** now we deploy the springapp and the service called: springappsvc
+kubectl apply -f springapp.yml
+
+ubuntu@master:~$ kubectl get pod
+
+ubuntu@master:~$  kubectl get ep
+NAME                    ENDPOINTS                      AGE 
+springappsvc             10.36.0.1:8080,10.44.0.3:8080   67s
+
+   ***************if i wnt ot communicate wit the pod, i can use the name of the sevrice: springappsvc or the service ip: 10.100.100.234 
+such that if i curl, 
+ubuntu@master:~$ curl 10.100.100.234       ..... i successfully get a response 
+so the service is achieving dns resolution  ,,....... 1:07:50
+
+we can access the appl externally since we ar using node port , 
+ubuntu@master:~$ kubectl get svc 
+NAME           TYPE        CLUSTER-IP       EXTERNAL-IP   PORTS    AGE
+springappsvc   NodePort    10.100.100.234     none        80:32136/TCP 
+
+*****all we nid to use is one of our node even the master node in this case 
+ubuntu@master:~$ curl ifconfig.me
+3.36.7561ubuntu@master:~$
+ubuntu@master:~$
+ubuntu@master:~$ curl 3.16.75.61:32136    ... or  in google 3.16.75.61:32136 , w ecan access the application
+  ###we can see this appl is a springbootapp thet needs the mondodb  databse and we can automate it using jenkins,docker & k8 , and we are using k8 now, we already used
+docker to containerize
+***** right now our database has nt been deployed n soders no database that the appl is able to comm with.
+
+*********now we deploy our database
 mongo.yml  = kams:  
 =========
 kind: ReplicaSet   
 apiVersion: apps/v1  
 metadata:  
   name: mongors    
-spec:
+spec:                      *********** we wnt 1replica so we dnt write it bc by default, one wil be created.
   selector:
     matchLabels:
       app: mongo     
@@ -424,15 +465,15 @@ spec:
         - containerPort: 27017    
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
-          value: devdb
+          value: devdb                ********** if we hv a number of databaseports, to ahieve dns resolution
         - name: MONGO_INITDB_ROOT_PASSWORD 
           value: devdb@123
 ---
-kind: Service 
+kind: Service   
 apiVersion:  v1  
 metadata:  
    name: mongosvc 
-spec:
+spec:                 the default service type is clusterip so even if i dnt write it, the clusterip type will be created.
   selector:
     app: mongo    
   ports:
@@ -440,6 +481,9 @@ spec:
     targetPort: 27017  
 
 ---
+1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
+2. image: mylandmarktech/spring-boot-mongo               ********this is maintained by us
+
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
