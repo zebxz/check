@@ -600,7 +600,7 @@ reflect in the container and this wil result in data consistency
         nfs:
           path: /mongodata 
 
-
+when it comes to vol concept, ther are several vol options we can look at like:
 awsElasticBlockStore 
 azureDisk
 azureFile 
@@ -614,16 +614,22 @@ persistentVolumeClaim
 secret
 
 
-Configuration of NFS Server
+*********************   Configuration of NFS Server
 ===========================
 Step 1: 
-
 Create one Server for NFS
+2:08:31
+go to aws and create a server for nfs
+the server has to be launched in the same vpc like the other servers ie k8 servers, like the master node ..
+can creaye a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
+then connect the server in mobaxterm
+
 
 Install NFS Kernel Server in 
 Before installing the NFS Kernel server, we need to update our system’s 
 repository index with that of the Internet through the following apt command as sudo:
-Configuration of NFS Server
+
+***********************Configuration of NFS Server
   NFS = Network file system 
         distributed file system 
         shared file system 
@@ -633,18 +639,16 @@ Before installing the NFS Kernel server,
   we need to update our system’s repository index with that of the Internet 
   through the following apt command as sudo:
 
-$ sudo apt-get update
+$ sudo apt-get update ( in the nfs server created in aws)   
 
 The above command lets us install the latest available version of a software through the Ubuntu repositories.
-
 Now, run the following command in order to install the NFS Kernel Server on your system:
 
-$ sudo apt install nfs-kernel-server -y
-
+$ sudo apt install nfs-kernel-server -y   ...   2:13:20
 
 Step 2: Create the Export Directory
 
-sudo mkdir -p /mnt/share/
+sudo mkdir -p /mnt/share/       ** this is a shared dir , can run ll /mnt/share/
 
 =# As we want all clients to access the directory,
     we will remove restrictive permissions.
@@ -656,10 +660,9 @@ Step 3: Assign server access to client(s) through NFS export file
 
 sudo vi /etc/exports
 
-
 =#/mnt/share/ <clientIP or Clients CIDR>(rw,sync,no_subtree_check,no_root_squash)
  #Ex:
- 
+    and paste
 /mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
 
 /mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
