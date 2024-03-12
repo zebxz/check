@@ -802,8 +802,9 @@ we ar able to create a mount point btw the container n the persistent vol, the P
 ##########we wil use retain claim policy most of the time
 
 
+########################################## CREATING A PERSISTENT VOL ..................2:44:44
 mongo-pv-hostpath.yml   
----------------------
+---------------------                           ********** persistent vol
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -817,10 +818,10 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/kube"
+    path: "/kube"             ************  WE SEE the hostpath is manged by the kube   .......2:53:11
 
 ---
-# Mongo db pod with PVC
+# Mongo db pod with PVC      **************************** CREATING mongodb with pV
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -833,7 +834,7 @@ spec:
   - ReadWriteOnce
   hostPath:
     path: "/kube"
----
+---                  ************************ cREATING THE claim policy
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -845,7 +846,7 @@ spec:
   resources:
     requests:
       storage: 100Mi
----
+---                                ***************CREATING     Mongodb with PVC
 # Mongo db pod with PVC
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -879,9 +880,19 @@ spec:
          - name: mongodb-pvc
            mountPath: /data/db
 
+**************************************  Vi mongo-pv-pvc.yml and paste        .... this is all manual provisionong
+kubectl apply -f mongo-pv-pvc.yml
+created  , our db pod is running n we can write data  
+the recommendation is always standard,  persistent vol is created &managed  such that if the pod using the vol goes down, the vol stil exists so the vol is managed by k8 
+by k8 , so the ideal appraoch to store data in k8 is by using persiastent vol by it is managd by the kube service
+just like docker vol is manged by docker and thats why we use persistent vol in docker as well
+
+**********************************PERISTENT VOL USING TYPE NFS...........
+                                          we chnaGE whats necessary in the file                                                
 mongo-pv-pvc-nfs.yml   
 ===================
----
+--- ******************* we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFS as our VOL Type
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -898,65 +909,7 @@ spec:
     server: <nfs server ip>
     path: "/mnt/share"
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pvc-nfs-pv1
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 500Mi
----
-pv-pvc-mongo-hostpath.yml  
-=========================
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv-hostpath
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-  - ReadWriteOnce
-  hostPath:
-    path: "/kube"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pvc-hostpath
-spec:
-  storageClassName: manual
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Mi
----
-pv-pvc-hostpath.yml   
-==================
 # Mongo db pod with PVC
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv-nfs-pv1
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  nfs:
-    server: 10.0.0.76
-    path: "/mnt/share"
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
