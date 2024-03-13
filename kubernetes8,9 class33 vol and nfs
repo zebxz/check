@@ -1,4 +1,4 @@
-DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes , NFS ... ............  persistent vol and claim policy
+DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes ,hostpath ,  NFS ... ............  persistent vol and claim policy
 
 
 *************************************************************************************************
@@ -585,7 +585,6 @@ result in data loss because we are using hostpath volume :
   hostPath volume will store data ONLY on the node where the POD is scheduled .. ie inf entered while d db pod was on d node cant be transfered to anoda node if d db is
   This can result data lost and data inconsistency                                                         recreated on anoda node
 
-
 DEPLOYING OUR VOL Uing NFS
 ######## ******************    2:01:20  ..   netwoRK FILE SYSTEM OR EFS
 
@@ -894,7 +893,7 @@ mongo-pv-pvc-nfs.yml
 --- ******************* we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFS as our VOL Type
 
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolume   .................  though kind id persistent volume
 metadata:
   name: pv-nfs-pv1
   labels:
@@ -906,7 +905,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: <nfs server ip>
+    server: <nfs server ip>  10.0.0.76
     path: "/mnt/share"
 ---
 # Mongo db pod with PVC
@@ -954,14 +953,35 @@ spec:
          - name: mongodb-pvc
            mountPath: /data/db
 
+kubectl delete rs mongors
+mongors deleted
+vi spring/pv-pvc-pfs-momgos.yml and paste
+kubectl apply -f spring/pv-pvc-pfs-momgos.yml and paste
+
+**************after we deployed this nfs vol  , bc synchronization has taken place we can see data captured previously in the nfs  bc its the same mountpoint that was created earlier 
+these are persistent vol and that is the choice that is being used in depsloyment 
 kubernetes volumes  :
 ==========================
 
+QUESTION
+
+CAn we use NFS TO scale inordervto meet the wrk load??
+if u are refering to hw to hv multiple read replicas 
+we wil be seeing hw to replicate the db so we can hv multiple read replicas
+
+why didnt we use stateful set for deployment ?
+we will use it dnt worry
+
+******i dnt understand persistent and nfs
+the nfs is kind of s storage option that we can use to store data like we saw hostpath wher data wil only be hosted by one particular node in the clusted bt in the nfs data
+is distributed to all the nodes and taht leads to data constitency,, howeve rif u create a nfs and it is nt created under a persistent vol, bc it is the recommended approach 
+to store data in k8 bc when u create a persistent vol it is manged by the kube service , therefore the vol is independent of the livecycle of the pod that is consuming the vol
+so if the pod goes down we can stil retieve the data
+the persistence vol could either be host path, NFS and other vol options 
+with persistent vol, the vol itself is managed by the kube service
 
 
-
-
-
+if u master k8 u are at the center of ur game 
 
 
 
