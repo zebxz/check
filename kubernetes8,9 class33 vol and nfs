@@ -491,7 +491,7 @@ spec:                 the default service type in k8 is clusterip so even if i d
   - port: 27017 
     targetPort: 27017  
 
-#############to deploy the db 
+#############to deploy the db      .........  1:10:10
 ubuntu@master:~$ vi spring/mongo.yml n paste the  db manifest file
 ubuntu@master:~$ kubectl apply -f spring/
 replicaset.apps/mongors created
@@ -502,12 +502,14 @@ ubuntu@master:~$
 ubuntu@master:~$ kubetcl get all 
 we can see mongosvc is running  ...... n when we check in google we can see its running, so we are able to deploy our stateful appl n stateless appli
 so this process can be automated
-if we run kubectl delete pod mongors-966hc
+if we run kubectl delete pod mongors-966hc                 ,......1:33:40
 we can see a new pod is being created automatically.. n this is permitted bc it has a controller manger which is our mongors but if u run: kubectl delete rs mongors, db wnt
-although it was automTICALLY CREATED, we cant get back data that was previously created                       be recreated bc the controller was deleted.
-for us to be able to capture data we hv to look at volume concept in k8
+although it was automTICALLY CREATED, we cant get back data that was previously created                       be recreated bc D replication controller MANAGer managing the.
+for us to be able to capture data we hv to look at volume concept in k8                                      db pod has been deleted  ... 1:42:50
+                                                                ***  bt goin further in d video he kefpt deletin the rs each time he had to deploy a manifest file  like 
 
----
+
+---1:15:48                                                                                    for NFS and persistent vol
 1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
 2. image: mylandmarktech/spring-boot-mongo               ********this is maintained by us
 
@@ -523,13 +525,15 @@ for us to be able to capture data we hv to look at volume concept in k8
              value: devdb@123   
 
 
-=========================================================
+==========================
 
 IMP REPOSITORIES TO CLONE
 repository to clone:
 1. https://github.com/LandmakTechnology/kubernetes-notes
 2. https://github.com/LandmakTechnology/kops-k8s
 3. https://github.com/LandmakTechnology/kubernetes-manifests
+
+********************************************** CREATING HOSTPATH VOLUMES .................
 
 ****IF U ARE TRYING to deploy a stateless appl we hv to mk use of k8 volumes  ...  1:3540
 since we are deployin a database we nid to ensure that a piece of storage is created..
