@@ -1,4 +1,6 @@
 CONFIG MAP AND SECRETS
+ways to pass secret values so they are more secured.
+****************************************************************************************************
 
 there aew 2kinds of appl we generally deploy in k8
 stateless
@@ -14,4 +16,373 @@ azuredisk
 configmaps
 
 4:48
-env variables are  like secret variable ,, because the  inf is stored in our source code mgt and so we shouldnt pass the env variable 
+env variables are  like secret variable ,, because the inf is stored in our source code mgt and so we shouldnt pass the env variable like this 
+env 
+name:MONGO DB HOSTNAME
+value: mongosvc
+name:MoNGO DB USERNAME
+value:devdb
+name: MONGO DB PASSWORD
+value: devdb@123
+
+6:29      CONFIG MAP
+######  HOW CAN WE DEPLOY THE ENV variable/file in a more secured way
+
+kubernetes volumes :
+==========================
+==========================
+Config Maps & Secrets
+======================
+We can create ConfigMap & Secretes in the Cluster using command or also using yml.
+ConfigMaps:
+  are used to passed non confidential information in key:value  pair that weren't 
+  hardcoded/included in the Dockerfiles/code by Developers
+    HOSTNAME
+    USERNAME 
+    tomcat-users.xml  [  ]  
+      dev = <user username="tomcat" password="tomcat" roles="admin-gui,manager-gui"/>
+      uat = <user username="paul" password="admin123" roles="admin-gui,manager-gui"/>
+
+tomcat-users.xml  
+    <?xml version='1.0' encoding='utf-8'?>
+      <tomcat-users xmlns="http://tomcat.apache.org/xml"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+                      version="1.0">
+       
+       <user username="tomcat" password="tomcat" roles="admin-gui,manager-gui"/>
+    </tomcat-users>
+
+
+Secrets:
+  are used to passed confidential information in base64 format
+    PASSWORD
+    SSH_PRIVATE_KEYS  
+    dockerHub LOGIN password  
+    tls certificate  
+
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: spingapp
+spec:
+   replicas: 2
+   selector:
+     matchLabels:
+       app: springapp
+   template:
+      metadata:
+         labels:
+            app: springapp
+      spec:
+         containers:
+         - name: app
+           image: mylandmarktech/spring-boot-mongo
+           ports:
+           - containerPort: 8080
+           env:
+           - name: MONGO_DB_HOSTNAME
+             value: mongosvc
+           - name: MONGO_DB_USERNAME
+             value: devdb
+           - name: MONGO_DB_PASSWORD
+             value: devdb@123
+
+Create ConfigMap Using Command:
+  kubectl create configmap springappconfig --from-literal=db-username=devdb 
+  kubectl create configmap springappconfig --from-literal=db-hostname=mongosvc 
+Create ConfigMap Using files/declarative approach:
+yaml:
+=====
+kind: ConfigMap  
+apiVersion: v1     
+metadata:
+  name: springappconfig   
+data:
+  db-hostname: mongosvc   
+  db-username: devdb  
+  db-password: devdb123       
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: springappsecret
+type: Opaque
+stringData:   # We can define multiple key value pairs.
+  mongodbpassword: devdb@123
+
+Secret Using Command: 
+kubectl create secret generic springappsecret --from-literal=mongodbpassword=devdb@123 
+
+
+kubectl api-resources
+kubectl api-resources | grep -i configmap  
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: spingapp
+spec:
+   replicas: 2
+   selector:
+     matchLabels:
+       app: springapp
+   template:
+      metadata:
+         labels:
+            app: springapp
+      spec:
+         containers:
+         - name: app
+           image: mylandmarktech/spring-boot-mongo
+           ports:
+           - containerPort: 8080
+           env:
+           - name: MONGO_DB_HOSTNAME
+             valueFrom: 
+               configMapKeyRef:
+                  name: springappconfig
+                  key: db-hostname
+           - name: MONGO_DB_USERNAME
+             valueFrom: 
+               configMapKeyRef:
+                  name: springappconfig
+                  key: db-username
+           - name: MONGO_DB_PASSWORD
+             valueFrom: 
+               secretKeyRef:
+                  name: springappsecret
+                  key: mongodbpassword 
+
+Stateful applications mongodb :
+  - statefulsets/RS  
+  - storageClass 
+  - PersistentVolume 
+  - PersistentVolumeClaim
+  - configMaps 
+  - Secrets   
+  - service = ClusterIP   
+stateless applications:  
+  - deployment
+  - configMaps 
+  - Secrets   
+  - service - NodePort / LoadBalancer     
+
+---
+ConigMap As Volume Example
+=========================
+-# ConfigMap with file data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: javawebappconfig
+data:
+  tomcat-users.xml: |
+    <?xml version='1.0' encoding='utf-8'?>
+      <tomcat-users xmlns="http://tomcat.apache.org/xml"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+                      version="1.0">
+       <user username="devadmin" password="tomcat123" roles="admin-gui,manager-gui"/>
+    </tomcat-users>
+
+
+kops:
+Ticket07: Install a kops cluster using company documentation
+          https://github.com/LandmakTechnology/kops-k8s
+kops
+
+Suggestions:
+ * validate cluster: kops validate cluster --wait 10m
+ * list nodes: kubectl get nodes --show-labels
+ * ssh to the master: ssh -i ~/.ssh/id_rsa ubuntu@api.class33.k8s.local
+
+   kops export kubecfg $NAME --admin
+
+
+# Complete Manifest Where in single yml we defined Deployment 
+#& Service for SpringApp & PVC(with default  StorageClass),
+#ReplicaSet & Service For Mongo.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springappdeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springapp
+  template:
+    metadata:
+      name: springapppod
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springappcontainer
+        image: mylandmarktech/spring-boot-mongo
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_DB_USERNAME
+          value: devdb
+        - name: MONGO_DB_PASSWORD
+          value: devdb@123
+        - name: MONGO_DB_HOSTNAME
+          value: mongo 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springapp
+spec:
+  selector:
+    app: springapp
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodbpvc 
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mongodbrs
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+     metadata:
+       name: mongodbpod
+       labels:
+         app: mongodb
+     spec:
+       volumes:
+       - name: pvc
+         persistentVolumeClaim:
+           claimName: mongodbpvc     
+       containers:
+       - name: mongodbcontainer
+         image: mongo
+         ports:
+         - containerPort: 27017
+         env:
+         - name: MONGO_INITDB_ROOT_USERNAME
+           value: devdb
+         - name: MONGO_INITDB_ROOT_PASSWORD
+           value: devdb@123
+         volumeMounts:
+         - name: pvc
+           mountPath: /data/db   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  type: ClusterIP
+  selector:
+    app: mongodb
+  ports:
+  - port: 27017
+    targetPort: 27017
+
+a6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
+
+nslookup 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
+
+DNS = Domain Name service to create A rcords  
+
+app.com ---> 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
+
+kk --->  https://github.com/LandmakTechnology/kops-k8s 
+
+landmarkapp.net---> 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
+
+
+https://github.com/LandmakTechnology/kops-k8s
+remote add kk https://github.com/LandmakTechnology/kops-k8s 
+
+
+managed or self managed  LB   
+
+self managed =
+   NGINX   
+
+
+How does traffic get to the PODS/containers running in kubernetes.
+
+IQ: Explain your experience in kubernetes? 
+I have over 6 years experience in kubernetes performing the following;
+- setting up a multi-node self managed kubernetes cluster using kubeadm 
+- setting up a multi-node production ready kubernetes cluster using  kops    
+- setting up a single-node self managed cluster using minikube and
+  Docker Desktop for testing.
+- setting up a multi-node managed production ready k8s cluster
+  using amazon eks 
+- troubleshooting issues from k8s setup/configuration or installation.
+- maintaining, monitoring and upgrading the cluster components E.G   :
+  scheduler, etcd, controllerManagers, kube-proxy, kubectl, kubelet,
+  container-D, Kubernetes-cni[weave, flannel], kubectl-csi, apiServer  
+  kops export kubecfg $NAME --admin 
+- deploying applications and workloads using kubernetes objects:
+    - pods/ReplicationControllers/ReplicaSets/DaemonSets,
+      Deployments/StatefulSets/PersistentVolume/ConfigMaps 
+      secrets
+- using deployment as a choice kubernetes objects for stateless apps  
+- using replicasets, volumes with persistenvolumes for Stateful apps  
+- using statefulsets to deploy Stateful applications  
+- rollouts and rollbacks of Deployments 
+- deploying applications using controllerManagers [RC/RS/DS/STS/deploy]
+- setting up Jenkins-kubernetes integration pipeline for full automation 
+- deploying both Stateful applications and Stateless applications  
+- making use of objects like; PV,PVC and dynamic storage classes to 
+  persist data for Stateful applications [mongodb/ES/prometheus/jenkins]
+- using configmaps and secrets for a secured application deployment   
+- using probes for Health checks configuration in our deployments     
+- using RBAC/namespaces/IAM for a secure access in the k8s. 
+
+scheduler for scheduling pods on nodes   
+- helm  [ helm create springapp ]  :
+     charts-manifest files [ 
+        deployment.yml, service.yml, ingress.yml, hpa.yml, rbac.yml 
+
+- scheduling in kubernetes  [ NodeSelectors / NodeAffinity / PodAffinity ] 
+- EKS  
+- EFK   
+- Prometheus/Grafana  
+
+  
+
+helm   
+nginx-ingress1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
