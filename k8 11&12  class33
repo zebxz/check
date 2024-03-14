@@ -37,11 +37,19 @@ We can create ConfigMap & Secretes in the Cluster using command or also using ym
 ConfigMaps:
   are used to passed non confidential information in key:value  pair that weren't 
   hardcoded/included in the Dockerfiles/code by Developers
+   E.G we can use config map to pass stuff like 
     HOSTNAME
     USERNAME 
-    tomcat-users.xml  [  ]  
+also if developers are required nt to code, we are then required to use config maps to pass the variables
+
+e.g we are tryin to deloy an appl and we are using a kind of a tomcat image  n in that tomcat image hw do we access n manage tomcat
+we hv a file called tomcat users.xml, so  we couldcreate a config map for our tomat users
+   e.g  lets assume we hv diff users in diff , with diff rolesenv we are not hardcoding, these are dynamic variables
+tomcat-users.xml  [  ]  
       dev = <user username="tomcat" password="tomcat" roles="admin-gui,manager-gui"/>
       uat = <user username="paul" password="admin123" roles="admin-gui,manager-gui"/>
+
+****** we can now use config map such that when we wnt to deploy for each env we knw we hv diff users , in each of that env we can use configmap for that purpose
 
 tomcat-users.xml  
     <?xml version='1.0' encoding='utf-8'?>
