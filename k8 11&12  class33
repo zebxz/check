@@ -159,21 +159,29 @@ spec:
            ports:
            - containerPort: 8080
            env:
-           - name: MONGO_DB_HOSTNAME
+           - name: MONGO_DB_HOSTNAME               
              valueFrom: 
-               configMapKeyRef:
+               configMapKeyRef:                        *************we dnt pass any values,
                   name: springappconfig
-                  key: db-hostname
+                  key: db-hostname                     it wil read the value frmthe config map that hv been created
            - name: MONGO_DB_USERNAME
              valueFrom: 
                configMapKeyRef:
                   name: springappconfig
                   key: db-username
-           - name: MONGO_DB_PASSWORD
-             valueFrom: 
+           - name: MONGO_DB_PASSWORD   ************ even though we can create PW using configmaps but for best practice we use secret cos secret is for confidential data
+             valueFrom:                   the value is coming frm the secret for best practice
                secretKeyRef:
                   name: springappsecret
                   key: mongodbpassword 
+
+******************* now we can delete the previous springapp we deployed from previous class and deploy this file
+vi spring.yml
+kubectl apply-f spring.yml
+now we can write data in the data base bc for us to deploy this appl we are making use of multiple objects  .....31:20
+
+********************APPLICATION DEPLOYMENT
+if we are going to deploy an application what is involved????
 
 Stateful applications mongodb :
   - statefulsets/RS  
