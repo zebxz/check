@@ -256,15 +256,50 @@ kops:
 Ticket07: Install a kops cluster using company documentation
           https://github.com/LandmakTechnology/kops-k8s
 
-**************lets see hw to manage kops .  ..... DEPLOYING OUR KOP CLUSTER
+**************lets see hw to manage kops .  ..... DEPLOYING OUR KOP CLUSTER .......... 44:00
 1) create ubuntuEC2instance in AWS
+he used the master node we already created
+##################When u ar craetin user in ubuntu server its diff frm  redhat
+
 2) CREATE KOPS user
   sudo adduser kops
   sudo echo kops ALL =NOPASSWD:ALL | SUDO TEE /ET          ..... TO GRANT sudo right
 SUDO SU -KOPS
 2a)  instal AWS cli  ............     see the file in the github link for full steps 
+ ******************* we are tryin to install kobs , it is a software taht wil help us to deploy a production ready k8 cluster
+4) we already hv kubectl installed 
+5 create iam role
 
-##################When u ar craetin user in ubuntu server its diff frm  redhat
+6) aws s3 ls  .. to list the buckets but we access denied
+he had to go to aws to create iam role for an aws service 50:00
+then clicked on the master node, under action,security, modify iam role, and assigned the  iamrole we jsut created and update it
+now when we run aws s3 ls , we no longer get permission denied bc we hv assigned iam role to the server.
+###### now we create the bucket   .... aws s3 mb s3://kops33   (kops33 bucket name, i bliv)    ............53:59
+
+7) vi bashrc  and paste the name of crated bucket n exit then
+source . bashrc to refresh the file
+now if we run 
+kops@master:~$  echo $NAME    ,, WE get a response
+class33.k8s.local
+kops@masteer:~$ echo $KOPS _STATE_STORE
+s3://kops33
+kops@masteer:~$    aws ls s3   .......   to ensure it exists 
+it exists
+
+8)57:27
+9)57:40
+the rule for kobs is that whatever u are craeting must end with .k8s.local
+we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some aws resources
+**********is this similar to what we saw in terrafrom as terraform plan???  in terraform when you do terrafrom plan it wil tell u evrtin tht WIL BE Created
+####copy the sshkey so that we can ssh to our master node  ....1:01:39
+
+Suggestions:  we can edit    ..........1:01:47 
+ 
+
+10)
+
+
+
 
 Suggestions:
  * validate cluster: kops validate cluster --wait 10m
