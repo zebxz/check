@@ -246,12 +246,25 @@ mongosvc          ClusterIP         10.110.26.165               none            
 springappsvc       LoadBalancer       10.100.100.234             pending      80:32136/TCP     WE stil hv the samenodeport no. here****it is waiting for an external ip wich wil nt cm  ....38:58
                                                                                    & this is the problem we ar goin to be facin with self manged k8 cluster.... 39:05
 
-***************** DEPLOYING A K8 CLUSTER USING KOBS
+***************** DEPLOYING A K8 CLUSTER USING KOBS    ...... 40:50  ,, read  the  file in github account
+
+       KOBS IS A SOFTWARE used to deploy a production ready k8 cluster
+here is our github account wich we'l be using to create a kobs cluster
+kobs is ifaac
 
 kops:
 Ticket07: Install a kops cluster using company documentation
           https://github.com/LandmakTechnology/kops-k8s
-kops
+
+**************lets see hw to manage kops .  ..... DEPLOYING OUR KOP CLUSTER
+1) create ubuntuEC2instance in AWS
+2) CREATE KOPS user
+  sudo adduser kops
+  sudo echo kops ALL =NOPASSWD:ALL | SUDO TEE /ET          ..... TO GRANT sudo right
+SUDO SU -KOPS
+2a)  instal AWS cli  ............     see the file in the github link for full steps 
+
+##################When u ar craetin user in ubuntu server its diff frm  redhat
 
 Suggestions:
  * validate cluster: kops validate cluster --wait 10m
