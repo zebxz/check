@@ -276,7 +276,7 @@ then clicked on the master node, under action,security, modify iam role, and ass
 now when we run aws s3 ls , we no longer get permission denied bc we hv assigned iam role to the server.
 ###### now we create the bucket   .... aws s3 mb s3://kops33   (kops33 bucket name, i bliv)    ............53:59
 
-7) vi bashrc  and paste the name of crated bucket n exit then
+6b) vi bashrc  and paste the name of crated bucket n exit then
 source . bashrc to refresh the file
 now if we run 
 kops@master:~$  echo $NAME    ,, WE get a response
@@ -286,33 +286,41 @@ s3://kops33
 kops@masteer:~$    aws ls s3   .......   to ensure it exists 
 it exists
 
-8)57:27
-9)57:40
+7)  ssh-keygen      ............  57:27
+8)57:40
 the rule for kobs is that whatever u are craeting must end with .k8s.local
-we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some aws resources
+we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some aws resources, 
+vpc, subnet route gatway, evrytin wil be created
 **********is this similar to what we saw in terrafrom as terraform plan???  in terraform when you do terrafrom plan it wil tell u evrtin tht WIL BE Created
 ####copy the sshkey so that we can ssh to our master node  ....1:01:39
 
 Suggestions:  we can edit    ..........1:01:47 
  
 
-10)
-
-
-
-
+9) kops update cluster ${NAME} --yes
+10
 Suggestions:
  * validate cluster: kops validate cluster --wait 10m
  * list nodes: kubectl get nodes --show-labels
  * ssh to the master: ssh -i ~/.ssh/id_rsa ubuntu@api.class33.k8s.local
 
+10b)   1:14:55 
    kops export kubecfg $NAME --admin
+kubectl get node  ,,  we get a response
+
+************ so we hv deployed our kops cluster 
+
+how many clusters do we hv now?
+now we hv kubadbm and kops cluster  , we v deployed a self manged cluster using kops
+1:18:05 *********lets go to our github and deploy a particular application
 
 
+1:19:47
+vi app.yml
 # Complete Manifest Where in single yml we defined Deployment 
 #& Service for SpringApp & PVC(with default  StorageClass),
 #ReplicaSet & Service For Mongo.
-apiVersion: apps/v1
+apiVersion: apps/v1                     ******* springapp deployment
 kind: Deployment
 metadata:
   name: springappdeployment
@@ -340,7 +348,7 @@ spec:
         - name: MONGO_DB_HOSTNAME
           value: mongo 
 ---
-apiVersion: v1
+apiVersion: v1             ************ service
 kind: Service
 metadata:
   name: springapp
@@ -352,7 +360,7 @@ spec:
     targetPort: 8080
   type: LoadBalancer
 ---
-apiVersion: v1
+apiVersion: v1                     ************ persistent volclaim, we are nt creating persistent vol
 kind: PersistentVolumeClaim
 metadata:
   name: mongodbpvc 
@@ -364,7 +372,7 @@ spec:
       storage: 1Gi
 ---
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: ReplicaSet                ***************** replicaset for mongo database rs
 metadata:
   name: mongodbrs
 spec:
@@ -395,7 +403,7 @@ spec:
          - name: pvc
            mountPath: /data/db   
 ---
-apiVersion: v1
+apiVersion: v1               ************** service for mongo called mongo
 kind: Service
 metadata:
   name: mongo
@@ -406,6 +414,15 @@ spec:
   ports:
   - port: 27017
     targetPort: 27017
+
+1:22:30........... we ar nt creatin persistent vol  bt let me show u smt b4 we deploy this appl
+
+kops@master:~$ kubectl get pvc
+nO resourecs found in defaullt namespace   ... there is no pvc
+kops@master:~$ kubectl get sc
+we hv a default storage class  ... with aws EBS provisioner, so when u craeted using kops,what do u realise? kops created EBS vol for us, this did nt happen when we deployed
+kubeadm cluster and since ther was no storage class u must manually proviison it, manually provision ur pv and pvc bt when ther is a storage class thatcan be automatic, it
+becomes dynamic 
 
 a6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
 
@@ -434,8 +451,8 @@ How does traffic get to the PODS/containers running in kubernetes.
 
 IQ: Explain your experience in kubernetes? 
 I have over 6 years experience in kubernetes performing the following;
-- setting up a multi-node self managed kubernetes cluster using kubeadm 
-- setting up a multi-node production ready kubernetes cluster using  kops    
+- setting up a multi-node self managed kubernetes cluster using kubeadm    ,kubeadm this is self managed
+- setting up a multi-node production ready kubernetes cluster using  kops     ,, kops is also self managed bt it comes wit other aws services
 - setting up a single-node self managed cluster using minikube and
   Docker Desktop for testing.
 - setting up a multi-node managed production ready k8s cluster
@@ -479,15 +496,11 @@ nginx-ingress1
 
 
 
-
-
-
-
-
-
-
-
-
+1:09:21 
+when we use kops
+kops create cluster : since our target is aws cloud, it gets into the aws cloud and in the aws cloud this command execute/achieves , it creates a series of resources e.g vpc
+n subnets, re.g subnet1& subnet2 , LB, autoscaling grp managing some worker noder, masternode, we didnt need to create server manually 
+with terraform we cud cretae resources in a cloud provide
 
 
 
