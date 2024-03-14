@@ -439,36 +439,54 @@ when we used kubeabdm, when we did a similar task using kubeabdm it wasnt able t
 
 the lb that has been created is manged nt self managed bc lb created in aws is manged by aws
 
+managed or self managed  LB 
+if i create a self mangaed lb, wit the self managed LB, i may create a server n in the server, i wil install a software like ngnix afterwich i wil deter hw service is routed
+self managed =
+   NGINX   
+                            1:31:00
+but in a manged cluster, aws wil craete  the lb for u and in the background the LB which is our service will be performing dns resolution n routing traffic accordingly to
+the backend port of the containers craeted on the nodes, this is what is goin to happen 
+we can check lb in aws and all of this stuff was automatically generated, we can see the target instance(the backend instance, i bliv the containers ip), its routing traffic
+to these servers and thats where our pods are running
+
+but now, so this lb hw is it able to knw wher the traffic is been routed????
+ns lookup means nameserver look, what is the name server that is linked to thais load balncer (below is our lb link frm aws)
+************* nslookup 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
+when u run this in ur browser :6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com , it is linked to a particular nameserver
+
+ 1:36:00  .....   frm an infrastruture perspective
+How does traffic get to the PODS/containers running in kubernetes.
+we v 50m users whaen they try to access this appl, they are typing the lb dns name , based on our deployment we v deployed a cluster wich has private n public subnet 
+in our public subnet der is an Elb , SO endusers are trying to access the appl tru the ELB guy. insid ethe cluster we v node1 and 9 , frm an infrastruture perspective, we
+v the frontend and we hv the backend , now  when ensuders tyep the lb url in the background a command wil be executed, the reQ  frm endusers wil query global dns servers 
+searching for the nameserver so in d background nslookup is searching for the nameserver, this is taking mini seconds, some of d global dns service providers it wil check is 
+godaddy, google,aws route53, once nslookup is executed it wil immediately route traffic  via the ELS url n then traffic gets into our cluster  .........1:56:00
+(&inside our cluster we v a service called springSVC
+n its routing traffic to backend pod , now any service u create in k8 must create a cluster service ip as well, he ran kubectl get svc n we cud see a clusterip attached to
+the loadbalancer service that was created when we deployed the springapp service above,) so frm the elb, traffic gets into the cluster n for it to get to the cluster it wil
+hv to get to the node n since its now in the cluster it wil identify which service the traffic is meant for n via the service traffic gets to the pods, bc traffic cannot go
+to the pod directly the pods are discovered via the service n as such traffic wil get to the backend pod accordinly and as part of the spring app  we also deployed a database
+pod , for the db we hv another service.. .. all our servers are runing in private subnet master n worker while ELB is in the  public subnet
 
 
-a6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
+*********************DNS = Domain Name service to create A rcords  
+TO avoid giving this to a client :6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
 
-nslookup 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
-
-DNS = Domain Name service to create A rcords  
-
+we wnt to create a record , the cord can say:  .....*********** in aws we can achieve this with a service called route53 ............1:43:00
 app.com ---> 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
-
+so instaed of the long link we use the alias name app.com
 kk --->  https://github.com/LandmakTechnology/kops-k8s 
-
 landmarkapp.net---> 6773018340fe4c89b2cbc41d4db7611-1100378697.us-east-1.elb.amazonaws.com
-
-
 https://github.com/LandmakTechnology/kops-k8s
 remote add kk https://github.com/LandmakTechnology/kops-k8s 
 
-
-managed or self managed  LB 
-if i create a self mangaed lb, wit the self managed LB, i may create a server n in the server, i wil install smt like ngnix afterwich i wil deter hw service is routed
-self managed =
-   NGINX   
-
-but in a manged cluster, aws wil craete  the lb for u and in the background0
+1:50:00 explanation
 
 
-How does traffic get to the PODS/containers running in kubernetes.
 
-IQ: Explain your experience in kubernetes? 
+
+    2:05
+ IQ: Explain your experience in kubernetes? 
 I have over 6 years experience in kubernetes performing the following;
 - setting up a multi-node self managed kubernetes cluster using kubeadm    ,kubeadm this is self managed
 - setting up a multi-node production ready kubernetes cluster using  kops     ,, kops is also self managed bt it comes wit other aws services
