@@ -1,4 +1,4 @@
-CONFIG MAP AND SECRETS
+CONFIG MAP AND SECRETS , DEPLOYING A K8 CLUSTER USING KOBS
 ways to pass secret values so they are more secured.
 ****************************************************************************************************
 
@@ -226,6 +226,27 @@ data:
        <user username="devadmin" password="tomcat123" roles="admin-gui,manager-gui"/>
     </tomcat-users>
 
+
+
+***************************
+unbuntu@master:~$  kubectl get sc   ..... to get storage class
+
+unbuntu@master:~$ kubectl get svc
+NAME               TYPE              CLUSTER-IP              EXTERNAL-IP      PORTS          AGE
+mongosvc          ClusterIP         10.110.26.165               none
+springappsvc       NodePort         10.100.100.234              none           80:32136/TCP 
+
+we can edit the service
+unbuntu@master:~$ kubectl edit svc springappsvc 
+we saw the manifest file and he changed the service type from nodeport to loadbalancer
+
+unbuntu@master:~$ kubectl get svc
+NAME               TYPE              CLUSTER-IP              EXTERNAL-IP      PORTS          AGE
+mongosvc          ClusterIP         10.110.26.165               none                                 what are some of the changes here?
+springappsvc       LoadBalancer       10.100.100.234             pending      80:32136/TCP     WE stil hv the samenodeport no. here****it is waiting for an external ip wich wil nt cm  ....38:58
+                                                                                   & this is the problem we ar goin to be facin with self manged k8 cluster.... 39:05
+
+***************** DEPLOYING A K8 CLUSTER USING KOBS
 
 kops:
 Ticket07: Install a kops cluster using company documentation
