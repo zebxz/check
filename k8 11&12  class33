@@ -17,24 +17,25 @@ configmaps
 
 4:48
 env variables are  like secret variable ,, because the inf is stored in our source code mgt and so we shouldnt pass the env variable like this 
-env 
-name:MONGO DB HOSTNAME
-value: mongosvc
-name:MoNGO DB USERNAME
-value:devdb
-name: MONGO DB PASSWORD
-value: devdb@123
+ env:
+           - name: MONGO_DB_HOSTNAME
+             value: mongosvc
+           - name: MONGO_DB_USERNAME
+             value: devdb
+           - name: MONGO_DB_PASSWORD
+             value: devdb@123
+
 
 6:29      CONFIG MAP
 ######  HOW CAN WE DEPLOY THE ENV variable/file in a more secured way
 
 kubernetes volumes :
 ==========================
-==========================
+==========================  by using:
 Config Maps & Secrets
 ======================
 We can create ConfigMap & Secretes in the Cluster using command or also using yml.
-ConfigMaps:
+********************ConfigMaps:
   are used to passed non confidential information in key:value  pair that weren't 
   hardcoded/included in the Dockerfiles/code by Developers
    E.G we can use config map to pass stuff like 
@@ -49,7 +50,8 @@ tomcat-users.xml  [  ]
       dev = <user username="tomcat" password="tomcat" roles="admin-gui,manager-gui"/>
       uat = <user username="paul" password="admin123" roles="admin-gui,manager-gui"/>
 
-****** we can now use config map such that when we wnt to deploy for each env we knw we hv diff users , in each of that env we can use configmap for that purpose
+****** we can now use config map such that when we wnt to deploy for each env we knw we hv diff users , in each of that env we can use configmap n secret for that purpose
+bc we ar managing our appl n it has diff values for diff env 
 
 tomcat-users.xml  
     <?xml version='1.0' encoding='utf-8'?>
@@ -62,44 +64,20 @@ tomcat-users.xml
     </tomcat-users>
 
 
-Secrets:
-  are used to passed confidential information in base64 format
+****************************Secrets:
+  are used to passed confidential information in base64 format e.g 
     PASSWORD
     SSH_PRIVATE_KEYS  
     dockerHub LOGIN password  
     tls certificate  
-
-
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-   name: spingapp
-spec:
-   replicas: 2
-   selector:
-     matchLabels:
-       app: springapp
-   template:
-      metadata:
-         labels:
-            app: springapp
-      spec:
-         containers:
-         - name: app
-           image: mylandmarktech/spring-boot-mongo
-           ports:
-           - containerPort: 8080
-           env:
-           - name: MONGO_DB_HOSTNAME
-             value: mongosvc
-           - name: MONGO_DB_USERNAME
-             value: devdb
-           - name: MONGO_DB_PASSWORD
-             value: devdb@123
-
-Create ConfigMap Using Command:
+          
+ *******************************OPTIONS FOR CREATING  CONFIGMAP:
+1)Create ConfigMap Using Command:
   kubectl create configmap springappconfig --from-literal=db-username=devdb 
   kubectl create configmap springappconfig --from-literal=db-hostname=mongosvc 
+
+should we use imperative or declarative approach to create config maps? we shud use file/declarative
+2)
 Create ConfigMap Using files/declarative approach:
 yaml:
 =====
@@ -110,8 +88,15 @@ metadata:
 data:
   db-hostname: mongosvc   
   db-username: devdb  
-  db-password: devdb123       
----
+  db-password: devdb123       ************shud we create pw using configmap, ofcourse we can do that bt it is nt recommended;
+                                                           ill just put here devd123, am creating pw here using configmap bt dis is nt recommended
+      for us to create PW, WHICH OBJ SHUD WE be using ? kind , so we wnt shud we use to create secret, we can create secret using command like this:
+Secret Using Command: 
+kubectl create secret generic springappsecret --from-literal=mongodbpassword=devdb@123 
+
+******************USING A FILE TO CREATE A SECRET
+                  THIS IS A SECRET obj we are creating ............19:00
+---                                                 
 apiVersion: v1
 kind: Secret
 metadata:
@@ -120,13 +105,40 @@ type: Opaque
 stringData:   # We can define multiple key value pairs.
   mongodbpassword: devdb@123
 
-Secret Using Command: 
-kubectl create secret generic springappsecret --from-literal=mongodbpassword=devdb@123 
 
+kubectl api-resources                         16.15
+kubectl api-resources | grep -i configmap           .... to get the api version for config map  
 
-kubectl api-resources
-kubectl api-resources | grep -i configmap  
+*************************************CREATING CONFIG MAP AND SECRET
+***********************kubectl get secret  ............. to see our secrets
+kubectl get cm   .... to get config maps
 
+vi secret.yml    and paste  ,   
+
+kind: ConfigMap  
+apiVersion: v1     
+metadata:
+  name: springappconfig   
+data:
+  db-hostname: mongosvc   
+  db-username: devdb  
+  db-password: devdb123
+-----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: springappsecret
+type: Opaque
+stringData:   # We can define multiple key value pairs.
+  mongodbpassword: devdb@123
+
+....................to create the secret object9 : kubectl apply -f secret.yml
+configmap/springappconfig created
+secret/springapppsecret created
+###########now we hv our secret n configmap for our configuration
+
+we wnt deploy our springapp, we we hv our secret n configmap so we can mk some changes in the env of our manifaet file 
+**************************************22:00
 kind: Deployment
 apiVersion: apps/v1
 metadata:
