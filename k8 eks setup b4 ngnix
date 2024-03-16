@@ -90,18 +90,61 @@ click compute , add node grp
  node name
 attach the iam role we just made
 we can  addd label n value
+on demand
 inatnsc type: t2 large with 8 gRAM 
 scalin g conf: 2,2,10
 nxt, we see the subnets and w ecan choose the  subnet we want the node to be scheduled, (i can decide to schedule all my node on the private subnet, in that case if i 
-wnt to expose the node, ill be exposing it using an xternal LB service wich is very possible)  for now ill just allow all the AZs
-nxt uj8ju8
+wnt to expose the node, ill be exposing it using an xternal LB service wich is very possible)  for now ill just allow all the AZs ,, 
+nxt , 
+it failed to create the nodes so he  selected the subnets in public wich hv auto assign public ip enabled
+i can also configure ssh access to the node, select .... , select  security grp 35:49
+nxt 
+node grp is been created n onec it is provisioned, if u come to compute, its certain the node grp
+***********we can created multiple node grps
 
+*to access the eks cl8s
+in mobarterm , 
+he has a server
+cretae user : sudo su - ec2user
+instal kubectl using th command bt he alsredy has aws cli istalled
+i wnt to b able to access my k8 control plane, k8 serevr, to access my eks cl8
+so we nid to run configure aws cli using bc i v to configure my aws access key n sacred access key
 
+******* so bk to aws, in iam role , on the right hand corner, he clicked on security credentials
+to create access key 4:30
+key created
+back to mobaxterm.. 
+aws configure 
+pste key 
+us west1
+json
 
+aws eks list -cluster
 
+next 
+we wnt to b able to congifure the kube configure file to b able to manage the cl8
+if we run kubectl get pod, connection is refused
+so to est the connection :  aws eks update-kubeconfig --name eks-demo --region us-west-1 
+now the file has been created, 
+kubectl get pod
+no resorce in the default name space
+kubectl get node
+2nodes hv been successfully deployed
+we created a node grp with mini 2 desired n dis is what we v here
 
+nxt install git if nt already installed
+kubectl get sc
+we hv this storage class deployed so we hv a default storage class bt we hv to instal the cli driver so mk sure that git is installed, if its nt 
+sudo yum istall git
+succcssfully installed
+then, am goin to deploy the csi driver wit this command, this is very imp for storage, csi, its goin to create a dynamic storgae class for us n it wil be ver helpful for our
+PV nad PVC 
+kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.12"
 
-
+successful
+kubectl get sc
+succsesul deployed the ebs csi driver n this is similsr to deplying the the vexray pluggin in docker, so this driver will help us to dynamically create a PV and PVCs cos
+now we hv a default storage class n with this we can easily deploy our applications
 
 
 
