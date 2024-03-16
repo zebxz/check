@@ -66,13 +66,43 @@ next
 configure logging: select all bt its going to be charged, so unselect all and next
 select add ons: these are k8 add ons , like kube proxy, coredns, amazon vpc will be configured  nxt 
 amazon version has iff options bt we ll just allow the default version assigned to us nxt and create
-ow  the cl8 is being created, wil tk a while
+ow  the cl8 is being created, wil tk a while , took abt 10minutes
 
 hw th cl8 works
 EKS provides a fully manged contrl plane7
 u provision an EKS  cl8 , ek8 automatically deploy control plane 
 so while we aredeploying this cl8, aws wil create the control plane for us, the only thing we nid to do once the cl8 is provisioned is to deploy worker nodes,
-so we can create our worker node grps then connect toe the EKS cl8 , then w ecan start running k8 appll, start deployin apps
+so we can create our worker node grps then connect toe the EKS cl8 , then we can use EKS to run k8 appll, start deployin apps to eks cl8
+
+
+now the eks has bee n provisioned, we nid to deploy our workernode into the cl8
+create iam role for the node with this ploicies ... 23:56
+
+iam
+role create
+common service: ec2
+select the required policy , nxt
+role name
+create role
+
+back to the  EKS cl8
+click compute , add node grp
+ node name
+attach the iam role we just made
+we can  addd label n value
+inatnsc type: t2 large with 8 gRAM 
+scalin g conf: 2,2,10
+nxt, we see the subnets and w ecan choose the  subnet we want the node to be scheduled, (i can decide to schedule all my node on the private subnet, in that case if i 
+wnt to expose the node, ill be exposing it using an xternal LB service wich is very possible)  for now ill just allow all the AZs
+nxt uj8ju8
+
+
+
+
+
+
+
+
 
 
 
