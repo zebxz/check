@@ -66,7 +66,9 @@ https://kubernetes.io/
 https://github.com/LandmakTechnology/kubernetes-manifests/blob/main/liveness_readiness_probes_example.yml
 https://github.com/LandmakTechnology/kubernetes-manifests/
 
-*************DEPLOYING APPL INCORPORATING LIVENESS PROBES...........
+
+
+*******************************************     DEPLOYING APPL INCORPORATING LIVENESS PROBES...........
                LETs deploy a replica set
 in the ubuntu server he sitched to sudo - su kops
 but got error when he ran
@@ -76,6 +78,9 @@ when that happens we nid to export the kube config file again(i guess thats 10b 
 now run
 kubectl get all and we hv our cl8 running
 
+***********we wnt to deploy an appl that has liveness probes
+we ar deploying the appl as a replicaset n we ar using the javawebapp image n web thsi appl i sinstaled for u to be sure that the appl is running the container pod for this
+appl 8080, therefore for us to be sure, we hv a readiness probe ,wich is our http get REQ, am i able to access this appl on this pod number
 
 app-probes.yml  
 ==============
@@ -99,14 +104,14 @@ spec:
         image: mylandmarktech/java-web-app
         ports:
         - containerPort: 8080
-        readinessProbe:
+        readinessProbe:    **********************readiness probe
           httpGet:
-            path: /java-web-app
+            path: /java-web-app            ***********am i able to access this appl on this path number, 
             port: 8080
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
-          periodSeconds: 15
-        livenessProbe:
+          initialDelaySeconds: 5           , when we create the container it will delay for 5sec, it wil be running a command in the background trying to check if our pod 
+          timeoutSeconds: 1                           is ready to accept traffic, if its nt ready it will wait agin and evry 15sec , it wil tryy to repeat the process, ar u
+          periodSeconds: 15                                         ready to accept trafic b4 it can add it to the lb or to the backend pod
+        livenessProbe:            *******if smt is wrong it wil restart the container/pod, readiness probe wil only route traffic to the pod unles it has passed d appl
           httpGet:
             path: /java-web-app
             port: 8080
@@ -120,7 +125,7 @@ kind: Service
 metadata:
  name: javawebappsvc
 spec:
-  type: NodePort
+  type: NodePort             ************* nodeport service for the appl
   selector:
     app: javawebapp
   ports:
@@ -128,24 +133,55 @@ spec:
     targetPort: 8080
     nodePort: 32000 
 
+to deploy it:
+vi app-probes.yml
+kubectl apply -f app-probes.yml
+kubectl get po
+our pod is running
+kubectl describe po javawebapprs-m9qwr
+we see it has a liveness probe in an http get req, it wil delay for 15sec n it wil redo the process again,until the result is positive n healthy ders no way trafic wil be
+routed to that pod.
+
+************so this is what liveness n readiness probe are goin to do
+
 http://:8080/java-web-app
 
-  curl localhost:8080  
+ it runs the curl command in the backend ....  curl localhost:8080  
 
 http://34.215.29.198:32000/java-web-app 
 
+*******these are probes n vthey are very imp as far as having a gud mastery in k8, u nid to v a gud mastery when it comes to probe
+
+###### one other aspect/thing we nid to look at carefully is metrics server ..................  32:10
+
+
+******************** ************* CONGFIGUE 
+
 Configure a Metrics Server on your kops Cluster4??
 =================================================
+   CLONE OUR GITHUB REPO FOR METRIC SERVER
 https://github.com/LandmakTechnology/metric-server
+ls
+we hv the metrics server
+ls metric-server/
 
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
-wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
+now to deploy my metrics server 
 kops@master:~$ kubectl apply -f metric-server/metrics-server-deploy.yml
 serviceaccount/metrics-server created
+kops@master:~$  kubectl get po -A
+metrics server is running
+kops@master:~$  kubectl top po
+we get a response
+NAME               CPU(cores)           MEMORY(bytes)
+
+**************so we v deployed a metrics server , and all we had to do was jst to clone the repository n run kubectl apply -f metric-server/metrics-server-deploy.yml
 
 
+35:34 
+if we redeploy :
+kops@master:~$ kubectl apply -f metric-server/metrics-server-deploy.yml
+there are some resources that are being created when metrics server is deployed
+the resources includes:
 serviceaccount/metrics-server unchanged
 clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader unchanged
 clusterrole.rbac.authorization.k8s.io/system:metrics-server unchanged
@@ -156,12 +192,19 @@ service/metrics-server unchanged
 deployment.apps/metrics-server configured
 apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io unchanged
 
+37:00
+when u are deploying any obj in k8 part of what was deployed here gots to do with rbac ,whic got to do with k8 security n  in the rbac der are a few things to look at:
 rbac:
 serviceaccount:
    ServiceAccounts Subject =  Users/Groups/otherApplications  
-role :
-    objects = pods/deployments/services/rs/ds/rc [ * ]
-    verbs   = edit/delete/view/read  [*] 
+so for e.g we can create a service account , the service account can be created for a user, grps, other appl
+e.g  we created a service account for anappl called metrics server, so this is goin to act as the subject of my service account
+so subject can be :Users/Groups/otherApplications
+so if u create a service account the nxt thing is that we can create a role n role binding
+
+role : we cud create a role ,this  role for example is expected to perform specific tasks, so  i create a role for my pod, deployment services, etc or 
+for my objects = pods/deployments/services/rs/ds/rc [ * ] ,, n if it is * its  means its for evrytin, all k8 objects bt if its for a particular obj like pod i create a role
+    verbs   = edit/delete/view/read  [*]                                                                                             for my pod 
     apiGroups = [ v1 ]  [ * ]
     namespace = role are applicable to a particular namespace
 
