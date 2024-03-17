@@ -1,1 +1,152 @@
 he said der was ngnix in the k814 video on probes but i dnt think so 
+helm   
+nginx-ingress1
+
+
+running notes for nginx-ingress   
+
+nginx-ingress contoller:
+==========================
+https://github.com/LandmakTechnology/nginx-ingress
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: web
+  labels:
+    app: web  
+spec:
+  containers:
+  - name: web
+    image : mylandmarktech/hello
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: websvc
+spec:
+  selector:
+    app: app   
+  ports:
+  - port: 80
+    targetPort: 80
+
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: webapp   
+  labels:
+    app: webapp     
+spec:
+  containers:
+  - name: web
+    image : mylandmarktech/java-web-app  
+    ports:
+    - containerPort: 8080  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webappsvc
+spec:
+  selector:
+    app: webapp   
+  ports:
+  - port: 80
+    targetPort: 8080 
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapp-ingress-rule
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: springappsvc
+            port:
+              number: 80
+  - host: hello.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: websvc 
+            port:
+              number: 80
+  - host: web.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: webappsvc
+            port:
+              number: 80
+
+
+
+
+apiVersion: v1  
+kind: Pod 
+metadata:
+  name: app  
+  namespace: dev  
+  labels:  
+    app: fe  
+    name: paul  
+spec:  
+
+kubernetes 13--AUGUST 13, 2023
+ResourceQuota,   
+LimitRange,
+StatefulSets  
+nginx-ingress
+
+
+
+54.201.176.87
+c32.pem  
+
+kops export kubecfg $NAME --admin   
+
+https://github.com/LandmakTechnology/kops-k8s
+
+kubectl edit svc springappsvc
+  kubectl create -f manifests-file.yml 
+  kubectl create -f app/  
+
+  kubectl apply -f manifests-file.yml 
+  kubectl apply -f app/ 
+
+  kubectl run 
+
+kubectl apply/create/run/edit/get/describe/delete/logs/exec/epose/show/rollout/scale  
+
+curl 34.219.47.255:31335
+
+
+
+
+
+
+
+
+
+
+
+
+
