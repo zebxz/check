@@ -70,7 +70,7 @@ https://github.com/LandmakTechnology/kubernetes-manifests/
 
 *******************************************     DEPLOYING APPL INCORPORATING LIVENESS PROBES...........
                LETs deploy a replica set
-in the ubuntu server he sitched to sudo - su kops
+in the ubuntu server he sitched to sudo su - kops
 but got error when he ran
 kubectl get all     ... 24:24
 he was unable to access his kops cl8 so 
@@ -132,7 +132,7 @@ spec:
   - port: 80
     targetPort: 8080
     nodePort: 32000 
-
+-------------------------
 to deploy it:
 vi app-probes.yml
 kubectl apply -f app-probes.yml
@@ -225,6 +225,19 @@ so if ur workin on securing ur cl8, u can also use cluster role n cl8 role bindi
     ServiceAccounts/Users/Groups/otherApplications
 
 ############ we use this for k8 security, role n role binding,  cluster role n cluster role binding
+kops@master:~$ ls metric-server/
+README.md deploy metrics-server-deploy.yml
+kops@master:~$ 
+kops@master:~$  vi metric-server/metrics-server-deploy.yml
+dis is a ver large file
+its creating a 
+services account for metric server in the kubectl namespace
+cluster role for metrics service , it can edit etc, these are the stuff it can do
+clusterrole binding
+
+******* so its very imp
+but again if u look at managing  all of these k8 filr or manifest file is a serious task so this is resolved by using stuff like helm 
+helm is a package manger for k8
 
 rolebinding.rbac
 clusterrole.rbac
