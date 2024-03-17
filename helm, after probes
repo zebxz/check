@@ -1,1 +1,181 @@
 
+Helm:
+  Helm is a package manager for Kubernetes applications.
+We deploy workloads in kubernetes using kubernetes objects declared in manifests files:
+  springapp Stateless web application:
+     deployment
+     service 
+     ingress 
+     hpa 
+     secrets  
+     configmaps 
+
+   mongodb Stateful database application:
+     deployment/ and 
+     service 
+     ingress 
+     hpa 
+     secrets  
+     configmaps 
+     persistentvolumes  
+     persistentvolumeclaims 
+     StatefulSets
+
+  Custom applications: 
+    springapp  
+    java-web-app  
+    maven-web-app 
+    pythonapp  
+    nodejsapp  
+  Third party applications:
+    mongo 
+    mysql 
+    jenkins
+    metrics-server 
+    csi drivers - EBSCSI  
+    CNI Plugins/Add-ons:
+      vpc-cni 
+      weave 
+      calico 
+      Flannel  
+    nginx-ingress 
+    RBAC:
+      clusterrole and clusterrolebinding   
+      Role  and RoleBinding  
+      serviceaccount
+
+Helm eases/simplifies the deployment of workloads in kubernetes   
+
+  maven Installation1:  
+    yum install openjdk14+  
+    yum install wget unzip  
+    wget  https://maven.zip 
+    unzip maven.zip 
+    create maven homeDir and environments variables   
+---
+maven installation in ubuntu/redhatOS server:
+  maven-install.sh  
+  sudo yum install wget unzip -y 
+  sudo yum install openjdk1.18  
+  cd /opt   
+  sudo wget https://dlcdn.apache.org/maven/maven-4/4.0.0-alpha-4/binaries/apache-maven-4.0.0-alpha-4-bin.zip
+  unzip apache-maven-4.0.0-alpha-4-bin.zip
+  mv apache-maven-4.0.0-alpha-4-bin.zip/ maven/ 
+  chmod -R 777 maven  
+
+
+ maven Installation2: 
+    yum install maven -y   
+
+we use package managers to install packages:
+  apt /  = package manager for ubuntu/debian
+  yum /  = package manager for redhatOS/centOS  
+  dnf /  = package manager for redhatOS/centOS 
+  rpm /  = package manager for redhat 
+  deb /  = 
+  choco / = package manager for windows OS
+  pip-python-pip = package manager FOR PYTHON  
+  brew = package manager for macOS  
+
+Helm is a package manager for kubernetes.
+
+Helm concepts:
+  Helm cli: = It's a command line interface used to work with packages to 
+             install upgrade or uninstall 
+
+             helm install springapp app/springapp /
+             helm upgrade springapp app/springapp  /
+             helm uninstall springapp
+             helm add repo  
+             kubectl apply app.yml       
+
+  Helm charts: are packaged kubernetes manifest files organised in a directory 
+  format that can be reused
+  
+  Helm repository: -- 
+      jar/ear/war, npm, python
+
+Helm 3 Architecture:
+helm 2 Architecture= 
+
+Install Helm 3
+--------------
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+ ./get_helm.sh
+
+-# Create deployment manifests (helm charts) for myapp
+mkdir app && cd app 
+helm create myapp 
+
+
+
+ubuntu@ip-10-0-0-24:~$ cat app/myapp/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "myapp.fullname" . }}
+  labels:
+    {{- include "myapp.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "myapp.selectorLabels" . | nindent 4 }}
+
+
+
+helm create myapp    = renders manifest files  
+helm install         =# will deploy applications
+helm uninstall       =# will undeploy applications
+helm upgrade   =# will rollout new versions deployments of applications
+helm ls    =# List deployments
+
+helm repo ls
+helm repo rm nginx
+helm search repo nginx  # searches number of deploys
+helm template nginx-stable/nginx-ingress    # review charts
+helm show values nginx/nginx-ingress   # show values/varaiables
+
+
+install nginx-ingress using helm:
+ https://kubernetes.github.io/ingress-nginx  
+  Add repository:
+     helm repo add nginx https://kubernetes.github.io/ingress-nginx  
+     helm repo add ingress https://kubernetes.github.io/ingress-nginx
+
+Helm repository:
+  https://artifacthub.io/
+
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+
+helm install metrics-server metrics-server/metrics-server 
+helm install metrics-server metrics-server/metrics-server -n kube-system  
+helm install metrics-server metrics-server/metrics-server -n dev    
+
+
+https://github.com/LandmakTechnology/helm-app23  
+
+helm repo add webapp https://landmaktechnology.github.io/helm-app23/
+helm repo update 
+
+helm to install and deploy:
+  P/G  
+  EFK  
+  Rancher    
+
+Dec 12, 2023   
+============
+
+
+
+
+
+
+
+
+
