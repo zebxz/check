@@ -12,7 +12,13 @@ dns resolution for my appl ... for external traffic our service type wil be node
 what else can we create? we can create loadbalancer(this a lbalancer service)... bt generally cl8ip is for cmmu within the cl8, whereas nodeport n lbalncer is gud for 
 external comm
 
-frm an infrastructure point of view we can place our lb in the public subnet n our node in private subnet, lb is nt free
+frm an infrastructure point of view we can place our lb in the public subnet n our node in private subnet, for (one appl to com to the other, it nids to go tru the service of 
+the appl) evrytin is runin in aws, lb is nt free , they are xpensive (for us to be able to keep our cost at the barest minimun we can deploy nginx ingress,we can create a new
+service in the cl8 called ngnix ingress
+
+when we create ngnix service for our appl we can now hv service of type cl8 ip service, that way all the service in the cl8 wil be a cl8 ip type for the appl to recive 
+external traffic we wil deploy an nginx ingress controller inside the cl8, on a node we can do a dployment called ngnix ingress so the pod is scheduled wil mg8 hw traffic is 
+routed to our backend appl, so as part of the deployment we are also creating a service for ngnix ingress controler
 
 running notes for nginx-ingress   
 
