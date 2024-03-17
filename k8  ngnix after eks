@@ -204,21 +204,27 @@ so if u create a service account the nxt thing is that we can create a role n ro
 
 role : we cud create a role ,this  role for example is expected to perform specific tasks, so  i create a role for my pod, deployment services, etc or 
 for my objects = pods/deployments/services/rs/ds/rc [ * ] ,, n if it is * its  means its for evrytin, all k8 objects bt if its for a particular obj like pod i create a role
-    verbs   = edit/delete/view/read  [*]                                                                                             for my pod 
-    apiGroups = [ v1 ]  [ * ]
-    namespace = role are applicable to a particular namespace
+n  whats the verbs   =  i can edit/delete/view/read  [*] , or it cud be  i can do evrything or anything                                                                                            for my pod 
+   for  apiGroups = [ v1 ]  [ * ],   e.g for pod, rc, services is v1, if i do *, it means the role is going to manage all d api grp category
+    namespace = role are applicable to a particular namespace , role is for a particular namespace .........41:15
 
-RoleBinding: 
+if u created a role, we can also bind that particular role to a subject
+RoleBinding: lets assume we created a role to mg8 deployment for e.g, once that role is assigned to a particular user that is called role binding n ro
    This is assigning/association the role to a subject 
    ServiceAccounts/Users/Groups/otherApplications\
 
-  ClusterRole:    
+41:11
+so if ur workin on securing ur cl8, u can also use cluster role n cl8 role binding
+
+  ClusterRole:    we cud create a role for 
     objects = pods/deployments/services/rs/ds/rc [ * ]
     verbs   = edit/delete/view/read  [*] 
     apiGroups = [ v1 ]  [ * ]
     ClusterRole are applicable to THE ENTIRE Cluster and all namespaces   
   ClusterRoleBinding: This is assigning/association the role to a subject 
     ServiceAccounts/Users/Groups/otherApplications
+
+############ we use this for k8 security, role n role binding,  cluster role n cluster role binding
 
 rolebinding.rbac
 clusterrole.rbac
