@@ -24,7 +24,7 @@ traffic to a particualr service, hellomyland.net these ar ingres rules, we creat
 our appl tru the appl service thye can type any of the alias we cretaed in the rule (these are Arecord wich v been created) n once that happens the traffic comes into the cl8
 the ingres service is a lbalncer service n as traffic is routed, it comes into the cl8 n its goin to be manged by the ingress lbalancer service whih wil immediately talk with
 the ngnix ingress controler pod bc the ingrss service is what is used to mg8 trafic into our ngnix ingress controller pod, the pod is workin with ingress rule, it identifies
-that the trafic dat was typed by users( any of the alias) has a backend wich is the service (heloSVC) of the appl (hello pod) , therfore once it gets into the cl8 the ingress
+that the trafic dat was typed by users( helomyland.net) has a backend wich is the service (heloSVC) of the appl (hello pod) , therfore once it gets into the cl8 the ingress
 controller wil route traffic to the helloSVC then to the hello pod.
 so with the use ngnix ingress we can route traffic to multiple backend appl, so ngnix ingres is deploying to us a layer 7 lbalancer.
 what will happen to the ngnix ingress CONTROLLER POD:
