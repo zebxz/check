@@ -30,18 +30,49 @@ so with the use ngnix ingress we can route traffic to multiple backend appl, so 
 what will happen to the ngnix ingress CONTROLLER POD:
 we are deploying the nginx ingress controler pod , it is deployed using the controler manger e.g deployment, deployemnt is used to ensure that the pod is up n running, if the
 replica goes down it is recreated, so inside the cl8 an ingress rule is created.
+20:10
+the ingress service cannot route trafic directly ot the hellopod bc  the ingres service only comm with the ingres conttroller pod 
 
-running notes for nginx-ingress   
 
-nginx-ingress contoller:
+
+******************************************  DEPLOYING NGNIX  INGRESS in our CL8   >>>>>>>>>>> 21:006
+nninx ingress can be easily deployed 
+IF YOU HAVE :
+ a kops cluster , that will be deployed seamlessly 
+
+
+he goes to github
+
+nginx-ingress contoller:    ( more info on ingress and steps  to setup ngnix)
 ==========================
 https://github.com/LandmakTechnology/nginx-ingress
 
+23:38                                                                                                                                                
+users > ingresSVC lb , it acts as d frontend therfore it provides additional layer of scurity n with it we can route traffic to multiple lb ie d diff app services:>  e.g
+        bc its a layer 7LBalancer.                                                                                                                ingress rules
+                                                                                                                                               helloSVC: hello.myland.net7
+                                                                                                                                               appSVC:app.mylandtech.net8
+                                                                            26:50                                                                   webSVC: web.mylandtech.net9
+                                                                            each of theses service hv their own endpoint e.g 7,8,9, 
+                                                                                       the endpoint is the number of pod replicas that are deployed
+                                                        we ar routing traffic to our backendappl using cluaterip  and btw clusterip n NOdeport, cluserip is the most secured
+         service in k8 bc it doe nt accept traffic outside the cl8, our cluster is vulnerable when it accepts external comm, external com is likely to mk our cl8 vulnerable
+       therfore clusterip increases our cl8 security, so introducing ngnix ingress, it hepls us to use a highly secured k8 discovry type which is clusterip.
 
-kind: Pod
-apiVersion: v1
+~######### in the ubuntu server
+kubectl get all
+we can see deployments done with loadbalancer service type
+now we wnt to use ngnix ingress and as such we dnt need loadbalancer service type again bc it wil be wastage of resources 
+so we can run kubectl edit svc springapp
+now inside the manifest file change the service type to ngnix                           ####### he tried it and it worked , lb to cluster   32: 20
+also if our service type was cllusterip, we can change it to loadbalancer or nodeport but if it was loadbalancer we cant change it to clusterip
+we can also change from nodeport to loadbalancer
+######## #############  to change service type we can also vi into the manifest file that we deployed
+
+kind: Pod                                                                                                                                      
+apiVersion: v1                                                                                                                                 
 metadata:
-  name: web
+  name: web                                                                                                                 
   labels:
     app: web  
 spec:
