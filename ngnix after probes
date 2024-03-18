@@ -18,7 +18,18 @@ service in the cl8 called ngnix ingress
 
 when we create ngnix service for our appl we can now hv service of type cl8 ip service, that way all the service in the cl8 wil be a cl8 ip type for the appl to recive 
 external traffic we wil deploy an nginx ingress controller inside the cl8, on a node we can do a dployment called ngnix ingress so the pod is scheduled wil mg8 hw traffic is 
-routed to our backend appl, so as part of the deployment we are also creating a service for ngnix ingress controler
+routed to our backend appl, so as part of the deployment we are also creating a service (ingressSVC )for ngnix ingress controler and the service will act as our frontend n 
+based on this service  we aer goin to create some ingress rules wich will state hw traffic can be routed, we say smt like  e.g if somebody type myland.net it wil route
+traffic to a particualr service, hellomyland.net these ar ingres rules, we create ingress rules like this,we v an ingress controller pod such that if an endusers try to acess
+our appl tru the appl service thye can type any of the alias we cretaed in the rule (these are Arecord wich v been created) n once that happens the traffic comes into the cl8
+the ingres service is a lbalncer service n as traffic is routed, it comes into the cl8 n its goin to be manged by the ingress lbalancer service whih wil immediately talk with
+the ngnix ingress controler pod bc the ingrss service is what is used to mg8 trafic into our ngnix ingress controller pod, the pod is workin with ingress rule, it identifies
+that the trafic dat was typed by users( any of the alias) has a backend wich is the service (heloSVC) of the appl (hello pod) , therfore once it gets into the cl8 the ingress
+controller wil route traffic to the helloSVC then to the hello pod.
+so with the use ngnix ingress we can route traffic to multiple backend appl, so ngnix ingres is deploying to us a layer 7 lbalancer.
+what will happen to the ngnix ingress CONTROLLER POD:
+we are deploying the nginx ingress controler pod , it is deployed using the controler manger e.g deployment, deployemnt is used to ensure that the pod is up n running, if the
+replica goes down it is recreated, so inside the cl8 an ingress rule is created.
 
 running notes for nginx-ingress   
 
