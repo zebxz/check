@@ -63,11 +63,50 @@ users > ingresSVC lb , it acts as d frontend therfore it provides additional lay
 kubectl get all
 we can see deployments done with loadbalancer service type
 now we wnt to use ngnix ingress and as such we dnt need loadbalancer service type again bc it wil be wastage of resources 
-so we can run kubectl edit svc springapp
+so we can run kubectl edit svc springapp                                                           and when we checked in aws console the lb has been deleted
 now inside the manifest file change the service type to ngnix                           ####### he tried it and it worked , lb to cluster   32: 20
 also if our service type was cllusterip, we can change it to loadbalancer or nodeport but if it was loadbalancer we cant change it to clusterip
 we can also change from nodeport to loadbalancer
-######## #############  to change service type we can also vi into the manifest file that we deployed
+######## #############  to change service type we can also vi into the manifest file that we deployed 
+
+
+********we are deploying the ngnix ingress controller using some yml file in the github account  .... ...........  34:47
+  1) clone
+    cd 
+2) namespace : the service account is for k8 security
+3)RBAC
+4) CREATE daemon set, we can deploy using a daemonset, k8 will cread a daemon controller on evry node or a deploy it using deployment , 
+so he ls and we saw: 
+common daemon-set deployment service
+if we wnat to use deployment, we just wnt to create a single pod:  kubectl apply -f deployment
+deployment.apps/nginx-ingress created
+5) check if the ngnix pod is running with the command
+when we run kubectl get po, we dnt see the pod bc its running on a specific namespce so we hv to specify the namespace
+kubectl get po -n nginx-ingress
+6)create loadbalancer service
+$ kubectl apply -f service/loadbalancer-aws-elb.yaml
+kubectl get svc -n nginx-ingress
+
+43:20 
+bc we hv nginx controller deployed, our service type will be clusterip
+he did a deployment using deployment as our choice k8 object, he said we can also use replica set but deployment is our choice k8 object
+kubectl appl -f jp.yml
+but it failed
+he realised thers was a resource quota he created in previous class 
+kubectl get resourcequota
+kubectl delete resourcequota test-ns-quota
+kubectl appl -f jp.yml
+created
+kubectl get deploy and we can see the pods running as desired
+############ 47:50
+creating a service
+bc we hv nginx controller whic is a k8 operator or what we call a k8 plugin or an add on that enhances the function an dthe security of k8,  so with it we are sure that 
+our cl8 wil be more secured so we cna take advantege of such a secured parameter 
+the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip
+
+
+
+
 
 kind: Pod                                                                                                                                      
 apiVersion: v1                                                                                                                                 
@@ -77,7 +116,7 @@ metadata:
     app: web  
 spec:
   containers:
-  - name: web
+  - name: webj
     image : mylandmarktech/hello
     ports:
     - containerPort: 80
@@ -93,6 +132,7 @@ spec:
   - port: 80
     targetPort: 80
 
+###################################
 ---
 kind: Pod
 apiVersion: v1
