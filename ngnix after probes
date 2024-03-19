@@ -102,7 +102,7 @@ kubectl get deploy and we can see the pods running as desired
 creating a service
 bc we hv nginx controller whic is a k8 operator or what we call a k8 plugin or an add on that enhances the function an dthe security of k8,  so with it we are sure that 
 our cl8 wil be more secured so we cna take advantege of such a secured parameter 
-the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip
+the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip and no NopePort numberkj7
 
 
 
@@ -128,7 +128,42 @@ selector:
       - containerPort:80
 
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+namespace: dev
+spec: 
+selector:
+ matchlabels:
+   app: webapp
+ template:
+   metadata:
+     name: webappod
+     labels:
+       app: webapp
+   spec:
+     containers:
+      name: javawebapp
+      image: mylandmarktech/java-web-app
+      ports:
+      - containerPort:80
 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webappsvc
+spec:
+  type:
+  selector:
+    app: javawebapp 
+  ports:
+  - port: 80
+    targetPort: 80
+
+
+#########################################################
 
 kind: Pod                                                                                                                                      
 apiVersion: v1                                                                                                                                 
