@@ -265,46 +265,62 @@ so with the help of ingres we are able to access our appl and we are able to use
 ******* ********** we hv deployed using host based routing
 we can also deploy using path based routingand in this case we will just have one hostname with diff path like 
 while creating ingress
+vi ingress2.yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: apps-ingress-rule
+  name: ingress2              ***i can enter a namespace if i want bt am nt entering any name space for now
 spec:
   ingressClassName: nginx
   rules:
-  - host: springapp.mylandmarktech.net
+  - host: mylandmarktech.net           ******lets assume this is my host
     http:
       paths:
       - pathType: Prefix
-        path: "/"           ****this is the root path, http
+        path: "/"           ****this is the root path,  cud be linking me to helloservice
         backend:
           service:
-            name: springapp
+            name: hellosvc
             port:
               number: 80
-  - host: hello.mylandmarktech.net
-    http:
-      paths:
       - pathType: Prefix
-        path: "/"               ****this is the root path, http
+        path: "/java-web-app"               
         backend:
           service:
-            name: hostsvc 
-            port:
-              number: 80
-  - host: web.mylandmarktech.net
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/java-web-app"             
-        backend:
-          service:
-            name: webappsvc
+            name: webappsvc 
             port:
               number: 80
 
+**********this ingress2 is routing traffic to 2backned service but it can alos route traffic to more 
+lets add one more 
+
+- pathType: Prefix
+        path: "/tesla"               *we hv an appl /taela   
+        backend:
+          service:
+            name: teslasvc            so this routing trffic to my tesla app
+            port:                         lets jst add this even though we dnt hv the service yet
+              number: 80
 
 
+deploying
+kubectl apply -f ingress-resource.yml
+
+lets describe ingress
+kubectl  get ingres
+NAME                      CLASS             HOSTS
+DDRESS       PORTS         AGE                                                     **********this is host base routing so it has multiple hostooooooooooo 
+apps-ingress-rule          nginx             springapp.mylanmarktech.net,hello.myland,arktech.net,web.mylandmarktech.net      
+              80          10m
+ingress2                  nginx               mylandmarktech.net             **********we hv jst one host bc its path based routing 
+             80            23s
+
+
+************ if we type mylandmarktech.net in google we dnt get any response bc we hv nt created the record set to establaish the response
+in aws we are using a dns service which is route53, in route53 w ehv to create A record set wherewe will state that my landmark tech is being forwarded to the loadbalancer
+so lets go bk to aws
+
+9:44
 #########################################################
 
 kind: Pod                                                                                                                                      
