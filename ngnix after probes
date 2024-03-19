@@ -102,24 +102,25 @@ kubectl get deploy and we can see the pods running as desired
 creating a service
 bc we hv nginx controller whic is a k8 operator or what we call a k8 plugin or an add on that enhances the function an dthe security of k8,  so with it we are sure that 
 our cl8 wil be more secured so we cna take advantege of such a secured parameter 
-the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip and no NopePort numberkj7
+the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip and no NopePort number as wud hv been d csae if 
+it was NodePort service
 
 
 
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment      ........... deployment for hello
 metadata:
   name: hello
 namespace: dev
 spec: 2replicas
 selector:
  matchlabels:
-   app: webapp
+   app: hello
  template:
    metadata:
      name: hello
      labels:
-       app: webapp
+       app: hello
    spec:
      containers:
       name: hello
@@ -129,7 +130,7 @@ selector:
 
 
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment           .............  for webapp
 metadata:
   name: webapp
 namespace: dev
@@ -150,17 +151,158 @@ selector:
       - containerPort:80
 
 
-apiVersion: v1
+apiVersion: v1         .........service for webapp
 kind: Service
 metadata:
   name: webappsvc
 spec:
-  type:
+  type: ClusterIP
   selector:
-    app: javawebapp 
+    app: webapp 
   ports:
   - port: 80
+    targetPort: 8080
+
+apiVersion: v1         .........service for hello
+kind: Service
+metadata:
+  name: hellosvc
+spec:
+  type: Clusterip
+  selector:
+    app: hello
+  ports:
+  - port: 80           ......service port
     targetPort: 80
+____________________  __
+
+kubectl get svc 
+we can see all our service are of type clusterIP and its more secured service discovery option
+kubectl get po --show-labels 
+we can see our pods and their labels
+
+
+55:36
+############ CREATING INGRESS RULE  ...........  continuing with our ingress installation script
+7) we can use hostbased routing or path based routing
+
+in aws  we see a LBalancer was deployed in uS West1, where our eks cluster is running     .....  .......  56:10
+since i hv this lb, i wil go to the dns service, aws route53, 
+creating record set , A record
+its an alias to an appl lb
+if u type this, its routed to .....> this service
+springapp.mylandmarktech.net ... >  springapp
+web.mylandmarktech.net   .........> webappsvc
+hello.mylnadmark .........> hellosvc
+
+.........now we will create an ingress rule to achieve this
+vi ingress-resource.yml
+***************** created using hostbased routing
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress-rule
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: springapp.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"           ****this is the root path, http
+        backend:
+          service:
+            name: springapp
+            port:
+              number: 80
+  - host: hello.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"               ****this is the root path, http
+        backend:
+          service:
+            name: hostsvc 
+            port:
+              number: 80
+  - host: web.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/java-web-app"             *******dnt knw why we are using this  ??????????????????????????????????????????????????????
+        backend:
+          service:
+            name: webappsvc
+            port:
+              number: 80
+
+
+before wwe deploy this lets run
+kubectl get ingress
+none
+kubectl apply -f ingress-resource.yml
+ingress ruke created
+and wwe hvae this ingress here
+lets describe the ingress , its called app ingress  rule
+kubectl describe ingress apps-ingress-rule
+we can see the host and the backend app its routing traffic to 
+host                                     path backends                the backendpoints
+springapp.mylandmarktech.net              /   springapp:80 )10.10.0.122:8080,10.10.1.148:8080,10.10.1.235:8080)
+                                                    this springapp service has 3 endpoints
+hello.mylandmarktech.net
+web.mylandmarktech.net
+
+************* so if we wnat to access this application, lets find out if evrytin has been deployed as expected
+
+we type this in google and we can access the database
+springapp.mylandmarktech.net
+hello.mylandmarktech.net/java-web-app         ??????????? i dnt knw why this has a java-web-app path
+
+we see that ingress is working
+so with the help of ingres we are able to access our appl and we are able to use the most secured service discovery option in k8 which is clusterip service
+
+******* ********** we hv deployed using host based routing
+we can also deploy using path based routingand in this case we will just have one hostname with diff path like 
+while creating ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress-rule
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: springapp.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"           ****this is the root path, http
+        backend:
+          service:
+            name: springapp
+            port:
+              number: 80
+  - host: hello.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"               ****this is the root path, http
+        backend:
+          service:
+            name: hostsvc 
+            port:
+              number: 80
+  - host: web.mylandmarktech.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/java-web-app"             
+        backend:
+          service:
+            name: webappsvc
+            port:
+              number: 80
+
 
 
 #########################################################
