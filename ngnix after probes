@@ -106,6 +106,28 @@ the type of service we will create is  clusterip and as such i can decide to wri
 
 
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+namespace: dev
+spec: 2replicas
+selector:
+ matchlabels:
+   app: webapp
+ template:
+   metadata:
+     name: hello
+     labels:
+       app: webapp
+   spec:
+     containers:
+      name: hello
+      image: mylandmarktech/hello
+      ports:
+      - containerPort:80
+
+
 
 
 kind: Pod                                                                                                                                      
@@ -236,6 +258,12 @@ kubectl edit svc springappsvc
 kubectl apply/create/run/edit/get/describe/delete/logs/exec/epose/show/rollout/scale  
 
 curl 34.219.47.255:31335
+
+
+
+
+ 
+---
 
 
 
