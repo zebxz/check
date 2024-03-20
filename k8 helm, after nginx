@@ -273,11 +273,22 @@ this is helm for you
 so with thw use of helm, we hv created our own custom chatr
 so we can cfeate our chart with relative ease
 
-
+###########################
+ubuntu@ip-10-0-0-24:~$ ls app/myapp
+chart.yaml charts templates values.yaml
+ubuntu@ip-10-0-0-24:~$
+ubuntu@ip-10-0-0-24:~$ ls app/myapp/templates/       ******************inside this deployment let us check how this deloyment.yaml file is
+NOTES.txt _helpers.tpl deployment.yaml ingress.yaml service.yaml serviceaccount.yaml tests
+ubuntu@ip-10-0-0-24:~$
+ubuntu@ip-10-0-0-24:~$ ls app/myapp/templates/deployment.yaml           *************inside this deployment let us check how this deloyment.yaml file is
+this is making reference like the name of the deployment includ myapp.fullname
+so these are variable, the labels 
+and the variables are defined in the values.yaml file
+so evrythin is making use of variables
 ubuntu@ip-10-0-0-24:~$ cat app/myapp/templates/service.yaml
-apiVersion: v1
-kind: Service
-metadata:
+apiVersion: v1                        
+kind: Service                            
+metadata:                                     *******************this is hw variables are passed, soif u want to assign varaible is smt like this
   name: {{ include "myapp.fullname" . }}
   labels:
     {{- include "myapp.labels" . | nindent 4 }}
@@ -292,24 +303,33 @@ spec:
     {{- include "myapp.selectorLabels" . | nindent 4 }}
 
 
+ubuntu@ip-10-0-0-24:~$ ls app/myapp/templates                             
+NOTES.txt _helpers.tpl deployment.yaml ingress.yaml service.yaml serviceaccount.yaml tests
+                                                  
+                                                                          ***********we hv now all our chart, now we can push this chart to a kind of remote repository 
+                                                                                                for helm and now use that chart oin the future to deploy appl
 
+
+
+helm commands:
 helm create myapp    = renders manifest files  
 helm install         =# will deploy applications
 helm uninstall       =# will undeploy applications
 helm upgrade   =# will rollout new versions deployments of applications
 helm ls    =# List deployments
 
-helm repo ls
+helm repo ls                            ************to show our helm repositories
 helm repo rm nginx
 helm search repo nginx  # searches number of deploys
 helm template nginx-stable/nginx-ingress    # review charts
 helm show values nginx/nginx-ingress   # show values/varaiables
 
 
+############################### lets assume we hv a task to install nginx ingress using helm , can that be done ...?? yes
 install nginx-ingress using helm:
- https://kubernetes.github.io/ingress-nginx  
+ https://kubernetes.github.io/ingress-nginx              ************this is the repository wher d nginx ingress chartt are found wich we can use to deploy appls
   Add repository:
-     helm repo add nginx https://kubernetes.github.io/ingress-nginx  
+     helm repo add nginx https://kubernetes.github.io/ingress-nginx         ***********can be added with this command: we can run helm repo add nginx or any name at all
      helm repo add ingress https://kubernetes.github.io/ingress-nginx
 
 Helm repository:
