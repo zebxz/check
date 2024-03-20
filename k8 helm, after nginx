@@ -250,8 +250,28 @@ deployed
 ubuntu@ip-10-0-0-24:~$ kubectl get svc
 we see the service we created
 we can access the appl using the loadbalancer service but its nt secured discovery option
-
-so we go to 
+we wnat to upgarde thi sdeployment and change the service to clusterip and also the image version to v2
+so we check dockerhub where our containerized images are found if we hv v2 bc k8 is simply manging containerized app ,so we use docker to conatinerized n k8 to mg8 d 
+container
+but we dnt hv v2 just 2
+so we cahnge the tag to 2
+so ww are deploying now with the version2 and clusterip
+ubuntu@ip-10-0-0-24:~$  helm upgrade app app/myapp/
+upgraded
+ubuntu@ip-10-0-0-24:~$ kubectl apply -f ingress-resource.yml
+it has been reconfigured
+ubuntu@ip-10-0-0-24:~$ kubectl get svc 
+the service type has changed
+ubuntu@ip-10-0-0-24:~$ kubectl get ingress
+isee my ingress rule
+ubuntu@ip-10-0-0-24:~$ kubectl describe ingress appas-ingress-rule
+we see its routin traffic to the backend pods
+but we unable to access the appl bc the Arecord has not be created
+SO in route53, we create the record
+after wich we can accses it online, traffic ias been routed as expected
+this is helm for you
+so with thw use of helm, we hv created our own custom chatr
+so we can cfeate our chart with relative ease
 
 
 ubuntu@ip-10-0-0-24:~$ cat app/myapp/templates/service.yaml
