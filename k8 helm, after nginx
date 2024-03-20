@@ -1,20 +1,23 @@
 
-Helm:
+Helm:                   ...... CAN GO TRU THE POWERPOINT SLIDE
   Helm is a package manager for Kubernetes applications.
 Helm will ease the process of managing hw appl are deployed in our cl8
 with the use of helm we can deploy diff appl in k8, remember if u wnt to deploy an appl in k8 most of the time like our spring app deployment, what was needed
 to deploy our spring app????????? now we hv a stateless appl , 
 We deploy workloads in kubernetes using kubernetes objects declared in manifests files:
- e.g we deloyed a  springapp Stateless web application:
+ e.g we deloyed a springapp Stateless web application: and how many objects were involved?
+we had to write a manifest file for :
      deployment
      service 
      ingress 
-     hpa 
+     hpa       atimes we also need this 
      secrets  
      configmaps 
+all these was for one appl deployment
+and in addition to this we are also deploying a stateful appl
 
-   mongodb Stateful database application:
-     deployment/ and 
+   mongodb Stateful database application: and for us to deploy this app, we nid smt like this either we ar using
+     deployment/ and or what else can we use with deployment
      service 
      ingress 
      hpa 
@@ -24,7 +27,41 @@ We deploy workloads in kubernetes using kubernetes objects declared in manifests
      persistentvolumeclaims 
      StatefulSets
 
-  Custom applications: 
+so all of this obj need to be written, we nid to write manifest file for all of this
+and this is too much job but with the help of helm, it eases n simplifies the deployment of workload in k8
+
+  Helm eases/simplifies the deployment of workloads in kubernetes   
+when we did maven if u want to instal maven in ur cl8???
+we cud wget , we nid wget so we hv to install it as well as the following, and all this was a lot of job to install maven alone
+
+OPTION1:
+  maven Installation1:  
+    yum install openjdk14+      ******the preriquisite
+    yum install wget unzip  
+    wget  https://maven.zip 
+    unzip maven.zip 
+    create maven homeDir and environments variables   
+---
+  ***********************  you can use a MAVEN INSTALLAION SCRIPT to install all of this components  ...........
+maven installation in ubuntu/redhatOS server:
+  maven-install.sh  
+  sudo yum install wget unzip -y 
+  sudo yum install openjdk1.18  
+  cd /opt   
+  sudo wget https://dlcdn.apache.org/maven/maven-4/4.0.0-alpha-4/binaries/apache-maven-4.0.0-alpha-4-bin.zip
+  unzip apache-maven-4.0.0-alpha-4-bin.zip
+  mv apache-maven-4.0.0-alpha-4-bin.zip/ maven/ 
+  chmod -R 777 maven  
+
+OPTION2:    ****************************USING A PACKAGE MANAGER
+ maven Installation2: 
+    yum install maven -y   
+
+************ in this case option2 is preferred as its simplified SO we dnt nid all of the manifest file of option1 to accomplish this installaton deployment
+so similarly when it come sto amven we can deploy appl in k8 using helm
+
+*****************WITH THE HELP OF MANIFEST FILE , WE have deployed some:
+Custom applications: these are appl developed by our developers, our team of developers hv developed this appl
     springapp  
     java-web-app  
     maven-web-app 
@@ -42,67 +79,69 @@ We deploy workloads in kubernetes using kubernetes objects declared in manifests
       calico 
       Flannel  
     nginx-ingress 
-    RBAC:
+    RBAC: services in k8
       clusterrole and clusterrolebinding   
       Role  and RoleBinding  
       serviceaccount
 
-Helm eases/simplifies the deployment of workloads in kubernetes   
+################################################# ALL OF THESE involves manifest files
 
-  maven Installation1:  
-    yum install openjdk14+  
-    yum install wget unzip  
-    wget  https://maven.zip 
-    unzip maven.zip 
-    create maven homeDir and environments variables   
----
-maven installation in ubuntu/redhatOS server:
-  maven-install.sh  
-  sudo yum install wget unzip -y 
-  sudo yum install openjdk1.18  
-  cd /opt   
-  sudo wget https://dlcdn.apache.org/maven/maven-4/4.0.0-alpha-4/binaries/apache-maven-4.0.0-alpha-4-bin.zip
-  unzip apache-maven-4.0.0-alpha-4-bin.zip
-  mv apache-maven-4.0.0-alpha-4-bin.zip/ maven/ 
-  chmod -R 777 maven  
+                  HOW CAN WE SIMPLIFY THE PROCESS OF DEPLOYMENT IN K8
+We can simplify the process of deployment in k8 using  helm as a package manger
 
-
- maven Installation2: 
-    yum install maven -y   
-
+DIFF PACKAGE MANAGERS:
 we use package managers to install packages:
-  apt /  = package manager for ubuntu/debian
-  yum /  = package manager for redhatOS/centOS  
-  dnf /  = package manager for redhatOS/centOS 
-  rpm /  = package manager for redhat 
-  deb /  = 
-  choco / = package manager for windows OS
+  apt /  FOR  = package manager for ubuntu/debian
+  yum /   FOR = package manager for redhatOS/centOS  
+  dnf /  FOR  = package manager for redhatOS/centOS 
+  rpm /  FOR = package manager for redhat 
+  deb /      = 
+  choco /  FOR = package manager for windows OS
   pip-python-pip = package manager FOR PYTHON  
   brew = package manager for macOS  
-
+WE also have :
 Helm is a package manager for kubernetes.
 
 Helm concepts:
   Helm cli: = It's a command line interface used to work with packages to 
              install upgrade or uninstall 
 
-             helm install springapp app/springapp /
-             helm upgrade springapp app/springapp  /
+         e.g you can run               
+           helm install springapp app/springapp /     (he said that this is helm chart :app/springapp 
+             helm upgrade springapp app/springapp  /     ..... to upgrade to version of ur appl
              helm uninstall springapp
-             helm add repo  
+             helm add repo    ********* to add a helm repository in nexus or other locations
              kubectl apply app.yml       
 
   Helm charts: are packaged kubernetes manifest files organised in a directory 
   format that can be reused
-  
+  helm charts are stored in helm repository and frm der we can pull the helm chart n deploy our appl in mutiple env
+so we can create a helm repository n these helm charts are like artifacts n we can store them in repository like nexus as well as github pages
+it has a cli wich we can equally use to run helm commands :helm add repo 
   Helm repository: -- 
       jar/ear/war, npm, python
+
+############################################### HELM ARCHITECTURE ............
 
 Helm 3 Architecture:
 helm 2 Architecture= 
 
-Install Helm 3
+Install Helm 3                   .............17:52
 --------------
+
+E.G
+Lets cal it a k8 client server , frm this serverv we can mk api calls like kubectl -apply, one we mk the call we are authenticated n ibside my cl8 w ev master &worker node
+so once we mk the call, we need to be uathenticated, on th emaster  node the api authenticates u, it enusre u are authoirzed to mk such call, n the authentication allows
+you to have tha kube config file, so the file is authenticating you thta yes u are permitted to mk the api call .. 
+similarly w ecan execute commands like : 
+helm install , onec this is done the same kube config file wil authenticate u but it will depend on the helm architecture, if u were appl helm helm some 4yrs ago since you hv 
+multiple years of experience ,
+for helm 2 architecture :for the api call  to be made (ie comm with your cl8) we nid to install an agent called tiller, it nids to be 
+deployed in your cl8,, if its nt ders no way u can execute  the helm commands 
+**********for helm3 architechure, we no longer need any agent
+so the architecture3 is preferred bc we hv less job, no nid to install an agaent
+
+
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
  ./get_helm.sh
