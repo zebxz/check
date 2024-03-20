@@ -141,14 +141,93 @@ deployed in your cl8,, if its nt ders no way u can execute  the helm commands
 **********for helm3 architechure, we no longer need any agent
 so the architecture3 is preferred bc we hv less job, no nid to install an agaent
 
+************WE ARE GOING TO BE USING HELM TO DEPLOY A LOT OF APPL IN OUR env
+we just deployed nginx  using a lot of manifest files, 
 
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-chmod 700 get_helm.sh
- ./get_helm.sh
+##########################################  helm installation script   ... helm3
 
+************.................   need to have just one cl8 running going forward ........................... 24:30
+we wil download helm  software
+change the permission and
+run the script
+
+vi helm3.sh and paste the 3line script
+or just run it one by one
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3               .... to download helm
+chmod 700 get_helm.sh            ........... change permission
+ ./get_helm.sh                      ...................install helm
+
+
+we can run helm 
+to seee the diff helm commands
+
+so we can create our own chart to deploy our appll using th ehelm create command
+before we create we need to install the tree command 
+to check if tree is already instaled: tree
+sudo apt instal tree
+
+
+instead of writing our files for myapp
+we want to create them
 -# Create deployment manifests (helm charts) for myapp
 mkdir app && cd app 
 helm create myapp 
+run tree 
+we see the number of files that were created
+4dirs  and 10files
+so all the resources need we can find them in this dir
+
+e.g          when u craete ur manifest file it comes iwth          ............ check powerpoint
+javawebapp
+     Chart.yaml      this includes #METADATA : this is data abt data... tells you what u are going to be accomplishing, some inf , explanation etc
+     charts  #dir           .... manually managed dependencies
+     templates  #dir
+        deployment.yaml
+        hpa.yaml
+        ingress.yaml
+        service.yaml
+        serviceaccount.yaml
+        tests
+           test-connection.yaml
+   values.yaml                ************************what is very imp here i sthis file bc this contains default values.. whtaever uwnt to create i sdefined in this file
+
+lets check the template thats in this chart: the templete is 
+ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
+based on what we hv for the template these are going to be created
+it wil create a service acount for u
+evrytin defined 
+this is a manifest file
+it wil create a service
+we can seeits created the default service type : clusterip
+its cereatinga deployment for ur appl 
+and here is the pod template for the dpeloyment
+*************this template depend son the values , so we can also run the command helm show values 
+
+ubuntu@ip-10-0-0-24:~$ helm show values myapp/
+i wnat to see the default value for my app
+these are the default values
+our replica is 1
+my image is nginx 
+but i can also change all this inf
+i wil go to the values files, vi into it and cahnge it 
+ubuntu@ip-10-0-0-24:~$  vi myapp/values.yaml
+now if am deployin an appl and the image is coming frm a private repo, i wil hv to run image pull secret, i wil enter it here
+we dnt nid a service account for this deployment so i can change true to  false
+service type can also be changed frm clusterip to nodeport n viceversa
+am i creating an ingress, by default it says false , am nt creatin an ingress
+am i autoscaling my pod , i can change false to true bt i wont do it ofr now
+discolarations
+tolorations      
+affimity
+     we can pass all these values here
+***************these become sour default values
+
+ubuntu@ip-10-0-0-24:~$  helm template myapp 
+now we see the changes i effected in the values file
+
+############# i am creating helmchart from my own  custom appl, once this is done
+ubuntu@ip-10-0-0-24:~$  ls
+myapp
 
 
 
