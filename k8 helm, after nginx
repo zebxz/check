@@ -330,7 +330,34 @@ install nginx-ingress using helm:
  https://kubernetes.github.io/ingress-nginx              ************this is the repository wher d nginx ingress chartt are found wich we can use to deploy appls
   Add repository:
      helm repo add nginx https://kubernetes.github.io/ingress-nginx         ***********can be added with this command: we can run helm repo add nginx or any name at all
-     helm repo add ingress https://kubernetes.github.io/ingress-nginx
+     helm repo add ingress https://kubernetes.github.io/ingress-nginx          
+
+                                                                            55:54
+ubuntu@ip-10-0-0-24:~$ helm repo add nginx https://kubernetes.github.io/ingress-nginx
+ubuntu@ip-10-0-0-24:~$ helm repo ls
+ubuntu@ip-10-0-0-24:~$ helm search repo ngnix           *************to check the chart that are in the repository
+we can see the ngnix/ingress- nginx chart as well as the version
+i can check the template to knw how the files were written
+ubuntu@ip-10-0-0-24:~$ helm show values 
+we can see the value files for the nginx ingress
+if u ae going to deploy nginx this is the values file
+we can sue the value file to deploy the appl as expected
+ubuntu@ip-10-0-0-24:~$ helm template nginx/ingress-nginx
+we can see the diff objs that will be created
+service account is being created
+config map
+clusterrole for nginx ingres
+role binding
+service of type clusterip
+deployment for ngnix ingress controller
+all the objs need ed is being created
+evrything needed is being deployed
+at the moment we hv nginx ingress already deployed in our env
+ubuntu@ip-10-0-0-24:~$    kubectl get ns 
+
+........................59: 41
+
+
 
 Helm repository:
   https://artifacthub.io/
