@@ -1,3 +1,5 @@
+INGRESS INSTALLATION, INGRESS RULES (HOST BASE AND PATH BASED ROUTING)
+
 he said der was ngnix in the k814 video on probes but i dnt think so 
 helm   
 nginx-ingress1
@@ -197,7 +199,8 @@ hello.mylnadmark .........> hellosvc
 
 .........now we will create an ingress rule to achieve this
 vi ingress-resource.yml
-***************** created using hostbased routing
+
+*****************################################################ created using HOSTBASED ROUTING
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -263,6 +266,12 @@ we see that ingress is working
 so with the help of ingres we are able to access our appl and we are able to use the most secured service discovery option in k8 which is clusterip service
 
 ******* ********** ******** we hv deployed using host based routing
+
+
+
+
+##############################################  DEPLOYING USING PATH BASED
+
 we can also deploy using path based routingand in this case we will just have one hostname with diff path like 
 while creating ingress
 vi ingress2.yml
