@@ -381,7 +381,41 @@ kubectl delete ns nginx-ingress       ...................1:06:00
 deleted ,,,,,, 
 helm install nginx nginx/nginx-ingress 
   ******************************error continued       1:06:40
-so he cd into nginx
+so he cd into nginx  **********************************************bt couldnt rectify it  so he continued to explain1:11:16
+i wanted to illustrate hw we can use helm for this purpose bt one of trhe tins i had wanted to xplain in the class today 
+is the fact that we are going be using helm to look at other concept in k8 , 
+
+we are goin to ne using helm to install 
+helm to install and deploy:
+  P/G  
+  EFK  
+  Rancher    
+we cud als use helm to deploy our metrix server
+so we hv a helm repository for metrix server, we cud do the same for, i already hv metric server deployed
+so we cud do the helm add metrix server andwe can  deploy the  metrix server in our cl8 using helm
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+
+helm install metrics-server metrics-server/metrics-server 
+helm install metrics-server metrics-server/metrics-server -n kube-system  
+helm install metrics-server metrics-server/metrics-server -n dev    
+
+am going to check on this nginx ingress bt again
+################ we hv already deployed nginx ingress and we hv seen hw it shud wrk seamlessly
+***************** so pls tk note its very imp 
+########### we will also discuss RANCher as well to see hw wwe can use it to visualize and access our cl8
+
+in the pas we hv created our own nchart for one of our appl
+we hv an appl that we hv created nchart for, the appl is found in this github repository so if u want to see this chart
+the chart are found in our github repository  
+https://github.com/LandmakTechnology/helm-app23  
+*******we can use the nchatr to deploy appl in our repository by jst adding this chart once we add d repo we can also update it
+helm repo add webapp https://landmaktechnology.github.io/helm-app23/
+helm repo update 
+
+******************this is now for a custom appl
+after the adding , we see we hv a chart called webapp
+****************** so we can run helm search repo webapp   ........ (the repo we added is webapp)
+
 
 
 
@@ -409,22 +443,10 @@ so he cd into nginx
 Helm repository:
   https://artifacthub.io/
 
-helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
-
-helm install metrics-server metrics-server/metrics-server 
-helm install metrics-server metrics-server/metrics-server -n kube-system  
-helm install metrics-server metrics-server/metrics-server -n dev    
 
 
-https://github.com/LandmakTechnology/helm-app23  
 
-helm repo add webapp https://landmaktechnology.github.io/helm-app23/
-helm repo update 
 
-helm to install and deploy:
-  P/G  
-  EFK  
-  Rancher    
 
 Dec 12, 2023   
 ============
