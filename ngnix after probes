@@ -43,7 +43,7 @@ IF YOU HAVE :
 
 he goes to github
 
-nginx-ingress contoller:    ( more info on ingress and steps  to setup ngnix)
+nginx-ingress contoller:    ( more info on ingress and steps  to setup ngnix in the link below) evrythin was deployed frm the github account
 ==========================
 https://github.com/LandmakTechnology/nginx-ingress
 
@@ -262,7 +262,7 @@ hello.mylandmarktech.net/java-web-app         ??????????? i dnt knw why this has
 we see that ingress is working
 so with the help of ingres we are able to access our appl and we are able to use the most secured service discovery option in k8 which is clusterip service
 
-******* ********** we hv deployed using host based routing
+******* ********** ******** we hv deployed using host based routing
 we can also deploy using path based routingand in this case we will just have one hostname with diff path like 
 while creating ingress
 vi ingress2.yml
@@ -315,114 +315,19 @@ apps-ingress-rule          nginx             springapp.mylanmarktech.net,hello.m
 ingress2                  nginx               mylandmarktech.net             **********we hv jst one host bc its path based routing 
              80            23s
 
-
+1:18:00
 ************ if we type mylandmarktech.net in google we dnt get any response bc we hv nt created the record set to establaish the response
 in aws we are using a dns service which is route53, in route53 w ehv to create A record set wherewe will state that my landmark tech is being forwarded to the loadbalancer
-so lets go bk to aws
+so lets go bk to aws and create the record set
 
-9:44
+502 error is server error , 502 error its called server site
+
+
 #########################################################
 
-kind: Pod                                                                                                                                      
-apiVersion: v1                                                                                                                                 
-metadata:
-  name: web                                                                                                                 
-  labels:
-    app: web  
-spec:
-  containers:
-  - name: webj
-    image : mylandmarktech/hello
-    ports:
-    - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: websvc
-spec:
-  selector:
-    app: app   
-  ports:
-  - port: 80
-    targetPort: 80
-
-###################################
----
-kind: Pod
-apiVersion: v1
-metadata:
-  name: webapp   
-  labels:
-    app: webapp     
-spec:
-  containers:
-  - name: web
-    image : mylandmarktech/java-web-app  
-    ports:
-    - containerPort: 8080  
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: webappsvc
-spec:
-  selector:
-    app: webapp   
-  ports:
-  - port: 80
-    targetPort: 8080 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: webapp-ingress-rule
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: mylandmarktech.net
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: springappsvc
-            port:
-              number: 80
-  - host: hello.mylandmarktech.net
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: websvc 
-            port:
-              number: 80
-  - host: web.mylandmarktech.net
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: webappsvc
-            port:
-              number: 80
 
 
 
-
-apiVersion: v1  
-kind: Pod 
-metadata:
-  name: app  
-  namespace: dev  
-  labels:  
-    app: fe  
-    name: paul  
-spec:  
 
 kubernetes 13--AUGUST 13, 2023
 ResourceQuota,   
