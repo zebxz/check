@@ -353,9 +353,56 @@ deployment for ngnix ingress controller
 all the objs need ed is being created
 evrything needed is being deployed
 at the moment we hv nginx ingress already deployed in our env
-ubuntu@ip-10-0-0-24:~$    kubectl get ns 
+ubuntu@ip-10-0-0-24:~$    kubectl get ns      .....................59: 41
+we had created a ns called nginx ingress b4 the ns was used to deploy oour appl
+kubectl get all -n nginx ingress       ................... we had earlier deployes an ngnix  before using manifest file we can now use n chart
+evrything is fine
+***we can delete all the objests here
+kubectlt delete all -all -n nginx-ingress
+service ngnix ingress deleted
+################  we hv deleted our nginx ingress controller pod  so at this time the nginc controller pod is nt running bt are we able to
+achieve this routing wit the absence of the controller pod, even if we hv this hostname created ?  we CAN NOT . bc the pod is gone ,
+the LB service is gone the deployment is gone,in the nginx ingress NS everytin is gone, bt we are able to use nchart for this deployment
+helm repo ls
+helm repo rm nginx
+we del;eted the ngnix repo we cretaed 
+now let add another  repository, we hv some other chart to deploy nginx
+helm repo add nginx://helm.nginx.com/stable
+nginx has been added to your repository
+helm search repo nginx
+we hv a good number of manifesty file like nginx
+we can also update this repo 
+helm update repo
+this wil get trhe latest version
+*************i want to deploy nginx ingress n i want too use n chart 
+helm install nginx nginx/nginx-ingress
+error , ns alreaDY EXIST 
+kubectl delete ns nginx-ingress       ...................1:06:00
+deleted ,,,,,, 
+helm install nginx nginx/nginx-ingress 
+  ******************************error continued       1:06:40
+so he cd into nginx
 
-........................59: 41
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
