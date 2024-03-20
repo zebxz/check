@@ -1,3 +1,5 @@
+HELM ,  HELM ARCHITECTURE
+
 
 Helm:                   ...... CAN GO TRU THE POWERPOINT SLIDE
   Helm is a package manager for Kubernetes applications.
@@ -444,6 +446,48 @@ am goin to revisit this in our nxt class pls
 but the main tin to master is that we are using helm as a packege manager ofr k8
 when u use helm it wil create the manifest file and render the maanifest files n once the manifest file are rendered
 u can deploy appl with relative ease
+
+
+ .................................questtion
+1) i installed the EKS Ctl tool 
+with the EKS ctl tool, i created a 2nd cl8 with the EKS ctl create 
+i use the eks ctl delete cl8 to delete the cl8 bt the the one the GUI i use EKS ctl to deletete the cl8 also , i wanst able to delete
+it bt it did delete the node grp and i was wondering why it didnt delete the cl8 bt the node
+
+ANS:
+EKS has what is called EKS ctl 
+EKS CTL Is a comand line utility for EKS, elastic kubernetes service
+u can actually create ur cl8 by running eks ctl create cl8 or aws create cl8 , any one
+n if ur trying to delete the cl8 using command, most of the time u must first delete the cl8 dependency like node grp
+so if a node grp was created in that cl8, u must first delete the node grp , delete the de[pendency before deleting the cl8
+
+2) WHAT IS THE BESTS TOOL WE CAN SUE TO MANAGE OUR CL8
+
+ANS:      it all depends 
+maybe u want to ask hw we can best deploy our cl8
+............u can deploy ur EKS cl8 using terraform scipt, u can use commands to deploy your EKS ie rather than going to the console 
+u can jst run on the CLI , aws  EKS create cl8 ( the name of the cl8) that wi;l create it or eks ctl create cl8 bt u nid to ensure 
+that your EKS command line utility has aklready been installed 
+so u can use :
+commaNd
+console 
+terraform
+once u do that u can now proceed to deploy appl bc ur main task is appl deployment
+most time at wrk u are goinmg to join a coy that already has running cl8 , it cud be EKS cl8, kubeabm cl8, kops cl8
+once the cl8 is already existing all u nid is to use the cl8 to deploy appl, so main task now is appl deployment bc u wrk in an env 
+with existing cl8 already , so u are goin to be worried abt u appl are ruuing that are installed and exposed , u hv vol installed and all of that.
+
+
+3) DIFF bTW helm and aws EKS 
+k8 comes wit  a cl8 the cl8 cud be EKS cl8, kubeabm cl8, kops cl8, now once u aleady hv a cl8 u nid to be able to deploy wrk load in the cl8
+the question now becomes how can i deploy workload ????  for u to be albe to deploy a work in my cl8, u id a command line utility called kubectl
+u cud aslo us the GUI to deploy apkl , tahts what u nid for deployment, now aprt from using kubectl only we hv a package manager  we can use
+to deploy called helm and helm can be deployed in any cl8 be it kops, eks etc once its installed u can then use it to deploy Ur appl
+
+DIFF BTW HELM AND EKS 
+ helm is a package manager for k8 while EKS is a k8 cl8b that come swith a fully managed controled plane provided by aws
+so one is is a cl8 and the other is a command line utility and with the heklp of helm, u can reder ur manifest file, it can create the 
+manifest filwe for u. 
 
 
 
