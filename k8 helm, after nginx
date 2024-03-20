@@ -213,7 +213,7 @@ i wil go to the values files, vi into it and cahnge it
 ubuntu@ip-10-0-0-24:~$  vi myapp/values.yaml
 now if am deployin an appl and the image is coming frm a private repo, i wil hv to run image pull secret, i wil enter it here
 we dnt nid a service account for this deployment so i can change true to  false
-service type can also be changed frm clusterip to nodeport n viceversa
+service type can also be changed frm clusterip to nodeport n or LB   n viceversa
 am i creating an ingress, by default it says false , am nt creatin an ingress
 am i autoscaling my pod , i can change false to true bt i wont do it ofr now
 discolarations
@@ -228,7 +228,30 @@ now we see the changes i effected in the values file
 ############# i am creating helmchart from my own  custom appl, once this is done
 ubuntu@ip-10-0-0-24:~$  ls
 myapp
+  ********* now i can deploy appl uisng this helm chart
+ubuntu@ip-10-0-0-24:~$  helm install app myapp/
+STATUS: deployed
+ubuntu@ip-10-0-0-24:~$  helm ls 
+we can see the appl , it was deployed in the dev namespace
+ubuntu@ip-10-0-0-24:~$ kubectl get pod
+thers an error , my app got an error in pulling the image
+copy the image name
+ubuntu@ip-10-0-0-24:~$  kubectl describe pod (the image name)
+ we dnt have the version of the image its trying to pull , so the deployment didnt tk palce 
+ubuntu@ip-10-0-0-24:~$  helm uninstall app
+ubuntu@ip-10-0-0-24:~$ helm ls 
+we no longer hav ethe deployment
+ubuntu@ip-10-0-0-24:~$  vi myapp/values.yaml
+change tag to latest
+ubuntu@ip-10-0-0-24:~$  helm install app myapp/
+ubuntu@ip-10-0-0-24:~$ kubectl get deploy
+deployed
+**************************so with the help of helm w ehv deployed thsi appl  with relative ease
+ubuntu@ip-10-0-0-24:~$ kubectl get svc
+we see the service we created
+we can access the appl using the loadbalancer service but its nt secured discovery option
 
+so we go to 
 
 
 ubuntu@ip-10-0-0-24:~$ cat app/myapp/templates/service.yaml
