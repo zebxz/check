@@ -415,6 +415,35 @@ helm repo update
 ******************this is now for a custom appl
 after the adding , we see we hv a chart called webapp
 ****************** so we can run helm search repo webapp   ........ (the repo we added is webapp)
+******************* we can check the default configuration in this repository by executing 
+helm show values webapp/myapp
+if we are going to deploy this appl 
+whata re the objects to be created ? 
+ we can see auto scaling is enabled 
+we can see the image  is mylandmarktech spring boot mongo
+service is false bc w e dnt nid it for this deployment
+lb service type
+********************helm template will show show us all the object to be created 
+its crtaing an HPA autoscaler
+etc
+we wnat to use the chart to deploy our appl 
+helm installn app31 webapp/myapp
+deployed
+this is a custom appl of ours 
+kubectl get deploy
+kubectl get po
+kuibectl dsecribe pod (pod name)  ................18:46
+readiness probe is failing , the pod is unhealthy so traffic cannot be routed there
+kubectl top node 
+lets see hw much memeory is available 
+helm show values ************************************ to see hw the trmplate is configured
+the pod was successfully assigned, the liveness probe is failing, the pod is restrting
+lets check the template  ******************************* helm template webapp/myapp
+wa re suppose to get a minimum wait time for readiness probe which am not seeing here
+am goin to revisit this in our nxt class pls 
+but the main tin to master is that we are using helm as a packege manager ofr k8
+when u use helm it wil create the manifest file and render the maanifest files n once the manifest file are rendered
+u can deploy appl with relative ease
 
 
 
