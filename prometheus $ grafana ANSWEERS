@@ -200,22 +200,27 @@ did u suceesd in fixing them ?
 most of the time yes
 
 
-server [mem4GB ] --- maven[2BG]
-  OTHER SERVICES/processes are using 3G 
-  BOA.COM  / aa.com / cnn.com / 
-  facebook.com  / 3B active users   
-  whatsapp.com /  3B active users 
+
 
 PROMETHEUS AND GRAFANA               *********************47:40  .............########### check powerpoint
+if we want to ensure our server is function well we hv to install a software that will monitor the server and give us info abt it 
 =====================
 its an open source monitoring aaaaand alerting toolkit. prometheus consists of serveral components some of which are listed below:
 
 importance os monitoring:
   •  avoid reactive panics  
-  •  Increase uptime. webapp pod  
+  •  Increase uptime. webapp pod    in k8, automatically it wil restart the pod or if the pod goes down it will recreate a new pod replace it. 
   •  Improve hardware and software performance.
   •  Plan for the future by making the best use of your resources.
   •  get an almost immediate return on investment
+
+************if ur server is abt to go doen or is running short of resources, it may get to a point wher the appl can no longe rrun in the server 
+e.g 
+server [mem4GB ] --- maven[2BG], at all  time i need 2gb for my maven service to run                                             to avoid reactive panic
+  OTHER SERVICES/processes are using 3G , then maven will nt run , therefore no bill can be done appl can run n dats a server so to avoid this we can monitor the server
+  BOA.COM  / aa.com / cnn.com /     to avoid reactive panic  ,, imagine this server goes down, so we can monitor the env so that even b4 cx notice it we ar already aware 
+  facebook.com  / 3B active users                                                                                        n fix it b4 they even notice 
+  whatsapp.com /  3B active users 
 
   accessBank = 25B Naira as at Jan 1, 2023 
     Jan 1, 2023 - assets = 25,000,000,000/400 = $62.5m
