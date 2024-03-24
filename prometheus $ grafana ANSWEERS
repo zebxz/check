@@ -237,7 +237,7 @@ WITHOUT monitoring:
  Dec 2023   1400     25B    17.9m  
 
 =====================================
-Prometheus/Grafana 
+Prometheus/Grafana 1:09   ........................... ************************ powercycle ......... prometheus configuration
 =====================================
 application performance monitoring = APM   
 monitoring (micro-service) applications with  
@@ -275,10 +275,16 @@ helm template prometheus/prometheus
 
 helm install prometheus prometheus/prometheus
 helm upgrade prometheus prometheus/prometheus -f prometheus-values.yml -n dev
+PREREQUISITE
+*********************************************** w eneed a k8 server with dynamic storage class  to deploy prometheus n grafana 
+2) Kubernetes nodes iwt mini 4GB RAM with 2 core processor
+3) server which has kubectl $ helm configured
 
 
-deploy grafana using helm   
+deploy grafana using helm   ************************
 ==========================
+****************************************so we are deployin promtheus n grafana in our cl8 and we wil be using k8 package manager whcich is helm   ...... 1:16:15
+                                                                                     so if i dnt hv helm installed i can install helm3
 grafana   https://grafana.github.io/helm-charts   
   helm repo add grafana https://grafana.github.io/helm-charts
   helm install grafana grafana/grafana -n dev  
