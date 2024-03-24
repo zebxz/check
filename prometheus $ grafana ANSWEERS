@@ -33,21 +33,22 @@ we also have the
 ********thes are what we can use to mg8 task in k8 when it comes to architecture
 
 2) Explain your experience in kubernetes??
-what p
-What problems have you encountered applying kubernetes in environment?
+
+3)What problems have you encountered applying kubernetes in environment?
 we kn the k8 mg8 containerized appl, if ders a problem in the app 
 How can you troubleshoot application related issues in kubernetes??
 our appl are running in pods so if ders a problem, we v a few things we can do , we also saw dat when it comes to docker 
 now if u look at k8 n docker, if ders a problem in doker in our container we can run the below , also for k8 we run the command below
 kubernetes manages containerised applications:
-  kubernetes                       docker    :
-  kubectl get pods                 docker ps or docker ps -a      
-  kubectl describe pods podName    docker inspect containerName/ID  
+  kubernetes                                                    docker    :
+  kubectl get pods                                          docker ps or docker ps -a      
+  kubectl describe pods podName                             docker inspect containerName/ID  
   kubectl get svc/service  
   kubectl get endpoint/ep  
-  kubectl logs podName             docker logs containerName/ID 
-  kubectl exec podName             docker exec containerName/id 
-  kubectl top podName               docker stats/top   
+  kubectl logs podName                                        docker logs containerName/ID 
+  kubectl exec podName  
+exec to execute command inside the pod ..... 24:00                       docker exec containerName/id 
+  kubectl top podName                                            docker stats/top   
 we can also pipe n grep for errors
 kubectl logs app-(app name) | gre errors
  
@@ -70,7 +71,7 @@ THEREfore i will create a webapp service wich will lb traffic to the 7pods
 kubectl get svc
 impotrantly we can get the endpoints/ ep
 
-#############   also  .................................................NICE ... 18.00
+#############   also  .................................................NICE .........................################################18.00
 we run kubectl get deploy  to see the app we deployed
 kubectl get ep 
 WE SEE THE CURRENT EP is 2 
@@ -78,38 +79,51 @@ kubectl scale deply (app name) ----- replica 4
 we run kubectl get ep again 
 now we see Ep is 4
 ############### there fore we can rightly say that the service is routing traffic as expected
-so i can be abl rto xpalin this in real time bc it is working a sexpected
+so i can be abl rto xpalin this in real time bc it is working as expected
+#########we can aslo check kubestl get svc 
+to see if we can accesss the app and also check online
 
 ********** we can also get logs for the appl
+kubectl logs app-(app name) | gre errors
+if ders an error the error msg is able to tell us 
+
+########################################we cud also have these errors ............27:00       our images are found in dockerhub or amazonECR
+WE can run kubectl get events
+in the process of pulling the image
+creating the container and
+strating the container there could be a problm inbtw this proceses
+iys either we are pulling the wrong image
+we cud hv the right image but wrong authentication with the image pull sercert when pulling frm a private repo
 
 common errors in kubernetes:  
-  pods are in pending  state 
+#  pods are in pending  state 
   pullimage error / imagepulloff   
    WRONG  image: mylandmarktech/hello:20     
           mylandmarktech/hello:22   
- authenticationerror:
+# authenticationerror:
   mylandmarktech/nodejs-fe-app:2  
   imagePullSecrets:
   - dockerhubcred
-KOPS CLUSTER DEPLOYMENT ISSUES: 
-  IAM user not authorise 
+#KOPS CLUSTER DEPLOYMENT ISSUES: like
+  IAM user not authorise     ............. we nid this to create a kops cl8 in aws
     create an IAM role with required permissions/policy  
        VPCFULLACCESS/EC2FULLACCESS/S3FULLACCESS and attached
        to the kops control server 
     Attached required IAM policies to the IAM user/group and   
     run aws configure  
 
-  vpc limit reached / :
+  #vpc limit reached / :............ by default when u run a vpc tier account, the max numbe rof vpc u can crtae in one regionis 5, so when u reach this u can request#
     5 vpc running in production  
     Request additional vpc quota from aws  
   deploying a kops cluster [ a new vpc,s3, ec2-instances, ELB, ASG ]
 
-node notReady:
-  kops/kubeadm = kubernetes CNI [flannel, weave, calico] is not deployed
-  ensure that the kubelet service is running [systemctl start kubelet]       
-  not is stopped/terminated in aws
-  Place the nodes behind an ASG with a ELB for health check  
-  use kops/eks over kubeadm    
+node notReady: when u deploy self mg8 cl8, u hv to deploy ur node , u hv to mk sure that ur nodes are ready bt  mg8 cl8 like  EKS we dnt worry abt d node nt being ready
+  kops/kubeadm = kubernetes CNI [flannel, weave, calico] is not deployed our node will nt be ready
+NODES not ready cud be bc of k8 cli, k8 netwrk interfaces nt installed 
+  ensure that the kubelet service is running [systemctl start kubelet]   if not node wil nt be ready    
+  node is stopped/terminated in aws , in this case restart it 
+ OR  Place the nodes behind an ASG with a ELB for health check  
+  use kops/eks over kubeadm    to manage such problem
 crashloopbackoff 
    pod repeatedly crashing
 ReadinessProbeFailed or 
