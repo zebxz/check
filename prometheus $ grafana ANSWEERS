@@ -1,6 +1,12 @@
+NICE explantion for :  .. 2) Explain your experience in kubernetes?? .......  18:00
+
 4:00     ................... watch it
 you would be ask what you have been able to use k8 to solve in your environment
+ITS A Common experience when it comes to k8, either they want u to explain your experience or they just want todiscus some problems u may v encountered using k8 and hw you
+were able to fix those problem. also when u apply k8 thersa lot of xperience u gather n der a lot of problem uve been able to solve, 
+so the xpectation is for you to be able to state clearly the kind of problems uv been able to fix applying k8 in ur env
 
+also at times , they ask to xplain  k8 architecture
 this is a very imp aspect in k8                              
 
 
@@ -10,16 +16,29 @@ helm to install and deploy:
   EFK  
   Rancher    
 
-Explain the kubernetes architecture??  
+6:00
+this is a very imp aspect in k8 n u shud be able to xpln dem                        
+
+1) Explain the kubernetes architecture??  
    masterNodes/controlPlane:
-      apiServer/etcd/scheduler/controllerManagers
+made up of 
+      apiServer  : wich is the main adminstartor, the entry point into our cl8
+/etcd/scheduler/controllerManagers
    WorkerNodes:
       kubelet/kube-proxy/containerRuntime-Container-d/  
+these are the component
+we also have the
    kubernetesClient|: 
       kubectl / UI- Kuberenets dashboard
-Explain your experience in kubernetes??
+********thes are what we can use to mg8 task in k8 when it comes to architecture
+
+2) Explain your experience in kubernetes??
+what p
 What problems have you encountered applying kubernetes in environment?
+we kn the k8 mg8 containerized appl, if ders a problem in the app 
 How can you troubleshoot application related issues in kubernetes??
+our appl are running in pods so if ders a problem, we v a few things we can do , we also saw dat when it comes to docker 
+now if u look at k8 n docker, if ders a problem in doker in our container we can run the below , also for k8 we run the command below
 kubernetes manages containerised applications:
   kubernetes                       docker    :
   kubectl get pods                 docker ps or docker ps -a      
@@ -28,10 +47,40 @@ kubernetes manages containerised applications:
   kubectl get endpoint/ep  
   kubectl logs podName             docker logs containerName/ID 
   kubectl exec podName             docker exec containerName/id 
-  kubectl top podName              docker stats/top   
+  kubectl top podName               docker stats/top   
+we can also pipe n grep for errors
+kubectl logs app-(app name) | gre errors
+ 
+#############more xplanation  .................13:05
+kubectl get po 
+he tried to access his kops cl8 bt it didnt wrk so  he said 
+when we v dis rror msg   to get it fixed we go to our kops cl8 setup n export the kube config file that is the file we used for kops inatallation
+kops export kubecfg $NAME  --admin
+then run 
+kubectl get pod 
+so if ders a problmr in our appl we can run that and we can also describe the pod 
+kubectl describe po (pod name)
 
-  service discovery:
+IN K8 appl IS EXPOSED USING SERVICE DISCOVERY
+ service discovery:
     webAppservice ---> 7webAppPods
+lets assume i hv 7 webApppods
+THEREfore i will create a webapp service wich will lb traffic to the 7pods
+############for me to knw my webappservice is routing traffic to all of this pod i can run
+kubectl get svc
+impotrantly we can get the endpoints/ ep
+
+#############   also  .................................................NICE ... 18.00
+we run kubectl get deploy  to see the app we deployed
+kubectl get ep 
+WE SEE THE CURRENT EP is 2 
+kubectl scale deply (app name) ----- replica 4
+we run kubectl get ep again 
+now we see Ep is 4
+############### there fore we can rightly say that the service is routing traffic as expected
+so i can be abl rto xpalin this in real time bc it is working a sexpected
+
+********** we can also get logs for the appl
 
 common errors in kubernetes:  
   pods are in pending  state 
