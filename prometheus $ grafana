@@ -2,3 +2,324 @@
 you would be ask what you have been able to use k8 to solve in your environment
 
 this is a very imp aspect in k8                              
+
+
+
+helm to install and deploy:
+  P/G  
+  EFK  
+  Rancher    
+
+Explain the kubernetes architecture??  
+   masterNodes/controlPlane:
+      apiServer/etcd/scheduler/controllerManagers
+   WorkerNodes:
+      kubelet/kube-proxy/containerRuntime-Container-d/  
+   kubernetesClient|: 
+      kubectl / UI- Kuberenets dashboard
+Explain your experience in kubernetes??
+What problems have you encountered applying kubernetes in environment?
+How can you troubleshoot application related issues in kubernetes??
+kubernetes manages containerised applications:
+  kubernetes                       docker    :
+  kubectl get pods                 docker ps or docker ps -a      
+  kubectl describe pods podName    docker inspect containerName/ID  
+  kubectl get svc/service  
+  kubectl get endpoint/ep  
+  kubectl logs podName             docker logs containerName/ID 
+  kubectl exec podName             docker exec containerName/id 
+  kubectl top podName              docker stats/top   
+
+  service discovery:
+    webAppservice ---> 7webAppPods
+
+common errors in kubernetes:  
+  pods are in pending  state 
+  pullimage error / imagepulloff   
+   WRONG  image: mylandmarktech/hello:20     
+          mylandmarktech/hello:22   
+ authenticationerror:
+  mylandmarktech/nodejs-fe-app:2  
+  imagePullSecrets:
+  - dockerhubcred
+KOPS CLUSTER DEPLOYMENT ISSUES: 
+  IAM user not authorise 
+    create an IAM role with required permissions/policy  
+       VPCFULLACCESS/EC2FULLACCESS/S3FULLACCESS and attached
+       to the kops control server 
+    Attached required IAM policies to the IAM user/group and   
+    run aws configure  
+
+  vpc limit reached / :
+    5 vpc running in production  
+    Request additional vpc quota from aws  
+  deploying a kops cluster [ a new vpc,s3, ec2-instances, ELB, ASG ]
+
+node notReady:
+  kops/kubeadm = kubernetes CNI [flannel, weave, calico] is not deployed
+  ensure that the kubelet service is running [systemctl start kubelet]       
+  not is stopped/terminated in aws
+  Place the nodes behind an ASG with a ELB for health check  
+  use kops/eks over kubeadm    
+crashloopbackoff 
+   pod repeatedly crashing
+ReadinessProbeFailed or 
+LivenessProbeFailed
+Insufficient resources
+persistent volume mount failures
+InvalidNamespace
+cni plugin error
+ 
+error converting YAML to json
+=============================
+kind: Devops
+apiVersion: PODS    
+metadata  
+spec
+
+kubectl api-resources | grep devops  
+
+
+what about issues when all pods are running but the
+applications are unable to communicate?
+misconfigurations.
+pod.yml   
+-------
+kind: Pod    
+apiVersion: v1   
+metadata:  
+   name: myapp  
+   labels:
+      tier: be  
+spec:
+   containers:
+   - name: myapp   
+     image: mylandmarktech/hello   
+     ports:
+     - containerPort: 80
+
+svc.yml  
+-------
+kind: Service
+apiVersion: v1
+metadata:
+  name: websvc
+  namespace: dev
+  labels:
+    app: web
+spec:
+  type: NodePort # ClusterIP
+  selector:
+    app: myapp # labels= tier:be
+  ports:
+  - port: 80
+  - targetPort: 8080  # containerPort80/8080
+  - nodePort: 40200   # 30000 - 32676
+
+server [mem4GB ] --- maven[2BG]
+  OTHER SERVICES/processes are using 3G 
+  BOA.COM  / aa.com / cnn.com / 
+  facebook.com  / 3B active users   
+  whatsapp.com /  3B active users 
+
+PROMETHEUS AND GRAFANA
+=====================
+importance os monitoring:
+  •  avoid reactive panics  
+  •  Increase uptime. webapp pod  
+  •  Improve hardware and software performance.
+  •  Plan for the future by making the best use of your resources.
+  •  get an almost immediate return on investment
+
+  accessBank = 25B Naira as at Jan 1, 2023 
+    Jan 1, 2023 - assets = 25,000,000,000/400 = $62.5m
+  November = 62.5 * 1400 = 87.5B Naira 
+
+WITH monitoring:
+ Date       assets  NAIARA   USD   
+ Jan 2023            25b    62.5m   
+ Dec 2023            87.5b  62.5m  
+
+WITHOUT monitoring:
+ Date       RATES  NAIARA   USD-Asset   
+ Jan 2023   400      25b    62.5m   
+ Dec 2023   1400     25B    17.9m  
+
+=====================================
+Prometheus/Grafana 
+=====================================
+application performance monitoring = APM   
+monitoring (micro-service) applications with  
+Prometheus and Grafana
+======================================
+deploy prometheus using helm:
+  helm: CLI/charts/repository  
+ helm-charts  
+helm-cli 
+helm-repository  
+helm charts for:
+nginx-ingress   https://helm.nginx.com/stable
+grafana         https://grafana.github.io/helm-charts
+prometheus      https://prometheus-community.github.io/helm-charts
+
+make sure that helm3 is installed   
+================================
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+ ./get_helm.sh
+
+deploy33.sh    
+helm repo add nginx-ingress https://helm.nginx.com/stable
+helm repo add prometheus https://prometheus-community.github.io/helm-charts 
+helm repo add grafana https://grafana.github.io/helm-charts 
+
+helm install prometheus  prometheus/prometheus 
+
+deploy prometheus using helm   
+==========================
+helm repo add prometheus https://prometheus-community.github.io/helm-charts   
+helm install prometheus prometheus/prometheus
+helm show values prometheus/prometheus
+helm template prometheus/prometheus
+
+helm install prometheus prometheus/prometheus
+helm upgrade prometheus prometheus/prometheus -f prometheus-values.yml -n dev
+
+
+deploy grafana using helm   
+==========================
+grafana   https://grafana.github.io/helm-charts   
+  helm repo add grafana https://grafana.github.io/helm-charts
+  helm install grafana grafana/grafana -n dev  
+
+git clone https://github.com/myLandmakTechnology/prometheus-grafana-ELK-EFK
+
+kubectl get secret --namespace dev grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+  username = admin  
+  password = 5ibxy9DOfkwuTjyWaW34T5wKAmA5sQ7Dp7aBkvmh
+
+helm charts for:
+nginx-ingress   https://helm.nginx.com/stable
+helm search repo  nginx-ingress    
+helm install nginx  nginx-ingress/nginx-ingress -n dev   
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress33  
+  namespace: default  
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: springapp.landmarkapp.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: springapp
+            port:
+              number: 80
+  - host: java.landmarkapp.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: javawebappsvc  
+            port:
+              number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingresspg
+  namespace: dev
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: grafana.landmarkapp.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 80
+  - host: prometheus.landmarkapp.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: prometheus-server
+            port:
+              number: 80
+  - host: alerts.landmarkapp.net
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: prometheus-alertmanager
+            port:
+              number: 9093
+
+
+-
+Sample Dash Board IDS: 
+  3119, 7249,  8919, 6417 ,11074
+
+kops@master:~$ kubectl get po -n dev
+NAME                                                READY   STATUS    RESTARTS   AGE
+grafana-948dd5956-xcn5q                             1/1     Running   0          35m
+nginx-nginx-ingress-controller-7f48d57b4c-7tghw     1/1     Running   0          43m
+
+1. alertmanager-0       -- statefulset
+2. kube-state-metrics   -- deployment
+3. node-exporter        -- DaemonSet
+4. pushgateway           - deployment
+5. prometheus-server     - statefulset/database  
+
+  EFK =  
+
+Rancher and kubernetes:
+PROVIDE A Kubernetes platform  
+With Rancher we can import and manage multiple kubernetes clusters    
+We can create clusters like EKS / AKS / GKE, etc.   
+Rancher provide a dasborad for kubernetes
+Rancher is deployed using docker  
+
+#!/bin/sh  
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt install docker.io -y  
+sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+
+sudo docker logs  container-id  2>&1 | grep "Bootstrap Password:"
+sudo docker logs  b3e4c58c646c  2>&1 | grep "Bootstrap Password:"
+b3e4c58c646c
+
+
+  https://18.119.126.168
+
+  security and EFK  
