@@ -243,6 +243,29 @@ application performance monitoring = APM
 monitoring (micro-service) applications with  
 Prometheus and Grafana
 ======================================
+
+********************************deploy prometheus using helm
+helm repo add prometheus https://prometheus-community.github.io/helm-charts
+helm install prometheus prometheus/prometheus
+helm show values prometheus/prometheus
+helm template prometheus/prometheus
+
+helm install prometheus prometheus/prometheus
+helm upgrade prometheus prometheus/prometheus -f prometheus-values.yml -n dev
+
+we acn still deploy promethus cloning this , bc its in our github repository ............ and folloeing the instruction but thats not what we ar using
+git clone https://github.com/myLandmakTechnology/prometheus-grafana-ELK-EFK
+
+PREREQUISITE
+*********************************************** w eneed a k8 server with dynamic storage class  to deploy prometheus n grafana 
+2) Kubernetes nodes iwt mini 4GB RAM with 2 core processor
+3) server which has kubectl $ helm configured
+
+
+deploy grafana using helm   ************************
+==========================
+****************************************so we are deployin promtheus n grafana in our cl8 and we wil be using k8 package manager whcich is helm   ...... 1:16:15
+                                                                                     so if i dnt hv helm installed i can install helm3
 deploy prometheus using helm:
 helm comes with the :
   helm: CLI/charts/repository     .....these are the 3aspects of helm
@@ -263,7 +286,7 @@ prometheus
 ######we saw nginx ingress b4, bt lets see hw we can deploy nginx ingress using helm
 
 
-#################forst thing to do is to ensure that helm is installed
+#################first thing to do is to ensure that helm is installed
 
 1)  ****************************make sure that helm3 is installed   
 ================================
@@ -286,7 +309,7 @@ we can also upadte the repositort: ........helm update repo
 
 helm install prometheus  prometheus/prometheus 
 
-3) ******************deploy prometheus using helm   
+i) ******************deploy prometheus using helm   
 ==========================
 this promethus has some chart, so we wnt to deploy this using the chart called promrtheus/promtheus
 we can search this repository
@@ -308,45 +331,119 @@ we hv are also cretain a deployment and this is happening in the default namespa
 we hv her promethus non exporter , its a daemon set
 we hv the service of promethus
 ***************i can also cahnge some info on my file
+#################################################################****************** i dont understand this file hes referring to ....................???????????????
+
 there is a values file here, i hv di svalues file  ...: promethus-file.yml, hv done some configurations   (hv shared it in the class)
 in my deployment here
 vi promethus-file.yml                  *******************************1:27:00
 am just changin some info on my values file for promethus
 in this info whats applicable in the changes
+the alert manger file is goin to be changing, we are goin to be sending alert via email notification to my landmarkech. gmail.com
+and this is the interval, gmial wil be notified   .......... the grp interval is goi to be 2minutes
+so when do we send alert?
+serverfils:
+  alerting_rules.yml:
+      groups:
+      name:NodeDown
+when our node is down for 2mins we will send alert 
+when memory is less than 85%
+when our pods nt ready
+when persisten vol error
+etc
+*************************************************pls make sure you copy this guy and create a file for it ( i bliv the alert file) ?????????????????
 
-helm repo add prometheus https://prometheus-community.github.io/helm-charts   
-helm install prometheus prometheus/prometheus
-helm show values prometheus/prometheus
-helm template prometheus/prometheus
+######################################## NOW TO DEPLOY PROMETHUS
+we could decide to create a namespcae
+kubectl get ns
+kubectl create ns dev
+ill use d dev ns for this deployment
 
-helm install prometheus prometheus/prometheus
-helm upgrade prometheus prometheus/prometheus -f prometheus-values.yml -n dev
-PREREQUISITE
-*********************************************** w eneed a k8 server with dynamic storage class  to deploy prometheus n grafana 
-2) Kubernetes nodes iwt mini 4GB RAM with 2 core processor
-3) server which has kubectl $ helm configured
+helm repo add prometheus https://prometheus-community.github.io/helm-charts        **************this is goin to deploy base on the default value file
+we can still deploy
+but now i hv a custom value file which is 
+prometheus prometheus/prometheus -f prometheus-values.yml -n dev
+deployin promethus in the dev ns
+kubectl get po -n dev
+nothing in the dev ns 
+so lets deploy promethus in the dev ns
+helm install prometheus prometheus/prometheus -f prometheus-values.yml -n dev
+kubectl get po -n dev
+now we see its being deployed in the dev ns
+its creating promethus alert manger
+promethus node exporter
+nod eexporter need to scrap metrix     ***************************1:31:22 ................ i dnt understand   ????????????????????
+
+kubectl get svc -n dev
+its creating service like alert mAnager -headless
+it has this headless service bc this is deployed as a stateful set
+all our services a cl8 ip
 
 
-deploy grafana using helm   ************************
-==========================
-****************************************so we are deployin promtheus n grafana in our cl8 and we wil be using k8 package manager whcich is helm   ...... 1:16:15
-                                                                                     so if i dnt hv helm installed i can install helm3
-m 
-grafana   https://grafana.github.io/helm-charts   
+lets deploy grafana
+ii) ************************************************************* DEPLOY GRAFANA USING HELM ................. 1:32
+
+grafana   https://grafana.github.io/helm-charts             ********************we only hv this helm chart
   helm repo add grafana https://grafana.github.io/helm-charts
-  helm install grafana grafana/grafana -n dev  
+  helm install grafana grafana/grafana -n dev                    *******************IN THE DEV NS
 
-git clone https://github.com/myLandmakTechnology/prometheus-grafana-ELK-EFK
-
+#########ONCe installed get admin user by runnin this command  (to get admin user psswd)
 kubectl get secret --namespace dev grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
   username = admin  
   password = 5ibxy9DOfkwuTjyWaW34T5wKAmA5sQ7Dp7aBkvmh
 
+#################### whta do we use to access grafana externally , its a service right?
+we need the service
+lets check the dev ns 
+kubectl get svc -n dev
+we see grafana service is clusterIP 
+we cant use clusterIP for external service so we can edith the grafana service 
+kubectl edit svc grafana -n dev
+since am using kops cl8 i can change it to service type loadbalancer and its going to create a loadbalancer in aws
+but loadbalancer are not free 
+kubectl get svc -n default   (ie default ns)
+i have this loadbalancer i created before
+ls
+i see the previous deployments  ...... e.g app.yml , javaweb , mongo
+vi into app.yml  ,,, which has the springapp svc
+i see the service type is lb so i change it to clusterip
+kubectl apply -f app.yml
+service type has been changed
+so now we hv the loadbalancer service in the dev ns bt its nt free
+so i wnat to maintain my clusterIP which is most secured
+helm ls -n dev
+we see the deployments in the dev ns
+lets delete the grafana deployment
+helm uninstall grafana -n dev
+when i deploy grafan it created a lb in aws 
+now redeploy grafana
+################################# i want to show you smt that is very important /...............................1:41
+why do i wnat to use only clusterIP services
+whenevr you deploy grafana make sure you get the admin PW
+helm I
+The pW wil be diff from what we had before
+
+lets also deploy ngnix ingress
+i can search the repository and get the charts that are there
+so lets search this repository and get the right helm chart to use 
+ngnix ingress will enable us get a layer7 lb in our cluster which we can use to route traffic to multiple applications
+
 helm charts for:
-nginx-ingress   https://helm.nginx.com/stable
+nginx-ingress   https://helm.nginx.com/stable   ....................THIS is our online repository
+so lets search this repository and get the right helm chart to use 
 helm search repo  nginx-ingress    
-helm install nginx  nginx-ingress/nginx-ingress -n dev   
+ nginx  nginx-ingress/nginx-ingress       >>>>>>>>>>>>>>>>>>>>>>>  ... i v this helm chart
+helm install nginx  nginx-ingress/nginx-ingress -n dev      . .... in the dev ns
+#########no wthe nginx ingress controller has been insatlled, 
+kubectl get svc -n dev
+it has created a lb in aws
+let me shoe u guys smt
+since we hv this lb in aws i can  go to aws and create  Arecords ................1:46:00
+mk sure to cretae the right loadbalancer while making the Arecord
+now we create a file (the ingress file)
+
+'.....................########## ingress file using the host based routing 
+vi ingress33.yml
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -363,7 +460,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: springapp
+            name: springapp                   ************* routin to our springapp svc
             port:
               number: 80
   - host: java.landmarkapp.net
@@ -373,10 +470,24 @@ spec:
         path: "/"
         backend:
           service:
-            name: javawebappsvc  
+            name: javawebappsvc         *********************** routing to javawebapp svc
             port:
               number: 80
 
+kubectl apply -f ingress33.yml
+deployed
+kubestl get ingress
+kubectl describe ingress  
+we see its in the dev ns
+we see the backend
+springapp.landmarkapp.net
+and its routing traffic when we check online 
+one lb is routing traffic to multiple applications
+
+####lets create another file 
+cp ingress33.yml ingress3.yml
+vi ingress3.yml
+                                       1:5700
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -393,7 +504,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: grafana
+            name: grafana  ***************************  routing to grafana
             port:
               number: 80
   - host: prometheus.landmarkapp.net
@@ -413,7 +524,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: prometheus-alertmanager
+            name: prometheus-alertmanager     ***************routing to promethus
             port:
               number: 9093
 
