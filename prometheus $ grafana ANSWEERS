@@ -244,30 +244,76 @@ monitoring (micro-service) applications with
 Prometheus and Grafana
 ======================================
 deploy prometheus using helm:
-  helm: CLI/charts/repository  
- helm-charts  
-helm-cli 
-helm-repository  
-helm charts for:
+helm comes with the :
+  helm: CLI/charts/repository     .....these are the 3aspects of helm
+ helm-charts      : predefined manifest files we can use to deploy both custon and 3rd partyapplications
+helm-cli           : the command line utility
+helm-repository     : where the charts are found
+
+******as far as helm is concerned helm charts for:
 nginx-ingress   https://helm.nginx.com/stable
 grafana         https://grafana.github.io/helm-charts
 prometheus      https://prometheus-community.github.io/helm-charts
 
-make sure that helm3 is installed   
+******************SO WE want to deploy
+nginx-ingress
+grafana
+prometheus
+
+######we saw nginx ingress b4, bt lets see hw we can deploy nginx ingress using helm
+
+
+#################forst thing to do is to ensure that helm is installed
+
+1)  ****************************make sure that helm3 is installed   
 ================================
+helm installation:copy this 3line command and execute in my cl8:
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
  ./get_helm.sh
 
-deploy33.sh    
+*********************   helm ls ........... to see we v helm installed 
+*****************  helm repo ls ........... 
+
+2)..........................#############ADD Helm chart FOR  ngninx, promrtheus, grafana
+deploy33.sh    (he didndt use dis, jst copy and paste the 3links)
 helm repo add nginx-ingress https://helm.nginx.com/stable
 helm repo add prometheus https://prometheus-community.github.io/helm-charts 
 helm repo add grafana https://grafana.github.io/helm-charts 
 
+helm repo ls >>>>>>> we hv the repositories
+we can also upadte the repositort: ........helm update repo
+
 helm install prometheus  prometheus/prometheus 
 
-deploy prometheus using helm   
+3) ******************deploy prometheus using helm   
 ==========================
+this promethus has some chart, so we wnt to deploy this using the chart called promrtheus/promtheus
+we can search this repository
+e.g helm search repo promethus and we can see so many charts 
+but we are using chart prometheus/prometheus
+the cahart has some value faile  so we can run:
+helm show values prometheus/prometheus
+now we can see values for my prometheus configuration, these are default values
+value files are default values
+everytin has been configured
+############  we also have templates              *************1:25:00
+from this values file waht is going to be installed
+so we can run helm template promethus/promethus
+lets see the diff k8 objs that will be 
+we hv a long list of obj
+we are deployin promethus as a statefulm set, 
+the number of replca is 1
+we hv are also cretain a deployment and this is happening in the default namespace
+we hv her promethus non exporter , its a daemon set
+we hv the service of promethus
+***************i can also cahnge some info on my file
+there is a values file here, i hv di svalues file  ...: promethus-file.yml, hv done some configurations   (hv shared it in the class)
+in my deployment here
+vi promethus-file.yml                  *******************************1:27:00
+am just changin some info on my values file for promethus
+in this info whats applicable in the changes
+
 helm repo add prometheus https://prometheus-community.github.io/helm-charts   
 helm install prometheus prometheus/prometheus
 helm show values prometheus/prometheus
@@ -285,6 +331,7 @@ deploy grafana using helm   ************************
 ==========================
 ****************************************so we are deployin promtheus n grafana in our cl8 and we wil be using k8 package manager whcich is helm   ...... 1:16:15
                                                                                      so if i dnt hv helm installed i can install helm3
+m 
 grafana   https://grafana.github.io/helm-charts   
   helm repo add grafana https://grafana.github.io/helm-charts
   helm install grafana grafana/grafana -n dev  
