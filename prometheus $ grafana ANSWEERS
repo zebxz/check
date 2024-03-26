@@ -1,4 +1,5 @@
 NICE explantion for :  .. 2) Explain your experience in kubernetes?? .......  18:00
+my question: when is hosted zones created
 
 4:00     ................... watch it
 you would be ask what you have been able to use k8 to solve in your environment
@@ -437,13 +438,16 @@ helm install nginx  nginx-ingress/nginx-ingress -n dev      . .... in the dev ns
 #########no wthe nginx ingress controller has been insatlled, 
 kubectl get svc -n dev
 it has created a lb in aws
-let me shoe u guys smt
+we check the lb in aws and we see the hosted zone    ... ie ( landmarkapp.net, grafana.landmarkapp.net)
+i bliv hosted zones were creayted earlier
+let me show u guys smt
 since we hv this lb in aws i can  go to aws and create  Arecords ................1:46:00
 mk sure to cretae the right loadbalancer while making the Arecord
 now we create a file (the ingress file)
 
 '.....................########## ingress file using the host based routing 
 vi ingress33.yml
+ 
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -524,14 +528,78 @@ spec:
         path: "/"
         backend:
           service:
-            name: prometheus-alertmanager     ***************routing to promethus
+            name: prometheus-alertmanager     **************   service name for alert manager
             port:
               number: 9093
 
-
--
+********************************************* kubectl apply -f ingress3.yml
+we caheck online: prometheus.landmarkapp.net
+we can see the alerts that have been configured
+************ we tried to access prometheus.landmarkapp.net
+but couldnt bc we havent created Arecords for alert manager service
+after the ARecord created we can access it online 
+we caould also access grafana.landmarkapp.net 
+he said the promethus UI isnt the best option to use so we hv to use the grafana dashboard
+but we still couldnt access it
+with this erroe am unable to xplain hw all of this guy will give us the expected result
+he said we couldnt acces it yet bc it takes a while 
+finally, we can now acceess it , the grafana dashboard pops up
+then we entered the username and PW we generated earlier when we installed grafana 
+ the grafana dashboard hasa a data source and the sourec is promethus   ...................**************2:22:21
+name : promethus server
+save and test
+connection: http://promethus server
+successfully connected to promethus
+so its building a dashboard 
+we can see the grafana dashboard wich is communucarting with the prometus server
+we can import a dashboard
+in the dashboard he typed 7249
+connection: promethus server
+now we see the dashboard ,n whatever is happening in your cl8 can be visualized in your promethus dashboard
+so whtaever issues we ar hv  e.g running low on memmory ,on our promethus UI we have alert
+when u configure promethus as we hv done, there are some sample dashboard to watch out for 
+e.g
 Sample Dash Board IDS: 
   3119, 7249,  8919, 6417 ,11074
+we can import any of these dashboards
+it gives us info on memeory usage and 
+all of these inf can also be understood by non IT GUYS
+these are dashboards that have been designed by other developer
+***************so promenthus is monitorng my entire cl8
+the mamory uasge the pods that are ruuning their metris, whatever that is happenin
+there are diff dashboard that we can check
+all my k8 objects, frm deployment, the pods,replicaset , node, controller
+ther is an alert manager wich we hv created certain alert like when memory is low 
+there are congifuration for the different issues for which we will receive alert
+so this promethus
+
+********************when we deployed promethus , some items were deployed 
+kubectl get po -n dev
+didnt get exactly what he wanted so 
+sudo su - kops
+kubectl get po -n dev
+we can see the items 
+remember we deployed garafana independently
+when we deployed prometus, it deployed 
+promrthus alert manager
+promethus kube state metrics
+promethus node exporter
+promtheus push gateway
+promethus server 
+etc
+################# but how did it deploy my alert manager
+kubectl get deploy -n dev
+NAME
+grafana
+nginx-nginx ingress controller
+promethus kube state metrics
+promethu promthus push gateway
+promethus seevrer     ************************  all these as a deployment
+
+how about staeful staeful
+kubectl get sts -n dev 
+NAME
+promethus -alertmanger
 
 kops@master:~$ kubectl get po -n dev
 NAME                                                READY   STATUS    RESTARTS   AGE
