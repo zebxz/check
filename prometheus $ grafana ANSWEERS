@@ -630,8 +630,21 @@ Rancher is deployed using docker
 we will deploy rancher using docker  ................................ 19.08
 checking if he has docker server to deploy rancher
 didnt hv , so creating docker server using ubuntu
+open all ports
 
+COMMAND TO INSTALL RANCHER
+sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+
+
+hes using auser data to install rancher, so paste the script 
 #!/bin/sh  
+sudo apt install docker.io -y  
+sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+            ###### then launch the server
+
+but it didnt work bc he realised that initially he didnt add -y 
+
+******************so in mobaxterm he vi dk.sh  and paste
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg
@@ -645,8 +658,61 @@ echo \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-sudo apt install docker.io -y  
+********************************************************************************
+
+ubuntu@ip-10-0-0-56:~ docker 
+docker not installed 
+********************************* so he ran 
+sudo apt install docker.io 
+successfuly installed
+
+######################################### now deploy rancher
 sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+
+************once rancher is deployed, we can import our cl8 into rancher
+i can import any number of cl8 into rancher
+rancher is being deployed, its a massive deployment
+successfully deployed
+
+ubuntu@ip-10-0-0-56:~   sudo docker ps 
+CONTAINER ID        IMAGE 
+b3E4C558C646C      rancher/rancher  
+we hv this container
+he then went to aws, this the container running
+copied the ip , to acces it online , i wnt  to access the capplication, its a container
+cant be reached
+checked his security 
+then tried the ip online again and it worked
+warning potential risk ahead, thats fine
+ACCEPT and continue
+its asking for password 
+then copy the command on rancher website on the screen 
+sudo docker logs  container-id  2>&1 | grep "Bootstrap Password:"
+copy the container id  : b3E4C558C646C 
+sudo docker logs  b3e4c58c646c  2>&1 | grep "Bootstrap Password:"
+in mobaxtern run :
+sudo docker logs  b3e4c58c646c  2>&1 | grep "Bootstrap Password:"
+ ************now we can see the passwd
+copy it and paste on the website on the screen, am connecting to rancher now, it wil provide a dashboard
+rancher is goin to give me a k8 dashboard 
+now we can customise our own PASSWD OR selct a specific one 
+allow
+allow 
+copy the sever ip adress
+continue
+but couldnt connect
+
+############## he said he wanted us to connect so he can show us how to connect to our cl8 from rancher
+but bc of the error he wil hv to reillustrate in booth camp
+so pls this is k8, ther are a few things that are pending which u will get them in videos 
+like security and efk
+
+
+##################### today is our final class #################
+nxt wk we will search with boot camp
+
+
+
 
 sudo docker logs  container-id  2>&1 | grep "Bootstrap Password:"
 sudo docker logs  b3e4c58c646c  2>&1 | grep "Bootstrap Password:"
