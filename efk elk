@@ -287,55 +287,86 @@ the events that are taking place are vaarible events
  to cover i decided to share the video with u guys bc i wnat to shed some light in the 2nd half of the class, on certain terraform concepts...... k8 security n rbac
 
 
-
+****************************** K8 TALKING POINT
 
 
 
 Summary 
    Talking points:
-1. Container Orchestra 
+1. Container Orchestra     ... ie
       kubernetes Orchestrate containerise applications 
       kubernetes Orchestrate containerise micro-service applications 
+
+******* we choose k8 bc
 
 2. Self healing capacity, scalability, Disaster recovery, LB,  
    
 3. Automated rollouts and rollbacks
 
+we use k8 objects to deploy workload in our cl8
+imp objs to tk note of 
+services for  service discovery
+pods
+rc , rs, 
+satefulset  ,, which we just saw today
+daemonset
+deployment
+volumes
+configmaps
+secrets
+namespace concept
+ResourceQuota
+nodeAffinity
+podAffinity
+security
+
+*********these are very imp concepts for  to b able to xplain them
+before the objects, we spoke abt the architecture
+in the architecture, we saw the controlpaane, wich is also called the master node
+apiserver
+etcd
+scheduler
+controller-managers
+kubernetes-cni  :
+kube-proxy
+kube-dns
+workernodes
+
 Kubernetes architecture:
   control plane /master-node:
-    apiServer 
+    apiServer        ************ this receives the api call  eg         kubectl get  ,        helm install   
        kubectl get  
        helm install   
-       ui    
-    etcd [db] 
-    scheduler 
-    controller-managers 
+       ui       *********************  using the k8 dashboard with  some ui commands , u wil be communiatoin wit the APiserver, once it receives it it persist it in etcd
+    etcd [db]   (db or keyvalue store)   ,,,, then whatevar info has been stored here the scheduler is notified that some wrk nids to be done
+    scheduler         ************ then transfer d inf to d workernode ,kublet receives d info n immediaterly, d scheduler schedules d pod in d worker node n d resorce  
+    controller-managers                                                                                              is created
     kubernetes-cni:
       kube-proxy 
       kube-dns 
-  worker-nodes: 
-    container-runtime[docker, containerD]
-    kubelet
-    kubernetes-cni:
+  worker-nodes:                                                                                    1:21:10
+    container-runtime[docker, containerD]  ,, cud be docker in the past or today cntainerD ...i pu docker in d past bc docker was depreciated jst last yr n ur xperience 
+    kubelet                                                                                           is nt  docker was only 
+    kubernetes-cni:        the cni is also ruuning in the worker node like in the master node
       kube-proxy 
       kube-dns 
 Kubernetes objects:
-  services = service discovery :
-    users/admin/app--->SVC--->pod[APPcontainer]
-    service-TYPES:
-      ClusterIP :
+  services = service discovery :   our app are running inside a pod so to acces them u must go tru a service
+    users/admin/app--->SVC--->pod[APPcontainer]          user,admin , app can access the pod tru a service e.g spring talk to the db pod tru the service 
+    service-TYPES:                                                                               the pod to d service is an endpoint n d service performs this task does lb
+      ClusterIP :              the default service in k8                                                                          that is service discovery
         spec:
           type  
           selector:
             app: myapp 
-      NodePort   
-      LoadBalancer  
-      ExternalName 
-      ingress 
-         ClusterIP 
-  pods---> houses containers  
-     SingleContainerPods  
-     MultiContainerPods 
+      NodePort         *********** external
+      LoadBalancer      ****************** external
+      ExternalName       **************** we didnt demo this, used to cmm with app outised ur cls8
+      ingress            ***has  alot of advantages .in security its xplained as additional layer of security, we can use it to deploy app using clusterIP wich increses 
+         ClusterIP                                  security in our cl8
+  pods---> houses containers       ************* wher appl are run
+     SingleContainerPods         *********** truout this course we hadjst had singlecontainer pod bt we can v some  pod that act as ultilty  pod to the main pod 
+     MultiContainerPods       ************    and in that case we can hv multi container pod
   PodTemplate:
     metadata:
       labels:
