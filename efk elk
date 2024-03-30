@@ -78,8 +78,280 @@ the nxt componant is called beats
 BEATS: open source data shipprs that can be installed as agents on servers to send operational data directly to Elasticsearch or via logstash, wher it can be further
 processed n enhanced.
 Therea re a number of beats for diff purposes.
+FILEbaet    , logfile
+metricbeat  , metrics   e.g metric data like cpu, memory
+packetbeta , netwrk data
+heartbeat: uptime monitoring
 
 WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
+
+in few words
+filebeats collects data from the log files and sends it to logstash
+logstssh enhances the data and sends it to elasticsearch
+elasticsearch stores and indexe the data
+kibana displays the data stored in elasticsearch
+
+ELK Stack Architecture
+           2) data processing        3)storage           4)Visualize
+1)Log
+
+            logstash                 elatsicsearch      kibana
+
+however one more component is needed or data collection called beats. this led Elatic to rename ELK as the Elastic stack.
+
+            Data collection          data processing        3)storage           4)Visualize
+1)Log
+
+              beats                       logstash                 elatsicsearch         kibana (can also be used to share)
+
+
+PREREQUISITE TO DEPLOY ELastic Stask     .....23:00
+
+we need a k8 cl8 with storage calss configured
+
+kubectl get pv 
+to check for our persist volume we created initially
+kubectl get sc
+to see we hv a dynamic storage class 
+************* also if we have deploy k8 using kops, it would have as well cm with dynamic storgae class
+
+
+helm install elasticsearch elastic/elasticsearch
+   It will deploy elasticsearch in the default namespace 
+   It will deploy elasticsearch using default value file 
+helm install elasticsearch elastic/elasticsearch \
+  -n efk -f elasticsearch.values 
+
+# ingress2.yml
+apiVersion: extensions/v1beta1  # networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-rule-1
+  namespace: efk
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kibana.dominionsystem.net
+    http:
+      paths:
+      - backend:
+          serviceName: kibana-kibana
+          servicePort: 5601
+
+Summary 
+   Talking points:
+1. Container Orchestra 
+      kubernetes Orchestrate containerise applications 
+      kubernetes Orchestrate containerise micro-service applications 
+
+2. Self healing capacity, scalability, Disaster recovery, LB,  
+   
+3. Automated rollouts and rollbacks
+
+Kubernetes architecture:
+  control plane /master-node:
+    apiServer 
+       kubectl get  
+       helm install   
+       ui    
+    etcd [db] 
+    scheduler 
+    controller-managers 
+    kubernetes-cni:
+      kube-proxy 
+      kube-dns 
+  worker-nodes: 
+    container-runtime[docker, containerD]
+    kubelet
+    kubernetes-cni:
+      kube-proxy 
+      kube-dns 
+Kubernetes objects:
+  services = service discovery :
+    users/admin/app--->SVC--->pod[APPcontainer]
+    service-TYPES:
+      ClusterIP :
+        spec:
+          type  
+          selector:
+            app: myapp 
+      NodePort   
+      LoadBalancer  
+      ExternalName 
+      ingress 
+         ClusterIP 
+  pods---> houses containers  
+     SingleContainerPods  
+     MultiContainerPods 
+  PodTemplate:
+    metadata:
+      labels:
+        app: myapp 
+    spec:
+      containers
+  ReplicationControllers:
+    spec:
+      selector:
+        app: myapp 
+
+  ReplicaSet:
+    selector:
+      matchExpressions [set-based]
+      matchLabels: [eqaulity based]
+        app: myapp 
+  StatefulSet 
+  DaemonSet 
+  Deployment 
+  volumes 
+  configMaps  
+  secrets
+  namespace :
+    virtual clusters within our k8s. 
+  ResourceQuota 
+  node 
+    by default the scheduler assigns pods to be 
+    created in node with sufficient resources 
+  nodeSelector
+    use to restrict the node(s) where pods should be created     
+  nodeAffinity 
+    use to restrict the node(s) where pods should be created 
+  podAffinity
+    PriorityClasses   
+      prod-app [high priority]  
+      dev-app  [low priority]
+      test-app [meduim priority]
+    dev-app is running   
+    prod-app is pending due to insufficient resources 
+    If podAffinity is enforced dev-app pods will be evicted and    
+    prod-app pods will be running 
+
+  Health Checkers:
+  liveness probes/
+  readiness probes/
+     users/apps/admins --->appSVC---> 4pods[appsContainer] 
+     http:
+        /java-web-app
+    curl -v localhost:8080/java-web-app 
+  startup probes
+  security
+
+
+portable containerise applications  
+our Developers don't hard code 
+    db-username: ${username}
+    db-password: ${password} 
+    dockerHub-credentials , ssh-keys 
+
+Terraform:
+
+elastic-search:
+  storage for log files 
+    nodes 
+    pods   
+
+s3:
+  objects 
+    log files  
+    audio files   
+    video files 
+    archive files 
+  storage classes 
+
+Terraform introduction:
+  Terraform is an Infrastructure as a code [IaC] tool 
+  Creating VMs using hypervisor:
+    virtualBox  
+    vmWare 
+    cetrix Zen
+    hyperV  
+      Console  
+      commands   
+      IaC = VAGRANT  
+  Cloud providers / platforms:
+    AWS   
+    GCP  
+    AZURE  
+    IBM  / REDHAT 
+  We can create resources in cloud platforms using:
+
+    Console = GUI 
+    CLI = 
+    IaC:
+      Terraform [WORKS FOR ALL PROVIDERS]  
+      cloudFormation [AWS]
+      ansible 
+      python-sdk 
+Use VS CODE to easily write and modify files, scripts and codes. 
+Terraform codes are written in:
+    Hashicorp configuration language = HCL 
+===========================
+1. Create a dbServer in aws using terraform
+1. create a vpc in aws using terraform
+
+
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+Authenticated and authorised using:
+  IAM  
+
+provider "aws" {
+  region = "us-west-1"
+}
+resource "aws_instance" "db"{
+  ami             = 
+  instance_type   = "t2.micro"
+  key_pair        = "class27"
+  security_groups = ['sg1', 'sg2', 'sg10' ]
+  tags = {
+    Name = "db-server"
+    Environment = "production"
+  }
+}
+
+terraform:
+  init  = initialises a terraform dir and 
+          download providers plugins 
+  validate = validate tf files 
+  plan     = 
+  apply 
+  apply --auto-approve 
+  destroy  
+  destroy --auto-approve 
+  format
+ = records all Infrastructures created  
+  terraform show or cat terraform.tfstate
+  import  --bring resources under the mgt of terraform  
+            which were not created by terraform
+  modules  
+  variables  
+  outputs 
+  workspaces
+  terraform.tfstate mgt     
+     locally [5 Engineers]
+        Paul
+           terraform apply  
+        Esther
+           terraform apply 
+     remotely 
+        s3 backend
+        dynamoDB table locks  
+
+
+
+
+
+
+
+
+
 
 
 
