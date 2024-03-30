@@ -116,11 +116,96 @@ to see we hv a dynamic storage class
 ************* also if we have deploy k8 using kops, it would have as well cm with dynamic storgae class
 
 
-helm install elasticsearch elastic/elasticsearch
+create namespace
+kubectl create ns efk
+add
+we are using helm to deploy efk
+helm repo add elastic https://helm.elastic.co
+we can go to this site to search the chart that are der   :https://helm.elastic.co
+helm repo update
+helm repo ls 
+we wnt to deploy elasticsearch
+searching the repo we just added
+helm search repo elastic **************** searching the repo we just added
+we can see all the charts  in the repo
+this is the chart we want to use :   elastic/elasticsearch
+helm show values elastic/elasticsearch
+lets see the values in the chart
+lets createa anew file 
+mkdir efk
+cd efk
+ls                                                  (redirectin it into this custom file)
+helm show values elastic/elasticsearch >> elasticsearch.values  
+ls 
+elasticsearch.values
+vi elasticsearch.values                   ................ 31:00
+we see the valuesfile that will be used to deploy elastic search
+he changed replicas from 3 to 1 and master node from 3 to 1 ,, just for this practical
+
+helm install elasticsearch elastic/elasticsearch     ........(using the default values file)
    It will deploy elasticsearch in the default namespace 
    It will deploy elasticsearch using default value file 
 helm install elasticsearch elastic/elasticsearch \
-  -n efk -f elasticsearch.values 
+  -n efk -f elasticsearch.values              .....(using our custom file)  ..... dnt use the default file use the custom file
+it will be deployed in the efk ns we created earlier
+
+kubectl get all -n efk 
+nothing available
+1) ######################## 
+helm install elasticsearch elastic/elasticsearch -n efk -f elasticsearch.values    
+kubectl get all -n efk 
+now we see the elasticsearch pod coming up and its being deployed as a stateful pod 
+kubectl get pvc -n efk
+it has pvc for the elasticsearch pod with 30Gi
+this is bc we hv dynamic class storage configured in our env so data can be stored bc elastic search wil stpre the data
+kubectl get pod -n efk 
+we can see the pod and the service created
+
+2) ##############     WE WANT to deploy kbana    .... (helm install elastic/kibana)
+
+helm show values elastic/kibana
+we see the default values for kibana
+one replica is being deployed and dats what we need
+we hv some cinfigs maps that wil be deployed
+config maps are additional configuration
+we see the service type is CLusterIP and we can work with that bc we have nginx already deployed
+but if nginx wasnt deployed, we would have changed the service type to nodeport or lb 
+all the default values are ok
+the chart we are using for thais deployment ias elastic/kibana
+################### deploying kibana
+(its deployed in the efk name space)  
+helm install  elastic/kibana -n efk      ... (since we ar not changin any values we wont use -f) bc we wont use any customized file for the deployemt, we did nt chnGE D 
+VALUES file           
+kubectl get po -n efk
+we see kibana was deployed using deployment, k8 object
+kubctl get statefulset -n efk
+we see elasticsearch was deployed using stateful set
+bc elastic search comes with a database, its the database wher all the logs are shipped into
+and logs that hv been shipped into elasticsearch,we can visualize the log using kibana
+filebeats will ship the log into elasticsearch
+***********************we now install filebeat
+helm install filebeat elastic/filebeat -n efk        (in the efk namesapce)
+also we are nt changing any values for filebeat 
+we nid filebeat to be running in all the nodes, so it can be collecting the logs and shipping it 
+therefore, it will be deployed as a daemonset
+3) ##########
+helm install filebeat elastic/filebeat -n efk
+now deployed
+kubectl get ds -n efk
+filebeat-filebeat
+kubectl get svc -n efk
+we hv 3services
+NAME                                  TYPE
+elasticsearch-master                 CLusterip
+elasticsearch-master-headless        Clusterip
+kibana-kibana                        Clusterip
+
+we need to access kibana service externally 
+right now we hv just the clusterip we hv used to deploy kibana
+but see we already hv ingress controller deployed in our cl8, we dnt ned to worry abt nodeport
+4)  ***************************so we are goin to create ingress rule for kibana
+we created one yesterday for alertmanger, promethus server and grafana
+so hw do we wnat to access kibana, we are creating an ingress rule
 
 # ingress2.yml
 apiVersion: extensions/v1beta1  # networking.k8s.io/v1
