@@ -206,6 +206,7 @@ but see we already hv ingress controller deployed in our cl8, we dnt ned to worr
 4)  ***************************so we are goin to create ingress rule for kibana
 we created one yesterday for alertmanger, promethus server and grafana
 so hw do we wnat to access kibana, we are creating an ingress rule
+############# host base routing
 
 # ingress2.yml
 apiVersion: extensions/v1beta1  # networking.k8s.io/v1
@@ -216,12 +217,31 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: kibana.dominionsystem.net
+  - host: kibana.dominionsystem.net         (hostname), to accses the backend services, type: kibana.dominionsystem.net 
     http:
       paths:
       - backend:
-          serviceName: kibana-kibana
-          servicePort: 5601
+          serviceName: kibana-kibana       (gotten by running kubectl get svc )
+          servicePort: 5601                 (gotten by running kubectl get svc ) at work u also maintain the right service port
+
+this is host basse routing
+to create thsi ingress resource
+vi  ingress-rule.yml   ,  and paste
+kubectl apply -f ingress-rule.yml
+ingress.extensions/ingress-rule-1 created
+kubectl describe ingress ingress-rule-1 -n efk
+ we can see kibana.dominionsystem.net
+and its routing trafic to the backendport on the port number   kibana-kibana:5601(10.0.1.124:5601)
+its port forwarding taking place her     ................ 52:00
+bc when u type : kibana.dominionsystem.net
+ur traffic is routed via the lbalancer service
+&once it comes into d cl8,it talks 2 dis service kibana-kibana:on d service port number 5601 & kibana service route d service to dcontainer on dis port no.(10.0.1.124:5601)
+this is what is happens
+in aws we hv to go to route 53 n create dns record
+
+52:16
+
+
 
 Summary 
    Talking points:
