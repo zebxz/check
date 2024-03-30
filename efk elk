@@ -355,9 +355,9 @@ Kubernetes objects:
     users/admin/app--->SVC--->pod[APPcontainer]          user,admin , app can access the pod tru a service e.g spring talk to the db pod tru the service 
     service-TYPES:                                                                               the pod to d service is an endpoint n d service performs this task does lb
       ClusterIP :              the default service in k8                                                                          that is service discovery
-        spec:
-          type  
-          selector:
+        spec:         
+          type       1:33:00 ...  how will a service identify that it nids to route service to a po dvia service discovery, under service we hv api version, metadata, spec, 
+          selector:                   under spec seletor, in the selector we pass smt like this  bc d selector must match
             app: myapp 
       NodePort         *********** external
       LoadBalancer      ****************** external
@@ -373,19 +373,20 @@ Kubernetes objects:
         app: myapp 
     spec:
       containers
-  ReplicationControllers:
-    spec:
-      selector:
-        app: myapp 
-
-  ReplicaSet:
-    selector:
-      matchExpressions [set-based]
-      matchLabels: [eqaulity based]
+  ReplicationControllers:   (rs,staefulset, daemonset,deployment) therfore, we dnt deploy d containers directly inside the pod dirctly bc  d pod lifecycle is very short
+    spec:                                      so we depoy them using controllers, so wit the help of controlers we cqn deploy our appl
+      selector:                                 bt how will d controller knw that they are incaharge of a pod,  remeber that in d pod ther is a template file,
+        app: myapp                                 and in the pod ders a template ders a metadata wher we pass some labels like app: myapp
+                                  for replication controllers we hv selector is looking for app:myapp, so selector knw that app=myapp, so d controllers ar able to identify
+                                                      their pod usin labels n selectors, so this  replicationcontroller knows that ist responsible for this guy app:myapp
+ReplicaSet:                                       similarly,if it was for rs, daemonset , deployment , these are the new generation or the big guys bc 
+    selector:                                         they jst dnt use equalitybased selector
+      matchExpressions [set-based]                under selector they add anoda layer : e.g match label for equality base
+      matchLabels: [eqaulity based]                       this is the same pattern for rs, stateful set , daemonset, deployment
         app: myapp 
   StatefulSet 
   DaemonSet 
-  Deployment 
+  Deployment         
   volumes 
   configMaps  
   secrets
