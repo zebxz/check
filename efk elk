@@ -1,4 +1,6 @@
 check the EFK/ ELK powerpoint
+WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
+
 we are talking bout elastic stack , lock stack and kuberna or elastic stack fibric and kuberna
 we are goin to be deploying this stack in our k8 cl8 using helm
 
@@ -20,3 +22,75 @@ kubectl describe  tdapp-759f7c6687
 OR check/get the logs  of the pod
 kubectl logs tdapp-759f7c6687     
 we can see the appl was deployed using the spring booth frame work
+if u look at the appl, you can visualize the logs
+********************if ders anytin wrong with your appl you can check the logs it will tell whats happening
+
+############## kubectl get deploy
+NAME                      READY         
+ngninx-nginx-ingress        1/1
+tdapp                       2/2 
+
+**************** kubectl logs tdapp
+Error from server (Not found): pods tdapp not found 
+####################### ie it has to be in pods to check the logs , ( run kubectl get pod, first before running kubectl get logs tdapp)
+
+*****************************  9:10
+##############  but when u have multiple appl and ther are issues,
+kubectl get pod -A        * TO get all the pods in all the name spaces
+we see all the pods running
+NAMESPACE            NAME    
+apm                 grafana
+apm                 promethus
+kube-system         cluster-autoscaler-6cf74d69f7
+grafana pod is running
+the alertmanger   , incharge of sending alert, if smt is going wrong 
+kubestate -maetrics ttaht gathr all the data, whatever is happening within our k8 objects eg pods, deplyment, rs, rc,  even nodes
+node exporter is also gathering whatererv is happening in the nodes, the metrics  node exporter is gathering them 
+promrthus sererv pod , it will scrap all of this data into the promethus  time series databasea nd once the dta has been scrapped we can visualise what is hapening using 
+grafana
+
+**************** so if we hv 100 pods we cant be running kubectl for all of the pods, that will be a tidious task
+kubectl logs cluster-autoscaler-6cf74d69f7
+ERROR form server not found clustr-autoscaler      ************************** this is bc we didnt check in the correct namespace (we nid to pass the namespace)
+kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system
+the logs are successfully generated                     8:25
+
+HOW ARE WE ABLE TO CENTRALIZE OUR LOG MGT  ************************ powerpoint 12:40
+we can use Elastic stack along with Docker to collect, process, store and visualize logs of microservices
+
+WHAT IS ELASTIC STACK  .........................the vendor is ELASTIC
+its an open source app from elastic designed to take data From any source and in any format and then search, analyze,and visualize that data in real time.
+it was formely known as ELK stack, in wich the letters in the name stood for the appl in the grp. Elasticsearch, lahstack,and kibana. A fourth app, Beats, was 
+subsquently added to the stack.
+
+ELATICT search: ie now we can use elastic stack to staore data and to index the data, indexing streamas of semi-structured data, e.g logs or decoded ntwrk packets.
+************* so elastic search will act as a container, it will store all the logs  ...... this i sthe use of elastic stack, it also does indexing.
+it will index the logs , so when the logs are inside elastic search or the semi structure data n some ntwrk packages are inside elasticsearch waht happens is 
+elasticsearch can do indexing, it will index the logs , it will perform indexing ,indexing is just like a pattern , lets assume it wants to cfreate an index which is goin
+to like be displaying logs on a timestamp basis so that whatever is happening in the cl8 , u can use ur timestamp to know aht is goin on, so that can tk place, therfore
+elastic search is goin to act as a store n a kind of an analyzer.. thats what elastic search is goin to do.
+once the logs are stored, the next thing is that we want to visuaize these logs and we can use kibana  .... (THE SAMe way we saw grafana)
+
+KIBANA: is an open source analytics and visualizationplatform designed to work with elasticsearch. it can be used to search,view n interact wit data stored in elasticsearc
+indices, allowing sadvanced dtaa analysis n visualing dta in a variety of charts, tables n maps
+
+the nxt componant is called beats
+BEATS: open source data shipprs that can be installed as agents on servers to send operational data directly to Elasticsearch or via logstash, wher it can be further
+processed n enhanced.
+Therea re a number of beats for diff purposes.
+
+WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
