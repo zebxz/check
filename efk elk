@@ -237,9 +237,24 @@ bc when u type : kibana.dominionsystem.net
 ur traffic is routed via the lbalancer service
 &once it comes into d cl8,it talks 2 dis service kibana-kibana:on d service port number 5601 & kibana service route d service to dcontainer on dis port no.(10.0.1.124:5601)
 this is what is happens
-in aws we hv to go to route 53 n create dns record
+in aws we hv to go to route 53 n create dns record    ....... 52:16
+now we can access it online by typing kibana.dominionsystem.net
 
-52:16
+now we hv some pod taht we hv deployed
+kubectl get infress -o wide
+we can see the address
+lets get ingress in the right namespace
+kubectl get ingress -n efk -o wide 
+we can see ths adress , its the address of our lb
+nslookup kibana.dominionsystem.net 
+we see its resolving to the adress , (i bliv its the lb address)  .......56:45
+so when u ttype kibana.dominionsystem.net , in the background, its runing dns lookup, it wants to find out, what is the address, bc every server has a name 
+when endusers type          ## it talks to    >>   this talks to   >> talks to >>  
+******************* kibana.dominionsystem.net >> Ingress controller >> kibanaSVC >> Kibanapods
+the ingress controller is using the rules defined in this ingress resource and to talk to the ingress controller pod, it goes tru the lb and the lb we hv created Arecords
+so if you want to talk to the lb just type kibana.dominionsystem.net, traffic is routed, it gets to the ingress controller, ic routes  to the kibanapods tru the kibanaSVC
+
+
 
 
 
