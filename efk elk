@@ -407,23 +407,24 @@ ResourceQuota    ********* also a gud k8 obj, since we v ns we can restrict hw m
     use to restrict the node(s) where pods should be created     
   nodeAffinity 
     use to restrict the node(s) where pods should be created 
-  podAffinity  : this is used to prioritie
-    PriorityClasses   
+  podAffinity  : this is used to prioritize     ,, use pod affinity to assign high priority to the pod   ..    (INTERVIEW QUESTION)
+    PriorityClasses     ...................    lets assume u ar deployin multiplse appl, with d help of affinity ur prod app wil tk priority, 
       prod-app [high priority]  
       dev-app  [low priority]
       test-app [meduim priority]
-    dev-app is running   
-    prod-app is pending due to insufficient resources 
+    dev-app is running   , you are deployin prod app bt its 
+    prod-app is pending due to insufficient resources  bc u hv deploy dev app already
     If podAffinity is enforced dev-app pods will be evicted and    
-    prod-app pods will be running 
+    prod-app pods will be running  ,, bc my server doesnt hv suficient resources
 
-  Health Checkers:
+1:46:45             ,, if the pod is nt ready rediness will restart it to make sure it comes up 
+Health Checkers:
   liveness probes/
-  readiness probes/
-     users/apps/admins --->appSVC---> 4pods[appsContainer] 
+  readiness probes/   lets assume we v 4containers running, b4 traffic is routed to a pod a health check is performed using readiness probe, it mksure trafic is nt routed
+     users/apps/admins --->appSVC---> 4pods[appsContainer]                                                      to a pod thats nt ready to receive trafic
      http:
         /java-web-app
-    curl -v localhost:8080/java-web-app 
+    curl -v localhost:8080/java-web-app    e.g to run the curl command  on ur command line, to run a test if ur appl is running,  so readiness test is like a this jst to check if ur 
   startup probes
   security
 
