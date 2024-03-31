@@ -357,7 +357,7 @@ Kubernetes objects:
       ClusterIP :              the default service in k8                                                                          that is service discovery
         spec:         
           type       1:33:00 ...  how will a service identify that it nids to route service to a po dvia service discovery, under service we hv api version, metadata, spec, 
-          selector:                   under spec seletor, in the selector we pass smt like this  bc d selector must match
+          selector:                   under spec seletor, in the selector we pass smt like this ,app: myapp bc d selector must match
             app: myapp 
       NodePort         *********** external
       LoadBalancer      ****************** external
@@ -382,18 +382,25 @@ Kubernetes objects:
 ReplicaSet:                                       similarly,if it was for rs, daemonset , deployment , these are the new generation or the big guys bc 
     selector:                                         they jst dnt use equalitybased selector
       matchExpressions [set-based]                under selector they add anoda layer : e.g match label for equality base
-      matchLabels: [eqaulity based]                       this is the same pattern for rs, stateful set , daemonset, deployment
+      matchLabels: [eqaulity based]            1:32:00           this is the same pattern for rs, stateful set , daemonset, deployment
         app: myapp 
-  StatefulSet 
-  DaemonSet 
-  Deployment         
-  volumes 
-  configMaps  
-  secrets
-  namespace :
-    virtual clusters within our k8s. 
-  ResourceQuota 
-  node 
+  StatefulSet    .... used to deploy db appl
+  DaemonSet          ... to deploy appl that wil run in all your node like exporter we deployed yesterday n filebead  we deployed today
+  Deployment        ... recommended k8  obj to deploy in k8 bc it has rollback , rollout n it also maintains all d replicaset for all d deployment, it kips a recrd of it
+  volumes                   imp  for deploying db appl ,we lokked at  PV wher a piece of storage can b created withinin our cl8 n managed by cl8 by d kube service                                                                    dats y u can rolbk n rollout
+  configMaps      .......  since we create portable containerise applications , wich means our Developers don't hard code , since they dnt hardcode 
+  if they are tryin to pass
+    db-username: ${username}     ie in the dockerfile this info are not hardcoded, so we use config maps to pass this inf whiledeploying our contaainerized appl in k8
+    db-password: ${password}            so config is goin 2 be used for us to pass additional config that were not nt passed in d docker file or any additonal config
+    dockerHub-credentials , ssh-keys                that the container need to run effectively . its used to pass non-confidntial data e.g we v smt like db-password: ${password}
+                                               this is a secret info, hw do we pass dis info in our cls8 or we wnt to dpeloy appl n our images ar in private repositories
+                                we nid our dockerhub credentials, hw ar we goin to pass d credentials for dockerhub, or we wnt to pass some ssh keys all of dis will be passe
+  secrets                                                                            using secrets
+  namespace :       *********** helps us to create virtual cl8 within our k8 cl8, e.g u can create ns for dev env, prod , stagin  n ts also gud for security, e.g u can decide
+    virtual clusters within our k8s.                                           that developers wil only wrk in the dev ns, they v nothing to do with prod ns
+
+ResourceQuota    ********* also a gud k8 obj, since we v ns we can restrict hw much resources each ns can create to uptimize our resource usage in k8 ,,, using resourcequota
+  node   ********* very imp, bc dis is wher all d workload are deployed, thay are dpeloyed in worker node , we v nodeselector, a
     by default the scheduler assigns pods to be 
     created in node with sufficient resources 
   nodeSelector
