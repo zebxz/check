@@ -442,7 +442,22 @@ our Developers don't hard code
     db-password: ${password} 
     dockerHub-credentials , ssh-keys 
 
-Terraform:
+
+
+
+QUESTION
+why do we store logs in s3 bucket????????
+
+1:54:40
+moving logs  into s3 bucket
+
+simon@k8:~/efk$ aws s3 ls                 ********* now we see the buckets we already hv 
+class27adevops
+landmark27
+simon@k8:~/efk$          ******* so if  simon@k8:~/efk$   is our elastic search server and i v some log files, we can copy the logs into any of the buckets i v chosen to
+                                                             move my log file into , so that implies we can store our log files in elastic search for 1month after 1mth
+                                                                  we can move the logs to s3 bucket.
+
 
 elastic-search:
   storage for log files 
@@ -450,12 +465,16 @@ elastic-search:
     pods   
 
 s3:
-  objects 
+  objects  storage ,
+objects like
     log files  
     audio files   
     video files 
     archive files 
   storage classes 
+
+
+Terraform:
 
 Terraform introduction:
   Terraform is an Infrastructure as a code [IaC] tool 
