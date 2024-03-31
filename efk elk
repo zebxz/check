@@ -400,14 +400,14 @@ ReplicaSet:                                       similarly,if it was for rs, da
     virtual clusters within our k8s.                                           that developers wil only wrk in the dev ns, they v nothing to do with prod ns
 
 ResourceQuota    ********* also a gud k8 obj, since we v ns we can restrict hw much resources each ns can create to uptimize our resource usage in k8 ,,, using resourcequota
-  node   ********* very imp, bc dis is wher all d workload are deployed, thay are dpeloyed in worker node , we v nodeselector, a
-    by default the scheduler assigns pods to be 
+  node   ********* very imp, bc dis is wher all d workload are deployed, thay are dpeloyed in worker node , we v nodeselector, nodeaffinity, node affinity 
+  what happens with node is that:  by default the scheduler assigns pods to be 
     created in node with sufficient resources 
-  nodeSelector
+  nodeSelector   : if we wnt a pod to be created only in a particular node (nodeselector or nodeaffinity)
     use to restrict the node(s) where pods should be created     
   nodeAffinity 
     use to restrict the node(s) where pods should be created 
-  podAffinity
+  podAffinity  : this is used to prioritie
     PriorityClasses   
       prod-app [high priority]  
       dev-app  [low priority]
