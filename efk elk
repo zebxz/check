@@ -417,16 +417,23 @@ ResourceQuota    ********* also a gud k8 obj, since we v ns we can restrict hw m
     If podAffinity is enforced dev-app pods will be evicted and    
     prod-app pods will be running  ,, bc my server doesnt hv suficient resources
 
-1:46:45             ,, if the pod is nt ready rediness will restart it to make sure it comes up 
+1:46:45             ,, if the pod is nt ready liveness will restart it to make sure it comes up 
 Health Checkers:
   liveness probes/
   readiness probes/   lets assume we v 4containers running, b4 traffic is routed to a pod a health check is performed using readiness probe, it mksure trafic is nt routed
      users/apps/admins --->appSVC---> 4pods[appsContainer]                                                      to a pod thats nt ready to receive trafic
      http:
         /java-web-app
-    curl -v localhost:8080/java-web-app    e.g to run the curl command  on ur command line, to run a test if ur appl is running,  so readiness test is like a this jst to check if ur 
-  startup probes
-  security
+    curl -v localhost:8080/java-web-app    e.g to run the curl command on ur command line, to run a test if ur appl is running, so this is like a health test as well
+                                        so readiness probe wil mk sure that b4 trafic is routed to a pod by a service, the pod is ready to receive trafic
+                                       so if a pod is nt ready, readines probe wil remove the pod frm the loadservice algorithm bc the appSVC cant route trafic to the pod
+   
+startup probes        ..... for containers that are slow to start if we dnt wnt the container to fail, we can use startup probes
+
+###################### this are imp stuff to tk note of    #############
+
+you;ll go tru the security video 
+security
 
 
 portable containerise applications  
