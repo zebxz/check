@@ -1,3 +1,4 @@
+HOW TO DO  RBAC using EKS ,How to configure roles and cluster roles to easily permit who can perform what in our k8 cluster, cl8 was deployed using terraform   ********** 
 Security Best Practices for Kubernetes Deployment   :
 =======================================================
 
@@ -125,7 +126,7 @@ e.g  what is the api version for pod?
 #apiVersion: v1
 #kind: Pod
 
-*********************************************so we can create a role and bind it to a user , group, process
+*********************************************so we can create a role and bind it to a user , group, process ,, and that is role binding
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -141,6 +142,30 @@ roleRef:
   apiGroup: ""
 
   ******************37:00
+RBAC                            *********** it is imp to knw that  k8 does nt hv any resource that deals directly with Authentication, howevr we can integrate k8 with 
+Authentication (Identity)                                                                                                   LDAP,IAM -eks , X-509 for identification
+when we are doing authentication generally where someone is identified, we can use smt like:
+x-509 certificate
+LDAP
+IAM - EKS
+these can be used for authentication
+
+AUthorisation (Permission)
+we use:
+Role
+RoleBinding
+
+37:47
+################################ HOW TO DO  RBAC using EKS   ,,,,.. this is my EKS cl8 ,  
+WE AR goin to be dealing with 
+Clusterrolebindingss
+clusterroles : are created foe the entire cluster
+rolebindings  : Assigning the role to a subject (users, groups, certain applications)
+role : Resourece we create wich is perimtting certain action to be carried out in your cl8
+                     A role is created for a namesapce
+
+luster roles to easily permit who can perform what in our k8 cluster
+our EKS cluster was deployed using Terraform
 
 RBAC Role
 
