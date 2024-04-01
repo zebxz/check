@@ -156,7 +156,8 @@ Role
 RoleBinding
 
 37:47
-################################ HOW TO DO  RBAC using EKS   ,,,,.. this is my EKS cl8 ,  
+################################ HOW TO DO  RBAC using EKS   ,,,,.. this is my EKS cl8 ,  ####################################################
+
 WE AR goin to be dealing with 
 Clusterrolebindingss
 clusterroles : are created foe the entire cluster
@@ -164,8 +165,56 @@ rolebindings  : Assigning the role to a subject (users, groups, certain applicat
 role : Resourece we create wich is perimtting certain action to be carried out in your cl8
                      A role is created for a namesapce
 
-luster roles to easily permit who can perform what in our k8 cluster
+41:00
+How to cobfigur reoles and Cluster roles to easily permit who can perform what in our k8 cluster
 our EKS cluster was deployed using Terraform
+ubuntu@demo:~/eks/EKS$ terraform show
+this displays some imp resourec including a very imp resource , we can see the kube config file and also our config map 
+the canfigmap o scalled : name: aws -auth      ..... this is what will get you authenticated, will auth users
+the map is created in kubectl namespace
+ubuntu@demo:~/eks/EKS$ kubectl get configmap        *********** this is in the default ns 
+ubuntu@demo:~/eks/EKS$  kubectl get configmap -n kube-system        ***************** to get it in the kube system ns
+i hv my cl8 runing, if i want to get it :
+ubuntu@demo:~/eks/EKS$  aws eks list-clusters
+ListClusters
+clusters
+terraform-eks-demo              ******** this is my cl8, wich is ruing, i v deployed the cls8
+ubuntu@demo:~/eks/EKS$
+to knw the authorixation that any user has 
+ubuntu@demo:~/eks/EKS$  kubectl auth can-i delete pods
+yes                                        *********************** so yes this user can
+ubuntu@demo:~/eks/EKS$  kubectl auth can-i create pods
+yes
+ubuntu@demo:~/eks/EKS$  kubectl auth can-i " *" "*"          ************this means can i do evrytin in this cl8 ? 
+yes                                                       ************this means this person is a super user, he can do evrytin
+ubuntu@demo:~/eks/EKS$                               you are working in a team, you are nt working alone
+
+we are going to aws account n we wil perform certain key task  like  lastweekin an 
+
+########################### INTERVIEW SOMEONE WAS ASKED WHAT IS YOUr IAM EXPERIENCE
+47:00
+ in the iam console in aws
+we create a grp: fintech grp 
+we hv nt assigned any role/policy to the grp
+lets also create fintech engrs  no policy assigned too
+create a user : bode , the user can hv programmatic acess(aws api, cli, sdk n other development tools ) or console access( aws mgt console)
+hes given only programamtic access  , no permission is assingned
+hes only assigned to the fintech develpers
+copy the access key n sacred access key for bode
+we are granting him restricted access
+we go to users in aws
+we copy his ARN   ...... ....... A mazon resourec name  ...   
+bode is identified with his ARN
+we hv to confirm the region our eks cl8 is ruing in
+now i wil try to access the cl8 usin bode , bc we hv created a subject 
+
+he used another server
+in his windown server , in the local treminal .............. 52:40
+***********************pls ensue u hv aws cli installed on ur laptop or any othet server u want to use
+to log into my sevre as bode 
+
+
+
 
 RBAC Role
 
