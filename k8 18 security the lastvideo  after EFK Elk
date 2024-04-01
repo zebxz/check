@@ -21,17 +21,17 @@ some cops keep in       Nexus/JFrog
 
 ######  to deploy ur appl , once this command is executed, it is using an image, so we must mk sure that only authorized images are used when it comes o deployment
         kubectl run/apply/create
-
-2. Limit Direct Access to Kubernetes Nodes.  (mg8 who gets access to the nodes) , in k8 we must restrict who can aaccess our node
+                                                                                     if someone deletes the node its a problem so linit access 
+2. Limit Direct Access to Kubernetes Nodes.  (mg8 who gets access to the nodes) , we nid to limit direct access to d node .,in k8 we must restrict who can aaccess our node
       kubectl get/decribe/edit/update/label/delete
       Cluster-->Nodes-->Pods
 
-3. Create Administrative Boundaries between Resources. 
+3. Create Administrative Boundaries between Resources.  we can limit developers to the dev ns
       Developers --> dev-nameSpace
       Sr. Engineers --> Cluster
 
-4. Define Resource Quota.
-      apiVersion:
+4. Define Resource Quota.   e.g kind: resourceQuota, thats what we wnt to create , so we are creating resourcequota for dev ns
+      apiVersion:                                  so we can create resourceQuota as far as  a specific ns is concerned
       kind: ResourceQuota
       metadata:
          namespace: dev-nameSpace
@@ -39,71 +39,93 @@ some cops keep in       Nexus/JFrog
       spec:
       - resources:
          cpu: 4Gi
-         mem: 128Mi 
-         pods: 20
+         mem: 128Mi   this way , whatevr is hapening, the dev namespace wont use more than 4Gi or 20pods 
+         pods: 20                              this is security
          
          
 5. Implement Network Segmentation. 
+we can stil do this using name spacing , with the help of name spacing we can isolate env like dev env, QA .. etc
 
 6. Apply Security Context to Your Pods and Containers.
+e.g who can access certain pods n containers 
 
 7. Log Everything. 
-     EFK
+     EFK  
+using EFK to mg8 the logs that are generated frm our appl
 
 8. Summary.
 
 Kubernetes Role Based Access Control (RBAC):
 
-When a request is sent to the API Server, it first needs to be authenticated (to make sure the requestor is known by the system) before it’s authorized (to make sure the requestor is allowed to perform the action requested).
+When a request is sent to the API Server, it first needs to be authenticated (to make sure the requestor is known by the system) before it’s authorized (to make sure the 
+requestor is allowed to perform the action requested).
 
-  RBAC:
-     authentication: 
-        kubectl get 
+  RBAC: Roll base access control
+     authentication: this is the first thing that hapens in a cl8
+    e.g of Api call:    kubectl get 
      authorisation:
 
 
 RBAC is a way to define which users can do what within a Kubernetes cluster.
 
 
-If you are working on Kubernetes for some time you may have faced a scenario where you have to give some users limited access to your Kubernetes cluster. For example you may want a user, say Michale from development, to have access only to some resources that are in the development namespace and nothing else. To achieve this type of role based access, we use the concept of Authentication and Authorization in Kubernetes.
+If you are working on Kubernetes for some time you may have faced a scenario where you have to give some users limited access to your Kubernetes cluster. For example you 
+may want a user, say Michale from development, to have access only to some resources that are in the development namespace and nothing else. To achieve this type of role
+based access, we use the concept of Authentication and Authorization in Kubernetes.
 
+#############To achieve this type of role based access, we use the concept of auhENTICATION N Authorization in k8
 
 Broadly, there are three kinds of users that need access to a Kubernetes cluster:
-1.	Developers/Admins/Engineers:
-Users that are responsible to do administrative or developmental tasks on the cluster. This includes operations like upgrading the cluster or creating the resources/workloads on the cluster.
-
+1.	Developers/Admins/Engineers: 
+Users that are responsible to do administrative or developmental tasks on the cluster. This includes operations like upgrading the cluster or creating the resources/
+workloads on the cluster.                                                                       e.g of resources  frm pod to rs, to rc, deployment, statefulset
+                                                                                                    done by developers, engrs , administrators
 2.	End Users:
-Users that access the applications deployed on our Kubernetes cluster. Access restrictions for these users are managed by the applications themselves. For example, a web application running on Kubernetes cluster, will have its own security mechanism in place, to prevent unauthorized access.
+Users that access the applications deployed on our Kubernetes cluster. Access restrictions for these users are managed by the applications themselves. For example, a web 
+application running on Kubernetes cluster, will have its own security mechanism in place, to prevent unauthorized access.
         users--->app.com[app.com--LB]-->NODE-->ingress-->
+         27:19....   so we hv created Arecord, so it pointing to our LB , we v equally ensured that the enduser traffic is also encrypted using certificate
+our LB will now b the guy that wil route trafic to the backend appl, bt as we saw it does nt routetrafic trfic directly to the backend appl, so when this trafic talks to a 
+node, the node is goin to route it to ingres service then ingress then routes tru the IC pod... our env is highly secured, endusers trafic cannot talk to our appl directly
+that is a security breach.. 
 
 3.	Applications/Bots:
-There is a possibility that other applications may need  access to Kubernetes cluster, typically to talk to resources or workloads inside the cluster. Kubernetes facilitates this by using Service Accounts.
-   Ingress--> 
+There is a possibility that other applications may need  access to Kubernetes cluster, typically to talk to resources or workloads inside the cluster. Kubernetes 
+facilitates this by using Service Accounts.
+ e,g when we deployed ingress, we created a service account for ingress which wil be given some powers and this is done by creating role n rolebinding
+nginx is a service so we create a service account that will permit ngin to control other appl in the cl8 e.g we can creat a role  wich wil hv definition like ok, u can
+control services , appl and then we bind the role to the service account to perform such tasks
+Ingress--> 
               Role 
               RoleBinding 
 
-
+  #THERE ARE SOME KEY WORD TO TAKE NOTE OF :
 RBAC in Kubernetes is based on three key concepts:
-
-1.	Verbs: This is a set of operations that can be executed on resources. There are many verbs, but they’re all Create, Read, Update, or Delete (also known as CRUD).
+                                                               THESE are the main verbs we are going to see when you are tryin to create a role or a cl8 role
+1.Verbs: This is a set of operations that can be executed on resources. There are many verbs, but they’re all, LIKE Create, Read, Update, or Delete (also known as CRUD).
 
 2.	API Resources: These are the objects available on the clusters. They are the pods, services, nodes, Persistent Volumes and other things that make up Kubernetes.
-
+                                                                        deplymen, daemonset etc  .. kubectl get pod, so the pod is an api resource
 3.	Subjects: These are the objects (Users, Groups, Processes(Service Account)) allowed access to the API, based on Verbs and Resources.
- 
+                      e.g we can create a grp of devops engrs and if u ar a member of that grp u ar goin to b able to peform all the task assigned to the grp
+
+E.G WE ARE CREATING A ROLE
 
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   namespace: office
-  name: deployment-manager
-rules:
+  name: deployment-manager     *********** the name of the role
+rules:                these ar the major API gropups        **********( if u put  * , it includes all the groups given
 - apiGroups: ["*", "extensions", "apps"]   # v1, apps/v1, 
   resources: ["deployments", "replicasets", "pods"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"] , these are action words that permit a particular task to b executed
+
+e.g  what is the api version for pod?
 #apiVersion: v1
 #kind: Pod
 
+*********************************************so we can create a role and bind it to a user , group, process
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -117,7 +139,8 @@ roleRef:
   kind: Role
   name: deployment-manager
   apiGroup: ""
- 
+
+  ******************37:00
 
 RBAC Role
 
