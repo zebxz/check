@@ -1,16 +1,28 @@
 Security Best Practices for Kubernetes Deployment   :
 =======================================================
 
+referred to a diagram on hw com is est within our k8 cl8 n on of the tin we realise is the fact that we can use ingres for that purpose , we wil stil visit this guy again 
+bt b4 we do that lets look at security, why do we nid to secure our k8 cl8
+
+BEST PRACTICES
+
+Remember that we are looking at eks, eks is increasingly been used by companies today so thats why we wil actually dealt with thAT
+LINK FOR K8 SECURITY:
 https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/
 
 1. Ensure That Only Authorized Images are Used in Your Environment. 
-      DockerHub 
-      AMAZON ECR
-      Nexus/JFrog
-      
+IN K8 we ochestrating docker containers n the containers are runing  frm docker images bc a docker container is running instance of a docker image , therfor for u secure
+your env you must ensure that only authorized images are used in ur env .
+our images are kept primarily in dockerhub, in :
+                        DockerHub 
+                        AMAZON ECR
+some cops keep in       Nexus/JFrog
+
+
+######  to deploy ur appl , once this command is executed, it is using an image, so we must mk sure that only authorized images are used when it comes o deployment
         kubectl run/apply/create
 
-2. Limit Direct Access to Kubernetes Nodes.  
+2. Limit Direct Access to Kubernetes Nodes.  (mg8 who gets access to the nodes) , in k8 we must restrict who can aaccess our node
       kubectl get/decribe/edit/update/label/delete
       Cluster-->Nodes-->Pods
 
