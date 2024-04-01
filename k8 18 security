@@ -1,0 +1,365 @@
+Security Best Practices for Kubernetes Deployment   :
+=======================================================
+
+https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/
+
+1. Ensure That Only Authorized Images are Used in Your Environment. 
+      DockerHub 
+      AMAZON ECR
+      Nexus/JFrog
+      
+        kubectl run/apply/create
+
+2. Limit Direct Access to Kubernetes Nodes.  
+      kubectl get/decribe/edit/update/label/delete
+      Cluster-->Nodes-->Pods
+
+3. Create Administrative Boundaries between Resources. 
+      Developers --> dev-nameSpace
+      Sr. Engineers --> Cluster
+
+4. Define Resource Quota.
+      apiVersion:
+      kind: ResourceQuota
+      metadata:
+         namespace: dev-nameSpace
+         name: dev-resources
+      spec:
+      - resources:
+         cpu: 4Gi
+         mem: 128Mi 
+         pods: 20
+         
+         
+5. Implement Network Segmentation. 
+
+6. Apply Security Context to Your Pods and Containers.
+
+7. Log Everything. 
+     EFK
+
+8. Summary.
+
+Kubernetes Role Based Access Control (RBAC):
+
+When a request is sent to the API Server, it first needs to be authenticated (to make sure the requestor is known by the system) before it’s authorized (to make sure the requestor is allowed to perform the action requested).
+
+  RBAC:
+     authentication: 
+        kubectl get 
+     authorisation:
+
+
+RBAC is a way to define which users can do what within a Kubernetes cluster.
+
+
+If you are working on Kubernetes for some time you may have faced a scenario where you have to give some users limited access to your Kubernetes cluster. For example you may want a user, say Michale from development, to have access only to some resources that are in the development namespace and nothing else. To achieve this type of role based access, we use the concept of Authentication and Authorization in Kubernetes.
+
+
+Broadly, there are three kinds of users that need access to a Kubernetes cluster:
+1.	Developers/Admins/Engineers:
+Users that are responsible to do administrative or developmental tasks on the cluster. This includes operations like upgrading the cluster or creating the resources/workloads on the cluster.
+
+2.	End Users:
+Users that access the applications deployed on our Kubernetes cluster. Access restrictions for these users are managed by the applications themselves. For example, a web application running on Kubernetes cluster, will have its own security mechanism in place, to prevent unauthorized access.
+        users--->app.com[app.com--LB]-->NODE-->ingress-->
+
+3.	Applications/Bots:
+There is a possibility that other applications may need  access to Kubernetes cluster, typically to talk to resources or workloads inside the cluster. Kubernetes facilitates this by using Service Accounts.
+   Ingress--> 
+              Role 
+              RoleBinding 
+
+
+RBAC in Kubernetes is based on three key concepts:
+
+1.	Verbs: This is a set of operations that can be executed on resources. There are many verbs, but they’re all Create, Read, Update, or Delete (also known as CRUD).
+
+2.	API Resources: These are the objects available on the clusters. They are the pods, services, nodes, Persistent Volumes and other things that make up Kubernetes.
+
+3.	Subjects: These are the objects (Users, Groups, Processes(Service Account)) allowed access to the API, based on Verbs and Resources.
+ 
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: office
+  name: deployment-manager
+rules:
+- apiGroups: ["*", "extensions", "apps"]   # v1, apps/v1, 
+  resources: ["deployments", "replicasets", "pods"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
+#apiVersion: v1
+#kind: Pod
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: deployment-manager-binding
+  namespace: office
+subjects:
+- kind: User
+  name: employee
+  apiGroup: "*"
+roleRef:
+  kind: Role
+  name: deployment-manager
+  apiGroup: ""
+ 
+
+RBAC Role
+
+A Role example named example-role which allows access to the mynamespace with get, watch, list, etc. operations:
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  namespace: mynamespace
+  name: example-role
+rules:
+- apiGroups: [""] 
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+In the rules above we:
+1.	apiGroups: [""] – set core API group
+2.	resources: ["pods"] – which resources are allowed for access
+3.	["get", "watch", "list"] – which actions are allowed over the resources above
+
+
+RBAC RoleBingding
+To “map” those permissions to users we are using Kubernetes RoleBinding, which sets example-role in the mynamespace for the example-user user:
+ 
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  name: example-rolebinding 
+  namespace: mynamespace 
+subjects:
+  -	kind: User
+    name: example-user
+    apiGroup: rbac.authorization.k8s.io 
+roleRef:
+    kind: Role
+    name: example-role
+    apiGroup: rbac.authorization.k8s.io
+
+
+Here we set:
+
+	subjects:
+	kind: User – an object type which will have access, in our case this is a regular user
+	name: example-user – a user’s name to set the permissions
+	roleRef:
+	kind: Role – what exactly will be attached to the user, in this case, it is the Role object type
+	name: example-role – and the role name as it was set in the name: example- role in the example above
+
+Role vs ClusterRole
+
+Alongside with the Role and ClusterRole which are set of rules to describe permissions –
+Kubernetes also has RoleBinding and ClusterRoleBinding objects.
+
+The difference is that Role is used inside of a namespace, while ClusterRole is cluster-wide permission without a namespace boundaries, for example:
+	allow access to a cluster nodes
+	resources in all namespaces
+	allow access to endpoints like /healthz
+
+A ClusterRole looks similar to a Role with the only difference that we have to set its kind as ClusterRole:
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  name: example-clusterrole 
+  rules:
+  -	apiGroups: [""]
+resources: ["pods"]
+verbs: ["get", "watch", "list"]
+
+And a ClusterRoleBinding example:
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1 metadata:
+name: example-clusterrolebinding 
+subjects:
+- kind: User
+  name: example-user
+  apiGroup: rbac.authorization.k8s.io 
+roleRef:
+  kind: ClusterRole
+  name: example-clusterrole 
+  apiGroup: rbac.authorization.k8s.io
+
+
+Keep in mind that once you’ll create a Binding you’ll not be able to edit its roleRef value – instead, you’ll have to delete a Binding and recreate 
+
+•	Kubernetes uses RBAC to control different access levels to its resources depending on the rules set in Roles or ClusterRoles.
+
+•	Roles and ClusterRoles use API namespaces, verbs and resources to secure access.
+•	Roles and ClusterRoles are ineffective unless they are linked to a subject (User, serviceAccount...etc) through RoleBinding or             ClusterRoleBinding.
+•	Roles work within the constraints of a namespace. 
+    It would default to the “default” namespace if none was specified.
+•	ClusterRoles are not bound to a specific namespace as they apply to the cluster as a whole.
+
+ Goal	
+
+As a Admin:
+=============
+
+1) Create IAM User With Polociy to List & Read EKS Cluster to get Kube Config File in AWS IAM Console.
+
+2) Edit aws-auth to add userarn to aws-auth config map
+
+  kubectl edit configmap aws-auth -n kube-system
+
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::921483055369:role/EKS_Node_Role
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::935840844891:user/Mithun          # Update your user arn here
+      username: Mithun                                        # Update your user name.
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2020-10-19T03:35:20Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "792449"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/aws-auth
+  uid: 8135dcd1-90e6-4dfb-872f-636601475aca
+	  
+	  
+RBAC:
+
+kubectl auth can-i '*' '*'
+kubectl auth can-i create ns  '*'
+
+
+## Create Role/ClusterRole & RoleBinding & ClusterRoleBinding#####
+
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: readonly
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get","list","create","delete","update"]
+- apiGroups: ["apps"]
+  resources: ["deployments","replicasets","daemonsets"]
+  verbs: ["get","list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: full_access_role_binding
+  namespace: default
+subjects:
+- kind: User
+  name: Simon                           # Map with username
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: readonly
+  apiGroup: rbac.authorization.k8s.io
+================
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: readonly
+rules:
+- apiGroups: [""]  # v1 = pods services
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["deployments","replicasets","daemonsets"]
+  verbs: ["get","list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: full_access_role_binding
+  namespace: default
+subjects:
+- kind: User
+  name: Bode
+- kind: User
+  name: Simon
+  # Map with username
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: readonly
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+
+Client Side:
+===========
+1) Install Kubectl & AWS CLI.
+
+2) Configure AWS CLI(With Access Key & Secret Key of IAM User which you created in AWS IAM)
+
+3) Get Kube-config file
+
+   aws eks update-kubeconfig --name <EKSClusteName> --region <regionName>
+   
+   aws eks update-kubeconfig --name myeks25 --region us-west-1
+   
+   
+
+4) try to access the cluster resources using kubectl ======	=====================================
+
+==========
+Prometheus Server 
+- scrapes data/logs
+- RULES Engine
+   failedPods
+   nodeDown 
+   LowMemory
+   Latency
+- alertManager 
+
+- NIH --  
+
+landmarkfintech.com 
+
+NYPD ==> 
+  Black Friday 
+    80% 
+    scaling ==95%
+  
+--> 
+
+ebs-blockStore
+==============
+Helm charts 
+  custom app 
+  open-source app 
+
+  helm search repo
+
+kubectl create ns monitoring
+helm show values stable/prometheus 
+helm install -f Prometheus.values.yml prometheus stable/prometheus -n monitoring
+
+helm install prometheus stable/prometheus -n monitoring -f Prometheus.values.yml
+
+
+helm install grafana stable/grafana -n monitoring -f grafana.values
+
+helm upgrade -f prometheus.values prometheus stable/prometheus -n monitoring
+
+kubectl edit deployment|service|rs|rr 
+kubectl edit SERVICE:
+   ClusterIP --> NodePort
+   ClusterIP --> LoadBalancer
+   NodePort  --> LoadBalancer
+			
