@@ -1,4 +1,5 @@
-HOW TO DO  RBAC using EKS ,How to configure roles and cluster roles to easily permit who can perform what in our k8 cluster, cl8 was deployed using terraform   ********** 
+HOW TO DO  RBAC using EKS , CONFIGURE THE CONFIGMAP TO AUTHORIZE USER , How to configure roles and cluster roles to easily permit who can perform what in our k8 cluster, 
+cl8 was deployed using terraform   ********** 
  TO MK THE USER GET ACCESS TO SVC ,   TO MK THE USER GET ACCESS TO READ ALL THE SERVICES
 
 Security Best Practices for Kubernetes Deployment   :
@@ -407,6 +408,53 @@ kubectl get pod as well as kubectl get svc
 this is k8 security and this is one thing you shud be able to explain, particularly since we hv done stuff like RBAC 
 
 w eare goin on break , when we come bk we go to promethus and grafana, so u can go ahead and ask ur question 
+
+
+say we have anothr user : simon
+we create a role for him and add himto the rolebinding
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  name: full_access_role_rolebinding 
+  namespace: default
+subjects:
+  -	kind: User
+        name: bode   
+        kind: user
+        name: Simon
+
+
+1:32:58
+
+ right now  we have assigned all the roles to Bode but that shud nt be the use case
+we should assign a role for simon as an engr and a role for Bode as a developer 
+
+QUESTION
+do you advice we create a backup for the configmap before editing it? 
+
+ANS:
+ the configmap is saved in our etcd
+You can equally check like when we deployed this cl8, it possible that we hv an s3 bucket where its running as our etcd, its still possible
+but know that etcd is our key value store
+
+************** but we could also create a backup for that file ,u can  just copy the content of the file and paste it somewher so that if u mess it up but even if you
+mess it up u cant cm out of the file e.g if u enter a wrong syntax, it wont edit, it wil tell u , u hv netered smt that is wrong.
+
+QUESTION 
+in a situation wher u want to assign permission to e.g multiple devops engrs, can we group them ???
+
+ANS: 
+ IF the KIND can be user , the KIND can also group , then all the users in that group can inherit that prmission/ whatevr the role is permitting them to do
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  name: full_access_role_rolebinding 
+  namespace: default
+subjects:
+  -	kind: User  #group
+    name: bode
 
 
 
