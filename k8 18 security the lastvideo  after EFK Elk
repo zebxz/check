@@ -189,9 +189,9 @@ ubuntu@demo:~/eks/EKS$  kubectl auth can-i " *" "*"          ************this me
 yes                                                       ************this means this person is a super user, he can do evrytin
 ubuntu@demo:~/eks/EKS$                               you are working in a team, you are nt working alone
 
-we are going to aws account n we wil perform certain key task  like  lastweekin an 
-
+we are going to aws account n we wil perform certain key task  like,  last weekin an 
 ########################### INTERVIEW SOMEONE WAS ASKED WHAT IS YOUr IAM EXPERIENCE
+
 47:00
  in the iam console in aws
 we create a grp: fintech grp 
@@ -203,13 +203,14 @@ hes only assigned to the fintech develpers
 copy the access key n sacred access key for bode
 we are granting him restricted access
 we go to users in aws
-we copy his ARN   ...... ....... A mazon resourec name  ...   
+we copy his ARN   ...... ....... Amazon resource name  ...   
 bode is identified with his ARN
 we hv to confirm the region our eks cl8 is ruing in
 now i wil try to access the cl8 usin bode , bc we hv created a subject 
 
+now using his laptop
 he used another server
-in his windown server , in the local treminal .............. 52:40
+in his windown server , the local treminal .............. 52:40
 ***********************pls ensue u hv aws cli installed on ur laptop or any othet server u want to use
 i wnat to log into my sever as bode
 i have a local terminal here 
@@ -259,7 +260,7 @@ kubeconfig    .... file is needed
 aws eks update-kubeconfig --name \
 ***************then add the cl8 name 
 terraform-eks-demo \
-************************ then the aws cl8 where the cl8 is running in
+************************ then the aws region where the cl8 is running in
 --region us-west-1 \
  ########### now run the command : 
 aws eks update-kubeconfig --name terraform-eks-demo --region us-west-1
@@ -279,21 +280,68 @@ kubectl get pod
 error: you must be logged in to the server (unauthorized)
 at this tim ethis user is nt authorized to access the cl8
 
-~~~~~~~################ 
+~~~~~~~################   remember we have our administrator   ##########
+ubuntu@demo:~/eks/EKS$  kubectl auth can-i " *" "*"          ************this means can i do evrytin in this cl8 ? 
+yes                                                       ************this means this person is a super user, he can do evrytin
+so we go bk to this server, this is like the adminstrator of our k8 cl8
+ubuntu@demo:~/eks/EKS$ kubectl get configmap -n kube-system
+NAME                       DATA          AGE
+aws-auth                     1            76m
+coredns                      1            79m
+kube-proxy                   1            79m
 
+********** so we hv this config map : aws-auth
+we can also edith the config map and add mapUsers, bc its the config map that contains users that want to access our cl8 , but w eneed Bode to get access
+ubuntu@demo:~/eks/EKS$  kubectl edit configmap aws-auth -n kube-system    *********** (its found in the kubectl namespace)
+in the config map we add users info , so we add Bode info 
+we hv mapRoles:
+we create mapUsers
+mapUsers:  
+ - userarn:  paste the ARN  for bODE whcih we copied from AWs 
+   username: BOde
+exit
+now the info has been updated
 
+################ now going tbk to his laptop
+kubectl get pod
+Erorr from server (forbidden): pods is forbidden: user bode cannot list resourecs pods in API group in the default namespace
 
+we hv used IAM to authenticate BOde
+************* so now BODE IS ABLE TO access the cl8 but cant perform task in the cl8
 
+####### lets see that he has right to list pod
 
+lets create a role
+vi role-dev.yml
 
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  namespace: default                ************ bc role is restricted to a namespace
+  name: readonly
+rules:
+- apiGroups: [""]      *********** this represents API resources with v1     #v1 = pods services
+  resources: ["pods"]
+  verbs: ["get",  "list"]
+apiGroups:["apps"]
+resources: ["deployments", "replicasets", "daemonsets"]
+verbs: ["get", "list"]
 
+#### now we bind the role to the user, if we dnt bind it he wont still have access .. .... 
 
-
-
-
-
-
-
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  name: example-rolebinding 
+  namespace: mynamespace 
+subjects:
+  -	kind: User
+    name: bode                                      #replace the map with your own username
+    apiGroup: rbac.authorization.k8s.io 
+roleRef:
+    kind: Role
+    name: example-role
+    apiGroup: rbac.authorization.k8s.io
 
 RBAC Role
 
