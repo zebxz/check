@@ -372,7 +372,7 @@ metadata:
   name: readonly
 rules:
 - apiGroups: [""]      
-  resources: ["pods", "services"]
+  resources: ["pods", "services"]                      ********* Here we add services
   verbs: ["get",  "list"]
 apiGroups:["apps"]
 resources: ["deployments", "replicasets", "daemonsets"]
@@ -383,6 +383,32 @@ kubectl apply-f dev-roles.yml
 *************** now bk to the laptop sevrer
 kubectl get svc 
 we see the svc
+
+#################################   TO MK THE USER GET ACCESS TO READ ALL THE SERVICES ###################
+vi role-dev.yml 
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  namespace: default               
+  name: readonly
+rules:
+- apiGroups: [""]      
+  resources: ["*]                 ************ here we put " *"  , therfor , everytin wich has v1 as an ap1 version, which includes pods, sevrivces etc
+  verbs: ["get",  "list"]
+apiGroups:["apps"]
+resources: ["deployments", "replicasets", "daemonsets"]
+verbs: ["get", "list"]
+
+************************************** now bode can run 
+kubectl get pod as well as kubectl get svc
+
+this is k8 security and this is one thing you shud be able to explain, particularly since we hv done stuff like RBAC 
+
+w eare goin on break , when we come bk we go to promethus and grafana, so u can go ahead and ask ur question 
+
+
+
 
 
 
