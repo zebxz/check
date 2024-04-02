@@ -1,4 +1,5 @@
 HOW TO DO  RBAC using EKS ,How to configure roles and cluster roles to easily permit who can perform what in our k8 cluster, cl8 was deployed using terraform   ********** 
+ TO MK THE USER GET ACCESS TO SVC ,   TO MK THE USER GET ACCESS TO READ ALL THE SERVICES
 Security Best Practices for Kubernetes Deployment   :
 =======================================================
 
@@ -332,16 +333,63 @@ verbs: ["get", "list"]
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1 
 metadata:
-  name: example-rolebinding 
-  namespace: mynamespace 
+  name: full_access_role_rolebinding 
+  namespace: default
 subjects:
   -	kind: User
     name: bode                                      #replace the map with your own username
     apiGroup: rbac.authorization.k8s.io 
 roleRef:
     kind: Role
-    name: example-role
+    name: readonly                            #this has to be the same as the role file
     apiGroup: rbac.authorization.k8s.io
+
+kubectl apply-f dev-roles.yml
+
+*************** now bk to the laptop sevrer
+kubectl get pod 
+we see he now has acess
+
+########## lets deploy an appl, in the main server as an admin
+kubectl apply -f app.yml
+deployed
+
+***************** bk to the laptop
+kubectl get pod 
+we see the pod we just deployed
+*********************************************** lets see if he has access to services
+kubectl get svc 
+error
+
+        ******************* TO MK THE USER GET ACCESS TO SVC#################################
+#################### back to the admin server  , to allow the user access services, ther are 2ways we can do it 
+vi role-dev.yml                                   in resources add  services
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1 
+metadata:
+  namespace: default               
+  name: readonly
+rules:
+- apiGroups: [""]      
+  resources: ["pods", "services"]
+  verbs: ["get",  "list"]
+apiGroups:["apps"]
+resources: ["deployments", "replicasets", "daemonsets"]
+verbs: ["get", "list"]
+
+kubectl apply-f dev-roles.yml
+
+*************** now bk to the laptop sevrer
+kubectl get svc 
+we see the svc
+
+
+
+
+
+
+
 
 RBAC Role
 
