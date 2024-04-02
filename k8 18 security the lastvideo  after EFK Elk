@@ -211,7 +211,86 @@ now i wil try to access the cl8 usin bode , bc we hv created a subject
 he used another server
 in his windown server , in the local treminal .............. 52:40
 ***********************pls ensue u hv aws cli installed on ur laptop or any othet server u want to use
-to log into my sevre as bode 
+i wnat to log into my sever as bode
+i have a local terminal here 
+who am i 
+landmark technologies
+i wnat to log into my sever as bode
+aws configure
+its asking for acess key    .. copy n paste 
+also secret key   ..... copy n paste
+aws s3 ls
+access denied
+aws eks list-clusters
+access denied
+so we go to aws , IAM and grant  access , in policy        ********* 55:40
+we create policy , click JSON
+ service : eks
+can tick all EKS actions  OR manually select what u want 
+it takes us to resources
+lets assume that you hv 10 eks cls8 for this coy u ar managing  , e.g dev env, stage env , etc
+you can cm her n dceide wich eks cl8 u want to mg8, in the region i can assign the region a user is allowed to work in 
+even the particular account can be specified, if u wrk in a country that has many accounts bc in aws we hv what is called org wher if a coy hv like 5account they grp them
+to become an organisation  or jst tick any if u dnt want to state the account name  
+you can also specify the cl8 name , e,g u hv many cl8 in the region i can choose  aparticualr cl8
+************** for now we can select all resources
+we are assigning him full eks accsess 
+nxt
+Review Policy :  my-eks25policyfor developers
+description :   my-eks25policyfor developers
+ we see its full access
+create 
+this policy has been created, now we assign it to user/group 
+its similar to role binding
+we tick on the policy and and in action  select attach
+select bode
+attach policy
+now in mobaxterm  ( i bliv the aws cli)
+befoer bode was denied access , bt now bode is able to list cl8
+aws eks list-clusters
+Listclusters
+clusters
+Terraform-eks-demo
+ ************** ****** but stil bode cant run kubectl get pod 
+this is bc he need sthe kube congif file bsfeor he can query/access the cl8
+Terraform-eks-demo
+kubeconfig    .... file is needed
+******************to import the kubeconfig file 
+aws eks update-kubeconfig --name \
+***************then add the cl8 name 
+terraform-eks-demo \
+************************ then the aws cl8 where the cl8 is running in
+--region us-west-1 \
+ ########### now run the command : 
+aws eks update-kubeconfig --name terraform-eks-demo --region us-west-1
+  *********** we can now mk API calls 
+kubectl get pod 
+error
+################ so i will remove this kube/config file
+rm -rf ~/.kube/
+************************* so the file does nt exists anymore
+ ########### now run the command : 
+aws eks update-kubeconfig --name terraform-eks-demo --region us-west-1
+updated
+so the file has been created
+cat ~/.kube\config
+error
+kubectl get pod
+error: you must be logged in to the server (unauthorized)
+at this tim ethis user is nt authorized to access the cl8
+
+~~~~~~~################ 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
