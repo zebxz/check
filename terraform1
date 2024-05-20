@@ -71,10 +71,129 @@ is been captured in the code.
 
 interview quetsions
 what is IAC
+waht are the benefits of iac
 hv u evr implamemterd IAC in ur environment.
 
-terraform : MEANING
+
+19:38   .......................... READUP SCRIPT
+Now we are being introduced to a tool called terraform : MEANING
+Iaac tool from Hashicorp
+its uses HCL- hashicorp configuration language- human readable
+HASHICORP is the vendor
+hashicorp has other several products, once is called packer, it can automatically create AMIs , u can customize ur AMI
+for security:1) vault, 2) boundary
+vault , it can give us dynamic credentials , it can go to AWS, get credentials for us and inject it into our pipeline.
 ...
+terraform is platform agnostic: meaning, u can use it on linux , on windows, mac ox, its also cloud agnostic , meaning: u can run it on multiple cloud
+tereraform can create resource on multiple cloud,e.g aws , azure, alibaba, gcp, k8, helm
+state mgt: terraform manages a state file, it creares a stae file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures evrytin
+that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
+ u can look at the file n knw the sate of ur infrasture
+it creates opeartor confidence bc  when u using terraform as an operator it gives u confidence,  once u hv all ur configuration file , terraform wil give u a plan 
+n as u cretae resources , terraform manges them for you, so it gives u confidence bc it shows u exactly what u have.
+
+25:32
+TERRADORM Configuration files
+terra uses declarative syntax to describe ur infrastructure (iac0 n thne perists it in configuration files that can be shared, reviewed, edited, versoned, preservedn reused
+**************this means that we create a file thats ritten in HSC language, the file describes the infrasture, so u v a configration file that terraform wil use, it can 
+be in 2 foremt either : HCL langusge or JSON format which is machine readable.
+config files that use the HCL format must end wit . tf file extension for terrafrom to be able to read it , it nt terraform wont read it.
+while JSON File format must end with .tf.json file extenson.
+these aare the basic inf u nid regarding terraform .
+
+TERRAFORM INSTALLATON 29:40
+its very easy to install.
+1) you can down load the binary
+2) you can use a package manager, which is the easiest way to do it
+choco or choco install terraform -y
+
+TO know if terrafrom has been installed in ur env, if u just type Terraform, it wil give u an output, listing many terraorm commands
+we can install terraform in our local env,  ie (mobaxterm)
+we can also install terraform on an ec2 instance,, ie create an inatsnce using file to install terraform ....... 31:20
+either way once u type terfaorm in ur local env it shud give u the same output showing the list of commands
+
+NEXT:
+bc we will be writing codes, u need a code editor
+e.g vs code editor..... visual studio code
+
+
+34:50
+ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM
+TERRaform is a third party application that is hosted/managed by hashicorp
+
+when u wnat to use terraform in ur env (wher wver ur env is)
+so u hv ur aws account, u nid terraform to create a resource for u in ur account
+so 1) u  will nid to hv terraform binary , which is why we are downloading it, bt as we v it, we nid to give it specifications
+what do we wnt ot do in aws, gcp, azure, we are giing it specifications, wich is in the form of configuration files, we are writing files in our env using the terrafform
+workflow, we run the terraform workflow
+so b4 teraform interacts with aws it wil nid to be authenticated bc it is a 3rd party appl, for it to be auth , it wil rely on the inf that u as a user wil provide it with.
+
+*************there are number of ways terraform allows u to pass credentials to it, credentials to interact with AWS
+ FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT
+ for me to be able to do anytin in aws i need to v permission/to be authenticated , e.g i nid  access key n secret key thta auth  me to access the my secret n access key 
+actually nid to v permission to actually create an ec2 instance
+thats hw persmission works in aws
+so the same tin applies to terraform, it will need credentila that wil enable it to go to AWS and create a resource based on the specification that you have given it
+once its authenticated, it wil retrun for u a plan n say based on specification this is the paln , this is what we ar goin to do ,and once u apprv ethe plan , terraform wil
+go ahead n create ur resource n once taht is done, it now has what is called a state file, and it wil keep a copy of ur file(state file) locally so that it wil show u 
+exactly what resources u hv, that will be captured on this file which is called a state file
+
+ALL THESE ARE INTERVIEW QUESTION
+1)what is a state file
+this is a file athat mahages the stae of ur infrasture, it give u a picture of ur infrasture, what is the actual state of ur infrasture, it is captured as a file
+2)does terraform need credentioals to intercst with cloud provider like an API, like aws
+yes terrarfeom needs credentilas 
+3)how do we pass credentials to terraform ??.....................44.30
+credentials:
+firts , if u are trying to create resources in aws, u must hv an aws account, the same applies to GCP , or azure
+
+for AWS, we need to generate security credentials in the console
+so to do that, we go to the IAM user ncretea seceurity credentials wher we create an access key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
