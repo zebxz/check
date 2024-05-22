@@ -86,8 +86,8 @@ vault , it can give us dynamic credentials , it can go to AWS, get credentials f
 ...
 terraform is platform agnostic: meaning, u can use it on linux , on windows, mac ox, its also cloud agnostic , meaning: u can run it on multiple cloud
 tereraform can create resource on multiple cloud,e.g aws , azure, alibaba, gcp, k8, helm
-state mgt: terraform manages a state file, it creares a stae file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures evrytin
-that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
+state mgt: terraform manages a state file, it creares a stae file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
+evrytin that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
  u can look at the file n knw the sate of ur infrasture
 it creates opeartor confidence bc  when u using terraform as an operator it gives u confidence,  once u hv all ur configuration file , terraform wil give u a plan 
 n as u cretae resources , terraform manges them for you, so it gives u confidence bc it shows u exactly what u have.
@@ -129,7 +129,8 @@ workflow, we run the terraform workflow
 so b4 teraform interacts with aws it wil nid to be authenticated bc it is a 3rd party appl, for it to be auth , it wil rely on the inf that u as a user wil provide it with.
 
 *************there are number of ways terraform allows u to pass credentials to it, credentials to interact with AWS
- FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT
+
+FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT
  for me to be able to do anytin in aws i need to v permission/to be authenticated , e.g i nid  access key n secret key thta auth  me to access the my secret n access key 
 actually nid to v permission to actually create an ec2 instance
 thats hw persmission works in aws
@@ -213,9 +214,10 @@ on the console, we can only create access n secret keys, we cant create profile 
 like this to be able to call aws on our behalf. .............. 1:07
 just mk sure u hv set ur credential b4 u are able to use terraform.
 
-TERRAFORM COMMAND BASICS    ..............1:09:30
+1)TERRAFORM COMMAND BASICS ............................................................ ..  ...............1:09:30
 terraform configuration files, its declarative in nature , must  with .tf   
-TERRAFORM WORKFLOW
+
+2)TERRAFORM WORKFLOW
 let say u v written ur configuration files , now u hv multiple conf files , the files are in the same dir , that dir is called ur terraform working dir
 
 INTERVIEW QUESTION:
@@ -236,26 +238,34 @@ interprete what terrafr intens to do in aws
 ********************so once u run terrafrm init, the first init does is it downloads the resource that u want to use
 if i wnt to create a resource in aws, i wil need tell terfrm thta my provider is aws but hw do i do that, ? it thefore means that i need a configuration file  .... 1:18 00
 if u v ur vscode n uv instaled an extension , when u go to extension n serach harsicop/terraform , click the first one , this is an extension, once u v the extension, 
-it wil help u wit writing ur code for auto completion bcx  it knows what u intend to do, n u wil see this symbol symbolizing harsicop, that shows your ext hv been installed.
+it wil help u wit writing ur code for auto completion bcx  it knows what u intend to do, n u wil see this symbol symbolizing harsicop, dat shows your ext hv been installed.
 if i go bk to my files, if i create any file that ends wit .ttf , i wil see this symbol, menaing this is a terafrm config file, inside thwe file  once i type provider,
 bc of the ext it wil auto complete it for me n i can pass my provider "aws"   ..... .......  1:20: 50 
 proviser "aws" {} , this 2 calibres means its a map, i can map key value pairs, i can put key value pairs inside, this hw we write/defin e a map,,.
 so inside of ur privder block, it is a map , i can map diff resources
 now if i go to my terminal n ls , i see the file
 now i can run terraforn init , inside it. ... n we see it initializing
-so bc i indicated aws as my provider, once i did terfm init , terfrm goes to the terfrm registry n looks for the rprivder i v ststed , once it goes to tht PARTICULAR PROVIDER
-it download th epluggin n bc i didnt specufty the version, it wil allways download the lastest version of ur plugin frm harscop, n once it downloads ur provider plugin , insiden  of this dir
-it wil create for u one file (terafrm lock.hcl) n one dir ( a.terfrm dir)
+so bc i indicated aws as my provider, once i did terfm init , terfrm goes to the terfrm registry n looks for the rprivder i v ststed , once it goes to tht PARTICULAR 
+PROVIDER it download th epluggin n bc i didnt specufty the version, it wil allways download the lastest version of ur plugin frm harscop, n once it downloads ur
+provider plugin , insiden  of this dir it wil create for u one file (terafrm lock.hcl) n one dir ( a.terfrm dir)
 
 
 INTERVIEW QUESTION:
-
-whta is terraform init?
+whta is the purpose of terraform init/ when do w run it?
 it i sthe first command we run to intialize our working dir and also to download our provider pluggings n also our modules.
 
-TERAFRM VALALIDATE
+3)TERAFRM VALALIDATE    ...... 1:25
 it wil validiate the config file in the respective dir to ensure they are syntically valid n  internally consistent
+U run this after terfrm init  and u will get success config is valid but if i miss the closn }, it wil say "error" uncosed config block
+so bc d syntax is nt correct, i canrdo anytin else until i correct it 
+so terfrm validate ensures the syntax is corect
 
+4) TERAFRM PLAN
+creats an execution plan
+the best cause of action to follow/apply
+
+
+*************once we strt taliking abt the diff blocks u guys wil ubderstand what it is
 
 
 
