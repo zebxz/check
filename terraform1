@@ -153,13 +153,13 @@ so to do that, we go to the IAM user n create seceurity credentials wher we crea
 (and add to admin grp ,when i click on Administrator access , - JSON  , ..... it has allow all actions on all resources)
 next
 to generate security credentials  for this user, click seceurity credentials 
-now  need  create access key (when creating, tick AWS cli) n secret key
+now  need  create access key (when creating, tick AWS cli , cos i wnt to use the credentials for my cli) n secret key
 now we v the acess key, copy it 
 this user has adminstrative access/credential
 once u hv ur credentials    ><>>>>>>>>>>>>>>>>>>.>>>>>>........(COMMAND to configure AWS is in the landmark terraform installation script)
-nxt we set the credentials n this is why we neede to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
+nxt we set the credentials n this is why we needed to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
 once u hv ur AWS cli, u wil need to configure,  run aws configure so that u set ur crednetial
-if u run the configure script in the landmark script, it will set default craedentials
+if u run jst the aws configure, it will set default credentials
 now i go to my aws cLI (mobaxterm) run aws configure ............51:00 
 it asks for the ke id n access key we copied , i paste it 
 ask for region, i leave it as default region
@@ -181,15 +181,39 @@ we can use teraform especially when we look at credentials, we can pass those cr
 HOW MANY WAYS THOS ETERRA FORM ALLOW US TO PASS THOSE CREDENTIALS????
 for us to knw hw to use thsoe credn , we nid to knw the command basis n nid to knw hw to write a teraform configuration so we knw  wher we can pass our credentials
 
-SOMEBODY QUESTION: show us how to setup the CLI abi how to run aws configure, saw u are running directly frm ur macbk bt all along we hv been seting up the servers in aWS
+SOMEBODY QUESTION: 1)
+show us how to setup the CLI abi how to run aws configure, saw u are running directly frm ur macbk bt all along we hv been seting up the servers in aWS
 prof said if u hv gitash/mbaxtem/vs code installed in ur envr run aws configure bc we wnt to config ur credentials, u config ur credntials in ur local envrn for security 
 reasson u, if ur using ec2 instances, u dnt configure static credentials in aws, if u are using ec2 instance, u create a role and attach to the instance bt ur nt using a
 key in ur instance bc if u set a key that is static, anybody who has has ccess to ur instance that becomes a security issue
 so using ec2 instance, we instaed create a role n give permission to the role, we always attach roles to resources. bt in ur local env u hv ur aws cli configure.
+am showing that we can run terrform from our local env, we can write code in our local envn n mg8 resources in aws n 2mrw we ill see that we can instal teraform on an ec2
+instance n create a role, give permission to the role n the ec2instance wil perform action in aws on ur behalf
 
 
+QUESTION2
+WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
+ok since t can do that n terafrom can also do that so whats the diff btw the 2
+  .. ANS..
+WE can use aws CLI to provision resources in AWS bt AWS CLI  is native to aws bc i cant use it to provisin resources in azure or gcp , thats bc a cli just for aws
+the benefti that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
+thats why companies are adopting teraform as an iaac
 
+QUESTION3
+why do we v the multiple profiles?/
+when u run just aws configure you configure a defualt profile n each time u set a new default profile, it overrides the previous default profile
+but when u run aws configure --profile amaka , this wil create a name profile called amaka , bc you pass an option, we can also vi into the credentials file n add d secret , 
+acess keys n create a square bracket n put the nmae of the profile ......... 1:08
+so when am runing my teraform, if i dnt want it to use my default credentials , i can pass a profile
+e.g i v a developer profile n it only has read ccessn and i wnt to tets my code wit jst read access, so yes i can v and mg8 multiple accounts, u can send me a secrte key 
+frm ur account n i can create a profile here n anythin i do using ur profile, it wil be happening in ur account bc this credentials they also hv a mapping of the account
+they v permissions of the prticular account that supply the credential. bt if i switch to my default, its hapening in my account, dats hw we use profiles n we wil see hw we 
+can use diff profiles for our teraform runs.
+on the console, we can only create access n secret keys, we cant create profile on the console. bt when we wnt to configure our CLI env then we can then configure a profile
+like this to be able to call aws on our behalf. .............. 1:07
+just mk sure u hv set ur credential b4 u are able to use terraform.
 
+TERRAFORM COMMAND BASICS    ..............1:09:30
 
 
 
