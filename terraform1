@@ -214,10 +214,10 @@ on the console, we can only create access n secret keys, we cant create profile 
 like this to be able to call aws on our behalf. .............. 1:07
 just mk sure u hv set ur credential b4 u are able to use terraform.
 
-1)TERRAFORM COMMAND BASICS ............................................................ ..  ...............1:09:30
+A)TERRAFORM COMMAND BASICS ............................................................ ..  ...............1:09:30
 terraform configuration files, its declarative in nature , must  with .tf   
 
-2)TERRAFORM WORKFLOW
+B)TERRAFORM WORKFLOW
 let say u v written ur configuration files , now u hv multiple conf files , the files are in the same dir , that dir is called ur terraform working dir
 
 INTERVIEW QUESTION:
@@ -226,7 +226,7 @@ this a dir wher u v terraform config files
 THATS Wher terraform wil be reading the files n creating a plan ..................1:13
 
 the first command to enable terraform read the files is:
-terraform init
+1)terraform init
 its used to initialize a working directory containing terraform config files.
 this is the 1st command that shud be run after writing a nwe conf file.
 it downloads providers n modules.  ........................................................1:15
@@ -254,15 +254,18 @@ INTERVIEW QUESTION:
 whta is the purpose of terraform init/ when do w run it?
 it i sthe first command we run to intialize our working dir and also to download our provider pluggings n also our modules.
 
-3)TERAFRM VALALIDATE    ...... 1:25
+2)TERAFRM VALALIDATE    ...... 1:25
 it wil validiate the config file in the respective dir to ensure they are syntically valid n  internally consistent
 U run this after terfrm init  and u will get success config is valid but if i miss the closn }, it wil say "error" uncosed config block
 so bc d syntax is nt correct, i canrdo anytin else until i correct it 
 so terfrm validate ensures the syntax is corect
 
-4) TERAFRM PLAN
+3) TERAFRM PLAN
 creats an execution plan
 the best cause of action to follow/apply
+4) Terasfrm app : used to apply the changes to reach the esired state of the configuration
+by default scans the curent dir for d config n applies d cahnges appriopriately.
+the state file is created when apply is ran the first time
 
 
 *************once we strt taliking abt the diff blocks u guys wil ubderstand what it imeans..................
@@ -288,16 +291,25 @@ tags = {
 also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configurebt aws configure default region is US west2
 
 WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
-Terafrm init  ................minitializing, .
+1)Terafrm init  ................minitializing, .
 bc it already downloaded the plugggings, it wont download it again
-terfrm validate  .............. valid, our AMI n instance type is valid 
-terafrm plan .... terfrm goes now to aws, using the credentials that are default bc i hvnt passed any credentials yet for my provider, it assumes i wnt to use d default 
+2)terfrm validate  .............. valid, our AMI n instance type is valid 
+3)terafrm plan .... terfrm goes now to aws, using the credentials that are default bc i hvnt passed any credentials yet for my provider, it assumes i wnt to use d default 
 credentials 
 it goes to aws n now generates a plan 4 me  .......... saying terfrm wil perfrm the folowing action
 the plus sign means they are the things that will be added
 **so far the tins that aRE knw is our AMI, instance type.........evrytin else we do not knw, bt we wil knw them after d instance hv been created,
 terfm wil tel u "known after apply"
-this AMI plan belongs to US East1
+this AMI belongs to US East1
+4)terafrm apply
+we dnt knw the state of our infarsture yet, we dnt hv a state file yet
+once we run apply, we know we hv an an created n a staefile to represent that.
+when u run app, it wil fast run th eplan again, it wil regenertae the plan again n ask u to confirm
+  . yes ...... n it stars creating the instance
+************** bt we got an error ...............  ***** reason ...........??
+first we knw that AMI are region specific 
+we got our AMI id frm US east1
+
 
 
 
