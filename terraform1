@@ -279,10 +279,241 @@ in
 to illustrae an example,  he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
 resourcev"aws_ instance" "project2ec2" {
 ami =    ****************************
-instanc etype: T2 micro 
+instanc etype: "t2.micro" 
 
 tags = {
  Name = "firstEC2"
+
+***************now in my provider i v only passed 'aws" , i hv nt pass any credential and so the provider is goin to use the default credential bc it has to talk to aws
+also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configurebt aws configure default region is US west2
+
+WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
+Terafrm init  ................minitializing, .
+bc it already downloaded the plugggings, it wont download it again
+terfrm validate  .............. valid, our AMI n instance type is valid 
+terafrm plan .... terfrm goes now to aws, using the credentials that are default bc i hvnt passed any credentials yet for my provider, it assumes i wnt to use d default 
+credentials 
+it goes to aws n now generates a plan 4 me  .......... saying terfrm wil perfrm the folowing action
+the plus sign means they are the things that will be added
+**so far the tins that aRE knw is our AMI, instance type.........evrytin else we do not knw, bt we wil knw them after d instance hv been created,
+terfm wil tel u "known after apply"
+this AMI plan belongs to US East1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
