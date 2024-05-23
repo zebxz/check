@@ -218,6 +218,7 @@ A)TERRAFORM COMMAND BASICS .....................................................
 terraform configuration files, its declarative in nature , must  with .tf   
 
 B)TERRAFORM WORKFLOW
+includes a number of commands we run to inorder to create  a conf file
 let say u v written ur configuration files , now u hv multiple conf files , the files are in the same dir , that dir is called ur terraform working dir
 
 INTERVIEW QUESTION:
@@ -350,6 +351,33 @@ can we use the mobxterm we are used to ?  yes we will
 u hv any terminal that u hv ur aws configured then u will be able to run terfrm
 in ur terminal download terfrm
 as long as u hv ur aws cli configured
+
+DIFF BTW TRM PLAN n TERFRM apply
+trfrm gives u a plan without actually executing it , ie it gives the option of accepting or changing or destroy the plan while
+apply creates the resources
+
+what cred does trfrm use if we dnt pass it
+it uses the default crdentials
+
+HOW DO U sSET DEFAULT CREDENTIALS
+we use aws configure
+
+MY QUESTION
+if we dnt tell terfm the region we wnt it to provide our resources, it wil create it in the default region set when u run aws config
+if u dnt specify d  vpc or the subnet, , bc terfrm wil assume u wnt to create it in the default vpc
+so if u dnt hv a default vpc,  terfrm wil return an error , c it wil b looking for  adefault vpc to b able to create ur resource
+so if u dnt v a default vpc terfrm wil fail
+so some of the prerequisite: if u want to create a resource in a default vpc mk sure the region u ar creating ur resource has a default vpc
+so how do you create a default vpc ????? ....... i knw 
+
+
+I SEE THE SCRIPT HAS A COMMANDC THAT SAYS FORMAT 
+ANS:
+terfrm has a lot of commands , we wil seee hw we ll format our code
+what we did was a very basic code , we didnt nid to format the code 
+when we write more code we see hw wev  can use more commands bt the basic work flow, init, validate, plan, apply, destroy
+
+
 
 
 
