@@ -308,7 +308,48 @@ when u run app, it wil fast run th eplan again, it wil regenertae the plan again
   . yes ...... n it stars creating the instance
 ************** bt we got an error ...............  ***** reason ...........??
 first we knw that AMI are region specific 
-we got our AMI id frm US east1
+we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provison our resorces in US west2 bc we hvnt passed any region
+and thats why we get the error
+although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
+
+to correct the error we will pass our region in the providr
+region="us-east-1"
+the region we pass wil overide the default region bt we ar stil uising d default credential.
+lets say we wnt to pass a profile (credential)  profile = "marie"   .... bc its the provider that nids to authenticate
+bc we v pass a profile , terfrm wil wnt to use the credentials that are identified within the profile
+the profile i pass overides the default profile.
+
+*lets see hw terfrm wil handle that**************
+terfrm init ,, u can run it as many time 
+terfrm plan  ............... ERRER, profilr marie nt found.............. 
+so we comment the profile "#"
+terfrm plan .................. sucessful
+terfrm apply ............ ERROR ... NO specified vpc, no default vpc for this user............................ 1:44:00 ......... WATCH
+whwat happens is that terfrm wil create it in d default vpc bc in my code i didnt specify ehrr i wnt to creaqte it 
+if i go to my vpc in us est1, Virginia, i v 4vpcs bt ders no default vpc, so bc der no default vpc i hv to specify whiv vpc i nid to create this
+n to specify i look at the subnet n pick n public vpc n copy the id of of d particular subnet n coopy the id 
+and in my code i pass the id , so v specified that i wnt the instance to b created in that subnet bt if i dnt pass it wil wnt to create it in a default vpc
+subnetid:*****************************, i can pass it as a sring bc dats wher i wnat to create my resources
+terfrm plan
+now we can see the plan creating the instance 
+now we hv the instance id  and if u go to aws we see the TAG " FIRSTEC2" , Jst as the tag we indidcated in the code .............1:49:00
+*********bc i hv creadted this instancE using code, it means that i can do this 10times n i wil stil create the same instance 
+after the instance ahs been cretae it wil create a terfrm .tf state.... thisn is the  statefile
+when u open it u wil see it has captured for you the steps, evrytin abt the instance its captured for u
+
+
+5) tefrm destroy to terminate the resource  if no longer needed
+it will generate a plan
+we can see the plus sign has changed frm + to - 
+if i say yes,
+we can see it shutting down the instance in aws
+this is hw terfrm is able to mag8 ur resources.
+
+QUESTION:
+can we use the mobxterm we are used to ?  yes we will
+u hv any terminal that u hv ur aws configured then u will be able to run terfrm
+in ur terminal download terfrm
+as long as u hv ur aws cli configured
 
 
 
