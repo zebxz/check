@@ -413,6 +413,25 @@ a blk can also be smt like a template which has  a block type, (like a resource,
 then below , inside the brcaket, we hv the block body ... thers idnetifiers & expression, indentifiers are also called argument
 arguments are parameters u pass inside of a resource like an AMI, instance type, subnet id , secrity grp,,   these are argument
 whne we craete an instanvce what we get out is called an attribute e.g ip address, instance id
+*************** so when you are defining your blocks to create your resource, we are pasing arguments inside the blocks but once the rsource hv been created we can get 
+atrribute out of it
+
+we hv 10 high level blocks that tefrm defines
+1) terfrm settings blks > we pass the version of trm we wnt to use , it sets the version of our provider
+2) provider blk: wher we specify our provider , if we wnt to specify our provider then we hv to use a provider blk
+3)resource blk : evrytin we create is cerated using a resource blk, resourecs are what are being created
+4)input varaibles blk: we are passing input into our resource , we wnt to modularize or make our code flexible thefore we use variable  , input in our resource
+5) output values blk : these gets the attribute out of the instance
+6)local values blk:
+7)data sources blk: blks we use to query data, e.g now we nt to aws to find the AMI bt as engineers we can do this dynamically, i dnt hv to go to aws to copy the AMI, i can
+use the data blk, it wil dynmaically or automaticaly go into aws fetch the AMI n bring it bk to me so that i inject it inside my code. so as an engineer, u might find that 
+u may never log into aws  to find anytin cos if i need anytin i can use a data source, il hv the data source go to aws and get the info for me, so i may never log into aws bc 
+i hv everytin written as code
+8)modules blk: how i can arrange my code so i package it as a module
+9)moved blk: used if i need to migrtae resource frm one name to another
+10) import blk
+
+
 
 
 
