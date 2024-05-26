@@ -417,7 +417,7 @@ whne we craete an instanvce what we get out is called an attribute e.g ip addres
 atrribute out of it
 
 we hv 10 high level blocks that tefrm defines
-1) terfrm settings blks > we pass the version of trm we wnt to use , it sets the version of our provider
+1) terfrm settings blks > we pass the version of trm we wnt to use , it sets the required version of trfrm 
 2) provider blk: wher we specify our provider , if we wnt to specify our provider then we hv to use a provider blk
 3)resource blk : evrytin we create is cerated using a resource blk, resourecs are what are being created
 4)input varaibles blk: we are passing input into our resource , we wnt to modularize or make our code flexible thefore we use variable  , input in our resource
@@ -432,7 +432,7 @@ i hv everytin written as code
 10) import blk
 
 
-SO HOW DO THESE BLOCKS WOWRKS >>>>>>>>>>>>  2:20 
+SO HOW DO THESE BLOCKS WOWRKS >>>>>>>>>>>>  2:20   .................   CAN READUP
 so, a blk basically has a type 
 so each blk type defines hw many labels might fall
 ARGUMENTS will asign value to a name, tghey appeAR within a blk, arguments can be reQ or optional
@@ -443,7 +443,46 @@ bc i want to create a resource called aws_instance , it brings u to the document
 we also seee arguments rEference: these are d tins we can pass in ur ec2 instance when ur creating n they are optional , so u can pass them or nt bt if ur ticket requires
 if the specification req u pass it, then u poass it as its written here in ur configuration
 we hv some arguments that are eithr bullions  that are either true or false , u hv to check out what ur refernece are
-apart frm that whe  u stroll down, we hv the attibute Reference  
+apart frm that whe  u stroll down, we hv the attibute Reference   ..............2:23:50
+ARN , instance state
+so if u wnat to knw what u can get out of the reource ur createing , cm to the dodcumentation section
+theses are tins u can return out of ur resource
+we also hv 
+COMMENTS
+/*
+so this section terfrm doesnt see it what ever is written here
+*/
+
+2:29
+u can put a partivular version of terfrm u wnt ur code to run with
+~ we sue this symbol before the version
+e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
+version is always in 3digits , major.minor.patch
+the fisrt didgit is the major 
+then minor 
+then patch
+e.g    major.minor.patch
+           1.4.5 
+so   amyb every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
+so it goes frm 1.4.5 to 1.4.6 , 1.4.7
+but lets say the update is a feature then it becomes 1.5.0 , then the patch wil reset to 0 
+bc if i update a mi or version the patch wil reset to 0
+what if i update a major version , if create a whole newv version of terfrm .... 2.0.0
+this is hw versioning works 
+**************** so when u are placing the rEQ version of terfrm, am constraing it such tha am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
+so this a more flexible way
+if u contrain it to a specificy version then  "~>1.5.6" it jst menas that if that particualr patch version comes up and its update dur code might easily break bc uve 
+constrained to a specify vesrion of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within th em they wil be c
+ompartible with that, so we use terfrm seting blks to set our req version of terfrm
+after that we can aslo set our REQ providers  ................................................2:38:00
+
+
+
+
+
+
+
+teh
 
 
 
