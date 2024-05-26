@@ -384,7 +384,10 @@ how do we write trfrm conf file  .... ....... ?
 
  when we write trfrm cong file , trfrm has what is xcalled top level blocks
 blocks ar jsy representation of codes ,  hw we write code
+blocks can also be template 
 terfrm has 10 top levelin wich anytin u wnt to write or createv in trfrm wil fall under one of those blks
+terafrm use the top level blks whenever its provisioning infrastructure    ...... 2:12:40
+
 e.g 
  we hv a name : provider 
 a certain label :aws 
@@ -392,18 +395,24 @@ a blk wil always be btw this 2{}  which are a map
 in the calibres {} is always a map ., this map are jst key bvalue pairs we ar pasing in der, 
 this is called a resoure block bc the block starts with the word: resource  .. resourcev"aws_ instance" "project2ec2"
 a resource blk wil v 2labels , 
-1) h e resource type ( in aws we v dif resourcese.g vpc, inernt gatway,) bt all our resoure in aws wil start wit the keywrd aws_ (aws_vpc) bc its a
+1) the resource type ( in aws we v dif resourcese.g vpc, inernt gatway,) bt all our resoure in aws wil start wit the keywrd aws_ (aws_vpc) bc its a
 resource that is knw to aws , if i wnt t create a resource blk , d 1st tin is d resource type n once i v the ext installed ,i wil hv to 
 populate so i can selet frm the list of resources
-2) resource name  .... the name must be unique to terfrm bc its possibl ethat i can crate 2resource the same vpc bt the name has to be diff ......... 2:08:
+2) resource name  .... the name must be unique to terfrm bc its possibl ethat i can crate 2resource in the same vpc bt the name has to be diff ......... 2:08:
 so the name has to b unique to trfrm so that it can identify d resources bc if the nmaes ar nt unique trf wil nt kn w hw to mg8 the dif resources
 bc the resource type will b d same in this case  hwer we are creating multiple resoure in the same vpc 
 e.g resource "aws_vpc"  nmae "my vpc" {
    resource "aws_vpc"  nmae "my_test_ vpc" {
-if u dnt dif it n run app , trm frm wil indicate it as duplicate resouce
+if u dnt dif it n run apply , trm frm wil indicate it as duplicate resouce
+so the name must be unique
 
-
-
+blocks can also be template 
+terfrm has 10 top levelin wich anytin u wnt to write or createv in trfrm wil fall under one of those blks
+terafrm use the top level blks whenever its provisioning infrastructure    ...... 2:12:40
+a blk can also be smt like a template which has  a block type, (like a resource, providr, variable), it also has a block label (resource type) n block label(resource name)
+then below , inside the brcaket, we hv the block body ... thers idnetifiers & expression, indentifiers are also called argument
+arguments are parameters u pass inside of a resource like an AMI, instance type, subnet id , secrity grp,,   these are argument
+whne we craete an instanvce what we get out is called an attribute e.g ip address, instance id
 
 
 
