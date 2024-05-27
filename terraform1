@@ -421,7 +421,7 @@ we hv 10 high level blocks that tefrm defines
 2) provider blk: wher we specify our provider , if we wnt to specify our provider then we hv to use a provider blk
 3)resource blk : evrytin we create is cerated using a resource blk, resourecs are what are being created
 4)input varaibles blk: we are passing input into our resource , we wnt to modularize or make our code flexible thefore we use variable  , input in our resource
-5) output values blk : these gets the attribute out of the instance
+5) output values blk : these gets the attribute out of the instance/resource
 6)local values blk:
 7)data sources blk: blks we use to query data, e.g now we nt to aws to find the AMI bt as engineers we can do this dynamically, i dnt hv to go to aws to copy the AMI, i can
 use the data blk, it wil dynmaically or automaticaly go into aws fetch the AMI n bring it bk to me so that i inject it inside my code. so as an engineer, u might find that 
@@ -488,7 +488,21 @@ so what am doing is called refactoring , ie am breaking up my code so that its e
 sure if i hv resourecss i jus t hv that on one file , if uwant to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
 wnt to deploy a t2micro, just go to the varaible file n cahnge it there n once u run the code its goin to read the variable n replace it.
 we wil also se the diff types of variables.
-default value means if no 
+when i created  a vroiable here, i passed a default value.
+default value means if no other is passed it is goin to fall bk on the value uve passed as default 
+
+**********************INTERVIEW QUESTION .............2:51:00
+Wht is a REQ variable???
+how do u mk a variable  REQuired?
+by not giving a default value
+when we dnt supply a default value, we make it rEQ variable
+e.g , now, in the variable file, if i comment on the instance type, bt in the main file i stil refernce the variable , then the variable becaomes a REQ variable
+*************so if i run plan , its asking me tp  enter a value, so am making terfrm interact wit the user
+terfrm wil nt plan until i supply these value bc i commented out the variable, i didnrt supply the default value, so its now a REQ variable
+
+OUTPUT VALUES BLK  ...2 :54:40
+
+
 
 
 
