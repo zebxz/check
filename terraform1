@@ -425,8 +425,8 @@ we hv 10 high level blocks that tefrm defines
 6)local values blk:
 7)data sources blk: blks we use to query data, e.g now we nt to aws to find the AMI bt as engineers we can do this dynamically, i dnt hv to go to aws to copy the AMI, i can
 use the data blk, it wil dynmaically or automaticaly go into aws fetch the AMI n bring it bk to me so that i inject it inside my code. so as an engineer, u might find that 
-u may never log into aws  to find anytin cos if i need anytin i can use a data source, il hv the data source go to aws and get the info for me, so i may never log into aws bc 
-i hv everytin written as code
+u may never log into aws  to find anytin cos if i need anytin i can use a data source, il hv the data source go to aws and get the info for me, so i may never log into aws 
+bc i hv everytin written as code
 8)modules blk: how i can arrange my code so i package it as a module
 9)moved blk: used if i need to migrtae resource frm one name to another
 10) import blk
@@ -453,7 +453,7 @@ COMMENTS
 so this section terfrm doesnt see it what ever is written here
 */
 
-2:29
+2:29  TERFRM SETTING 
 u can put a partivular version of terfrm u wnt ur code to run with
 ~ we sue this symbol before the version
 e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
@@ -473,9 +473,23 @@ this is hw versioning works
 so this a more flexible way
 if u contrain it to a specificy version then  "~>1.5.6" it jst menas that if that particualr patch version comes up and its update dur code might easily break bc uve 
 constrained to a specify vesrion of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within th em they wil be c
-ompartible with that, so we use terfrm seting blks to set our req version of terfrm
+ompartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
 after that we can aslo set our REQ providers  ................................................2:38:00
 now when we talk abt backends we ill also see that if we config a whcih we ar calling a remote bk end we will be able to config it in this terfmrm setting blk
+PROVIDER BLOCK
+we can also set our credentials n our region
+If  u leave it open it will use the default
+RSOURCE BLK
+INStead of harding coding , we can create a variable n reference the variable in my resource , n so its flexible  .............................2:43:45
+then create a new file called variable.tf n copy n paste all the variables i created, 
+can also create a new file called provider.tf n paste the provider info and the terfrm setting blk info
+an my file called main wich only has my resource blk wich is referencing variables
+so what am doing is called refactoring , ie am breaking up my code so that its easily readable, so instasde of having evrytin on one file am refactoring my code , making 
+sure if i hv resourecss i jus t hv that on one file , if uwant to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
+wnt to deploy a t2micro, just go to the varaible file n cahnge it there n once u run the code its goin to read the variable n replace it.
+we wil also se the diff types of variables.
+default value means if no 
+
 
 
 
