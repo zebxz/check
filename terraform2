@@ -33,9 +33,25 @@ resource "aws_vpc" "my_vpc" {
    tags = {
       Name = var.vpc_name
       Env = var.my_env
-      BD = $(Var.vpc_name)-$(var.my_env)
+      BD = $(Var.vpc_name)-$(var.my_env)    .... bc this is too long , iil rather reference the locals blk
+      BD = local.business       ... so am referencing this as jst a local, it is frm the locals blk but its a key called business n d value of this takes the whole value 
+     }                                     of this:  "$(var.vpc_name)"-"$(var.my_env)"  , n this value is read frm the variable of (variable "vpc_name and variable "my_env)
+   }     BD , ie business division
 
-bc its a long name, i declare it in a locals blk 
+variable "vpc_name" {
+    type = string
+    default = "my-vpc"
+}
+
+variable "my_env" {
+  type = string
+  default = "prod"
+}
+
+locals {
+business = "$(var.vpc_name)"-"$(var.my_env)"
+
+*********************** bc its a long name, i declare it in a locals blk 
 
 
 
