@@ -27,10 +27,11 @@ we hv to reference our (resource type.the resource name.the attribute)
 e.g aws_instance.instl.public_ip       .... so this is referencing the resource that we interested in.
 
 LOCAL BLK  ..........1:09 
+local.name
 we use local blk if we hv long names that we dnt want to repeat writing it in the code , we can define them in my locals blk and then just reference it in my code if this
 is smt that is repeatative bc i may hv concatenating variables  e.g the BD  value is the (variable "vpc_name" and variable "my_env ), so i can jst define a locals blk n just 
-referencd it, so that makes my codes mangeable and easy to read bc hv done all my definitions in my local blk and am just referencing it 
-so i can put as many values in the local as i want if its a long name i might use inside of my code and then i just reference them
+referencd it, so that makes my codes mangeable and easy to read bc hv done all my definitions in my local blk and am just referencing local
+so i can put as many values in the local as i want if its a long name i might use inside of my code and then i just reference local
 this is hw we use a locals blk
 
 
@@ -65,7 +66,22 @@ bucket_business = local.business   ( i did this myself based on the github note)
 
 
 
+DATA SOURCE     ...... 1:17:35      create a data source for an AMI , we wnt to return a certain AMI 
+first create n name the file and open it and startt56
+YOU start create a data source oR using a data blk with the keyword data, n data block needs 2 labels 
+        data "aws_ami" "amazon_linux" {
+          most_recent = true             .... we can check the date the ami was =created and req for the most recent ............1:21:01
+         owners = ["amazon"] 
 
+
+        filter {                  we wnt to filter the AMI bc when we are doing our search, it is goin to return all AMIs that ar owned by amazon n also d most recent
+           name= "name"                                                  so we ar goin to apply filters on the specific AMI that we wnt
+           values ="al2023-ami-*-kernel-6.1-x86_64"          ( we can remove the date n put* so it captures all the AMIs) dnt understand what he means
+
+
+          filter {
+             name = "root-device-type"
+             values = ["ebs"] 
 
 
 
