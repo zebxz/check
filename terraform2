@@ -27,6 +27,12 @@ we hv to reference our (resource type.the resource name.the attribute)
 e.g aws_instance.instl.public_ip       .... so this is referencing the resource that we interested in.
 
 LOCAL BLK  ..........1:09 
+we use local blk if we hv long names that we dnt want to repeat writing it in the code , we can define them in my locals blk and then just reference it in my code if this
+is smt that is repeatative bc i may hv concatenating variables  e.g the BD  value is the (variable "vpc_name" and variable "my_env ), so i can jst define a locals blk n just 
+referencd it, so that makes my codes mangeable and easy to read bc hv done all my definitions in my local blk and am just referencing it 
+this is hw we use a locals blk
+
+
 resource "aws_vpc" "my_vpc" {
    cidr _block ="10.0.0.0/16"
 
@@ -35,7 +41,7 @@ resource "aws_vpc" "my_vpc" {
       Env = var.my_env
       BD = $(Var.vpc_name)-$(var.my_env)    .... bc this is too long , iil rather reference the locals blk
       BD = local.business       ... so am referencing this as jst a local, it is frm the locals blk but its a key called business n d value of this takes the whole value 
-     }                                     of this:  "$(var.vpc_name)"-"$(var.my_env)"  , n this value is read frm the variable of (variable "vpc_name and variable "my_env)
+     }                                     of this:  "$(var.vpc_name)"-"$(var.my_env)"  , n this value is read frm these variables (variable "vpc_name and variable "my_env)
    }     BD , ie business division
 
 variable "vpc_name" {
