@@ -27,6 +27,28 @@ we hv to reference our (resource type.the resource name.the attribute)
 e.g aws_instance.instl.public_ip       .... so this is referencing the resource that we interested in.
 
 LOCAL BLK  ..........1:09 
-resource
+resource "aws_vpc" "my_vpc" {
+   cidr _block ="10.0.0.0/16"
 
-bc its a long name, i declare it in a lox
+   tags = {
+      Name = var.vpc_name
+      Env = var.my_env
+      BD = $(Var.vpc_name)-$(var.my_env)
+
+bc its a long name, i declare it in a locals blk 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
