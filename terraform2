@@ -83,9 +83,38 @@ YOU start create a data source oR using a data blk with the keyword data, n data
              name = "root-device-type"
              values = ["ebs"] 
 
+when i run terfrm init and terfrm validtawe  and trfrm plna , it will reade the data source n return for me the AMi ID , 
+it will run this filters and return an id of an AMI
+
+********************how do i now use THIS ID  ????   ... remeber i hvnt gone to AWS to get this iD , hv jst used this data source
+LETS SAY I want to create an ec2 instance 
+so i can cereate a resource
+
+  resource "aws_instance" "data_test" {
+ ami= data.aws_ami.amazonlinux.id     (.id , bc we nid the id)         ****  instead of me hardcoding the AMI value , i am gon to get vit frm my data vsource
+ instance_type = t2.micro                   how do i refernce the data source, attributes frm a data source/resource we alsways use d dot notattion
 
 
+  *********** now when i run init, validtae and plan , it will run the data source , get the id and replace the id for the AMI 
+so i hv dynamicxally gone to aws n got the MAI and substitute it here
+bc of this i can use thsi data source to get my AMis dynamically
 
+this AMI belong to US west 2.,, bc thats my default region 
+if i pass a provider bc in my code i dnt hv a proider n my provider is AWS and pass a region
+*******************  provider = "aws " {
+                        region = "us-east-1"
+
+when i run trfrm plan , it wil return an AMI thats ends with 5369 bc of the region , it has used d filter to find the moist recent AMI in thta region bc theyb wil almhv dis filter
+similar name bt is just finding that AMi in d specoific region 
+so if i change my region , i dnt hv to go on d console to do it, to find that AMi, so now i hv dynamically created it and it has returned for me this AMi and now creating it in 
+US east2
+*********************if i change my region to US west1, am jst changin my region bt i v my dtatsource
+my dtasource will fetch an AMI id that is now 491b , bc this AMI belongs to USwest1
+so this is hw we can dynamically use datasourec to provision our resources , we are nt harcoding , instaed we ar usin dataasource to fget info for us ,so i dnt nid to go to d console  to
+knw wich region i am in bc we knw AMIs AR REGION SPECIFIC Bt if i use  adatasourec it go to what eber region its bein provision n it lways get the aMi fro , AMInthat is specifuc to 
+that ergion and am able to provison my instance
+
+**************** so tahts hw we use  dtata source and data blk
 
 
 
