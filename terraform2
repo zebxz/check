@@ -177,13 +177,13 @@ so i hv my code tacked away bt am calling them now as modules              .....
 
 ############################### MAKING THE VARIABLE FLEXIBLE ***************************
 
-******************bt still this module  that am passin here is still nt flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it means
+******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it means
 u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
      variable " cidr " {
            type = string        ( i am making it and string and nt passing a defULT value, that way, i am making it  REQ 
 
 
-And then i chnage the info in the vpc resource i created earlier   ....      cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr , so that u as the user can now 
+And then i chnage the info in the vpc resource blk i created earlier   ....      cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr , so that u as the user can now 
                                                                   supply the value
    resource "aws_vpc" "vpc" {
      cidr_block = var.cidr
