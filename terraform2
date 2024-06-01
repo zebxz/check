@@ -178,8 +178,8 @@ so i hv my code tacked away bt am calling them now as modules              .....
 
 ############################### MAKING THE VARIABLE FLEXIBLE ***************************
 
-******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it means
-u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
+******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it 
+means u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
      variable " cidr " {
            type = string        ( i am making it and string and nt passing a defULT value, that way, i am making it  REQ 
 
@@ -258,6 +258,12 @@ a variable is a
 Values in a list are always accessed by an index and the index in a list always starts wit zero
    e.g       ["t2micro", "t2 medium", "t3 micro"]
          index    0,       1,             2
+
+now to access this in this instance resource blk 
+
+     resource "aws_instance" "data_test" {
+        ami = data.aws_ami.amazon_linux.id
+        instance _type -var.instance[0]         ..... index of 0 , ie i want the value thats at index position 0
 
 
 
