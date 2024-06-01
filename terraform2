@@ -1,15 +1,15 @@
 whenever you are installing a package, you have to make sur eyou an adminstrator or it wont allow you
 
-depending on ther version am running the version dert the syntax, though most of them are backward compartibkle, it wii jst give u warning that this has been depricated,u nid to upgrade
-when it cms to prod u nid to constrin ur version of terfrm so ur code doesnt break
+depending on ther version am running the version dert the syntax, though most of them are backward compartibkle, it wii jst give u warning that this has been depricated,u 
+nid to upgrade when it cms to prod u nid to constrin ur version of terfrm so ur code doesnt break
 the syntax of code that was written 5years ago will be dif frm code 
 
 INTERVIW QUESTION   ................. 54:44
 terrfrm setting blocks 
  e.g 
-if the code is running in produ n terfrm version is version 1.0, then i nid to constrain the ccode to 0.9 so that my code wil stil run .if i run trfrm init it wil download the ryt version 
-of trfrm (ver 9), the ryt plugin bc am constraining it  bt if i leave it open , if i dnt pass the version then init will always download the current version n when that happens my code 
-may nt be comparible n it wil break n give me error 
+if the code is running in produ n terfrm version is version 1.0, then i nid to constrain the ccode to 0.9 so that my code wil stil run .if i run trfrm init it wil download
+the ryt version of trfrm (ver 9), the ryt plugin bc am constraining it  bt if i leave it open , if i dnt pass the version then init will always download the current version
+n when that happens my code may nt be comparible n it wil break n give me error 
 so thats how we use terfrm setting block
 
  when we dnt pass credential we say its goin to use a default prorfile
@@ -29,7 +29,7 @@ e.g aws_instance.instl.public_ip       .... so this is referencing the resource 
 LOCAL BLK  ..........1:09 
 local.name
 we use local blk if we hv long names that we dnt want to repeat writing it in the code , we can define them in my locals blk and then just reference it in my code if this
-is smt that is repeatative bc i may hv concatenating variables  e.g the BD  value is the (variable "vpc_name" and variable "my_env ), so i can jst define a locals blk n just 
+is smt that is repeatative bc i may hv concatenating variables  e.g the BD  value is the (variable "vpc_name" and variable "my_env ), so i can jst define a locals blk n just
 referencd it, so that makes my codes mangeable and easy to read bc hv done all my definitions in my local blk and am just referencing local
 so i can put as many values in the local as i want if its a long name i might use inside of my code and then i just reference local
 this is hw we use a locals blk
@@ -110,18 +110,18 @@ so if i change my region , i dnt hv to go on d console to do it, to find that AM
 US east2
 *********************if i change my region to US west1, am jst changin my region bt i v my dtatsource
 my dtasource will fetch an AMI id that is now 491b , bc this AMI belongs to USwest1
-so this is hw we can dynamically use datasourec to provision our resources , we are nt harcoding , instaed we ar usin dataasource to fget info for us ,so i dnt nid to go to d console  to
-knw wich region i am in bc we knw AMIs AR REGION SPECIFIC Bt if i use  adatasourec it go to what eber region its bein provision n it lways get the aMi fro , AMInthat is specifuc to 
-that ergion and am able to provison my instance
+so this is hw we can dynamically use datasourec to provision our resources , we are nt harcoding , instaed we ar usin dataasource to fget info for us ,so i dnt nid to go to
+d console  to knw wich region i am in bc we knw AMIs AR REGION SPECIFIC Bt if i use  adatasourec it go to what eber region its bein provision n it lways get the aMi fro , 
+AMInthat is specifuc to that ergion and am able to provison my instance
 
 **************** so tahts hw we use  dtata source and data blk
-if ur asked to get a data source for a VPC , u wnt to get the VPC id , u can use a data source n build filters n it wil go to any particular region n it wil gett d id based on the 
-filters u applied 
+if ur asked to get a data source for a VPC , u wnt to get the VPC id , u can use a data source n build filters n it wil go to any particular region n it wil gett d id based
+on the filters u applied 
 
 
 blk 8: modules blk  ..................1:38:48
 modules our code very flexible
-   ************ HOW DO WE CREATE MODULES .......... ?/?????
+  1) ************ HOW DO WE CREATE MODULES .......... ?/?????
 so we v the main general dir called terrsfrm master class33 and inside this dir
 lets say we hv a dir called test  , this is the dir that has my  tefrm config files 
 bc all my code is in inside this testb dir, so i can use this test dir 
@@ -151,6 +151,52 @@ are
 n its creatin an instance called data test which is part of our module.so this is hw we reuse values/code. 
 
 we can apckage our code , create our code after we v tested  it , put in a dir n that becomes our moduele
+
+2)~~~~~#####################
+WE CAN CREATE MODULE FOR VPC
+in the overall dir terrsfrm master class33 he created a  dir called vpc  and inside it he ceated a file called main.tf and in the main.tf, he cetaed a resource 
+
+resource "aws_vpc" "vpc" {
+     cidr_block = 10.0.0.0/16
+
+now i can go bk to the main.tf file in the test dir and create a module 
+   module "vpc" {
+       source = "./vpc"
+************ so now i v 2modules i am initializing, i v initialized the ec2 module earlierand now i hv a vpc module , so bc now i v dis i need to run terfrm init
+so anytime u cahnge a module or add a module , u hv run terafrm init bc the module needs to be downloaded, d module nids to be initialized , 
+so bc v added a new module here, this module lives in this vpc dir , inside of this vpc dir i hv my code bt wher am calling d module is on this file (main.tf in test dir)
+am just refering wher my code live 
+
+so in my terminal i run terferm init, bt if i just run terfrm plan, it wil say a ERROR, ders a module called vpc is nt installed 
+afer runing trfrm init, i run terfrm plqn 
+now its goin to create for me 2resources
+the first vpc with cidr  10.0.0.0/16
+and also the  ec2 instance 
+so i hv my code tacked away bt am calling them now as modules              ......1:51
+
+******************bt still this module  that am passin here is still nt flexible bc if i give u this code to use n ur calling the module as it is, it means u are goin to
+use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
+     variable " cidr " {
+           type = string        ( i am making it and string and nt passing a defULT value, that way, i am making it  REQ 
+
+
+And then i chnage the info in the vpc resource i created earlier   ....      cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr
+
+      resource "aws_vpc" "vpc" {
+     cidr_block = var.cidr
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
