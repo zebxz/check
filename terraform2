@@ -174,19 +174,25 @@ the first vpc with cidr  10.0.0.0/16
 and also the  ec2 instance 
 so i hv my code tacked away bt am calling them now as modules              ......1:51
 
-******************bt still this module  that am passin here is still nt flexible bc if i give u this code to use n ur calling the module as it is, it means u are goin to
-use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
+******************bt still this module  that am passin here is still nt flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it means
+u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
      variable " cidr " {
            type = string        ( i am making it and string and nt passing a defULT value, that way, i am making it  REQ 
 
 
-And then i chnage the info in the vpc resource i created earlier   ....      cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr
-
-      resource "aws_vpc" "vpc" {
+And then i chnage the info in the vpc resource i created earlier   ....      cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr , so that u as the user can now 
+                                                                  supply the value
+   resource "aws_vpc" "vpc" {
      cidr_block = var.cidr
 
-
-
+bt hv nt supplied the value so that u as the user can now supply the value bt frm this module , we knw that it xpects  acidr blk 
+ so then now i can cm to my mian.tf (in the test dir) and on this module i provide the value 
+          module "vpc" {
+       source = "./vpc"
+       cidr = 10.0.0.0/16
+now i can run terafrm init and trfrm plan , initializes the backend and plan reads the value frm the module vpc 
+so am supplying the value of the cidr as the user and if i edited the vpc module (main.tf in test dir)
+so i dnt need to go bk to the vpc file to edit the info
 
 
 
