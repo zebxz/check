@@ -194,9 +194,42 @@ bt hv nt supplied the value so that u as the user can now supply the value bt fr
        source = "./vpc"
        cidr = 10.0.0.0/16
 now i can run terafrm init and trfrm plan , initializes the backend and plan reads the value frm the module vpc 
-so am supplying the value of the cidr as the user and if i edited the vpc module (main.tf in test dir)
-so i dnt need to go bk to the vpc file to change the values, am making evrrytin as required/varibales bt when am  calling the module , this is when am supplying the value
-bt i can equally mk it 
+so am supplying the value of the cidr as the user  in the module and if i edited the vpc module (main.tf in test dir)
+so i dnt need to go bk to the vpc file to change the values, am making evrrytin as required/ or as varibales bt when am calling the module , this is when am supplying the
+value bt i can equally mk it required so that am passing it as run time  ie comment it , bt if i dnt pass the value 
+ 
+      ##################    USING VARIABLES TO MODULELARIZE MY CODE (when am making my varaiable required)..........................
+
+bt if i dnt pass the value ,1) it is goin to complain that this value is required
+so on my module, i need to declare it , i nid to declare a variable called cidr    bt still nt provide it (the value)   ****************1:55
+         variable  "cidr" {
+             type = string
+ 
+bt  still complaining  ...... 1:55:27 , ie the codes were nt organized
+      *************************************** i stil nid to format it 
+
+
+1:55:   \********************    terfrm format
+so when i run terfrm format, it reformats your code , so that ur code is well organized the lines and all
+this formtas your code 
+
+now when i run terfrm plan it says missing reQ argument 
+   so in the module vpc  ill 
+ 
+module "vpc" {
+       source = "./vpc"
+       cidr = var.cidr       .......  its reading frm the module btstill i hvnt supplied the value so am still making it required
+
+  variable  "cidr" {
+             type = string
+
+so if i run terfrm plan, it now requires me to enter the value bc hv now mk the value required
+
+
+############## so this is hw we use variableas to modularizeor to make our code as flexible as possible 
+
+
+
 
 
 
