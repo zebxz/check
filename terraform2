@@ -294,18 +294,39 @@ bt we can declare a variable of type map
 so hv defined my map, map means i have mapped my env with the type of instance that i want
 
  2:29
-HOW TO REFERENCE VALUES IN A MAP
-ILL Use the square brackets but now instead of the " , index bc our map is key value pairs, ill pass the key  ,  e.g dev , then terfrm wil return the value
+******************************* HOW TO REFERENCE VALUES IN A MAP
+ILL Use the square brackets but now instead of the index, bc our map is key value pairs, ill pass the key  ,  e.g dev , then terfrm wil return the value
+
+  resource "aws_instance" "data_test" {
+        ami = data.aws_ami.amazon_linux.id
+        instance _type = var.inst["dev"] 
+
  key      value
 dev" = "t2.micro"
 
 so if i was asked to deploy in the dev env, ill pass dev bt i need to pass the correct variable and in this case its "inst"
 
+now once i run trfrm plan , it will retuen my instance asa t2 micro
+  ......... the is hw we reference values in a map using the key
+
+
+**********************  iNPUT Varibale
+declaring a variable but nt providing the default , thereby making it REQ
+
+
+   OUTPUT  
+attriibutes we tyr to get out
+
+
+TUPLE
+it has a mixed data type
+ITS LIKE ALIST, IT can contain strings, numbers or othe r  list
+objects with  aalist while an OBJECT is a list within  a map
 
 
 
-
-
+      OBJECT
+Its like a map , bt a mix , key value pairs of both strings n numbers , list bt in the form of a map
 
 
 
