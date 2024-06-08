@@ -398,10 +398,48 @@ so if i want terfrm to mask it i hv to mark it as sensistive that way in the sta
 
 
 
-    ##############
+    ##############   QUESTION
+1) on the work env are we prorvided wit these file for a project given to u or u hv to create ur own code  ??
+
+ANS:
+U as an engr thats why we are learnig trfrm , u may be reQ to write the trfrm code bt its very easy , 1) bc u hv a lot of documentation
+e.g if ur asked to create an s3 bucket , u can type aws_s3_bucket in google , it take su to terfrm registry , it gives u e.g on hw to create an s3 bucket 
+copy it n paste in ur id, ie file ur creating, and i can modifty , e.g its for the dev env
+
+ EXAMPLE
+                            PRIVATE bucket wit tags
+       resource "aws_s3_bucket" "dev_env" {
+  bucket = "example-bucket"    .... then i put the name of the bucket here
+
+ tags= {    , i can pass my tag
+ Name           ="my bucket"
+ Environment    = "Dev"
+}
+
+     but also mayb ur boss may REQ other things   ............... 3:00
+what else can u pass when ur creating ths bucket ?     so u look at ur argument  click on argument reference and read tru it 
 
 
+********** also what we hv been creating here as we created our modules, these s3 bucket we copied is a moudle
+we v been trying to create our own modules using resources, theese are called custom modules bt terfrm also has public modules or official modules 
 
+e.g 
+i want to create an instance
+in google, i can type : aws instance module terrafrm  aws instance module terraform and it takes me to the registry an di see an aws instance module that has been created and 
+i can copy it and paste :
+
+  module "ec2-instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"                    
+  version = "5.6.1"
+}                                                    3:05
+              we se the source is frm the terfrm registry, so it wil be downlaoding the this version of module frm the regisrty
+bt when ur working with modules frm the registry u hv to look below ,,, input : this is like the variable u can pass here, outputs ...., depencies
+scroll down more , ull see for the same instance u can pass ur own values, so u are using the same odule bt passing ur own values
+when u click on inputs u see what u can pass 
+
+
+   ********* so myab ur firts task mayb to create a module for a vpc , we hv  a new env ,  we are now creatin an HR env, can u craete a vpc to be ddeployed in hat env
+so u as an engr , u nid to knw wher ur resources are , u come to the documemtation and eithr createa ciutom module or use an officIAL TRFRM MODULE frm the registry n use it
 
 
 
