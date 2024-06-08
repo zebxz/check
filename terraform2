@@ -368,9 +368,27 @@ variable files are files that  starts with any name but ends with tf.vars , any 
 **************** 2:50
 1)bt if u crtaete a file that starts wit terraform.tfvars  file, this file is automatically loaded u dnt hv to pass it on the command line , it has to start with terferm
 then i can just terfrm plan without supplying the values then the file wil be automatically loaded 
-so if u hv values u like to be automatically loaded the  u create a trfrm.tfvars
+so if u hv values u like to be automatically loaded the  u create a trfrm.tfvars , the values are automatically loaded
 
-2) auto files 
+2) auto files   
+e.g test.auto.tfvars
+as long as ther is auto then the file will be automatically loaded
+
+  ********* bt files without this options, that has a diff name like .tfvars file , then u hv to supply on th CLI as -var-file= bc its a named file 
+ auto or terraforms files, are files that are automatic to trfrm 
+as u keep writing codes n keep working, u will see a lot of code , a terrafrm.tfvars file are files that supply only your variables, u wil see this files a lotin code  that 
+pipo use to supply the values bc they are making variables reQ so that u can supply UR OWN values, i can create a module (VPC, ec2) n leave all the variables REQ e.g the 
+name, the cidr , the tags and ill ask u create a .tfvars file to supply the values,, that way u acn put ur own tag,name, cidr, and so that is now making ur code flexible, n
+reusable , anyone one can reuse bc they can supply their own values , u hv nt hardcode values within terfrm 
+thats hw we use variable files
+
+
+ 2:55:08  ################# CREATING A VARIABEL THAT HAS A SECRET##################
+
+
+
+    ##############
+
 
 
 
@@ -394,7 +412,7 @@ ie :  ami = var.myami
 ********************   how do u mk a variable  REQuired?
 by not giving a default value
 when we dnt supply a default value, we make it rEQ variable
-e.g , now, in the variable file, if i comment on the instance type, bt in the main file i stil refernce the variable , then the variable becaomes a REQ variable
+e.g , now, in the variable file, if i comment on the instance type, bt in the main file i stil refernce the variable , then the variable becomes a REQ variable
 
 
 
