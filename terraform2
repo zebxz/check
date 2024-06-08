@@ -453,15 +453,16 @@ then we hv to move everycode in its on place
 
 
 **************3;11:15                         QUESTION
- FOr the major , minor patches, u said we shud nt constrain it to a particualr version so it can get the particualar patches that are being done 
+1) FOr the major , minor patches, u said we shud nt constrain it to a particualr version so it can get the particualar patches that are being done 
 so if thers a major cahnge in the configufraion binary ,a major upate e.g fmr 1.5 to 2.00 , hw do i now update my version????????????????
  
 ANS:
 
-    evertime we run terfrm init terfrm created for us this log file (terraform.lock.hcl) , the log file , it downloaded the versions n it locked them, this is the share
-version of our provider aws, it downloaded the latest version 
+    THE FIRST Time u  run terfrm init terfrm created for us this log file (terraform.lock.hcl) , the log file,it downloaded the versions n it locked them, this is the share
+version of our provider aws, it downloaded the latest version , when subsequently u run terfrm init, it checks the log file, if its stil consistent, u hvnt updated any  
+provider it wnt go bk to donwload the plugins again. it wil reuse that depsncies
 
-bc v changed the version of my providerto 3.o  bt hv nt changed the logfile bc inside the log file trfrm is reading whats in the log file which is 5.2.4
+bt bc v changed the version of my providerto 3.o  bt hv nt changed the logfile bc inside the log file trfrm is reading whats in the log file which is 5.2.4
 so if i run terfrm init it is goin to fail bc in my package i hv 5.2.4 bt am trying to lock it to 3.0
 
 ******** so whenever u run terrafrm init for the first time , terfrm downloads ur dependencies , therfor if u cahnge ur provider version n run  terfrm init again , it wil
@@ -472,9 +473,15 @@ constrain it , it wil nt go bk to download the dependcies again, it will reuse t
 so this hw we manage our provider pluggindsin term of version , so if terfrm does a change n it changes that , then u just hv to modify the constrian to that particular
 vesrion bt u hv to upgrade ur puggins 
 
+2) can i hvae more tahn 1 .tf file under the same folder???  ,,... since we dnt pas the name of the file whaen we run terfrm init ..
 
+ANS: 
+yes , when we refactor , we organize our env and create a file for each e.g resorces file, data file, provider file .. etc 
+   now if i run terfrm init, it will initialize, terfrm wil read all the files and it will geneater for me the same plan as if they were all in the same file , ie  as if 
+i didnt refactor 
+so terfrm is declarative , it doesnt matter the number of files u have, it will reade tru all th efile and create a plan 
 
-
+#############################################################################################################################################
 
 
 ################# TO CREATE VARIABLE 
@@ -497,7 +504,21 @@ e.g , now, in the variable file, if i comment on the instance type, bt in the ma
 
 
 
-
+TERFRM SETTING 
+u can put a partivular version of terfrm u wnt ur code to run with
+~ we sue this symbol before the version
+e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
+version is always in 3digits , major.minor.patch
+the fisrt didgit is the major 
+then minor 
+then patch
+e.g    major.minor.patch
+           1.4.5 
+so   amyb every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
+so it goes frm 1.4.5 to 1.4.6 , 1.4.7
+but lets say the update is a feature then it becomes 1.5.0 , then the patch wil reset to 0 
+bc if i update a miNor version the patch wil reset to 0
+what if i update a major version , if create a whole newv version of terfrm .... 2.0.0
 
 
 
