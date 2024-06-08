@@ -1,8 +1,8 @@
   WE CAN CREATE MODULE FOR VPC , USING VARIABLES TO MODULELARIZE MY CODE, TYPES OF VRAIABLES ,HOW DO U ACCESS VALUES IN A LIST, HOW TO REFERENCE VALUES IN A MAP, PASSING
-VARIABLES AS A FILE  
+VARIABLES AS A FILE  , terraform.tfvars , auto files
 
 ###in summary ill say we created a data source and then used modules to make it flexible then using variables to modulerize the code , declaring a variable of type map, and
-then using a variable file
+then using a variable file, 
 
 
 /whenever you are installing a package, you have to make sur eyou an adminstrator or it wont allow you
@@ -355,6 +355,22 @@ to pass the variables file
 
 **************2:46:50,,,............. WATCH
  we can use a variables file to deploy in multiple env
+
+   ************INTERVIEW QUESTION
+have u ever used trfrm to provisoin in diff env  ??????  ............ HOW do u do it
+
+ANS:
+ first  thing we v learnt is that i can use diff varibales fil;es
+i can use a variAbles taht contains value for my staging , or anoda variables file that contains value for prod env,
+ so am supplying this values at run time 
+when trfrm is runningthis values file are beein run bc am passing them on the command line.
+variable files are files that  starts with any name but ends with tf.vars , any file that hs this concvention u v to pas it on the CLI uing -var-file=
+**************** 2:50
+1)bt if u crtaete a file that starts wit terraform.tfvars  file, this file is automatically loaded u dnt hv to pass it on the command line , it has to start with terferm
+then i can just terfrm plan without supplying the values then the file wil be automatically loaded 
+so if u hv values u like to be automatically loaded the  u create a trfrm.tfvars
+
+2) auto files 
 
 
 
