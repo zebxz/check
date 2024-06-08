@@ -450,9 +450,11 @@ like this varaibles needs to go to vraiables file, provider ,ur data source , re
 then we hv to move everycode in its on place
 
 
-**************3;11:15
- u nid to constrin ur version of terfrm so ur code doesnt break
-
+**************3;11:15                         QUESTION
+ FOr the major , minor patches, u said we shud nt constrain it to a particualr version so it can get the particualar patches that are being done 
+so if thers a major cahnge in the configufraion binary ,a major upate e.g fmr 1.5 to 2.00 , hw do i now update my version????????????????
+ 
+ANS:
 
     evertime we run terfrm init terfrm created for us this log file (terraform.lock.hcl) , the log file , it downloaded the versions n it locked them, this is the share
 version of our provider aws, it downloaded the latest version 
@@ -461,7 +463,12 @@ bc v changed the version of my providerto 3.o  bt hv nt changed the logfile bc i
 so if i run terfrm init it is goin to fail bc in my package i hv 5.2.4 bt am trying to lock it to 3.0
 
 ******** so whenever u run terrafrm init for the first time , terfrm downloads ur dependencies , therfor if u cahnge ur provider version n run  terfrm init again , it wil
-fail so u have to run terfrm init -upgrade
+fail so u have to upgrade to upgrade ur pluggins , s0: run terfrm init -upgrade
+now it will download the version which is 3.0 , so it is upgrading the lock version , so terfrn has made some cahges to the provider dependencies 
+and in my lock file i can see the version is 3.76.1 bt the constraint is 3.0 , so this now becomes the depencies that terfrm is using , s if i run terfrm init as long as v 
+constrain it , it wil nt go bk to download the dependcies again, it will reuse the dependecise
+so this hw we manage our provider pluggindsin term of version , so if terfrm does a change n it changes that , then u just hv to modify the constrian to that particular
+vesrion bt u hv to upgrade ur puggins 
 
 
 
