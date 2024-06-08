@@ -384,6 +384,17 @@ thats hw we use variable files
 
 
  2:55:08  ################# CREATING A VARIABEL THAT HAS A SECRET##################
+    YOU CAN MARK IT AS sensitive =true
+
+        variable "mytype" {
+          type = string
+         sensitive = true
+
+what this does is that , bc when trfrm writes the state fiel evrytin is written in plan text it doesnt encrpyt it 
+everyone can read the state file , 
+so if i want terfrm to mask it i hv to mark it as sensistive that way in the state file, trfrm will not genertae it, u wil nt be able to see it
+
+   49:00
 
 
 
