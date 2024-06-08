@@ -1,3 +1,6 @@
+  WE CAN CREATE MODULE FOR VPC , TYPES OF VRAIABLES ,PASSING VARIABLES AS A FILE    
+
+
 /whenever you are installing a package, you have to make sur eyou an adminstrator or it wont allow you
 
 depending on ther version am running the version dert the syntax, though most of them are backward compartibkle, it wii jst give u warning that this has been depricated,u 
@@ -77,7 +80,7 @@ YOU start create a data source oR using a data blk with the keyword data, n data
         filter {                  we wnt to filter the AMI bc when we are doing our search, it is goin to return all AMIs that ar owned by amazon n also d most recent
            name= "name"                                                  so we ar goin to apply filters on the specific AMI that we wnt
            values = ["al2023-ami-*-kernel-6.1-x86_64"]          ( we can remove the date n put* so it captures all the AMIs) dnt understand what he means
-                                                                       ***its bc we can use this smae data source to get diff AMIs  e.g in a diff region
+                                                                       ***its bc we can use this smae data source to get diff AMIs  e.g wen we wnt toget AMI in a diff region
 
           filter {
              name = "root-device-type"
@@ -332,7 +335,21 @@ so this is a list within a map
 ************************** this are the main type of variable we can pass inside our configuration
 
 
-             PASSING VARIABLES AS A FILE 
+             PASSING VARIABLES AS A FILE    ( we can use a variables file to deploy in multiple env)
+when u dnt want to pass these varaibles within ur configuration , terfrm always gives the option for u to pass them as files
+
+e.g  if u want to pass a varaible as a file on the command line u can use an argument command line optional argument - var-file and reference the file that has ur variables,
+the file has to end with .tfvars
+    $ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars
+
+
+**************************2:39:30
+so i can create a file taht has my variables    ..... call it variables.tfvars
+to pass the variables file
+   terfrm plan -var-file=variables.tfvars 
+************this will read frm the variabel file n return whats needed
+
+
 
 
 
