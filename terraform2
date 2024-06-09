@@ -240,10 +240,23 @@ so if i run terfrm plan, it now requires me to enter the value bc hv now mk the 
 ############## so this is hw we use variableas to modularizeor to make our code as flexible as possible 
 
 
-QUESTION:
+QUESTION:  ..... ..........1:58             .... watch 2:06 
 1)
        DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND???
-if you notice, i only run tfrm plan, i didnt run terfrm apply 
+if you notice, i only run tfrm plan, i didnt run terfrm apply ,I WAS JUST TRYING TO GENERATE THE PLAN BC THIS IS HW WE TEST whether EVRYTIN IS WRKING 
+bt if i created a new resource and run trfrm plan , we can see the plan is to add 1 and destroy 0 
+module.ec2.aws_instance.data_test:Refreshing state  .. THIS MEANS its only refreshing the instance resource we already have 
+# module.vpc.aws_vpc.vpc will be created   ......... this means  this new resource will be created
+terfrm apply 
+ we check the stste file we ssee the resource taht was added 
+
+if i run trfrm apply again .. it says 
+no changes, your infrastucture matches the configuration
+bc the configuration matches what is ur current actual state, so its checking , refreshing what is in ur state file n comparing it wit ur configuratn,so bc it sees everytin 
+matches ,ders nothing to change or add
+bt if decide to add a like a tag on my vpc, it just means that am modifying my step ,wit that i can run trfrm init, trfrm plan, it sees ders a dif , it refrehes n statae n
+say its now going to modify the vpc , it just updates, it goes to the vpc n put this tag 
+   ********** terfrm state list shows hw many resources i hv captured in my state file 
 
 
 2)    WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE 
