@@ -481,6 +481,53 @@ yes , when we refactor , we organize our env and create a file for each e.g reso
 i didnt refactor 
 so terfrm is declarative , it doesnt matter the number of files u have, it will reade tru all th efile and create a plan 
 
+3) e.g if u hv a provider aws and mayb mistakenly u created anoda provider thathas azure or gcp 
+how will terfrm read when u hv like 2 provider file wit diff values in them ????
+   ANS:
+
+provider = "aws " {
+      region = var.region
+}
+
+provider "azurerm" {}
+   ******************* ther are some other arguments am suppose to pass             .......... 3.24.20
+
+  ************* when u run terfrm init , it will initialize the backend and we can look at .terrafrm we see it now downloaded azure pluggins bt we already have aws pluggins
+
+
+3) when u map the variables to the prod , stage dev ,, how do we tag the resources so that it matches with the mapping???
+
+  resource "aws_instance" "data_test" {
+        ami = data.aws_ami.amazon_linux.id
+        instance _type -var.instance[0] 
+
+         tags = {
+          Name = var.tags [0]
+     }
+  }
+
+ varaiable "inst" {
+    type = map      
+    default = {
+     " dev" = "t2.micro"
+      "stage" = "t2.medium"
+      "prod" = "t3.large"
+  
+   }
+}
+
+varaiable "tags" {
+    type = list(string)      
+    default = ["dev", "stage", "prod"]
+}
+
+
+
+
+
+
+    
+
 #############################################################################################################################################
 
 
