@@ -1,7 +1,7 @@
 ************ version dertermines the syntax
 
 WE CAN CREATE MODULE FOR VPC , USING VARIABLES TO MODULELARIZE MY CODE, TYPES OF VRAIABLES ,HOW DO U ACCESS VALUES IN A LIST, HOW TO REFERENCE VALUES IN A MAP, PASSING
-VARIABLES AS A FILE  , terraform.tfvars , auto files  , QUESTION :terfrm init -upgrade.
+VARIABLES AS A FILE  , terraform.tfvars , auto files  , QUESTION :terfrm init -upgrade. , MOVED  BLOCK
 
 
 ###in summary ill say we created a data source and then used modules to make it flexible then using variables to modulerize the code , declaring a variable of type map, and
@@ -497,6 +497,8 @@ provider "azurerm" {}
 
 3) when u map the variables to the prod , stage dev ,, how do we tag the resources so that it matches with the mapping???
 
+  ANS:
+
   resource "aws_instance" "data_test" {
         ami = data.aws_ami.amazon_linux.id
         instance _type -var.instance[0] 
@@ -522,9 +524,81 @@ varaiable "tags" {
 }
 
 
+     4) THE Workflow  terrafrom destroy
+e.g u have 5 ec2 instance in aws and u wnt to specify just one to destroy, how can terrfrm do that
+
+ANS:   ............. 3:30:30
+
+  you can target
+
+e.g
+terrafrm state list
+data.aws_ami.amazon_linux
+aws_instance.data_test
+aws_s3_bucket.dev_env
+ terrafrm destroy -target=aws_s3_bucket.dev_env      .... to destroy the targeted resource
+
+ its gives u the destroy plan but if i use auto destroy, it will automatically destroy it
+now its destroyed 
+bt if u run trfrm init, trfrm will think i want to recreate it again bc its stil in the configuration file , so if u dnt wnt it ot b recreated
+u can delete it frm ur file or comment it so trefrm doesnt see it
+
+ now ,, terrafrm state ... we hv just this 2 left 
+ 
+data.aws_ami.amazon_linux
+aws_instance.data_test
+
+
+ i can run terafrm state show aws_instance.data_test
+
+it shows me the instance , hw its capturd in the state file  , if u want a specific thing frm the state file  , u run terfrm state show and the resource address
+
+otherwise u can run terrafrm show , it shows you the instance and the data source
+
+
+**************  
+LETS SAY I HV A RESOUREC IN MY STATE FILE 
+      resource "aws_instance" "data_test"   and i change the name to    resource "aws_instance" "data_test1"
+ if i run terfrm plan , it refreshes the state but plans to 
+plan: 1 to add, 0 to change, 1 to destroy.  but why???
+u looknat the plan and u can see its planing to destroy an instance called  resource "aws_instance" "data_test" and 
+add an instance called resource "aws_instance" "data_test1"
+
+***********lets says ur boss ask you to change the name of a certain instance tahst running in production, terfrm is goin to destroy it and recreate it 
+this is what you dnt want to happen 
+this is why we hv a 9th type of block called mOVED BLOCK
+
+3:40:20
+**************************  MOVED BLOCK   ,, used to rename our resources
+E.G U USED TO Iive at point a  bt moved to point b , so ull go to the post office , u tell thme i used to live here bt now there n give them ur forwarding address
+
+
+in terrfrm , moved block u hv to define wher ur moving frm test  to wher ur moving to test1
+i dnt intend to destroy my instance bt dis same instance used to be called data test bt moving to dtat test1
+so am using moved blk to relocate or rename my instance
+
+ moved {
+   from = aws_instance.data_test
+   to = aws_instance.data_test1
+}
+
+now when i run terfrm plan , it will read the step 
+it says : # plan :  it will add 0 , change 0 and destroy 0
+# aws_instance.data_test has moved to aws_instance.data_test1  ........... so its nt destroying or deleting bt wihin the state file its just relocating the name
+
+************** so evrytime ur working with trfrm, always run the plam first and look at what terfm is trying to do if ur comfortable with the plan then go ahead n apply
+
+   ***********
+in our case ur asked to change the name but ur not asked to destroy it so how are u goin to do it????
+    we can easily use a moved blk to rename our resoures
+
+
+if i needed to move this inside of a module then ican just give it the addres of the module and move the resource
+ 
 
 
 
+              TRY AN ATTEMPT THIS TASK 
 
     
 
