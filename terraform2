@@ -73,10 +73,16 @@ bucket_business = local.business   ( i did this myself based on the github note)
 
 *********************** bc its a long name, i declare it in a locals blk 
 
-
-
-
-BLK 7: DATA SOURCE     ...... 1:17:35      create a data source for an AMI , we wnt to return a certain AMI 
+########vidoe 3   ########### 15:20 
+ we use data sources to get info to return info for us frm an API, IF WE wnt 2 get info frm AWS, mayb frm a vpc, AN INSTANCE, a s3 bucket, this obj we wnt to get info abt,
+first it has to exist,   so if we hv an ec2 instance tht exists we are able to get info abt the instance ,  the id , public addres, its dns 
+so we can use a data source and pass in our filters and we are able to filter out all d amis that are der and we are ablle to return jst the value of what we nid
+we use data source for automation bc as engr u dnt want to go to d console to manually copy an ami or any info/attribute,instaed u can automate d proces by runing a comand 
+an data source wil go fast into aws , it wil get the attribute/info that u need n terrafrm gives u a way wherby u can aripolate that, u can pass d it directly to d resource 
+ur creating
+#################
+vide2 continues:
+BLK 7: DATA SOURCE     ...... 1:17:35     create a data source for an AMI , we wnt to return a certain AMI 
 first create n name the file and open it and startt56
 YOU start create a data source oR using a data blk with the keyword data, n data block needs 2 labels 
         data "aws_ami" "amazon_linux" {
