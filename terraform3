@@ -209,7 +209,7 @@ we pass it as a list bc we can put multiple arguments in there
 depends on = [aws_instance.myec2]
 can run terfrm format so it formats the code 
 thne trfrm apply 
-and we see its first goin to create the  instance first
+and we see its first goin to create the instance first
 we dnt see any vpc creating as it did earlier
 so have altered the behaviour
 so after my instance have been created then it can then create the vpc 
@@ -217,9 +217,18 @@ this explicit , am defining hw i want my resources to be created
 butb if i wanted my vpc to be created first then ill say my instance depends on ....
 
 2) count
-in trfrm a resource blk actually configures only one infrastructure obj by defaault. if we want mutiple resources wit same configurations, w ecan define d count meta-argument
+in trfrm a resource blk actually configures only one infrastructure obj by defaault.
+if we want mutiple resources wit same configurations, w ecan define d count meta-argument
+this reduce the overhaeds of duplictaing the resource blk that number of times
+ie with count meta-argument we can change tefrm hw the resourec wil behave 
+e.g, so if i want to create 2instances, instaed of dupicating the resourec but i hv to change the name
+these are too many lines of code to maintain  
+so id rather introduce a meta argument and it will toveride the defaault
+count = 3     ... that is it wil craete the resourec 3times 
 
-
+***************but to be able to differentiate each of the created resource we pass a count.index
+the index ranges from 0 t0 -1
+so if i want to create 
 
 
 
