@@ -176,7 +176,7 @@ your understanding of hw these wrk wil hekp u to easly wrk wit trefrm bc u can m
 10lines of code bc u hv meta argument that can create resourecs jst based on the conditions that u pass
 
 
-depends on:
+1) depends on:
 trfrm has a feature of identifying resource dependency. this means that tfrm internally knws d sequence in wich d dependant resources needs to be craeted 
 wheras the independent resources are created in parrallel.
 ie if u have 2resources that are depndent on each other, terfrm internally has a way of identifying wich resource has to be created first b4 the other , 
@@ -195,7 +195,44 @@ of tfrm that identifies which resource nids to be created first
 
 EXPLICIT DEPENDENCIES
 this is whne u determine urself manaually the order resources are created 
-this is done by apssing a depend_on meta argument
+this is done by apssing a depend_on meta argumentq
+
+
+he showed an e.g,
+in our caling resourec file we have a resource for an instance, and a rsorec for a vpc 
+terfrm plan and we see the plan is to first create the instance and then the vpc 
+and then terraform apply: we see vpc creating and instance creating 
+lets create a dependency
+i want the vpc to depend on the instance, so that means the vpc can only be created after the instance has beeen craeted
+so in my vpc i can say that this vpc depends on = the aws instance 
+we pass it as a list bc we can put multiple arguments in there
+depends on = [aws_instance.myec2]
+can run terfrm format so it formats the code 
+thne trfrm apply 
+and we see its first goin to create the  instance first
+we dnt see any vpc creating as it did earlier
+so have altered the behaviour
+so after my instance have been created then it can then create the vpc 
+this explicit , am defining hw i want my resources to be created
+butb if i wanted my vpc to be created first then ill say my instance depends on ....
+
+2) count
+in trfrm a resource blk actually configures only one infrastructure obj by defaault. if we want mutiple resources wit same configurations, w ecan define d count meta-argument
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
