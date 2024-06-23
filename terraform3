@@ -6,7 +6,7 @@ i cudnt install terrafrm                       ............... ASSIGNMENT: 1:25:
 remember when u intialize terfrm , u nid to be in the dir where your files are 
 
 user data, boot straping, terfrm has built in functions ,THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key ,secret/ .gitgnoire, meta arguments, TYPES OF META 
-ARGUMENTS , IMPLICIT/EXPLICIT Dependencies, 
+ARGUMENTS , IMPLICIT/EXPLICIT Dependencies, converting list to set of string
 
 ########  am goin to intro u to anod IDE  i like using called itelligie     .............. 26:00
 bt its nt any diff frm vscode
@@ -259,9 +259,9 @@ so bc of that trfrm also has anoda argument called:
 e.g resource "aws_instance" "myec2" {
 for each = var.instance_type
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     ***********we cahngeit to : 
-user_data    = file("${path.module}/app1-install.sh")
-tag = {
+instance type = so instaed of this: var.instance_type     ***********we cahngeit to : each.value 
+user_data    = file("${path.module}/app1-install.sh")          ie for each of the list (t2.micro", "t2.medium", "t3.micro) we wnt the instance typ to b for each
+tag = {                                                               so for each one the instance type wil be the value 
    "Name" = "EC2Demo-${count.index)"
  }
 }
@@ -269,7 +269,14 @@ tag = {
 
 varaiable "instance_type" {
     type = list(string)
-    default = ["2t2.micro", "t2.medium", "t3.micro"]
+    default = ["t2.micro", "t2.medium", "t3.micro"]
+
+****************************************bt this wont work bc for each works with either a map or a set of strings 
+run tefrm apply and we get an error : invalid for_each argument 
+
+****************** so bc of this we can use a tefrm function to convert our list into a set of strings bc we cant convert to  amap bc we dnt hv key value pairs in here.
+
+
 
 
 
