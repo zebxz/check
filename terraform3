@@ -5,8 +5,8 @@ i cudnt install terrafrm                       ............... ASSIGNMENT: 1:25:
 38:00 , watch what he did .........
 remember when u intialize terfrm , u nid to be in the dir where your files are 
 
-user data, boot straping, terfrm has built in functions ,THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key , secret/ .gitgnoire, meta arguments, IMPLICIT/EXPLICIT
-Dependencies.. .. 
+user data, boot straping, terfrm has built in functions ,THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key ,secret/ .gitgnoire, meta arguments, TYPES OF META 
+ARGUMENTS , IMPLICIT/EXPLICIT Dependencies, 
 
 ########  am goin to intro u to anod IDE  i like using called itelligie     .............. 26:00
 bt its nt any diff frm vscode
@@ -154,8 +154,11 @@ i creat my variable n mark it as sensitive = true so when trfrm create the state
 as plain state , otherwiae anyone who has access to ur statefile are able to see ur secret
 any thing u dnt wnat exposd, u mark it as senesitive n ter frm will nt expose it as an ouput or within ur statefile
 
-############   1:44:30 
-                               META ARGUMENTS   ............... REFer to note file in github
+
+
+############  #######################     1:44:30 
+                         
+                                  META ARGUMENTS   ............... REFer to note file in github
 so far w ve been dealing with  Aruments are what we pass into our terrfm resource  when  we wnt to create a resourec or when we wnat to get data, uisng data source , w ecan 
 use argument
 
@@ -216,7 +219,8 @@ so after my instance have been created then it can then create the vpc
 this explicit , am defining hw i want my resources to be created
 butb if i wanted my vpc to be created first then ill say my instance depends on ....
 
-2) count
+2) count 
+it can be specified in resources as well as modules 
 in trfrm a resource blk actually configures only one infrastructure obj by defaault.
 if we want mutiple resources wit same configurations, w ecan define d count meta-argument
 this reduce the overhaeds of duplictaing the resource blk that number of times
@@ -226,11 +230,46 @@ these are too many lines of code to maintain
 so id rather introduce a meta argument and it will toveride the defaault
 count = 3     ... that is it wil craete the resourec 3times 
 
-***************but to be able to differentiate each of the created resource we pass a count.index
+***************but to be able to differentiate each of the created resource we pass a count.index , the index has to be whole numbers
 the index ranges from 0 t0 -1
-so if i want to create 
+so if i want to create 3 instances 
+count = 3
+Name = "server-$(count.index)"
+subsequently the instances wil be   ...................2:09:00
+server-index1
+server-index2
+server-index3
+
+the name that will be captUred in the statefile will have the index indicated
+so we using the same code to create multiple instances 
+the ami, user data, the instance type are all the same 
+
+  ************************ LIMITATIONS OF COUNT ***************
+bc count uses an index 
+for e.g we created 4 instances and then i remove/ delete one instance from the list , count will try to reindex all the incidents instance and it wil delete all and then
+recreate all again bc the index has to be frm 0 upwards.
+also if go in the middle of the list and u remove an element frm a list then it means all the subsequent element needs to be resequenced
+ie u removed index 2, so index 3, 4, 5 hv to be reconfigured to make the arrangment of the numbers accordingly
+
+so bc of that trfrm also has anoda argument called: 
+
+3)    FOR EACH   ............... THIS is more flexible        ...............2:17
 
 
+e.g resource "aws_instance" "myec2" {
+for each = var.instance_type
+ami           = data.aws_ami.amzlinux2.id
+instance type = so instaed of this: var.instance_type     ***********we cahngeit to : 
+user_data    = file("${path.module}/app1-install.sh")
+tag = {
+   "Name" = "EC2Demo-${count.index)"
+ }
+}
+
+
+varaiable "instance_type" {
+    type = list(string)
+    default = ["2t2.micro", "t2.medium", "t3.micro"]
 
 
 
