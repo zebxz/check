@@ -272,7 +272,7 @@ varaiable "instance_type" {
     default = ["t2.micro", "t2.medium", "t3.micro"]
 
 ****************************************bt this wont work bc for each works with either a map or a set of strings 
-run tefrm apply and we get an error : invalid for_each argument 
+run tefrm plan and we get an error : invalid for_each argument 
 
 ****************** so bc of this we can use a tefrm function to convert our list into a set of strings bc we cant convert to  amap bc we dnt hv key value pairs in here.
 
@@ -282,10 +282,19 @@ its used to convert a list or a map into a set
  e.g
 for each = toset(var.instance_type)
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type   
+instance type = each.value            ************** but if its a map : each.key , you supply the key then it wil return the value
 user_data    = file("${path.module}/app1-install.sh")        
 tag = {                                                           
    "Name" = "EC2Demo-${count.index)"
+
+terrform plan 
+and its successfull
+
+so this how we use meta data for hw a resource behave or hw terfrm handles a resource.
+
+2:29:00   ********************* but if its a map : each.key , you supply the key then it wil return the value of the key supplied.
+
+4) provider     
 
 
 
