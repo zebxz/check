@@ -5,8 +5,8 @@ i cudnt install terrafrm                       ............... ASSIGNMENT: 1:25:
 38:00 , watch what he did .........
 remember when u intialize terfrm , u nid to be in the dir where your files are 
 
-user data, boot straping, terfrm has built in functions ,  THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key , secret/ .gitgnoire
-
+user data, boot straping, terfrm has built in functions ,THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key , secret/ .gitgnoire, meta arguments, IMPLICIT/EXPLICIT
+Dependencies.. .. 
 
 ########  am goin to intro u to anod IDE  i like using called itelligie     .............. 26:00
 bt its nt any diff frm vscode
@@ -142,7 +142,7 @@ i need to look at the key pairs i have in that region
 i look at my documentation, hw do i pass a key , i look at my arguments , scroll down to k
 so always make sure you have that the key exists and the key is in ur env , for e.g in dis case, its west2
 
-we will see how we can create our key using the ssh key gen command and u can create the private/public key on ur terminmal and dpass the key to terfrm n terfrm wil associate
+we will see how we can create our key using the ssh key gen command and u can create the private/public key on ur terminmal n dpass the key to terfrm n terfrm wil associate
 that key wit ur instance bc u wil have both ur private key in ur env and it wil tk the public key and attach it to ur instance at ceration
 
                                         
@@ -150,9 +150,59 @@ that key wit ur instance bc u wil have both ur private key in ur env and it wil 
 first i create the secret file and write the secret know only to me  e.g db_password = "landmark123"     terraform apply -var-file=secret.tfvars
 but if am working with a team, ur working collaboratively, ur using .gitgnoire (inside  the .gitgnoire file, he refered to the secret file he wrote: secret.tfvars)
 so am passing .gitnoir, if i push this code to you , u will not hv dis file the secret file, so u wont be able to see it
-i creat my variable n mark it as sensitive so when trfrm create the statefile its nt going to  output the value of the variable, it nt goin to be captured in the statefile 
+i creat my variable n mark it as sensitive = true so when trfrm create the statefile its nt going to output the value of d variable, it nt goin to be captured in d statefile 
 as plain state , otherwiae anyone who has access to ur statefile are able to see ur secret
 any thing u dnt wnat exposd, u mark it as senesitive n ter frm will nt expose it as an ouput or within ur statefile
+
+############   1:44:30 
+                               META ARGUMENTS   ............... REFer to note file in github
+so far w ve been dealing with  Aruments are what we pass into our terrfm resource  when  we wnt to create a resourec or when we wnat to get data, uisng data source , w ecan 
+use argument
+
+META ARGUMENTS : these are arguments that alter the behaviour of a a resource , they dnt cahneg d resource they only change hw it behaves
+
+
+INTERVIEW QUESTIONS  , WHta is meta arguments
+meta arguments are what i pass into my terfrm resource to alter the behaviour  of hw the resource behaves
+
+   ther are 5types
+depends on
+count
+for_each
+provider
+lifecycle
+
+your understanding of hw these wrk wil hekp u to easly wrk wit trefrm bc u can moduleize ur code otr create dependecies, u can reduce ur code to 
+10lines of code bc u hv meta argument that can create resourecs jst based on the conditions that u pass
+
+
+depends on:
+trfrm has a feature of identifying resource dependency. this means that tfrm internally knws d sequence in wich d dependant resources needs to be craeted 
+wheras the independent resources are created in parrallel.
+ie if u have 2resources that are depndent on each other, terfrm internally has a way of identifying wich resource has to be created first b4 the other , 
+
+depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
+ 
+
+   INTERVIEW QUESTIONS, 
+What are implicit dependencies???
+
+ANS:
+THis is a situation wherby terfrm internally identifies d dependencies of resource n therfrore its able to identify which resource to create first, so it is abt dependencies
+so if u dnt pass any depends on argument but tefrm still organizes which arguments needs to be created first then that becomes implicit depencies, its an inbuilt functionality
+of tfrm that identifies which resource nids to be created first 
+
+
+EXPLICIT DEPENDENCIES
+this is whne u determine urself manaually the order resources are created 
+this is done by apssing a depend_on meta argument
+
+
+
+
+
+
+
 
 
 
