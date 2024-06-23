@@ -1,9 +1,11 @@
+
+
 i cudnt install terrafrm                       ............... ASSIGNMENT: 1:25:30
 
 38:00 , watch what he did .........
 remember when u intialize terfrm , u nid to be in the dir where your files are 
 
-user data, boot straping, terfrm has built in functions ,  THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key 
+user data, boot straping, terfrm has built in functions ,  THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key , secret/ .gitgnoire
 
 
 ########  am goin to intro u to anod IDE  i like using called itelligie     .............. 26:00
@@ -143,7 +145,14 @@ so always make sure you have that the key exists and the key is in ur env , for 
 we will see how we can create our key using the ssh key gen command and u can create the private/public key on ur terminmal and dpass the key to terfrm n terfrm wil associate
 that key wit ur instance bc u wil have both ur private key in ur env and it wil tk the public key and attach it to ur instance at ceration
 
-
+                                        
+1:354:00  gitgnoire file for creating a secret
+first i create the secret file and write the secret know only to me  e.g db_password = "landmark123"     terraform apply -var-file=secret.tfvars
+but if am working with a team, ur working collaboratively, ur using .gitgnoire (inside  the .gitgnoire file, he refered to the secret file he wrote: secret.tfvars)
+so am passing .gitnoir, if i push this code to you , u will not hv dis file the secret file, so u wont be able to see it
+i creat my variable n mark it as sensitive so when trfrm create the statefile its nt going to  output the value of the variable, it nt goin to be captured in the statefile 
+as plain state , otherwiae anyone who has access to ur statefile are able to see ur secret
+any thing u dnt wnat exposd, u mark it as senesitive n ter frm will nt expose it as an ouput or within ur statefile
 
 
 
