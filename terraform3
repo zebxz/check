@@ -222,7 +222,7 @@ butb if i wanted my vpc to be created first then ill say my instance depends on 
 2) count 
 it can be specified in resources as well as modules 
 in trfrm a resource blk actually configures only one infrastructure obj by defaault.
-if we want mutiple resources wit same configurations, w ecan define d count meta-argument
+if we want mutiple resources wit same configurations, w ecan define d count meta-argument  ie we can use count meta argument
 this reduce the overhaeds of duplictaing the resource blk that number of times
 ie with count meta-argument we can change tefrm hw the resourec wil behave 
 e.g, so if i want to create 2instances, instaed of dupicating the resourec but i hv to change the name
@@ -250,10 +250,15 @@ for e.g we created 4 instances and then i remove/ delete one instance from the l
 recreate all again bc the index has to be frm 0 upwards.
 also if go in the middle of the list and u remove an element frm a list then it means all the subsequent element needs to be resequenced
 ie u removed index 2, so index 3, 4, 5 hv to be reconfigured to make the arrangment of the numbers accordingly
+also count meta data cannot b used with for_each
 
 so bc of that trfrm also has anoda argument called: 
 
 3)    FOR EACH   ............... THIS is more flexible        ...............2:17
+  this accepts a map or set of strings. tefrm wil create one instance of that resource for each member of that map or set. to identify each member of the for_each block,
+we have 2objects:
+eack key: the map or set member coresponding to each member
+ecah value: the map value corressponding to each member.
 
 
 e.g resource "aws_instance" "myec2" {
@@ -295,7 +300,7 @@ so this how we use meta data for hw a resource behave or hw terfrm handles a res
 2:29:00   ********************* but if its a map : each.key , you supply the key then it wil return the value of the key supplied.
 
 4) provider     
-
+specifies wich provider to use for a reosure 
 
 
 
