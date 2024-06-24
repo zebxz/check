@@ -335,23 +335,40 @@ tag = {
    "Name" = "EC2Demo-${count.index)"
 
 
+varaiable "instance_type" {
+    type = list(string)
+    default = ["t2.micro", "t2.medium"]
+
+
 resource "aws_vpc" "myec2" {
    cidr_block = "10.0.0.0/16"
      depends_on = {aws_instance.myec2}
 
 
 provider "aws" {
-   alias = east 
+   alias = "east"
    region = "us-east-1"
 }
 
     therfore , with this, your vpc wil be in US west bc i hv my provider, it wil tk the default provider 
 but the instance will have an alias so wil be created in east 
 
+*************2:39:10  ............... 
+run terfrm plan 
+we got error : invalid AMI, not found 
+he said hes nt trying to troubleshoot, hes trying to establish why hes getting that error 
+someone suggested that we calling resorces that was created in diff region,  west, to be created in west
+so it doesnt recognize bc ec2 are region specific thus the error
 
+**************** he said
+right now we are trying to create a resource in us east1,
+we hv used a meta argumet wich alters the behavior , by default the resourdewil be craeted in d default region bt it wil also use thsis data ssource to get our AMI BT 
+BC WE pass a provider, this data source is using d default provider to query that particular data. its trying to find data in us  west bt when it returns that particular
+data, this AMI is nt found in us East1
 
-
-
+2:44 :00 ************* so we need to find out can you pass a provider alias in a data source????
+can somebody go to the provider and find out
+so this is your first project at work so how can you pass it?? 
 
 
 
