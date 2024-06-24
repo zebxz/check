@@ -300,8 +300,45 @@ so this how we use meta data for hw a resource behave or hw terfrm handles a res
 2:29:00   ********************* but if its a map : each.key , you supply the key then it wil return the value of the key supplied.
 
 4) provider     
-specifies wich provider to use for a reosure 
+specifies wich provider to use for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
+for diffrrntiating those providers, u use an alias field.
+the resource then reference the same alias field of the provider as provider.alias to tell wich one to use.
+e.g when i wnt the use the europe region then in my resource i wil specify 
 
+# default provider
+provider google
+  region = us-central
+
+## Another provider
+provider google
+  alias = europe 
+  region = europe-west1
+
+## Referencing the other provider
+resource "google_compute_instance" "example" {
+  provider = google.europe                         .**********in my resourec i wil specify the provider
+
+also another e.g
+
+resource "aws_instance" "myec2" {
+ provider = aws.east                     ************* here ill pass the provider
+for each = toset(var.instance_type)
+ami           = data.aws_ami.amzlinux2.id
+instance type = each.value           
+user_data    = file("${path.module}/app1-install.sh")        
+tag = {                                                           
+   "Name" = "EC2Demo-${count.index)"
+
+
+resource "aws_vpc" "myec2" {
+   cidr_block = "10.0.0.0/16"
+     depends_on = {aws_instance.myec2}
+
+
+provider "aws" {
+   alias = east 
+   region = "us-east-1"
+}
 
 
 
