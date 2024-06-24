@@ -319,6 +319,11 @@ resource "google_compute_instance" "example" {
   provider = google.europe                         .**********in my resourec i wil specify the provider
 
 also another e.g
+i hv a resource for an instance and a resource for a vpc 
+if i want to creste the instance in us east1, then i v defined an alias below
+then in the instance ill define my prorvider as aws.east
+why bc i hv a vpc that wil be created in west
+bt for the instance v pass a provider wit an alias that wil alter wher the resource wil be provisioned
 
 resource "aws_instance" "myec2" {
  provider = aws.east                     ************* here ill pass the provider
@@ -340,6 +345,8 @@ provider "aws" {
    region = "us-east-1"
 }
 
+    therfore , with this, your vpc wil be in US west bc i hv my provider, it wil tk the default provider 
+but the instance will have an alias so wil be created in east 
 
 
 
