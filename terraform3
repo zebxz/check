@@ -1,5 +1,7 @@
 AMIs are Region specific ................3:00:14
 
+my QUESTION: How do you know areas that have default vpc ????????????????
+
 i cudnt install terrafrm                       ............... ASSIGNMENT: 1:25:30
 
 38:00 , watch what he did .........
@@ -387,12 +389,21 @@ prof said:
 we are tryin g to call a data source bt how are we referencing it, passing it ?    ............2:53:05
 
 ANS:
-in the data source,where we have the output resource for our AMI , he added provider = aws.east
+in the data source,where we have our resource to get our AMI , he added provider = aws.east
 data "aws_ami" amzlinux2" {
-    provider = aws.west
+    provider = aws.east
     most_recent = true
     owners =   ["amazon"]
     filter {
+
+terrafrm plan ...... successful   ********************* this is the solution 
+but terfrm apply and vpc not specified errror
+this is bc in us East(where i want my reources to be configured, i dont have a default vpc 
+thi s is jst a basic question to see how we use meta arguments wich alters the default behaiour of our resource
+the default behaviour of this data source is that it will use the default provider which is us west2
+bt bc v congigure an alias, i wnat my resources to be configured in a diff region us East, therfroe we v to manipulitae d data source to use d same provider as our resources
+so, data source has to go to into us East bt unfortunataely we dnt hv a default vpc in US East 
+************* so the rectify the issue he changed our alias region to a region that has a default vpc
 
 
 
