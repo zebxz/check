@@ -1,4 +1,4 @@
-
+AMIs are Region specific ................3:00:14
 
 i cudnt install terrafrm                       ............... ASSIGNMENT: 1:25:30
 
@@ -202,7 +202,7 @@ this is done by apssing a depend_on meta argumentq
 
 
 he showed an e.g,
-in our caling resourec file we have a resource for an instance, and a rsorec for a vpc 
+in our caling resourec file/data block we have a resource for an instance, and a rsorec for a vpc 
 terfrm plan and we see the plan is to first create the instance and then the vpc 
 and then terraform apply: we see vpc creating and instance creating 
 lets create a dependency
@@ -369,6 +369,35 @@ data, this AMI is nt found in us East1
 2:44 :00 ************* so we need to find out can you pass a provider alias in a data source????
 can somebody go to the provider and find out
 so this is your first project at work so how can you pass it?? 
+
+ANS:............   2:50:00
+she saw it under meta data sources
+data sources
+aws_regions
+
+that we should use :
+bc the documentation says, it enables all the region so that u check for the resources across regions
+so in the data source , he added:
+
+data  "aws_region" "current" {
+  all_regions = true
+
+   terrafrm apply but we still get error 
+prof said:
+we are tryin g to call a data source bt how are we referencing it, passing it ?    ............2:53:05
+
+ANS:
+in the data source,where we have the output resource for our AMI , he added provider = aws.east
+data "aws_ami" amzlinux2" {
+    provider = aws.west
+    most_recent = true
+    owners =   ["amazon"]
+    filter {
+
+
+
+
+
 
 
 
