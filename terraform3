@@ -359,8 +359,8 @@ but the instance will have an alias so wil be created in east
 run terfrm plan 
 we got error : invalid AMI, not found 
 he said hes nt trying to troubleshoot, hes trying to establish why hes getting that error 
-someone suggested that we calling resorces that was created in diff region,  west, to be created in west
-so it doesnt recognize bc ec2 are region specific thus the error
+someone suggested that we calling resorces that was created in diff region,  west, to be created in east
+so it doesnt recognize bc ami,ec2 are region specific thus the error
 
 **************** he said
 right now we are trying to create a resource in us east1,
@@ -410,6 +410,24 @@ in the data source for AMI, he changed provider to aws.west
 
 terffrm plan 
 terfrm apply .............. successfull.................. 2:57:13
+vpc was created in aregon but the instances were craeted in california
+
+so we hv seen hw we can use provider as a meta argument to manipulate hw our resources are provisioned created.
+tru troubleshooting n finding errorrs , this hw u cm to findout hw things work.  if u find errors like that dnt freakout, just understnad d concept.
+the basic concept is that AMIs are region specific
+*************if tefrm gives u an error thta an AMI is not found , jst knw that ur are in the wrong region.
+###############################if ur usin a data osurce, a datasource shud always return ur AMI , and a datasource  wil use d provider, the region of the provider that is the 
+default region that your datasource wil try to query the data from , bt if u hv used an alis , if one of ur resource has an alias then ur datasource wil always try to query
+data frm ur defult region that is set in ur default provider bt if u ve an alias, uv configured a provider alias then u hv to pass that in your datasource 
+
+
+
+
+
+
+
+
+
 
 
 
