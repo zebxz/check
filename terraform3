@@ -479,6 +479,37 @@ C)
 YOU can play around and see hw it works
 
 
+  that is the main, when u understnad how this meta arguments works then trefrm wil become very easy bc when when we start writing code n we using functions ,
+we usidng meta argment like e.g for each", we are able to loop over code , we are able to careet multiple resources with few lines of code
+if i have few lines of code that code is easy to read and miantain , u are less prone to mk errors bc u hv very few lines of code 
+instaed of me writing a 100 lines of code to deploy 10 ec2 instances, i can write 10 line sof code using  meta arguments , using loops n the code can easily be read, it
+easy to maintain and less prone to errors.
+
+
+what we left for u to know is terfrm backend 
+what we ve ben doing, as we v been writibg and genetaing codes, trfrm has been storing our state file
+this is the stae of our infrasture , it stores this state file in ur pwd 
+this is cllaed a localbackend
+a backend is wHer terfm opretaons hv been happening
+and trerm has been downloading our providers here and its stores its state file in ur pwd , wher ur runing trem and it also has a backup of ur statfile inaces ue 
+mainstate file gets corrupted bt thsis state file are in ur pwd , 
+so this is calle da loacl backend , so sofar we v ben using a local backend
+
+   INTERVIEW QUESTION
+what are the type of trfrm backend that u are familair with ? 
+NOW we knw what a loscal backend is ..............
+
+when we meet nxt we will see what a remote backend is 
+we will create an s3 bucket and be able to push our trfrm statefile to  the bucket
+so we will use an s3 bucket a sa remote storage, so it will be consider more like a remote bcakend bc trfrm wil nt read its statefile frm here
+when we run tefrm init, it wil initialize the s3 bucket as its backend 
+so thats what we will call it , a remote backend for state storsge 
+and we ll see hw we can secure the s3 busket using diamond or db table as part of our security
+bc when ur collaborating with ur  team member,  the statefile neds to b accesible ,evry team mmeber  neds to hv acces to the state file bc ur working on the same 
+infratsure 
+so thsi statefile nedst to be in a place wher we can collobrate  bt we dnt push our statefile in github or repository
+it needs to b in a secured env and thats why we  aer goin to b usin an s3 bucket
+
 
 
 
