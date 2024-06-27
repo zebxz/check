@@ -410,7 +410,7 @@ in the data source for AMI, he changed provider to aws.west
 
 terffrm plan 
 terfrm apply .............. successfull.................. 2:57:13
-vpc was created in aregon but the instances were craeted in california
+vpc was created in oregon west2 but the instances were craeted in california , west1
 
 so we hv seen hw we can use provider as a meta argument to manipulate hw our resources are provisioned created.
 tru troubleshooting n finding errorrs , this hw u cm to findout hw things work.  if u find errors like that dnt freakout, just understnad d concept.
@@ -422,6 +422,30 @@ data frm ur defult region that is set in ur default provider bt if u ve an alias
 specifying the region ur datasource shud query or get the data.
 
 5)  LIFE CYCLE
+   A life cycle defines the life cycle of a resource. as per the resource behaviour , tefrm can do the following:
+create a resource destroy a resource updated resource in place update resource by deleting existing and create new.
+lifecycle is a nested block unde rresource that is used to cutomise that behaviour 
+
+   CUSTOMIZATION THAT ARE AVAILABLE UNDER LIFE CYCLE BLOCK
+A) Create_before_destroy :(Type: Bool)  ... u pass it as a bullion ,, the default nature of trfrm is that it wil destroy a resource then create bt in prod if u dnt wnat 
+that to happen, u dnt wnat downtime , u wnt u infrasture to be created first then you can protect ur infrastu using life cycle meta argument
+you can pass create_before_destroy = true 
+b) prevent_destroy: (Type:Bool)
+c) ignore_changes (type list (Attribute Name)
+
+******************** 3.06:05
+if we ar to chnage our instanec frm t2 micro to t2 medium,
+we knw that when u chnage your instance type or AMI , its like your opearting system , wich maps ur cpu n memeory,that particular instance wil hv to be destroyed, tefrm 
+cannot just update but 
+if its tag, if i change it, trfrm  can modify it , if i run the plan , iil seee trfrm wil try to modify it in place, memaing its updated frm this to this , it doesnt hv
+to destroy the instance
+
+but if  we ar to chnage our instanec frm t2 micro to t2 medium, and run trfrm plan,
+we see plan : 1 to add , 1 to destroy
+trfem apply 
+then we see it first starts to dsetroy and at the same time, its creating
+but we dnt wnat hsi to hpapen in prod  bc ur imnfrasture is been destroy n bc of that downtime
+to prevent thsi u can pass a life cycle meta argument
 
 
 
