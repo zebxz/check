@@ -445,7 +445,42 @@ we see plan : 1 to add , 1 to destroy
 trfem apply 
 then we see it first starts to dsetroy and at the same time, its creating
 but we dnt wnat hsi to hpapen in prod  bc ur imnfrasture is been destroy n bc of that downtime
-to prevent thsi u can pass a life cycle meta argument
+
+*******************  3:10:00
+A) to prevent thsi in our resource block u can pass a life cycle meta argument
+
+life cycle{
+  create_before_destroy = true
+
+trfrm apply 
+it showed destroying
+creating 
+then destroying multiple times 
+and finlayy it took 1sec to destroy and 4ms to create 
+so he said technically thats still a downtime 
+
+
+B:
+life cycle{
+  prevent_destroy = true
+
+trfrm apply 
+error: ccannot be destroy , says its protected by a life cycle
+so it altered the default bebaviour of the instance 
+
+but the documentation says u can bypass that plan by using -target
+terrefrm destroy -target 
+so i can target the specific resource i wnat to destroy
+
+when we run tereraform state list 
+we see we no longer have the targeted resourec 
+
+C)
+YOU can play around and see hw it works
+
+
+
+
 
 
 
