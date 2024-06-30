@@ -341,10 +341,34 @@ tag = {
 
      33:05  *********** 
 now he also removed the variables for the subnets from the vpc file and paste them in the variables file 
-so all the variable are in one file 
+so all the variableS are in one file 
 
 also, for the output, he created a file , output.tf and pasted the output block
+
          
+N0.12)      ****************************
+     I ALSO NEED to create and output for my subnet, i need the subnet id bc when am creating this instance the argument that is passed is subnet id  so i need the id 
+how do i get the subnet id 
+  if i go to my vpc file, this is my subnet :aws_subnet" "main"
+
+     output "subnet_id" {                                 
+         value = "aws_subnet.main.id            ************ i want to get the id of this subnet after it has been created
+   
+
+NO.12a    ******************  now ill remove the output for the subnet id and paste it inside the output file 
+  so ill get my output for my vpc and my output for my subnet
+
+# VPC
+    output "vpc_id" {                                 
+         value = "aws_vpc.main.id 
+
+  # Subnet
+    output "subnet_id" {                                 
+         value = "aws_subnet.main.id 
+
+    
+36:32   ************** so hv created this 2output for this 2resources
+      with this am able to access these 2 output , bc ill need this subnet id to use it when am creating my resource
 
 
 13) NOW THIS IS HOW OUR VPC FILE LOOKS LIKE
@@ -363,8 +387,14 @@ resource "aws_subnet" "main" {
                               
 tag = { 
   Name = "Demo - subnet"
- 
 
+
+ 36:32   ******************** 
+      now let me go to my vpc and create this vpc first
+by looking at the output which resource do you think will be taking first ?
+  ANS:
+ 
+38:41 .... 
 
 
 
