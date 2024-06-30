@@ -189,7 +189,7 @@ resource "aws_vpc" "main" {
 tags = {
    Name = " Demo-vpc"}
 
-                                  REFACTORING
+                                  REFACTORING/creating variables
 5)                    ******** then let , REFACTOR this code, ie i can pass this as variables 
 
 
@@ -214,7 +214,7 @@ varaiable "tags" {
 Default   = "Demo-vpc"
 }
 
-5a)    ************** referencing the variable cidr and vpc tag
+5a)    *********** referencing the variable cidr and vpc tag   ( he usually just goes back to NO.4 and refernce it by doing the changes e.g "10.0.0.0/16" to "var.cidr"
 
  resource "aws_vpc" "main" {
    cidr_block = "var.cidr"       *********** so we are referencing the CIDR variable above
@@ -268,7 +268,8 @@ bt ill wnat to get the subnet frm this vpc that am craeting
 now since this vpc is a module on its on, for u to get something out of a module you must create an output, 
 there must be an output for you to access the attribute of the module
 right now we are creating this vpc but we do not hv any output, so ders no way of accessing the attributes of the vpc
-so for us to be able to access the attributes we will need to craete an output 
+
+9)   so for us to be able to access the attributes we will need to craete an output 
 
 
 vpc.tf file
@@ -280,14 +281,15 @@ tags = {
    Name = " Demo-vpc"}
  }
 }
-
+     NO.9
 output "vpc_id" {                                   ************so this output will return the vpc id 
   value = "aws_vpc.main.id                              so am using an output to access the attribute of that value (an attribute of the vpc)
                                                          so i have to declare this particular output
 
 28:25    ********** havin created that particular output, i probably want to create a subnet/subnets inside of this particular vpc 
 
-   HOW TO CREATE A SUBNET 
+
+10)       HOW TO CREATE A SUBNET 
 in the registry he copied the resource block and pasted in the vpc file 
 
 resource "aws_vpc" "main" {
@@ -300,7 +302,8 @@ tags = {
 
 output "vpc_id" {                                 
   value = "aws_vpc.main.id 
-}
+
+}    NO.10
 resource "aws_subnet" "main" {             ****** am creating a reosurce called a subnet,i wnat to craete the subnet inside this vpc,  so ill nid to pass this vpc id
     vpc_id   = aws_vpc.main.id                       (aws_vpc.main.id) this will return the id of the vpc,  so i need a vpc id where the subnet will be created
     cidr_block = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at this 
@@ -310,25 +313,31 @@ tag = {
  }
 }
 
-***********    again i can pass this as varaiables 
+11) ***********    again i can pass this as varaiables 
    now i can create 2variables (this is again refactoring)
 
 varaiable "sub_cidr" {
     type      =  "string"
     Default   = "10.0.1.0/24"
 
-31:44   ****** then to reference it 
-
-resource "aws_subnet" "main" {             
-    vpc_id   = aws_vpc.main.id                       
-    cidr_block = "var.sub_cidr"         ******************referencing the variable sub_cidr
-
 
 ************* variable for the subnet tag
      varaiable "sub_tag" {
     type      =  "string"
     Default   = "Demo-subnet"
-         
+
+ 11a)    ************************    31:44
+      Referencing the variable for the sub_cidr  and subnet tag  ( he usually just goes back to NO.10 and refernce it by doing the changes e.g "10.0.1.0/24" to "var.sub_cidr"
+    
+resource "aws_subnet" "main" {             
+    vpc_id   = aws_vpc.main.id                       
+    cidr_block = "var.sub_cidr"         ******************referencing the variable sub_cidr
+
+tag = { 
+  Name = "sub_tag"         ******************referencing the variable sub_tag
+
+
+         so we have refactored our code 
     
 
  
