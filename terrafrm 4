@@ -218,8 +218,28 @@ provider "aws" {
 
 ************* so now inside of the vpc dir, i can create anoda file and call it varaiables.tf
 so ill remove the variables from the vpc file and paste them inside its own file (the varaiables.tf file) .....********** the is the process called REFACTORING******** 
+SO THAT it is easy to read , 
+am making sure i only have resources in one file
+providers in one file, so now ill create a file for providers ........................     25.03
+
+variables.tf file 
+
+varaiable "cidr" {
+    type  =  "string"
+Default   = "10.0.0.0/16"
+}
+
+varaiable "tags" {
+    type  =  "string"
+Default   = "Demo-vpc"
+}
 
 
+remove the provider from my vpc and put it on its file
+  provider.tf
+
+provider "aws" {
+   region = "us-west-1"
 
 
 
