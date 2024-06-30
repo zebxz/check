@@ -107,12 +107,41 @@ resource "aws_instance" "web" {
 ^^^^^^^^^^^^^^^ 16;00
 
   LETS SEE HOW REMOTE EXEC WORKS
+we have this provisioners file 
 
 WE want to create our ec2 instance 
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server sowe wil use this data source to get our AMI 
 this wil gnerate an AMI for ubnutu
 once we get AMI, we are goin to use it in our resource block
+
+resource "aws_instance" "my_ekl_instance" {
+ provider = aws.east                     ************* here ill pass the provider
+for each = toset(var.instance_type)
+ami           = data.aws_ami.amzlinux2.id
+instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
+subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]
+key_name         = var. my_key
+user_data    = file("${path.module}/app1-install.sh")        
+tag = {                                                           
+   "Name" = "EC2Demo-${count.index)"
+
+
+varaiable "instance_type" {
+    type = list(string)
+    default = ["t2.micro", "t2.medium"]
+
+
+resource "aws_vpc" "myec2" {
+   cidr_block = "10.0.0.0/16"
+     depends_on = {aws_instance.myec2}
+
+
+provider "aws" {
+   alias = "east"
+   region = "us-east-1"
+}
+
 
 
 
