@@ -272,10 +272,29 @@ output "vpc_id" {                                   ************so this output w
   value = "aws_vpc.main.id                              so am using an output to access the attribute of that value (an attribute of the vpc)
                                                          so i have to declare this particular output
 
-28:25    ********** haven created that particular output, i probably want to create a subnet/subnets inside of this particular vpc 
+28:25    ********** havin created that particular output, i probably want to create a subnet/subnets inside of this particular vpc 
 
    HOW TO CREATE A SUBNET 
+in the registry he copied the resource block and pasted in the vpc file 
 
+resource "aws_vpc" "main" {
+   cidr_block = "10.0.0.0/16"
+
+tags = {
+   Name = " Demo-vpc"}
+ }
+}
+
+output "vpc_id" {                                 
+  value = "aws_vpc.main.id 
+}
+resource "aws_subnet" "main" {             ****** am creating a reosurce called a subnet,i wnat to craete the subnet inside this vpc,  so ill nid to pass this vpc id
+    vpc_id   = aws_vpc.main.id                       (aws_vpc.main.id) this will return the id of the vpc,  so i need a vpc id where the subnet will be created
+    cidr_id = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at this 
+                              
+tag
+
+ 
 
 
 
