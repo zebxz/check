@@ -1,4 +1,6 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
+PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, PASING A SUBNET, REFACTORING, PASSING A PROVIDER 
+ create a subnet/subnets inside of the vpc 
 
 
 what is meta data ??
@@ -184,7 +186,8 @@ resource "aws_vpc" "main" {
 tags = {
    Name = " Demo-vpc"}
 
-******** then let , REFACTOR this code, ie i can pass this as variables 
+                                  REFACTORING
+                    ******** then let , REFACTOR this code, ie i can pass this as variables 
 
 vpc.tf file
 
@@ -207,10 +210,10 @@ varaiable "tags" {
 Default   = "Demo-vpc"
 }
 
-
+                                                     PASSING MY PROVIDER 
 ************* so have declared 2 varaiables...... 
-after have done this, fo rthis particular vpc  i need to pass a provider 
-i neeed to pass my provider block 
+after have done this, for this particular vpc  i need to pass a provider 
+i NEED  to PASS MY PROVIDER block 
 
 provider "aws" {
    region = "us-west-1"      ********so this is where am creating my vpc 
@@ -266,7 +269,9 @@ tags = {
 
 output "vpc_id" {                                   ************so this output will return the vpc id 
   value = "aws_vpc.main.id                              so am using an output to access the attribute of that value (an attribute of the vpc)
+                                                         so i have to declare this particular output
 
+28:25    ********** so i probably want to create a subnet/subnets inside of the vpc 
 
 
 
