@@ -1,6 +1,6 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
- create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE 
+ create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, 
 
 
 what is meta data ??
@@ -389,12 +389,27 @@ tag = {
   Name = "Demo - subnet"
 
 
- 36:32   ******************** 
+ 36:32   ********************      IMPLICIT DEPENDENCY 
+
       now let me go to my vpc and create this vpc first
 by looking at the output which resource do you think will be taking first ?
-  ANS:
  
-38:41 .... 
+38:41 
+ANS: this is what we talked abt implicit dependencies 
+so trefrm is able to look at your resources and determine which resources should be created first bc of implicit dependencies
+but if we wnat to make it dependence explicit,  we use depends on
+if  we ant to make our explicit dependency,  then we can pass a depends on meta argument here
+we will say that the subset depends on the vpc and  bc we v explicitly declared that, it just means the vpc wil have to be created first  bc the subnet depends on it
+
+  ******** but bc of how the subnet requires a vpc id, so this inherently is implicit dependency
+
+so just understand the difference
+
+   ALL THESE ARE INTERVIEW QUESTIONS
+WHAT IS IMPLICIT dependency... ?
+what is explicit dependency   ?
+how does trfrm achieve implicit dependency  ... ?    it is just by how resources depends on each other 
+how does trfrm achieve explicit dependency   ..... ?    you have to pass a dependency 
 
 
 
