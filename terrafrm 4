@@ -42,7 +42,42 @@ this now becosmes a process of configuration, am tryin to config this ec2 instan
 ********11:20
 one way we saw we can run a script is by using user data, we can use user data to run a script, that is a porcess of configuraton, this is hw i can configure my instance
 usingtfrm by using user data
-but ehat if i have a script on my 
+but what if i have a script on my local env that am nt passing as user data bt i wnat such that after my instance has created i want to transfer the script into my instance
+then once this script has been transferred run this script on the instance
+so trfrm gives you what is called provisioners, u can use provisioners to do that
+so i have used this process of provisioners to craete my instance bt then am using what we call a provisioner to do what we call configuration
+
+############ when u look at the documentaion, trfrm gives a strong warning that *************** PROVISIONERS ARE OUR LAST RESORT****************
+WHEN ur using provioners, it is recommended that only use them when neccesssary jst bc of the nature of hw provisioners wrk
+onof the things u wil realise as u work with provisioners is that if a provisioner fails e.g  if d script ur trying to install fails then the provisioner wil b deleted
+and when this happens , if the provisiner was working on a resource like an ec2 instance , the instance will be deleted and recreated
+thats why we hv to use provisioners as last resort.
+
+TYPES OF PROVISIONERS
+
+1) file provisioner
+The file provisioner copies files or directories from the machine running Terraform to the newly created resource. The file provisioner supports both ssh and winrm
+type connections.
+
+that is :if i have a file on my local env, i can use a file provisoner that will copy the file and tk it to the destination which is the remote machine (the machine that is been
+provioned)
+
+2) LOCAL-EXEC PROVISIONER
+he local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource. See the remote-exec
+provisioner to run commands on the resource.
+
+Note that even though the resource will be fully created when the provisioner is run, there is no guarantee that it will be in an operable state - for example system services
+such as sshd may not be started yet on compute resources.
+
+THAT IS:
+A local exec basically runs on your local env ,i can run a command on my local env after my remote instance has been craeted
+and we will see exactly what i mean once we run it 
+
+
+
+
+
+
 
 
 
