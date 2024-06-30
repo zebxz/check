@@ -1,5 +1,5 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
-PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, PASING A SUBNET, REFACTORING, PASSING A PROVIDER 
+PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, subnet, REFACTORING, PASSING A PROVIDER 
  create a subnet/subnets inside of the vpc 
 
 
@@ -164,8 +164,8 @@ varaiable "instance_user" {
 
 
 19:15
- ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
-module for my vpc, i  now hv a dir here called vpc
+ ********* AS see above, am passin a subnet id bt d subnet is ,i dnt hv d subnet yet so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here
+n create a module for my vpc, i  now hv a dir here called vpc
 now ill go to the trfrm registry ND TYPES aws_vpc as a resource 
 he copied the basic usage :
     
@@ -211,9 +211,10 @@ Default   = "Demo-vpc"
 }
 
                                                      PASSING MY PROVIDER 
-************* so have declared 2 varaiables...... 
+  23:08  ************* so have declared 2 varaiables...... 
+
 after have done this, for this particular vpc  i need to pass a provider 
-i NEED  to PASS MY PROVIDER block 
+i NEED  to PASS MY PROVIDER block , am using AWS 
 
 provider "aws" {
    region = "us-west-1"      ********so this is where am creating my vpc 
@@ -271,7 +272,9 @@ output "vpc_id" {                                   ************so this output w
   value = "aws_vpc.main.id                              so am using an output to access the attribute of that value (an attribute of the vpc)
                                                          so i have to declare this particular output
 
-28:25    ********** so i probably want to create a subnet/subnets inside of the vpc 
+28:25    ********** haven created that particular output, i probably want to create a subnet/subnets inside of this particular vpc 
+
+   HOW TO CREATE A SUBNET 
 
 
 
