@@ -1,6 +1,6 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
-PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, subnet, REFACTORING, PASSING A PROVIDER 
- create a subnet/subnets inside of the vpc 
+PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
+ create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE 
 
 
 what is meta data ??
@@ -111,10 +111,13 @@ resource "aws_instance" "web" {
   LETS SEE HOW REMOTE EXEC WORKS
 we have this provisioners file 
 
-WE want to create our ec2 instance 
+    
+                  ************   WE WANT TO CREATE OUR EC2 INSTANCE 
+
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server sowe wil use this data source to get our AMI 
-this wil gnerate an AMI for ubnutu
+
+1) this wil gnerate an AMI for ubnutu
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -127,7 +130,7 @@ filter {
  filter {
    name = 
 
-***********  once we get AMI, we are goin to use it in our resource block
+2)      ***********  once we get AMI, we are goin to use it in our resource block
 
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
@@ -138,7 +141,7 @@ key_name         = var. my_key                                19:15  so lets try
  
 
 
- ##########variable.tf file     (variable for the instance)
+3)      ##########variable.tf file     (variable for the instance)
 
 varaiable "region" {
   type      = list(string)
@@ -178,7 +181,7 @@ so this will craete my vpc
 so on this vpc he added some tags
 
 
-********* vpc.tf file
+4)     ********* vpc.tf file
 
 resource "aws_vpc" "main" {
    cidr_block = "10.0.0.0/16"
@@ -187,16 +190,17 @@ tags = {
    Name = " Demo-vpc"}
 
                                   REFACTORING
-                    ******** then let , REFACTOR this code, ie i can pass this as variables 
+5)                    ******** then let , REFACTOR this code, ie i can pass this as variables 
+
 
 vpc.tf file
 
 resource "aws_vpc" "main" {
-   cidr_block = "var.cidr"       *********** so we are referencing the CIDR variable below
+   cidr_block = "10.0.0.0/16"       
  
 
 tags = {
-   Name = " var.tags"}
+   Name = " Demo-vpc"}
  }
 }
 
@@ -210,7 +214,16 @@ varaiable "tags" {
 Default   = "Demo-vpc"
 }
 
-                                                     PASSING MY PROVIDER 
+5a)    ************** referencing the variable cidr and vpc tag
+
+ resource "aws_vpc" "main" {
+   cidr_block = "var.cidr"       *********** so we are referencing the CIDR variable above
+
+ tags = {
+   Name = " var.tags"}          ****************** referencing the vpc tag above
+
+
+  6)                                                   PASSING MY PROVIDER 
   23:08  ************* so have declared 2 varaiables...... 
 
 after have done this, for this particular vpc  i need to pass a provider 
@@ -226,7 +239,7 @@ SO THAT it is easy to read ,
 am making sure i only have resources in one file
 providers in one file, so now ill create a file for providers ........................     25.03
 
-variables.tf file 
+7)      variables.tf file 
 
 varaiable "cidr" {
     type  =  "string"
@@ -239,7 +252,7 @@ Default   = "Demo-vpc"
 }
 
 
-remove the provider from my vpc and put it on its file
+8)      remove the provider from my vpc and put it on its file
   provider.tf
 
 provider "aws" {
@@ -319,6 +332,26 @@ resource "aws_subnet" "main" {
     
 
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
