@@ -242,6 +242,39 @@ provider "aws" {
    region = "us-west-1"
 
 
+******************** so bc i have declared my provider and variables and vpc on their own file , so this in itself and bc its inside of the vpc dir 
+so i can call this as my vpc module bc everything in this vpc dir has to do with jsut the vpc only
+so i can go ahead and create the vpc first
+bt before i create the vpc, i realise that in my code (resourec block) to create my instance
+i need a certain subnet
+bt ill wnat to get the subnet frm this vpc that am craeting 
+now since this vpc is a module on its on, for u to get something out of a module you must create an output, 
+there must be an output for you to access the attribute of the module
+right now we are creating this vpc but we do not hv any output, so ders no way of accessing the attributes of the vpc
+so for us to be able to access the attributes we will need to craete an output 
+
+
+vpc.tf file
+
+resource "aws_vpc" "main" {
+   cidr_block = "10.0.0.0/16"
+
+tags = {
+   Name = " Demo-vpc"}
+ }
+}
+
+output "vpc_id" {                                   ************so this output will return the vpc id 
+  value = "aws_vpc.main.id                              so am using an output to access the attribute of that value (an attribute of the vpc)
+
+
+
+
+
+
+
+
+
 
 
 
