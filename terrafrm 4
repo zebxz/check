@@ -138,9 +138,32 @@ key_name         = var. my_key
 
  ##########variable file 
 
+varaiable "region" {
+  type      = list(string)
+  default   = ["us-west1", "us-west-2", "us-east-1"]
+}
 varaiable "instance_type" {
     type = list(string)
     default = ["t2.micro", "t2.medium"]
+}
+varaiable "my_key" {
+    type     = list(string)
+    default  =  "eks-instance"
+}
+varaiable "my_path" {
+    description   = "private key path"
+    default  =  "mykey/elk-instance.pem"
+}
+varaiable "instance_user" {
+    default  =  "ubuntu"
+}
+
+
+
+
+
+
+
 
 
 resource "aws_vpc" "myec2" {
