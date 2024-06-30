@@ -290,9 +290,33 @@ output "vpc_id" {
 }
 resource "aws_subnet" "main" {             ****** am creating a reosurce called a subnet,i wnat to craete the subnet inside this vpc,  so ill nid to pass this vpc id
     vpc_id   = aws_vpc.main.id                       (aws_vpc.main.id) this will return the id of the vpc,  so i need a vpc id where the subnet will be created
-    cidr_id = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at this 
+    cidr_block = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at this 
                               
-tag
+tag = { 
+  Name = "Demo - subnet"
+ }
+}
+
+***********    again i can pass this as varaiables 
+   now i can create 2variables (this is again refactoring)
+
+varaiable "sub_cidr" {
+    type      =  "string"
+    Default   = "10.0.1.0/24"
+
+31:44   ****** then to reference it 
+
+resource "aws_subnet" "main" {             
+    vpc_id   = aws_vpc.main.id                       
+    cidr_block = "var.sub_cidr"         ******************referencing the variable sub_cidr
+
+
+************* variable for the subnet tag
+     varaiable "sub_tag" {
+    type      =  "string"
+    Default   = "Demo-subnet"
+         
+    
 
  
 
