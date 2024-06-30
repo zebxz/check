@@ -71,7 +71,36 @@ such as sshd may not be started yet on compute resources.
 
 THAT IS:
 A local exec basically runs on your local env ,i can run a command on my local env after my remote instance has been craeted
-and we will see exactly what i mean once we run it 
+and we will see exactly what i mean once we use it 
+
+3)  REMOTE- EXEC
+The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc.
+To invoke a local process, see the local-exec provisioner instead. The remote-exec provisioner requires a connection and
+supports both ssh and winrm.
+
+THAT IS:
+it perfroms a task on your remote resource, if am creatin an ec2 instance , i can use a remote exec, i can run commands on the remote instance ie the instance hv jst created
+if i use a remote exec provisioner but for me to be able to run command inside of the instanc e(the remote instance), iil need to connect to it 
+hw do i connect to an instance , il use ssh , iil need to ssh into that particular instance for me to be able to conect to the instance after wich am then able to run either
+my script or command after the connection.
+
+resource "aws_instance" "web" {
+  # ...
+
+  # Establishes connection to be used by all
+  # generic remote provisioners (i.e. file/remote-exec)
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = var.root_password
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.web.private_ip}",
+    ]
 
 
 
