@@ -130,10 +130,10 @@ filter {
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
 instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
-subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]             ********* am passin a subnet id 
-key_name         = var. my_key                                                   
-   "Name" = "EC2Demo-${count.index)"
-
+subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]             ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet
+key_name         = var. my_key                                19:15  so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
+                                                                                                      module for my vpc
+ 
 
 
  ##########variable file 
@@ -142,7 +142,7 @@ varaiable "region" {
   type      = list(string)
   default   = ["us-west1", "us-west-2", "us-east-1"]
 }
-varaiable "instance_type" {
+varaiable "myInstance" {
     type = list(string)
     default = ["t2.micro", "t2.medium"]
 }
@@ -161,6 +161,9 @@ varaiable "instance_user" {
 
 
 
+19:15
+ ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
+module for my vpc
 
 
 
