@@ -275,10 +275,10 @@ right now we are creating this vpc but we do not hv any output, so ders no way o
 vpc.tf file
 
 resource "aws_vpc" "main" {
-   cidr_block = "10.0.0.0/16"
+   cidr_block = "var.cidr"
 
 tags = {
-   Name = " Demo-vpc"}
+   Name = " var.tag"}
  }
 }
      NO.9
@@ -293,10 +293,10 @@ output "vpc_id" {                                   ************so this output w
 in the registry he copied the resource block and pasted in the vpc file 
 
 resource "aws_vpc" "main" {
-   cidr_block = "10.0.0.0/16"
+   cidr_block = "var.cidr"
 
 tags = {
-   Name = " Demo-vpc"}
+   Name = " var.tag"}
  }
 }
 
@@ -336,10 +336,33 @@ resource "aws_subnet" "main" {
 tag = { 
   Name = "sub_tag"         ******************referencing the variable sub_tag
 
-
-         so we have refactored our code 
+       so we have refactored our code 
     
 
+     33:05  *********** 
+now he also removed the variables for the subnets from the vpc file and paste them in the variables file 
+so all the variable are in one file 
+
+also, for the output, he created a file , output.tf and pasted the output block
+         
+
+
+13) NOW THIS IS HOW OUR VPC FILE LOOKS LIKE
+
+   resource "aws_vpc" "main" {
+   cidr_block = "var.cidr"
+
+tags = {
+   Name = " var.tag"}
+ }
+
+}    
+resource "aws_subnet" "main" {             
+    vpc_id   = aws_vpc.main.id                       
+    cidr_block = "10.0.1.0/24"           
+                              
+tag = { 
+  Name = "Demo - subnet"
  
 
 
