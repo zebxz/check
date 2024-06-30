@@ -113,19 +113,30 @@ WE want to create our ec2 instance
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server sowe wil use this data source to get our AMI 
 this wil gnerate an AMI for ubnutu
-once we get AMI, we are goin to use it in our resource block
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners    = { 09879009}
+
+filter {
+   name    = "aws"
+   values  = 
+}
+ filter {
+   name = 
+
+***********  once we get AMI, we are goin to use it in our resource block
 
 resource "aws_instance" "my_ekl_instance" {
- provider = aws.east                     ************* here ill pass the provider
-for each = toset(var.instance_type)
-ami           = data.aws_ami.amzlinux2.id
+ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
 instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
-subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]
-key_name         = var. my_key
-user_data    = file("${path.module}/app1-install.sh")        
-tag = {                                                           
+subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]             ********* am passin a subnet id 
+key_name         = var. my_key                                                   
    "Name" = "EC2Demo-${count.index)"
 
+
+
+ ##########variable file 
 
 varaiable "instance_type" {
     type = list(string)
@@ -143,6 +154,17 @@ provider "aws" {
 }
 
 
+
+
+   provider = aws.east                     ************* here ill pass the provider
+for each = toset(var.instance_type)
+ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
+instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
+subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]             ********* am passin a subnet id 
+key_name         = var. my_key
+user_data    = file("${path.module}/app1-install.sh")        
+tag = {                                                           
+   "Name" = "EC2Demo-${count.index)"
 
 
 
