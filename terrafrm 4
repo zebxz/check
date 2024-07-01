@@ -1,6 +1,7 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
- create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, 
+ create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, REMOTE STATE DATA SOURCE
+
 
 
 what is meta data ??
@@ -458,6 +459,19 @@ this is bc we declared an output
 
                    tERRAFRM.tfstate
   IN this inf that has returned, it has also generated a statefile 
+the atatefile has the resources that were created
+we see the specs too ( tag, attribute)
+now if u had any sensitive inf bc as we said trfrm wil spit out everytin in plain text
+so bc of that we seee that there is no senesitive inf that was passed so we dnt have anything to worry abt the vpc
+     so this is our statefile
+
+************* we wnat to get this inf,  we wnt to be able to read this inf and get our id for our subnet inorder for us to provision our ec2 instance 
+
+48:11       HOW DO WE DO THAT???
+
+          REMOTE STATE DATA SOURCE
+ TRFRM gives you an option of a data source, u can use a data source to read a statefile called remote state data source
+ CAn go to the documentation:
 
    
         
