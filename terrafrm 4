@@ -1,7 +1,7 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
- create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, REMOTE STATE DATA SOURCE
-
+ create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, READING FRM A STATEFILE,
+REMOTE STATE DATA SOURCE ,Elastic ip, 
 
 
 what is meta data ??
@@ -535,8 +535,45 @@ lets say we hv this particular key, we wnat to pass the key, for us to pass the 
 if i look at my variables (No.3 above) i have passed my key (elk-instance)
 again as we said last time, whatever key you pass needs to exist in the particular region u trying to creating your resource
 
+58:30 **************Also in NO.3 above (variable file), the default for my instance 
+    if i we are to create a t2 medium, how can we reference it???
+by indexing it, we are reading it frm a list:
 
-59:14
+resource "aws_instance" "my_ekl_instance" {
+ami           = data.aws_ami.amzlinux2.id                            
+instance type = var.myInstance [1]                                                 
+subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
+key_name         = var. my_key   
+
+
+ **********  in the main.tf file, we are also passing a security grp , this is also an argument that we can pass 
+
+vpc_security_group_ids = [
+  aws_security_group.elk_sg.id,   ********** bc we nid this sg id, so it means this sg has to b created first before our instance can be created dats why we ar pasing
+ ]                                                    depends on, if the instance creates first before the sg then the instance wil nt bootstrap well
+]                                                    thats why we are doin an explicit depsncy so that terfrm orders hw d resourecs wil be created
+
+  depends_on = [aws_security_group.elk_sg]    * we are also passing an explicit dependency using depends on  
+
+
+************ also, we are creating an elastic ip , an we wil attach it on our instance, so our instance wil v an elastic ip, it wil nt just be automatically assigned a
+public ip bc we dnt wnat the ip to change so we are creating an elastic ip 
+
+#EIP
+resource "aws_eip" "ip" {
+  instance = aws_instance.my_elk_instance.id     ....this is the instance id we are associating it with 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
