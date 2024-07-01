@@ -231,12 +231,11 @@ so now once i do that am creating depsndency and terfrm is able to figure out ho
                  ec2instance.tf file
 
     resource "aws_instance" "myec2" {
-for each = var.instance_type
 ami           = data.aws_ami.amzlinux2.id
 instance type = var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo"
  }
 
 variable "instance_type" {
@@ -246,16 +245,15 @@ variable "instance_type" {
 
  resource "aws_vpc" "myec2" {
    cidr_block = "10.0.0.0/16"
-   depends_on = [aws_instance.myec2]
+   depends_on = [aws_instance.myec2]    ******** bc this is a list we can mk reference to more reosurces if we need to 
 tags = {
    Name = "my-test-vpc"
  }
 }
 bc its a list u can pass as many resources as u want as long as this particular resource depends on them, so u can pass it as a list
- e.g 
-depends_on = [aws_instance.myec2]     ******** bc this is a list we can mk reference to more reosurces if we need to 
 
     ******* so this is the first meta argument              ....... 2:04:00
+
 
 2) count          *****  this uses an index
 it can be specified in resources as well as modules 
@@ -266,19 +264,19 @@ ie with count meta-argument we can change tefrm hw the resourec wil behave
 e.g, so if i want to create 2instances, instaed of dupicating the resourec but i hv to change the name (myec2)
     bc of this am nt changing any configuration, am only changing the name which is local to trefrm
 
- 1) resource "aws_instance" "myec2" {
+ i) resource "aws_instance" "myec2" {
 ami           = data.aws_ami.amzlinux2.id
 instance type =  var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo)"
 
-2)   resource "aws_instance" "myec2" {
+ii)   resource "aws_instance" "myec2" {
 ami           = data.aws_ami.amzlinux2.id
 instance type =  var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo"
 
 
 *******  these are too many lines of code to maintain  
@@ -294,7 +292,7 @@ ami           = data.aws_ami.amzlinux2.id
 instance type =  var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo)"
 
 
 2b)
@@ -411,6 +409,8 @@ and its successfull
 so this how we use meta data for hw a resource behave or hw terfrm handles a resource.
   ********** this is more flexible bc its not using index, bc of this for each is more powerful meta argument to use if u have a list of varaible that u wnat to loop over
 so i can pass my list of string 
+
+so this is hw we use for each to alter the behaviour of resource or hw tarfrm handles a resource.
 
 2:29:00   ********************* but if its a map : each.key , you supply the key then it wil return the value of the key supplied.
 
