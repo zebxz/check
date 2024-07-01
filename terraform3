@@ -219,7 +219,20 @@ we dnt see any vpc creating as it did earlier
 so have altered the behaviour
 so after my instance have been created then it can then create the vpc 
 this explicit , am defining hw i want my resources to be created
-butb if i wanted my vpc to be created first then ill say my instance depends on ....
+but lets say i did it a diff way
+if i wanted my vpc to be created first, once the vpc is created then i want the instance to be placed in this particular vpc as a subnet, so with that i wil create depenencies
+ill say my instance depends on the vpc ....
+so my vpc will be created first, once it available then my instnace , i can get a subnet id, i can now use a data source, i can get a subnet id for that particular vpc to
+place my instance
+so now once i do that am creating depsndency and terfrm is able to figure out how to stretch it so it detr which resource will be created first
+
+    *********** depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
+
+bc its a list u can pass as many resources as u want as long as this particular resource depends on them, so u can pass it as a list
+ e.g 
+depends_on = [aws_instance.myec2]
+
+    ******* so this is the first meta argument              ....... 2:04:00
 
 2) count 
 it can be specified in resources as well as modules 
