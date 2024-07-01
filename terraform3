@@ -233,7 +233,7 @@ so now once i do that am creating depsndency and terfrm is able to figure out ho
     resource "aws_instance" "myec2" {
 for each = var.instance_type
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     
+instance type = var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
    "Name" = "EC2Demo-${count.index)"
@@ -267,17 +267,15 @@ e.g, so if i want to create 2instances, instaed of dupicating the resourec but i
     bc of this am nt changing any configuration, am only changing the name which is local to trefrm
 
  1) resource "aws_instance" "myec2" {
-for each = var.instance_type
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     
+instance type =  var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
    "Name" = "EC2Demo-${count.index)"
 
 2)   resource "aws_instance" "myec2" {
-for each = var.instance_type
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     
+instance type =  var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
    "Name" = "EC2Demo-${count.index)"
@@ -293,12 +291,13 @@ count = 3     ... that is it wil craete the resourec 3times
   resource "aws_instance" "myec2" {
 count = 3
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     
+instance type =  var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
    "Name" = "EC2Demo-${count.index)"
 
 
+2b)
 ***************but to be able to identify each of the created resource we pass a count.index , the index has to be whole numbers
 if i create 3 of these, i need to distinguish one from the other so bc of that ill need to pass count.index,i need to pass an index which is the index number that correspond
 to each resource
@@ -326,7 +325,7 @@ e.g     ,.... # create four similar EC2 instances
 resource "aws_instance" "myec2" {
 count = 3
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     
+instance type = var.instance_type     
 user_data    = file("${path.module}/app1-install.sh")         
 tag = {                                                               
    "Name" = "EC2Demo-${count.index)"                          ********* with count.index, thats how terfrm wil identify this as multiple/ different resources 
@@ -360,47 +359,58 @@ also count meta data cannot b used with for_each
 so bc of that trfrm also has anoda argument called: 
 
 3)    FOR EACH   ............... THIS is more flexible        ...............2:17
-  this accepts a map or set of strings. tefrm wil create one instance of that resource for each member of that map or set. to identify each member of the for_each block,
+  this accepts a map or set of strings. 
+so if you have a map or a set, then u can use for each,
+tefrm wil create one instance of that resource for each member of that map or set. 
+to identify each member of the for_each block,
 we have 2objects:
-eack key: the map or set member coresponding to each member
-ecah value: the map value corressponding to each member.
+each key: the map or set member coresponding to each member
+each value: the map value corressponding to each member.
 
 
 e.g resource "aws_instance" "myec2" {
-for each = var.instance_type
+for each = var.instance_type                    ************* we wnt the instance type to be for each  
 ami           = data.aws_ami.amzlinux2.id
-instance type = so instaed of this: var.instance_type     ***********we cahngeit to : each.value 
+instance type = so instaed of this: var.instance_type     ***********we change it to : each.value   ... (we set the instance type as we want the value)
 user_data    = file("${path.module}/app1-install.sh")          ie for each of the list (t2.micro", "t2.medium", "t3.micro) we wnt the instance typ to b for each
 tag = {                                                               so for each one the instance type wil be the value 
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo"
  }
 }
 
-
 varaiable "instance_type" {
-    type = list(string)
-    default = ["t2.micro", "t2.medium", "t3.micro"]
+    type = list(string)             ********** now for each, we have a list of string, .... mico, medium, t3micro 
+    default = ["t2.micro", "t2.medium", "t3.micro"]           ************ list of my instance type 
+                                                    bc i hv this list i can use for esch, so for each of this element in the list, trfrm can create for me an instance 
+                                                        for each of this, hw do i do that????  in the instance resource block, instaed of count, i can use for each 
 
-****************************************bt this wont work bc for each works with either a map or a set of strings 
+bt we say that for each accepts a map or a set , this variable inatance is a list , for each doenst work with a list 
+****************************************so  this wont work bc for each works with either a map or a set of strings 
+
+to confirm
 run tefrm plan and we get an error : invalid for_each argument 
 
-****************** so bc of this we can use a tefrm function to convert our list into a set of strings bc we cant convert to  amap bc we dnt hv key value pairs in here.
+****************** so bc of this we can use a tefrm function to convert our list into a set of strings bc we cant convert to a map bc we dnt hv key value pairs in here.
 
      CONVERTING LIST INTO SET OF STRING
 we have a function called to set 
 its used to convert a list or a map into a set 
  e.g
+
+resource "aws_instance" "myec2" {
 for each = toset(var.instance_type)
 ami           = data.aws_ami.amzlinux2.id
 instance type = each.value            ************** but if its a map : each.key , you supply the key then it wil return the value
 user_data    = file("${path.module}/app1-install.sh")        
 tag = {                                                           
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo"
 
 terrform plan 
 and its successfull
 
 so this how we use meta data for hw a resource behave or hw terfrm handles a resource.
+  ********** this is more flexible bc its not using index, bc of this for each is more powerful meta argument to use if u have a list of varaible that u wnat to loop over
+so i can pass my list of string 
 
 2:29:00   ********************* but if its a map : each.key , you supply the key then it wil return the value of the key supplied.
 
@@ -437,7 +447,7 @@ ami           = data.aws_ami.amzlinux2.id
 instance type = each.value           
 user_data    = file("${path.module}/app1-install.sh")        
 tag = {                                                           
-   "Name" = "EC2Demo-${count.index)"
+   "Name" = "EC2Demo"
 
 
 varaiable "instance_type" {
