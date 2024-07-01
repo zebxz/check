@@ -470,6 +470,7 @@ so bc of that we seee that there is no senesitive inf that was passed so we dnt 
 
 ************* we wnat to get this inf,  we wnt to be able to read this inf and get our id for our subnet inorder for us to provision our ec2 instance 
 
+   NO.18
 48:11       HOW DO WE DO THAT???
 
           REMOTE STATE DATA SOURCE
@@ -494,6 +495,7 @@ so u need to be able to read the statefile inorder for you to return the subnet,
 bc evrytin is on your local env 
 therefore for us to read this statefile, we are going to , he closed the vpc dir 
 
+NO.19
 *********51:18   .... opened  .. data.tf file 
        AM using this data source :it is called "terraform_remote_state, 
 this is the name that you must pass, this is the data source that is used to read statefile  
@@ -502,13 +504,27 @@ then i can give it any name, it doesnt matter, this is just a name (vpc) that wi
  ****** so if am calling this remote state called vpc, bc its goin to read the staefile of my vpc
 
 data "terraform_remote_state" "vpc" {
-  backend = "local"               ********* the type of backend is local 
-  config = { 
-       path    = "../vpc
+  backend = "local"                                ********* the type of backend am using is local 
+  config = {                                       what is the configuration ******** config here is the path, i need to tell tefrm the path wher to find that statefile
+       path    = "../vpc/terraform.tfstate"         ******** the data.tf is here , bc the vpc dir/file is in the same dir as the data.tf file , am goin to give it a path
+                                                        so it needs to go into a dir called vpc , while inside ther,you wil find a statefile called tefrm.tf
+                                                     it is in the Present dir of a dir called vpc n inside of that particualar dir there is whta we call a terrafrom.tf state
+
+ ************** so am using this datasource to be able to read this particular statefile
+but once i read the statefile , am interested to get an output that was declared inside the atatefile, am interested toget an output of a subnet id
+
+  54:08
+********************************
+     inside my 
 
 
 
- 
+
+
+
+
+
+
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners    = { 09879009}
