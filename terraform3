@@ -229,6 +229,7 @@ so now once i do that am creating depsndency and terfrm is able to figure out ho
     *********** depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
 
                  ec2instance.tf file
+
     resource "aws_instance" "myec2" {
 for each = var.instance_type
 ami           = data.aws_ami.amzlinux2.id
@@ -259,23 +260,87 @@ depends_on = [aws_instance.myec2]     ******** bc this is a list we can mk refer
 2) count 
 it can be specified in resources as well as modules 
 in trfrm a resource blk actually configures only one infrastructure obj by defaault.
-if we want mutiple resources wit same configurations, w ecan define d count meta-argument  ie we can use count meta argument
+if we want mutiple resources WITH THE SAME configurations, w ecan define d count meta-argument  ie we can use count meta argument
 this reduce the overhaeds of duplictaing the resource blk that number of times
 ie with count meta-argument we can change tefrm hw the resourec wil behave 
-e.g, so if i want to create 2instances, instaed of dupicating the resourec but i hv to change the name
-these are too many lines of code to maintain  
-so id rather introduce a meta argument and it will toveride the defaault
-count = 3     ... that is it wil craete the resourec 3times 
+e.g, so if i want to create 2instances, instaed of dupicating the resourec but i hv to change the name (myec2)
+    bc of this am nt changing any configuration, am only changing the name which is local to trefrm
 
-***************but to be able to differentiate each of the created resource we pass a count.index , the index has to be whole numbers
-the index ranges from 0 t0 -1
-so if i want to create 3 instances 
+ 1) resource "aws_instance" "myec2" {
+for each = var.instance_type
+ami           = data.aws_ami.amzlinux2.id
+instance type = so instaed of this: var.instance_type     
+user_data    = file("${path.module}/app1-install.sh")         
+tag = {                                                               
+   "Name" = "EC2Demo-${count.index)"
+
+2)   resource "aws_instance" "myec2" {
+for each = var.instance_type
+ami           = data.aws_ami.amzlinux2.id
+instance type = so instaed of this: var.instance_type     
+user_data    = file("${path.module}/app1-install.sh")         
+tag = {                                                               
+   "Name" = "EC2Demo-${count.index)"
+
+
+*******  these are too many lines of code to maintain  
+
+so id rather introduce a meta argument and it will toveride the defaault nature of this resource
+count requires a whole number and it will create the resourec that number of times
+count = 3     ... that is it wil craete the resourec 3times 
+   e.g
+
+  resource "aws_instance" "myec2" {
 count = 3
-Name = "server-$(count.index)"
+ami           = data.aws_ami.amzlinux2.id
+instance type = so instaed of this: var.instance_type     
+user_data    = file("${path.module}/app1-install.sh")         
+tag = {                                                               
+   "Name" = "EC2Demo-${count.index)"
+
+
+***************but to be able to identify each of the created resource we pass a count.index , the index has to be whole numbers
+if i create 3 of these, i need to distinguish one from the other so bc of that ill need to pass count.index,i need to pass an index which is the index number that correspond
+to each resource
+the index ranges from 0 t0 -1
+just like a list,
+our list always starts with 0 index
+so if i want to create 3 instances 
+count = 0, 1, 2
+
+e.g     ,.... # create four similar EC2 instances
+
+   resource "aws_instance" "server" {
+  count = 4 
+  ami           = "ami-a1b2c3d4"
+  instance_type = "t2.micro"
+
+  tags = {
+ #usage of count.index in providing a distinct name for every instance
+    Name = "Server ${count.index}"
+  }
+}
+
 subsequently the instances wil be   ...................2:09:00
-server-index1
-server-index2
-server-index3
+server- (index ) 1
+server- (index) 2
+server- (index) 3
+
+   so thats how terfrm wil diffferiante this resources from each other 
+
+resource "aws_instance" "myec2" {
+count = 3
+ami           = data.aws_ami.amzlinux2.id
+instance type = so instaed of this: var.instance_type     
+user_data    = file("${path.module}/app1-install.sh")         
+tag = {                                                               
+   "Name" = "EC2Demo-${count.index)"                          ********* with count.index, thats how terfrm wil identify this as multiple/ different resources 
+ }
+
+variable "instance_type" {
+   type = string
+   default = "t2.micro"
+
 
 the name that will be captUred in the statefile will have the index indicated
 so we using the same code to create multiple instances 
