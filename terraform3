@@ -228,9 +228,31 @@ so now once i do that am creating depsndency and terfrm is able to figure out ho
 
     *********** depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
 
+                 ec2instance.tf file
+    resource "aws_instance" "myec2" {
+for each = var.instance_type
+ami           = data.aws_ami.amzlinux2.id
+instance type = so instaed of this: var.instance_type     
+user_data    = file("${path.module}/app1-install.sh")         
+tag = {                                                               
+   "Name" = "EC2Demo-${count.index)"
+ }
+
+variable "instance_type" {
+   type = string
+   default = "t2.micro"
+}
+
+ resource "aws_vpc" "myec2" {
+   cidr_block = "10.0.0.0/16"
+   depends_on = [aws_instance.myec2]
+tags = {
+   Name = "my-test-vpc"
+ }
+}
 bc its a list u can pass as many resources as u want as long as this particular resource depends on them, so u can pass it as a list
  e.g 
-depends_on = [aws_instance.myec2]
+depends_on = [aws_instance.myec2]     ******** bc this is a list we can mk reference to more reosurces if we need to 
 
     ******* so this is the first meta argument              ....... 2:04:00
 
