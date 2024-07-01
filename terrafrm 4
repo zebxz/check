@@ -1,6 +1,6 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
- create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, 
+ create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR 
 
 
 what is meta data ??
@@ -402,6 +402,7 @@ if  we ant to make our explicit dependency,  then we can pass a depends on meta 
 we will say that the subset depends on the vpc and  bc we v explicitly declared that, it just means the vpc wil have to be created first  bc the subnet depends on it
 
   ******** but bc of how the subnet requires a vpc id, so this inherently is implicit dependency
+                        so this is an example of implicit dependency in terrafrm 
 
 so just understand the difference
 
@@ -411,6 +412,35 @@ what is explicit dependency   ?
 how does trfrm achieve implicit dependency  ... ?    it is just by how resources depends on each other 
 how does trfrm achieve explicit dependency   ..... ?    you have to pass a dependency 
 
+
+      *********** now that we have this, we can go ahead and create our vpc 
+
+                         LOCAL BACKEND 
+
+40:43  in mobaxaterm, watch how he arrived at the vpc dir 
+inside vpc dir 
+run terrafrm init   .....  to initialize the backend 
+this backend that is initializing , its downloading pluggins and providers, basically what its doing, its downloading those particular providers pluggins in your local env
+when that is downlaoded in ur local env, this becaomes a local backend 
+inside of my vpc we see that it created for us this .terrafrm dir, it downloaded frm the registry, harshicop registry, it downloaded your aws provider, that is the version
+of your provider 
+                           
+                             .TERRAFORM DIR
+
+so that is the purpose of the .terrafrm dir, it downloads your provider pluggins and if u hv any module but it also generates for you this file called terrfrm log file
+this is a log file that shows the provider pluggin that was downloaded
+this ae the harsh keys of that particular provider/pluggin that was downloaded
+ ***** so thats what terfrm init has done
+
+trfrm validate 
+the configuartion is valid 
+
+terrafm plan
+
+
+
+
+             
 
 
 
