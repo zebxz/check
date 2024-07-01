@@ -574,10 +574,10 @@ in our code also we ar goin to have a provisiner, once we create that instance
    depends_on = [time_sleep.wait_for_instance}
  # connection Block for provisioners to connect to the ec2 instance
 
-connection {                        ********** we will connect to the instance by using ssh 
-  host  = aws_eip.ip.public_ip
-  type  = "ssh"
-  user  = var.instance_user
+connection {                        ********** we will connect to the instance by using ssh,we wil ssh into the instance
+  host  = aws_eip.ip.public_ip     *********bc it is elastic, it wont change, it wil be d same ip that wil b attached on the instance, we wil us the elasic aws ip we cretaed
+  type  = "ssh"                            ** normally we wil pass a key to ssh into an instance, its d same tin we ar doing here, trfrm converted it to connection block             
+  user  = var.instance_user                e.g ssh -i key ubuntu@76.89.56
  private_key = file
 }
 
