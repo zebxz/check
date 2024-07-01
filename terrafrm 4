@@ -134,13 +134,15 @@ filter {
  filter {
    name = 
 
-2)      ***********  once we get AMI, we are goin to use it in our resource block
+2)      ***********  once we get AMI, we are goin to use it in our  (instance) resource block
+
+                     main.tf
 
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
 instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
-subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]             ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet
-key_name         = var. my_key                                19:15  so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
+subnet_id        =data.taerraform_remote_state.                ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet
+key_name         =                                         19:15  so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
                                                                                                       module for my vpc
  
 
@@ -515,7 +517,19 @@ but once i read the statefile , am interested to get an output that was declared
 
   54:08
 ********************************
-     inside my 
+     inside my instance resource block
+main.tf
+
+resource "aws_instance" "my_ekl_instance" {
+ami           = data.aws_ami.amzlinux2.id                            
+instance type = var.myInstance                                                      we are passing the subnet id:
+subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id       **** my subnet id wil b read frm the remote state data source (vpc) n in the statfile, am      
+key_name         = var. my_key                                      interested in d output, we always refer an output by its name (subnet_id) then trfm wil return the value
+                                                                         so we are reading this subnet frm the statefile (frm our vpc module)
+
+       ********* we are creating our resource inside of a custom vpc, our netwrk already exists 
+  so we are creating this instance inside of this subnet id 
+now we are also passing a key 
 
 
 
