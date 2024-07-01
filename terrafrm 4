@@ -1,7 +1,7 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
  create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, READING FRM A STATEFILE,
-REMOTE STATE DATA SOURCE ,Elastic ip, 
+REMOTE STATE DATA SOURCE ,Elastic ip, INLINE command
 
 
 what is meta data ??
@@ -582,7 +582,7 @@ connection {                        ********** we will connect to the instance b
                                       e.g of the normal convention: ssh -i key ubuntu@76.89.56
                                     ********* this is the user we ar connecting to : ubuntu@76.89.56, and our key is this particular key that we are using: ssh -i key
 }                                       *********** the protocol we are using, the type is ssh     
-
+                              terrfrm has converted this: the normal convention: ssh -i key ubuntu@76.89.56,  into connection blocks when ur using provisioners
 provisioner "file {
    source    =  "script/elasticsearch.yml"
    destination = "/tmp/elasticsearch.yml"
@@ -592,11 +592,42 @@ provisioners  "file" {
    source  =  "scripts/kibana.yml"
    destination = "/tmp/kibana.yml"
 }
+provisioners  "file" {
+   source  =  "scripts/apache-01.conf"
+   destination = "/tmp/apache-01.conf"
+}
+provisioners  "file" {
+   source  =  "scripts/instalLELK.sh"
+   destination = "/tmp/installELK.sh"
+}
+provisioners  "remote-exec" {
+   inline = [
+      "chmod +x    "/tmp/installELK.sh",
+      "sudo sed -i -e 's/\r$//' /tmp/installELK.sh", #Remove the spurious CR characters.
+      "sudo /tmp/installELK.sh",
+}
 
+ 1:04:16
+    *********** in this particular case, we are also using what is called a null resource
 
+   INTERVIEW QUESTION
+ What is a null resource ??
+this is just a place holder, its a dormy/empty resource, it doesnt create anything.. bt we can use it to enable us establish our connection n we ar connecting to this 
+particular inastance we are creating :aws_eip.ip.public_ip
 
+now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some scrptt, the source is inside 
+this dir called script, i wnt to connect to that instance and transfer this file 
+the first file i want to transfer is elastic search
+the nxt is kibana
+3rd is apache configuration
+4th is inatallation scripts  to install ELK 
 
-
+              INLINE
+  BUT the destination, its been transferred into an instance in a temporary dir, (tmp/kibana.yml) wit those particular names, so the names wil nt change, so once my instance
+has created the provisioner will take over , this null resource wil be created to enable us connect to the instance and once we connect it wil transfer this files that ar in my 
+local env to the instance , afer whic i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it wil run trfrm commands on 
+the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to run 
+   
 
 
 
