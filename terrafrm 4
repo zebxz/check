@@ -576,10 +576,12 @@ in our code also we ar goin to have a provisiner, once we create that instance
 
 connection {                        ********** we will connect to the instance by using ssh,we wil ssh into the instance
   host  = aws_eip.ip.public_ip     *********bc it is elastic, it wont change, it wil be d same ip that wil b attached on the instance, we wil us the elasic aws ip we cretaed
-  type  = "ssh"                            ** normally we wil pass a key to ssh into an instance, its d same tin we ar doing here, trfrm converted it to connection block             
-  user  = var.instance_user                e.g ssh -i key ubuntu@76.89.56
- private_key = file
-}
+  type  = "ssh"              ** normally we wil pass a key to ssh into an instance, its d same tin we ar doing here,trfrm converted it to connection blk wen usin provisioners            
+  user  = var.instance_user                                        e.g of the normal convention: ssh -i key ubuntu@76.89.56
+ private_key = file                 ****** 
+                                      e.g of the normal convention: ssh -i key ubuntu@76.89.56
+                                    ********* this is the user we ar connecting to : ubuntu@76.89.56, and our key is this particular key that we are using: ssh -i key
+}                                       *********** the protocol we are using, the type is ssh     
 
 provisioner "file {
    source    =  "script/elasticsearch.yml"
