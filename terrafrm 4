@@ -563,6 +563,34 @@ public ip bc we dnt wnat the ip to change so we are creating an elastic ip
 resource "aws_eip" "ip" {
   instance = aws_instance.my_elk_instance.id     ....this is the instance id we are associating it with 
 
+******** A backend is basically where terfm operates from, wher trfrm coammnds are executed frm, wit this particualr backend, we hv backend on our env so therefrer  this is
+what is called a local backend , we are goin to refernce this 
+in our code also we ar goin to have a provisiner, once we create that instance
+
+ null-resource.tf
+#create a null resource and provisioners
+
+ resource "null_resource" "my_null_resource" {
+   depends_on = [time_sleep.wait_for_instance}
+ # connection Block for provisioners to connect to the ec2 instance
+
+connection {                        ********** we will connect to the instance by using ssh 
+  host  = aws_eip.ip.public_ip
+  type  = "ssh"
+  user  = var.instance_user
+ private_key = file
+}
+
+provisioner "file {
+   source    =  "script/elasticsearch.yml"
+   destination = "/tmp/elasticsearch.yml"
+}
+
+provisioners  "file" {
+   source  =  "scripts/kibana.yml"
+   destination = "/tmp/kibana.yml"
+}
+
 
 
 
