@@ -594,7 +594,7 @@ provisioners  "file" {
 }
 provisioners  "file" {
    source  =  "scripts/apache-01.conf"
-   destination = "/tmp/apache-01.conf"
+   destination = "/tmp/apache-01.conf"    **********  temporary dir
 }
 provisioners  "file" {
    source  =  "scripts/instalLELK.sh"
@@ -602,9 +602,9 @@ provisioners  "file" {
 }
 provisioners  "remote-exec" {
    inline = [
-      "chmod +x    "/tmp/installELK.sh",
-      "sudo sed -i -e 's/\r$//' /tmp/installELK.sh", #Remove the spurious CR characters.
-      "sudo /tmp/installELK.sh",
+      "chmod +x    "/tmp/installELK.sh",     (i wnat to give executable permison to that script)
+      "sudo sed -i -e 's/\r$//' /tmp/installELK.sh", #Remove the spurious CR characters. ( i wnat modify some chracters using some set commands)
+      "sudo /tmp/installELK.sh",        ********** then i wnat to run the script
 }
 
  1:04:16
@@ -626,8 +626,17 @@ the nxt is kibana
   BUT the destination, its been transferred into an instance in a temporary dir, (tmp/kibana.yml) wit those particular names, so the names wil nt change, so once my instance
 has created the provisioner will take over , this null resource wil be created to enable us connect to the instance and once we connect it wil transfer this files that ar in my 
 local env to the instance , afer whic i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it wil run trfrm commands on 
-the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to run 
-   
+the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to be run 
+so i wnat to give executable permison to that script then i wnat modify some chracters using some set commands inside of the script
+then i wnat to run the script
+once i run that particular script, this script 
+it will do apt update
+it will install elastic search, start it and we can access sit on port 9200
+install logstash
+kibana and start it 
+install metricbeat n start the service            *************1:07:00
+then it will start the service of logstash
+this script once it 
 
 
 
