@@ -257,7 +257,7 @@ depends_on = [aws_instance.myec2]     ******** bc this is a list we can mk refer
 
     ******* so this is the first meta argument              ....... 2:04:00
 
-2) count 
+2) count          *****  this uses an index
 it can be specified in resources as well as modules 
 in trfrm a resource blk actually configures only one infrastructure obj by defaault.
 if we want mutiple resources WITH THE SAME configurations, w ecan define d count meta-argument  ie we can use count meta argument
@@ -319,15 +319,10 @@ e.g     ,.... # create four similar EC2 instances
  #usage of count.index in providing a distinct name for every instance
     Name = "Server ${count.index}"
   }
-}
 
-subsequently the instances wil be   ...................2:09:00
-server- (index ) 1
-server- (index) 2
-server- (index) 3
 
-   so thats how terfrm wil diffferiante this resources from each other 
-
+             ec2instance.tf file
+ 
 resource "aws_instance" "myec2" {
 count = 3
 ami           = data.aws_ami.amzlinux2.id
@@ -341,12 +336,20 @@ variable "instance_type" {
    type = string
    default = "t2.micro"
 
+************* 
+subsequently the instances wil be   ...................2:09:00
+myec2[0}   .....   ie  index 0
+myec2[1]   ...... ie  index 1
+myec2[2]   ....... ie  index 2
+
+   so thats how terfrm wil diffferiante this resources from each other 
 
 the name that will be captUred in the statefile will have the index indicated
 so we using the same code to create multiple instances 
-the ami, user data, the instance type are all the same 
+when u look at the ami, user data, the instance type are all the same 
 
-  ************************ LIMITATIONS OF COUNT ***************
+
+************************ LIMITATIONS OF COUNT ***************
 bc count uses an index 
 for e.g we created 4 instances and then i remove/ delete one instance from the list , count will try to reindex all the incidents instance and it wil delete all and then
 recreate all again bc the index has to be frm 0 upwards.
