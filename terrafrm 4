@@ -120,6 +120,9 @@ we hv dis data source which is creating an ubuntu server sowe wil use this data 
 
 1) this wil gnerate an AMI for ubnutu
 
+
+          data.tf file
+
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners    = { 09879009}
@@ -491,8 +494,31 @@ so u need to be able to read the statefile inorder for you to return the subnet,
 bc evrytin is on your local env 
 therefore for us to read this statefile, we are going to , he closed the vpc dir 
 
-*********51:18 
+*********51:18   .... opened  .. data.tf file 
+       AM using this data source :it is called "terraform_remote_state, 
+this is the name that you must pass, this is the data source that is used to read statefile  
+then i can give it any name, it doesnt matter, this is just a name (vpc) that wil be unique to terfrm
+
+ ****** so if am calling this remote state called vpc, bc its goin to read the staefile of my vpc
+
+data "terraform_remote_state" "vpc" {
+  backend = "local"               ********* the type of backend is local 
+  config = { 
+       path    = "../vpc
+
+
+
  
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners    = { 09879009}
+
+filter {
+   name    = "aws"
+   values  = 
+}
+ filter {
+   name = 
 
    
         
