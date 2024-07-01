@@ -1,6 +1,6 @@
 RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
- create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR 
+ create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, 
 
 
 what is meta data ??
@@ -389,6 +389,7 @@ tag = {
   Name = "Demo - subnet"
 
 
+NO.14
  36:32   ********************      IMPLICIT DEPENDENCY 
 
       now let me go to my vpc and create this vpc first
@@ -415,7 +416,8 @@ how does trfrm achieve explicit dependency   ..... ?    you have to pass a depen
 
       *********** now that we have this, we can go ahead and create our vpc 
 
-                         LOCAL BACKEND 
+
+NO.15                        LOCAL BACKEND 
 
 40:43  in mobaxaterm, watch how he arrived at the vpc dir 
 inside vpc dir 
@@ -432,10 +434,33 @@ this is a log file that shows the provider pluggin that was downloaded
 this ae the harsh keys of that particular provider/pluggin that was downloaded
  ***** so thats what terfrm init has done
 
+NO.16
+
 trfrm validate 
 the configuartion is valid 
 
 terrafm plan
+we see the resoureces that wil be created
+subnet and vpc 
+we see the information (cidr block, tag) we passed as a variable has been extrapolated from the variable and interpolated into the resource 
+
+terrafr apply -auto-apporve
+it wil re run the plan first
+then creates the vpc 
+then crates the subnet bc the subnet depends on the vpc
+once that is done
+it also output the subnet id and vpc id, 
+this is bc we declared an output 
+
+
+46:50
+ NO.17 ***********      BECAUSE IT HAS RETURNED THIS INFRORMATION, HOW CAN WE NOW USE THIS INFORMATION IN PROVISIONING OF OUR INFRASTRUCTURE
+
+                   tERRAFRM.tfstate
+  IN this inf that has returned, it has also generated a statefile 
+
+   
+        
 
 
 
