@@ -470,8 +470,29 @@ so bc of that we seee that there is no senesitive inf that was passed so we dnt 
 48:11       HOW DO WE DO THAT???
 
           REMOTE STATE DATA SOURCE
- TRFRM gives you an option of a data source, u can use a data source to read a statefile called remote state data source
+ TRFRM gives you an option of a data source, u can use the data source to read a statefile called remote state data source
  CAn go to the documentation:
+The terraform_remote_state data source uses the latest state snapshot from a specified state backend to retrieve the root module output values from some other Terraform 
+configuration.
+
+ so we can use the datasource to read our statefile and once that is done we are able to get the info that we need frm that particular statefile
+
+for example:
+in your work env as an engr u might be asked to provision
+your netwrk will always be to provison first 
+so your vpc wil be set, u go to work and your vpc has already been set 
+bc your vpc has been created, ur told can u go and provison an ec2 instance in this particular vpc
+
+  ********* NOW HOW DO YOU DO THAT ??????
+you need to be able to read the statefile that manages bc evrytin is bein managed by terefrm
+so u need to be able to read the statefile inorder for you to return the subnet, to get the attribute thata re captured in that particular statefile.
+
+*************** bc this statefile is on your local env, it is local, so this backend wher terfrm is doing its operation is called a local backend
+bc evrytin is on your local env 
+therefore for us to read this statefile, we are going to , he closed the vpc dir 
+
+*********51:18 
+ 
 
    
         
