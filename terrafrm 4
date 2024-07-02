@@ -4,6 +4,8 @@ PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN
 REMOTE STATE DATA SOURCE ,Elastic ip, NULL RESOURCE, INLINE command and explanation of the scripts been transferred into the instance , AWS_key_pair, TERRAFORM CONSOLE
 USING LOOP , USING FUNCTION
 
+   **** in the main.tf file (resource block for instance) we referenced the key variable to pass the key BUT in the null resource, we used a file to pass sthe key 
+
 diff btw output and datasource
 https://stackoverflow.com/questions/75246774/difference-between-data-source-and-output-block-in-terraform
 
@@ -525,7 +527,7 @@ but once i read the statefile , am interested to get an output that was declared
   54:08
 ********************************
      inside my instance resource block
-main.tf
+main.tf  (the same file as NO.2 above)
 
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
@@ -543,15 +545,17 @@ lets say we hv this particular key, we wnat to pass the key, for us to pass the 
 if i look at my variables (No.3 above) i have passed my key (elk-instance)
 again as we said last time, whatever key you pass needs to exist in the particular region u trying to creating your resource
 
-58:30 **************Also in NO.3 above (variable file), WE have a list of default values (t2 micro, t2 medium)
-    if  we are to create a t2 medium, how can we reference it???
-by indexing it, we are reading it frm a list:
-
-resource "aws_instance" "my_ekl_instance" {
+    resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
 instance type = var.myInstance [1]                                                 
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
-key_name         = var. my_key                    *************** key we are passing 
+key_name         = var. my_key                         *************** key we are passing 
+
+
+
+58:30 **************Also in NO.3 above (variable file), WE have a list of default values (t2 micro, t2 medium)
+    if  we are to create a t2 medium, how can we reference it???
+by indexing it, we are reading it frm a list:
 
 
 NO.21
