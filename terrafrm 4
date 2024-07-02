@@ -551,7 +551,7 @@ resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
 instance type = var.myInstance [1]                                                 
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
-key_name         = var. my_key   
+key_name         = var. my_key                    *************** key we are passing 
 
 
 NO.21
@@ -958,7 +958,19 @@ lower so that once its converted its goin to read and pass the code
 bc i just created a basic vpc bt runing terfrm apply we got an error, 
 it looks like it needs an AN for a network for the vpc to attach, so am going to add more code to give us a more complte vpc
 then once we do that we will us ethe same datasource to create our instance
-      
+
+
+   QUESTION
+1) i can see in the variable file you have key name as a variable then in the null resource, why didnt we use the variable  when we were creating the ssh connection??
+
+   ANS:       *********  bc we are using a file
+ connection {                        
+  host  = aws_eip.ip.public_ip     
+  type  = "ssh"                      
+  user  = var.instance_user                                      
+ private_key = file    ("${path.module}/mykey/elk-instance.pem"}      ************ we are using a file , when you read at the function, u hv to give it a path to where the
+                                                                    file is, it has to be either relative or absolute path, file function wil nt extrapolate like variables
+                                                                 so u hav eto give it either relative or absolute path 
 
 
 
@@ -980,6 +992,15 @@ then once we do that we will us ethe same datasource to create our instance
 
 
 
+
+
+
+
+
+
+
+
+c
 
 
 diff btw output and datasource
