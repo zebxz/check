@@ -706,10 +706,29 @@ ill expalin to you whats goin on here
 
       sg.tf
 
- bt here we are jst creating a security grp and 
 
- 
+bt here we are jst creating a security grp and we are creating it dynamically using for each 
 
+
+but then the ingress will remain the same 
+
+
+      1:14:36
+NO.26
+  ***********    tIME SLEEP
+time slip is a resource that jsut runs time, its jsut like a counter,its jst counting down,i know taht when i create my instance, my instance wil take some time to bootstrap
+for ssh connection to be available, if i run terfrm once my instance is created, if i try to ssh into it chances are the ssh might nt b up and so my connection wil fail so
+bc of that am passing a time sleep resource just to wait for the instance to bootstrap first
+hv passed 180s , this is abt 3minuutes, so once i start it this time sleep depends on the instance ie onsce the instance is careted then the time sleep wil run
+have passed an explicit dependency , it depends  on my instance 
+
+
+  sleep.tf
+
+ resource "time_sleep" "wait_for _instance" {
+  create_duration = "180s"
+
+  depends_on = [aws_instance.my_elk_instance]
 
 
 
