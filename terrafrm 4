@@ -799,6 +799,32 @@ he jsut used the cp command to copy the key frm his downlaods to the pwd
 afterwhich we see the new key file and inside the key content has been copied
 
 
+tefrm plan
+
+terfrm apply
+
+the firts tin is creating ur instance bc w specifically passsed our depsndecy
+then the time sleep bc it despend son the instance, it wil tk abt 3mins to provision
+bt the API can create in parallel bc it doesnt hv any dependencies
+bt the API needs the instance id and thats an implicit dependency
+right now the time to slepe is happeing 
+so if we go to our intances 
+in this region we see thers an instance thats initializing
+so this is the time that we are buying until our instance fully initializes b4 we can ssh into it
+its goin tk abt 3mins to b on the save side , so its counting down 
+once that is done the null resource will start proviosning 
+bc the null resource depends on the timesleep , so the timesleep has to create first
+after that creates the null resource will create 
+it will do an ssh connection and transfer our files and start the configuration 
+so right now what we are doing is provioning but once the null resource connects we now start doing configuration
+we are configuring our instance by installing kiban, ELK, elatic serach on that particular instance
+w eare using terfrm , we are using it with proviisoners 
+provisioners are been used to do configuration
+so this is another way we can configure our inatnces 
+so we hv seen u can usee user data, which will just bootstrap 
+but then if u want to ssh into an instance and taranser files from your local then it means we are goin to use a provisiner 
+
+
        
 
 
