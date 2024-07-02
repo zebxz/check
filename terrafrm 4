@@ -13,8 +13,8 @@ what is meta data ??
 tefrm gives you what are called mata arguments
 these are arguments that alter the normal behaviur of our resources 
 by default resources that we create in trfrm has a certain convention/behaior
-the normal convention is that if i declare 1resource block , itwil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin then i can pass
-in an arguemt thta wil manipulate the behavior ... that is what is a mata argument 
+the normal convention is that if i declare 1resource block , itwil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin then i can
+pass in an arguemt thta wil manipulate the behavior ... that is what is a mata argument 
 
 WHILE , 
 an ARGUMENT, acts as an input, if u  wnt to input inf into a resource ,u can pass an argument so that it becomes part of the input into your resource
@@ -24,7 +24,8 @@ BUT,
 ATTRIBUTES , is what we need to get out of our resource
 
 A MODULE:
-we say that you can create a module and a module is just resources (terfrm resources) that you can put inside a dir, now that becomes a module and we can ( call that) can create 
+we say that you can create a module and a module is just resources (terfrm resources) that you can put inside a dir, now that becomes a module and we can ( call that) can
+create 
 those rsources just by using the module block
 so this is one of the trfrm blks among the 10 tfrrm blks that we hv used so far
 so u can use a module blk to actually create resources
@@ -317,7 +318,8 @@ output "vpc_id" {
 }    NO.10
 resource "aws_subnet" "main" {             ****** am creating a reosurce called a subnet,i wnat to craete the subnet inside this vpc,  so ill nid to pass this vpc id
     vpc_id   = aws_vpc.main.id                       (aws_vpc.main.id) this will return the id of the vpc,  so i need a vpc id where the subnet will be created
-    cidr_block = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at this 
+    cidr_block = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at 
+                                                                                          this 
                               
 tag = { 
   Name = "Demo - subnet"
@@ -338,7 +340,7 @@ varaiable "sub_cidr" {
     Default   = "Demo-subnet"
 
  11a)    ************************    31:44
-      Referencing the variable for the sub_cidr  and subnet tag  ( he usually just goes back to NO.10 and refernce it by doing the changes e.g "10.0.1.0/24" to "var.sub_cidr"
+    Referencing the variable for the sub_cidr  and subnet tag  ( he usually just goes back to NO.10 and refernce it by doing the changes e.g "10.0.1.0/24" to "var.sub_cidr"
     
 resource "aws_subnet" "main" {             
     vpc_id   = aws_vpc.main.id                       
@@ -586,7 +588,7 @@ null-resource.tf
 
 connection {                        ********** we will connect to the instance by using ssh,we wil ssh into the instance
   host  = aws_eip.ip.public_ip     *********bc it is elastic, it wont change, it wil be d same ip that wil b attached on the instance, we wil us the elasic aws ip we cretaed
-  type  = "ssh"              ** normally we wil pass a key to ssh into an instance, its d same tin we ar doing here,trfrm converted it to connection blk wen usin provisioners            
+  type  = "ssh"             ** normally we wil pass a key to ssh into an instance, its d same tin we ar doing here,trfrm converted it to connection blk wen usin provisioners            
   user  = var.instance_user                                        e.g of the normal convention: ssh -i key ubuntu@76.89.56
  private_key = file    ("${path.module}/mykey/elk-instance.pem"}
                                       e.g of the normal convention: ssh -i key ubuntu@76.89.56
@@ -695,8 +697,8 @@ terraform {
    region = "us-west-2"
  }
 }
-
-   #let me just put my provider here
+        let me declare my provider here
+   #let me just put my provider 
 provider "aws" {
    region = "us-west- 1          ************ am choosing this region bc this is where we created our vpc, we must be creating them in the same region
 }
@@ -712,10 +714,22 @@ ill expalin to you whats goin on here
       sg.tf
 
 
-bt here we are jst creating a security grp and we are creating it dynamically using for each 
-
-
+bt here we are jst creating a security grp and we are creating it dynamically using for each , s
+o this for each we hv created a locals blocks here n on the local block, we have declared an ingress config , which is a list, 
+everytin is inside of this bracket, it is a list and inside the list we hv put whta we need to pass for elastic serach, the cidr blocks, the port, the protocol n description
+and what we need to put for logstash and kibana as a map
+so this is a list of maps , u see all these calibre,  this is a list of maps 
+so we are usng for each to loop through
+so for each of this map it is goin to loop through using the local.ingres 
+as it loops through the description of the content will be this ingress which is calling this for ecah but we need the value
+remember that for each uses each.value or each.key 
+again, ill explain this when we are dealing with functions 
+bt for now its just looping through all this ports then it wil dynamically create the security grp 
+bc otherwise ill need to writebalmost like 100 lines of codes for each of this description/security grp
+but now instaed  hv declared them as locals and am just looping through using for each meta argument and it will loop through this and create for me this ingress 
 but then the ingress will remain the same 
+
+so thats on the security grp
 
 
       1:14:36
@@ -758,8 +772,8 @@ output represents is one of the two ways that data can flow from one module into
 and output blocks represent data moving from the child module out to the parent.
 
 There is no strong relationship between these two concepts bt one way they sometimes connect is if you use the tfe_outputs data source belonging to the hashicorp/tfe provider,
-or if you use the terraform_remote_state data source from the terraform.io/builtin/terraform provider. Both of those data sources treat the output values from the root module
-of some other Terraform configuration as the external object to fetch, and so you can use these as one way to use the results from one configuration
+or if you use the terraform_remote_state data source from the terraform.io/builtin/terraform provider. Both of those data sources treat the output values from the root
+module of some other Terraform configuration as the external object to fetch, and so you can use these as one way to use the results from one configuration
 as part of another configuration, as long as the second configuration will be run in a context that has access to the state of the first.
 
 
