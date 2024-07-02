@@ -1030,24 +1030,89 @@ once you fill the form we get it instantly
   bc of one subnet it was failing so i went ahead and updated my code 
 
 so now we have a new dir (my-vpc) with a new file for our vpc (vpc.tf) and the old dir (vpc) with the file we wont use bc of basic configuration (vpc.tf)
-
+also , there are other new file in the new dir ( variables.tf, provider.tf, output.tf)
 *********** and dont worry about the code  you will have the code and you will have all this code and will have time to go thru all this 
 
      2:09:40
    
        new vpc.tf
 
-    resource "aws_vpc" "main" {
-   cidr_block = "var.cidr"
+    resource "aws_vpc" "main" {                ************ we are creating a resource vpc
+   cidr_block = "var.vpc_cidr"
 
 tags = {
-   Name = " var.tag"}
- }
+   Name = " my-vpc"
+  }
+}  
 
-}    
-resource "aws_subnet" "main" {             
-    vpc_id   = aws_vpc.main.id                       
-    cidr_block = "var.sub_cidr"      
+#2  create IGW                        ******** when u craete a vpc u nid to craete an IGW for your vpc to be able to  have access  to internet, 
+resource "aws_internet_gateway" "igw" {         
+     vpc_id =aws_vpc.main.id
+
+     tags = {
+        Name = "igw"
+  }
+}
+
+#3  create EIP                            ************** elastic ip that we will use for our natgateway, this is like a 3tier kinda infrastructure 
+   resource "aws_eip" "nat" {   
+
+      tags = {
+         Name = "nat" 
+    }
+   }
+
+#4  create NAT gateway                     
+ resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat.id                        ************* once this is created we will allocate our elastic ip to the natgateway 
+  subnet_id   =  aws_subnet.public[0].id
+
+     tags = {
+       Name = "nat"
+}
+
+ depends_on = [aws_internet_gateway.igw]         **************** the natgateway depends on igw
+}
+
+#5 create private subnet                   ********** dnt worry abt this code, am uisng a lot of functions to make it very comfortable
+    resource "aws_subnet" "private" {                                                              
+    count              = length(slice(var.private_cidr, 0, var.private_subnet_count))   ***** count meta argument bc i wnt to knw d number of private subnet i wnt to create
+    vpc_id             = aws_vpc.main.id                                           
+    cidr_block         = elements(var.private_cidr, 0, var.private_subnet_count)), count.index)
+    availability zone  = element(var.availability_zones, count.index)
+
+    tags = {
+      "Name" = "private"
+}
+
+  2:12:00 
+
+   ****** am using a count meta argument bc i wnt to knw d number of private subnet i wnt to create
+   and am using a slice function bc its reading my private cidr
+when u look at what a slice functions does, it reads
+when you give it an input like a variable and you give it like the starting index, i wnat it to start from index[0] when i give it a list then what is the end index?
+so that slice is smt similar to 
+e.g
+ i have a pile of multiple elements, so frm the slice perspective, i just want to get a slice of this pile
+i hv 9 cidr blks , now am making this flexible bc i want to get a slice of the cidr blocks, i dnt want to hv to use all cidr 
+so am saying begining from the first slice on index 0 to a certain count , mayb i want 2, so frm o to 2nd slice
+so it is going to slice the pile to the portion of the 2nd cidr and return just that portion as the length
+that means the count will be 2 bc , although i have given it a pile of 9cidr blocks  but iwant it to start from 0 and go up to 2
+so , 0 i sthe first index but i wnat 2 slices , ie 1 & 2
+so count wil return this 2slices and that will mean that i am creating 2 subnets inside of that vpc   :
+   create private subnet                  
+    resource "aws_subnet" "private" {                                                              
+    count              = length(slice(var.private_cidr, 0, var.private_subnet_count))
+
+*********** so the same thing will happen for the element bc am using count, so it returns some element from that particular list 
+
+
+#5 create public subnet 
+
+
+
+
+
 
 tag = { 
   Name = "sub_tag"           
@@ -1072,7 +1137,7 @@ tag = {
 
 
 
-c
+
 
 
 diff btw output and datasource
