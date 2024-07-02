@@ -4,6 +4,10 @@ PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN
 REMOTE STATE DATA SOURCE ,Elastic ip, NULL RESOURCE, INLINE command and explanation of the scripts been transferred into the instance , 
 
 
+diff btw output and datasource
+https://stackoverflow.com/questions/75246774/difference-between-data-source-and-output-block-in-terraform
+
+
 what is meta data ??
 
 tefrm gives you what are called mata arguments
@@ -735,21 +739,24 @@ have passed an explicit dependency , it depends  on my instance
 
 
 
+diff btw output and datasource
+https://stackoverflow.com/questions/75246774/difference-between-data-source-and-output-block-in-terraform
+
+data essentially represents a dependency on an object that isn't managed by the current Terraform configuration but the current Terraform configuration still needs to make
+use of it. Mechanically that typically means making a Get or Read request to a specific API endpoint and then exporting the data from that API response in the resulting 
+attributes.
+
+output represents is one of the two ways that data can flow from one module into another. variable blocks represent data moving from the parent module into the child module,
+and output blocks represent data moving from the child module out to the parent.
+
+There is no strong relationship between these two concepts bt one way they sometimes connect is if you use the tfe_outputs data source belonging to the hashicorp/tfe provider,
+or if you use the terraform_remote_state data source from the terraform.io/builtin/terraform provider. Both of those data sources treat the output values from the root module
+of some other Terraform configuration as the external object to fetch, and so you can use these as one way to use the results from one configuration
+as part of another configuration, as long as the second configuration will be run in a context that has access to the state of the first.
 
 
 
 
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-  owners    = { 09879009}
-
-filter {
-   name    = "aws"
-   values  = 
-}
- filter {
-   name = 
 
    
         
@@ -796,29 +803,6 @@ filter {
 
 
 
-
-resource "aws_vpc" "myec2" {
-   cidr_block = "10.0.0.0/16"
-     depends_on = {aws_instance.myec2}
-
-
-provider "aws" {
-   alias = "east"
-   region = "us-east-1"
-}
-
-
-
-
-   provider = aws.east                     ************* here ill pass the provider
-for each = toset(var.instance_type)
-ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
-instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
-subnet_id        =data.taerraform_remote_state.networks.outputs.public_subnet[0]             ********* am passin a subnet id 
-key_name         = var. my_key
-user_data    = file("${path.module}/app1-install.sh")        
-tag = {                                                           
-   "Name" = "EC2Demo-${count.index)"
 
 
 
