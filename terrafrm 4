@@ -798,12 +798,16 @@ so he went to AWS for a diff key and change the name in variable file
 in mobaxterm, he jsut used the cp command to copy the key frm his downlaods to the pwd 
 afterwhich we see the new key file in terrafrm and inside the file , the key content has been copied
 
+       tf-file-provisioner cd mykey
+       mykey cp -/Downloads/ansible-infra-test.pem
+       mykey ls 
+ ansible-infra-test.pem elk-instance.pem          ********** i can seee my key 
 
 tefrm plan
 
 terfrm apply
 
-the firts tin is creating ur instance bc w specifically passsed our depsndecy
+the first tin is creating ur instance bc w specifically passsed our depsndecy
 then the time sleep bc it despend son the instance, it wil tk abt 3mins to provision
 bt the API can create in parallel bc it doesnt hv any dependencies
 bt the API needs the instance id and thats an implicit dependency
@@ -826,6 +830,36 @@ but then if u want to ssh into an instance and taranser files from your local th
 
 ******** we have error : EIP
 
+1:35:00      QUESTION
+i was facinated on how you did the.pemkey cos i was wondering how we wil go and chabge the key bt thi sis really good
+my quetsion is do we first go and create the key manually from our console is that what u did or is there a way we can automatically get the key pairs
+
+ANS:
+what v shown u is that that key already exists in AWS
+ SO U can either do it either of the ways, u can either go on the console link a key that exists or u can create an ssh key
+these keys that we use are jsut ssh keys 
+so you can genertae your own ssh key on ur local env as long as you have your private and your public 
+then in terfrm u are goin to use  , terfrm gives you everytin, u wil use AWs_key_pair (in google in typed it to go to documentation)
+you wil use a resource called a key pair
+
+                  (copied frm documentation)
+ 
+    resource "aws_key_pair" "deployer" {       (you pass this key pair resource)
+  key_name   = "deployer-key"            (you wil give it a name)   bt ther is a public key, so u wil copy d public key u generated using d ssh key gen command &paste 
+                                          it here as a string, once that is done n u run/create this resource, dis key wil be ........
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK
+0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFb
+eUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
+}
+
+
+********   bt ther is a public key, so u wil copy d public key u generated using d ssh key gen command &paste it here as a string, once that is done n u run/create this 
+resource, dis key wil be sent into ur instance as ur public key but when you use ssh key gen , u wil get both the public key and the private key so in ur env u will be left
+with the private but this public key wil be sent to ur instance then u will use this private key to authenticate with the public key that uve already sent into ur instance
+then if u want to do it dynamically then u can use this aws key pair to automatically generate your keys but once you do that ull ned to generate the ssh key frm your local
+env then u can send it 
+so thats the 2ways that you can send it , either generate it on the console manually then just copy the name , download the .pem key, download it on your env then u can do 
+that or you can dynamically use this resource to generate the key 
 
 
 
