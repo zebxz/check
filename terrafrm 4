@@ -830,8 +830,9 @@ but then if u want to ssh into an instance and taranser files from your local th
 
 ******** we have error : EIP
 
-1:35:00      QUESTION
-i was facinated on how you did the.pemkey cos i was wondering how we wil go and chabge the key bt thi sis really good
+1:35:00    
+                                           QUESTION
+2)i was facinated on how you did the.pemkey cos i was wondering how we wil go and chabge the key bt thi sis really good
 my quetsion is do we first go and create the key manually from our console is that what u did or is there a way we can automatically get the key pairs
 
 ANS:
@@ -861,9 +862,29 @@ env then u can send it
 so thats the 2ways that you can send it , either generate it on the console manually then just copy the name , download the .pem key, download it on your env then u can do 
 that or you can dynamically use this resource to generate the key 
 
+ 
+2)  1:41:00
+       QUestion on referencing values in a map 
 
+ in this variable file, he change dthe dfault to a map 
+      varaiable "myInstance" {
+    type = list(string)
+    default = [
+      "dev" = "t2-micro"
+      "stage" = "t2-medium" 
 
+then in the resource blk )main.tf) , we pass the key : stage  and it will reyurn the value 
 
+                        TERRAFORM CONSOLE
+************how you can easily confirm that in terafrm there is what is called terrafrm console
+       once you run that it gives a prompt >, helps you to quickly test to know what the output are 
+
+    > var.map["stage"]          ************ so am testing what its goin to return for me 
+  "t2.medium"          ******* the output
+
+    ********** so i can use terraform console to test my expressions before i actually commit my code bc i want to know what its gonna return
+
+   
        
 
 
