@@ -656,9 +656,59 @@ bc now how am referencing it, when u look at your null resource file
 private_key = path.module}/mykey/elk-instance.pem
 am saying the connection , . private key is within the module, in a dir called my key and its called elk-instance.pem
 
-******8and the user we want to connect to hv pass it as a variable in the variable file and the user/instance user is ubuntu
+*******and the user we want to connect to, I hv pass it as a variable in the variable file and the user/instance user is ubuntu
 
-****** and am also creating an output, its goin to output the public and private ip  of the instance 
+1:10:00
+NO.24
+****** and am also creating an output, its goin to output the public and private ip of the instance 
+      (this file is diff from N0.12a , the vpc file for vpc output)
+
+     output.tf
+output "public_ip" {
+ value = aws_instance.my_elk_instance.public_ip
+}
+
+output "private_ip"{
+   value = aws_instanec.my_elk_instance.private_ip
+}
+
+NO.25
+provider.tf
+
+terraform {
+  required_version = "~>  1.0 "
+  required_provisioners {
+    aws = {
+       source = "harshicorp/aws"
+       version = "~> 5.0"
+    }
+ }
+                                  #### we comment the backend for now bc we havent used a remote backend yet 
+# backend "s3" {
+   bucket  = "landmark-automation-kenmak"
+   key   =  "ec2/terraform.tfstate"
+   region = "us-west-2"
+ }
+}
+
+   #let me just put my provider here
+provider "aws" {
+   region = "us-west- 1          ************ am choosing this region bc this is where we created our vpc, we must be creating them in the same region
+}
+
+    ## so with that i have my vpc and i aslo hv my instance that i wnat to craete 
+
+
+1:11:47
+NO.21 .....  contd
+ am also creating a security grp 
+ill expalin to you whats goin on here
+
+      sg.tf
+
+ bt here we are jst creating a security grp and 
+
+ 
 
 
 
