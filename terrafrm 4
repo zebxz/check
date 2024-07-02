@@ -66,22 +66,23 @@ TYPES OF PROVISIONERS
 The file provisioner copies files or directories from the machine running Terraform to the newly created resource. The file provisioner supports both ssh and winrm
 type connections.
 
-that is :if i have a file on my local env, i can use a file provisoner that will copy the file and tk it to the destination which is the remote machine (the machine that is been
-provioned)
+that is :if i have a file on my local env, i can use a file provisoner that will copy the file and tk it to the destination which is the remote machine (the machine that is
+been provioned)
 
 2) LOCAL-EXEC PROVISIONER
-he local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource. See the remote-exec
-provisioner to run commands on the resource.
+he local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource. See the
+remote-execprovisioner to run commands on the resource.
 
-Note that even though the resource will be fully created when the provisioner is run, there is no guarantee that it will be in an operable state - for example system services
-such as sshd may not be started yet on compute resources.
+Note that even though the resource will be fully created when the provisioner is run, there is no guarantee that it will be in an operable state - for example system 
+services such as sshd may not be started yet on compute resources.
 
 THAT IS:
 A local exec basically runs on your local env ,i can run a command on my local env after my remote instance has been craeted
 and we will see exactly what i mean once we use it 
 
 3)  REMOTE- EXEC
-The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc.
+The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, 
+etc.
 To invoke a local process, see the local-exec provisioner instead. The remote-exec provisioner requires a connection and
 supports both ssh and winrm.
 
@@ -580,7 +581,7 @@ null-resource.tf
 #create a null resource and provisioners
 
  resource "null_resource" "my_null_resource" {
-   depends_on = [time_sleep.wait_for_instance}
+   depends_on = [time_sleep.wait_for_instance}       *********** the null resource depends on the time sleep (NO.26)
  # connection Block for provisioners to connect to the ec2 instance
 
 connection {                        ********** we will connect to the instance by using ssh,we wil ssh into the instance
@@ -724,7 +725,11 @@ time slip is a resource that jsut runs time, its jsut like a counter,its jst cou
 for ssh connection to be available, if i run terfrm once my instance is created, if i try to ssh into it chances are the ssh might nt b up and so my connection wil fail so
 bc of that am passing a time sleep resource just to wait for the instance to bootstrap first
 hv passed 180s , this is abt 3minuutes, so once i start it this time sleep depends on the instance ie onsce the instance is careted then the time sleep wil run
-have passed an explicit dependency , it depends  on my instance 
+have passed an explicit dependency , it depends on my instance , 
+bt for the connection to happen, the null resourece depends on the time sleep 
+so it means am ORDERING HOW  terfrm is goin to create the resources so it just means the instance wil be created first
+then the timesleep , ther wil b time dealay of 3mins fo rthe instance to bootstrap after wich then my resource wil start creating 
+it can now ssh into it and provision the resources
 
 
   sleep.tf
@@ -735,7 +740,10 @@ have passed an explicit dependency , it depends  on my instance
   depends_on = [aws_instance.my_elk_instance]
 
 
-
+   *********** 1:16:45 
+let me now go into my env bc we have seen hw everytin is been configured and 
+lets now create our resource
+lets see how we can create our resources. 
 
 
 
