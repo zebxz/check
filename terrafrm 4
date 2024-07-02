@@ -754,6 +754,8 @@ it can now ssh into it and provision the resources
   depends_on = [aws_instance.my_elk_instance]
 
 
+#########################################################################################
+
    *********** 1:16:45 
 let me now go into my env bc we have seen hw everytin is been configured and 
 lets now create our resource
@@ -792,6 +794,9 @@ the time sleep
 ********* terrafrm apply -auto 
 
 
+           **************************** 
+
+NO.27
 1:26:00
 key refused
 so he went to AWS for a diff key and change the name in variable file 
@@ -828,11 +833,13 @@ so this is another way we can configure our inatnces
 so we hv seen u can usee user data, which will just bootstrap 
 but then if u want to ssh into an instance and taranser files from your local then it means we are goin to use a provisiner 
 
+
+NO.27b
 ******** we have error : EIP
 
 1:35:00    
                                            QUESTION
-2)i was facinated on how you did the.pemkey cos i was wondering how we wil go and chabge the key bt thi sis really good
+1)i was facinated on how you did the.pemkey cos i was wondering how we wil go and chabge the key bt thi sis really good
 my quetsion is do we first go and create the key manually from our console is that what u did or is there a way we can automatically get the key pairs
 
 ANS:
@@ -924,6 +931,45 @@ and when it converts it am goin to select the first instance [1]  ie t2.medium
      "t2.medium"
 
 therefore, this function evaluates to t2.medium
+
+   > for s in var.myinstance : lower(s)][0]
+     "t2.micro"
+
+########   buT 
+                  when we try 2 we get error 
+  > for s in var.myinstance : lower(s)][2]
+     in valid index
+
+
+
+   *******so am just showing you that we can use a function to convert
+this is been proactive as an engr to mk sure in future if someone who isnt an expert is e.g creating an s3 bucket name and we knw that by convwntion AWS doesnt allow capital
+letteers in s3 bucket names and your instance type need to be lower, doesnt allow capital letters so bc of that u become proactive and making sure that whatever a user 
+passes you are using a function to convert, so eben if thay pass a capital, you code will nt fail becauase am using a function to ensure that i collapse it/convert it to
+lower so that once its converted its goin to read and pass the code
+ thats exactly what this function was doing
+
+
+1:57:20
+  *********** contd  from
+  NO.27b
+******** we have error : EIP
+************* during our bring now illmodify my vpc code , ill share my screen but it basically wont be recorded
+bc i just created a basic vpc bt runing terfrm apply we got an error, 
+it looks like it needs an AN for a network for the vpc to attach, so am going to add more code to give us a more complte vpc
+then once we do that we will us ethe same datasource to create our instance
+      
+
+
+
+
+
+
+
+
+
+
+
 
 
 
