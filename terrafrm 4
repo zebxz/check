@@ -742,7 +742,7 @@ hv passed 180s , this is abt 3minuutes, so once i start it this time sleep depen
 have passed an explicit dependency , it depends on my instance , 
 bt for the connection to happen, the null resourece depends on the time sleep 
 so it means am ORDERING HOW  terfrm is goin to create the resources so it just means the instance wil be created first
-then the timesleep , ther wil b time dealay of 3mins fo rthe instance to bootstrap after wich then my resource wil start creating 
+then the timesleep , ther wil b time dealay of 3mins fo rthe instance to bootstrap after wich then my null resource wil start creating 
 it can now ssh into it and provision the resources
 
 
@@ -758,6 +758,57 @@ it can now ssh into it and provision the resources
 let me now go into my env bc we have seen hw everytin is been configured and 
 lets now create our resource
 lets see how we can create our resources. 
+
+***************1:17:00
+now in i think mobazterm 
+
+cd to the tf-file-provisioner 
+terrafrm init 
+trfrm validate
+trfrm format   .... now all my codes hv been reformatted correctly 
+trfrm plan 
+
+the first thing that happens is the datasource , terAfrm remote state ,
+it goes and read the state file of the vpc
+data.terrafrom_remote_state.vpc: Reading
+then
+the data source for the ami , it goes and read and find the AMI and it returns the AMI id 
+data.aws_ami.ubuntu: Reading 
+
+once it does that what is been created is my elastic ip 
+my instance the ami has been returned , that is the ami that will be created
+the instance type t2 medium
+the key name  elk-instance
+its also returned our subnet id , ( ends wit 4e20)
+if i scroll bk up where we created this 
+output:
+subnet_id = "subnet- ........ 4e20)                         .......... 1:20
+so we hv used the datasource to read the statefile n return for us the subnet id wher we wnt to create our resource n after that the subnet id has been dynamically passed 
+here and we knw that our resorce will be provisioned in that subnet 
+we see the security grp
+the null resource 
+the time sleep
+
+********* terrafrm apply -auto 
+
+
+1:26:00
+key refuse 
+so went to AWS for a diff key and change in name in avr file 
+he jsut used the cp command to copy the key frm his downlaods to the pwd 
+afterwhich we see the new key file and inside the key content has been copied
+
+
+       
+
+
+
+
+
+
+
+
+
 
 
 
