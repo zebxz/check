@@ -1035,7 +1035,8 @@ also , there are other new file in the new dir ( variables.tf, provider.tf, outp
 
      2:09:40
    
-       new vpc.tf
+   NO.28
+new vpc.tf
 
     resource "aws_vpc" "main" {                ************ we are creating a resource vpc
    cidr_block = "var.vpc_cidr"
@@ -1110,15 +1111,60 @@ so count wil return this 2slices and that will mean that i am creating 2 subnets
 #5 create public subnet 
 
 
+2:15:00 **********************
+
+ NO.29
+     ********** variable.tf
+                             ********* in my varaibles, i have all these cidr blocks, am defining this ....
+
+    variable "private_cidr" {     
+       type = list(string)
+     default = [
+          "10.0.1.0/24"
+          "10.0.2.0/24"      ** but i just want to create subnet in just these 2, so am making it flexible if i need to make more subnets then i can just increase my slice
+          "10.0.3.0/24"
+          "10.0.4.0/24"
+          "10.0.5.0/24"
+          "10.0.6.0/24"
+          "10.0.7.0/24"
+          "10.0.8.0/24"
+  }
+}
+variable "availability_zones" {
+   type    = list(string)
+   default = ["us-east-1a", "us-east-1b"]
+}
+
+ variable "public_cidr" {
+       type = list(string)
+     default = [
+          "10.0.101.0/24"
+          "10.0.102.0/24"
+          "10.0.103.0/24"
+          "10.0.104.0/24"
+          "10.0.105.0/24"
+          "10.0.106.0/24"
+          "10.0.107.0/24"
+          "10.0.108.0/24"
+ ]
+}
+
+variable "vpc_cidr" {
+   type    = string
+   default = "10..0.0.0/16"
+}
+
+ varaible "private_subnet_count" {
+   type   = number 
+   default = 2
+}
+
+ variable "public_subnet_count" {
+    type = number
+    default = 2
+}
 
 
-
-
-tag = { 
-  Name = "sub_tag"           
-                              
-tag = { 
-  Name = "Demo - subnet"
 
 
 
