@@ -867,29 +867,63 @@ that or you can dynamically use this resource to generate the key
        QUestion on referencing values in a map 
 
  in this variable file, he change dthe dfault to a map 
-      varaiable "myInstance" {
-    type = list(string)
+      varaiable "map" {
+    type = map(string)
     default = [
       "dev" = "t2-micro"
       "stage" = "t2-medium" 
 
 then in the resource blk )main.tf) , we pass the key : stage  and it will reyurn the value 
 
-                        TERRAFORM CONSOLE
+                       
+                                   TERRAFORM CONSOLE
+
 ************how you can easily confirm that in terafrm there is what is called terrafrm console
        once you run that it gives a prompt >, helps you to quickly test to know what the output are 
+       i can use terraform console to test my expressions before i actually commit my code 
 
     > var.map["stage"]          ************ so am testing what its goin to return for me 
   "t2.medium"          ******* the output
+                              ie, this function:var.map["stage"]    evaluates  to t2medium
+
+ > subnet_id  = data.terraform_remote_state.vpc.outputs.subnets.subnets_arn
+  "it returns the subnet i"
 
     ********** so i can use terraform console to test my expressions before i actually commit my code bc i want to know what its gonna return
+  with thi sma able to evaluate/check my function
 
-   
-       
+   1:47:00
+ALso,                          USING A LOOP   (showing you how to use functions)
+
+         resource "aws_instance" "my_ekl_instance" {
+ami              = data.aws_ami.amzlinux2.id  
+insytanace type  = [for s in var.myinstance : lower(s)][1]  ******** for is a loop, (s) is jst an abitrary number , i can use a,k etc 
+#instance type   = var.myInstance [1]                                                 
+subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
+key_name         = var. my_key
+    
+
+         showing you how to use functions)
+
+            varaiable "myInstance" {
+               type = list(string)
+               default = ["t2.MICRO" , "T2.MEDIUM", "T3.MICRO"]    ******** usually in AWS this will give an error bc everytin needs to be in lower case 
+              
 
 
+*******  for s in var.myinstance : lower(s)][1]
+ so this means that for , for any element in this variable (var.myInstance) am passing a function ; lower then the value of (s) 
+so for every value in this instance that value theres a function whatevr is in the right of the column side, there is a lower function that is goin to be applied
+so if the variable is capital "T2 MICRO" , then am goin to apply a lower function ie it will be converted into a lower case 
+and when it converts it am goin to select the first instance [1]  ie t2.medium
 
 
+     ******* now test the function 
+
+   > for s in var.myinstance : lower(s)][1]
+     "t2.medium"
+
+therefore, this function evaluates to t2.medium
 
 
 
