@@ -398,8 +398,10 @@ tags = {
 }    
 resource "aws_subnet" "main" {             
     vpc_id   = aws_vpc.main.id                       
-    cidr_block = "10.0.1.0/24"           
-                              
+    cidr_block = "var.sub_cidr"         
+
+tag = { 
+  Name = "sub_tag"
 tag = { 
   Name = "Demo - subnet"
 
@@ -1004,13 +1006,54 @@ once we create this ec2 module , we will create a backend remotely  and we will 
 backend 
 
 
+    ANNOUNCEMENT
+2:04:30 
+prof said python will be covered during bootcamp
+
+someone asked about promethus n grafana n he said its deployed with kubernetes 
+someone asked for newrelic and he said we already hv a resource to that effect, its even on our youtube channel so that resource will be deplyed accordingly, once u look
+at promethus and grafana, newrelic will just be anoda deployment in that category so you will not have any problem
+
+we have people who have testified in the past who finished the course and its like they hv not had any mastery but in the bootcamp everything changed , 
+
+once you fill the form we get it instantly 
+ its cloud computing that we are leveraging on 
 
 
+#########################################################
+   
+           CLASS CONTINUES
 
+        Contd ... frm 1:57:20    above 
+2:09:25
+   we had ceated a vpc but because the vpc was very basic the only thing we created was basically vpc with one subnet 
+  bc of one subnet it was failing so i went ahead and updated my code 
 
+so now we have a new dir (my-vpc) with a new file for our vpc (vpc.tf) and the old dir (vpc) with the file we wont use bc of basic configuration (vpc.tf)
 
+*********** and dont worry about the code  you will have the code and you will have all this code and will have time to go thru all this 
 
+     2:09:40
+   
+       new vpc.tf
 
+    resource "aws_vpc" "main" {
+   cidr_block = "var.cidr"
+
+tags = {
+   Name = " var.tag"}
+ }
+
+}    
+resource "aws_subnet" "main" {             
+    vpc_id   = aws_vpc.main.id                       
+    cidr_block = "var.sub_cidr"      
+
+tag = { 
+  Name = "sub_tag"           
+                              
+tag = { 
+  Name = "Demo - subnet"
 
 
 
