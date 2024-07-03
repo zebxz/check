@@ -1476,14 +1476,92 @@ but now its destroying that instance first then create a new instance
  if evrythin has been passed correctly, it shud be able to create the instance 
 then it will bootstrap it with a script using a provisioner , ok lets give it a moment
 so this is the process of configuration
-we created our instance and now we are usingterfrm to actually 
+we created our instance and now we are using terfrm to actually install software
+we are doin configuration, its now running the script in there
+it has installed logstash
+its installig kibana now in our instance 
+
+     ask your questions and ill explain whats goin on 
+
+
+            ************ QUESTION
+1) if there are situations wher i have to go to the console to delete a resource, how does that impact the statefile ???
+   ANS: 
+   Remember when you run terfrm plan , terfrm wil always compare your configuration, this is your desired state, this is what i desire to have
+then it goes to aws and looks at your actuall state
+so when my desired state say i need to have an instance here bc i hv it in my configuration but when it goes to aws it doesnt find the instance bc i deleted it 
+then terfrm wil see that as a decrepracy , a drift, so it will recreate it so that this always matches what is actual 
+so if you run apply once you deleted it as long as its still in your configuration file terfm wil go and recreate it
+so if you dnt want whatever u deleted, if dnt want it here then remove the configuration file bc this is your desired state
+
+2) is there a function/argument  or the moment we change mayb an argument, it could just taint the former one 
+
+  ANS:
+ thers a terfr command to taint a resource
+  terraform taint 
+terraform taint aws_instance.my_instance              .... so if youv created such an instance ,its in your statefile ,bt u wnat to terminate it or to dstroy it 
+you can taint it, tainting just means u acn just mark it for destruction and when nxt you run terfrm aply, it wil automatically terminate it bc the resource is tainted
  
 
+3) am asking bc when i look at the template, sometimes it awes me, in our working env do we have some template that we can be modifying or we hv to write the code all the 
+time
+
+   ANS:     2:49:00
+I did say it might look overwhelming but as you keep working at it especially if u rely on documentation
+trfrm is very easy to work with bc ther are templates, ther are modules, u go to the documentation you copy and you paste and you just modify
+you will be asked to create modules, custom modules , so custom modules you can use the official module to copy examples bt ur customizing them menaing your makiing them
+to suit your env, your changing the names , the variables , the regions, changing hw users are interacting with that, bt the base code ur basically reusing it
+in terfrm thers smt we call dry , like dnt repeat youself, terfrm supports that concept wherby we use modules so that our code is reuseable
+like now how hv created this vpc here, hv create it as a module so i dnt anticipate  that whenever i wnat a vpc anytime that i will go back and rewrite this code, like 
+what i did , i copied this code form somewher else bc i had already wirtten that so am just reusing the code and you will see a lot of that
+so craete your infrastructure as modules and just reuse them , just make changes as as you deem fit and just reuse them
+
+
+4) AM still confused as to how the documentation works , like how do we access all the documentations just to pick it back up when we are doing our work in the real world??
+
+5) before WE apply our code is there a way to check our work,like a test run or thers like a backend checkover our work before we do terfrm apply n hv it show up on our 
+ instance as for d real world work
+
+  ANS:
+   and thats why you see evrytime am runing trfrm plan, what does the do??
+if u have configuration , before u create anything u wnat to check the plan, is this what you wnat? this is the test that your doing, you generating a plan
+terfm wil generate for u a plan and the plan will ask you, is this what you wnat to do , 
+in most of the cases you will jsut be runing trfrm plan, bc you dnt have to everytime run the pipeline bc once you apply it means you are goin to trigger a bill
+most time u can do a local plan to see if your configuration is valid, once the plan exists success and u check the plan and its good then u can go ahead and run apply
+just rely on terfrm plan to check that what your intending to do is captured in the plan before you run apply 
 
 
 
 
 
+2:53:37
+        ########### explanation contd ...
+
+   so right here we used provisiners thats as far as i can go and using a null resource it did a connection and once it did that, it transferred some files,did ssh connection
+it transfered these files, (null resource) kibana, apache then the script then transfering the files, it did a remote exec afyer that we atraed running these scripts thats
+now use to install our softwares and start the services
+so we ran the null resource, it unpack and u guys will hv this code so u can try it 
+it unpacked and basiaclly ran the script , after which it install all those packages 
+here am using terfrm to do configuration and how are we doing it, we are using a provioner  to do a provisoning
+now hv installed kibana, elestic search
+ opened (elasticsearch.yml)        ....2:55:10
+now elastic search according to this when we install the pod that ealstic search listems to is 9200
+but kibana  ,, opens (kibana.yml) is our display board , it listens on 5601
+we knw that kibana is scrapping , we are passing the local host that port
+kibana is reading frm elastic search  it getes its metric 
+#this is the urls of the Elasticsearch instances to use for all your queries 
+elasticsearch.hosts: [https://localhost:9200]
+
+  2:55:49 ******** 
+so if i go on my aws console now , i should have an instance t2.medium running
+its created in availabilty zone us west 1c, it ha sthat sg
+it has the elasticip 
+if i copy that publicip, bc now this is the local host
+and paste it in google, kibana runs on 5601   : publicip:5601
+ 
+    2:58:30*********** cant connect, cant be reached 
+   3:03:30  ......... opened our sg and open all tcp for one sg
+   now working 
 
 
 
