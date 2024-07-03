@@ -302,8 +302,9 @@ output "vpc_id" {                                   ************so this output w
 28:25    ********** havin created that particular output, i probably want to create a subnet/subnets inside of this particular vpc 
 
 
-10)       HOW TO CREATE A SUBNET 
-in the registry he copied the resource block and pasted in the vpc file 
+10)             HOW TO CREATE A SUBNET 
+
+ in the registry he copied the resource block and pasted in the vpc file 
 
 resource "aws_vpc" "main" {
    cidr_block = "var.cidr"
@@ -341,8 +342,10 @@ varaiable "sub_cidr" {
     Default   = "Demo-subnet"
 
  11a)    ************************    31:44
-    Referencing the variable for the sub_cidr  and subnet tag  ( he usually just goes back to NO.10 and refernce it by doing the changes e.g "10.0.1.0/24" to "var.sub_cidr"
-    
+    Referencing the variable for the sub_cidr  and subnet tag 
+ ( he usually just goes back to NO.10 and refernce it by doing the changes e.g "10.0.1.0/24" to "var.sub_cidr"
+
+
 resource "aws_subnet" "main" {             
     vpc_id   = aws_vpc.main.id                       
     cidr_block = "var.sub_cidr"         ******************referencing the variable sub_cidr
@@ -577,8 +580,8 @@ public ip bc we dnt wnat the ip to change so we are creating an elastic ip
 resource "aws_eip" "ip" {
   instance = aws_instance.my_elk_instance.id     ....this is the instance id we are associating it with 
 
-******** A backend is basically where terfm operates from, wher trfrm coammnds are executed frm, wit this particualr backend, we hv backend on our env so therefrer  this is
-what is called a local backend , we are goin to refernce this 
+******** A backend is basically where terfm operates from, wher trfrm coammnds are executed frm, wit this particualr backend, we hv backend on our env so therefrer  
+this is what is called a local backend , we are goin to refernce this 
 in our code also we ar goin to have a provisiner, once we create that instance
 
 
@@ -1439,6 +1442,34 @@ its the first one on the list , its a list of subnet
 
 59..00
 
+so with that now ill cd out to my parent dir and right there ill run terafrm plan 
+have already initialize, hv already downloaded the pluggin so i can just run terfrm plan
+bc init only initializes the backend and the provider, so i can run trfrm plan 
+    2. tf-file-provisioner terraform plan
+
+when i do that it willrefresh the state  and while thats happening somethings will be replaced
+1) the EIP has been tainted
+
+       INTERVIEW QUESTION
+
+What is tainting in terfrm
+
+   ANS:
+this is marking a resource for destruction
+when a resource needs to be destroyed in terrafrm, you taint it 
+when its tainted, during the next apply , this particular resource will be destroyed
+
+ ************ so our EIP has been tainted therefore it must be replaced 
+
+ our instance is tainted, it must be replaced bc we are changing the subnet, we are forcing replacement of  the subnet
+we are moving it frm the subnet that existed here (the vpc that was destroyed) and now moving it to a totaly didff subnet
+this is the public subnet we selected [0] (we indidcated we were interested in )when we created our vpc 
+  so thats how we access on a list 
+
+
+
+
+
 
 
 
@@ -1458,8 +1489,12 @@ its the first one on the list , its a list of subnet
       MY QUESTION
 
   what do you mean by wE are migrating subnets ??? 
-IS it bc  of NO.3 above? where the variable file has that key (eks-instance") that cant be found we changed region in video3 
+IS it bc  of NO.3 above? where the variable file has that key (eks-instance") that cant be found we changed region in video3 ???
 
+   ANS: 
+ (the vpc that was destroyed) it was destroyed bc it was a basic vpc , we got and EIP error when he run trfrm apply(i guess he cudnt upgarde the vpc probably bc there may hv
+been some things the vpc should have been configured with while it was been created)
+I think he used the word migrtating bc the subnet id will change 
 
 
 
@@ -1488,6 +1523,7 @@ and when she spoke at the interview she was told she was speaking from a profess
         ### this is what ill first try 
 
 if u dnt knw that frm day 1 this programme has been project based then thats a serious problem 
+
 
 
 
