@@ -1308,7 +1308,62 @@ key_name         = var. my_key
 
    
 
+meta data option {
+   http_tokens      = "required"
+   http_endpoint    = "enabled"
+}
 
+root_block_device {
+  encrypted = true
+}
+
+ vpc_security_group_ids = [
+  aws_security_group.elk_sg.id,   ********** 
+ ]                                                   
+]                                                    
+
+  depends_on = [aws_security_group.elk_sg] 
+}
+
+#EIP
+resource "aws_eip"ip" {
+  instance = aws _instance.my_elk_instance.
+
+
+
+2:19:25
+    **************************#########################
+
+ i blieve now in mobaxterm:
+
+   my-vpc ls
+ouput.tf  provider.tf   varaibles.tf   vpc.tf
+
+my-vpc   terrafrm init
+so here am recreating the vpc 
+am no longer goin to us ethat vpc
+
+terfrm validate 
+successful
+
+terrafrm plan 
+      ********** watch      ............... 2:20:25
+
+terrafrm apply .auto.approve 
+
+   error:  vpc limit is exceeded
+i can either go into my console    OR
+  use IAC 
+ cos i created the vpc, it already existed in that same region
+my-vpc cd  ../vpc               cd and go to vpc
+  vpc ls
+outputs.tf   provider.tf     terrafrm.tfstate varaibles.tf       ****** so i seee i have the state file , so lll destroy it cos they are in the same region
+vpc terrafrm destroy -auto-approve
+
+   ***** somebody aked yetserday, can we destroy a vpc with a resource in it ??
+lets find out 
+we created a vpc and once it was created  we already created an instance in the vpc , so are we able to destroy it
+so once it resfreshes the state, it starts destroying that one subnet 
 
 
 
