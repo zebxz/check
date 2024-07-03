@@ -2,7 +2,7 @@ RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
  create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, READING FRM A STATEFILE,
 REMOTE STATE DATA SOURCE ,Elastic ip, NULL RESOURCE, INLINE command and explanation of the scripts been transferred into the instance , AWS_key_pair, TERRAFORM CONSOLE
-USING LOOP , USING FUNCTION, SLICE FUNCTION  ,, COMPLETE VPC TO CREATE 
+USING LOOP , USING FUNCTION, SLICE FUNCTION  ,, COMPLETE VPC TO CREATE , REMOTE BACKEND.. 
 
    **** in the main.tf file (resource block for instance) we referenced the key variable to pass the key BUT in the null resource, we used a file to pass sthe key 
 
@@ -1601,7 +1601,14 @@ i have a bucket her called landmark automation, now becsuas i have that
 so i wnat to store my statefile inside of this bucket instaed of my local env, for collaboration
 so for me to do that therfore , ill need to configure a remote backend 
 am using aN S3 just for state storage , just to store my statefile 
-so ill find that bucket that exists (landmarkautomation)
+so ill find that bucket that exists which is (landmarkautomation) 
+bc i have that bucket that exists and its in us west2
+i just need to give it the region wher the bucket was created, it is global yet when i created it, it was created in us west as a region 
+
+
+3:13:43
+ in provider,tf 
+
 
 
 
