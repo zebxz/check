@@ -1464,8 +1464,20 @@ when its tainted, during the next apply , this particular resource will be destr
  our instance is tainted, it must be replaced bc we are changing the subnet, we are forcing replacement of  the subnet
 we are moving it frm the subnet that existed here (the vpc that was destroyed) and now moving it to a totaly didff subnet
 this is the public subnet we selected [0] (we indidcated we were interested in )when we created our vpc 
-  so thats how we access on a list 
+  so thats how we access values on a list , we use index
 
+  ******* ** terraform apply -auto-approve 
+   
+   once we approve it its goin to destroy that resource first, 
+remeber if we wanted w ecould pass a life cycle meta argument
+we can say we want to prevent destroy or we want to create before destroy
+so what that would hav edone, it would first create our new instance before it destroys the other one
+but now its destroying that instance first then create a new instance
+ if evrythin has been passed correctly, it shud be able to create the instance 
+then it will bootstrap it with a script using a provisioner , ok lets give it a moment
+so this is the process of configuration
+we created our instance and now we are usingterfrm to actually 
+ 
 
 
 
@@ -1493,8 +1505,8 @@ IS it bc  of NO.3 above? where the variable file has that key (eks-instance") th
 
    ANS: 
  (the vpc that was destroyed) it was destroyed bc it was a basic vpc , we got and EIP error when he run trfrm apply(i guess he cudnt upgarde the vpc probably bc there may hv
-been some things the vpc should have been configured with while it was been created)
-I think he used the word migrtating bc the subnet id will change 
+been some things the vpc should have been configured with while it was been created so he had to create a new one)
+I think he used the word migrtating bc the subnet id will change given that we created a new vpc
 
 
 
