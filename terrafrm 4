@@ -1000,7 +1000,7 @@ OR u can pass it as : file = mykey/ansible
 
 
 
-  when w ereturn frm the break, we wil look at our backend 
+  when we return frm the break, we wil look at our backend 
 we will create this 
 we v already seen what a local backend looks like 
 we have benn able to read the statefile here
@@ -1009,18 +1009,7 @@ once we create this ec2 module , we will create a backend remotely  and we will 
 backend 
 
 
-    ANNOUNCEMENT
-2:04:30 
-prof said python will be covered during bootcamp
-
-someone asked about promethus n grafana n he said its deployed with kubernetes 
-someone asked for newrelic and he said we already hv a resource to that effect, its even on our youtube channel so that resource will be deplyed accordingly, once u look
-at promethus and grafana, newrelic will just be anoda deployment in that category so you will not have any problem
-
-we have people who have testified in the past who finished the course and its like they hv not had any mastery but in the bootcamp everything changed , 
-
-once you fill the form we get it instantly 
- its cloud computing that we are leveraging on 
+   
 
 
 #########################################################
@@ -1335,7 +1324,7 @@ resource "aws_eip"ip" {
 
 
 2:19:25
-    **************************#########################
+    **************************#########################||#####################################
 
  i blieve now in mobaxterm:
 
@@ -1379,11 +1368,107 @@ we can see  error:
 this subnet has dependencies and cannot be deleted
 
   ******* 2:24:20
+ so ill  cd out , bk here wher i hv my instance and bc we are migrating subnet, this instance will be destroyed anyway 
+bc we are moving it to a new instance, ill run terafrm destroy , ill destroy that instance 
+ vpc cd ...
+2. tf-file-provisioner terrafrm destroy -auto-approve
+
+    ERROR 
+he said its bc its still reading frm the data.tf file 
+
+**********  26:00 
+ SO he went into the aws console and deleted the default vpc  and the other vpc that had resources in it by overriding the warning
+ so we dnt hv a default vpc here again , that means that anything thing i create i need to reference a certain custom vpc or you can also create a default vpc 
+
+ 
+******** 2:31:18                           ############### troubleshooting 
+ he went back to (NO.19) and in data.tf he changed vpc to my-vpc
+
+       data.tf
+data "terraform_remote_state" "vpc" {
+  backend = "local"                               
+  config = {                                       
+       path    = "../vpc/terraform.tfstate" chnaged to   "../my-vpc/terraform.tfstate" 
+
+
+*************  trfrem apply 
+    error:  creating EC2 subnet   ..... west 1
+
+
+  he went to  varaibles.tf to change region
+      this vpc was in east, i forgot to change my variabels , the parameters is US-west 1a and US west 1b
+
+  }
+variable "availability_zones" {
+   type    = list(string)
+   default = ["us-west-1a", "us-west-1b"]
+}
+
+
+ 2:32:40
+   ******* terfrm apply 
+so once the vpc creates then we will create our resource 
+and once the vpc creates then we are able to read the statefile using the terrafrm remote stste 
+and we are reading it frm the dir which is my-vpc
+and what we are interested in the ststefile is the output for the public subnet bc we wil create our resource in that public subnet
+and the subnet wil read it frm that remote data source 
+the output is called public and we will select the first one [0]
+so bc this instance already exists 
+
+   ******** ERROR :
+ subnet can only be created in us west 1a and us west ic 
+so he went back to the variable file and changed it aagain 
+
+   #### am glad that this errors are happening now bc this is exactly what you will be dealing with at work when ur working on a project and you will have to try out things
+some things will fail but you hv to troubleshoot and find out , look at your errors , look at what the system is telling you until you get success
+
+   ****** terraform apply -auto-approve 
 
 
 
 
-bootcamp 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      MY QUESTION
+
+  what do you mean by wE are migrating subnets ??? 
+IS it bc  of NO.3 above? where the variable file has that key (eks-instance") that cant be found we changed region in video3 
+
+
+
+
+#################################################################################
+    ANNOUNCEMENT
+2:04:30 
+prof said python will be covered during bootcamp
+
+someone asked about promethus n grafana n he said its deployed with kubernetes 
+someone asked for newrelic and he said we already hv a resource to that effect, its even on our youtube channel so that resource will be deplyed accordingly, once u look
+at promethus and grafana, newrelic will just be anoda deployment in that category so you will not have any problem
+
+we have people who have testified in the past who finished the course and its like they hv not had any mastery but in the bootcamp everything changed , 
+
+once you fill the form we get it instantly 
+ its cloud computing that we are leveraging on 
+
+ 
+*****************    jly 2nd  bootcamp 
 i dnt wnat you to think that u dnt have live experience 
 u were working in landmark , whatever we did we didnt do it from the classroom, we did it frm the workplace
 what has helped landmark students over the years is confident
@@ -1393,6 +1478,7 @@ and when she spoke at the interview she was told she was speaking from a profess
         ### this is what ill first try 
 
 if u dnt knw that frm day 1 this programme has been project based then thats a serious problem 
+
 
 
 
