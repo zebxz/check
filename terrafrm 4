@@ -1243,8 +1243,9 @@ variable "vpc_cidr" {
     default = 2
 }
 
-  NO.30
-  provider.tf
+ 
+  ############### **********   NO.30
+                    provider.tf
 
 provider "aws" {
    region = "us-west-1"
@@ -1590,7 +1591,7 @@ whne u look at all this we v seen that our terfrm statefile is also in this loca
    *********** 3:11:26
 what if we wnated to use a remote backend ??
  we wil go to where our provider file (prorvider.tf) and pass a backend that is remote 
-when u pass a backend that is remote, this is like an S3 bucket so bc when we run terfrm init the firts tin that normally hapens is it initializws thebackend 
+when u pass a backend that is remote, this is like an S3 bucket so bc when we run terfrm init the firts tin that normally hapens is it initializes the backend 
 bc thats the firts thing that runs, your backend therfore its means that its just needs to exist 
 so i can go to my AWs console and i can look for S3
 
@@ -1603,11 +1604,61 @@ so for me to do that therfore , ill need to configure a remote backend
 am using aN S3 just for state storage , just to store my statefile 
 so ill find that bucket that exists which is (landmarkautomation) 
 bc i have that bucket that exists and its in us west2
-i just need to give it the region wher the bucket was created, it is global yet when i created it, it was created in us west as a region 
+i just need to give it the region wher the bucket was created, it is global but yet when i created it, it was created in us west as a region 
+am pasing my backend inside of my terfrmblock, this is where w epass our backend 
+and the key is judt a path, its a dir , a dir that i want to create , i can call the dir elk, (no longer ec2)
+its a dir inside of the bucket wher i wnat to create my statefile which is (terraform.tfstate)
+then the region is US west2
+so here am using a remote backend which is s3
+
+******************************** 3:13:43
+   NO.32
+
+       in provider,tf 
+
+  ( provider.tf     from NO.25 )  not the provider.tf for my-vpc that he subsequently created in NO.30
+
+terraform {
+  required_version = "~>  1.0 "
+  required_provisioners {
+    aws = {
+       source = "harshicorp/aws"
+       version = "~> 5.0"
+    }
+ }
+                                                          **************   so here am using a remote backend which is s3
+ backend "s3" {                                            ************  am pasing my backend inside of my terfrmblock, this is where we pass our backend 
+   bucket  = "landmark-automation-kenmak"
+   key   =  "elk/terraform.tfstate"            ******* and the key is judt a path, its a dir
+   region = "us-west-2"
+ }
+
+provider "aws" {
+   region = "us-west- 1
+}
 
 
-3:13:43
- in provider,tf 
+
+**********3:14:52
+because initially i had this infarstruture created using a local backend now i want to migrate my state to a remote backend so how do i do that???
+
+  we know that when u run terfrm init, the first thing it does is that it always initializes the backend
+so if i wnat to migrate this state after hv made changes to my configuration and put the buscket ill run tefrem init but before i do that
+ 2 tf=file-provisoner terraform init
+right now we see that our statefile is right here, its local
+ 2 tf=file-provisoner terraform init
+so once i run terfrm init, its initilizing the backend 
+
+  the first thing it says is
+*********** DO YOU  want to copy existing state to the new backend ????
+   preexisting state was found while migrating the previous , so it was local 
+but now do u wnat to copy this staret to the new s3 bucket 
+enter yes to copy and no to empty the state 
+
+   *****  yes
+ successfully configured the backend "S3" trgrm wil automatically us ethis bckend unless the backend configuration changes
+
+ terraform has sucessfully initialized 
 
 
 
