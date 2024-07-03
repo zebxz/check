@@ -38,7 +38,7 @@ Tonight we wil continue wit our exploration of teRRAFORM
 we'll go over PROVISIONERS AND BACKENDS
 
 PROVISIONERS:
-You can use provisioners to model specific actions on the local machine or on a remote machine 
+You can use provisioners to model specific actions on the local machine or on a remote machine  
 in order to prepare servers or other infrastructure objects for service
 
 9:15
@@ -1111,6 +1111,29 @@ so count wil return this 2slices and that will mean that i am creating 2 subnets
 #5 create public subnet 
 
 
+#7 create private route table
+ resource "aws_route_table" "private" {
+    vpc_id = aws_vpc.main.id
+
+  depends_on = [aws_subnet.private]
+
+  tags = {
+    Name = "private"
+  }
+}
+
+#8 create public route table
+resource  "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+   depends_on = [aws_subnet.public]
+
+  tag = {
+    Name = "public "
+ }
+}
+
+
 2:15:00 **********************
 
  NO.29
@@ -1154,12 +1177,12 @@ variable "vpc_cidr" {
    default = "10..0.0.0/16"
 }
 
- varaible "private_subnet_count" {
+ varaible "private_subnet_count" {         ********* my private subnet count am just creating 2
    type   = number 
    default = 2
 }
 
- variable "public_subnet_count" {
+ variable "public_subnet_count" {    ************** my public subnet am just creating 2
     type = number
     default = 2
 }
