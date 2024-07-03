@@ -1810,6 +1810,33 @@ so we always use what is called dynamond db table to lock our ststefile in the s
 ********** so this is a concept that we wll look at when nxt we meet ...
 
 
+       QUESTION 
+1) IN the event that i start working in a cop and the have their statefile in the backend, an di wnat to start working in collaboration with th eother team, 
+how do i migrate it to my own local env so that i can work with the statefile that is already in existence
+
+   ANS:
+that will not be the case because once you pull it , we only have 1 ststefile  
+normally they prevent you form pulling unless you are pulling it and pushing it back
+but theres a command for that :
+ terraform state pull
+
+ ********  it pulled our stsefile and you can tell by the lineage number , it doesnt change 
+
+******** so if i wanted to inspect the ststefile, like what is there , then i can easily do a state pull
+ then look at it, work on it then i can do a state push to push it back but i think its asking for a path  or u can use -force
+
+  ##### but basically you can use terfform state commands  
+      terrafrm state -h
+it shows you the sub commands, how to manipulate terfrrm state
+
+subcommands;
+list
+mv
+pull
+push
+replace-provider
+rm
+show
 
 
 
