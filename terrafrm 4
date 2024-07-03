@@ -1690,15 +1690,97 @@ we sue s3 for stste storage , we use it as our backend , wherby evertin that we 
    now if i go ahesd n destroy this ,lets see what is goin to happen 
    2 tf=file-provisoner terraform destroy .auto.approve
 
-
-
+***************** 
    i cant destroy my vpc bc my instance exist in the vpc but i can dsetroy this bcthe statefile is diff 
-the ststefile for my instance is remote is in my s3 but the ststefile for my vpc is local 
+the statefile for my instance is remote its in my s3 but the ststefile for my vpc am using local 
+
+3:21:33
+ ******* lets continue with destroying
+ but as its destroying 
+
+  3:21:06
+********** now can i migrate this state (vpc) to an s3 bucket ... ???? yes of course 
+
+ 
+   opens the provider.tf for my-vpc ..... NO.30
+  now i can add my remote backend  (copies the backend frm NO.32) And pastes it here   , the same BACKEND but now i can give it a path like my-vpc
+i want the statefile to be saved in the same bucket but now it is goin to be in this path .. my-vpc
+  for the instance its in the path elk but this is a diff statefile for my my-vpc
+  
+provider "aws" {
+   region = "us-west-1"
+}
+
+  
+terraform {
+  required_providers {
+    aws = {
+       source = "harshicorp/aws"
+       version = "~> 5.0"
+}
+data "terraform_remote_state" "my-vpc"
+ backend "s3" {                                            
+   bucket  = "landmark-automation-kenmak"
+   key   =  "my-vpc/terraform.tfstate"                        **************  i can give it a path like my-vpc     (changed frm elk)   
+   region = "us-west-2"
+ }
+
+
+   ****** after am done destroying, ill migrate this statefile to s3
+ how do i do that??
+ cd into my-vpc  and once am in ther ill run tefrm init
+my-vpc terfrm init
+terfrm init initializes the backend , secondly, it downloads the module
+so if i want to migrate my state to a diff backend , what command can i use 
+  its terraform init 
+it senses i want to migrate bc now i hav a diff backend configured in the provider file 
+  yes 
+successful and it will transfer the statefile
+now we see that statefile is gone
+
+
+  ********* 3:24:13
+ in AWS,i click on the elk path statefile for my instance and everyting in the statefile has been destroyed 
+so the statefile is empty, it doenst have any reosurces, any outputs bc i just ran terfrm destroy for my instance
+
+  ********* back in the bucket i can see i now hv my my-vpc dir created 
+and in it i have a statefile, if i open it i see that i hv my vpc with public subnet, vpc cidr (the content)
+so hv migrtaed my statefile for my-vpc here
+
+
+  *******3:24:56
+
+     HOW CAN I READ A STATEFILE THAT IS IN AN s3 bucket ???????
+
+i wnat to create my resource , my instance in my (local env) but this statefile (my-vpc) is in s3 bucket
+ so how do you read that
+ .... again we use the same principle , we use the smae data source (data.tf)
+but then our backend is not local 
+
+ 3:25:23  ************** 
+   
+
+  data.tf
+
+   data "terraform_remote_state" "vpc"
+   backend "s3" {                                ******** am saying that the bucket is s3
+   config = {                                                
+     bucket  = "landmark-automation-kenmak"                 ****** the config , am passing the bucket name 
+     key   =  "my-vpc/terraform.tfstate"                            *********** and the ksy, this is dir , the path  to wher the statefile is 
+     region = "us-west-2"                             ********* then the region
+   }
+ }
+
+*/
+#  data "terraform_remote_state" "vpc" {         ********** we comment this bc our backend is nolonger local 
+  backend = "local"                               
+  config = {                                       
+       path    = "../my-vpc/terraform.tfstate" 
 
 
 
-
-
+  ************ 3:26: 36
+ so i can now go 
 
 
 
