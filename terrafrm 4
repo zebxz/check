@@ -32,7 +32,6 @@ those rsources just by using the module block
 so this is one of the trfrm blks among the 10 tfrrm blks that we hv used so far
 so u can use a module blk to actually create resources
 
-
 Tonight we wil continue wit our exploration of teRRAFORM
 
 we'll go over PROVISIONERS AND BACKENDS
@@ -1108,7 +1107,16 @@ so count wil return this 2slices and that will mean that i am creating 2 subnets
 *********** so the same thing will happen for the element bc am using count, so it returns some element from that particular list 
 
 
-#5 create public subnet 
+#6 create public subnet 
+resource "aws_subnet" "public" {                                                              
+    count              = length(slice(var.public_cidr, 0, var.public_subnet_count))   
+    vpc_id             = aws_vpc.main.id                                           
+    cidr_block         = elements(var.public_cidr, 0, var.public_subnet_count)), count.index)
+    availability zone  = element(var.availability_zones, count.index)
+
+    tags = {
+      "Name" = "public"
+
 
 
 #7 create private route table
@@ -1189,7 +1197,9 @@ variable "vpc_cidr" {
 
 
 
-
+    bootcamp 
+i dnt wnat you to think that u dnt have live experience 
+u were working in landmark , whatever we did we didnt do it from the classroom, we did it frm the workplace
 
 
 
