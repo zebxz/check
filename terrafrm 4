@@ -1562,14 +1562,46 @@ and paste it in google, kibana runs on 5601   : publicip:5601
     2:58:30*********** cant connect, cant be reached 
    3:03:30  ......... opened our sg and open all tcp for one sg
    now working 
+but its not security wise to open all traffic 
+  ########### so thats a project once you have the code work on the security grp and make sure that you only opened the req port
+but for dmeo purposes what we are just  rying to proof is that we have used tefrrm to do  configuration and we hv beene able to install elastic searchn kibana and view 
+our dashboard 
+
+   *********** 3:06:06
+we have metrix space so maybe we can create our dashboard 
+you can plac around with the index patterns n create ur dashboard
 
 
+    QUESTION
+1) whats basicaly the function of the dashboard, is it for monitoring the app??  APN, app performance monitoring 
+
+   ANS:  3:09
+yes for monitoring it 
+right here you can monitor diff ,like right now its me metrics based on the OP that is running on 
+so if i wnat host name , type, its giving me that,  am running this on a linux , platform its ubnuntu the sever its giving me that 
+
+so u can cfeate a dashboard that will show u evertin , so frm this metrics you can create a dashboard that wil be able to display those metrics 
 
 
+###### the point is we hv been able to use terfrm to do configuration and we hv been able to craete our instance
+we hv been abl eto use provisoners, we v used nt just file provisoners,  we v also used remote exec provisoners to actually run our script
+whne u look at all this we v seen that our terfrm statefile is also in this local env , it jsut mena that we also using a remote backend here
 
+   *********** 3:11:26
+what if we wnated to use a remote backend ??
+ we wil go to where our provider file (prorvider.tf) and pass a backend that is remote 
+when u pass a backend that is remote, this is like an S3 bucket so bc when we run terfrm init the firts tin that normally hapens is it initializws thebackend 
+bc thats the firts thing that runs, your backend therfore its means that its just needs to exist 
+so i can go to my AWs console and i can look for S3
 
+   *******  3:12:43
+do i have an S3 bucket in this particular region, the region wher i created .... ? created what
 
-
+i have a bucket her called landmark automation, now becsuas i have that 
+so i wnat to store my statefile inside of this bucket instaed of my local env, for collaboration
+so for me to do that therfore , ill need to configure a remote backend 
+am using aN S3 just for state storage , just to store my statefile 
+so ill find that bucket that exists (landmarkautomation)
 
 
 
