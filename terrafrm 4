@@ -1764,8 +1764,8 @@ but then our backend is not local
 
    data "terraform_remote_state" "vpc"
    backend "s3" {                                ******** am saying that the bucket is s3
-   config = {                                                
-     bucket  = "landmark-automation-kenmak"                 ****** the config , am passing the bucket name 
+   config = {                                                ****** the config
+     bucket  = "landmark-automation-kenmak"                 ****** am passing the bucket name 
      key   =  "my-vpc/terraform.tfstate"                            *********** and the ksy, this is dir , the path  to wher the statefile is 
      region = "us-west-2"                             ********* then the region
    }
@@ -1780,7 +1780,36 @@ but then our backend is not local
 
 
   ************ 3:26: 36
- so i can now go 
+ so once uv configured this as your backend, i can now go into wher my instance is an i can run terfm plan
+       2 tf=file-provisoner terraform plan
+  the first thing is it is goin to read the terfrm state frm the s3 bucket
+once it reads it frm the bucket it gets the info and it returns that same subnet id frm my statefile 
+
+so this is how we use backends in  our infrastructure 
+
+  ********** so just remember that befoer u initialize terfrm u will need to have that backend 
+
+   ###########  some time  you might think why cant i create an S3 bucket using terfrm  ???
+yes you can do that 
+however, if it is in the same module ( wit the illustration he was giving wit the cursor, i bliv we wil run the command to create s3 bucket in provider.tf file) what will 
+happens is that bc once u run init ,initilizing needs to initialize the backednd first before you create it, so what u may want to do is you may want to create your instance
+but first in the (provider.tf file) comment out your backend as s3 (ie the s3 bucket backend) then run the code using a local backend so that your s3 bucket is created once 
+the bucket is created then you can uncomment and comment your backend with the name of the bucket you just created , with the path , then your terfrm will initilize inside
+of the bucket you ve created but as long as the bucket exists when you are running terfrm init then it is goin to initilize that bucket as your bucket
+so thats how we do 
+
+3:28:57
+ ******* then there is what we call state looking
+thats one concept that nxt time we meet, ill be taking abt that 
+where by in the bucket trfrm prevent sif 2engrs are working on the statefile at the sametime
+mayb bc its  an s3 bucket , i mayb be running apply and you are runing destroy
+so we dnt want to corrupt our ststefile, so what tfrfm does is that it, it places a lock, you can lock the statefile so that only one engr can work on the statefile at
+a time so that if you have 2 people issing terfrm command at the same time, you dnt want to corrupt your statefile
+so we always use what is called dynamond db table to lock our ststefile in the s3 bucket
+
+********** so this is a concept that we wll look at when nxt we meet ...
+
+
 
 
 
