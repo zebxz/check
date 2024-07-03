@@ -1660,12 +1660,54 @@ enter yes to copy and no to empty the state
 
  terraform has sucessfully initialized 
 
+    *********** 
+now i relaod my terfrm
+i click the statefile but its empty bc its has been migrateed to s3 bucket
+my backup (i blicv a file terrafrom backend ) is here but the current state of the infrastruture is stored now in an S3 bucket
+so this module her is using S3 bucket for state storage 
+ now if i go to my s3 bucket (i configured it) and open it iil see a new dir called elk that wa just created
+if i click on elk ill see my tefrm.tfstate that was jsut created minutes ago 
+ i can open it on the bject url, its says access denied but i can open it by clciking on the option open above and i see the conent of my ststefile
+
+   ******* 3:18:29
+now this statefile is now in a distributed env so when am working with you w eare able to collaborate bc we all hv acces to the statefile as opposed to if it was\on my 
+local env then u wil nt have accse to it , so bc w ewrk in a collaborated env which is distributed 
+so we always use S3 bucket for our state storage which is a distributed env
+
+    INTERVIEW QUETSION
+How do you work with terfrm in a distributed env , IN A COllaboartive env
+ 
+    ANS:
+we sue s3 for stste storage , we use it as our backend , wherby evertin that we do , we run here (our local env), its been captured in the s3 bucket 
+
+
+    ************ 3:19:36
+  e.g 
+ if i run terfm state list 
+  2 tf=file-provisoner terraform list
+ this will jsut list the resources thats captured in the statefile
+
+   now if i go ahesd n destroy this ,lets see what is goin to happen 
+   2 tf=file-provisoner terraform destroy .auto.approve
+
+
+
+   i cant destroy my vpc bc my instance exist in the vpc but i can dsetroy this bcthe statefile is diff 
+the ststefile for my instance is remote is in my s3 but the ststefile for my vpc is local 
 
 
 
 
 
-      
+
+
+
+
+
+
+
+
+
       MY QUESTION
 
   what do you mean by wE are migrating subnets ??? 
