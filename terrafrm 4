@@ -2,7 +2,7 @@ RECAP , PROVISIONERS AND BACKENDSRECAP,
 PROVISIONERS, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS, CREATING AN EC2 INSTANCE, subnet, REFACTORING, PASSING A PROVIDER 
  create a subnet/subnets inside of the vpc , ACCESSINg ATTRIBUTE IN A MODULE, IMPLICIT DEpendency, LOCAL BACKEND, .TerrAFRM DIR, terfrm state file, READING FRM A STATEFILE,
 REMOTE STATE DATA SOURCE ,Elastic ip, NULL RESOURCE, INLINE command and explanation of the scripts been transferred into the instance , AWS_key_pair, TERRAFORM CONSOLE
-USING LOOP , USING FUNCTION, SLICE FUNCTION
+USING LOOP , USING FUNCTION, SLICE FUNCTION  ,, COMPLETE VPC TO CREATE 
 
    **** in the main.tf file (resource block for instance) we referenced the key variable to pass the key BUT in the null resource, we used a file to pass sthe key 
 
@@ -907,9 +907,10 @@ then in the resource blk )main.tf) , we pass the key : stage  and it will reyurn
    1:47:00
 ALso,                          USING A LOOP   (showing you how to use functions)
 
+                              (main.tf)
          resource "aws_instance" "my_ekl_instance" {
 ami              = data.aws_ami.amzlinux2.id  
-insytanace type  = [for s in var.myinstance : lower(s)][1]  ******** for is a loop, (s) is jst an abitrary number , i can use a,k etc 
+instance type  = [for s in var.myinstance : lower(s)][1]  ******** for is a loop, (s) is jst an abitrary number , i can use a,k etc 
 #instance type   = var.myInstance [1]                                                 
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
 key_name         = var. my_key
@@ -1247,9 +1248,71 @@ variable "vpc_cidr" {
     default = 2
 }
 
+  NO.30
+  provider.tf
+
+provider "aws" {
+   region = "us-west-1"
+}
+
+  
+terraform {
+  required_providers {
+    aws = {
+       source = "harshicorp/aws"
+       version = "~> 5.0"
+     }
+   }
+}
+
+  
+
+ NO.31
+   output.tf
+output "private" {                                  *** i want to return my private subnet
+ value = aws_subnet.private.*.id
+}
+
+output "public"{                                   *** i want to return my public subnet
+   value = aws_subnet.private.*.id                  ** bc  am returing using  * (splar) am creating 2subnets so am goin to return 2subnet ids n when i reference in my code 
+}                                                                                                                         ***2:18:26                           (main.tf)
+
+  output "vpc_id" {                                  *** i want to return the vpc id 
+         value = "aws_vpc.main.id 
+
+  output
+    output "vpc_cidr" {                                   *********** and the cidr for my vpc
+         value = "aws_vpc.main.cidr_block
+}
 
 
-    bootcamp 
+           ********* but what am interested in is either this public or private subnet but ill create my instance inside ofthe public subnet 
+  
+
+
+  2:18:26
+
+  
+                           (main.tf)
+
+         resource "aws_instance" "my_ekl_instance" {
+ami              = data.aws_ami.amzlinux2.id  
+instance type  = [for s in var.myinstance : lower(s)][1]  
+#instance type   = var.myInstance [1]                                                 
+subnet_id        =data.taerraform_remote_state.vpc.outputs.public[0]        ****** when i reference it in my code, am referening that public output wich returns 2 of them   
+key_name         = var. my_key                                                
+
+   bt i need the 1st one, am goin to create my instance in the first subnet on the list bc this
+     wil return for me a list, a list of the 2 subnets, so it wil be subnet 1&2 bt i wnat the first 
+      so am using the index[0] to get the first subnet, thats wher ill create my instance
+
+   
+
+
+
+
+
+bootcamp 
 i dnt wnat you to think that u dnt have live experience 
 u were working in landmark , whatever we did we didnt do it from the classroom, we did it frm the workplace
 what has helped landmark students over the years is confident
