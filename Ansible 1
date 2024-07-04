@@ -145,10 +145,15 @@ Using compile file       **** download / use a complie file     ****  https://do
 
   $ sudo adduser ansible                   ***** 1st u need to create a user who willl install ansible, this user will install the ansible software
   $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible       ********* we add him to sudoers group , for sudo right bc he will be installing packages
-  $ sudo su - ansible 
-  $ sudo apt-add-repository ppa:ansible/ansible 
-  $ sudo apt install ansible -y
-Ansible installation on REDHAT EC2
+  $ sudo su - ansible                                      ****** switch user to ansible 
+  $ sudo apt-add-repository ppa:ansible/ansible            ****** once ansible is installed in our env,,always remeber ,the user that instal the sf ware is the default user
+  $ sudo apt install ansible -y                                                                                 ansible who ansible will be expecting to connect with 
+Ansible installation on REDHAT EC2         
+
+                                   ****** if hv installed this user a sansible and hv installed ansible sfware as an ansible user then when am making an ssh connection by
+     default ansible my controlnode wil be looking for a user in the remote node called ansible 
+########thats smt u really need topay attention to and understand how it works 
+                                        
 
   $ sudo useradd ansible 
   $ sudo hostname ansible 
@@ -166,6 +171,25 @@ $ sudo echo "ansible:ansible" | chpasswd
 $ sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
 $ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
 $ sudo service sshd restart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
