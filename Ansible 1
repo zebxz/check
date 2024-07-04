@@ -139,6 +139,8 @@ Using compile file       **** download / use a complie file     ****  https://do
 
    ****** we are installing ansible on ubuntu , meaning it will be our control node 
 
+
+  NO.1
 ******* 21:44              PREREQUISITE TO INSTALL ANSIBLE 
 
  ###########  Installing Ansible on Ubuntu
@@ -181,21 +183,71 @@ bc that becomes the default user in ansible , this is how e can install ansible 
 it means on my remote node, i need to have a user called ansible that am setting as the default so that when asnible pushes the module, it is pushing to home of this
 ansible and it is this ansidible user in the remote node that will do the installation/patch work 
 
-
+NO2.
 ###### Script to add user, password and enable password authentication
 
 #!/bin/bash
 $ sudo useradd -d /home/ansible -s /bin/bash -m ansible    ********  it is pushing to home of this ansible and it is this ansidible user in the remote node
 $ sudo echo "ansible:ansible" | chpasswd                   *** giving the user PW and the PW is ansible 
 $ sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible              ******** addding user in sudoer
-$ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config         ***PW authentication needs to be enabled inside sshd config
+$ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config       **PW authentication needs to be enabled inside sshd config
 $ sudo service sshd restart
 
 
+ 28:45 ******in summary, bc hv installed ansible in the controller as asnsible , bc hv installed as uer there as ansible , i need to create aa user in the remote called ansible
+this is the suer that ansible in the controler wil be pushing this remote nodes to 
+the system with the remote node has to hv PW authentication enabled bc if this is a linux sysytem,(the remote node sys) linux sys by default has been designed to communicate 
+using ssh keys and therfror PW authentictaion by default has been set to false, ur nt allowe dto use a PW , bt sinec we are creating a user in the remote sys, for you to be 
+able to transfer a key, you will need to transfer a key (aagin ull see when we cm to authentication) to a particular user bt ull need to use a PW for the key to be transferd
+
+*****29:52
+    Right now am goin thru the overview, so once you guys get the big picture we will go into the actuall installation
+so the reason why we nid the ansible user in the remote node sys is so that we can transfer a key to them, after wich we can do ssh without a PW, wich we will see passwordless
+authentictaion 
 
 
+  NO.3   ************ 
+
+  30:50 ######## lets go ahead with the Installation
+so again as i said , at this stage we wil be using automation
+so inside of this Ansible dir, i provided for you some terfrm code , we will use trfrm to easily create our resources
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/01-Introduction/terraform%20files
+
+    data.tf
+thers a data source for our ubuntu server , to get our ubunt AMI 
+thers also another data to get our redhat bc am creating both ubuntu and redhat server for host 
+
+    ec2.tf
+   ***** then for our ec2 , the first resource am creating is for ubuntu server 
+  this ubuntu server the AMi is using a data source which is for  ubuntu 
+the instance type am passing it as a variable , looking at the variable file it is t2.micro (default)
+for user data am pasing a script, d same script that i showed your guys to instal asnible on that particular ec2 instance , so am using that same particular script (NO.2) for
+installing ansible on that ec2 insatnce
+ 
+********* 32:53 bt apart frm that, i also have anoda script which i will talk to you guys abt 
+  apart fr m that script, i have 2 scripts that i want to provison, i wnat to configure my instance with 
 
 
+   #resource block
+resource "aws_instance" "ubuntu" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.my_instance_type
+  #user_data     = file("${path.module}/ansible-install-ubuntu.sh")
+  user_data = data.template_cloudinit_config.user-data.rendered
+
+  key_name = var.my_key
+
+  tags = {
+    "Name" = "Ansible-Ubuntu"
+  }
+}
+  
+
+   ********* 32:53 bt apart frm that, i also have anoda script which i will talk to you guys abt 
+  apart fr m that script, i have 2 scripts that i want to provison, i wnat to configure my instance with 
+
+    INTERVIEW QUESTION
+How can you pass 2scripts as user data ????
 
 
 
