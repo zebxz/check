@@ -61,12 +61,37 @@ the other a redhat server , then what ansible does is , am able to control this 
 once it has a ssh connect it connects to remote host (the windowd and redhat servers) it is goin to push small programms into your nodes this programs are what we are caling
 modules , it pushes your ansible modules insid eof theservers that ist controlin, once that is done, the module wil perfrom a task, lets say i want to create a file inside 
 of this so i can use ansible to go insid ef this ec2 istance n create a sile so it sgoin to use a file module, it wil push the file module over ssh , once its moved , ansible 
-wil use the file module to create that file accoridng to the specifictaion, once it creates the file it delets the module and masrks that task a complete
+wil use the file module to create that file accoridng to the specifictaion, once it creates the file it deletes the module and once it accomplishes that task , it masrks that
+task a complete and then it deletes the module   . 
+
+   **********10:48
+ on the window server, i can push a program that will congigure the server an donce its done the module is taken out
+this is how ansible does 
+
 
 The pushed programs/modules will be executed on remote server by Ansible over SSH and removes them when finished.
 Unlike Puppet or Chef it doesn’t use an agent on the remote host, Instead Ansible uses SSH. It is agentless.
 It’s written in Python which needs to be installed on the remote host.
 This means that you don’t have to setup a client server environment before using Ansible
+
+   INTERVIEW QUESTION
+ what other configurtaion mgt tools do you know ??
+
+ANS: 
+ Apart from ansible, puppet , chef is also a configuration magt tool 
+this two uses agent on the remote host while ansible uses a push mechanism and thats why ansible stands out 
+ansible pushes modules so its your controller that initiates, it pushes out modules so it doesnt need agents in your seververs
+unlike puppet and chef that need an agent bc the use a pull module an dbc they use a pill mechanism as such you have to install a puppet agent of a chet agent inside of 
+each node bc it is the agent that will initiate that particular push bc your controller will be pulling. it uses a pull mechansim when it does the configuration
+so ansible stand sout bc it doesnt need an agen , it uses a push mechanism as such its agentless 
+
+
+  ******* bc ansible is written in python thefrore python needs to be installed on your remote node bc ansible runs on python so the firtsthing is python needs to be 
+installed on the remote node for ansible to wrk , so this menas you dnt ned to setup a client server env before before using ansible 
+all you need to do is setup your ansible server then inside of your configuration file which w ecall the host file , you just need to pass the ip address of the 
+particular server that you wnat to patch or confgure then ansible will take care of that so you dnt have to do any setup on these particular servers
+so thats basicllay how ansible works
+
 Benefits of using Ansible
 
 It is a free open -source Automation tool and simple to use.
