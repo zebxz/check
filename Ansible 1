@@ -216,11 +216,11 @@ so again as i said , at this stage we wil be using automation
 so inside of this Ansible dir, i provided for you some terfrm code , we will use trfrm to easily create our resources
 https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/01-Introduction/terraform%20files
 
-    a)   data.tf
+   ####### a)   data.tf
 thers a data source for our ubuntu server , to get our ubuntU AMI 
 thers also another data to get our redhat bc am creating both ubuntu and redhat server for host 
 
- b)   ec2.tf
+######## b)   ec2.tf
    ***** then for our ec2 , the first resource am creating is for ubuntu server 
   this ubuntu server the AMi is using a data source which is for  ubuntu 
 the instance type am passing it as a variable , looking at the variable file it is t2.micro (default)
@@ -278,7 +278,7 @@ ANS:
  so am installing this vscode inside of my ubuntu , so thats the script that am using, the script is called (vscode -install.sh)
 
   35:00
-      C)                       #(vscode -install.sh)
+      #######  C)                       #(vscode -install.sh)
 
    sudo apt update
 sudo apt upgrade -y
@@ -304,15 +304,34 @@ but bc its more than 2, if your given 3scripts, 4scripts, that you need to insta
 
  36:14 ####### once we have this configured, then we ill run our ansible 
 now for the host, those that we are goin to manage, like our host 
-am also creating 2ubuntu instances and am creating them as the ones we will use as nodes to manage, as our manage nodes
-and am using count meta argument , the name and the type .. this is a meta argument that we knw 
+am also creating 2ubuntu instances and am creating them as the ones we will use as nodes to manage, as our managed nodes
+and am using count meta argument , and the name and the type .. this is a meta argument that we knw 
+and on this insatnces am using user data but on this user data, am just passing a file
+    
+        Biii)   ec2.tf
+}
+
+resource "aws_instance" "ubuntu-hosts" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.my_instance_type
+  user_data     = file("${path.module}/create_ansible_user.sh")    *******this file is to create a user, am creating d ansible user inside of my host 
+  key_name      = var.my_key                                                                  script name:(create ansible user)
+  count         = 2
+  tags = {
+    "Name" = "My-Ubuntu-${count.index}"
+    "Type" = "My-Ubuntu-${count.index}"
+  }
 
 
+    ## ## D
+    create ansible user
 
-
-
-
-
+   #!/bin/bash
+sudo useradd -d /home/ansible -s /bin/bash -m ansible
+sudo echo "ansible:ansible" | chpasswd
+sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
+sudo service sshd restart
 
 
 
