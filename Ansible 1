@@ -57,7 +57,11 @@ IT Orchestration
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
 e.g you hv your ansibleserver, this is the server wherby you hv installed your ansible software on this ec2 instance as such this is my control node, ansible controller 
 bc its the server that have installed my ansible server and afteri have that i can hv multiple remote nodes, i can hv other ec2 instances/servers  one can be a window server,
-the other a redhat server , then what ansible does is , am able to control this multiple servers frm my control node thru ssh connection
+the other a redhat server , then what ansible does is , am able to control this multiple servers frm my control node thru ssh connection 
+once it has a ssh connect it connects to remote host (the windowd and redhat servers) it is goin to push small programms into your nodes this programs are what we are caling
+modules , it pushes your ansible modules insid eof theservers that ist controlin, once that is done, the module wil perfrom a task, lets say i want to create a file inside 
+of this so i can use ansible to go insid ef this ec2 istance n create a sile so it sgoin to use a file module, it wil push the file module over ssh , once its moved , ansible 
+wil use the file module to create that file accoridng to the specifictaion, once it creates the file it delets the module and masrks that task a complete
 
 The pushed programs/modules will be executed on remote server by Ansible over SSH and removes them when finished.
 Unlike Puppet or Chef it doesn’t use an agent on the remote host, Instead Ansible uses SSH. It is agentless.
