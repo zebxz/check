@@ -1,4 +1,4 @@
-today we stsrt a new serie of ANible
+today we start a new serie of ANible
 so far we hv been working with terfrm , its a tool we use for infrastrure prvisoining
 we sue trtfrm to provion/create infrastrure
 
@@ -119,20 +119,53 @@ configuration then you can introduce a configuration mgt tool as ansible
    Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
  this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whethr windows 
 so  a conrol node cannot be windows but tonight installation we will be installing it on a redhat 
-for maco s, the operating system is linux , if you have mac then you can run ansible diesctly frm your mac bc thats a linux env
+for maco s, the operating system is linux , if you have mac then you can run ansible directly frm your mac bc thats a linux env
+but on windows laptop, you cant directly run ansible on ur windows server u hv to create an ec2 instance or what is called a windows subsistence of linux,  wsl , mayb ubuntu
+or contos os then you can for sure install ansible and run lt locally 
+bt for our case we will run ansible on an ubuntu sever
 
 Ansible is python based and therefore the control node and the managed nodes need to have python2 or python3 installed on them.
+******* the good news is that most of our system already cm with python installed bt also ansible once it connects to a system, if python isnt already installed,its goin to
+install python basically 
 
 Ansible can be installed in three ways:
 
-Using yum or apt
-Using pip
-Using compile file
+Using yum or apt       ******** if ur installing on ec2 instance
+Using pip              ****** package manger for python
+Using compile file       **** download / use a complie file     ****  https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html 
+                                in the link u can see hw w e ar able to install ansible
 
 
 
+   ****** we are installing ansible on ubuntu , meaning it will be our control node 
 
+******* 21:44              PREREQUISITE TO INSTALL ANSIBLE 
 
+  Installing Ansible on Ubuntu
+
+  $ sudo adduser ansible                   ***** 1st u need to create a user who willl install ansible, this user will install the ansible software
+  $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible       ********* we add him to sudoers group , for sudo right bc he will be installing packages
+  $ sudo su - ansible 
+  $ sudo apt-add-repository ppa:ansible/ansible 
+  $ sudo apt install ansible -y
+Ansible installation on REDHAT EC2
+
+  $ sudo useradd ansible 
+  $ sudo hostname ansible 
+  $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible 
+  $ sudo su - ansible # Enable PassowrdLogin and assign password to ansible user 
+  $ sudo yum install python3 -y 
+  $ sudo alternatives --set python /usr/bin/python3 
+  $ sudo yum install python3-pip -y 
+  $ pip3 install ansible --user
+Script to add user, password and enable password authentication
+
+#!/bin/bash
+$ sudo useradd -d /home/ansible -s /bin/bash -m ansible
+$ sudo echo "ansible:ansible" | chpasswd
+$ sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+$ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
+$ sudo service sshd restart
 
 
 
