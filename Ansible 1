@@ -216,11 +216,11 @@ so again as i said , at this stage we wil be using automation
 so inside of this Ansible dir, i provided for you some terfrm code , we will use trfrm to easily create our resources
 https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/01-Introduction/terraform%20files
 
-    data.tf
+    a)   data.tf
 thers a data source for our ubuntu server , to get our ubuntU AMI 
 thers also another data to get our redhat bc am creating both ubuntu and redhat server for host 
 
-    ec2.tf
+ b)   ec2.tf
    ***** then for our ec2 , the first resource am creating is for ubuntu server 
   this ubuntu server the AMi is using a data source which is for  ubuntu 
 the instance type am passing it as a variable , looking at the variable file it is t2.micro (default)
@@ -230,7 +230,7 @@ installing ansible on that ec2 insatnce (the script is the file we hv called ans
 ********* 32:53 bt apart frm that, i also have anoda script which i will talk to you guys abt 
   apart fr m that script, i have 2 scripts that i want to provison, i wnat to configure my instance with 
 
-
+Bi)
    #resource block
 resource "aws_instance" "ubuntu" {
   ami           = data.aws_ami.ubuntu.id
@@ -263,6 +263,7 @@ ANS:
 
     "template_cloudinit_config"    , its a template that you can use , he called it (name) 'user-data'
 
+     ### Bii) part of  ec2.tf
 
   data "template_cloudinit_config" "user-data" {
   part {
@@ -274,8 +275,37 @@ ANS:
     content      = file("${path.module}/vscode-install.sh")       ***** d content is anoda ascript that i wil use to instal vscode inside of my ubuntu
                                                                   so that when we start writing playbooks, we can actually write playbks and run them at the same time
    instead of us vi ing, writing play bks on our ide here then copying , then goin to the ubuntu an vi , create a file and do all that  .... 
- so am installing this vscode inside of my ubuntu , so thats the script that am using, the script is called vscode -install.sh
+ so am installing this vscode inside of my ubuntu , so thats the script that am using, the script is called (vscode -install.sh)
 
+  35:00
+      C)                       #(vscode -install.sh)
+
+   sudo apt update
+sudo apt upgrade -y
+sudo apt install software-properties-common apt-transport-https wget -y
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" -y
+sudo apt install code -y
+
+in the script am just doin  sudo apt update 
+am installing the sfware .. wget
+it is getting the repository for vscode
+and am using apt to install vscode which is what is called vscode   , so it will install it frm the apt repository 
+
+
+   so thats what am doing with this user data, (Bi) bc am using 2scripts 
+  
+user_data = data.template_cloudinit_config.user-data.rendered
+
+** **** if its one script, ill just pass it like this: file
+               #user_data     = file("${path.module}/ansible-install-ubuntu.sh")
+
+but bc its more than 2, if your given 3scripts, 4scripts, that you need to install then ull have to use a data source called :template_cloudinit_config
+
+ 36:14 ####### once we have this configured, then we ill run our ansible 
+now for the host, those that we are goin to manage, like our host 
+am also creating 2ubuntu instances and am creating them as the ones we will use as nodes to manage, as our manage nodes
+and am using count meta argument , the name and the type .. this is a meta argument that we knw 
 
 
 
