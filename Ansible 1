@@ -81,7 +81,7 @@ ANS:
  Apart from ansible, puppet , chef is also a configuration magt tool 
 this two uses agent on the remote host while ansible uses a push mechanism and thats why ansible stands out 
 ansible pushes modules so its your controller that initiates, it pushes out modules so it doesnt need agents in your seververs
-unlike puppet and chef that need an agent bc the use a pull module an dbc they use a pill mechanism as such you have to install a puppet agent of a chet agent inside of 
+unlike puppet and chef that need an agent bc the use a pull module an dbc they use a pull mechanism as such you have to install a puppet agent of a chet agent inside of 
 each node bc it is the agent that will initiate that particular push bc your controller will be pulling. it uses a pull mechansim when it does the configuration
 so ansible stand sout bc it doesnt need an agen , it uses a push mechanism as such its agentless 
 
@@ -141,19 +141,30 @@ Using compile file       **** download / use a complie file     ****  https://do
 
 ******* 21:44              PREREQUISITE TO INSTALL ANSIBLE 
 
-  Installing Ansible on Ubuntu
+ ###########  Installing Ansible on Ubuntu
 
   $ sudo adduser ansible                   ***** 1st u need to create a user who willl install ansible, this user will install the ansible software
   $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible       ********* we add him to sudoers group , for sudo right bc he will be installing packages
   $ sudo su - ansible                                      ****** switch user to ansible 
   $ sudo apt-add-repository ppa:ansible/ansible            ****** once ansible is installed in our env,,always remeber ,the user that instal the sf ware is the default user
   $ sudo apt install ansible -y                                                                                 ansible who ansible will be expecting to connect with 
-Ansible installation on REDHAT EC2         
+       
 
                                    ****** if hv installed this user a sansible and hv installed ansible sfware as an ansible user then when am making an ssh connection by
-     default ansible my controlnode wil be looking for a user in the remote node called ansible 
-########thats smt u really need topay attention to and understand how it works 
-                                        
+     default ansible my in my control node wil be looking for a user in the remote node called ansible 
+########thats smt u really need to pay attention to and understand how it works ############
+         a user who installs the sfware, it is the default user that ansible expects in the remote host bc when u do ssh connection , do so ssh to a aspecific home of a user
+e.g thet why we do ssh ,then ec2 @ a certain ip  OR ssh you pass the key, then u do ubuntu @ we are always trying to do ssh to a certain user, default user
+  ********* then for ansible if we hv install ansible as an ansible user then this ansible user becomes the default user that when you do ssh ,anible here(control) will be
+seeking to connect with a user in the remote 
+25:41
+    if i install ansible in the control as a user called Ken, then my default user in the remote that ansible will be looking to connect with will be a user called ken
+bc that becomes the default user in ansible , this is how e can install ansible on ubuntu
+
+
+
+##############  Ansible installation on REDHAT EC2                  the same when installin on redhat
+           thi script will use pip bc its goin to use yaum to install python and pip , then il use pip to install ansible as the user bc hv done sudo -su a sthe user
 
   $ sudo useradd ansible 
   $ sudo hostname ansible 
@@ -163,15 +174,22 @@ Ansible installation on REDHAT EC2
   $ sudo alternatives --set python /usr/bin/python3 
   $ sudo yum install python3-pip -y 
   $ pip3 install ansible --user
-Script to add user, password and enable password authentication
+
+
+   26:46 ***** 
+          then once have installed asible thers a script here for our remote nodes , then rmember the default user ansible wil be looking for is a user called asnible
+it means on my remote node, i need to have a user called ansible that am setting as the default so that when asnible pushes the module, it is pushing to home of this
+ansible and it is this ansidible user in the remote node that will do the installation/patch work 
+
+
+###### Script to add user, password and enable password authentication
 
 #!/bin/bash
-$ sudo useradd -d /home/ansible -s /bin/bash -m ansible
-$ sudo echo "ansible:ansible" | chpasswd
-$ sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
-$ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
+$ sudo useradd -d /home/ansible -s /bin/bash -m ansible    ********  it is pushing to home of this ansible and it is this ansidible user in the remote node
+$ sudo echo "ansible:ansible" | chpasswd                   *** giving the user PW and the PW is ansible 
+$ sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible              ******** addding user in sudoer
+$ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config         ***PW authentication needs to be enabled inside sshd config
 $ sudo service sshd restart
-
 
 
 
