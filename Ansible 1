@@ -1,9 +1,6 @@
 ANSIBLE INTRODUCTION, types of config tools, INSTALLATION, PREREQUISITE, TERAFRM SCRIPT TO CREATE RESOURCE, USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE, 
 
 
-  ON THE installation file, it doesnt say create user is it because w hv it on the terefrm script we want to use ????
-
-
  today we start a new serie of ANible
 so far we hv been working with terfrm , its a tool we use for infrastrure prvisoining
 we sue trtfrm to provion/create infrastrure
@@ -262,13 +259,22 @@ How can you pass 2scripts as user data ????
 
 ANS:
 
- because of how very flexible terfrm is, it gives you that opportunity to do that through a datasource called :
+ because of how very flexible terfrm is, it gives you that opportunity to do that through what is called a datasource called :
 
-    "template_cloudinit_config"    , its a template that you can use
-
-this template will content type = 
+    "template_cloudinit_config"    , its a template that you can use , he called it (name) 'user-data'
 
 
+  data "template_cloudinit_config" "user-data" {
+  part {
+    content_type = "text/x-shellscript"                                     ********* for content type am passing a shell script
+    content      = file("${path.module}/ansible-install-ubuntu.sh")
+  }
+  part {                                                        ********but am passing again a 2nd script 
+    content_type = "text/x-shellscript"                           ****** 2nd part again here the content is a script, 
+    content      = file("${path.module}/vscode-install.sh")       ***** d content is anoda ascript that i wil use to instal vscode inside of my ubuntu
+                                                                  so that when we start writing playbooks, we can actually write playbks and run them at the same time
+   instead of us vi ing, writing play bks on our ide here then copying , then goin to the ubuntu an vi , create a file and do all that  .... 
+ so am installing this vscode inside of my ubuntu , so thats the script that am using, the script is called vscode -install.sh
 
 
 
