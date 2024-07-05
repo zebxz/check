@@ -121,6 +121,8 @@ configuration then you can introduce a configuration mgt tool as ansible
 
    17:32 
      HOW DO YOU INSTALL ANSIBLE
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/02-Installation.md
+
    Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
  this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whethr windows 
 so  a conrol node cannot be windows but tonight installation we will be installing it on a redhat 
@@ -492,6 +494,7 @@ but bc i did it already , the key.pem i already changed the permission to 400 th
 
 let see if our script ran 
 sudo su - ansible 
+ansible@ip-172-31-17-108
 so yes, i see that ansible user was created , i hv a home of anisible , thers a user called ansible 
 if i type the wrd ansible then its suppose to give me this output
 meaning that ansible was installed inside of my server
@@ -500,11 +503,55 @@ now with this if i run the command ansible, i see that anasible has been install
 
 ******* 52:05
 ONCE UVE DONE THE INSTALLATION of ansible there is what we  call an ANSIBLE_config_file
-A configuration file 
+  A configuration file 
+
+   WHAT IS ANSIBLE configuration file 
+
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
+
+   ansible has what is called a default dir :
+
+ Ansible Directory Structure
+
+The default ansible home directory is /etc/ansible
+This directory will consist of:
+a) ansible.cfg
+b) hosts
+c) roles
 
 
+if i run 
+ansible@ip-172-31-17-108: $   pwd
+/home/anasible                                ** am in the home of ansible
+bc i did su -ansible, i exited the home of ubuntu and now am in the home of ansible 
+now been in the home of anasible , the default home of ansible is   /etc/ansible
+lets cd  
+ansible@ip-172-31-17-108: $  cd /etc/ansible
+ansible@ip-172-31-17-108: /etc/ansible  ls
+anisible.cfg   hosts  roles                      ********* 2files and a dir called called role 
 
 
+   INTERVIEW QUESTION
+if you are to cd into   /etc/ansible, what do you expect to see if you have worked with ansible what do you expect to see in that dir 
+
+  ANS:
+
+in the etc ansible, this is the dafault ansible home, ansible lives in /etc/ansible, this is default
+in the /etc/ansible, you will seee what is called anisible.cfg, this sis the ansible config file, everything ansible does, it has to read this configuration file 
+this is the dafault :anisible.cfg 
+default meaning you can create anoda file and override this, you can ceate anod aconfiguartion file and override this bc this is default
+apart it has a hsot file
+this is wher we put the ip address of the host that we are trying ot mange 
+so if i wnat to manage like the 2 or 3 uvuntu servers it just mean iil g o to the hhost file and do an entry inside o fthe host file , once that is done ansible wil be reading
+the host file to know which servers it has to configure
+we hv a dir called roles 
+as we will be talking abt playbooks but smt higher than playbooks, we can actually craete roles
+role sare like modules that u can custom create ans call them as needed, so u can create what is called roels
+i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call the role inside  ofmy playbk and jenkins will be installe d
+so i dnt hv to re write my playbook with all the place ( idnt undestand)
+i can write a role once and call the role to do my configurtaion
+so all the roles will live inside of the roles dir 
+but these are the 3 entities that you expect to find in the ansible home 
 
 
 
