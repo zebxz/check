@@ -572,8 +572,8 @@ that is not what we want in automation, in automation we dnt wnat the process to
 we will go into the ansible config file and turn the host key checking to false so that our server/automation dosent staop to ask us to confirm 
 so all that is done in the ansible config file
  
-           host_key_checking = False
-                     or
+           host_key_checking = False                                 *****1:02:22
+                     or                          ****export an env var called ** and set it to false with this ansible wil nt ask you to confirm the authenticity of this var
         $ export ANSIBLE_HOST_KEY_CHECKING=false
 
 
@@ -620,9 +620,46 @@ What is the precedence or priority of ansible when its searching for the configu
 and if not it goes to the 
 default : /etc/ansible/ansible.cfg
 
+                                HOST KEY CHECKING
+
+           host_key_checking = False                                 *****1:02:22
+                     or                          ****export an env var called ** and set it to false with this ansible wil nt ask you to confirm the authenticity of this var
+        $ export ANSIBLE_HOST_KEY_CHECKING=false
 
 
 
+
+****** so this is what the ansible configuration structure is
+
+
+       ########### example of configuration file
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
+
+as you see almost everythin has been commented out bc they are default, they hv been set as default already , so bc of that they hv ben commented out
+
+e.g lets say i hv my inventory right here but its pointing to  /etc/ansible/hosts
+
+
+    #some basic default values 
+#inventory     = /etc/ansible/hosts
+this is wher my inventory is, this is where ill put the list of the servers i want to configure, ill put it inside of the host file, but if i want to create this inventory
+somewher else, e.g i want the hsot file to be insid eof my pwd, then ill need to cm to this configuration file and comment this:
+#inventory     = /etc/ansible/hosts
+so that am activating the inventory and change the part to where am pointing that inventory to
+so if i leave it commented, it will assume this is default , so it will always go to the  /etc/ansible/hosts
+but if i uncomment it then i can define my path where i want ansible to read the host  e.g i can put a path like .pwd
+then ansible will be looking frm that particular working dir, i can just give it a path to wher my inventory is 
+
+    ******   1:04:37
+ther are many thisngs that you can configure here
+
+  Also, for host key checking 
+
+   # uncomment this to disable SSH key host checking
+#host_key_checking = False
+
+by default it is true but for it not to check then uncomment this so that the host key checking will now be false , so that it wil not check for the authenticity and this is
+smt that you will need to do for automation other wise, your ansible playbook will stop bc it will be wiating  for you to confirm if u want to continue or not. .. 
 
 
 
