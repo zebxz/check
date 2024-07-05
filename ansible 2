@@ -1,3 +1,6 @@
+RECAP,  REMOTE DEVELOPMENT
+ 
+
 2:30 
 in the real world 
 it wil be a diff scenario that will REQ you to use that basic understaning 
@@ -118,14 +121,50 @@ Host ansible:
    User ansible 
    IdentifyFile ~/Downloads/elk-instance.pem               ********** once you pass this inside of your ssh config file then you are able to directly use your vscode code 
                                                        to do remote host, to login to that ec2 instance and write your code, create your files , write your play book 
-    and run them on your termiinal, so this is what we call remote developmet
+    and run them on your termiinal, so this is what we call remote development
+
+******* for this to happen we passed the vscode installation script:
+ vscode-install.sh
+this the script thats goin to install and configure vscode
+but apart frm that,we hv this (another) script:script.sh  this is the script that will configure vscode, this is d script that will install vscode and ill show you shortly
+hw it works 
+
+
+  HOW ARe the 2scripts diff   ?????
+
+   #!/bin/bash
+
+sudo mkdir /home/ansible/.ssh/                                      ***********  it needs to mk a dir in the home of ansible
+sudo chown -R ansible:ansible /home/ansible/.ssh                       ********  ansible needs to own that dir
+sudo cp /home/ubuntu/.ssh/authorized_keys /home/ansible/.ssh/          ******* copy the key frm the ubuntu home n copy it in the ansible server
+sudo chown ansible:ansible /home/ansible/.ssh/authorized_keys        
+sudo chown -R ansible:ansible /etc/ansible                              ********* basically, ansible needs to own that etc/ansible
 
 
 
+*******55:51                  i also added 2scripts
+            now if your running vscode on linux this is the script that ur goin to use , it is like template, it is goin to use a template to dynamically replace all that
 
+      linux-ssh-script
+ cat << EOF >> ~/.ssh/config
 
+Host ${user}
+   HostName ${hostname}
+   User ${user}
+   IdentityFile ${IdentityFile}
+EOF
 
+********** and if your running on windows: 
 
+               windows-ssh-script.tpl
+   
+add-content -path c:/users/Ken/.ssh/config -value @'
+
+Host ${user}
+   HostName ${hostname}
+   User ${user}
+   IdentityFile ${IdentityFile}
+'@
 
 
 
