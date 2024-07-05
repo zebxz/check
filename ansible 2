@@ -1,6 +1,6 @@
 RECAP,  REMOTE DEVELOPMENT
 
-********* my summary for NO.4
+59:18********* my summary for NO.4
 summary, if i select linux in the variable (NO.3) then the var.os in the null resource becomes  templatefile("${ var.os == linux and therfore the ? itineray  indicates  as 
 false and so the interpreter wil be bash then it will run the linux scripts
 
@@ -115,7 +115,7 @@ this is a script that dose remote development, wherby you need to bc our ansible
 our playbk they run the playbk, so instead of using that we can use our vscode 
 
 
-                                REMOTE DEVELOPMENT
+##### A)                                REMOTE DEVELOPMENT
 ******52:23
 opens the vscode:
 if you opens the vscode, and look at the seeting comand pallet thers a remote host, you can connect to a remote host, you can connect to an ec2 instance but b4 you connect 
@@ -193,7 +193,7 @@ so am saying , this  var.os == "windows" ? , is it equals to windows, if this is
 then if it is nt then your interpreter wil be bash, 
 so this ? is called a itenery operator, it always evaluates, its a bullion variable, it always evalustes either true or false
 
-summary, if i select linux in the variable (NO.3) then the var.os in the null resource becomes  templatefile("${ var.os == linux and therfore the ? itineray  indicates  as 
+summary, if i select linux in the variable (NO.3) then the var.os in the null resource becomes  templatefile("${ var.os == linux and therfore the ? itineray  indicates it as 
 false and so the interpreter wil be bash then it will run the linux scripts
 
    
@@ -239,9 +239,33 @@ resource "time_sleep" "wait_for_instance" {
 }
 
 
+  2)    APPLYING OUR CODE
+**********59:50
 
+mk sure your key is available in your env , bc for e.g  we referenced our key in the null file, the resource blk for our instance ec2.tf 
 
+   terafrm files  ls 
+i have all those files there so ill run 
+   terraform files   terrafrom init
+initializes the backend
+terfrm plan
+Enter value:linux          this variablw we made it rEQ so that you can choose what operating system your using , am using a mac computer, the os is linux so il enter linux
+                           if your uisng select windows so its able to setup your vscode for you 
 
+*********1:02:23
+in vscode, he opened the config file and removed The vscode ssh configuration  in A) above 
+he said he wants to configure the vscode so that he can directly ssh into in server 
+
+   **** 
+  Enter value:linux         ,, enter
+it has ran the plan, now its goin to create for me host 
+these are severs that ill use for demo to connevt to then its creating for me this ubuntu server wich ill instal ansible in am using a script to install ansible on this 
+ubuntu server 
+am also creating a redhat host but am not goin to use this but am passing that user data for the redhat on this 
+bt ill us ethe ubnutu wher ill install ansible , then 
+these are the 2sevrers ubuntu host that am gonna use for them to be anble to connect to them 
+
+   terfrm apply -auto-approve
 
 
 
