@@ -83,7 +83,7 @@ the lock is is done the lock is taken off , the statefile is unlocked for any ot
 so that you can create a resorce/ data source then that is sufficient, it becomes the building blk for u to build onto that b4 u start thinking of more advanced concept in 
 terfrm
 
-
+                      RECAP FROM ansible 1
 continuation frm 1st video
 ********** 28:34
         
@@ -92,13 +92,33 @@ continuation frm 1st video
 
 QUESTION...........  43:20
 
-i knw that for terfrm, thers cloud formation that works only for aws but for anasible if i want to wrk with windows, is there a particular one ican choose frm pip and puppet
+i knw that for terfrm, thers cloud formation that works only for aws but for anasible if i want to wrk with windows, is there a particular one ican choose frm chef and puppet
 
 ANS:
 thers linux subsistence you can use if you want to wrk with windows 
 i probably think chef and puppet only works on windows, am nt very sure but i can find out n let you knw
 
 
+*********** 52:00   in data "template_cloudinit_config" "user-data" ,   we passed 2scripts
+the 2nd script is to configure the vscode  
+content      = file("${path.module}/vscode-install.sh")
+i did dis automation so that when we start writing playbooks it wil be easier for you guys
+this is a script that dose remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into the ubutu server to create
+our playbk they run the playbk, so instead of using that we can use our vscode 
+
+
+                                REMOTE DEVELOPMENT
+******52:23
+opens the vscode:
+if you opens the vscode, and look at the seeting comand pallet thers a remote host, you can connect to a remote host, you can connect to an ec2 instance but b4 you connect 
+to that remote host, you need to configure it,you need to configure your ssh so that ... # ### your configuring smt like this:
+
+Host ansible:
+   HostName   35.07.199.239                           ******* ie is the ip address of the server that you are  creating 
+   User ansible 
+   IdentifyFile ~/Downloads/elk-instance.pem               ********** once you pass this inside of your ssh config file then you are able to directly use your vscode code 
+                                                       to do remote host, to login to that ec2 instance and write your code, create your files , write your play book 
+    and run them on your termiinal, so this is what we call remote developmet
 
 
 
