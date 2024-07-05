@@ -566,7 +566,15 @@ The default location is: /etc/ansible/ansible.cfg, in which we can make various 
 
      HOST
 when you trying to log into your instance for the firts time like you saw, it wil always ask you do you wnat to add this server like it checks the authenticity and you hv 
-to accept and seay yesso thats we call host key checking 
+to accept and seay yesso thats we call host key checking
+so by default host key checking has been set to true meaning evrytime ansible makes a conection/ a sever makes a connection, you have to confirm that you wnat to but
+that is not what we want in automation, in automation we dnt wnat the process to be interrupted, we want the process to go on automatically 
+we will go into the ansible config file and turn the host key checking to false so that our server/automation dosent staop to ask us to confirm 
+so all that is done in the ansible config file
+ 
+           host_key_checking = False
+                     or
+        $ export ANSIBLE_HOST_KEY_CHECKING=false
 
 
 
