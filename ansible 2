@@ -8,11 +8,12 @@ in the configuration file in vscode, we configured our ssh so that we can connec
 vscode installation script & script.sh (dnt knw why we hv 2diff scripts to install vscode)
 then,
 
-  59:18********* my summary for NO.4
+  59:18********* my summary from  NO.2 to  NO.4
 we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
 using script.sh also in the variables file; we passed a variable that enables us select the os we wantt to configure 
-if i select linux in d variable (NO.3) then d template for var.os in the null resource becomes templatefile("${ var.os == linux and therfore the ? itineray  indicates it as 
-false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on our selection in the variable)
+if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
+? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
+our selection in the variable)
 
    
 resource "null_resource" "vscode-config" {
@@ -213,8 +214,9 @@ vscode installation script & script.sh (dnt knw why we hv 2diff scripts to insta
 then,
 we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
 using script.sh also in the variables file; we passed a variable that enables us select the os we wantt to configure 
-if i select linux in d variable (NO.3) then d template for var.os in the null resource becomes templatefile("${ var.os == linux and therfore the ? itineray  indicates it as 
-false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on our selection in the variable)
+if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
+? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
+our selection in the variable)
 
    
 resource "null_resource" "vscode-config" {
