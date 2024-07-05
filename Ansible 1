@@ -565,7 +565,7 @@ The default location is: /etc/ansible/ansible.cfg, in which we can make various 
 ****** it is one in which you can make various changes like wher your inventory is wher your host file is , u can make all those cahnges insid ethe configuration file 
 
      HOST
-when you trying to log into your instance for the firts time like you saw, it wil always ask you do you wnat to add this server like it checks the authenticity and you hv 
+when you trying to log into your instance for the first time like you saw, it wil always ask you do you wnat to add this server like it checks the authenticity and you hv 
 to accept and seay yesso thats we call host key checking
 so by default host key checking has been set to true meaning evrytime ansible makes a conection/ a sever makes a connection, you have to confirm that you wnat to but
 that is not what we want in automation, in automation we dnt wnat the process to be interrupted, we want the process to go on automatically 
@@ -576,6 +576,30 @@ so all that is done in the ansible config file
                      or
         $ export ANSIBLE_HOST_KEY_CHECKING=false
 
+
+contd     ....... 58:00
+**********  Default ansible configuration file
+
+But we can define ansible configuration file in different location and for this there is a priority for this files.
+********** so we can create a diff ansible config, this is just a default loctaion:/etc/ansible but we can create it in a diff location 
+You can generate ansible.cfg by running the command $ ansible-config init --disabled > ansible.cfg
+
+  WHATS THE PRIORITY THAT ANSIBLE LOOKS AT
+********** whenyour craeteing , the priority that ansible looks at 
+
+Locations with priority(starting from top to bottom):
+
+ANSIBLE_CONFIG environment variable            ********** if you can set an env var and point it to d ansible config as a configuration file like that, then it tk precedence
+                                                                                env variable always takes precedence over everytin else 
+./ansible.cfg from the current directory
+
+~/.ansible.cfg file present in home directory
+
+/etc/ansible/ansible.cfg default ansible.cfg file.
+
+Ansible will only use the configuration settings from the file which is found in this sequence first.
+
+It will not look for the settings in the higher sequence files if the setting is not present in the file which is chosen for deployment
 
 
 
