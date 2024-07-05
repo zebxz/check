@@ -21,6 +21,19 @@ and we have other advanced concept thay you will be able to tour
 helping you prepare for interviews, how your suppose to response
 
 
+            QUESTION
+1)  CAN WE create our resources in global instaed of regions and having issues,??
+
+ANS:     ..NO
+when your configuring you cant use global, we use a default , you must pass a region
+e.g you want to create an ec2 instance , can you create that using the global option , it needs to be created in a specific region bc it needs to be created in a vpc
+so the reason why we hv to pass a default is just incase in our configuration we are not specifying a region atleast aws is proactive to mk sure that your resource will be 
+created somewhere, so thats why you hv to set that default region bc resources, most of the resources in aws are region based, we hv very limite global services like IAM
+thats why when you go to create a user or a role it doesnt ask you for a region , S3 bucket is a global service bc you can access it frm any region but howeevr, when u go to 
+create a bucket youhv to specify a region , bc most of the service are region specific so your reQ to pass a default region so that when a region is nt set in your 
+configuration then either terfrm or whatever appli your using wil fall back on a region that has been set as a default
+so thats why we cannot global aws configure set globally, we must have a region 
+
 
 
 
