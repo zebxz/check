@@ -1,6 +1,6 @@
 2:30 
 in the real world 
-it wil be a diff scenario that will REQ you to use that basic understaning
+it wil be a diff scenario that will REQ you to use that basic understaning 
 e.g they may say we hv a k8 cl8 that is runing in aws we nid to get a the cluster certificate form that cl8 bc we need it somewhere, if given that task so how wil you do it??
 
 ANS: 
@@ -63,6 +63,34 @@ mean that my commit is behind, my main branch has already moved ahead, the commi
 need to rebase my branch before i match my cod e, once i do that w eare colaboarting the that particular repo, now if we are running pipelines, as we run the pipelines the
 pipeline wil be bulding our vpc, id changes have happened then those cahnges are goin to be effected, but now the issues comes whne we are running terfrm commands at the same 
 time
+
+    *********24:49
+ if we are doin in a pipeline then how pipelines hv been set up is pipeline has beeen queued, thers a queue 2piplines will nt run at the same time, once i commit and i do my
+push if anoda engr is also pushing at the same time what the pipeline, the CI will do is it will queue the jobs and queing the jobs just means that whover committed the job 
+first that pilpline is goin to run, and how it runs is bc am running terfrm, it is goin to put a lock on the state file. this is wher we are talking abt using dynamond DB to 
+lock our statefile  and our tstefileis in the s3 bucket, the lock ensuresatha t no other terfrm activity can tk place on that statefile apart from the activity that this 
+pipeline is running , so once this psieline is done and the statefile has been updated, it realease the lock and then anoda job can be submeitted
+thast what happens terfrm alwsy puts a lock
+for us bc we are running it on our local env we hv to configure that lock, we hv to create/configure a dynamond DB thta we will use to lock our ststefile in the s3 bucket
+to prevent 2engrs or more running terfrm workflow  on the statefile at the sametime.
+
+********26:28
+if u are using terfrm cloud, its done automatically, trfrm cloud wil lock the statefile anytime your doing trfrm workflow so you can only have 1 wrkflow running, after the job 
+the lock is is done the lock is taken off , the statefile is unlocked for any other workflow to run
+
+27:00
+###### but all this will become clearer when you go furtehr, right now as long a you just understand the basic trffrm concepts, the blocks , the workflow ,jst basic functions
+so that you can create a resorce/ data source then that is sufficient, it becomes the building blk for u to build onto that b4 u start thinking of more advanced concept in 
+terfrm
+
+
+
+
+
+
+
+
+
 
 
 
