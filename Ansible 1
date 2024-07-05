@@ -588,22 +588,37 @@ You can generate ansible.cfg by running the command $ ansible-config init --disa
 ********** whenyour craeteing , the priority that ansible looks at 
 
 Locations with priority(starting from top to bottom):
+                                                                  1st
+ANSIBLE_CONFIG environment variable            ********** if you can set an env var and point it to d ansible config (disabled > ansible.cfg) as a configuration file like 
+                                                             that, then it tk precedence, env variable always takes precedence over everytin else 
+                                                                             
+./ansible.cfg from the current directory    ****** 2nd , if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
+    thefor wil al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
+its configuartion, also if i move to prod, i can acreta anoda configuartion file for ansible that has a diff configuration bc this is a diff env within that dir and this is 
+wher ansible will read 
+                                                       59:23 
+~/.ansible.cfg file present in home directory       ********* 3rd,  if it doesnt find the config file in the current dir it will at the home of the user, anywhere in the 
+home of that particualar user, does it have an ansible.cfg file if its presnt then thats where ist going to get its configuration
 
-ANSIBLE_CONFIG environment variable            ********** if you can set an env var and point it to d ansible config as a configuration file like that, then it tk precedence
-                                                                                env variable always takes precedence over everytin else 
-./ansible.cfg from the current directory
 
-~/.ansible.cfg file present in home directory
-
-/etc/ansible/ansible.cfg default ansible.cfg file.
+/etc/ansible/ansible.cfg default ansible.cfg file.   ***** finally, if it doesnt find it in the 3rd location, then it goes to the default location: /etc/ansible/ansible.cfg
 
 Ansible will only use the configuration settings from the file which is found in this sequence first.
 
 It will not look for the settings in the higher sequence files if the setting is not present in the file which is chosen for deployment
+ie it will nt look for settings here /etc/ansible/ansible.cfg if you have a file here ~/.ansible.cfg,  its always reads whats closest to it 
+so this is how we use ansiblein various envs   ...........1:01:24
 
+     INTERVIEW QUESTION
+What is the precedence or priority of ansible when its searching for the configurtaion file 
 
+ ANS : 
 
-
+1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
+2nd:  ./ansible.cfg         pwd dir 
+3rd:  ./ansible.cfg         home  of that particulr user 
+and if not it goes to the 
+default : /etc/ansible/ansible.cfg
 
 
 
