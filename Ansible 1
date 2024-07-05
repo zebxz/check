@@ -1,4 +1,6 @@
 ANSIBLE INTRODUCTION, types of config tools, INSTALLATION, PREREQUISITE, TERAFRM SCRIPT TO CREATE RESOURCE, USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE, 
+ASSOCIATE/CREATE A KEY,
+
 
 
  today we start a new serie of ANible
@@ -230,7 +232,7 @@ installing ansible on that ec2 insatnce (the script is the file we hv called ans
 ********* 32:53 bt apart frm that, i also have anoda script which i will talk to you guys abt 
   apart fr m that script, i have 2 scripts that i want to provison, i wnat to configure my instance with 
 
-Bi)
+.......... Bi)           control node 
    #resource block
 resource "aws_instance" "ubuntu" {
   ami           = data.aws_ami.ubuntu.id
@@ -263,7 +265,7 @@ ANS:
 
     "template_cloudinit_config"    , its a template that you can use , he called it (name) 'user-data'
 
-     ### Bii) part of  ec2.tf
+......... Bii) part of  ec2.tf
 
   data "template_cloudinit_config" "user-data" {
   part {
@@ -308,7 +310,7 @@ am also creating 2ubuntu instances and am creating them as the ones we will use 
 and am using count meta argument , and the name and the type .. this is a meta argument that we knw 
 and on this insatnces am using user data but on this user data, am just passing a file
     
-        Biii)   ec2.tf
+ ....... Biii)   ec2.tf
 }
 
 resource "aws_instance" "ubuntu-hosts" {
@@ -326,12 +328,174 @@ resource "aws_instance" "ubuntu-hosts" {
     ## ## D
     create ansible user
 
+THIS file is to create a user, am creating d ansible user inside of my host am also enabling PW authentication dynamically 
+am running a script to enable PW authenticataion, to chngae it fmr no to yes in the etc ssh sshd_config
+then am goin to start the service
+
    #!/bin/bash
 sudo useradd -d /home/ansible -s /bin/bash -m ansible
 sudo echo "ansible:ansible" | chpasswd
 sudo echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
 sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
 sudo service sshd restart
+
+
+37:37                  ........... continued above
+******* 
+this 2 servers that am provisioning as my ubuntu am goin to create that user in them n also create an instance
+create a user enable PW authentication and all that 
+
+****38:06
+AM also creating a redhat
+am using a redhat AMI
+the instance type is the same 
+but in this redhat am just ceatimng a user same user as this (Biii) bc i wnat to be ablr to manage both ubuntu and redhat 
+so Biii and Biv are my manged nodes while  Bi) is the control node 
+******* my control node am installing ansible and am installing vscode on them 
+ and Bii) is my data block to run the 2scripts (to install ansible and vscode) 
+  
+......... Biv)
+
+}
+    resource "aws_instance" "rhel-hosts" {
+  ami           = data.aws_ami.rhel.id
+  instance_type = var.my_instance_type
+  user_data     = file("${path.module}/create_ansible_user.sh")
+  key_name      = var.my_key
+  count         = 1
+  tags = {
+    "Name" = "My-rhel-${count.index}"
+  }
+}
+
+
+*****   38:25
+so with this, i have outputs , i have set my outputs, its just goin to get
+
+  ###### E)
+                   Outputs.tf
+
+   ubuntu public ip 
+    value       = aws_instance.ubuntu.public_ip
+
+also for the redhat
+  value       = aws_instance.rhel-hosts[*].public_ip
+
+
+
+   ********39:17
+ remember bc am using count , count returns  alist therfor i can output, i can acces values frm a list
+thats why when u do an output if you havant passed this list [+] , it will say the instance you are trying to access has 3 or more attributes and its attribute has to be
+accessed at a specific instance, this is what it means, 
+so whenevr you are trying to output you need to pass {} and put in either 0 or 1 , a specific instance 
+but fo rthis redhat resource blk, i only have one count , so i can eith put 0 or a splar or wildcat *, it wil just return the ip of whatever instance is there
+
+   
+   ******  am also getting the private ip 
+     value       = aws_instance.rhel-hosts[*].public_ip
+
+ all these are what we call attributes, attributes out of that particular instance 
+
+
+41:05
+   ####### F)        provider.tf
+
+ *** this is smt you are familiar with
+this is the 2nd half of the file i copied
+
+#provider block
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"            ***********my profile ma just using default bt again i dnt hv to pass that profile there bc its default, bc its default then its just goin 
+                                                                to pick that by default
+
+######### G)
+   variables.tF
+
+
+NO.4)
+
+    **********41:40
+
+WITH That, i have my terafrm  set
+
+now in the IDE(mobaxterm )
+am inside of the terrafrm files (i bliv dir)
+if i ls i see all the files 
+so  let me run terfrm init
+this is the first command you are to run 
+you can run init as many times a spossible , it initializes your backend 
+
+  initializes the bcakend 
+here my backend is local bc in my terfrm, i didnt pass any s3 bucket
+so with this ill run trfrm format ,just to mk sure my code is formatted correctly
+
+terrfrm plan
+so the firts tin it does, it runs your data sources
+so that template data , it reads the user data
+then it goes out to fetch the ubuntuand redhat AMI, and it returns them , those are the ids
+we see the user data 
+
+terfrm apply -auto-approve                  ..... 44:48
+then it starts provisioning my instances 
+he logs into AWS
+we see 4 instances that has just been created running 
+1)my-rhel -0                **** created  Ansible user
+2)my ubuntu -1              **********created  Ansible user
+3) Ansible-ubuntu   ,       ************ where i installed the ansible software using the script
+4) My-ubuntu-0              ********* created Ansible user
+
+
+################# H)         ASSOCIATE/CREATE A KEY
+
+   ******47:06
+
+lets go ahead and connect to the ansible server (ANsible-ubuntu)
+clicks connect , copy the ssh command 
+
+  ########## one other thing i forgot to mention is that bc we will b sshing into the server so mk sure you create/associate a key
+so i had already ahd a key created and on my ec2, i had passed this key name: key_name = var.my_key  as seen in ( Bi, Biii, and Biv) 
+and in the variables.tf  (G) 
+
+   variable "my_key" {
+  type    = string
+  default = "ansible-key"            ******** the key name is ansible-key , this is the key that uve created (shud hv already created)in your aws console
+}
+
+
+i created the key, i donwloaded the .pem keybut this key here is the public key that always remains in AWS, that is installed inside of 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
