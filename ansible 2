@@ -130,8 +130,9 @@ but apart frm that,we hv this (another) script:script.sh  this is the script tha
 hw it works 
 
 
-  HOW ARe the 2scripts diff   ?????
+  why do we hv 2diff scripts to insatll vscode (script.sh and vscode-install.sh )   ?????
 
+NO.1)                         ####script.sh
    #!/bin/bash
 
 sudo mkdir /home/ansible/.ssh/                                      ***********  it needs to mk a dir in the home of ansible
@@ -141,7 +142,7 @@ sudo chown ansible:ansible /home/ansible/.ssh/authorized_keys
 sudo chown -R ansible:ansible /etc/ansible                              ********* basically, ansible needs to own that etc/ansible
 
 
-
+NO.2)
 *******55:51                  i also added 2scripts
             now if your running vscode on linux this is the script that ur goin to use , it is like template, it is goin to use a template to dynamically replace all that
 
@@ -156,7 +157,7 @@ EOF
 
 ********** and if your running on windows: 
 
-               windows-ssh-script.tpl
+  NO.2ii)         windows-ssh-script.tpl
    
 add-content -path c:/users/Ken/.ssh/config -value @'
 
@@ -166,9 +167,68 @@ Host ${user}
    IdentityFile ${IdentityFile}
 '@
 
+********* 57:05
+NO.3)
+*********in our variable file i pased a variable called "os"
+
+  variable "os" {
+  type    = string
+  #default = "linux"            ****** this is where you need to make your selection
+}
+
+this os here, once you select it is using what is called a null resource provisoner 
+
+NO.4)    
+***********  Null resource.tf
+     we have a local exec provisoner, it selects the script, hv passed a variable so if you choose linux then the template file (NO.2) thats going to run will be linux.ssh
+script but if you choose windows, the template script (nO.2ii) that will run wil be windows-ssh-script.tpl
+how do you mk your script, your interpreter you hv to select it here, based on your selection, the ? is called itinerery,terrary operator, its what always evaluates the
+condition,
+so am saying , this  var.os == "windows" ? , is it equals to windows, if this is true then your interpreter will be powershell, then it is goin to run that windows scripts
+then if it is nt then your interpreter wil be bash, 
+so this ? is called a itenery operator, it always evaluates, its a bullion variable, it always evalustes either true or false
+
+   
+resource "null_resource" "vscode-config" {
+  depends_on = [time_sleep.wait_for_instance]
 
 
+  connection {
+    type        = "ssh"
+    host        = aws_instance.ubuntu.public_ip
+    user        = "ubuntu"
+    password    = ""
+    private_key = file("~/Downloads/ansible-key.pem")
+  }
 
+  provisioner "file" {
+    source      = "script.sh"
+    destination = "/tmp/script.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/script.sh",
+      "sudo sed -i -e 's/\r$//' /tmp/script.sh", 
+      "sudo /tmp/script.sh",
+    ]
+  }
+
+  provisioner "local-exec" {                                          ******* a local exec provisoner, it selects the script, 
+    command = templatefile("${var.os}-ssh-script.tpl", {
+      hostname     = aws_instance.ubuntu.public_ip
+      user         = "ansible",
+      IdentityFile = "~/Downloads/ansible-key.pem"
+    })
+    interpreter = var.os == "windows" ? ["powershell", "-Command"] : ["bash", "-c"]    *****  your interpreter you hv to select it here
+  }                                           ******** is it equals to windows, if this is true then your interpreter will be powershell
+}
+
+resource "time_sleep" "wait_for_instance" {
+  create_duration = "180s"
+
+  depends_on = [aws_instance.ubuntu]
+}
 
 
 
