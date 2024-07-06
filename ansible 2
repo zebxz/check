@@ -916,19 +916,47 @@ ansible@ip172-31-16-16  exit
 172.31.19.131   sucesss        ********      success
 
 
-    ********* now hv been able to pass the ssh key passwordlessly 
+    ********* now hv been able to CONFIGURE MY SSH CONNECtion  passwordlessly 
+       so am not using a password to login into my instnace because hv transferrd a key
+
+2:39:46
+7bv)
+      *************   COPYING THE KEY TO A SPECIFIC USER 
+
+ what if i want to make a connect on this server; 172.31.19.131 i have a user here called mark
+i wnat to mk a connection using this user, that means i have to transfer a key to the home of mark 
+
+ ansible@ip172-31-27-28 : $      ssh-copy-id mark 172.31.19.131                       ******* so am sending the key specifically to the user mark in that instance
+                                                                       ****if i dnt specify it will go to the default user ansible as seen in (7biii)
+
+password:  mark               ******* key transferred
+ 
+ansible@ip172-31-27-28  ssh 172.31.19.131
+  
+mark@ip172-31-19-131                                             ************ now in the home of mark
+
+7bvi)
+                                TO PING MARK  (-u mark)
+
+mark@ip172-31-19-131  exit
+
+ansible@ip172-31-27-28      ansible all -m ping -u  mark 
+
+ 172.31.16.16                  ******** failed  bc i dnt hv mark here
+
+
+   172.31.27.37  success            *********  failed   bc we dnt hv mark here
+172.31.19.131   sucesss        ********      success           *********** found only one user mark bc i specifiy the user i wnt to ping
+
+
+2:44:00           ########### video stopped
 
 
 
 
 
-
-
-
-
-
-
-
+13:00       uname to check if app is installed
+he said all the resorces shud be in the cloud but shes doing it on her computer
 
 
 
