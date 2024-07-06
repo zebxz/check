@@ -1,4 +1,4 @@
-RECAP,  REMOTE DEVELOPMENT
+RECAP,  REMOTE DEVELOPMENT, INSTALLING VSCODE, local exec provisioner, Configuring managed nodes.
 
 
 
@@ -148,6 +148,7 @@ this the script thats goin to install and configure vscode
 but apart frm that,we hv this (another) script:script.sh  this is the script that will configure vscode, this is d script that will install vscode and ill show you shortly
 hw it works 
 
+                                     INSTALLING VSCODE
 
   why do we hv 2diff scripts to insatll vscode (script.sh and vscode-install.sh )   ?????
 
@@ -219,6 +220,7 @@ if i select linux in d variable (NO.3) then in the null resource, using local ex
 ? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
 our selection in the variable)
 
+                                      null resource.tf  (local exec provisioner)
    
 resource "null_resource" "vscode-config" {
   depends_on = [time_sleep.wait_for_instance]
@@ -262,7 +264,7 @@ resource "time_sleep" "wait_for_instance" {
 }
 
 
-  2)    APPLYING OUR CODE
+  5)    APPLYING OUR CODE
 **********59:50
 
 mk sure your key is available in your env , bc for e.g  we referenced our key in the null file, the resource blk for our instance ec2.tf 
@@ -299,12 +301,13 @@ right now the instance is bootstrapping
 my instance are initializing this is my ansible 
 
 
-   ###########  the video stopped playing  frm 1:5:50
-so 
- ***** 
-1:2100
+ 
+    ###########  the video stopped playing  frm 1:5:50    and contd from 1;21:00
 
-   so whenevre we rn ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
+ ***** 
+1:21:00
+
+   so whenevre we run ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
 so whener we run ansile, it wil look for the config file based on the priorities, it wil check if we pass env variable , if its nt there it wil check the pwd
 so if i created a playbk where my ansible.cfg is , ansible wil use the file to read the configuration thats the priority, if it doest find it it wil go to the home of the
 user and then the default 
@@ -312,12 +315,13 @@ user and then the default
 
 ****** so this is what the ansible configuration structure is
 
+  NO.6)
  #############  haven said that, lets go now to configure our remote node /managed nodes
 for us to configure thses managed nodes:
 
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
 
-   Configuring managed nodes.
+6i)   Configuring managed nodes.
 
 Launch/select required no of servers (managed nodes)
 Use a key-pair to associate with your servers.
@@ -329,18 +333,43 @@ Make sure that you change the key permissions to 400
    $ ansible
 
 
+***************  ie 
 first we launched our servers which we are calling  managed nodes, we used a key pair to assosciate with our servers
 we hv logged into our control node using a .pem key and making sure the permisson is chmod400 
 
 ****** we knw that when your connecting a linux server to a linuxserver the key permision needs to b 400 otherwise it says ur key is too open 
 to ensure our key permissonis set to 400 w eare ableto ssh into that server and run anisible just like we did 
 we are able to test to see if ansible has been created 
-now ansible uses ssh , we can cretae ssh connection in 2 ways 
+now ansible uses ssh , we can create ssh connection in 2 ways 
+
+6ii)       Ansible Engine uses SSH Connection to connect and work with Manage nodes.
+
+We can create SSH Connection in two ways:
+
+a) Password Authentication
+b) Password-less Authentication(This is with SSH Keys)
+Provide the managed Nodes IP/FQDN in inventory file on Ansible Engine.
+
+Test the connectivity by running:
+
+$ ansible all -m ping
+
+************  ie
+
 1) we can use PW authentication 
 
 for us to use those ssh keys, we will need to do some configuration 
 
-  ansible@ip-172-31-17-108: 
+
+
+
+
+
+
+
+
+
+ansible@ip-172-31-17-108: 
 
 ansible@ip-172-31-27-28: 
 
