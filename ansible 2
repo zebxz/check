@@ -390,6 +390,8 @@ ansible@ip-172-31-27-28:  $ ansible localhost -m ping
                                       configure the server that its installed on/running , this shows hw powerful ansible is, cos it can configure other servers n also the 
                                          server that its running on bc local host is the server that is running ansible
 
+     CREATING THE HOST LIST
+
 1:29:44
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
 our host list is empty now lets try and popuplate our host list 
@@ -426,7 +428,10 @@ so we see that while am trying to reach my instances it sdenying me bc by defaul
 so hw then can we connect to this user
 we knw that we created a user and we gave the usr a PW, so for us to comm to this ansible  on eof the things i sthat we ll hv to run ping command bt for us to comm we v to
 
-                                        -k option 
+                                                           ESTABLISHING AN SSH CONNECTION
+
+                                        (-k option) 
+
 *********** pass a -k option (small k) 
 we pass this bc it prompts us for an ssh PW
 
@@ -439,7 +444,7 @@ we had enabled PW authentication, we had changed it to yes frm our script.
 
   **********  so you hv to pass a -k option so it prompts ypu for a PW 
 
-    INTERVIEW QUESTION
+    INTERVIEW QUESTION                                ****   1:37:27
 why do we need a -k option when ruuning an ansible  adhod command
 
 ANS:
@@ -447,10 +452,24 @@ ANS:
 
      
 
+  ************ 1:37:40
+wit this hv been able to pass my PW and v been able to connect to my server
+if i need to coonect to the web, just to the web grp  so i can pass ansible and just pass web
 
+     ansible@ip-172-31-27-28:  $ ansible web -k ping 
+ but bc i hv a user called ansible who has a PW, if i dnt pass the -k option it wil by default try to connect using the ssh keys
 
+IN THE web i only hv 1host wich is the redhat bc i hv a user who  is called asnible i need to pass a -k option so that it prompts me for a PW 
 
+         ansible@ip-172-31-27-28:  $ ansible web -k ping 
 
+then ill enter my PW ansible  and then 
+it ill mk my conncetion 
+the process is the same if am connecting to the DB group and it wil mk a connection to the 2 instances in that grp 
+
+   ********** so here hv been able to est a ssh conection with my server
+
+bur which user am i communicating with, that user is the default user wich is ansible 
 
 
 
