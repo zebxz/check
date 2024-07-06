@@ -671,11 +671,22 @@ ansible@ip-172-31-27-28: $ cd/etc/ansible
     ansible_ssh_user=ansible               ********** so we are saying for this grp of servers the ssh PW is this 
 
 
-    ** now i can delete the host variable bc we ar ultilizing the grp variable 
+ ******** now i can delete the host variable 7Avii) bc we ar ultilizing the grp variable 
    
 
+[db]
+ 172.31.27.37  
+172.31.19.131   
+*********************************
+if i ping 
+ansible@ip-172-31-27-28   ansible db -m ping 
+
+ 172.31.27.37  success            ********* the group level varibale is successful
+172.31.19.131   sucesss        ******** 
 
 
+##########################  we knw that host variable has the hightest priority
+if variables are defined at host level, it takes precedence over varaibles defined at group level
 
 
 
