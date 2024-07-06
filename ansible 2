@@ -265,7 +265,7 @@ resource "time_sleep" "wait_for_instance" {
 }
 
 
-  5)    APPLYING OUR CODE
+  5)    APPLYING OUR CODE   (to configure 1 to 4 above)
 **********59:50
 
 mk sure your key is available in your env , bc for e.g  we referenced our key in the null file, the resource blk for our instance ec2.tf 
@@ -316,13 +316,15 @@ user and then the default
 
 ****** so this is what the ansible configuration structure is
 
-  NO.6)
+ 
+NO.6)                                CONFIGURING OUR MANAGED NODES
+
  #############  haven said that, lets go now to configure our remote node /managed nodes
 for us to configure thses managed nodes:
 
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
 
-6i)   Configuring managed nodes.
+  Configuring managed nodes.
 
 Launch/select required no of servers (managed nodes)
 Use a key-pair to associate with your servers.
@@ -343,7 +345,7 @@ to ensure our key permissonis set to 400 w eare ableto ssh into that server and 
 we are able to test to see if ansible has been created 
 now ansible uses ssh , we can create ssh connection in 2 ways 
 
-6ii)       Ansible Engine uses SSH Connection to connect and work with Manage nodes.
+7)            Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 
 We can create SSH Connection in two ways:
 
@@ -357,7 +359,7 @@ $ ansible all -m ping
 
 ************  ie                  1:26:18
 
-1) we can use PW authentication 
+7A) we can use PW authentication 
 
 for us to use those ssh keys, we will need to do some configuration 
 but first when we are testing the connectivity for right now, we wnt to tast our connections 
@@ -369,7 +371,7 @@ All ansible commands starts wth the keyword ansible , this is what invokes ansib
 ******** all  , is what is called your inventory, we ll go tru that
 
 
-   ***********       -M  option    (passing a ping module)
+ 7Ai)  ***********       -M  option    (passing a ping module)
 
 -m is an option  you pass when you want to pass a module 
 then the module we wnat to pass is a ping module , this is what we use to test for connectivity 
@@ -391,7 +393,7 @@ ansible@ip-172-31-27-28:  $ ansible localhost -m ping
                                      configure the server that its installed on/running on, this shows hw powerful ansible is, cos it can configure other servers n also the 
                                          server that its running on bc local host is the server that is running ansible
 
-     CREATING THE HOST LIST
+ 7Aii)    CREATING THE HOST LIST
 
 1:29:44
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
@@ -430,7 +432,7 @@ so hw then can we connect to this user
 we knw that we created a user and we gave the usr a PW, so for us to comm to this ansible  on eof the things i sthat we ll hv to run ping command bt for us to comm we v to
 
                                                            ESTABLISHING AN SSH CONNECTION
-
+7Aiii)
                                         (-k option) 
 
 *********** pass a -k option (small k) 
@@ -491,6 +493,8 @@ so hv logged dinto this instance
 i see i only hv a user called ansible
 
 
+7Aiv)
+
 1:40:54                                 CREATING ANOTHER USER   (mark)
 ****************
 LETS create the user called mark
@@ -527,6 +531,7 @@ back to my control node
 ansible@ip-172-31-27-28
 
 
+7Av)
   *********1:43:00                        COMMUNICATING WITH THE USER mark
 
   ansible@ip-172-31-27-28   ansible db -m ping
@@ -536,6 +541,7 @@ it wil try to comm with the default ansible user using a ssh key but bc am nt us
   ansible@ip-172-31-27-28   ansible db -m ping -K            ****i need to pass -k option but if i pass it , it wil stil be d default user that am comm with
 
 
+7Avi)
 ************         -u  option  (user)
 
 if i want to comm with a specific user, ill pass -u option , this just means user
@@ -558,7 +564,7 @@ so am trying to use ssh to connect to my remote host
   *********** so looking at managing remote host, we can use password authentictaion, pass a -u option but then i aso eed to pass a -k option so that it prompts me for a PW 
 
                                       
-                                               HOST AND GROUP VARIABLE
+   7Avii)                                    HOST AND GROUP VARIABLE
 
 1:46:51   ***************
 but what am doing right here is nt very convieneint especially when it comes automation so ansible give syou what is called either host or grp variables
@@ -595,7 +601,9 @@ this is what is called a host variable
 success
 
 
-     ******* 1:50:07            ANSIBLE FACT       (pingpong, meaning success)
+     7Aviii)
+
+******* 1:50:07            ANSIBLE FACT       (pingpong, meaning success)
 
 
 this hostfile is still the password for ansible and when ansible goes ther its looking to see if ansible has been installed in those servers
@@ -637,18 +645,34 @@ then save
 172.31.19.131   sucesss        ******** the connection is been made to mark
 
    this is what is called a host variable 
+but also ansible gives us what is called group variables 
+so instaed os duplicating this and writing this on evry host file,     ; 172.31.27.37  ansible_ssh_pass=ansible
+we can create a group variable 
 
 
 1;52:55
+
+7Aix)
 ********                            GROUP VARIABLES
 
      **Group variables:**
     [db:vars]
     ansible_ssh_user=sammy
     ansible_ssh_pass=abc123
+                                              CREATING GROUP VARIABLE
+
+so ill vi 
+ansible@ip-172-31-27-28: $ cd/etc/ansible
+ ansible@ip-172-31-27-28: $  vi host
+
+   and in the file 
+
+[db:vars]
+    ansible_ssh_user=ansible               ********** so we are saying for this grp of servers the ssh PW is this 
 
 
-
+    ** now i can delete the host variable bc we ar ultilizing the grp variable 
+   
 
 
 
