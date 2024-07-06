@@ -354,11 +354,96 @@ Test the connectivity by running:
 
 $ ansible all -m ping
 
-************  ie
+************  ie                  1:26:18
 
 1) we can use PW authentication 
 
 for us to use those ssh keys, we will need to do some configuration 
+but first when we are testing the connectivity for right now, we wnt to tast our connections 
+   we ll run this command 
+$ ansible all -m ping                ******** all  , is what is called your inventory, we ll go tru that
+
+All ansible commands starts wth the keyword ansible , this is what invokes ansible software
+
+******** all  , is what is called your inventory, we ll go tru that
+
+
+   ***********       -M  option 
+
+-m is an option  you pass when you want to pass a module 
+then the module we wnat to pass is a ping module , this is what we use to test for connectivity 
+
+  so right now i can cd baack
+
+ ansible@ip-172-31-27-28: $ cd /etc/ansible
+ ansible@ip-172-31-27-28:/etc/anisble$ ls
+ansible.cfg hosts roles
+ansible@ip-172-31-27-28:/etc/ansible$ cd -
+/home/ansible                          am in the home of anisble now 
+ansible@ip-172-31-27-28:  $ ansible all -m ping                    ******* tsting for connectivity
+  the provided list is empty , only localhost is available 
+note taht the implicit localhost does not match 'all'          **** bc i inside of my host, i havent passed any ip address for the servers i wnt to maintain/configure
+                                                                       the list is empty, says only localhost is available so let me use it as my inventory 
+so now ill pass local host 
+ansible@ip-172-31-27-28:  $ ansible localhost -m ping
+     succsess                              ******* so ansible has been able to ping the local host, its been able to ping itself, so this meansthat ansible is able to 
+                                      configure the server that its installed on/running , this shows hw powerful ansible is, cos it can configure other servers n also the 
+                                         server that its running on bc local host is the server that is running ansible
+
+1:29:44
+so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
+our host list is empty now lets try and popuplate our host list 
+when we look at our output 
+
+splits his terminal  and on the 2nd terminal   we see 
+outputs 
+ansible_publicip = "54.218.138.205"
+instance_private ip =[
+(base) terrafrm files git :(main) terraform output
+
+we see the public and private ips for our host servers
+
+so lets go to our host file and try to enter these particular hosts into our host file 
+we cd 
+
+ ansible@ip-172-31-27-28: $ cd/etc/ansible
+ ansible@ip-172-31-27-28: $  vi host 
+it will give you examples of hw u nid to mk your entries into this particular files                  ********* 1:31:30
+he scrolled down to create a grp called DB
+he used his private ips do that whenevr he shuts down his instances  he doesnt have to come in here to change the ips bc the ips changed
+he also created anoda grp called web
+here he put the redhat  private instance ips 
+then saved
+now these are the remote host i want to manage 
+
+ansible@ip-172-31-27-28:  $ ansible all -m ping       
+ae u sure you wnat to add ...  yes
+i hv just typed yes for the first server, i need to type yes 3times
+
+************ bt as i do that bc i hv 3severs in my inventory its trying to reach my inventory but its failing 
+host added, permission denied
+so we see that while am trying to reach my instances it sdenying me bc by default ansible wil alwasy try to commusing ssh keys bt we havnt exchanged any sssh key 
+so hw then can we connect to this user
+we knw that we created a user and we gave the usr a PW, so for us to comm to this ansible  on eof the things i sthat we ll hv to run ping command bt for us to comm we v to
+
+                                        -k option 
+*********** pass a -k option (small k) 
+we pass this bc it prompts us for an ssh PW
+
+  ansible@ip-172-31-27-28:  $ ansible all -k ping 
+ssh password  : ansible , you cant see it i typed it 
+success
+now it will connect bc remeber i created a user in my script , creted on this instances, the script that i ran had a user called ansible that was created in the servers
+so bc the user has a pw therfr i can mak a ssh connection using a PW 
+we had enabled PW authentication, we had changed it to yes frm our script.
+
+  **********  so you hv to pass a -k option so it prompts ypu for a PW 
+
+     
+
+
+
+
 
 
 
