@@ -1,6 +1,6 @@
 79RECAP,  REMOTE DEVELOPMENT, INSTALLING VSCODE, local exec provisioner, Configuring managed nodes., -m option, CREATING THE HOST LIST, establishing an ssh connection,
--k option , creatING ANOTHER USER (MARK), COMMUNICATING WITH THE USER mark, -u option, HOST AND GROUP VARIABLES, ANSIBLE FACT, (PINPONG), GROUP VARIABLES, host level 
-precedence
+-k option ,creatING ANOTHER USER (MARK), COMMUNICATING WITH THE USER mark, -u option, HOST AND GROUP VARIABLES, ANSIBLE FACT, (PINPONG),CONNECTING TO  A SPECIFIC USER, GROUP
+VARIABLES, host level precedence
 
 ##########################  we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
@@ -686,9 +686,24 @@ ansible@ip-172-31-27-28   ansible db -m ping
  172.31.27.37  success            ********* the group level varibale is successful
 172.31.19.131   sucesss        ******** 
 
+ 
+7Ax)                                         
+HOST LEVEL PRECEDENCE
 
 ##########################  we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
+
+
+7Axi)   for example 
+
+   [db:vars]
+    ansible_ssh_user=ansible   
+
+     
+
+Create a file on the managed nodes to see which user its working with.
+
+$ ansible all -m file -a "path=test.txt state=touch"
 
 
 
