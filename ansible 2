@@ -696,28 +696,47 @@ if variables are defined at host level, it takes precedence over varaibles defin
 
 7Axii)   for example 
 
+     172.31.27.37 
+     172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark  
+
    [db:vars]
     ansible_ssh_user=ansible   
 
-     
+   if i ping 
+ansible@ip-172-31-27-28   ansible db -m ping
+
+     172.31.27.37  success            ********* the group level varibale is successful
+172.31.19.131   sucesss        ********        The host level connection is successful
+
+
+     7Axii)
+
+****** we can test that by creating a file by using a file module
 
 Create a file on the managed nodes to see which user its working with.
 
 $ ansible all -m file -a "path=test.txt state=touch"
 
+   ie am -m, am passing a module, -a , means what argument am i passing, i want to create a file, am using -m to specify its a file module then what are the arguments, ill
+put the arguments in the quotation mark " ", where do i want to create the file, i can just give it a name or ican say the path, = i want to create a file called test.md
+and the state is touch , when we are creating a file we always say , we touch the file, so the state is touch
 
+******   1:59:41
 
-
-
-
-
-
-
-
-
-ansible@ip-172-31-17-108: 
-
+   so ill cd out
+ansible@ip-172-31-27-28: $ cd/etc/ansible
+ ansible@ip-172-31-27-28:/etc/ansible  cd
 ansible@ip-172-31-27-28: 
+ansible@ip-172-31-27-28: ansible db -m file -a "path=test.md state=touch"          ****** am creating a file called test n it will be in the pwd of DB group
+ 172.31.27.37 
+   change = true                          ****** meaning that anisible went and created something
+
+
+
+
+
+
+
 
 
 
