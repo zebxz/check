@@ -212,6 +212,7 @@ so this ? is called a itenery operator, it always evaluates, its a bullion varia
 in the configuration file in vscode, we configured our ssh so that we can connect to a remote host, you can connect to an ec2 instance and for that to happen, we passed
 vscode installation script & script.sh (dnt knw why we hv 2diff scripts to install vscode)
 then,
+          summary frm NO.2 to NO.4
 we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
 using script.sh also in the variables file; we passed a variable that enables us select the os we wantt to configure 
 if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
