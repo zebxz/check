@@ -822,6 +822,8 @@ so for me to copy this key, i can either ssh-copy-id ansible@ the ip address i w
 bc ansible is the default user, i can ssh-copy-id then the private ip (172.31.27.37
 ansible@ip-172-31-27-28: ssh-copy-id 172.31.27.37
 
+7bi)
+                                                    SSH COPY ID
   ********* splits his screen
 2:29:42
 bc i define output, i can run terfrm output and it will show my output
@@ -830,13 +832,16 @@ bc i define output, i can run terfrm output and it will show my output
   ansible@ip-172-31-27-28: ssh-copy-id 172.31.27.37
 password:ansible                                               **********  now it is trying to make a connection but bc ansible has a PW, i need to enter a PW 
                                  now it makes a ssh connect and transfers the key 
+
+    7Bii)                                       LOGIN WITHOUT PASSWORD
+
 now try logging into the machine 
 now i can try logging in using ssh just with the ip 
 ansible@ip-172-31-27-28: ssh 172.31.27.37                           ******* now am logged in without a password 
 welcome to ubuntu
 ansible@ip-172.31.27.37: $
 
-    sofrm here hv been able to login to the home of ansible using the ssh key
+    so frm here hv been able to login to the home of ansible using the ssh key
 i used the pw above to be able to transfer the key  bc i needed to est an ssh connection for the key to be transferred
 
 am using the ssh copy id to transfer the key frm my anisble home in the control to the home of the server i want to control, ie the remote host (private ip)
@@ -850,6 +855,8 @@ ansible@ip-172-31-27-28:  ansible db -m ping
  172.31.27.37         failed                   ***** we have a connection with this ansible user 
   172.31.19.131       success                ******* i havent transferred my key to this user thefor no ssh connection established 
 
+
+7Biii)                                      TRANSFERS KEY TO 2ND UBNUtu USER
 
 **************** using the same process ,LETS transfer the key for user  172.31.19.131
 
@@ -881,9 +888,47 @@ ansible@ip172.31.19.131: $  exit
 172.31.27.37  success            *********  connection established using ssh keys 
 172.31.19.131   sucesss        ********        
 
- 2:37:13
+   7biv)                                      
+    ***********************                   PING ALL
+2:37:13           
                                
     ansible@ip172-31-27-28  ansible all -m ping
+
+172.31.16.16                  ******** Failed      havent transferred key to this , ican do the same process 
+
+
+   172.31.27.37  success            *********  sucesss
+172.31.19.131   sucesss        ********        success
+
+
+          *******************        TRANSFERS KEY TO REDHAT USER 
+
+ansible@ip172-31-16-16          ********** after transferring the key, now am in 
+
+ansible@ip172-31-16-16  exit
+ 
+ ansible@ip172-31-27-28         ansible all -m ping
+
+    172.31.16.16                  ******** success
+
+
+   172.31.27.37  success            *********  success
+172.31.19.131   sucesss        ********      success
+
+
+    ********* now hv been able to pass the ssh key passwordlessly 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
