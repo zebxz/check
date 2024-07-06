@@ -730,10 +730,21 @@ ansible@ip-172-31-27-28:
 ansible@ip-172-31-27-28: ansible db -m file -a "path=test.md state=touch"          ****** am creating a file called test n it will be in the pwd of DB group
  172.31.27.37 
    change = true                          ****** meaning that anisible went and created something
+                                                     it created in the home of this particular user ansible user
+172.31.19.131   
+ change =true                    ****** it also created this file in the home of mark bc of our group variable ,
+                          on this instance, the user we are comm with is mark, our ssh user is mark n thats why it created this file in his home
 
+  
+  7Axiii)                               ITEM POTENCY
 
+ill run the command again 
+ansible@ip-172-31-27-28: ansible db -m file -a "path=test.md state=touch"
 
-
+   172.31.27.37 
+   change = true                        ******* our result is still true and thats bc the file has no content in bt if it had content in it ansible wil nt recreate it
+172.31.19.131                              and that is what is call item potency of ansible, ansible will not recreate what it has already created
+ change =true   
 
 
 
