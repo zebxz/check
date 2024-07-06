@@ -1,4 +1,4 @@
-RECAP,  REMOTE DEVELOPMENT, INSTALLING VSCODE, local exec provisioner, Configuring managed nodes.,  CREATING THE HOST LIST,  -m option, establishing an ssh connection,
+79RECAP,  REMOTE DEVELOPMENT, INSTALLING VSCODE, local exec provisioner, Configuring managed nodes., -m option, CREATING THE HOST LIST, establishing an ssh connection,
 -k option 
 
 
@@ -369,7 +369,7 @@ All ansible commands starts wth the keyword ansible , this is what invokes ansib
 ******** all  , is what is called your inventory, we ll go tru that
 
 
-   ***********       -M  option 
+   ***********       -M  option    (passing a ping module)
 
 -m is an option  you pass when you want to pass a module 
 then the module we wnat to pass is a ping module , this is what we use to test for connectivity 
@@ -381,14 +381,14 @@ then the module we wnat to pass is a ping module , this is what we use to test f
 ansible.cfg hosts roles
 ansible@ip-172-31-27-28:/etc/ansible$ cd -
 /home/ansible                          am in the home of anisble now 
-ansible@ip-172-31-27-28:  $ ansible all -m ping                    ******* tsting for connectivity
+ansible@ip-172-31-27-28:  $ ansible all -m ping                    ******* testing for connectivity
   the provided list is empty , only localhost is available 
-note taht the implicit localhost does not match 'all'          **** bc i inside of my host, i havent passed any ip address for the servers i wnt to maintain/configure
+note that the implicit localhost does not match 'all'          **** bc i inside of my host, i havent passed any ip address for the servers i wnt to maintain/configure
                                                                        the list is empty, says only localhost is available so let me use it as my inventory 
 so now ill pass local host 
 ansible@ip-172-31-27-28:  $ ansible localhost -m ping
-     succsess                              ******* so ansible has been able to ping the local host, its been able to ping itself, so this meansthat ansible is able to 
-                                      configure the server that its installed on/running , this shows hw powerful ansible is, cos it can configure other servers n also the 
+     succsess                              ******* so ansible has been able to ping the local host, its been able to ping itself, so this means that ansible is able to 
+                                     configure the server that its installed on/running on, this shows hw powerful ansible is, cos it can configure other servers n also the 
                                          server that its running on bc local host is the server that is running ansible
 
      CREATING THE HOST LIST
@@ -457,20 +457,143 @@ ANS:
 wit this hv been able to pass my PW and v been able to connect to my server
 if i need to coonect to the web, just to the web grp  so i can pass ansible and just pass web
 
-     ansible@ip-172-31-27-28:  $ ansible web -k ping 
+     ansible@ip-172-31-27-28:  $ ansible web -m ping 
+172-31-16-16    unreachable
+
  but bc i hv a user called ansible who has a PW, if i dnt pass the -k option it wil by default try to connect using the ssh keys
 
 IN THE web i only hv 1host wich is the redhat bc i hv a user who  is called asnible i need to pass a -k option so that it prompts me for a PW 
 
-         ansible@ip-172-31-27-28:  $ ansible web -k ping 
+         ansible@ip-172-31-27-28:  $ ansible web -m ping -k
+172-31-16-16    successful
 
 then ill enter my PW ansible  and then 
 it ill mk my conncetion 
 the process is the same if am connecting to the DB group and it wil mk a connection to the 2 instances in that grp 
+172-31-19-131   successful
+172-31-27-37    successful
+                       
 
-   ********** so here hv been able to est a ssh conection with my server
+   ********** so here hv been able to est a ssh conection with my servers
 
-bur which user am i communicating with, that user is the default user wich is ansible 
+but which user am i communicating with the default user, that user is the default user wich is ansible 
+let say i want to comm with a diff user lets says called mac
+let me ssh into this instance 172-31-19-131   
+
+           ansible@ip-172-31-27-28:  $ ssh 172-31-19-131   
+           ansible@ip172-31-19-131's password  :  ansible 
+
+welcome to ubnuntu 
+
+so hv logged dinto this instance 
+ ansible@ip172-31-19-131: $ cat /etc/passwd
+
+i see i only hv a user called ansible
+
+
+1:40:54                                 CREATING ANOTHER USER   (mark)
+****************
+LETS create the user called mark
+
+ ansible@ip172-31-19-131  $ sudo adduser mark
+ new passwrd
+retype password   : mark
+   
+ansible@ip172-31-19-131     $ cat /etc/passwd
+now i hv a user called mark
+
+   lets say i want to comm with anoda user oda than the anisble default user 
+
+ansible@ip172-31-19-131     $ exit
+
+how can i tell once i run anisble 
+password: ansible 
+i see ansible software insatalled here
+
+if i ssh 
+  ansible@ip-172-31-27-28:  $ 172.31.19.131
+password :ansible 
+welcom to bnuntu
+
+if i run ansible 
+ansible@ip172-31-19-131  ansible
+command nt found
+bc  ansible is nt installed in this 
+so i only hv one controll node 
+
+ansible@ip172-31-19-131    exit
+
+back to my control node
+ansible@ip-172-31-27-28
+
+
+  *********1:43:00                        COMMUNICATING WITH THE USER mark
+
+  ansible@ip-172-31-27-28   ansible db -m ping
+it wil try to comm with the default ansible user using a ssh key but bc am nt using any key, hv nt passed any key, with that i hv to use a PW 
+172-31-19-131   false
+172-31-27-37    false
+  ansible@ip-172-31-27-28   ansible db -m ping -K            ****i need to pass -k option but if i pass it , it wil stil be d default user that am comm with
+
+
+************         -u  option  (user)
+
+if i want to comm with a specific user, ill pass -u option , this just means user
+i wnat to ping a usr called mark
+  ansible@ip-172-31-27-28   ansible db -m ping -u mark
+172-31-19-131   false
+172-31-27-37    false
+
+bt if i do that its goin to fail bc mark has a PW, hv nt exchange any key with mark so i hv to pass a - k option 
+   ansible@ip-172-31-27-28   ansible db -m ping -u mark -k              ******* now am prompted for  a password 
+ssh password :mark
+172-31-19-131   success                     ********** bc it found a user called mark, who has a password 
+172-31-27-37    false                       ********** here it failed bc i dnt v auser called mark 
+ 
+ansible@ip-172-31-27-28 
+
+so i see ethat if i want to com with a specific user then i need to specify -u option
+so am trying to use ssh to connect to my remote host 
+
+  *********** so looking at managing remote host, we can use password authentictaion, pass a -u option but then i aso eed to pass a -k option so that it prompts me for a PW 
+
+1:46:51   ***************
+but what am doing right here is nt very convieneint especially when it comes automation so ansible give syou what is called either host or grp variables
+so instaed of me passing these options on the command line,i can pass the ssh PW within the host file 
+
+SO if i:
+
+ ansible@ip-172-31-27-28: $ cd/etc/ansible
+ ansible@ip-172-31-27-28:cd/etc/ansible  vi host         i have my host listed here
+so instead of passing the PW on the CLI evrtime, i can pass on the 
+
+
+Host and group variables
+
+If were run the ping command on all servers, we will get permission denied on the servers that need a password to authenticate.
+Instead of that, we can provide the password in the host file
+This is at a host level or host level variable.
+Host level variables
+
+    **Host variables**
+    [db]
+    172.31.13.31  ansible_ssh_pass=ansible
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
