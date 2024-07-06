@@ -565,7 +565,34 @@ SO if i:
 
  ansible@ip-172-31-27-28: $ cd/etc/ansible
  ansible@ip-172-31-27-28:cd/etc/ansible  vi host         i have my host listed here
-so instead of passing the PW on the CLI evrtime, i can pass on the 
+so instead of passing the PW on the CLI evrtime, i can pass on the HOST file
+[db]
+ 172.31.27.37  ansible_ssh_pass=ansible
+172.31.19.131   ansible_ssh_pass=ansible
+
+*********** am passing this on the host level, am passing host variable within the host file  so that i dnt hv to keep pasiing them on the cl
+havin done this was i run the command ping, it wil mk the connection 
+bc intead of me passing a -k to be prompted for  a PW, i hv created a host varaible , hv passed the password within th host file
+this is what is called a host variable
+
+   
+ ansible@ip-172-31-27-28   ansible db -m ping 
+success
+
+
+     ******* 1:50:07            ANSIBLE FACT       (pingpong, meaning success)
+
+
+this hostfile is still the password for ansible and when ansible goes ther its looking to see if ansible has been installed in those servers
+   'discovered_interpreter_python": /usr/binpython3
+it uses what is called a module called anible fact, it goes and FINDS the interpreter there, it discovers python is availabeland thefroe it says ping pong meaning it is a 
+success
+
+but for  
+
+ ansible@ip-172-31-27-28   ansible web -m ping 
+failed                                                  ** bc i havent passed a variable 
+
 
 
 Host and group variables
@@ -580,9 +607,37 @@ Host level variables
     172.31.13.31  ansible_ssh_pass=ansible
 
 
+************
 
 
+1:51:11  
 
+
+what if we wnat to mk our default user anytime we connect with the server , our default user wil be mark
+so we can also passs that as a host variable 
+
+You can also connect using a different user by specifying the user in the hosts file.
+    [db]
+    172.31.13.31  ansible_ssh_user=sammy ansible_ssh_pass=abc123
+  
+       ie
+[db]
+ 172.31.27.37  ansible_ssh_pass=ansible
+172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark          * so now we are specifying that anytime we want to mk a conection to this instance the user needs to be 
+                                                                      mark and we passing marks PW , bc otherwise it wil use the default user
+
+then save 
+
+  ansible@ip-172-31-27-28   ansible db -m ping 
+
+ 172.31.27.37  success            ********* the connection is been made by the ansible user who is the default user
+172.31.19.131   sucesss        ******** the connection is been made to mark
+
+   this is what is called a host variable 
+
+
+1;52:55
+********  GROUP VARIABLES
 
 
 
