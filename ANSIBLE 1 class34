@@ -275,9 +275,9 @@ to pdate changes that were made either on the comsole or  CLI, use refresh
 
 
 
+other stuffs to talk abt terfrm
 
-
-data sources 
+data sources for the data block
 modules = vpc/eks/ec2/s3/ecs/route53/etc.       
 terraform.tfstate  
 terraform.tfstate.backup 
@@ -287,11 +287,24 @@ remote backend/s3
 dev-vars.tf /test-vars.tf / prod-vars.tf / prod.tfvars  
 blocks   
 vpc.tf
+
+when u look at terfrm u realise that any tefrm code is a module n we can write the code making use of variables
+e.g we maintain 3 Environments = Dev           /UAT /      PROD  
+therfore in each of this env we nid to provision resources
+in each of these env we need to provision resources and we can use console, CLI, IAAC
+IF U USE IAC 
 we maintain 3 Environments = Dev           /UAT /      PROD  
         .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
    Infrastructure Engineer = 200k/year   
+IF you understand terfrm this is wger u find yourself in the 200k bracket, 
+ Infrastructure Engineer is too much money
+
+it you are provisioning resources for your client in these 3 env,  = Dev           /UAT /      PROD
+what that means is that
+
 we have 3 Infrastructure Engineers provisioning and managing Infrastructures
-The terraform.tfstate records the state of our Infrastructures.    
+The terraform.tfstate records the state of our Infrastructures. 
+
 
 Configuration Management: - 
 Tools:
