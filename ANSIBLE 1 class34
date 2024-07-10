@@ -224,7 +224,24 @@ terraform = init / validate / fmt /
             refresh / import           
 ... terfrm refresh to capture changes
 terform will synchronse whatevre changes is in the infrastructure against the state file bc the state file records the state of the infrastruture
+
+********** 1:36:55 
 terfrm import to import a resource terfrm didnt create into terfrm
+terfrm import "aws_vpc.dev34" vpc-oc2ed3bcbdef5190d
+
+before importingthis resource, please create its configuration in the root module, for example ;
+
+  resource "aws_vpc" "dev34" {
+     #(resource arguments)
+}
+
+   ie
+terraform import aws_vpc.dev34 vpc-0c2ed3bcbdef5190d
+
+so we hv imported the vpc
+cat terfrm state to see if we hv a new vpc imported
+so we can import a resource that terfrm did not create
+
 
             appy / apply --auto-approve  
             destroy  / destroy -target-aws_vpc.dev34     
