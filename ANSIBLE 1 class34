@@ -150,10 +150,18 @@ if you manged infrastructure like this there are so many commands, this commands
 Examples of Infrastructure resources / services:
 ************* lets see how easy that infrastruture is
 
-55:00 ****************************************  using diagram to explain
-
+55:00 ****************************************  using diagram to explain( we can create Nat gateway in the public subnet which wil give internet access to the private subnet)
+                                                                                so it has to be placed wher ther is internet wich is the public subnet
     - 3. Files/HCL /
-provider "aws" {
+creating a vpc using terraform:
+
+ 1:14:00 ************ ****************         his own terrafrm style
+teraform init intializes this dir to become a terrafrm working dir and downloads the provider pluggins 
+***************18:30 looking for his vpc.tf file , lol
+1:20:27  *******************   terrafrm apply to execute the infrastructure
+
+
+provider "aws" {                      
   region = "us-east-1"
 }
 resource "aws_vpc" "vpc1" {
