@@ -235,22 +235,36 @@ before importingthis resource, please create its configuration in the root modul
      #(resource arguments)
 }
 
-   ie
+   ie   paste this in the vpc.tf file
+
+provider "aws" {                      
+  region = "us-east-1"
+}
+resource "aws_vpc" "vpc1" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  } 
+resource "aws_vpc" "dev34" {                     ****** what we are importing
+}
+
+the execute
 terraform import aws_vpc.dev34 vpc-0c2ed3bcbdef5190d
 
 so we hv imported the vpc
 cat terfrm state to see if we hv a new vpc imported
 so we can import a resource that terfrm did not create
 
+************* but before we imported the vpc, we went and created a resource blk for what we want to import
 
-            appy / apply --auto-approve  
+          
+terrafrm = we also have
+appy / apply --auto-approve  
             destroy  / destroy -target-aws_vpc.dev34     
 
-terraform import aws_instance.example_instance i-0123456789abcdef0
-terraform import aws_vpc.dev34 vpc-0c2ed3bcbdef5190d
 
-resource "aws_vpc" "dev34" {
-}
+1:44:40 *****************  so in terfrm we have a statefile and the state of our infrastruture is stored in terfrm , we are using tefrm to mg8 our re
 
 
 data sources 
