@@ -1,2 +1,254 @@
 ansible 2 VIDEO  class33 (prof ken)STopped at 2:44 , i bliv thats wher he start with adhoc commands 
 so i had to start with profs video Ansible1, for class 34
+
+
+
+
+ Anisble:
+Dev-Ops Foundation
+    SDLC
+  Waterfall - R + D + I/D + T + D  + M  
+  Agile     - Scrum  = sprint/1/2/3/4/5/6.../n   
+                       meetings  =  
+  Dev-Ops automation =   
+    Develops, Tests, Builds, qualification, backup  
+     deploys & monitors applications 
+    Applications are the output from Softwares development 
+Tesla = versions = v1/v2/v3/v4
+Versioning:
+   Git = Versioning
+   SVN
+SCM = Source Code MGT : 
+   GitHub = SCM [IDEs] READme.md   .gitignore  
+   GitLab
+   BitBucket
+   awsCodeCommit  
+Testing:
+   TestNG
+   Selenium
+CodeQuality:
+  SonarCube = IaaS  
+   [quality benchmark] [DL <5% /CC>90%/Bugs<1/SHS<1/SMELLS <4]
+     Scanner server
+     SonarCube server [ db / webServer / searchEngine=ES, CE ]
+  SonarCloud = Serverless = SaaS    
+  codeChecker
+Build: 
+java applications  
+  Maven [Lifecycle = site/swagger | clean  | default]  
+     app.java=print('hello')   app.class [01245312012] JVM  
+     default = validate / compile / test  / package / sonar:sonar / deploy / install 
+  ANt/Graddle
+.net|
+  MSBuild.
+Artifacts Repository:
+  Nexus
+  JFrog
+Application Servers:
+  Tomcat        = java web applications  
+  Wildfly/JBoss = java web/enterprise applications 
+  java          = java standalone applications 
+   users ----> appServers  
+   users  ---> WebServers/LB  ----> appServers  
+WebServers/LB:
+  Self Managed: 
+    nginx /apache http/  = apt/yum install nginx httpd  
+    Nginx Ingress
+    HAProxy
+  managed:
+    ELB = NLB / ALB   
+
+CI/CD AUTOMATION:
+  Jenkins/ 
+  CloudBees Jenkins = enterprise version of Jenkins
+  Bamboo
+  circle CI   
+  Travis CI
+  CruiseControl
+  GitLab 
+APM1 = Application Performance Monitoring tools : 
+  NewRelic 
+  Prometheus/Grafana  
+  AppDynamics 
+  Nagios
+Log mgt and data analytics  :
+  EFK/ELK  
+  SPLUNK  
+CONTAINERISATION:
+  Rocket
+  CoreOS
+  Docker  - 85%
+    engine  / cli=docker and docker service/daemon / 
+    registry=dockerHub / ECR / Nexus/JFrog / DTR
+      docker build
+      docker /run/create/start/pull/push/login/ps/ps-a/kill/images
+    Dockerfile = List of instructions that will be executed 
+                 orderly from top to bottom to create docker images.
+                 This file contain key words
+                 FROM / CMD/ENTRYPOINT/ RUN/ EXPOSE /
+                 COPY/ADD/ENV/etc.       
+BEST PRACTICES: 
+  use minimun RUN instructions to create lightweight 
+  use docker official images 
+  use alpine linux where possible  
+  Avoid installation of unnecessary applications
+  use docker-compose file for deployment  
+CONTAINER ORCHESTRATION:
+   Docker Swarm
+   Kubernetes
+   OpenShift
+Cloud PROVIDERS:
+   AWS    = eks / ecs  
+   AZURE
+   GCP
+   IBM
+   VMWARE 
+aws: 
+    server = ec2, rds, 
+    Serverless = Lambda, farget / 
+    storage=EBS/EFS/S3 
+    networking services: vpc / route53 / vpn /
+    elb/asg/lc/lt  
+    IAM / nACL / SG /    
+Infrastructure as a code - IaaC:
+   Terraform      - HCL   
+   CloudFormation - Json and Yaml   
+  How to create ec2 instances   and other resources in aws?   
+  - 1. console  
+  - 2. CLI   
+       aws ec2 run-instances --image-id ami-xxxxxxxx --count 1 \
+        --instance-type t2.micro --key-name MyKeyPair \
+
+       aws ec2 run-instances --image-id ami-0e731c8a588258d0d --count 1 \
+        --security-group-ids sg-07fe099f5be5a1aba --key-name class35 \
+        --subnet-id subnet-0301f6ce6f3fe5f9c
+
+       aws ec2 create-tags --resources i-01d0055cc3ba70952 --tags \
+          Key=Name,Value=ansible2  
+
+           use commands to terminate instances  i-0c91943354f3cbab4
+       aws ec2 terminate-instances --instance-ids i-0c91943354f3cbab4 i-0c91943354f3cbab4
+          --instance-ids
+       aws ec2 stop-instances --instance-ids  i-01d0055cc3ba70952
+       aws ec2 start-instances --instance-ids i-01d0055cc3ba70952
+       aws ec2 terminate-instances --instance-ids i-01d0055cc3ba70952
+Examples of Infrastructure resources / services:
+
+    - 3. Files/HCL /
+provider "aws" {
+  region = "us-east-1"
+}
+resource "aws_vpc" "vpc1" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  }
+}
+terraform = init / validate / fmt / 
+            refresh / import
+            appy / apply --auto-approve  
+            destroy  / destroy -target-aws_vpc.dev34     
+
+terraform import aws_instance.example_instance i-0123456789abcdef0
+terraform import aws_vpc.dev34 vpc-0c2ed3bcbdef5190d
+
+resource "aws_vpc" "dev34" {
+}
+
+data sources 
+modules = vpc/eks/ec2/s3/ecs/route53/etc.       
+terraform.tfstate  
+terraform.tfstate.backup 
+arguments
+output   
+remote backend/s3  
+dev-vars.tf /test-vars.tf / prod-vars.tf / prod.tfvars  
+blocks   
+vpc.tf
+we maintain 3 Environments = Dev           /UAT /      PROD  
+        .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
+   Infrastructure Engineer = 200k/year   
+we have 3 Infrastructure Engineers provisioning and managing Infrastructures
+The terraform.tfstate records the state of our Infrastructures.    
+
+Configuration Management: - 
+Tools:
+  Ansible - PUSH -- AGENTLESS 
+  Chef - Pull
+  Puppet
+  SaltStack
+
+Servers:
+    UsersMGT
+    FilesMGT
+    ServicesMGT
+    PackagesMGT
+    deployments, manage,
+    build, test and configure apps 
+Ansible is an open source AGENTLESS :
+  Configuration Management tool, 
+  deployment tool and/or  
+  provisioning tool maintained by Redhat
+
+Ansible can be installed in Linux OS. 
+====================================
+Ticket01: provision an ec2-instance in aws call ansible using ubuntu 
+Search official documentation for creating aws ec2-instance
+
+resource "aws_instance" "web" {
+  ami           = "ami-0c7217cdde317cfec"
+  instance_type = "t2.micro"
+  subnet_id     = "subnet-0301f6ce6f3fe5f9c"
+  key_name      = "class35"
+  security_groups = [ "sg-07fe099f5be5a1aba"  ]
+  tags = {
+    Name = "ansible"
+  }
+}
+
+
+#1 Ansible installation in ubuntu using python3-pip
+sudo useradd ansible
+sudo passwd ansible
+ echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+sudo su - ansible
+sudo apt install python3
+sudo apt update
+sudo apt install python3-pip
+pip3 install ansible --user
+sudo apt update
+sudo apt install sshpass
+sudo mkdir /etc/ansible
+sudo chown -R ansible:ansible /etc/ansible/
+vi  /etc/ansible/ansible.cfg
+vi  /etc/ansible/hosts
+
+#2 Ansible installation in ubuntu using apt repo
+Ansible installation in ubuntu
+ sudo adduser ansible
+ echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+ sudo su - ansible
+ sudo apt-add-repository ppa:ansible/ansible  
+ sudo apt install ansible  -y 
+
+/etc/ansible/hosts  
+[web]
+54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[db] 
+172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[k8s]
+34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+[docker]
+10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+Ansible concepts:
+1. Ansible commands:  
+    ansible hosts -m module -a "df -f"
+      -m=modules
+      -a=arguements
+  hosts: db / web / app / localhost / all     
+      ansible all -m ping
+      ansible localhost -m ping
+
+ ansible web -m command -a "df -h"
+ ansible localhost -m command -a "df -h"
