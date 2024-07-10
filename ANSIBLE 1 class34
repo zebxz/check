@@ -296,14 +296,48 @@ IF U USE IAC
 we maintain 3 Environments = Dev           /UAT /      PROD  
         .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
    Infrastructure Engineer = 200k/year   
-IF you understand terfrm this is wger u find yourself in the 200k bracket, 
+IF you understand terfrm this is wher u find yourself in the 200k bracket, 
  Infrastructure Engineer is too much money
 
-it you are provisioning resources for your client in these 3 env,  = Dev           /UAT /      PROD
-what that means is that
+********************** 1:50:40
 
+but you are managing resources for your customer/client in these 3 env,  = Dev           /UAT /      PROD
+what that means is that  in provisioning resources you could need the same infrasture/resources for prod, for dev , and the same for UAT 
+so hw do u mange this resources, hw do i deploy them with relative ease , what can i use  ??????????? 
+ill use terfrm bc infarstruture as a code is the best option ot be used bc if u write a code which becomes a module e.g
+we can write modules for :
+modules = vpc/eks/ec2/s3/ecs/route53/etc.       
+so if u hv modules like this,all i need is i can use a var.tf file ie a variable file and deploy resources to esch env depending on what is defined in that env variable file
+
+e.g u need to create an instance for each of this env
+we maintain 3 Environments = Dev           /UAT /      PROD  
+        .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
+so the variable says for  dev = t2 medium, for UAT = t2.2xlarge   , for prod = m4.5xlarge
+so with the same module, (that blcok of code is called module) so with the smae module, i can launch resources like this
+this is infrastructure
+
+ **********1:53:45
+
+we have remote backend
+
+when you create resources in aws , they are stored in the terfrm staatefile, bt in our env 
 we have 3 Infrastructure Engineers provisioning and managing Infrastructures
+so how do we ensure that their task is nt conflicting
+what we do is that in tefrm all state file 
 The terraform.tfstate records the state of our Infrastructures. 
+so what ever you create or destroy will be captured in the terfrm.tf statefile so thefrore
+if we hv a situation wherby 3 engrs are working, we must enusre that if simon is trying to provision resources , mary shud nt be doing it at the same time so 
+only one infrastructure engr shud provison resources at once and we manage that by creating a remote backend
+as a matter of fact, for us to permit that 3 engr to provision resources we nid to hv a remote backend 
+a remote backend , no longer a local backend , bc the backend is either local or remote 
+but local backend wil mean that simon, wil hv a diff backend , mary will hv a diff backend as well as john wil also hv a diff backend
+so fo rthem to use a common backend, we need to use a remot ebackend probably in aws 
+bt for us to ensure the resources are nt broken we nid to lock the backend usinf diamond DB debo lock 
+
+and that is terafrm for you 
+
+
+
 
 
 Configuration Management: - 
