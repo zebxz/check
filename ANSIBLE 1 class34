@@ -159,6 +159,8 @@ creating a vpc using terraform:
 teraform init intializes this dir to become a terrafrm working dir and downloads the provider pluggins 
 ***************18:30 looking for his vpc.tf file , lol
 1:20:27  *******************   terrafrm apply to execute the infrastructure
+statefile created
+1:22:00  *************************  using the same resource to create another vpc
 
 
 provider "aws" {                      
@@ -171,8 +173,59 @@ resource "aws_vpc" "vpc1" {
     Environment = "UAT"
   }
 }
+
+
+********************************************************
+
+1:25:26 ************** if i wnat to see the resources which i created , cat the terrafrm statefile
+so can you see that with the help of the state file i can mange all my resources, the resources can be manged here directly from the statefile
+to destroy a particular resource  .... - target=aws_vpc.vpc name
+1:29:45*************** terraform destroy -targett=aws_vpc.vpc.vpc2         **** destroyed      
+and if we execute terraform apply --auto-approve, it recreates the vpc destroyed , our vpc2
+
+
+********** 1:30:22 
+Another way to destroy a particular resource is to put a  comment  on the resource , /* and at the end */
+e.g to destroy vpc2 :
+
+provider "aws" {                      
+  region = "us-east-1"
+}
+resource "aws_vpc" "vpc1" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  } 
+/*
+resource "aws_vpc" "vpc2" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  } */
+
+terraform apply --auto-approve
+bc of the comment, it wil destroy the commented resource, once you click apply, it destroys the resource
+
+1:31:31**********************
+ there are lot of video you have to go tru when it comes to terrafrm 
+there are other options like
+how can terfrm control a resource that it didnt create 
+so we hv looked at terfrm, when it comes to terfrm we hv options
+
+
+so is it possible for terfrm to manage  a resource it didnt create and which option will that be ???  ...  yes
+
+
+1:34:00 
+
 terraform = init / validate / fmt / 
-            refresh / import
+            refresh / import           
+... terfrm refresh to capture changes
+terform will synchronse whatevre changes is in the infrastructure against the state file bc the state file records the state of the infrastruture
+terfrm import to import a resource terfrm didnt create into terfrm
+
             appy / apply --auto-approve  
             destroy  / destroy -target-aws_vpc.dev34     
 
@@ -181,6 +234,7 @@ terraform import aws_vpc.dev34 vpc-0c2ed3bcbdef5190d
 
 resource "aws_vpc" "dev34" {
 }
+
 
 data sources 
 modules = vpc/eks/ec2/s3/ecs/route53/etc.       
