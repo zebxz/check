@@ -3,4 +3,338 @@ so i had to start with profs video Ansible1, for class 34
 
 
 
+ Anisble:
+Dev-Ops Foundation
+    SDLC
+  Waterfall - R + D + I/D + T + D  + M  
+  Agile     - Scrum  = sprint/1/2/3/4/5/6.../n   
+                       meetings  =  
+  Dev-Ops automation =   
+    Develops, Tests, Builds, qualification, backup  
+     deploys & monitors applications 
+    Applications are the output from Softwares development 
+Tesla = versions = v1/v2/v3/v4
+Versioning:
+   Git = Versioning
+   SVN
+SCM = Source Code MGT : 
+   GitHub = SCM [IDEs] READme.md   .gitignore  
+   GitLab
+   BitBucket
+   awsCodeCommit  
+Testing:
+   TestNG
+   Selenium
+CodeQuality:
+  SonarCube = IaaS  
+   [quality benchmark] [DL <5% /CC>90%/Bugs<1/SHS<1/SMELLS <4]
+     Scanner server
+     SonarCube server [ db / webServer / searchEngine=ES, CE ]
+  SonarCloud = Serverless = SaaS    
+  codeChecker
+Build: 
+java applications  
+  Maven [Lifecycle = site/swagger | clean  | default]  
+     app.java=print('hello')   app.class [01245312012] JVM  
+     default = validate / compile / test  / package / sonar:sonar / deploy / install 
+  ANt/Graddle
+.net|
+  MSBuild.
+Artifacts Repository:
+  Nexus
+  JFrog
+Application Servers:
+  Tomcat        = java web applications  
+  Wildfly/JBoss = java web/enterprise applications 
+  java          = java standalone applications 
+   users ----> appServers  
+   users  ---> WebServers/LB  ----> appServers  
+WebServers/LB:
+  Self Managed: 
+    nginx /apache http/  = apt/yum install nginx httpd  
+    Nginx Ingress
+    HAProxy
+  managed:
+    ELB = NLB / ALB   
+
+CI/CD AUTOMATION:
+  Jenkins/ 
+  CloudBees Jenkins = enterprise version of Jenkins
+  Bamboo
+  circle CI   
+  Travis CI
+  CruiseControl 
+  GitLab 
+APM1 = Application Performance Monitoring tools : 
+  NewRelic 
+  Prometheus/Grafana  
+  AppDynamics 
+  Nagios
+Log mgt and data analytics  :
+  EFK/ELK  
+  SPLUNK  
+CONTAINERISATION:
+  Rocket
+  CoreOS
+  Docker  - 85%
+    engine  / cli=docker and docker service/daemon / 
+    registry=dockerHub / ECR / Nexus/JFrog / DTR
+      docker build
+      docker /run/create/start/pull/push/login/ps/ps-a/kill/images
+    Dockerfile = List of instructions that will be executed 
+                 orderly from top to bottom to create docker images.
+                 This file contain key words
+                 FROM / CMD/ENTRYPOINT/ RUN/ EXPOSE /
+                 COPY/ADD/ENV/etc.       
+BEST PRACTICES: 
+  use minimun RUN instructions to create lightweight 
+  use docker official images 
+  use alpine linux where possible  
+  Avoid installation of unnecessary applications
+  use docker-compose file for deployment  
+CONTAINER ORCHESTRATION:
+   Docker Swarm
+   Kubernetes
+   OpenShift
+Cloud PROVIDERS:
+   AWS    = eks / ecs  
+   AZURE
+   GCP
+   IBM
+   VMWARE 
+aws: 
+    server = ec2, rds, 
+    Serverless = Lambda, farget / 
+    storage=EBS/EFS/S3 
+    networking services: vpc / route53 / vpn /
+    elb/asg/lc/lt  
+    IAM / nACL (netwrk access controm list) / SG /    
+Infrastructure as a code - IaaC:              ******************************************* 23 n:00
+   Terraform    (we are basically talking abt how to manage our resources in aws)  - HCL   
+   CloudFormation - Json and Yaml   language
+ provisioning resources/ How to create ec2 instances   and other resources in aws?   
+  - 1. console  
+  - 2. CLI   
+
+to create instance:
+       aws ec2 run-instances --image-id ami-xxxxxxxx --count 1 \
+        --instance-type t2.micro --key-name MyKeyPair \
+
+to add sg to the created instance:
+       aws ec2 run-instances --image-id ami-0e731c8a588258d0d --count 1 \
+        --security-group-ids sg-07fe099f5be5a1aba --key-name class35 \
+        --subnet-id subnet-0301f6ce6f3fe5f9c
+
+to add tag:
+       aws ec2 create-tags --resources i-01d0055cc3ba70952 --tags \
+          Key=Name,Value=ansible2  
+
+to start, stopt and terminate:
+           use commands to terminate instances  i-0c91943354f3cbab4
+       aws ec2 terminate-instances --instance-ids i-0c91943354f3cbab4 i-0c91943354f3cbab4
+          --instance-ids
+       aws ec2 stop-instances --instance-ids  i-01d0055cc3ba70952
+       aws ec2 start-instances --instance-ids i-01d0055cc3ba70952
+       aws ec2 terminate-instances --instance-ids i-01d0055cc3ba70952
+
+you can search in google to get all the cli commands
+
+45:08 **********************************************  the good tin is that if you are getting it wrong, making errors, on the cli, it tells you what to do 
+
+if you manged infrastructure like this there are so many commands, this commands are not saved in any files so it is cumbersome to mg8 your infrastruture be it CLI OR console
+
+
+***********54:00
+
+Examples of Infrastructure resources / services:
+************* lets see how easy that infrastruture is
+
+55:00 ****************************************  using diagram to explain( we can create Nat gateway in the public subnet which wil give internet access to the private subnet)
+                                                                                so it has to be placed wher ther is internet wich is the public subnet
+    - 3. Files/HCL /
+creating a vpc using terraform:
+
+ 1:14:00 ************ ****************         his own terrafrm style
+teraform init intializes this dir to become a terrafrm working dir and downloads the provider pluggins 
+***************18:30 looking for his vpc.tf file , lol
+1:20:27  *******************   terrafrm apply to execute the infrastructure
+statefile created
+1:22:00  *************************  using the same resource to create another vpc
+
+
+provider "aws" {                      
+  region = "us-east-1"
+}
+resource "aws_vpc" "vpc1" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  }
+}
+
+
+********************************************************
+
+1:25:26 ************** if i wnat to see the resources which i created , cat the terrafrm statefile
+so can you see that with the help of the state file i can mange all my resources, the resources can be manged here directly from the statefile
+to destroy a particular resource  .... - target=aws_vpc.vpc name
+1:29:45*************** terraform destroy -targett=aws_vpc.vpc.vpc2         **** destroyed      
+and if we execute terraform apply --auto-approve, it recreates the vpc destroyed , our vpc2
+
+
+********** 1:30:22 
+Another way to destroy a particular resource is to put a  comment  on the resource , /* and at the end */
+e.g to destroy vpc2 :
+
+provider "aws" {                      
+  region = "us-east-1"
+}
+resource "aws_vpc" "vpc1" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  } 
+/*
+resource "aws_vpc" "vpc2" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  } */
+
+terraform apply --auto-approve
+bc of the comment, it wil destroy the commented resource, once you click apply, it destroys the resource
+
+1:31:31**********************
+ there are lot of video you have to go tru when it comes to terrafrm 
+there are other options like
+how can terfrm control a resource that it didnt create 
+so we hv looked at terfrm, when it comes to terfrm we hv options
+
+
+so is it possible for terfrm to manage  a resource it didnt create and which option will that be ???  ...  yes
+
+
+1:34:00 
+
+terraform = init / validate / fmt / 
+            refresh / import           
+... terfrm refresh to capture changes
+terform will synchronse whatevre changes is in the infrastructure against the state file bc the state file records the state of the infrastruture
+
+********** 1:36:55 
+terfrm import to import a resource terfrm didnt create into terfrm
+terfrm import "aws_vpc.dev34" vpc-oc2ed3bcbdef5190d
+
+before importingthis resource, please create its configuration in the root module, for example ;
+
+  resource "aws_vpc" "dev34" {
+     #(resource arguments)
+}
+
+   ie   paste this in the vpc.tf file
+
+provider "aws" {                      
+  region = "us-east-1"
+}
+resource "aws_vpc" "vpc1" {
+  cidr_block       = "172.0.1.0/24"
+  tags = {
+    Name = "vpc-tesla"
+    Environment = "UAT"
+  } 
+resource "aws_vpc" "dev34" {                     ****** what we are importing
+}
+
+the execute
+terraform import aws_vpc.dev34 vpc-0c2ed3bcbdef5190d
+
+so we hv imported the vpc
+cat terfrm state to see if we hv a new vpc imported
+so we can import a resource that terfrm did not create
+
+************* but before we imported the vpc, we went and created a resource blk for what we want to import
+
+
+terrafrm = we also have
+appy / apply --auto-approve  
+            destroy  / destroy -target-aws_vpc.dev34     
+
+so these are options we hv seen when it comes to terfrm 
+but is very imp that is very imp is the statefile
+1:44:40 *****************  so in terfrm we have a statefile and the state of our infrastruture is stored in terfrm , we are using tefrm to mg8 our end to end infrastructure
+ec2 instance, evrytin is managed frm terfrm
+bt b4 u start running tefr u nid to initialize the dir so the you can download providrs pluugins
+you hv to validate the fiel struture
+you hv to format it to be well organise
+to pdate changes that were made either on the comsole or  CLI, use refresh
+
+
+
+
+other stuffs to talk abt terfrm
+
+data sources for the data block
+modules = vpc/eks/ec2/s3/ecs/route53/etc.       
+terraform.tfstate  
+terraform.tfstate.backup 
+arguments
+output   
+remote backend/s3  
+dev-vars.tf /test-vars.tf / prod-vars.tf / prod.tfvars  
+blocks   
+vpc.tf
+
+when u look at terfrm u realise that any tefrm code is a module n we can write the code making use of variables
+e.g we maintain 3 Environments = Dev           /UAT /      PROD  
+therfore in each of this env we nid to provision resources
+in each of these env we need to provision resources and we can use console, CLI, IAAC
+IF U USE IAC 
+we maintain 3 Environments = Dev           /UAT /      PROD  
+        .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
+   Infrastructure Engineer = 200k/year   
+IF you understand terfrm this is wher u find yourself in the 200k bracket, 
+ Infrastructure Engineer is too much money
+
+********************** 1:50:40
+
+but you are managing resources for your customer/client in these 3 env,  = Dev           /UAT /      PROD
+what that means is that  in provisioning resources you could need the same infrasture/resources for prod, for dev , and the same for UAT 
+so hw do u mange this resources, hw do i deploy them with relative ease , what can i use  ??????????? 
+ill use terfrm bc infarstruture as a code is the best option ot be used bc if u write a code which becomes a module e.g
+we can write modules for :
+modules = vpc/eks/ec2/s3/ecs/route53/etc.       
+so if u hv modules like this,all i need is i can use a var.tf file ie a variable file and deploy resources to esch env depending on what is defined in that env variable file
+
+e.g u need to create an instance for each of this env
+we maintain 3 Environments = Dev           /UAT /      PROD  
+        .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
+so the variable says for  dev = t2 medium, for UAT = t2.2xlarge   , for prod = m4.5xlarge
+so with the same module, (that blcok of code is called module) so with the smae module, i can launch resources like this
+this is infrastructure
+
+ **********1:53:45
+
+we have remote backend
+
+when you create resources in aws , they are stored in the terfrm staatefile, bt in our env 
+we have 3 Infrastructure Engineers provisioning and managing Infrastructures
+so how do we ensure that their task is nt conflicting
+what we do is that in tefrm all state file 
+The terraform.tfstate records the state of our Infrastructures. 
+so what ever you create or destroy will be captured in the terfrm.tf statefile so thefrore
+if we hv a situation wherby 3 engrs are working, we must enusre that if simon is trying to provision resources , mary shud nt be doing it at the same time so 
+only one infrastructure engr shud provison resources at once and we manage that by creating a remote backend
+as a matter of fact, for us to permit that 3 engr to provision resources we nid to hv a remote backend 
+a remote backend , no longer a local backend , bc the backend is either local or remote 
+but local backend wil mean that simon, wil hv a diff backend , mary will hv a diff backend as well as john wil also hv a diff backend
+so fo rthem to use a common backend, we need to use a remot ebackend probably in aws 
+bt for us to ensure the resources are nt broken we nid to lock the backend usinf diamond DB debo lock 
+
+and that is terafrm for you 
+
+
+
 
