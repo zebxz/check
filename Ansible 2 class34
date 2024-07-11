@@ -1,3 +1,5 @@
+connection timed out , port22 need to be open
+
 so are looking on hw we are able to manage our infrastruture 
 i think we hv convinced our selves that terfm wil be the ideal option bc it can be reuseable, theres version control and thers also terfrm workspaces
 
@@ -114,12 +116,55 @@ Ansible installation in ubuntu
 *********** 49:14
 checking online to knw where he can get the ansible configuration file 
 in google in typed ansible.cfg example     and  he found the github link where he said he can find the repository 
-he copied the file and pasted in   vi  /etc/ansible/ansible.cfg
-
 https://github.com/dmahler/ansible-template/blob/master/ansible.cfg
 
+he copied the file and pasted in   vi  /etc/ansible/ansible.cfg
 vi  /etc/ansible/ansible.cfg
+so now we have this file
+we also have the ansible host file
+but we dnt have any host for now
+so lets try and add host
+he went to his aws server  we hv an ansible server, a dbserver, 
+for my ansible server, am i able to configure this dbserver ,, yes i can
+he went to the etc host file, cos hes needs to create host inventory for his abservers
+in aws he copied the public and private ip address as if they are 2diff servers
+then pasted it in the host file  , we want to acess ansible related task 
 vi  /etc/ansible/hosts               
+
+
+
+********* 52:15
+since that is the ip address , when it comes to our ansible host inventory file, how are we able to access it
+this server it has a user
+ansible is goin to connect to this server 
+we need to connect to carry out specific task in ansible 
+
+he tried to run ansible command but it says ansible has nt been installed
+so if ansible wasnt installed we can also install ansible using package manager 
+so he executed this 2comands:
+ sudo apt-add-repository ppa:ansible/ansible  
+ sudo apt install ansible  -y 
+
+ll/etc/ansible/
+
+we see our  ansible cfg file ,,  so ansible has been installed 
+
+he pinged web server
+realised the host file is empty
+
+**********1:1:20
+
+recreating host file
+[web]
+54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+ansible web -m ping
+no response bc we need tocreate the key i the tmp dir
+vi tmpclass35.pem
+went to his downloads and copied his key and pasted in the file 
+ansible web -m ping
+if connection timesd out, it means our port is nt open  and also our key is too open so 
+chmod 400 /tmp/class35.pem
+now we need to open port 22 , the ssh port
 
 
 /etc/ansible/hosts  
