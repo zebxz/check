@@ -7,28 +7,6 @@ what is cloud formation ???????
 the video for locking the statefile with diamondDB    ????
 
 
-1:19:55
-
-  QUESTION:
-1)i was goin tru an env and i noticed they deveolped a docker file that had lifecycle when developing it
-so is there a way that terfrm options can enter docker files bc when you were doing file i didnt see smt like life cycle in it but i saw that meta argument of life cycle which
-is in terfrm in docker file
-
-ANS:
-ITS TRUE THAT there are some things which you will see more of it based on what we have covered already bt talking abt life cycle that is in terfrm in docker file , you may 
-hv to share that with me personally let me lookat it 
-but the base line is that if you have  a mastery of what is expected of frm which is the basics there are a lot of docker files you can play around with in dockerhub bc all
-the images in docker hub has an associated docker file 
-and for the official images ther docker file are mostly in github wher you will see other options there
-
-2)
-what is the better way to provison on aws
-bc i went tru the aws solution architech course and they were heavily on cloud formation 
-so is it terrafrm or cloudformation
-
-ANS:
-MOST ATTIMES YOU MAY BE exposed to both of them based on what you want to provision but generally companies are serching fo terfrm 
-bc it cloud alcostic meaning you can use the same code across multiple cloud just by changing the variables 
 
 how are we able to configure our resources
 how can we configure our resources in aws and how can we configure our servers that we hv created 
@@ -223,16 +201,7 @@ ansible all -m ping
 sucess
 success
 
-/etc/ansible/hosts  
-[web]
-54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
-[db] 
-172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
-[k8s]
-34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
-[docker]
-10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
-Ansible concepts:
+
 1. Ansible commands:  
     ansible hosts -m module -a "df -f"
       -m=modules
@@ -243,3 +212,43 @@ Ansible concepts:
 
  ansible web -m command -a "df -h"
  ansible localhost -m command -a "df -h"
+
+
+ 
+
+************  1:19:55
+
+  QUESTION:
+1)i was goin tru an env and i noticed they deveolped a docker file that had lifecycle when developing it
+so is there a way that terfrm options can enter docker files bc when you were doing file i didnt see smt like life cycle in it but i saw that meta argument of life cycle which
+is in terfrm in docker file
+
+ANS:
+ITS TRUE THAT there are some things which you will see more of it based on what we have covered already bt talking abt life cycle that is in terfrm in docker file , you may 
+hv to share that with me personally let me lookat it 
+but the base line is that if you have  a mastery of what is expected of frm which is the basics there are a lot of docker files you can play around with in dockerhub bc all
+the images in docker hub has an associated docker file 
+and for the official images ther docker file are mostly in github wher you will see other options there
+
+2)
+what is the better way to provison on aws
+bc i went tru the aws solution architech course and they were heavily on cloud formation 
+so is it terrafrm or cloudformation
+
+ANS:
+MOST ATTIMES YOU MAY BE exposed to both of them based on what you want to provision but generally companies are serching fo terfrm 
+bc it cloud alcostic meaning you can use the same code across multiple cloud just by changing the variables 
+
+*******************************************************************************************************************************
+
+/etc/ansible/hosts  
+[web]
+54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[db] 
+172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[k8s]
+34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+[docker]
+10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+Ansible concepts:
+
