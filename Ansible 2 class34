@@ -1,17 +1,20 @@
-Configuration Management, USES OF ANSIBLE,ansible installation, CREATING ANSIBLE CONFIGURATION FILE,connection timed out , port22 need to be open,
+Configuration Management, USES OF ANSIBLE,ansible installation, CREATING ANSIBLE CONFIGURATION FILE, CREATING THE ANSIBLE HOST FILE, AUTOMATING TASK, ANSIBLE COMMANDS, 
+connection timed out , port22 need to be open,
 Puppet&chef and their playbooks are called cookbooks
 
-so we are looking on hw we are able to manage our infrastruture 
-how are we able to configure our resources
-i think we hv convinced our selves that terfm wil be the ideal option bc it can be reuseable, theres version control and thers also terfrm workspaces
 
 what is cloud formation ???????
 the video for locking the statefile with diamondDB    ????
 
 
+**************************** STARTS
 
 
-***************************** STARTS
+so we are looking on hw we are able to manage our infrastruture 
+how are we able to configure our resources
+i think we hv convinced our selves that terfm wil be the ideal option bc it can be reuseable, theres version control and thers also terfrm workspaces
+
+
 
 how are we able to configure our resources
 how can we configure our resources in aws and how can we configure our servers that we hv created 
@@ -143,7 +146,7 @@ then pasted it in the host file  , we want to acess ansible related task
 vi  /etc/ansible/hosts               
 
 
-
+CREATING THE ANSIBLE HOST FILE 
 ********* 52:15
 since that is the ip address , when it comes to our ansible host inventory file, how are we able to access it
 this server it has a user
@@ -165,7 +168,7 @@ realised the host file is empty
 
 **********1:1:20
 
-recreating host file
+recreating host file (ie adding a host to the host file) DUE to the error above 
 [web]
 54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
 ansible web -m ping
@@ -195,7 +198,8 @@ successful
 creating another host with the k8s/kubernetes server
 
 in the inventory file add 
-vi  /etc/ansible/hosts               
+vi  /etc/ansible/hosts   
+[k8s]
 34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
 changed  user=ec2-user to ubuntu bc when you craete an ubuntu server the default user is ubuntu ....*********************   1:14:30
 vi tmp/kkk.pem
