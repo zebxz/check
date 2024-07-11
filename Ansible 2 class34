@@ -164,8 +164,39 @@ went to his downloads and copied his key and pasted in the file
 ansible web -m ping
 if connection timesd out, it means our port is nt open  and also our key is too open so 
 chmod 400 /tmp/class35.pem
-now we need to open port 22 , the ssh port
+now we need to open port 22 , the ssh port   , 
+so he opened all traffic frm everywher
+are you sure you want to continue ........... yes
+but to automate this 
 
+
+ 1:09:14         ************ AUTOMATING TASK
+
+Because ansible should be able to run while you are sleeping 
+
+so 
+vi  /etc/ansible/ansible.cfg
+
+in the hostkey checking area it was commented so we remove the comment
+ansible web -m ping
+successful
+
+creating another host with the k8s/kubernetes server
+
+in the inventory file add 
+vi  /etc/ansible/hosts               
+34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+changed  user=ec2-user to ubuntu bc when you craete an ubuntu server the default user is ubuntu ....*********************   1:14:30
+vi tmp/kkk.pem
+copy and paste the kkk.pem key 
+chmod 400 /tmp/kkk.pem
+
+ansible k8s -m ping
+
+we can also ping all the host 
+ansible all -m ping 
+sucess
+success
 
 /etc/ansible/hosts  
 [web]
