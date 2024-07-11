@@ -40,9 +40,17 @@ Ansible is an open source AGENTLESS :
 Ansible can be installed in Linux OS. 
 ====================================
 Ticket01: provision an ec2-instance in aws call ansible using ubuntu 
-Search official documentation for creating aws ec2-instance
+if given this ticket but you dnt have a clue
+Search official documentation for creating aws ec2-instance  .. (terfrm aws_ec2 instance)
 
+21:38 
 ********** creating our anisible instance uisng terfrm:
+he started with creating a file in vscode
+vi ec2.tf 
+pasted the resources 
+we are using this data soure it is going to pull our amazon machine image :   ami  = data.aws_ami.ubuntu.id
+
+
 
 resource "aws_instance" "web" {
   ami           = "ami-0c7217cdde317cfec"
@@ -56,21 +64,44 @@ resource "aws_instance" "web" {
 }
 
 
+to delete user   sudo userdel ansible 
+
+************38:33   ............. installing ansible in the created ansible server
+i wont run this as a script bc if i do it wont give me the result that i want
+we are creating a user called ansible 
+
+
+
+script 1
+
 #1 Ansible installation in ubuntu using python3-pip
-sudo useradd ansible
-sudo passwd ansible
+sudo hostnamectl set-hostname ansible                            ******* create a hostname
+sudo useradd ansible                                            
+sudo passwd ansible             **********  add password to ansible
  echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
 sudo su - ansible
 sudo apt install python3
 sudo apt update
 sudo apt install python3-pip
-pip3 install ansible --user
+pip3 install ansible --user                                ********** we are installing ansible as ansible meaning that only ansible can run ansible command 
 sudo apt update
-sudo apt install sshpass
-sudo mkdir /etc/ansible
+sudo apt install sshpass                              *********** to be able to use password
+sudo mkdir /etc/ansible                                ****** creating ansible working dir 
 sudo chown -R ansible:ansible /etc/ansible/
+touch /etc/ansible/hosts                             ********** thers a file called ansible host file,  creating etc ansible host file , so ill touch the file ,
+touch /etc/ansible/anisble.cfg                        ********* the configuration file
+ll 
+and we hv 2files owned by ansible 
+
+so we hv insatlled ansible 
+  **************************************************
+
 vi  /etc/ansible/ansible.cfg
-vi  /etc/ansible/hosts
+vi  /etc/ansible/hosts               
+
+
+script2
+****************** this all we would hv done to hv ansible installed  bt since we used python p, we used option1 
 
 #2 Ansible installation in ubuntu using apt repo
 Ansible installation in ubuntu
