@@ -396,15 +396,19 @@ to check if ansible has been installed
 bc i installed the ansible software as an ansible user i can run ansible
 ansible 
 yes ansible software has been installed 
+the default ansible home dir is etc/ansible so i can cd into it
 ansible@ip-172-31-27-28: $ cd /etc/ansible 
-ansible@ip-172-31-27-28: $/etc/ansible$ ls
+ansible@ip-172-31-27-28: $/etc/ansible$ ls     ,, am expected to these 2 files and roles
 ansible.cfg hosts roles
-
-
+so ansible.cfg  , this is your configuration
+ansible needs to be configured  right
+so the default ansible configuration file is found in this location, in which we can make various settings like locating of our inventory file or host key checking
+so any type of configuration that we want to set for ansible we will do it in the ansible config file , ansible.cfg 
+but this configuration file we can put it any where as long as we reference it bc when you run ansible, the first tin is ansible will read the configuration
  ***** 
 1:21:00
 
-   so whenevre we run ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
+   bc whenevre we run ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
 so whener we run ansile, it wil look for the config file based on the priorities, it wil check if we pass env variable , if its nt there it wil check the pwd
 so if i created a playbk where my ansible.cfg is , ansible wil use the file to read the configuration thats the priority, if it doest find it it wil go to the home of the
 user and then the default 
