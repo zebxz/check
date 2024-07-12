@@ -1055,10 +1055,69 @@ so we have our 3host thatw e are managing , w ehv our host file congigured, we h
 
 we hv adhoc command 
 the command that i hv beeen running like this :
-ansible all -m ping -u  mark 
+ansible all -m ping -u  mark      ...*************** we are passing a module, the task that we hv just been pefrming here is just a ping, we are checking for connectivity
 this is a one line command 
 it is an ansible command that is just one line 
 this command just performs one task on a target/specfic target host 
+this is an adhoc command 
+
+         WHAT IS ADHOC COMMAND 
+An Ad-Hoc command is a one-liner ansible command that performs one task on the target host(s)/group(s).
+
+Unlike playbooks — which consist of collections of tasks that can be reused — ad hoc commands are tasks that you don’t perform frequently, such as restarting a service or retrieving information about the remote systems that Ansible manages.
+
+********** This command will only have two parameters,
+the group / target of a host that you want to perform the task and
+the Ansible module to run.
+
+
+this is default
+********** ALL ansible command , for you to invoke wll start with the key word ansble
+ansible all -m ping -u  
+but the parameters thatu  are passing is your target which is your group (db, bc i hv a grp called db i  created in my host file), it could be an ip address or & the module (ping)
+ansible 172.19.16.16    -    ** i could pass an ip addresss , that becomes my target 
+ansible 172.19.16.16    -m ping                   *********** i can  passa amodule, mayb i wnat to ping that server 
+ansible 172.19.16.16 -m  file     ***************   i can pass a file module
+ansible 172.19.16.16  -m yum                  *********** mayb i want to install a package, i acn use a yum module
+these are the 2parameters that an adhoc command expects 
+
+all these are modules that we will see shortly, we will see what mosule sare 
+but those are the 2 expected parameters
+
+
+Modules:
+
+These are small programs that do some work on the server.
+
+They are the main building blocks of Ansible and are basically reusable scripts that are used by Ansible Ad-hoc and playbooks.
+
+Ansible comes with a number of reusable modules.
+
+The basic syntax of an Ad-hoc command is:
+
+$ ansible [ -i inventory_file ] server1:server2:Group1:Group2 -m [-a arguments]
+
+To list all available modules:
+
+$ ansible-doc -l
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
