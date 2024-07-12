@@ -1187,7 +1187,7 @@ https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/04-Ansible%20mo
 
 
 
-1. Command module
+####  1.) Command module
 Used to execute binary commands    (its like a shell, a program that is used to execute some commands)
 
 It is the default module    (menaing if u dnt pass any other module its this module that is goin to run)
@@ -1218,7 +1218,7 @@ change true       **********  we get a response
 
 
 
-2. Shell Module
+##### 2.) Shell Module
 Used to execute binary commands
 
 It is more superior than the command module
@@ -1236,7 +1236,7 @@ so we are able to use the shell module as a more superior module, whenwevr we wa
 so for commands that hv special character use the shell command 
 
 
-3. File Module
+###########  3.) File Module
 Used to create files and directories
 a) Create a file named file25 
 $ ansible group1 -m file -a "path=file26.txt state=touch"
@@ -1257,33 +1257,110 @@ b) Create a directory file25
 $ ansible db -m file -a "path=/home/ansible/file26 state=directory mode=777 owner=root group=root" --become
 
 ************ creating a dir , u will use the -m file , module , you will give it a path, it could be a relative or absolute path but the state is directory
+then yu can change the permission ie if i wnat the dir to hv a specific permission, the ill use the mode, i can change the owner of the dir 
+e.g
+ansible all -m file -a "path=clas33 state=directory"
+it has created a dir n the homes of ansible
+we see the mode is 0775
+but if i wnated to cahnge the permission, i can pass mode as permission
+so ansible has been able to create the dir using a file module
 
-If state=absent, the file or directory will be deleted
+**************If state=absent, the file or directory will be deleted
+if i want to remove the dir or file the state will be absent
+e.g
+ansible all -m file -a "path=class33.txt state=touch"
 
-4. Copy Module
+it will say 
+changed: true
+path: class33             ********          
+state: absent                  *****************  so it has gone inside of my instance and deleted the dir
+
+so ansible is helping me mange my configuration just by passing a command 
+
+
+########## 4) Copy Module
 Used to copy files from the ansible control node to the remote node or copy files from one location to another in the remote node.
+******* copy module will need to have a source and a destination
 a) From ansible control node to remote node
 $ ansible group1 -m copy -a "src=/source/file/path dest=/dest/location"
 $ ansible group1 -m copy -a "src=/etc/hosts dest=/home/ansible"
+eg
+ansible@ip-172-01-19-131 $ touch auto.txt
+ansible@ip-172-01-19-131 $  echo "hello team" > auto.txt
+ansible@ip-172-01-19-131 $  cat auto.txt
+hello team
+so i have the file text.txt in my ansible control node   and i wnat to copy it to my remeote node 
+so  need to give it a source and a destination
+ansible@ip-172-01-19-131 $ ansible all -m copy -a "src=auto.txt dest=."
+bc its goin to the home of the default user, dest can be pwd or (.) bc its destination that its going 
+
+************* bt we got command ansible not found
+bc he created the file in the wrong place so he exited  and decided to copy to etc/host
+
+*********** 3:21:00
+exit
+ansible@ip-172-31-27-28: $  ansible all -m copy -a "src=/etc/hosts dest=."
+so we see change=true
+src:/home/ansible/.ansible/tmp/                ***** so it sent a file to(frm) the source of this and it sent it to the home of ansible 
+
+so if i ssh 
+ssh 172.31.19.131  and ls
+auto.txt class33.txt hosts
+ansible@ip-172-31-19-131: cat host                                   ******* dnt unerstand wht he did here)
+ill see the host file , it was copied frm my ansible control to all the remote node, so all the remote node now has this file
+
+******* so hve use the copy module to transfer a file frm one location on my control node to another
+
+
 b) From one location in remote node to another location in remote node
 $ ansible db -m copy -a “src=/source/file/path dest=/dest/location remote_src=yes"
+src=yes   ..... means all the operation are happening in the remote node ,  a file is not being copied frm your local 
+so i can copy frm the home of ubuntu and trasnfer to the home of ansible , bt ervytin is in the remote node am nt copying it frm the control node
 
 $ ansible group1 -m copy -a "src=/etc/hosts dest=/home/ansible remote_src=yes"
 
 c) Change permission of a file in a remote node
 $ ansible db -m file -a "dest=/home/ansible/hosts mode=0664"
 
-5. Fetch Module
-Used to download files from a remote node to the control machine.
-$ ansible db -m fetch -a “src=/source/file/path dest=/dest/location"
 
+#### 5) Fetch Module
+Used to download files from a remote node to the control machine.   (its getting them frm d remote &bringing them to your local env, frm ur remote host to your ansible host
+$ ansible db -m fetch -a “src=/source/file/path dest=/dest/location"
+                  ************* the path can be relative or absolute) just give it a path where you want it to copy thefile frm and the destination wher its sending to
+a)
 Will copy the files with a directory structure.
 $ ansible all -m fetch -a "src=./hosts dest=./"
 
+eg                                                its the pwd bt its called host 
+ansible@ip-172-31-27-28: ansible all -m fetch -a "src=./hosts dset=./"
+change:true
+
+so if i ls , ill see these directories, these are the dir that came frm each of the instances (id below)
+ansible@ip-172-31-27-28: ls
+172.31.16.16, 172.31.19.131 , 172.31.27.37  text.txt
+ansible@ip-172-31-27-28: 172.31.16.16 ls
+host                                               ****** i can see the host file 
+
+so when i pass the command to faetch, it actuallly downloaded it with a dir structure from each server/host, so it downloaded the file bt with a dir structure
+but if i dnt want the dir structure 
+
+
+b)
 To fetch the file without a directory structure, use the flat=yes option
 $ ansible all -m fetch -a "src=./hosts dest=./ flat=yes"
 
-6. Apt Module
+eg                **** 3:28:40,   dnt understand what he said 
+ansible@ip-172-31-27-28: ansible all -m fetch -a "src=./hosts dset=./ flat=yes"
+172.31.16.16, 172.31.19.131 , 172.31.27.37  host text.txt
+*** so this is hw we can use ansible to manage our diff env 
+
+
+******* read tru the remaining modules then when we meet next, we will go over the modules then start on seeing hw we can write playbks 
+in the mean time just mk sure you hv installed ansible , confiure it , trying runing ansible using paswd, configure ssh key , try the modules we hv coverered so far
+bt we will pick up frm herer on monday 
+
+
+##### 6). Apt Module
 Used to install a package in the ansible client.
 $ ansible db -m apt -a "name=apache2 state=present" --become
 
@@ -1291,7 +1368,7 @@ $ ansible db -m service -a "name=apache2 state=started" --become
 
 $ ansible db -m apt -a "name=nginx state=present" -b
 
-7. Service Module
+###### 7) Service Module
 You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the connecting user.
 
 $ ansible all -i inventory -m service -a "name=nginx state=restarted" --become -K
