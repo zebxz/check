@@ -1049,7 +1049,7 @@ so we hv configured our env , our env has been set up for automation, we hv exch
 next thing we hv is adhoc commands 
 let me just minimize this cos ill need to detsroy later
 
-
+8)
      ************     ADHOC COMMANDS 
 
 so we have our 3host thatw e are managing , w ehv our host file congigured, we hv exchange the key now we are ready for automation
@@ -1086,6 +1086,7 @@ all these are modules that we will see shortly, we will see what mosule sare
 but those are the 2 expected parameters
 
 
+9)
 ***********************************      MODULES
 Modules:
 
@@ -1135,7 +1136,7 @@ a lot of modules to do diff things
 
 
 2:55:00
-*********** you can go tru the file later on your own , tk time to read to get an understanding of what ansible does
+*********** you can go tru the file later on your own , tk time to HV a little bit of understanding of what ansible does
 https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/03-adhoc-commands
 
 Testing Connection to Ansible Hosts
@@ -1167,6 +1168,210 @@ you can create variable sthat will be used by this grp of instances
 [group_a:vars]
 ansible_user=sammy
 ansible_ssh_private_key_file=/home/sammy/.ssh/custom_id
+
+
+2:57:36
+***********************************************
+
+
+
+
+10)
+   ************  TYPES OF MODULES
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/04-Ansible%20modules/Type_module.md
+
+
+
+1. Command module
+Used to execute binary commands    (its like a shell, a program that is used to execute some commands)
+
+It is the default module    (menaing if u dnt pass any other module its this module that is goin to run)
+
+With the Command module the command will be executed without being proceeded through a shell.
+
+Consequently, some variables like $HOME and operations like <, >, | and & will not work. (ie it doesnt support special character, it is default bt its limited)
+e.g 1     
+$ ansible all -i inventory -a "uptime"
+
+ansible@ip172-31-27-28   ansible all -a "uptime"             ******** i didnt pass any module
+we still get an output (the uptime of my servers) 
+so ansible has gone to my system and run a command called uptime, 
+how did it run a command , i didnt pass any module/program
+so bc i didnt pass any module the default module will run, the default module is called command module 
+-The command module is more secure, because it will not be affected by the user’s environment
+
+e.g2
+ansible@ip172-31-27-28 $ ansible db -a "cat /etc/hosts && pwd"            **********************still using the default module bc i havent specified any module
+ in this case the command failed and it is bc of the && , it is a special character
+command module is limited even though its the default module 
+we hv a more superior module, the shell module
+
+********** but when i run it again without the && , we will get a response 
+$ ansible db -a "cat /etc/hosts"
+change true       **********  we get a response 
+
+
+
+
+2. Shell Module
+Used to execute binary commands
+
+It is more superior than the command module
+
+Command will be executed being proceeded through a shell.
+$ ansible db -a "cat /etc/hosts && pwd"
+
+$ ansible db –m shell –a "cat /etc/passwd && pwd"
+
+e.g
+ansible@ip172-31-27-28 $ ansible all –m shell –a "cat /etc/host && pwd"
+ we get a response
+
+so we are able to use the shell module as a more superior module, whenwevr we want to run a commands
+so for commands that hv special character use the shell command 
+
+
+3. File Module
+Used to create files and directories
+a) Create a file named file25 
+$ ansible group1 -m file -a "path=file26.txt state=touch"
+
+e.g
+if we want to create a file for in all our instances, but we need to give it a path, basiciclaly the name of the file, so we nid to reference a path & the state is touch
+e.g to create a file in all instances:
+ansible all -m file -a "path=class33.txt state=touch"
+it will be created in the home of ansible bc its uisng the default user
+************* if i want to create it in the home of mark then i can specify that 
+ansible all -m file -u mark -a "path=class33.txt state=touch"
+if i ssh in  .......... 
+ssh mark@172.31.19.131  and ls
+i can see the file created by asnisble
+so we use ansible for configuration
+
+b) Create a directory file25
+$ ansible db -m file -a "path=/home/ansible/file26 state=directory mode=777 owner=root group=root" --become
+
+************ creating a dir , u will use the -m file , module , you will give it a path, it could be a relative or absolute path but the state is directory
+
+If state=absent, the file or directory will be deleted
+
+4. Copy Module
+Used to copy files from the ansible control node to the remote node or copy files from one location to another in the remote node.
+a) From ansible control node to remote node
+$ ansible group1 -m copy -a "src=/source/file/path dest=/dest/location"
+$ ansible group1 -m copy -a "src=/etc/hosts dest=/home/ansible"
+b) From one location in remote node to another location in remote node
+$ ansible db -m copy -a “src=/source/file/path dest=/dest/location remote_src=yes"
+
+$ ansible group1 -m copy -a "src=/etc/hosts dest=/home/ansible remote_src=yes"
+
+c) Change permission of a file in a remote node
+$ ansible db -m file -a "dest=/home/ansible/hosts mode=0664"
+
+5. Fetch Module
+Used to download files from a remote node to the control machine.
+$ ansible db -m fetch -a “src=/source/file/path dest=/dest/location"
+
+Will copy the files with a directory structure.
+$ ansible all -m fetch -a "src=./hosts dest=./"
+
+To fetch the file without a directory structure, use the flat=yes option
+$ ansible all -m fetch -a "src=./hosts dest=./ flat=yes"
+
+6. Apt Module
+Used to install a package in the ansible client.
+$ ansible db -m apt -a "name=apache2 state=present" --become
+
+$ ansible db -m service -a "name=apache2 state=started" --become
+
+$ ansible db -m apt -a "name=nginx state=present" -b
+
+7. Service Module
+You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the connecting user.
+
+$ ansible all -i inventory -m service -a "name=nginx state=restarted" --become -K
+
+$ ansible all -m service -a "name=nginx state=stopped" --become -K
+
+8. User Module
+Used to create user accounts.
+Create a password encryption
+Generate the password from your local environment
+$ openssl passwd -crypt <desired_password>
+
+$ ansible db -m user -a "name=Peter password=wiyiMQbLhCRUY shell=/bin/bash" -b
+
+9. Setup module
+This is a default module and is used to gather facts about the hosts.
+
+The setup module returns detailed information about the remote systems managed by Ansible, also known as system facts.
+
+To obtain the system facts for group1, run:
+
+$ ansible group1 -m setup
+
+This will print a large amount of JSON data containing details about the remote server environment.
+
+To print only the most relevant information, include the "gather_subset=min" argument as follows:
+
+$ ansible group1 -m setup -a "gather_subset=min"
+
+To print only specific items of the JSON, you can use the filter argument. This will accept a wildcard pattern used to match strings. For example, to obtain information about both the ipv4 and ipv6 network interfaces, you can use ipv as filter:
+
+$ ansible group1 -m setup -a "filter=ipv"
+
+10. Debug module
+Executes only on the local host to display some information- message or variable value.
+
+We do not need ssh connectivity or password for a debug module. When using the debug module, the arguments will either be
+- msg = to display a message
+- var = to display a variable
+
+**Default variables**
+    - inventory_hostname
+    - inventory_hostname_short
+    - groups/ groups.keys()
+$ ansible all -m debug -a "var='This is a debug module'"
+$ ansible all -m debug -a "msg={{}}"
+
+inventory_hostname
+
+You can use debug to display variables.
+$ ansible all -m debug -a "var='inventory_hostname'"
+$ ansible all -m debug -a "msg={{inventory_hostname}}"
+
+If you have an inventory with entries like 'server1.cloud.production.host' then the command below will return server1.
+$ ansible all -m debug -a "msg={{inventory_hostname_short}}"
+
+You can also use debug module to display groups or groups keys in your inventory.
+$ ansible all -m debug -a "var='groups'"
+$ ansib
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
