@@ -337,6 +337,7 @@ the user is ansible and it has dynamically added the key , my key is in my downl
 so now my vscode has been configured am able to connect to that particular instance but we wont use it tonight , we will use it so i can easily connect 
 click on connect in vscode and hes connected to ansible
  it has now log me inside the home of that particular serever and insid ethis home of ansible i can create a file
+he created text.txt
   so we will use this when we are writing our playbk
 we can just create our playbks here and be able to execute them frm here instead of you writing the playbk in vscode then using ur gitbash , uve ssh into ansible, you create 
 a vi, and paste your code in there
@@ -1114,17 +1115,50 @@ $ ansible-doc -l
 
 ******** so if u hv an invenetory file, right now we are using the host file which is the default, bt if i can config anoda file in my local env
 like w ecalled a file called text.txt  (in vscode when we connected to ansible)
+u can create that file if i want to use it as my inentory
+i can use this as my inventory
+inventory means i hv my ip address inside of that file , 
+then i can do -i option to reference that file  [ -i inventory_file ]
+bc now am nt using the default host , am using an inventory, a file that  has ip adresses of the server
+or i can pass them like this, seperate them with semi colums  ; server1:server2:Group1:Group2 -m [-a arguments
+-m  is for my module 
+- a is  for argument  , this just means if i passs a module like a file  what do i want to do, i can pass some commands 
+so arguments are commands am passing on that particular module 
+
+To list all available modules:
+
+$ ansible-doc -l
+
+,, we can see all the modules you can use/reference inside of the doc
+a lot of modules to do diff things
+
+
+2:55:00
+*********** you can go tru the file later on your own 
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/03-adhoc-commands
+
+Testing Connection to Ansible Hosts
+
+Adjusting Connection Options
 
 
 
 
+*************
+
+To set up a custom SSH key, include the ansible_ssh_private_key_file variable as follows:
+
+~/ansible/inventory
+server1 ansible_host=203.0.113.111 ansible_ssh_private_key_file=/home/sammy/.ssh/custom_id
+server2 ansible_host=203.0.113.112
 
 
-
-
-
-
-
+**********so we uve see all that, we hv seen how an ansible inventory can look like 
+you can pass your servers, you can pass your ansible host, you acn pass your variables inside of your server
+if you are connceting using a pirvate key, you can pass : ansible_ssh_private_key    ***** as a variable 
+the only demo we did is we passed the user and we also passed the passwd
+but we could hv passed the key  and therfeor this ansible will be able to connect that particular user using this particular key
+but we automated the process just by transfering the keys
 
 
 
