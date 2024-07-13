@@ -83,6 +83,7 @@ and we see evrythin has been commanted
 so i need to now insert my host
 i want to create 2grps just as we did it the other time    .......... 23:45
 the grp could have 20 server, 50 servers
+created db and web grp
 
 so basically hes doing the same thing WE Already did in video2
 
@@ -151,7 +152,7 @@ $ ansible db -m service -a "name=apache2 state=started" --become
 $ ansible db -m apt -a "name=nginx state=present" -b
 
 
-                                              ROOT PRIVILEDGES
+                                              ROOT PRIVILEDGES   "-b"
 41:05 ***** 
 
 we need root priviledge to install a package  and  apt or yum will be used interchangeably  e.g yum for redhat and apt for ubuntu
@@ -220,7 +221,58 @@ But  failed for the redhat server
                                     USING YUM 
 to use yum , instead of all , ii use the grp name : web       ( we can use either present or latest)
 
-  ansible@ip-172-31-28-203: $ $ ansible web -m aptm -a "name=httpd state=present" -b
+  ansible@ip-172-31-28-203: $ $ ansible web -m apt -a "name=httpd state=present" -b
+change =true
+
+******** we installed using a yum moduel
+
+********* so we hv apache(or he said package) module, apt module, yum module 
+all these are ansible modules that you can use , modules are small programm that we are using 
+all thses are package managers
+we are using package mangers to be able to install package in our servers
+
+48:42
+***********
+we can use a service module if we need to start our appl
+we can install ngnix and we can start it by using a service module
+
+7) Service Module
+You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the connecting user.
+
+$ ansible all -i inventory -m service -a "name=nginx state=restarted" --become -K
+
+$ ansible all -m service -a "name=nginx state=stopped" --become -K
+
+*********** lets install ngnix on our db group
+installing ngnix using apt
+
+  ansible@ip-172-31-28-203: $ $ ansible db -m apt -a "name=nginx state=present" -b
+change = true          installed
+
+now to start the service                 ************* we need sudo priviledge to start it  so "-b"
+  ansible@ip-172-31-28-203: $ $ ansible db -m service -a "name=ngnix state=restarted" -b
+change=true
+state = started
+
+53:20
+on the other splited part of the terminal
+terraform output
+we see our output
+he copied one of the public ip of the host and bc ngnix runs on port 80
+35.91.190.201:80    in google
+we see apache runing on that particualr ubuntu
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
