@@ -75,8 +75,41 @@ ansible@ip-172-31-28-203: $ vi /etc/ansible/host
 and we see evrythin has been commanted 
 so i need to now insert my host
 i want to create 2grps just as we did it the other time    .......... 23:45
+the grp could have 20 server, 50 servers
+
+so basically hes doing the same thing in video2
+
+to disable key host checking (we need to change to false)
+ansible@ip-172-31-28-203: $  vi /etc/ansible.cfg
+as we see evrytin is commented out , it is bc evrytin is ruuning by default , they are default setting, default just means ansible config is in the etc/ansible  bt if u want 
+to see the actual file run this command and it will generate for you your actual file ansible-config init --disabled -t all > ansible.cfg
+ansible@ip-172-31-28-203: $  ansible-conifg init --disabled -t all > ansible.cfg
+am using this to redirect, its going to overide evrything in the config file so the config file wil now hv content
+
+ansible@ip-172-31-28-203: $  vi /etc/ansible/ansible.cfg                       *but he didnt see the file so he ls
+ansible@ip-172-31-28-203: $  ls
+ansible.cfg                                          ****** ok it created it in my pwd 
+ansible@ip-172-31-28-203: $  cat ansible.cfg
+we see the configfile and most of the tins hv been commented
+
+ 
+31:35 ****************************  FORKS 
+we hv what is called forks
+its like how many servers ansible can confiure ta once ie in parrarrel
 
 
+INTERVIEW QUSETION
+can you configur your ansible so that it execute task on remote host in series , ie one hsot after another
+
+ANS:
+yes you can do that by setting your forks number to 1 so that ist only executing task on one SERVER AT A TIME 
+
+bt right now by default its set to 5, so its able to configure 5servers at the same time, basically in parrarrel 
+
+#************* by deafault keyhost checking has been set to true but now we hv to change it to false
+so vi 
+ansible@ip-172-31-28-203: $  vi ansible.cfg
+and cahnge true to false
 
 
 
