@@ -172,19 +172,19 @@ but if am using yum i need to insatll httpd
 $ ansible db -m yum -a "name=httpd state=present" --become
    thats the package for yum 
 
-  ansible@ip-172-31-28-203: $ $ ansible all -m aptm -a "name=apache2 state=present" --b
+  ansible@ip-172-31-28-203: $ $ ansible all -m apt -a "name=apache2 state=present" -b
 chnage is true
   succes for the first ubuntu server
 change is true
 success for the 2nd ubuntu server
 But  failed for the redhat server  
 
-                                    
+####### 6i)                                   
 45:29
 *************  *****************             IDEM POTENCY
 
 if i run the caommand again  :
-  ansible@ip-172-31-28-203: $ $ ansible all -m aptm -a "name=apache2 state=present" --b
+  ansible@ip-172-31-28-203: $ $ ansible all -m apt -a "name=apache2 state=present" -b
 
 chnage is false                              *********** this is because the package has already been installed & so, ansible will nt install it again
   succes for the first ubuntu server
@@ -199,10 +199,28 @@ ANS:
 Anisble does not reinstall  a package thats already insatlled or run a task that has already been completed 
 
 
+###  6ii)
 ***************************** ABSENT 
  to remove the package ill say state is absent 
 
+  ansible@ip-172-31-28-203: $ $ ansible all -m aptm -a "name=apache2 state=absent" -b
 
+chnage is true                            ***********   pacakge has been removed 
+  succes for the first ubuntu server
+change is true                                       
+success for the 2nd ubuntu server
+But  failed for the redhat server  
+
+
+*********** so now we see we can use yum or apt to install our packages
+
+
+#### 6iii)
+48:07 ************
+                                    USING YUM 
+to use yum , instead of all , ii use the grp name : web
+
+  ansible@ip-172-31-28-203: $ $ ansible web -m aptm -a "name=apache2 state=absent" -b
 
 
 
