@@ -57,6 +57,7 @@ in aws click conncet, he copied the ssh command for the instance  54.185.247.171
 again am doing this still on my terminal (terfrm IDE) but hv already provisIoned dit in my vscode 
 so i can stilluse my vscode to do it, and ill show you when we write playbks 
 
+#### 1) 
 but for now ill just ssh in 
 splits his terminal
 cd into downloads , where the key is , so that it finds the key
@@ -65,6 +66,8 @@ yes
 now am in my instance 
 so i caraeted a user called ansible
 so ill 
+
+####  2)
 ubuntu@ip-172-31-28-203: $ sudo su - ansible 
 
 now am in my ansible server
@@ -73,13 +76,17 @@ provided host list is empty, only localhost is available
 ansible@ip-172-31-28-203: $ ansible localhost -m ping 
 success
 now i can cd and config my host file 
+
+##### 3)
 ansible@ip-172-31-28-203: $ vi /etc/ansible/host
 and we see evrythin has been commanted 
 so i need to now insert my host
 i want to create 2grps just as we did it the other time    .......... 23:45
 the grp could have 20 server, 50 servers
 
-so basically hes doing the same thing in video2
+so basically hes doing the same thing WE Already did in video2
+
+#### 4)
 
 to disable key host checking (we need to change to false)
 ansible@ip-172-31-28-203: $  vi /etc/ansible.cfg
@@ -115,6 +122,7 @@ and cahnge true to false
 
 SO HOST KEY CHANGEHAS BEEN configured , so we wont be asked if i want to connect 
 
+##### 5)
 next
 ansible@ip-172-31-28-203: $  ssh-keygen
 key generated
@@ -129,6 +137,11 @@ ansible@ip-172-31-28-203: $ ssh-copy 172.21.92
 so hv configured my remote hoste to be managed remotelessly
 key 
 
+
+38:21                  contd frm video2
+**************** back to ansible modules
+
+6) yum module
 
 
 
