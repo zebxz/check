@@ -27,3 +27,60 @@ just as we did the other time am goin to b able to ssh in to my insatnce which i
 after sshing , i need to connect with ssh but i wnat to do it passwd less authentication so ill exchange a key
 so this is the processwe already went tru and u shud be familiar with it now
 you first provison ur instances and once evrytin has been installed , then we go ahead and create our ssh keys
+
+output:
+control server
+ansible_publicip = 54.185.247.171
+  instance private ip =[
+"172.31.21.91"
+"172.31.28.218"
+
+ ********************** the host
+inatance pub ip 
+35.91.190.201
+35.89.8.147
+
+rhel private ip
+172.31.21.92
+public
+50.112.62.228
+
+18:30******* evryting has been created so we go into our host file 
+
+so we first ssh into our that instance  (using the public ip): 54.185.247.171
+after which we configure our host file
+in aws click conncet, he copied the ssh command for the instance  54.185.247.171
+
+19:23******* 
+again am doing this still on my terminal (terfrm IDE) but hv already provisIoned dit in my vscode 
+so i can stilluse my vscode to do it, and ill show you when we write playbks 
+
+but for now ill just ssh in 
+splits his terminal
+cd into downloads , where the key is , so that it finds the key
+paste the command 
+yes
+now am in my instance 
+so i caraeted a user called ansible
+so ill 
+ubuntu@ip-172-31-28-203: $ sudo su - ansible 
+
+now am in my ansible server
+ansible@ip-172-31-28-203: $ ansible aa -m ping   ... .. said  he meant to type all but its seeing it that he wants to ping the group
+provided host list is empty, only localhost is available 
+ansible@ip-172-31-28-203: $ ansible localhost -m ping 
+success
+now i can cd and config my host file 
+ansible@ip-172-31-28-203: $ vi /etc/ansible/host
+and we see evrythin has been commanted 
+so i need to now insert my host
+i want to create 2grps just as we did it the other time    .......... 23:45
+
+
+
+
+
+
+
+
+
