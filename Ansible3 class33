@@ -1,4 +1,4 @@
-FORKS, HOST KEY GEN, PASSWORDLESSLY,
+FORKS, HOST KEY GEN, PASSWORDLESSLY,   IDEM POTENCY, ABSENT
 
 
 what command do you use to find your present working dir?  
@@ -162,7 +162,45 @@ failled for the first ubuntu server
 failed for the 2nd ubuntu server
 also failed for the redhat server     *********** bc it couldnt find apache tool
 
-*********  yes when we are working with yum , apache tool is nt part of the 
+*********  yes when we are working with yum module, apache tool is nt part of the yum repo, instead you need to install httpd 
+httpd is the same package but its the package thats in the yum repository  bc were trying to install a package thats not  part of yum repository
+so now we hv to change our package 
+but if i still want to install apache then apache is a package for the pat repository or dibiam 
+$ ansible db -m apt -a "name=apache2 state=present" --become
+   this package is apcahe
+but if am using yum i need to insatll httpd
+$ ansible db -m yum -a "name=httpd state=present" --become
+   thats the package for yum 
+
+  ansible@ip-172-31-28-203: $ $ ansible all -m aptm -a "name=apache2 state=present" --b
+chnage is true
+  succes for the first ubuntu server
+change is true
+success for the 2nd ubuntu server
+But  failed for the redhat server  
+
+                                    
+45:29
+*************  *****************             IDEM POTENCY
+
+if i run the caommand again  :
+  ansible@ip-172-31-28-203: $ $ ansible all -m aptm -a "name=apache2 state=present" --b
+
+chnage is false                              *********** this is because the package has already been installed & so, ansible will nt install it again
+  succes for the first ubuntu server
+change is false                                         ********* this is called idem potency
+success for the 2nd ubuntu server
+But  failed for the redhat server  
+
+   INTERVIEW QUESTION
+WHAT is idem potency 
+
+ANS:
+Anisble does not reinstall  a package thats already insatlled or run a task that has already been completed 
+
+
+***************************** ABSENT 
+ to remove the package ill say state is absent 
 
 
 
