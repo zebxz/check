@@ -151,7 +151,7 @@ $ ansible db -m service -a "name=apache2 state=started" --become
 $ ansible db -m apt -a "name=nginx state=present" -b
 
 
-
+                                              ROOT PRIVILEDGES
 41:05 ***** 
 
 we need root priviledge to install a package  and  apt or yum will be used interchangeably  e.g yum for redhat and apt for ubuntu
@@ -179,7 +179,7 @@ change is true
 success for the 2nd ubuntu server
 But  failed for the redhat server  
 
-####### 6i)                                   
+####### 6iI)                                   
 45:29
 *************  *****************             IDEM POTENCY
 
@@ -199,7 +199,7 @@ ANS:
 Anisble does not reinstall  a package thats already insatlled or run a task that has already been completed 
 
 
-###  6ii)
+###  6iII)
 ***************************** ABSENT 
  to remove the package ill say state is absent 
 
@@ -215,12 +215,12 @@ But  failed for the redhat server
 *********** so now we see we can use yum or apt to install our packages
 
 
-#### 6iii)
+#### 6iV)
 48:07 ************
                                     USING YUM 
-to use yum , instead of all , ii use the grp name : web
+to use yum , instead of all , ii use the grp name : web       ( we can use either present or latest)
 
-  ansible@ip-172-31-28-203: $ $ ansible web -m aptm -a "name=apache2 state=absent" -b
+  ansible@ip-172-31-28-203: $ $ ansible web -m aptm -a "name=httpd state=present" -b
 
 
 
