@@ -249,7 +249,7 @@ installing ngnix using apt
   ansible@ip-172-31-28-203: $ $ ansible db -m apt -a "name=nginx state=present" -b
 change = true          installed
 
-now to start the service                 ************* we need sudo priviledge to start it  so "-b"
+now to start the service                 ************* we need sudo priviledge to start it  so "-b"  , its only admin who can start it
   ansible@ip-172-31-28-203: $ $ ansible db -m service -a "name=ngnix state=restarted" -b
 change=true
 state = started
@@ -261,6 +261,17 @@ we see our output
 he copied one of the public ip of the host and bc ngnix runs on port 80
 35.91.190.201:80    in google
 we see apache runing on that particualr ubuntu
+so we hv used service module to start the service 
+we can still use the service module to stop it 
+  ********  
+  ansible@ip-172-31-28-203: $ $ ansible db -m apt -a "name=nginx state=stopped" -b
+now the service has been stopped
+
+56:18
+
+
+prof diff btw task and ..
+
 
 
 
