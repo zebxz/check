@@ -565,8 +565,9 @@ as we go tru play bks and roles then things will start to mk more sense bt now w
 
 ***********1:46:08
 
-
-                                                  ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom
+11)   
+  ###  
+                                               ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom
 
    ie, hv captured it as a code so am able to reuse it , this an eg of having infrasture,conifguration as a code,i hv my playbk wher i hv my configuration n i can reuse it
 so if you need to execute a task with ansible more than once then write a playbk bt if its just one task you can use an ahod command 
@@ -593,6 +594,8 @@ involving rolling updates, and can delegate actions to other hosts, interacting 
 Playbooks are designed to be human-readable and are developed in a basic text language. There are multiple ways to organize playbooks and the files they include.
 
 
+###
+11a)
   Playbook syntax
 
 Playbooks are expressed in YAML format with a minimum of syntax.
@@ -602,11 +605,11 @@ module.
 A playbook runs in order from top to bottom. Within each play, tasks also run in order from top to bottom.
 Playbooks with multiple ‘plays’ can orchestrate multi-machine deployments, running one play on your webservers, then another play on your database servers, then a third play
 on your network infrastructure, and so on. (ie if u hv multiple play u can hv dif target, one play targeting db instances, the other web instances bc each play wil hv diff
-arguments, it will v a host and it will hv task 
+arguments, it will v a host and it will hv task   *********** 1:53:20
 
 At a minimum, each play defines two things:
 the managed nodes to target, using a pattern
-at least one task to execute
+at least one task to execute (and this task wil hv  a module, ie what are you trying to do in this particular node) 
 
 
 ie, so a playbk can hv multiple play, evry play wil hv some task, task will use a module, each task calls a module, task belongs to a play, a play belongs to a playbk, so i
@@ -624,21 +627,98 @@ ANS:
 ansible wil run frm top to bottom, that concept we say that ansible is procedural , it follows a certain procedure ,frm top to bottom so you hv to order the task 
 so when a task fails ansible will stop, if it encounters smt that fails your play will stop and it will stop right der bc it runs frm top to bottom
 
-wheras
+whereas
 terrafrm is declarative, is nt procedural, it doesnt matter hw the files are organized, doesnt matter hw u put the mainfest files in a dir, bc ist declarative, it will read
 everytin firt then create  a plan , so it doesn tmatter the order of the files 
 thats one of the key differences when it comes to our automation tools
 
 
+1:53:52
+
+####
+11b)
+  Ansible task execution
+
+By default, Ansible executes each task in order, one at a time, against all machines matched by the host pattern.
+
+Each task executes a module with specific arguments. When a task has executed on all target machines, Ansible moves on to the next task.
+
+When you run a playbook, Ansible returns information about connections,the name lines of all your plays and tasks, whether each task has succeeded or failed on each machine,
+and whether each task has made a change on each machine.
+
+At the bottom of the playbook execution, Ansible provides a summary of the nodes that were targeted and how they performed.
+
+General failures and fatal “unreachable” communication attempts are kept separate in the counts.
+
+Desired state and ‘idempotency’
+                                         eg, i wnated to install httpd or apsche, once hv installed it bc i ran a command then that was my desired state
+Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that 
+repeating the task does not change the final state.
+
+Modules that behave this way are often called ‘idempotent.’ Whether you run a playbook once, or multiple times, the outcome should be the same.
+
+
+11c)
+#####
+
+Yaml basics
+
+For Ansible, nearly every YAML file starts with a list.
+Each item in the list is a list of key/value pairs, commonly called a “hash” or a “dictionary”.
+So, we need to know how to write lists and dictionaries in YAML.
+All YAML files can optionally begin with --- and end with ... . This is part of the YAML format and indicates the start and end of a document.
+All members of a list are lines beginning at the same indentation level starting with a "- " (a dash and a space):
+
+
+example:
+         a list always has "-"
+ ---
+# A list of tasty fruits - Apple
+  - Orange
+  - Strawberry
+  - Mango
+...
+
+
+11d)
+#######
+
+A dictionary is represented in a simple key: value form (the colon must be followed by a space):
+# An employee record martin:
+  name: Martin D'vloper 
+  job: Developer
+  skill: Elite
 
 
 
+  ***  
 
+Sample playbook
 
-
-
-
-
+---
+ - name: sonarqube playbook
+   hosts: sonarqube                             ********* need to define who the host are 
+   become: yes                              **** we ll see why am putting it there, become is yes, just like when we are passing it on a command line we said we pass a CLI flag 
+   tasks:
+ - name: install java
+   yum:
+   name: java-1.8.0-openjdk-devel.x86_64 state: present
+ - name: create /opt/sonarqube directory file:
+   path: /opt/sonarqube state: directory
+ - name: Download and Unarchive/ unzip Sonarqube ansible.builtin.unarchive:
+   src: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.8.zip dest: /opt/sonarqube
+   remote_src: yes
+ - name: move sonarqube-7.8
+   command: rm -rf sonarqube-7.8.zip && mv sonarqube-7.8 sonarqube
+ - name: Add a sonar user shell: useradd sonar
+ - name: Give sudo rights to sonar user
+   shell: echo "sonar ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/sonar
+ - name: Recursively change ownership and permission of a directory file:
+   dest: /opt/sonarqube/ owner: sonar
+   group: sonar mode: 0775 recurse: yes
+ - name: start sonarqube
+   shell: sh /opt/sonarqube/sonarqube-7.8/bin/linux-x86-64/sonar.sh start become: yes
+   become_user: sonar
 
 
 
