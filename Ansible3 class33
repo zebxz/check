@@ -868,7 +868,9 @@ then it gives us a summary ie the RECAP
 ********* we had 2task but one is the default task, which was gathering facts 
 so we see it was able to run
 
-
+####
+13C)
+                                            MODIFYING THE PLAYBK
 ********  2:18:19
 for this particular play, our playbk  here doesnt have a name but we can modify it so we give it a name
 
@@ -879,7 +881,7 @@ for this particular play, our playbk  here doesnt have a name but we can modify 
    - name: apache2                       ********* name for our task
      apt:
         name: apache2
-        state: present
+        state: absent
      become: yes                      **** become has to be on the same line as apt bc its nt a child of the module, its part of the module
 
 
@@ -888,9 +890,41 @@ bt bc this has alreday been installed, let me change, let me say state is absent
 
 ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
 so our playbk ran but apache was uninstalled bc the state is absent
+and it ran from top to bottom
 
 
+######
+13D)              2:24:14
 
+                DISABLING MODULE
+
+
+---
+ - name: Install apache2
+   hosts: db
+   gather_facts: false              ***** thatis do not run the setup module
+   tasks:
+   - name: apache2
+     apt:
+        name: apache2
+        state: present
+     become: yes
+
+******* run the ansible playbk again 
+
+ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
+
+PLAY db (install apache)
+
+TASK (apache2)
+ok: 72.31.28.218
+ok: 172.31.21.91
+
+
+PLAY RECAP
+
+
+now  it just runs the play and then goes straight to the task which is apache 
 
 
 
