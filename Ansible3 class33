@@ -722,6 +722,8 @@ Sample playbook
    become_user: sonar
 
 
+##12)
+
 2:00:28                                                REMOTE DEVELOPMENT
 ****************** 
 TO STARt writing our playbk lets go to our vscode
@@ -747,6 +749,9 @@ also the /etc/ansible , if it deosnt , ansible wont hv right to write to this di
 
 **** you can fo;;ow the script if the automated way isnt working for you bt if its working then its easier bc its just configuring that 
 
+####
+12a)
+
 2:04:00
 ********* so now in my vscode , click connect to host which is ansible
 are you sure you want to continue :yes
@@ -761,6 +766,9 @@ ansible ansible.cfg
 ansible@ip-172-31-28-203: cd ansible
 ansible@ip-172-31-28-203: git clone https://github.com/LandmakTechnology/Ansible-mc-series.git
 
+##
+12b)
+
 cloning my entire ansible series      ***** watch 2:07:00
 now if i go to my ansible dir illl see that i hv all these one of whcih is my dir called palybooks
 so inside of the playbks, i can open my simple playbooks and i can see my first play , 
@@ -771,33 +779,115 @@ but b4 we do that lets learn how to write a simple playbk
 2:08:20
 ***** he said Emeka made some changes on that , can yous end that script to everyone for those using windows, Emeka made modification on the script it is going work for you..
 
+##
+12c)
 
-2:08:50                ........... WATCH
+2:08:50                
 **********
 ill create anoda dir inside of this dir, ill call it testing
-HE Just deccide to 
+it wasnt working on th up part of the vscode 
+HE Just deccide to do it on the vscode terminal
 ansible@ip-172-31-28-203: cd 
 ansible@ip-172-31-28-203: mkdir testing
-ansible@ip-172-31-28-203: cd testing           
-ansible@ip-172-31-28-203: tesing.YAMl                       ********** now craete this file inside of the testing dir 
+ansible@ip-172-31-28-203: cd testing       
+ansible@ip-172-31-28-203:~/testings
 
-
-
+he left the twminal and went on bk on the up part of the vscode  and created:  testing.yaml                ********** now craete this file/playbk inside of the testing dir 
 we are writing a yaml file so the extension has to be YAML
 
+now we are in the yaml file 
+
+###
+13)
+
+         WATCH **** 2:11:00     this is hw to write a playbook
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/05-Playbooks/playbook.md
+
+if  i have an adhoc command like this  :ansible db -m apt -a "name=apache2 state=present" -b
+we are installling apache
+i can rewrite this command into a playbk
+
+first start with 3 , ---
+
+  ---
+ - hosts: db                                     ***** these are my host, in my hostfile i hv group called db
+   tasks:                                         ******* bc i can put multiple task, its a list of task, i can pass alist of task
+   - apt: name=apache2 state=present              *******  every task will hv a module , n for this task am using an apt module , apache2
+     become: yes                                   *******  this play bc we knw we are installing a package we hv to use sudo , become=yes
+
+
+so hv written a play without a name , hv jsut wirtten it like that, 
+
+
+###
+13a)
+
+               To run ansible playbook
+        ansible playbook-i inventory_file playbook.yaml
+
+******** back to vscode terminal:
+
+ansible@ip-172-31-28-203:~/testings ls
+testing.yaml
+ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
+******* when you look at this playbk, we are not passing any inventory, our default inventory is in the host, thas the default so bc we already hv a default, we dnt nid to
+pass a -i option , bt if we hv a custom inventory then we ll pass a - i, to tell ansible we hv anoda inventory so dnt use the host file bt bc our inventory is in the host 
+file and we hv a grp called db we ll nt specify -i, instaed we ll reference our playbk
+
+ansible@ip-172-31-28-203:~/testings
+
+PLAY db (gathering facts)
+ok:172.31.28.218
+ok:172.31.21.91
+
+TASK (apt)
+changed: 72.31.28.218
+changed: 172.31.21.91
 
 
 
+PLAY RECAP
 
 
+######## 13b)
+
+Explaining the result     .....  2:17:00
+
+the play is jsut showing db, 
+then we only passed just one task apt but in the result we hv 2task that ran
+the 1st task is named as gathering facts, its your setup module
+remember we said default module, your setup module will run to gather facts
+it has gone to the inventory, it has found that the db grp ha sthese 2instances , these aour inventories
+so it has gathered facts, it has found out facts abt these
+
+then it has ran our task, this task is just called apt" bt this is nt the name , its just written apt 
+then we see changed ie has has installed our apache
+
+then it gives us a summary ie the RECAP
+
+********* we had 2task but one is the default task, which was gathering facts 
+so we see it was able to run
 
 
+********  2:18:19
+for this particular play, our playbk  here doesnt have a name but we can modify it so we give it a name
+
+    ---
+ - name: Install apache2            ******** name for our playbook
+   hosts: db
+   tasks:
+   - name: apache2                       ********* name for our task
+     apt:
+        name: apache2
+        state: present
+     become: yes                      **** become has to be on the same line as apt bc its nt a child of the module, its part of the module
 
 
+******* this is the same playbook bt hv given a name to my task and playbook
+bt bc this has alreday been installed, let me change, let me say state is absent and re run the play
 
-
-
-
+ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
+so our playbk ran but apache was uninstalled bc the state is absent
 
 
 
