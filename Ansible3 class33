@@ -1028,7 +1028,64 @@ it will find a grp called web
 it has installed it and started it cos am using the service to  start it 
 
 
-1:00:00
+2:34:25
+
+Another file, again all these are just sample palybooks 
+lets say i wnat change a line inside of a file
+
+---
+- name: selinux enable or disable
+  hosts: db
+  become: yes
+  vars:                                  ******* am passing variables, hv defined as 
+     status: permissive                          ******* my vars hv defined as status and this status am passing it as permissive
+  tasks:
+     - name: changing SELinux from config file
+       lineinfile:       
+           path: /etc/selinux/config                          ******* i hv a line inside the etc
+           regexp: '^SELINUX='                         ********  this line selinux, we want to  change to permissive
+           line: 'SELINUX={{ status }}'                ******* this is calibras is reading a varaible n the variable name is status bt the value is permissive
+     - name: change directory                                           so it will replace the line selinux as permissive
+
+
+*********  anothe file , uptime.yml
+if i want to chaeck my uptime 
+
+   ---
+ - name: How to use debug module
+   hosts: localhost
+   tasks:
+   - name: Memory info
+     shell: df -h                               *********** i can run a shell script, am running this on my local host, i can run the shell to get d memory info then
+     register: results                         i need to capture that info inside of a variable called results, am using the key word register meaning its goin to  
+   - debug:                                 ******** i can use this debug module
+      msg: "{{results}}"
+      #var: "results"
+
+
+i need to capture that info inside of a variable called results, am using the key word register meaning its goin to capture the info once it runs that bc if i run it as a
+playbk its nt goin to display the info for me here bc the module wil just do the work and it just gives me a summary that everythin has been changed bt if i wan to see d 
+result then i need to capture those result using what is called a register and am capturing it in a variable called result then i us ethe debug module to display that result
+
+  ansible@ip-172-31-28-203:~/testings ansible-playbook uptime.yml
+now i see the memory info  thats the task that ran 
+TASK [memeory info]
+changed [local host]
+
+********* but if i  didnt use register it will just show that it changed, it did smt
+so if i wantit displayed to me i need to capture it using a register, i need to reg in a variable and am using debug to display it bc its my local host so debug module will
+display that register, the result that i captured in that task and now giving me what my memeory info is for my instance
+
+
+
+
+
+
+
+
+
+
+
 
 
 
