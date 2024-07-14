@@ -417,12 +417,12 @@ We do not need ssh connectivity or password for a debug module. When using the d
 $ ansible all -m debug -a "var='This is a debug module'"             ******** it wil perform d task on my ansible control node display the msg on my ansible control node 
 $ ansible all -m debug -a "msg={{}}"                                 *** so am using a debug module for info so that i can get the info y bc if am printing smt like  a file
                                                                   or perfroming a task, its been performed on the remote host, bt if i want info i can use debug so that it
-                                                              prints out info on my ansible control node and with that i can pass d arguments as 
+                                                              prints out info on my ansible control node and with that i can pass d arguments as either variable e.g 
 inventory_hostname
 
 You can use debug to display variables.
-$ ansible all -m debug -a "var='inventory_hostname'"
-$ ansible all -m debug -a "msg={{inventory_hostname}}"
+$ ansible all -m debug -a "var='inventory_hostname'"         ******* d eg, in quotation marks like this bc already this is a variable
+$ ansible all -m debug -a "msg={{inventory_hostname}}"      **** bt i can pass d same tin using a msg argument bt it has to be in these brackets,bc its how we read variables
 
 If you have an inventory with entries like 'server1.cloud.production.host' then the command below will return server1.
 $ ansible all -m debug -a "msg={{inventory_hostname_short}}"
