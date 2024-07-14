@@ -236,7 +236,9 @@ we are using package mangers to be able to install package in our servers
 we can use a service module if we need to start our appl
 we can install ngnix and we can start it by using a service module
 
-7) Service Module
+#### 
+   7) Service Module
+
 You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the connecting user.
 
 $ ansible all -i inventory -m service -a "name=nginx state=restarted" --become -K
@@ -268,6 +270,26 @@ we can still use the service module to stop it
 now the service has been stopped
 
 56:18
+
+############ 8)
+
+ User Module
+Used to create user accounts.  (TO create users, but you wil first craete an encrypted pW for the user)
+Create a password encryption
+Generate the password from your local environment
+$ openssl passwd -crypt <desired_password>
+
+$ ansible db -m user -a "name=Peter password=wiyiMQbLhCRUY shell=/bin/bash" -b
+
+                                ENCRYPTION , SUDO !!
+eg 
+ ansible@ip-172-31-28-203: $ cat /etc/shadow
+permission denied 
+ ansible@ip-172-31-28-203: $ sudo !!
+we see the list  of paswords
+we see ansible pW was encrpted, so pW are stored as encrypted in /etc/shadow file
+
+
 
 
 prof diff btw task and ..
