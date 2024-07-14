@@ -2,7 +2,7 @@ FORKS, HOST KEY GEN, PASSWORDLESSLY, APT/YUM MODULE, ROOT PRIVILEDGES, IDEM POTE
 
 ********* WE HV 2 DEFAULT MODULES : Command module and setup module
 
-56:18   *******we created the user in the control node but we had to ssh into the remote node(home of ansible to see the encryted PW of the user we created in /etc/shadow  ?
+58:16   *******we created the user in the control node but we had to ssh into the remote node(home of ansible to see the encryted PW of the user we created in /etc/shadow  ?
 
 
 what command do you use to find your present working dir?  
@@ -376,6 +376,29 @@ you
 
 ansible os family, ansible pkg_mg , so you can use all these as variables to filter out what resource sor server you want to maintain or configure 
 
+
+1:10:41              ***************
+
+
+To print only the most relevant information, include the "gather_subset=min" argument as follows:
+
+$ ansible group1 -m setup -a "gather_subset=min"
+
+
+eg
+ansible@ip-172.31.28.203: $ ansible web -m setup -a "gather_subset=min"
+ so it wont print out evrytin , just the most inportant, like a summary of all the vraiables you  can use reference
+
+
+******** we can disable this setup madule by passing  a flag called gather facts = false 
+we will see hw to do that in playbks 
+
+
+          INTERVIEW QUESTION
+whan you  pass an option like :gather facts= to false what module are you disabling
+
+ANS: 
+You are diasbling the setup module
 
 
 
