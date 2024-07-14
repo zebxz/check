@@ -564,7 +564,9 @@ as we go tru play bks and roles then things will start to mk more sense bt now w
 
 
 ***********1:46:08
-                                                  ANSIBLE PLAYBOOKS
+
+
+                                                  ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom
 
    ie, hv captured it as a code so am able to reuse it , this an eg of having infrasture,conifguration as a code,i hv my playbk wher i hv my configuration n i can reuse it
 so if you need to execute a task with ansible more than once then write a playbk bt if its just one task you can use an ahod command 
@@ -591,9 +593,28 @@ involving rolling updates, and can delegate actions to other hosts, interacting 
 Playbooks are designed to be human-readable and are developed in a basic text language. There are multiple ways to organize playbooks and the files they include.
 
 
+  Playbook syntax
+
+Playbooks are expressed in YAML format with a minimum of syntax.
+A playbook is composed of one or more ‘plays’ in an ordered list.
+The terms ‘playbook’ and ‘play’ are sports analogies. Each play executes part of the overall goal of the playbook, running one or more tasks. Each task calls an Ansible
+module.
+A playbook runs in order from top to bottom. Within each play, tasks also run in order from top to bottom.
+Playbooks with multiple ‘plays’ can orchestrate multi-machine deployments, running one play on your webservers, then another play on your database servers, then a third play
+on your network infrastructure, and so on.
+At a minimum, each play defines two things:
+the managed nodes to target, using a pattern
+at least one task to execute
 
 
- 
+ie, so a playbk can hv multiple play, evry play wil hv some task, task will use a module, each task calls a module, task belongs to a play, a play belongs to a playbk, so i
+can hv a playbk with 5plays then this diff plays are executing task on diff host bt those task each of them wil be calling  a module 
+
+                                      INTERVIEW QUESTION
+ What programming lang can you write???
+   
+ANS:     YAML
+when you writing playbk, its written in yaml so ull hv an experience writing YAML language
 
 
 
