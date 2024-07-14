@@ -934,8 +934,9 @@ may want to use for automation
 ######## ill just enable it back here to true
 
 
+#### 13e)
 *********** 2:23:55
-lets say after installing this i want to use another module to start it , so ican add anoda task and i has to be n the same lavel/line with the previous task
+lets say after installing this i want to use another module to start it , so i can add anoda task and i has to be n the same lavel/line with the previous task
 
 
    A service module can also be included to start apache with become on task level as follows;
@@ -956,7 +957,7 @@ lets say after installing this i want to use another module to start it , so ica
 
 
 ************ this playbk will fail  bc, state is absent, task start apache2 will fail bc , task apache2 is absent , bc its unable to start apache service
-so for the task to succeed we need to change state to present 
+so for the task to succeed we need to change state to present then it will gather facts ,install apache then use a service module to start it, then d 3 tasks will be success
 ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
 
 
@@ -975,6 +976,26 @@ PLAY RECAP
 failed 
 
 
+### 
+13f)
 
+************** to reduce lines of code instead of passing become twice, on a task level (13e) thereby duplicating it , if all my task require sudo rights then i can pass it
+on a host level 
 
+You can use become on a host level as shown below;
+---
+ - name: Install apache2
+   hosts: db
+   become: yes                             ******** (can use true or yes)
+   tasks:
+   - name: install apache2
+     apt:
+        name: apache2
+        state: present
+   - name: start apache2
+     service:
+       name: apache2
+       state: started
+
+************
 
