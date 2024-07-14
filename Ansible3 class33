@@ -25,7 +25,7 @@ error if you execute it as a script as oppose to u typing 10 commands bk to bk o
 so for one line you can run it directly on the cli but for multiple commands u put it in a script thats waht automation is about 
 
 
-so for ansible w ehv adhoc commands but if we hv multiple commands that we want to pass tru ansible then we can write a play bk 
+so for ansible we hv adhoc commands but if we hv multiple commands that we want to pass tru ansible then we can write a play bk 
 
 anytime we want to create a file , we use the file module
 referring to video3 class33 ************ 1:05
@@ -531,7 +531,29 @@ i typed it the same thing
 ok , tyr it on your gitbash, bc the most imp thing iS that you just want to encrypt the PW 
 
 
+   QUESTION
+1) when u did the ssg ken gen, you configured for 3servers, what if you want to do it for 50 servers , is that what you will do for all 50?
+also when you created a user you first created a PW, but to do it for 50 users, is ther a way to do it in bulk
 
+ANS:
+you can hv a script that can loop tru your invnetory , bt ryt now we v been do in it maunally bc we nid to understand the concept, bt as we go further Tomao we wil look at 
+dynamic inventories if i hv 50servers ders no way ill go into the 50 serevers to get the inventories, the i[p addresses  so i can configure it, with dynamic invnetory, i 
+dnt need to configure my host file, instaed ill use a script taht wil go into aws , even if its 100servers, based on the script am using it goes and and get all the servers
+ips and return it as an inventories then ansible will just use that as an inventory to go and do your configuration
+
+but what ull do here, esp in your prod env goin forward, most companies wil use what is called custom AMIs, ie an AMI that hv created bc am using it for a coy, this AMI will
+be managed by ansible b4 i craete the AMAI, i already exchange the key i pass in the key, the ssh key, you load it with all the software b4 you craete an instance for it
+so when i introduce ansible to mg8 it i dnt nid to worry abt ssh keys anymore bc this custome AMI alraedy has a user called ansible baked in, a pecific key has already been 
+exchanged so my ansible usser is already set so ill create ec2 instances based on this AMi, i can spin up a 100 instances based on this AMi.when i use that AMI , it will 
+already hv been configured to be maintained by ansible but if i just hv insatnces that exists in aws then we ll see hw i can use dynamic inventory script that wil go into aws 
+search tru d region, get all d inastnces and return that as an inventory then ansible wil use the ip addreses and go out and just do configuration.
+
+*** 1:43:20
+then for users, u can use loops , loop tru instances, if i hv maultiple packages that i need to install, i can use like foreloops that will loop tru all the variables that i 
+hv, it will loop tru all the packages and one by one & those wil be installed & the same thing again for users,we can set a foreloop so that it  loops tru all our inventories
+and for each server its configuring a user
+
+as we go tru play bks and roles then things will start to mk more sense bt now we are focusing on the conept and the basics of hw actually things works
 
 
 
