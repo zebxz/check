@@ -322,6 +322,8 @@ ansible@ip-172.32.21.91 :$  sudo !!
 mark: psv/alszgssq                         encrypted but to login as mark , ill pass the PW as mark cos mark is the PW that we encrypted,
                                                  but when using an ansible playbk to craete a user u hv to encrypt d PW using openssl and then pass it 
 
+
+
 ####                           
 9)   Setup module
 This is a default module and is used to gather facts about the hosts.  egused to go to the host to gather facts, to find out wheter python has been installed, to find out
@@ -342,6 +344,47 @@ $ ansible group1 -m setup -a "gather_subset=min"
 To print only specific items of the JSON, you can use the filter argument. This will accept a wildcard pattern used to match strings. For example, to obtain information about both the ipv4 and ipv6 network interfaces, you can use ipv as filter:
 
 $ ansible group1 -m setup -a "filter=ipv"
+
+ansible@ip-172.32.21.91 :$  exit
+ansible@ip-172.31.28.203 :$ ansible web -m setup                    ****** it will return info abt this redhat server
+success
+there are lots of info it returns , its called gathering fact
+
+1:7:50
+*********eg 
+ansible architecture" x86_64
+some othe facts returned are like variable sthat can be accessesed and we wil see hw to do that
+if i wanted to,i can use a variable to find the architecture of my server, i can use it as a filter
+therfor i can use my setup module and call these variables
+ill say if ansible architecture"  is  x86_64 , i can pass condition like that 
+then ansible will go out bc of the setup module, it will look for servers or host that has this architecture and those are the servers that its going to perform  a task on  
+
+also i can lok at 
+ansible _distribution : redhat                   ******** and we will be using this variables
+i can say that i want to configure instances whos ansible distribution is redhat
+eg 
+when i was running the command that we were installing httpd or apache, i would hv passed a variable and say install apache if ansible distribution is debiem bt install 
+httpd if ansible distribution is erdhat 
+so the satup module will go out and check all your servers then whatevr dustribution it returns if the distribution is redhat its goin to install httpd , if the distribution
+is debiam it will install apache 
+so thats hw u can use ansible with a setup module to automate process to dynamically hv it go an install packages based on the operating system, we wil see hw we can do that
+
+*******there are lot of varaiables, key value pairs that you can reference based on what you want
+you 
+
+ansible os family, ansible pkg_mg , so you can use all these as variables to filter out what resource sor server you want to maintain or configure 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
