@@ -11,7 +11,7 @@ MODULE
 
 ********* WE HV 2 DEFAULT MODULES : Command module and setup module
 
-httpd is a package manager for yum (redhat) while apache or debiem is a package manager for apt (ubuntu)
+httpd is a package manager for yum (redhat) while apache or debiem is a package manager for apt (ubuntu) linux
 
 ****** 1:35:30   its actually a better way to install openssl on your local env bc once u destroy your instance, it means ull hv to always be reintalling it but if you hv it
 on your local env and you want to encrypt anything youcan just open openssl, u can use it to encrypt anything and you can send a PW or a key to someone then if they hv openssl 
@@ -1081,13 +1081,13 @@ display that register, the result that i captured in that task and now giving me
 
    2:41:11
 
-i can use conditions
+i can use conditions    , i have  another file install_httpd.yml
 
 i want to install httpd or apache 
  ---
   - name: Simple play to install httpd or apache2
     hosts: all                                             ******** ie both db and web 
-    gather_facts: true                                         ***** gather facts bc i need to read the ansible distribution
+    gather_facts: false                                        ***** gather facts bc i need to read the ansible distribution
     become: yes          
     tasks:
     - name: Installing httpd using yum
@@ -1099,17 +1099,59 @@ i want to install httpd or apache
       apt:
         name: apache2
         state: present
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_distribution == "Ubuntu"                      ********* install apache using apt when ansible distribution is ubuntu  
+
+
+******* so am writing my playbk using a condition, am passing a condition that if my instance is ubuntu then i want to install apache using apt but if its nt ubuntu i want 
+to install httpd
+
+ill run it now with my setup as false 
+
+  ansible@ip-172-31-28-203:~/testings cd../02-conditional\statements/
+  ansible@ip-172-31-28-203:~/testings ansible-playbook install_httpd.yml
+failed 
+
+******* bc hv disabled gather facts its telling me the conditional check ansible distribution failed 
+error while evaluating the distribution
+ansible distribution is undefined
+
+* so i hv an error bc the ansible distribution is undefined bc i hv disabled the setup module , ie gather facts
+
+########## i change gather facts now to true or comment it out, ie its the default module that wil run to gather my facts
+
+   ansible@ip-172-31-28-203:~/testings ansible-playbook install_httpd.yml
+
+
+pLAY db (gathering facts)
+ok:172.31.28.218
+ok:172.31.21.91
+ok: 172.31.21.92
+
+TASK (installing httpd using yum)
+skipping: 72.31.28.218
+skipping: 172.31.21.91
+changed: 172.31.21.92
+
+TASK (installing apache2 using apt)
+changed: 72.31.28.218
+changed: 172.31.21.91
+skipping: 172.31.21.92
+
+PLAY RECAP
 
 
 
+  ******* first task, to install httpd, it skipping bc it gathered facts on all 3servers bt found out that the 1st 2 are ubuntu , therfrore the task skipped it only 
+installed on what is nt ubuntu which is redhat 
+
+for the 2nd task, it did the reseverse
 
 
+****** so i can see i can automate the process, i can use conditions, and am using conditions bc of the inbuilt variables which already exists, and am getting the variables 
+using my setup module, am able to read the variables then made conditions based on the variables & am able to install packages just based on the distribution
+this process has been automated
 
-
-
-
-
-
+**** so this is how you can use conditions
+and you can build in more logics so that ansible will use the logics you build in to knw wheter to install a package or not
 
 
