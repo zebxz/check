@@ -403,8 +403,33 @@ You are diasbling the setup module
 
 
 
+###### Debug module
+Executes only on the local host to display some information- message or variable value.
 
+We do not need ssh connectivity or password for a debug module. When using the debug module, the arguments will either be
+- msg = to display a message
+- var = to display a variable
 
+**Default variables**                             ******** these are some variables within ansible 
+    - inventory_hostname
+    - inventory_hostname_short
+    - groups/ groups.keys()
+$ ansible all -m debug -a "var='This is a debug module'"             ******** it wil perform d task on my ansible control node display the msg on my ansible control node 
+$ ansible all -m debug -a "msg={{}}"                                 *** so am using a debug module for info so that i can get the info y bc if am printing smt like  a file
+                                                                  or perfroming a task, its been performed on the remote host, bt if i want info i can use debug so that it
+                                                              prints out info on my ansible control node and with that i can pass d arguments as 
+inventory_hostname
+
+You can use debug to display variables.
+$ ansible all -m debug -a "var='inventory_hostname'"
+$ ansible all -m debug -a "msg={{inventory_hostname}}"
+
+If you have an inventory with entries like 'server1.cloud.production.host' then the command below will return server1.
+$ ansible all -m debug -a "msg={{inventory_hostname_short}}"
+
+You can also use debug module to display groups or groups keys in your inventory.
+$ ansible all -m debug -a "var='groups'"
+$ ansible all -m debug -a "var='groups.keys()'"
 
 
 
