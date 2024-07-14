@@ -892,11 +892,11 @@ ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
 so our playbk ran but apache was uninstalled bc the state is absent
 and it ran from top to bottom
 
-
+   
+ 2:24:14
 ######
-13D)              2:24:14
-
-                DISABLING MODULE
+13D)          
+*******************       DISABLING MODULE
 
 
 ---
@@ -924,7 +924,19 @@ ok: 172.31.21.91
 PLAY RECAP
 
 
-now  it just runs the play and then goes straight to the task which is apache 
+***************  now  it just runs the play and then goes straight to the task which is apache
+its skipping my gather facts
+so this is hw you disable your setup module by passing gather fact to false
+
+******* but as we will see later when it comes to automation u wnat to use the setup module bc if u diasble it u might nt be able to get acces to some sys variable that you 
+may want to use for automation
+
+######## ill just enable it back here to true
+
+
+*********** 2:23:55
+lets say after installing this i want to use another module to start it , so ican add anoda task and i has to be n the same lavel/line with the previous task
+
 
 
 
