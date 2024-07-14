@@ -159,8 +159,8 @@ $ ansible db -m apt -a "name=nginx state=present" -b
                                               ROOT PRIVILEDGES   "-b"
 41:05 ***** 
 
-we need root priviledge to install a package  and  apt or yum will be used interchangeably  e.g yum for redhat and apt for ubuntu
-so we use axommand called "become" to excalate our priviledges or a " -b " option , -b just means you wnat escalate the priviledges, w ewnt to use sudo prividege
+we need root priviledge to install a package  and  apt or yum will be used interchangeably  e.g yum for redhat and apt for ubuntu (debiem package manager) 
+so we use a command called "become" to excalate our priviledges or a " -b " option , -b just means you wnat escalate the priviledges, w ewnt to use sudo prividege
 
 ansible@ip-172-31-28-203: $ $ ansible all -m yum -a "name=apache2 state=present" --b
 failled for the first ubuntu server
@@ -168,9 +168,9 @@ failed for the 2nd ubuntu server
 also failed for the redhat server     *********** bc it couldnt find apache tool
 
 *********  yes when we are working with yum module, apache tool is nt part of the yum repo, instead you need to install httpd 
-httpd is the same package but its the package thats in the yum repository  bc were trying to install a package thats not  part of yum repository
-so now we hv to change our package 
-but if i still want to install apache then apache is a package for the pat repository or dibiam 
+httpd is the same package but its the package thats in the yum repository  bc were trying to install a package(apache) thats not part of yum repository
+so bc of this now we hv to change our package 
+but if i still want to install apache then apache is a package for the apt repository or dibiam 
 $ ansible db -m apt -a "name=apache2 state=present" --become
    this package is apcahe
 but if am using yum i need to insatll httpd
@@ -225,10 +225,12 @@ But  failed for the redhat server
                                     USING YUM 
 to use yum , instead of all , ii use the grp name : web       ( we can use either present or latest)
 
-  ansible@ip-172-31-28-203: $ $ ansible web -m apt -a "name=httpd state=present" -b
-change =true
+  ansible@ip-172-31-28-203: $ $ ansible web -m yum -a "name=httpd state=present" -b      **** so it will instal httpd on yum on that particular grp &it wilinstall the lastest
+it will check my web grp whic is redhat                                                      nd am using -b bc we are installing a package, we nid sudo priviledges
 
-******** we installed using a yum moduel
+change =true                                                                                         
+
+******** we installed using a yum module
 
 ********* so we hv apache(or he said package) module, apt module, yum module 
 all these are ansible modules that you can use , modules are small programm that we are using 
@@ -507,6 +509,19 @@ ungrouped
 
 ********* these are some of the basic modules that w eneed to knw , bt again as we lookde, ANSIBLE has a ton of modules that are there, public modules taht are there that
 you can use 
+
+
+
+###### complaint
+am trying to run the openssl its nt working, i copied the command diresctly frm the scripte
+
+ANS
+OK dnt copy, type it bc atimes the operator may see it as smt different
+
+i typed it the same thing
+ok , tyr it on your gitbash, bc the most imp thing iS that you just want to encrypt the PW 
+
+
 
 
 
