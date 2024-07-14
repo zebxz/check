@@ -1076,6 +1076,30 @@ changed [local host]
 so if i wantit displayed to me i need to capture it using a register, i need to reg in a variable and am using debug to display it bc its my local host so debug module will
 display that register, the result that i captured in that task and now giving me what my memeory info is for my instance
 
+****** so that is the uptime and httpd.yml 
+
+
+   2:41:11
+
+i can use conditions
+
+i want to install httpd or apache 
+ ---
+  - name: Simple play to install httpd or apache2
+    hosts: all                                             ******** ie both db and web 
+    gather_facts: true                                         ***** gather facts bc i need to read the ansible distribution
+    become: yes          
+    tasks:
+    - name: Installing httpd using yum
+      yum:
+        name: httpd
+        state: present                                                                                      when its nt ubuntu that means its redhat
+      when: ansible_distribution != "Ubuntu"                        **** bt am passing a when, am saying install this when d ansible ditribution is nt ubuntu
+    - name: Installing apache2 using apt
+      apt:
+        name: apache2
+        state: present
+      when: ansible_distribution == "Ubuntu"
 
 
 
