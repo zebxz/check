@@ -736,8 +736,14 @@ host ansible
    user:    ansible
    identifyfile: ~?downloads/elks-instance.pem
 
- ull need to run this script in the link below, once you login in, you will need to follow this procedure here bc if u do jst the config above, ansible wil nt own the 
+ ull need to run this script in the link below, once you login in, you will need to follow this procedure here bc if u do jst the config above, ansible wil nt own the home
+the home will stilll be owned by root, so you can ssh into your ansible control machine
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/remote-config.md
+
+2:03:00
+***** anisble has to own the authorized keys:      $ sudo chown ansible:ansible authorized_keys
+also the /etc/ansible , if it deosnt , ansible wont hv right to write to this dir 
+ $ sudo chown -R ansible:ansible /etc/ansible
 
 
 
