@@ -347,6 +347,9 @@ To print only specific items of the JSON, you can use the filter argument. This 
 
 $ ansible group1 -m setup -a "filter=ipv"
 
+
+#########a)
+
 ansible@ip-172.32.21.91 :$  exit                    the ****** host instance/ansible home to go bk to the contorl node
 ansible@ip-172.31.28.203 :$ ansible web -m setup                    ****** it will return info abt this redhat server
 success
@@ -355,15 +358,15 @@ there are lots of info it returns , its called gathering fact
 1:7:50
 *********eg 
 ansible architecture" x86_64
-some othe facts returned are like variable sthat can be accessesed and we wil see hw to do that
+some of the facts returned are like variables that can be accessesed and we wil see hw to do that
 if i wanted to,i can use a variable to find the architecture of my server, i can use it as a filter
 therfor i can use my setup module and call these variables
 ill say if ansible architecture"  is  x86_64 , i can pass condition like that 
 then ansible will go out bc of the setup module, it will look for servers or host that has this architecture and those are the servers that its going to perform  a task on  
 
-also i can lok at 
+also i can look at 
 ansible _distribution : redhat                   ******** and we will be using this variables
-i can say that i want to configure instances whos ansible distribution is redhat
+i can say that i want to configure instances whose ansible distribution is redhat
 eg 
 when i was running the command that we were installing httpd or apache, i would hv passed a variable and say install apache if ansible distribution is debiem bt install 
 httpd if ansible distribution is erdhat 
@@ -377,6 +380,7 @@ you
 ansible os family, ansible pkg_mg , so you can use all these as variables to filter out what resource sor server you want to maintain or configure 
 
 
+#########  b)
 1:10:41              ***************
 
 
@@ -402,7 +406,7 @@ You are diasbling the setup module
 
 
 
-
+10)
 ###### Debug module
 Executes only on the local host to display some information- message or variable value.
 
@@ -432,11 +436,77 @@ $ ansible all -m debug -a "var='groups'"
 $ ansible all -m debug -a "var='groups.keys()'"
 
 
+###### a)
+*********   1:15:26
+eg
+ inventory hostname of  db host group
+
+ansible@ip-172.31.28.203: $   $ ansible db -m debug -a "var='inventory_hostname'"                  ***** am specifying this is a variable
+success
+ineventory hostname : 172.31.21.91                 ******* on my db the iventory hostname are theese two 
+success
+ineventory hostname : 172.31.28.218               ***** bc its a debug module ,it will return this info
+
+but if i want info for ansible os family
+ansible@ip-172.31.28.203: $  ansible db -m debug -a "var='ansible_os_family'"      *****  i want to find out for my db what are my os ansible fmaily 
+success
+varIble is nt defined 
+ success
+varIble is nt defined
+
+ansible@ip-172.31.28.203: $    ansible db -m debug -a "var='ansible_distribution'"   
+success
+variable not defined
+ansible@ip-172.31.28.203: $    ansible db -m debug -a "gather_subnet=min'"              ******* 1:18:13
+we see a lot of variables like when we ran setup module
+
+******* dnt knw why its saying vaiable not defined , well thats how u use  a variable  but if you are pasing it as a msg put it in bracket/calibras
+
+ansible@ip-172.31.28.203: $   ansible db -m debug -a "msg={{inventory_hostname}}"      
+success
+msg: 172.31.21.91
+succes 
+msg:    172.31.28.203             ***** we see the key word msg ,the key is msg
+
+*** so all these varaiables are been read using our debug module and its displaying info on our system, inventory hostanme is been displayed as a msg
+
+so thats how we use debug module
+as we go further we ll see hw we can this debug
 
 
+### b)
+********** 
+
+TO KNOW THE GROUPS I HAVE 
+
+$ ansible all -m debug -a "var='groups'"
 
 
+###  c)
+********* 
+  to know the keys i have 
+i can pass it as a msg or a variable 
 
+
+ansible@ip-172.31.28.203: $ ansible db -m debug -a "msg='groups.keys()'"
+  172.31.21.91 success
+  msg: 
+   all
+ungrouped
+   db
+  web                                     **** so these are the grps that i hv in my invenory
+
+172.31.28.218 success
+  msg: 
+   all
+ungrouped
+   db
+  web     
+                              so am using a degug to read my inventory and the variables that are defined inside of my inventory and these variables are been retuned as grp
+
+
+********* these are some of the basic modules that w eneed to knw , bt again as we lookde, ANSIBLE has a ton of modules that are there, public modules taht are there that
+you can use 
 
 
 
