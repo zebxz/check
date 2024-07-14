@@ -273,7 +273,7 @@ now the service has been stopped
 
 ############ 8)
 
- User Module
+8) User Module
 Used to create user accounts.  (TO create users, but you wil first craete an encrypted pW for the user)
 Create a password encryption
 Generate the password from your local environment
@@ -300,15 +300,46 @@ unknown                                                           ********** he 
 psv/alszgssq                                                       ***********i hv encrypted the PW n it has been genearated,this is the PW we need to pass as encrypted
 
 *********** back on the other part of the terminal 
-using the user module 
- ansible@ip-172-31-28-203: $
- 
+using the user module , i will craete the user in the db grp
+ ansible@ip-172-31-28-203: $   ansible db -m user -a "name=mark" password=psv/alszgssq shell=/bin/bash" -b
+change=true                         ********   it has created a user mark
+home : "/home/mark"                        created a home 
+ password :                            NOT LOGGING PASSWORD            ******* so u cant use d encryted PW a sa login PW, what u nid to use is d decrypted PW(mark)
+its saved in the/ etc/paswd thats why its encrypted
 
+1:03:19
+to see the encrypted PW , we need to ssh into one of the instances 
+psv/alszgssq   
+ansible@ip-172-31-28-203: $  ssh 172.31.21.91
+welcme to ubnuntu                                       ******* now in the home of ansible 
+ansible@ip-172.32.21.91 :$ cat /etc/passwd
+mark : /home/bin/bash
+ansible@ip-172.32.21.91 :$  cat etc shadow 
+permission denied
+ansible@ip-172.32.21.91 :$  sudo !!
+mark: psv/alszgssq                         encrypted but to login as mark , ill pass the PW as mark cos mark is the PW that we encrypted,
+                                                 but when using an ansible playbk to craete a user u hv to encrypt d PW using openssl and then pass it 
 
+####                           
+9)   Setup module
+This is a default module and is used to gather facts about the hosts.  egused to go to the host to gather facts, to find out wheter python has been installed, to find out
+what package manager this server uses..... this is also a default module
 
+The setup module returns detailed information about the remote systems managed by Ansible, also known as system facts.
 
+To obtain the system facts for group1, run:
 
+$ ansible group1 -m setup
 
+This will print a large amount of JSON data containing details about the remote server environment.
+
+To print only the most relevant information, include the "gather_subset=min" argument as follows:
+
+$ ansible group1 -m setup -a "gather_subset=min"
+
+To print only specific items of the JSON, you can use the filter argument. This will accept a wildcard pattern used to match strings. For example, to obtain information about both the ipv4 and ipv6 network interfaces, you can use ipv as filter:
+
+$ ansible group1 -m setup -a "filter=ipv"
 
 
 
