@@ -1510,6 +1510,37 @@ into multiple task like bc this is to start,we can pass this as an handler:
 particular role
 
 
+    **** its updating repository, that takes a while 
+
+3:15:37 *********** 
+we can look at variables   , working_with_vars_yml
+
+when you are working with variable, you just have to specify the variables by using the keyword vars:
+you can pass your variable here
+
+the when you want to reference them ur just using the double calibrases and that will call the specify variable 
+but you can also put the variable inside of seperate file as we will see
+
+
+
+##############     input_output .yml
+
+  if i wnat my playbk to run but with user input then am goin to set what is called prompt 
+
+   private = no       *** this means if when i type the name it will show , but if its a PW 
+ private =yes          ******** then it is going to be hidden 
+
+
+  ****** then 
+  tasks:
+   - debug:
+      msg: "The username is: {{user_name}} and password is: {{password}}" 
+
+       *********  am using the debug bc i pased these prompt as variable so my username has now become a prompt variable 
+
+
+
+
 
 
 
