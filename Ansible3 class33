@@ -1005,7 +1005,9 @@ becomes for each the several tasks we hv
 
 ***** so this is how you can write a basic playbook
 
-
+                                     EXPLAINING MORE PLAYBOOKS
+###########
+13g)
 inside of our playbooks here ILL Just walk you through  (first play.yml)
 ******** 2:32:12
 
@@ -1015,7 +1017,9 @@ inside of our playbooks here ILL Just walk you through  (first play.yml)
       msg: 'This is the day'
 ...
 
-******* so inside this ansible dir, i have multiple playbooks to insatll like httpd on a web repo 
+#####
+13h)
+******* so inside this ansible dir, i have multiple playbooks,  to install like httpd on a web repo 
 so ill cd 
 
 ansible@ip-172-31-28-203:~/testings cd
@@ -1031,6 +1035,7 @@ it has installed it and started it cos am using the service to  start it
 
 
 2:34:25
+### 13i)
 
 Another file, again all these are just sample palybooks 
 lets say i wnat change a line inside of a file
@@ -1049,7 +1054,8 @@ lets say i wnat change a line inside of a file
            line: 'SELINUX={{ status }}'                ******* this is calibras is reading a varaible n the variable name is status bt the value is permissive
      - name: change directory                                           so it will replace the line selinux as permissive
 
-
+##
+13j)
 *********  anothe file , uptime.yml
 if i want to chaeck my uptime 
 
@@ -1082,6 +1088,8 @@ display that register, the result that i captured in that task and now giving me
 
 
    2:41:11
+###
+13k)
 
 i can use conditions    , i have  another file install_httpd.yml
 
@@ -1157,6 +1165,8 @@ this process has been automated
 and you can build in more logics so that ansible will use the logics you build in to mk decisions on wheter to install a package or not
 
 
+#### 
+13l)
 
   2:47:00  ************* /without_facts.yml
 
@@ -1212,15 +1222,35 @@ msg
 distribution name is: Red"
 os name:  linux
 
+                                                                                                 ##################
+******** hv used this by running a shell script to find this but just bc hv disabled gather facts ( i think its the shell script that made it work bc in "13l" above when we
+  changed gather facts to false the script failed
 
 
+but if i was to use gather facts then this is how short my playbk will be bc it will find the facts for me and i dnt need to run any commands, i can just use a debug module
+just to call that a particular variable bc this particular variable already exists in my setup so am just reading this particualer variable 
+
+####
+13m)
+
+ANother script   :  with_gatherfacts.yml
+
+   ---
+ - hosts: all
+   gather_facts: true                *****  bc it will find the facts for me 
+   tasks:
+   - debug:                                *************    i can just use a debug module just to call that particular variable
+      msg:
+       - "The os distribution is: {{ansible_distribution}}"            **** bc this variable already exists in my setup so am just reading thsi particular variable 
+       - "THe os name is: {{ansible_system}}"
+       - "The os family is: {{ansible_os_family}}"
+       - "THe mount points are :{{ansible_mounts}}"
 
 
+   **** 
 
 
-
-
-
+now if i run it 
 
 
 
