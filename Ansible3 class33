@@ -1459,15 +1459,15 @@ bt if i can just show you an example , if i was installing tomcat
    
 3:06:00
 *********** where is the tomcat port configured inside of my tomcat??
-so i need to find out where this tomcat is actually configure so inside of my tomcat i hv another file called server.xml.j2
+so i need to find out where this tomcat is actually configured so inside of my tomcat i hv another file called server.xml.j2
 i can copy a server.xml frm a tomacat
-when i opeen the file and scroll open thers what is called a connector port , this is your tomcat port where that runs
+when i open the file and scroll open thers what is called a connector port , this is your tomcat port where that runs
 and by default here it will just hv 8080  but i want to dynamically change the port so am passing this tomcat port as a variable 
 so hv copied this sever.xml file and bc its a variable its a ginger2, this is ginger2 templating bc this one becomes as a template
 so your file needs to end with a .j2 which is the extention for ginger templating so bc am using this server.xml as a template
 ********
 its a template bc i hv a variable that will only be read when the playbk is running so this becomes a dynamic file, so i cant use a copy module to copy this bc a copy
-module  will nt be able to interpolate the value , 
+module will nt be able to interpolate the value , 
 copy module will just copy the file as it is and just transfer it bt bc i want to dynamically read values as the file is been copied then ill use a template module 
 
 ***** so for this template module am installing tomcat bt i hv to replace, i hv to get this file server.xml and i need to replace it in the confg dir cos thats wher that
@@ -1495,7 +1495,19 @@ set the default java
 then download tomcat
 when it downloads it its going to unarchive it , all this is a module 
 
+3:13:48
+this will take a while to install tomcat
+but we are now using this playbk to run that 
+but as we wil see tomao thers now an even easy way of doing this bc now you can create a role and you can call the role whenevr u need them so youcan breakup this playbk
+into multiple task like bc this is to start,we can pass this as an handler:
 
+   - name: Starting tomcat
+        shell:  nohup /usr/local/latest/bin/startup.sh &
+
+******* we can pass this the template part inside of our template then the rest we can leave them as task                    
+
+ ******** then all the variables we can put them inside the variable dir or variable file then once that role has been created then we just able to call nad reuse that 
+particular role
 
 
 
