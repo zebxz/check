@@ -1414,7 +1414,7 @@ bt if i can just show you an example , if i was installing tomcat
       set_java: jre-1.8.0-openjdk
       req_tomcat_ver: 9.0.83
       tomcat_url: http://mirrors.estointernet.in/apache/tomcat/tomcat-{{req_tomcat_ver.split('.')[0]}}/v{{req_tomcat_ver}}/bin/apache-tomcat-{{req_tomcat_ver}}.tar.gz
-      tomcat_port: 8090                           ******* am also passing the port as a var, in prod we always want to use a custom port, so i can pass 8090 0r 8095
+      tomcat_port: 8095                            ******* am also passing the port as a var, in prod we always want to use a custom port, so i can pass 8090 0r 8095
     become: yes                                         bt for me to customize is bc am passing this tomcat variable 
     tasks:
       - name: Updating repos
@@ -1459,19 +1459,21 @@ bt if i can just show you an example , if i was installing tomcat
    
 3:06:00
 *********** where is the tomcat port configured inside of my tomcat??
-so i need to find out where this tomcat is actually configured so inside of my tomcat i hv another file called server.xml.j2
-i can copy a server.xml frm a tomacat
-when i open the file and scroll open thers what is called a connector port , this is your tomcat port where that runs
-and by default here it will just hv 8080  but i want to dynamically change the port so am passing this tomcat port as a variable 
+so i need to find out where this tomcat is actually configured so inside of my tomcat i hv  what we call the server.xml  
+so i can copy a server.xml frm a tomacat
+when i look at the particular server.xml
+when i open the file and scroll up thers what is called a connector port , this is your tomcat port where that runs
+but by default here it will just hv 8080  but i want to dynamically change the port so am passing this tomcat port as a variable 
 so hv copied this sever.xml file and bc its a variable its a ginger2, this is ginger2 templating bc this one becomes as a template
 so your file needs to end with a .j2 which is the extention for ginger templating so bc am using this server.xml as a template
 ********
 its a template bc i hv a variable that will only be read when the playbk is running so this becomes a dynamic file, so i cant use a copy module to copy this bc a copy
 module will nt be able to interpolate the value , 
 copy module will just copy the file as it is and just transfer it bt bc i want to dynamically read values as the file is been copied then ill use a template module 
+(install_tomcat.yml)
 
 ***** so for this template module am installing tomcat bt i hv to replace, i hv to get this file server.xml and i need to replace it in the confg dir cos thats wher that
-server.xml is 
+server.xml is                ******* i bliv the 2 files is the server.xml & the dynamic file (ginger) we now hv inside the server.xml file , the giner is an xtension file
 so what am doing is that am just replacing the file ,i hv an exact copy of the file but am using a template to go and replace those 2files bc when it replaces it, it wil 
 replace it with this file( install_tomcat.yml) that has a diff port bc am pasing my tomcat port as a variable that is now goin to be passed inside of the server.xml file 
 and now that port insid eof the instance will be 8095,instaed of 8090 ,so am using this template module to be able to install  tomcat so everything has been passed as 
