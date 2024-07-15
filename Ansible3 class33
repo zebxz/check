@@ -1537,9 +1537,82 @@ but you can also put the variable inside of seperate file as we will see
       msg: "The username is: {{user_name}} and password is: {{password}}" 
 
        *********  am using the debug bc i pased these prompt as variable so my username has now become a prompt variable 
+so am saying the username is  {{user_name}} and password is: {{password}}" 
+bc hv passed them as vars_prompt, so evryting here becomes a varaible bc hv used the keyword var 
+
+   ******* so thats how you can use inputs and i can use debug to output those specify variables
+
+
+*********** 3:18:02
+
+                                            LOOPS    ( without_loop.yml)
+
+Loops is very imp, without it if you are given 
+if i want to install packages, i wnt to insatll wget
+
+######################################################################
+it has replaced the tomcat but its not found
+we will need to get the url for the tomcat
+that url doesnt exists thats why its failing, failing to download 
+but basically that playbk once you look at it, update the url, it is goin to install tomcat for you
+###########################################################################################################
 
 
 
+  i wnat to install pip, tree, vim,
+if i hv more packages, it just means ill just keep writing but this becomes a very long playbk
+so instaed of writing all these long lines of code, i can use a loop, 
+ 
+        ********    loops.yml
+            in this loop am just saying
+   ---
+  - hosts: web
+    gather_facts: false
+    become: yes
+    tasks:
+    - apt:                     ******* am using apt
+       name: "{{item}}"              ******** and the name is , am passing here as a variable called item (i guess the callibres)
+       state: present                   ****** present 
+      loop:                                ******* then once i pass the loop, it is goin to loop tru these items, these will be called items 
+          - git                                        and for evry item, it will be installed.
+          - wget
+          - pip3
+          - tree
+          - vim
+
+****** so i can use a loop and just use list my items like this bt the name of the thing swe wnt to install is called an item, so it will be looping , eg
+the first time the item is git it will be replaced in the calibres, it continues until all are installed
+
+        ********** he ran the files but they failed 
+
+ (loops.yml)
+3:27:26 ******* success 
+he had to change apt to yum to insatll on web 
+
+
+  **** tomao we will go tru (using import and include) thers a reason i skipped it 
+bc when we will be talking abt roles this is wher we  will be using how you can import a role or how you can include a role and what are the diff
+we ll look at asnible roles and dynamic inventory 
+
+
+    QUESTION
+1) you said playbook is procedural  so is it realy necesssary  for us to use handler to notify the next process if it would run anyway??
+
+    ANS: 
+Yes, as we look at what handlers do, they only run when notifed bc if lets say ders no change in the httpd, its already running, ders no need to run this task (handler part
+so ansible shud just go ahead and run the nxt play, ders no need to run this task if its nt necessary so this is just a way of cleaning up our playbk so that task only runs
+when necessary and therfore handlers is a way of doin that, creating depencendies btw task and they will run run if they are notified, if there is a change then handler is
+notified if ders no change then thers no need for it to run 
+
+
+
+### just go over playbooks bc this is the really key of ansible, ie you knowing how to write  a playbk and executing using the diff modules
+and if you go to interview you can say that you hv experience, you use diff modules to do config 
+you v used like cariable to craete conditions so u are able to write a playbk that if you hv a fleet of 100instances but some of them windows and some are linux bt u just 
+want to patch ununtu servers or you hv multiple patches for ubuntu , windows and redhat, so you can hv a playbk that uses condition it says 
+if its a windows server then this is the patch ur to apply and vice versa, then your using the same playbk but with conditions then ur just running one playbk and ansible is
+goin out into all your servers and bc of the gathering facts, it finds out on its own which server is what, if its windows then it applies the appriopriate patch vic ecersa
+thats what automation is then u dnt hv to be 
 
 
 
