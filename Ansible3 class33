@@ -1287,7 +1287,8 @@ now the 2task are dependent on each other , installation had to be executed befo
 so bc the task are dependent on each other then we can create dependencies, ansible gives you a way of creating dependencies btw task & for the dependencies we can use handlers
 
 
-             WHAT ARE HANDLERS
+###########
+     13n)        WHAT ARE HANDLERS
 these are just like ordinary task but the diff is handlers are only executed when notified, when there is a change 
 
 ---
@@ -1326,8 +1327,8 @@ notify & i also need to pass the name, what is this task notifying?? its notifyi
 notifies the handler , this happens whenevre you hv a change in this task it wil trigger the handler if ders no change in the task the handler wont be triggerd
 
 so if am installing httpd, it means that ill record a change in this, if thers a change in this then the handler has to be triggered to start it, if i havent changed this:
-- start httpd , then this :  state: started, shudnt be trigerred, so now am creating dependencies as oppose to this(the first part) & ithinl also 13e above, when these are
-independent task  are independent task, they are depending in a way bc for the httpd to start depends on the service but the 2tasks are running indenpendently, there is
+- start httpd , then this :  state: started, shudnt be trigerred, so now am creating dependencies as oppose to this(the first part) & i think also 13e above, when these are
+are independent task, they are depending in a way bc for the httpd to start depends on the service but the 2tasks are running indenpendently, there is
 nothing that is creating a dependency to them 
 now that we knw that the first part was for demo, i can remove it 
 
@@ -1354,11 +1355,42 @@ changed:[172.31.21.92]
 RUNNING HANDLER: failed
 PLAY RECAP  ....... failed
 
+********** handler failed bc it wa snotified  to start bt httpd wa semove 
+so anything thers a change in the task, it wil notify the handler
+
+so this is how you can easily create dependencies where by only when you have changes
+
+#if i change the task state to:  present and run it , it will insatll it and notify the handler and it will start it 
+ right now w ehad 2task that ran 
+
+   PLAY [WEB]
+TASK [installed httpd]             
+changed:[172.31.21.92]
+RUNNING HANDLER: changed
+PLAY RECAP  ....... ok
+
+
+###### but if i re run the play 
+bc there wont be  a change in the 1st task so the handler willl nt be notifed
+PLAY [WEB]
+TASK [installed httpd]             
+changed:[172.31.21.92]
+PLAY RECAP  ....... ok
+
+***** so this is how handlers work , only work when notified and thats hw we create depencies btw task, you can use an handler 
 
 
 
+###                TEMPLATE MODULE 
 
+13o)
 
+if i wanted to install the httpd 
+
+3:01:01
+
+when you use a copy module, it basically mean we are just copying  a file frm my local hostor ansible host and am copying it to a remote host 
+so i can use copy module bt it only copy ststic data, ie the file does nt change at the point of execution
 
 
 
