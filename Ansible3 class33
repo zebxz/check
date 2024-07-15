@@ -1280,7 +1280,7 @@ we see it gather facts
 #########  lets looks at handlers
 
 
-2:52:00
+2:52:00                          ********** this needs to be xplained again
    INTERVIEW QUESTION
 the first playbook that i ran to install httpd, we see that we we installed httpd then we started it, 
 now the 2task are dependent on each other , installation had to be executed before "start" is executed, if the first state is absent the 2nd task will fail 
@@ -1390,7 +1390,17 @@ if i wanted to install the httpd
 3:01:01
 
 when you use a copy module, it basically mean we are just copying  a file frm my local hostor ansible host and am copying it to a remote host 
-so i can use copy module bt it only copy ststic data, ie the file does nt change at the point of execution
+so i can use copy module bt it only copy static data, ie the file does nt change at the point of execution
+whenever a file doesnt change it means the file doesnt have variables that will be dynamically changed like ansible needs to read a variable when its copying that file
+ so copy module is only used on ststic, a file does not change bt if a file has a variable that needs to be read at runtime then copy module will fail thats why we will
+use a template module 
+
+#########  so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run 
+eg
+  am missing a file , (ginger2, right here)
+bt if i can just show you an example , if i was installing tomcat
+
+   this is  a playbk to install tomcat
 
 
 
