@@ -1433,15 +1433,15 @@ bt if i can just show you an example , if i was installing tomcat
       - name: Downloading required tomcat
         get_url:
           url: "{{tomcat_url}}"
-          dest: /usr/local
+          dest: /usr/local 
       - name: Extracting downloaded tomcat
-        unarchive:
-          src: "/usr/local/apache-tomcat-{{req_tomcat_ver}}.tar.gz"
-          dest: /usr/local
-          remote_src: yes
-      - name: Renaming tomcat home
+        unarchive:                                                                 3:13:27******* its unarchaving it 
+          src: "/usr/local/apache-tomcat-{{req_tomcat_ver}}.tar.gz"          ****** from here
+          dest: /usr/local                                                       ******** the detsination
+          remote_src: yes                                                     ********* so evrtin the source to detsination is happening inside your remote server
+      - name: Renaming tomcat home                                                 ***** renmaing the tomcat using the move command to usr/local
         command: mv /usr/local/apache-tomcat-{{req_tomcat_ver}} /usr/local/latest
-      - name: Replacing default port with required port
+      - name: Replacing default port with required port                                            *** we are replacing that template then we are starting tomcat 
         template:
           src: server.xml.j2                                    **** i hv to replace this file 
           dest: /usr/local/latest/conf/server.xml                       **** replace it in the cong dir 
@@ -1483,6 +1483,18 @@ tomact version
 ******** lets run this playbk
 it might tk a while bc am updating everything java 
 as we go forth, we see that we hv a project that will go in replce the user, change the PW and setup the users and all the formations 
+
+     ansible@ip-172-31-28-203: ~ cd ansible/ansible-mc-series/05-playbooks/04-template\module/
+     ansible@ip-172-31-28-203: ~ / ansible/ansible-mc-series/05-playbooks/04-template\module/ $ ansible-playbook install_tomcat.yml
+
+3:12:42 ..........................
+its goin to tk a while to 
+the firts task to updta erepoitory using yum
+then install the Req JAVA
+set the default java
+then download tomcat
+when it downloads it its going to unarchive it , all this is a module 
+
 
 
 
