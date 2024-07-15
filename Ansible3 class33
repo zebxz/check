@@ -1005,7 +1005,7 @@ becomes for each the several tasks we hv
 
 ***** so this is how you can write a basic playbook
 
-                                     EXPLAINING MORE PLAYBOOKS
+ 2:31:46                                    EXPLAINING MORE PLAYBOOKS
 ###########
 13g)
 inside of our playbooks here ILL Just walk you through  (first play.yml)
@@ -1020,6 +1020,22 @@ inside of our playbooks here ILL Just walk you through  (first play.yml)
 #####
 13h)
 ******* so inside this ansible dir, i have multiple playbooks,  to install like httpd on a web repo 
+
+#ansible all -m yum -a "name=httpd state=present" -b
+---
+ - name: httpd
+   hosts: web
+   become: yes
+   tasks:
+   - name: Install httpd
+     yum:
+       name: httpd
+       state: present
+   - name: Start httpd
+     service:
+       name: httpd
+       state: started
+
 so ill cd 
 
 ansible@ip-172-31-28-203:~/testings cd
@@ -1087,7 +1103,7 @@ display that register, the result that i captured in that task and now giving me
 ****** so that is the uptime and httpd.yml 
 
 
-   2:41:11
+   2:41:11                               USING CONDITIONS
 ###
 13k)
 
@@ -1121,7 +1137,8 @@ ill run it now with my setup as false
   ansible@ip-172-31-28-203:~/testings ansible-playbook install_httpd.yml
 failed 
 
-******* bc hv disabled gather facts its telling me the conditional check ansible distribution failed 
+******* bc hv disabled gather facts its telling me the conditional check ansible distribution failed (in my understanding, the condition is relying on the gathered facts  
+the nasible distributionos bc it failed the condition couldnt execute)
 error while evaluating the distribution
 ansible distribution is undefined
 
@@ -1223,8 +1240,9 @@ distribution name is: Red"
 os name:  linux
 
                                                                                                  ##################
-******** hv used this by running a shell script to find this but just bc hv disabled gather facts ( i think its the shell script that made it work bc in "13l" above when we
-  changed gather facts to false the script failed
+******** hv used this by running a shell script to find this but just bc hv disabled gather facts ( i think its the shell script that made it work bc in "13k" above when we
+  changed gather facts to false the script failed, ,,, after goin tru 13k, my 2nd and most valid reason is that the condition in 13k script relied on the gather facts thats
+why the script failed to run bc gather script was false and so it failed)
 
 
 but if i was to use gather facts then this is how short my playbk will be bc it will find the facts for me and i dnt need to run any commands, i can just use a debug module
@@ -1262,15 +1280,80 @@ we see it gather facts
 #########  lets looks at handlers
 
 
-
+2:52:00
    INTERVIEW QUESTION
 the first playbook that i ran to install httpd, we see that we we installed httpd then we started it, 
-now the 2task are dependent on each other , installation had to be executed before "start" is executed, if the first satte is absent the 2nd task will fail 
-so bc the task are dependent on each other then we can create depencies, ansible gives you a way of creating dependencies btw task & for the dependencies we can use handlers
+now the 2task are dependent on each other , installation had to be executed before "start" is executed, if the first state is absent the 2nd task will fail 
+so bc the task are dependent on each other then we can create dependencies, ansible gives you a way of creating dependencies btw task & for the dependencies we can use handlers
 
 
              WHAT ARE HANDLERS
 these are just like ordinary task but the diff is handlers are only executed when notified, when there is a change 
+
+---
+  - hosts: localhost
+    gather_facts: false
+    become: yes
+    tasks:
+      - name: Install httpd
+        yum:
+          name: httpd
+          state: present
+      - name: start httpd
+        service:
+          name: httpd
+          state: started
+
+---
+  - hosts: web
+    gather_facts: false
+    become: yes
+    tasks:                               **********     whenevre you hv a change in this task it wil trigger the handle
+      - name: Install httpd
+        yum:
+          name: httpd
+          state: present
+        notify:                                     ******* in the former task ill passa notifier/ notify & i also need to pass the name, what is this task notifying
+          - start httpd                                    ***** its notifying the name of the handler: start httpd
+    handlers:                                   ****** instead of putting 2nd task as a task, ill put a handler/s 
+      - name: start httpd                         ********** i need to pass a name for the httpd and here its start httpd 
+        service:
+          name: httpd
+          state: started      
+
+****   i need to pass a name for the httpd and here its start httpd, instead of putting 2nd task as a task, ill put a handler/s, in the former task ill passa notifier/ 
+notify & i also need to pass the name, what is this task notifying?? its notifying the name of the handler: start httpd, so the 2names must be the same, so the notifier
+notifies the handler , this happens whenevre you hv a change in this task it wil trigger the handler if ders no change in the task the handler wont be triggerd
+
+so if am installing httpd, it means that ill record a change in this, if thers a change in this then the handler has to be triggered to start it, if i havent changed this:
+- start httpd , then this :  state: started, shudnt be trigerred, so now am creating dependencies as oppose to this(the first part) & ithinl also 13e above, when these are
+independent task  are independent task, they are depending in a way bc for the httpd to start depends on the service but the 2tasks are running indenpendently, there is
+nothing that is creating a dependency to them 
+now that we knw that the first part was for demo, i can remove it 
+
+******* 2:55:20
+
+     ansible@ip-172-31-28-203:~/testings cd../06-handlers/
+     ansible@ip-172-31-28-203:~/testings ls
+handlers.yml
+     ansible@ip-172-31-28-203:~/ansible/ansible-mc-series/05-playbooks/06-handlers  ansible-playbook handlers.yml
+PLAY [WEB]
+TASK [installed httpd]              ******* once i run it it says httpd installed bt this httpd had already been installed so bc of that it just say ok, this is idempotency
+ok:[172.31.21.92]
+PLAY RECAP  ........................
+
+     **** bc ther was no need to install it the handler was not notified
+
+############ but if i change the install to absent , httpd will be removed and bc this will record a change then the handler will be notified bt when its notified to start it
+httpd has been remove therfroe the handler will fail
+
+  
+
+
+
+
+
+
 
 
 
