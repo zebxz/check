@@ -1400,7 +1400,95 @@ eg
   am missing a file , (ginger2, right here)
 bt if i can just show you an example , if i was installing tomcat
 
-   this is  a playbk to install tomcat
+
+  ******  3:02:52
+   this is a playbk to install tomcat
+
+
+  ---
+  - name: Install and configure tomcat
+    hosts: web
+    gather_facts: false
+    vars:                                  ****** i hv some variables that am passing here and am saying mayb this is my REQ version of tomcat, can someone find the latest
+      req_java: java-1.8.0-openjdk                    
+      set_java: jre-1.8.0-openjdk
+      req_tomcat_ver: 9.0.83
+      tomcat_url: http://mirrors.estointernet.in/apache/tomcat/tomcat-{{req_tomcat_ver.split('.')[0]}}/v{{req_tomcat_ver}}/bin/apache-tomcat-{{req_tomcat_ver}}.tar.gz
+      tomcat_port: 8090                           ******* am also passing the port as a var, in prod we always want to use a custom port, so i can pass 8090 0r 8095
+    become: yes                                         bt for me to customize is bc am passing this tomcat variable 
+    tasks:
+      - name: Updating repos
+        yum:
+          name: "*"
+          state: latest
+      - name: Installing required java
+        yum:
+          name: "{{req_java}}"
+          state: present
+      - name: Setting default java
+        alternatives:
+          name: java
+          link: /usr/bin/java
+          path: /usr/lib/jvm/{{set_java}}/bin/java
+      - name: Downloading required tomcat
+        get_url:
+          url: "{{tomcat_url}}"
+          dest: /usr/local
+      - name: Extracting downloaded tomcat
+        unarchive:
+          src: "/usr/local/apache-tomcat-{{req_tomcat_ver}}.tar.gz"
+          dest: /usr/local
+          remote_src: yes
+      - name: Renaming tomcat home
+        command: mv /usr/local/apache-tomcat-{{req_tomcat_ver}} /usr/local/latest
+      - name: Replacing default port with required port
+        template:
+          src: server.xml.j2                                    **** i hv to replace this file 
+          dest: /usr/local/latest/conf/server.xml                       **** replace it in the cong dir 
+      - name: Starting tomcat
+        shell:  nohup /usr/local/latest/bin/startup.sh &
+
+
+
+  ********************************
+
+             <Connector port="{{tomcat_port}}" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+
+   
+3:06:00
+*********** where is the tomcat port configured inside of my tomcat??
+so i need to find out where this tomcat is actually configure so inside of my tomcat i hv another file called server.xml.j2
+i can copy a server.xml frm a tomacat
+when i opeen the file and scroll open thers what is called a connector port , this is your tomcat port where that runs
+and by default here it will just hv 8080  but i want to dynamically change the port so am passing this tomcat port as a variable 
+so hv copied this sever.xml file and bc its a variable its a ginger2, this is ginger2 templating bc this one becomes as a template
+so your file needs to end with a .j2 which is the extention for ginger templating so bc am using this server.xml as a template
+********
+its a template bc i hv a variable that will only be read when the playbk is running so this becomes a dynamic file, so i cant use a copy module to copy this bc a copy
+module  will nt be able to interpolate the value , 
+copy module will just copy the file as it is and just transfer it bt bc i want to dynamically read values as the file is been copied then ill use a template module 
+
+***** so for this template module am installing tomcat bt i hv to replace, i hv to get this file server.xml and i need to replace it in the confg dir cos thats wher that
+server.xml is 
+so what am doing is that am just replacing the file ,i hv an exact copy of the file but am using a template to go and replace those 2files bc when it replaces it, it wil 
+replace it with this file( install_tomcat.yml) that has a diff port bc am pasing my tomcat port as a variable that is now goin to be passed inside of the server.xml file 
+and now that port insid eof the instance will be 8095,instaed of 8090 ,so am using this template module to be able to install  tomcat so everything has been passed as 
+variables so am able to mange variables in one location just by declaring vars: there ,then once that is declared
+this is the tomcat url that hv also passed as a varaible, bc in the download part (using get url,) am just calling the tomcat url as a variable and its replacing the REQ 
+tomact version 
+
+
+******** lets run this playbk
+it might tk a while bc am updating everything java 
+as we go forth, we see that we hv a project that will go in replce the user, change the PW and setup the users and all the formations 
+
+
+
+
+
+
 
 
 
