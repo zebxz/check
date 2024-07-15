@@ -1154,6 +1154,45 @@ using my setup module, am able to read the variables then made conditions based 
 this process has been automated
 
 **** so this is how you can use conditions
-and you can build in more logics so that ansible will use the logics you build in to knw wheter to install a package or not
+and you can build in more logics so that ansible will use the logics you build in to mk decisions on wheter to install a package or not
+
+
+
+  2:47:00  ************* /without_facts.yml
+
+---
+ - name: Finding os distribution and os name 
+   hosts: all
+   gather_facts: false
+   tasks:
+   - name: Finding os distribution
+     shell: "cat /etc/os-release  | awk -F =  'NR==1 {print $2 }' | awk '{print $1}' | tr '\"' ' '"
+     register: os_dist
+   - name: Finding os name
+     shell: "uname"
+     register: os_name
+   - debug:
+      msg:
+       - "The os distribution name is: {{os_dist.stdout}}"
+       - "The os name: {{os_name.stdout}}"
+
+
+eg
+ i need to find the os distribution and os name of my host, then in that case ill need to run a shell script or shell command which will cat the etc/os release to find what
+my os distribution is , ill need to find the uname, pass a shell script/command, then as i do that am registering the os distribution and when am running the uname am also
+registering the os, then ill use the debug module to display that msg, d os distribution and also the os name 
+so if hv disabled gather facts then ill need to run this shell command to be able to get my distribution and os
+
+
+
+
+
+
+
+
+
+
+
+
 
 
