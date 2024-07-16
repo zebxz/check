@@ -508,13 +508,23 @@ i can use a role
    -httpd1
 
 /07-Ansible roles$ ansible-playbook httpd1.yml
-successful
-
+PLAY [installhttpd with dynamic role]
+TASK[gathering facts]
+ok  [172.31.24.167]
+TASK [httpd : install httpd]
+ok [172.31.24.167]
+TASK [httpd1: template]                       ****   it has now transferred the template file
+ok [172.31.24.167]
+PLAY RECAP
+ 
 1:48:56
-  ******* now goin to google, if i paste that ip address we ll see:
+now this is the ip address, let me find the public ip 
+then he went to the terfrm terminal (local env) that has the output , copied the public ip 
+  ******* now goin to google, if i paste that public ip address (34.216.78.183:80) we ll see:
 
-welcome to landmark Ansible Automation from, {172.31.24.167}
+welcome to landmark Ansible Automation from, {172.31.24.167}       ***** This is your ansible hostname 
 
+SUMMARY:
 inside my template (index.html.j2), i passed it as a variable, so the variable ansible hostname was dynamically pulled bc i put the html, we hv a default html that runs but 
 i substituted, i removed the default one and now i put my custom index.html, and thatar custom i passed it as a template but i had a variable , so this variable was 
 dynamically passed, if i had to put another variable 
@@ -540,7 +550,7 @@ before  and that will be the destination and the values will be dynamically repl
 
 
 
-
+**** 1:53:05
 
 
 
