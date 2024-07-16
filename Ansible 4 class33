@@ -270,7 +270,7 @@ cd  07-Ansible\ roles/     , now he wants to create a role for httpd
   role httpd was successfully created      ***** and looking up, a dir httpd has been created inside of my Ansible roles 
 and when i open the httpd dir, i see the 8 directories already created as we initialize this role
 
-i can also build, 
+i can also view it, 
 sudo apt install tree -y
 after installation
 ill run tree httpd
@@ -281,7 +281,7 @@ now i see what the directory structure of my httpd looks like
 52.24
 ************  now we nid to configure this role 
 for eg
-he  went bk to his playbk and  copied the httpd.yml playbk and pasted it in the Ansible roles dir
+he  went bk to his playbk and  copied the httpd.yml playbk and pasted it in the Ansible roles dir (pasting it created the playbk file automatically there )
   but now he added notifiers and handlers 
 
     - name: httpd
@@ -323,6 +323,7 @@ so hv created my role for httpd and i now create my playbook
    - httpd                              ******** the role we created
     
 
+so i can go to my playbook, httpd,yml
 ********** now i can run my playbook
 bt this playbk is using a role, its calling a role, this role  has 1task and a handler 
 
@@ -338,10 +339,12 @@ RECAP
     ****** so we see i hv cretaed this role n now its reusesable bc its nt tied to any playbk am just calling the role
 
 #####  5iv)           CREATING A USER ROLE
+                    (for this role, i didnt have to paste the httpd.yml file again bc we already craeted a copy of the file when we copied and pasted the file in 5111)
 
 1:03:48
 
 we also see a role to create a user
+he had already created the role to add a user earlier
 it is goin to create a grp using a grp module   (1.11.40)
 
 ***** 
@@ -356,7 +359,7 @@ in my task i passed variables uername and user grp
 1:07:26
 ########## 
 
- now bk to my role playbk, i can add the role 
+ now bk to my role playbk, httpd.yml, i can add the role 
 
    - name: install httpd using roles
    hosts: web
@@ -501,6 +504,7 @@ so now hv created this index.html file that is inside of my template
 so bk to my role playbk, i can remove the task and the template, i dnt need all this 
 i can use a role 
 
+           httpd1.yaml
    -name: install httpd with dynamic role
    - hosts: web
    become: yes
