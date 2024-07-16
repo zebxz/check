@@ -90,11 +90,15 @@ i can rewrite this playbk frm (install_multiple_pkgs_with_import_and_include.yam
     gather_facts: true
     become: yes
     tasks:                                                                    ******** if the os family is debiaem then it wil import debiem.yml 
-      - import_tasks: install_webserver_{{ansible_os_family}}.yml    *** its goin to import a task if the os family is Redhat, when it does the setup,it wil import redhat.yml
+      - import_tasks: install_webserver_{{ansible_os_family}}.yml    *** when it does the setup,its goin to import a task, if the os family is Redhat,it wil import redhat.yml
       - import_tasks: install_java_{{ansible_os_family}}.yml
 
-
 so now am reducing my playbk frm  (No.2) to (NO.3), ie just 2lines bc am now passing/using a variable
+
+
+(1:27:29, further xplanation for kelvins question) if u pass smt inside the calibres, its a variable 
+so we hv some predefined variables or inbuilt variables 
+an ansible os family is an inbuilt varaiable
 
 
 ###3A)                                                 (import.yml)
@@ -422,8 +426,8 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
    - include_role: httpd
    _ user_add
 
-
-
+3) or i can import roles ,, so i can say either include or import,
+but remember, we saw the limitation of when we import (if am using import,the data shud be static, but if dynamic ill use include)
 
 
 
