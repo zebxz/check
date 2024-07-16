@@ -257,11 +257,12 @@ By default, Ansible looks for roles in two locations:
 In a directory called roles/, relative to the playbook file in /etc/ansible/roles
 
 
-
+                             
 #######  5i)
                     example of role directory
-49.54  
-                                       
+49.54   
+                                                       EXAMPLE 1
+
                                          CREATNG A ROLE FOR A PLAYBOOK /CONVERTING THE PLAYBOOK (httpd) TO A ROLE
 
 he cd into our ansible roles 
@@ -306,21 +307,21 @@ ensure its well indented
 if i had up to 3 task, ill put all 3 in here too                                         ****** 57.34
 also for the handlers part , ill copy it and paste in in the handlers (main.yml) file
 now i hv my task n handler set 
-so hv created my role for httpd and i now create my playbook
+so hv created my role for httpd and i now create my (role)playbook
 
 
                                     
 
 
-59.14          ###5iii)                              MY NEW PLAYBOOK(using a role) (Httpd.yml)
+59.14          ###5iii)                              MY NEW (ROLE)PLAYBOOK (Httpd.yml)
 ******** 
- for this remaining part, (which is my playbk) ill change tasks to roles and remove( name)  and add just httpd bc thats the role i created
+ for this remaining part, (which is my playbk) ill change tasks to roles and remove(name)  and add just httpd bc thats the role i created
   
 - name: install httpd using roles
    hosts: web
    become: yes
    roles:
-   - httpd                              ******** the role we created
+   - httpd                              ******** the role we created when we initialized
     
 
 so i can go to my playbook, httpd,yml
@@ -337,6 +338,9 @@ RECAP
 
 
     ****** so we see i hv cretaed this role n now its reusesable bc its nt tied to any playbk am just calling the role
+
+                                  
+                    EXAMPLE2
 
 #####  5iv)           CREATING A USER ROLE
                     (for this role, i didnt have to paste the httpd.yml file again bc we already craeted a copy of the file when we copied and pasted the file in 5111)
@@ -473,6 +477,7 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
 but remember, we saw the limitation of when we import (if am using import,the data shud be static, but if dynamic ill use include)
 
 
+                              CREATING A ROLE e.g3
 1:33:17          making an example using the Template module (httpd.yml), in our github
                        CREATING A ROLE USING  the template module httpd playbook
 ******  
@@ -501,7 +506,7 @@ inside it i can put content like:                                       ****** i
 welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname}         ****** this wil return the ip address of the insatnce, an ansible hostname
 bc when you check among the default defined variables there is an ansible hostname which gives you the ipaddress of the particular instance 
 so now hv created this index.html file that is inside of my template 
-so bk to my role playbk, i can remove the task and the template, i dnt need all this 
+so bk to my role playbk (ie the new role playbk), i can remove the task and the template, i dnt need all this 
 i can use a role 
 
            httpd1.yaml
@@ -509,7 +514,7 @@ i can use a role
    - hosts: web
    become: yes
    roles:
-   -httpd1
+   -httpd1                       *** the role we created when we initialized
 
 /07-Ansible roles$ ansible-playbook httpd1.yml
 PLAY [installhttpd with dynamic role]
