@@ -132,8 +132,9 @@ variable, its goin to substitute the variable {{ansible_os_family}}., with the r
 and we defined that if you use import, the variable will only be subsitute when the ansible playbk is running bc ansible has to go and get the fact first b4 it is able to 
 read the variable, now bc the variable is substituted at run time  therfore, it makes it dynamic, ie when its running thats when the name will be substituted
 so bc its dynamic when u use import,it will fail bc import only uses static 
-so if i created a file with calibrases like this {{ansible_os_family}}., this is static meaning this name is not changing then i can use import bc import, it will just tk
-the file and transfer it as it is
+SO if i created a file with calibrases like this {{ansible_os_family}}., this is static he meant if we had created a file named ansible os family then we can put it inside
+the calibrases meaning this name is not changing then i can use import, bc import, it will just tk the file and transfer it as it is
+but if i want to do it dynaically then ill use include_task, bc include is what substitutes values dynamically
 
 ###3A)                                               
 
@@ -146,7 +147,8 @@ so we use import when we are using it on static data ie does not change
 
 
 ##### 3B)
-38.31
+38.31                                      DYNAMICALLY
+      
                          USING INCLUDE WHILE PASSING A VARIABLE  (install_multiple-pkgs_with_include_tasks.yaml)
 script ran succsessfully 
 
