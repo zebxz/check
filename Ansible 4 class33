@@ -111,8 +111,20 @@ once i run this , it will go to my server/host and it wil return info abt the se
  ansible_processor_cores        **** i can access this info bc its a filter
 to access this i can pass it as a variable  - import_tasks: install_webserver_{{ ansible_processor_cores}}.yml
 so as i gather my facts, once it gets to my host, ist goin to stumble upon an ansible processor cores,  once it sees that, it ll return it here {{ ansible_processor_cores}} it
-exchanges the value bc these are 
-
+exchanges the value bc these are inbuilt variables, variables that hv alraeady been predefined inside ansible
+thats why you need to knw what variable you are looking for 
+e.g 
+when i go tru this file, to the part of the ansible os family, it says RedHat, 
+so when i was writing my code, i specifically wrote one of the file to be RedHat:install_webserver_RedHat.yml ,exact name as defined in d setup file:bc i want to substitute 
+this name ansible os family, i want ansible to find this name, os family , is goin to find it as REdhat, then it will substitute it with the exact name 
+but if i had changed the name , even just by misspeling it e.g instead of RedHat, i said Redhat, it wil fail bc it wont find it 
+so am using my setup to look tru the instance, the remote host, so when it reads all the variables, it sees that there is an os family,  then bc in my defination am using a 
+variable, its goin to substitute the variable {{ansible_os_family}}., with the right info in the setup
+and we defined that if you use import, the variable will only be subsitute when the ansible playbk is running bc ansible has to go and get the fact first b4 it is able to 
+read the variable, now bc the variable is substituted at run time  therfore, it makes it dynamic, ie when its running thats when the name will be substituted
+so bc its dynamic when u use import,it will fail bc import only uses static 
+so if i created a file with calibrases like this {{ansible_os_family}}., this is static meaning this name is not changing then i can use import bc import it will just tk
+the file and transfer it as it is
 
 ###3A)                                               
 
