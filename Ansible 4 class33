@@ -272,8 +272,23 @@ so hv created my role for httpd and i now create my playbook
 ********** now i can run my playbook
 bt this playbk is using a role, its calling a role, this role  has 1task and a handler 
 
+/07-Ansible roles$ ansible-playbook httpd.yml
+PLAY   [install httpd using roles]
+TASK  (gathering facts)
+ok
+TASK [install httpd]                  **** its runing the task frm the role 
+ok                                           **** ok  bc httpd had already been installed n thats why the handlers didnt run
+RECAP  
 
 
+    ****** so we see i hv cretaed this role n now its reusesable bc its nt tied to any playbk am just calling the role
+1:03:48
+
+we also see a role to create a user
+bc i hv a notifer in the task, it means i have a handler
+opening the handler(main), its just to restart
+i also hv variables,and in the main.yml, i hv the variables defined there in 
+in my task i passed variables uername and user grp
 
 
 
