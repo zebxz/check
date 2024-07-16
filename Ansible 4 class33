@@ -105,11 +105,18 @@ so now am reducing my playbk frm  (No.2) to (NO.3), ie just 2lines bc am now pas
 (1:27:29, further xplanation for kelvins question) if u pass smt inside the calibres, its a variable 
 so we hv some predefined variables or inbuilt variables 
 an ansible os family is an inbuilt varaiable
+but hw do we knw
+ansible web -m setup                                    ****** am running my setup module 
+once i run this , it will go to my server/host and it wil return info abt the server, which icludes predefined variables that i can access
+ ansible_processor_cores        **** i can access this info bc its a filter
+to access this i can pass it as a variable  - import_tasks: install_webserver_{{ ansible_processor_cores}}.yml
+so as i gather my facts, once it gets to my host, ist goin to stumble upon an ansible processor cores,  once it sees that, it ll return it here {{ ansible_processor_cores}} it
+exchanges the value bc these are 
 
 
-###3A)                                                 (import.yml)
+###3A)                                               
 
-34.24/ 36.12                                         USING IMPORT WHILE PASSING A VARIABLE              
+34.24/ 36.12                                         USING IMPORT WHILE PASSING A VARIABLE      (import.yml)          
  ran the script  but failed
 error
  when using import you cannot use variables ,you cannot hv data that is changle bc this variable {{ansible_os_family}}is suppose to be substituted when the playbk is running
