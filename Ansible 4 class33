@@ -213,13 +213,7 @@ You can also add other YAML files in some directories. For example, you can plac
 By default, Ansible looks for roles in two locations:
 
 In a directory called roles/, relative to the playbook file in /etc/ansible/roles
-You can use roles in three ways:
 
-At the play level with the roles option: This is the classic way of using roles in a play.
-
-At the tasks level with include_role: You can reuse roles dynamically anywhere in the tasks section of a play using include_role.
-
-At the tasks level with import_role: You can reuse roles statically anywhere in the tasks section of a play using import_role
 
 
 #######  5i)
@@ -272,7 +266,7 @@ now i hv my task n handler set
 so hv created my role for httpd and i now create my playbook
 
 
-                                     ( You can use roles in three ways:  1) At the play level with the roles option)
+                                    
 
 
 59.14          ###5iii)                              MY NEW ROLES PLAYBOOK  (Httpd.yml)
@@ -387,7 +381,7 @@ template for replacing default port with required port
 and after we hv cahnged all these, we will notify our handler to start tomcat
 
 
-                         SUMMARY OF HOW TO CRAEATE ROLES 
+                         SUMMARY OF HOW TO CREATE ROLES 
 1:20.00
 **** it might seem as a lot of info , like its going over your head but just start by creating a simple role
 create the role, intialize it , break down your playbk,didvide the task and wherever u created ur role, once u initialize it,go ot ur role, openn the dir, then just copy all
@@ -399,11 +393,27 @@ if i hv files that are dynamic, ie files that wil change during execution then p
 thats how you can easily create a role
 
 
+1:24:00
+******* 
+You can use roles in three ways:
+
+At the play level with the roles option: This is the classic way of using roles in a play.
+
+At the tasks level with include_role: You can reuse roles dynamically anywhere in the tasks section of a play using include_role.
+
+At the tasks level with import_role: You can reuse roles statically anywhere in the tasks section of a play using import_role
 
 
+1)  example 
+ what we did in    5iii)     MY NEW ROLES PLAYBOOK  (Httpd.yml)
+  - name: install httpd using roles
+   hosts: web
+   become: yes
+   roles:                                ****** this is at the play level, just using roles , its the traditional way
+   - httpd
 
 
-
+2) OR AT TASK LEVEL, with include roles
 
 
 
