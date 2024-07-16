@@ -1,5 +1,5 @@
-IMPORT TASK, INCLUDE TASK, FUNDAMENTAL DIFF BTW  import task and INCLUDE TASK,PASSING A VARIABLES, USING IMPORT WHILE PASSING A VARIABLE, USING INCLUDE WHILE PASSING A
-VARIABLE, ANSIBLE ROLES, CREATNG A ROLE FOR A PLAYBOOK /CONVERTING THE PLAYBOOK (httpd) TO A ROLE, SUMMARY OF HOW TO CREATE ROLES..  
+IMPORT TASK, INCLUDE TASK, FUNDAMENTAL DIFF BTW  import task and INCLUDE TASK, PASSING A VARIABLES, USING IMPORT WHILE PASSING A VARIABLE, USING INCLUDE WHILE PASSING A
+VARIABLE/DYNAMICALLY, ANSIBLE ROLES, CREATNG A ROLE FOR A PLAYBOOK /CONVERTING THE PLAYBOOK (httpd) TO A ROLE, SUMMARY OF HOW TO CREATE ROLES..  
 
 31:14
 dabiem and Redhat are both ansible os family 
@@ -435,6 +435,7 @@ if i hv files that are dynamic, ie files that wil change during execution then p
 thats how you can easily create a role
 
 
+                                                3WAYS TO USE ROLES
 1:24:00
 ******* 
 You can use roles in three ways:
@@ -471,6 +472,13 @@ but remember, we saw the limitation of when we import (if am using import,the da
 1:33:17
 ******  
 
+ #Tasks
+-template:
+  src: index.html.j2
+  dest: /usr/share/httpd/no index/index.html
+notify:
+
+********** the task module goes into the task (main.yml) dir, but the file: index.html.j2, goes into the template 
 
 
 
