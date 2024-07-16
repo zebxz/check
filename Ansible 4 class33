@@ -359,10 +359,26 @@ you look at your vars dir (main.yml), in there i hv all my variables for tomcat 
 the  tomcat port  and am changing that port in the server.xml and bc its a ginger template , i ends with .j2
 these are template files, all templates file  we use what is called ginger templating 
 is a file that that accepts variables, its a dynamic file , a ginger2 file
-in the server.xml.j2, in the connector port segment, hv passed tomcat port as a variable inside the caliibrase
+1:17:12
+********** in the server.xml.j2, in the connector port segment, hv passed tomcat port as a variable inside the caliibrase
 it is a varaiable bc it is goin to be read at runtime 
-where is it been read?? 
-inside of my varaibles 
+where is it been read?? .... tomcat port, inside of my variables
+i just need to cm to my variables file and change, if i want my port  to be 8000 then thats the port that tomcat will run on 
+if i want to change the tomcat user name , ill change it here
+so all these things will now be dynamically passed to tomcat
+
+in the context.xml.j2
+we hv the esction that has been commeted out so that we hv access to the manger, so we can log into our tomcat
+ so these 3 templates are been passed when you look at the task
+we hv a template for authenticating with the manger
+tmeplate for configuring tomcat user credentials and roles
+template for replacing default port with required port
+and after we hv cahnged all these, we will notify our handler to start tomcat
+
+1:20.00
+**** it might seem as a lot of info , like its going over you head but just star with creating a simple playbk
+
+
 
 
 
