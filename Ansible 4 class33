@@ -186,6 +186,9 @@ files/main.yml - files that the role deploys.
 templates/main.yml - templates that the role deploys.
 
 meta/main.yml - metadata for the role, including role dependencies.
+
+1:22:31
+********* we hv seen these examples below while creating a ROLE 
 You can also add other YAML files in some directories. For example, you can place platform-specific tasks in separate files and refer to them in the tasks/main.yml file:
 # roles/example/tasks/main.yml
 - name: Install the correct web server for RHEL
@@ -388,8 +391,9 @@ create the role, intialize it , break down your playbk,didvide the task and wher
 the task in ur playbk put them under the task dir, oprn d task dir and ull see a main.yml,open it & just paste ur task, those are the task for the role, if u hv any variables
 that u hv passed go to the vars dir, vi into the dir (if ur doin it on the command line) cd into the vars dir and vi into main then paste ur variables 
 if u hv any files, static files that you wnat to copy, i wnat to trasnfer a file frm my host to my remote server, it is a static file, ie it doesnt hv any variable so it wont
-change, go to the files dir ,paste the file, this will hold static files 
-
+change, go to the files dir ,paste that file in the files dir, this will hold static files/content if i have a copy module.
+if i hv files that are dynamic, ie files that wil change during execution then put them inside of the template, cos template support dynamic values
+thats how you can easily create a role
 
 
 
