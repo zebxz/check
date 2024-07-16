@@ -17,7 +17,8 @@ A template is just a mode whereby things can be put in so when u use a template 
 8:30 
 ********************* START
 
-
+1)
+####  
 14:36   TO INstall multiple packages      
     install_multiple_pkgs.yaml
 
@@ -31,7 +32,8 @@ install java on redhat
 so we hv 4task that have been carried out
 but instead of me running it like this i can break down this playbk, bc am still using conditions, i can reduce the lines on my playbk when i can create reuseable task
 
-24:45               install_multiple_pkgs_with _import_and_include_task
+#####2)
+24:45               install_multiple_pkgs_with _import_and_include.yaml
 
 ***** 
 so for each of the 4 task executed in the playbk above, i can create a task for each of them and on my playbk ill  use what is called include_tasks to import these tasks  
@@ -44,7 +46,9 @@ setup module is the default module so even if we dnt indicate gather facts = tru
 except i want it to disable it  then i have to indicate it as false 
 
 
-     FUNDAMENTAL DIFF BTW  import task and INCLUDE TASK 
+  ##2i)
+      
+       FUNDAMENTAL DIFF BTW  import task and INCLUDE TASK 
 When we use import task it just says
 chANGed : 172.31.24.167
 but when we say include task its giving us a range of information, the name of the task that is included
@@ -59,8 +63,67 @@ u ll use include when you want to include tasks that have variables ie task that
 install webserver on debiem.yml and install webserserver on redhat, 
 dabiem and Redhat are both ansible os family 
 so i can pass a variable within this name 
-when i pass a vriable i can reduce this playbk (install_multiple_pkgs_with _import_and_include_task )even further
+when i pass a vriable i can reduce this playbk (install_multiple_pkgs_with _import_and_include_.yaml )even further
 i reduce it furtehr by been able to use thses as varibales so it pulls the right file
+
+
+#### 3)
+32:25
+***************
+i can rewrite this playbk frm (install_multiple_pkgs_with_import_and_include.yaml) to (install_multiple_pkgs_with_include.yaml)
+
+---
+  - name: Simple play to install multiple pkgs
+    hosts: all                                     ******am saying i wnat to import task 
+    gather_facts: true
+    become: yes
+    tasks:                                                                    ******** if the os family is debiaem then it wil import debiem.yml 
+      - import_tasks: install_webserver_{{ansible_os_family}}.yml    *** its goin to import a task if the os family is Redhat, when it does the setup,it wil import redhat.yml
+      - import_tasks: install_java_{{ansible_os_family}}.yml
+
+
+so now am reducing my playbk frm  (No.2) to (NO.3), ie just 2lines bc am now passing/using a variable
+
+
+###4)
+
+33.24                                          USING IMPORT WHILE PASSING A VARIABLE              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
