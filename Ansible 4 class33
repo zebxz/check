@@ -411,10 +411,16 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
    become: yes
    roles:                                ****** this is at the play level, just using roles , its the traditional way
    - httpd
-
+   - user_add
 
 2) OR AT TASK LEVEL, with include roles
 
+  - name: install httpd using roles
+   hosts: web
+   become: yes
+   tasks:                               ******* so am passing it at a task level but am including a role 
+   - include_role: httpd
+   _ user_add
 
 
 
