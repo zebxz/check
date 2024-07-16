@@ -522,7 +522,20 @@ i can modify the template and put another variable : lets use a variable we are 
 welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname} and {ansible_os_ansible_family)
 so this is an inbuilt variable, a building variable,so the expectation is ansible os family is suppose to return a redhat , so am dynamically passing it as a template so
 the value will be substituted at runtime when the setup module run
+now if i go into my template, ill see it has returned a Redhat:
+*********** welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname} and RedHat
+so am uisng a template to automate this process
+but if this was static data, if i use a file module then this will not work, bc this variables have to be dynamically read and thats why we use a template module ,
+in our task we use a template and we need to have our src, our html, bc template is the same as copy,
+if we use copy we ll hv a source and dest
 
+Tasks
+   -template:
+  src: index.html.j2                   ******** if we use copy, this needs to be static data 
+  dest: /usr/share/httpd/no index/index.html
+
+but bc its dynamic thats why we are using a template module, its goin to tk that file and transfer it into user shell, httpd no index and its goin to replace that index.html
+before  and that will be the destination and the values will be dynamically replaced
 
 
 
