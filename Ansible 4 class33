@@ -260,7 +260,7 @@ now i hv my task n handler set
 so hv created my role for httpd and i now create my playbook
 
 ******** 59.14
- for this remaining part, ill change tasks to roles and remove( name)  and add just httpd bc thats the role i created
+ for this remaining part, (which is my playbk) ill change tasks to roles and remove( name)  and add just httpd bc thats the role i created
   
 - name: install httpd using roles
    hosts: web
@@ -290,7 +290,17 @@ opening the handler(main), its just to restart
 i also hv variables,and in the main.yml, i hv the variables defined there in 
 in my task i passed variables uername and user grp
 
+1:07:26
+########## 
 
+ now bk to my playbk, i can add the role 
+
+   - name: install httpd using roles
+   hosts: web
+   become: yes
+   roles:
+   - httpd
+   - user_add
 
 
 
