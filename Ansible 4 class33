@@ -494,14 +494,14 @@ in the playbook he added a handler bc he added a notifier
 inside the template ill create a file 
 i can call  the file: index.html.j2  bt its a jinger2 template bc it has dynamic data
 
-inside it i can put content like:
+inside it i can put content like:                                       ****** i bliv insid ethe index.html, ansible hostname is a defined variable
 welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname}         ****** this wil return the ip address of the insatnce, an ansible hostname
 bc when you check among the default defined variables there is an ansible hostname which gives you the ipaddress of the particular instance 
 so now hv created this index.html file that is inside of my template 
 so bk to my role playbk, i can remove the task and the template, i dnt need all this 
 i can use a role 
 
-   -name: inssatll httpd with dynamic role
+   -name: install httpd with dynamic role
    - hosts: web
    become: yes
    roles:
@@ -513,10 +513,15 @@ successful
 1:48:56
   ******* now goin to google, if i paste that ip address we ll see:
 
-welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname}
+welcome to landmark Ansible Automation from, {172.31.24.167}
 
-
-
+inside my template (index.html.j2), i passed it as a variable, so the variable ansible hostname was dynamically pulled bc i put the html, we hv a default html that runs but 
+i substituted, i removed the default one and now i put my custom index.html, and thatar custom i passed it as a template but i had a variable , so this variable was 
+dynamically passed, if i had to put another variable 
+i can modify the template and put another variable : lets use a variable we are familiar with
+welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname} and {ansible_os_ansible_family)
+so this is an inbuilt variable, a building variable,so the expectation is ansible os family is suppose to return a redhat , so am dynamically passing it as a template so
+the value will be substituted at runtime when the setup module run
 
 
 
