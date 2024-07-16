@@ -471,7 +471,7 @@ but remember, we saw the limitation of when we import (if am using import,the da
 
 
 1:33:17          making an example using the Template module (httpd.yml), in our github
-
+                       CREATING A ROLE USING  the template module httpd playbook
 ******      
  #Tasks
 -template:
@@ -479,8 +479,17 @@ but remember, we saw the limitation of when we import (if am using import,the da
   dest: /usr/share/httpd/no index/index.html
 notify:
 
-********** the task module goes into the task (main.yml) dir, but the file: index.html.j2, goes into the template 
 
+in the playbook he added a handler bc he added a notifier
+**********so the task module goes into the task (main.yml) dir, handlers goes to handler(main.yml) but the file: index.html.j2, needs to exist inside the template dir
+inside the template ill create a file 
+i can call  the file: index.html.j2  bt its a jinger2 template bc it has dynamic data
+
+inside it i can put content like:
+welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname}         ****** this wil return the ip address of the insatnce, an ansible hostname
+bc when you check among the default defined variables there is an ansible hostname which gives you the ipaddress of the particular instance 
+so now hv created this index.html file that is inside of my template 
+so bk to my role playbk, i can remove the task and the template, i dnt need all this 
 
 
 
