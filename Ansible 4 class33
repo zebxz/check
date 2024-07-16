@@ -264,11 +264,11 @@ In a directory called roles/, relative to the playbook file in /etc/ansible/role
                                        
                                          CREATNG A ROLE FOR A PLAYBOOK /CONVERTING THE PLAYBOOK (httpd) TO A ROLE
 
-
-cd  07-Ansible\ roles/
+he cd into our ansible roles 
+cd  07-Ansible\ roles/     , now he wants to create a role for httpd
 07-Ansible\ roles/  ansible-galaxy init httpd --offline                                          **** httpd is the name of the role am initializing
   role httpd was successfully created      ***** and looking up, a dir httpd has been created inside of my Ansible roles 
-and when i open the httpd dir, i see the 8 directories already created 
+and when i open the httpd dir, i see the 8 directories already created as we initialize this role
 
 i can also build, 
 sudo apt install tree -y
@@ -281,7 +281,7 @@ now i see what the directory structure of my httpd looks like
 52.24
 ************  now we nid to configure this role 
 for eg
-he copied the httpd.yml playbk and pasted it on the Ansible roles dir
+he  went bk to his playbk and  copied the httpd.yml playbk and pasted it in the Ansible roles dir
   but now he added notifiers and handlers 
 
     - name: httpd
@@ -312,7 +312,7 @@ so hv created my role for httpd and i now create my playbook
                                     
 
 
-59.14          ###5iii)                              MY NEW ROLES PLAYBOOK  (Httpd.yml)
+59.14          ###5iii)                              MY NEW PLAYBOOK(using a role) (Httpd.yml)
 ******** 
  for this remaining part, (which is my playbk) ill change tasks to roles and remove( name)  and add just httpd bc thats the role i created
   
@@ -320,7 +320,7 @@ so hv created my role for httpd and i now create my playbook
    hosts: web
    become: yes
    roles:
-   - httpd
+   - httpd                              ******** the role we created
     
 
 ********** now i can run my playbook
@@ -527,7 +527,7 @@ welcome to landmark Ansible Automation from, {172.31.24.167}       ***** This is
 SUMMARY:
 inside my template (index.html.j2), i passed it as a variable, so the variable "ansible hostname" was dynamically pulled bc i put the html, we hv a default index html that
 runs but i replaced it,i substituted, i removed the default one and now i put my custom index.html, and that custom i passed it as a template but i had a variable , so this
-variable was dynamically passed, if i had to put another variable 
+variable was dynamically passed, if i had to put another variable    ...1:49:58
 i can modify the template and put another variable : lets use a variable we are familiar with
 welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname} and {ansible_os_ansible_family)
 so this is an inbuilt variable, a building variable,so the expectation is ansible os family is suppose to return a redhat , so am dynamically passing it as a template so
