@@ -472,9 +472,18 @@ but remember, we saw the limitation of when we import (if am using import,the da
 
 1:33:17          making an example using the Template module (httpd.yml), in our github
                        CREATING A ROLE USING  the template module httpd playbook
-******      
+******  
+---
+ - hosts: web
+   become: yes
+   tasks:
+  #Tasks:
+   - name: Install httpd
+     yum:
+       name: httpd
+       state: present
  #Tasks
--template:
+   -template:
   src: index.html.j2
   dest: /usr/share/httpd/no index/index.html
 notify:
@@ -490,6 +499,22 @@ welcome to landmark Ansible Automation from, then i can pass a varible {ansible_
 bc when you check among the default defined variables there is an ansible hostname which gives you the ipaddress of the particular instance 
 so now hv created this index.html file that is inside of my template 
 so bk to my role playbk, i can remove the task and the template, i dnt need all this 
+i can use a role 
+
+   -name: inssatll httpd with dynamic role
+   - hosts: web
+   become: yes
+   roles:
+   -httpd1
+
+/07-Ansible roles$ ansible-playbook httpd1.yml
+successful
+
+1:48:56
+  ******* now goin to google, if i paste that ip address we ll see:
+
+welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname}
+
 
 
 
