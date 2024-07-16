@@ -214,7 +214,7 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
 #######  5i)
                     example of role directory
 49.54  
-                                          CREATNG A ROLE FOR httpd
+                                          CREATNG A ROLE FOR A PLAYBOOK (httpd)
 
 cd  07-Ansible\ roles/
 07-Ansible\ roles/  ansible-galaxy init httpd --offline                                          **** httpd is the name of the role am initializing
@@ -227,17 +227,50 @@ after installation
 ill run tree httpd
 now i see what the directory structure of my httpd looks like 
 
+######### 5ii)
+
 52.24
 ************  now we nid to configure this role 
 for eg
-he copied the httpd file and pasted it on the Ansible roles dir
+he copied the httpd.yml playbk and pasted it on the Ansible roles dir
+  but now he added notifiers and handlers 
+
+    - name: httpd
+   hosts: web
+   become: yes
+   tasks:
+   - name: Install httpd
+     yum:
+       name: httpd
+       state: present
+     notify:
+       -  Start httpd
+   handlers:
+   - name: Start httpd
+     service:
+       name: httpd
+       state: started
 
 
+******* now ill copy the task aspect n in the httpd dir ill paste in tasks(main.yml)file
+ensure its well indented
+if i had up to 3 task, ill put all 3 in here too                                         ****** 57.34
+also for the handlers part , ill copy it and paste in in the handlers (main.yml) file
+now i hv my task n handler set 
+so hv created my role for httpd and i now create my playbook
 
+******** 59.14
+ for this remaining part, ill change tasks to roles and remove( name)  and add just httpd bc thats the role i created
+  
+- name: install httpd using roles
+   hosts: web
+   become: yes
+   roles:
+   - httpd
+    
 
-
-
-
+********** now i can run my playbook
+bt this playbk is using a role, its calling a role, this role  has 1task and a handler 
 
 
 
