@@ -214,7 +214,8 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
 #######  5i)
                     example of role directory
 49.54  
-                                          CREATNG A ROLE FOR A PLAYBOOK (httpd)
+                                       
+                                         CREATNG A ROLE FOR A PLAYBOOK (httpd)
 
 cd  07-Ansible\ roles/
 07-Ansible\ roles/  ansible-galaxy init httpd --offline                                          **** httpd is the name of the role am initializing
@@ -310,6 +311,39 @@ in my task i passed variables uername and user grp
 
 
 ******************* now i can run my playbook
+/07-Ansible roles$ ansible-playbook httpd.yml
+and we see all the task done
+so it has run that particular user on my host
+i can ssh
+
+*******   1.09.00
+ansible@ip-172-31-16-91 : ~ $ ssh 172.31.24.167
+am logged in
+ansible@ip- 172.31.24.167 :$  cat /etc/passwd
+ill see auser called tom, that was added  with the home
+/home/tom:/bin/bash
+
+ **** we also created groups
+ansible@ip- 172.31.24.167 :$  cat /etc/groups
+we see a grp called engrs that was just created
+
+
+******** so when we look at the tasks (main.yml) file , 
+we created a grp and it wa spassed as a variables so we are making it easy so if hv defined/created a role, i just need to use varaibles
+and am making this flexible, so bc am using variables, this task is reuseable bc i can create as many users as i want, i just need to change the variables
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
