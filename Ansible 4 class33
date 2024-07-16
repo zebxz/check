@@ -95,8 +95,10 @@ i reduce it furtehr by been able to use thses as varibales so it pulls the right
 #### 3)               PASSING A VARIABLE
 32:25
 ***************
-i can rewrite this playbk frm (install_multiple_pkgs_with_import_and_include.yaml) to (install_multiple_pkgs_with_include.yaml)
+so because am passing a variable, i can rewrite this playbk
+ frm NO.2(install_multiple_pkgs_with_import_and_include.yaml) to 3A)(install_import.yaml) or 3B)(install_multiple_pkgs_with_include.yaml)
 
+                     (install_import.yaml)
 ---
   - name: Simple play to install multiple pkgs
     hosts: all                                     ******am saying i wnat to import task 
@@ -106,7 +108,7 @@ i can rewrite this playbk frm (install_multiple_pkgs_with_import_and_include.yam
       - import_tasks: install_webserver_{{ansible_os_family}}.yml    *** when it does the setup,its goin to import a task, if the os family is Redhat,it wil import redhat.yml
       - import_tasks: install_java_{{ansible_os_family}}.yml
 
-so now am reducing my playbk frm  (No.2) to (NO.3), ie just 2lines bc am now passing/using a variable
+so now am reducing my playbk frm  (No.2) to (NO.3), ie reducing it to just 2lines bc am now passing/using a variable
 
 
 (1:27:29, further xplanation for kelvins question) if u pass smt inside the calibres, its a variable 
@@ -130,12 +132,13 @@ variable, its goin to substitute the variable {{ansible_os_family}}., with the r
 and we defined that if you use import, the variable will only be subsitute when the ansible playbk is running bc ansible has to go and get the fact first b4 it is able to 
 read the variable, now bc the variable is substituted at run time  therfore, it makes it dynamic, ie when its running thats when the name will be substituted
 so bc its dynamic when u use import,it will fail bc import only uses static 
-so if i created a file with calibrases like this {{ansible_os_family}}., this is static meaning this name is not changing then i can use import bc import it will just tk
+so if i created a file with calibrases like this {{ansible_os_family}}., this is static meaning this name is not changing then i can use import bc import, it will just tk
 the file and transfer it as it is
 
 ###3A)                                               
 
-34.24/ 36.12                                         USING IMPORT WHILE PASSING A VARIABLE      (install_import.yaml)          
+34.24/ 36.12                                         USING IMPORT WHILE PASSING A VARIABLE    
+                                                Running the s(install_import.yaml)          
  ran the script  but failed
 error
  when using import you cannot use variables ,you cannot hv data that is changing bc this variable {{ansible_os_family}}is suppose to be substituted when the playbk is running
