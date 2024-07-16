@@ -227,7 +227,7 @@ after installation
 ill run tree httpd
 now i see what the directory structure of my httpd looks like 
 
-######### 5ii)
+######### 5ii)                                CONFIGURING THE ROLE
 
 52.24
 ************  now we nid to configure this role 
@@ -259,7 +259,9 @@ also for the handlers part , ill copy it and paste in in the handlers (main.yml)
 now i hv my task n handler set 
 so hv created my role for httpd and i now create my playbook
 
-******** 59.14
+
+59.14          ###5iii)                              MY NEW PLAYBOOK  (Httpd.yml)
+******** 
  for this remaining part, (which is my playbk) ill change tasks to roles and remove( name)  and add just httpd bc thats the role i created
   
 - name: install httpd using roles
@@ -282,6 +284,9 @@ RECAP
 
 
     ****** so we see i hv cretaed this role n now its reusesable bc its nt tied to any playbk am just calling the role
+
+#####  5iv)           CREATING A USER ROLE
+
 1:03:48
 
 we also see a role to create a user
@@ -300,8 +305,11 @@ in my task i passed variables uername and user grp
    become: yes
    roles:
    - httpd
-   - user_add
+   - user_add                        *** this is a role that has been created, i want to create a user in my webserver
+                                       so bc i hv a role created, i can just run it here n reuse it
 
+
+******************* now i can run my playbook
 
 
 
