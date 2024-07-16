@@ -113,7 +113,16 @@ so as an engr when you anticipate that these are the tasks that you are goin to 
 that you use building variables to dynamically reduce your playbk bc u are using variables that exist, you are using your setup module to be able to call these variables
 
 41:30
-******* if i was to disable the setup)gather facts) and say false then the playbk will fail bc 
+******* if i was to disable the setup(gather facts) and say false then the playbk will fail bc these variables  {{ansible_os_family}}wil nt be defined 
+bc ansible doesnt knw what  this is {{ansible_os_family}}, unless i hv defined it as a  variable  ie vars:, but bc am depending on the setup module to get the buildin 
+variables so i hv to mk sure that my setup module is enabled, its set to true
+
+
+##########  so we hv seen what import and includes does and the differneces
+and we will see now that u can create multiple/diff tasks and just put them as a library and just call those particular tasks as you need  in your playbk taking into 
+consideration when its static or dynamic
+
+
 
 
 
