@@ -130,7 +130,8 @@ consideration when its static or dynamic
 so we hv seen that we can create reuseable tasks but ansible actually gives us a better way to reuse our tasks and these are called roles 
 
 
-ANSIBLE ROLES
+#####  4)
+                  ANSIBLE ROLES
 
 Roles let you automatically load related vars,files,tasks, handlers, and other known Ansible artifacts based on a known file structure.
 
@@ -141,12 +142,21 @@ You can create an ansible role by running the command below.
 $ ansible-galaxy init httpd --offline               ********* httpd is the name of the role
 We need to pass the --offline option so that ansible does now initialize the role from the ansible registry.
 
+45.43          if i go to google & type ansible galaxy, there are roles that hv alreday been created, the roles are online
+*********    eg if i want to  create a role for prometheus and i just run the command without offline, its goin to download or intialize a role that is online 
+so if i want to create a custom role i need to pass _offline 
+
 This is done when we want to create a custom role.
 
 After you initialize the role, cd into the various directories and vi into the main.yml file to enter the content.
 
-Role directory structure
 
+###### 5)
+
+                   ROLE DIRECTORY STRUCTURE    
+***** when a role is created, it gives you a directory structure, which will hv all these 8 directories & each dir must hv a main.yml file 
+
+ 
 An Ansible role has a defined directory structure with eight main standard directories.
 
 You must include at least one of these directories in each role. You can omit any directories the role does not use.
@@ -199,6 +209,30 @@ At the play level with the roles option: This is the classic way of using roles 
 At the tasks level with include_role: You can reuse roles dynamically anywhere in the tasks section of a play using include_role.
 
 At the tasks level with import_role: You can reuse roles statically anywhere in the tasks section of a play using import_role
+
+
+#######  5i)
+                    example of role directory
+49.54  
+                                          CREATNG A ROLE FOR httpd
+
+cd  07-Ansible\ roles/
+07-Ansible\ roles/  ansible-galaxy init httpd --offline                                          **** httpd is the name of the role am initializing
+  role httpd was successfully created      ***** and looking up, a dir httpd has been created inside of my Ansible roles 
+and when i open the httpd dir, i see the 8 directories already created 
+
+i can also build, 
+sudo apt install tree -y
+after installation
+ill run tree httpd
+now i see what the directory structure of my httpd looks like 
+
+52.24
+************  now we nid to configure this role 
+for eg
+he copied the httpd file and pasted it on the Ansible roles dir
+
+
 
 
 
