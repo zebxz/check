@@ -709,16 +709,32 @@ a) Ansible’s -i command-line option and specify the path to the script after m
  $ ansible -i ec2.py -u ubuntu us-east-a -m ping
 
 b) The second option is to copy the script to /etc/ansible/hosts and chmod +x it. You must also copy the ec2.ini file to /etc/ansible/ec2.ini. Then you can run ansible as
-you would normally. ie, instead of the host file list we configure, we copy this and paste it in there
+you would normally. (ie, instead of the host file list we configure, we copy this and paste it in there, so the script now becomes you hostfile then mk sure the script is
+executable chmod +x then copy the ec2.ini file to /etc/ansible/ec2.ini dir , then run ansible as normal)
 
 To make a successful API call to AWS, you must configure Boto (the Python interface to AWS). You can do this in several ways available, but the simplest is by exporting two
 environment variables like follows.
 
-export AWS_ACCESS_KEY_ID='AK123'
-export AWS_SECRET_ACCESS_KEY='abc123'
+export AWS_ACCESS_KEY_ID='AK123'                                        2:15:24
+export AWS_SECRET_ACCESS_KEY='abc123'                       ******* or u can attach a role to ur ec2 instance
 After downloading the 2 scripts and configuring boto/boto3, in your terminal simply type ec2.py --list
 
 Note*: Dynamic inventory brings all the instances across all the regions in your AWS account, so no need to specify the region
+ this is one way that you can do it to get your dynamic inventory but ill leave this for your guys to try it out
+if u want that particular script, just go online and type ec2.py script , in the github copy all the script then , this is 1700 lines of code
+https://github.com/vshn/ansible-dynamic-inventory-ec2/blob/master/ec2.py
+so thats a phyton script that you can use to be able to getthat dynamic inventory
+but when you follow those instructions, ull also need the script called ec2.ini file, and follow the instruction to see hw u can get that particular dynamic inventory
+https://github.com/willthames/ansible-ec2-example/blob/master/ec2.ini
+ill send the script to the chat
+
+
+
+******2:18:11
+but am goin to show you a easier way and this i sthe preferred way by using a pluggin 
+https://docs.ansible.com/ansible/latest/inventory_guide/intro_dynamic_inventory.html               ********* 2:20:50
+if you go to ansible dynamic inventory,
+it wil show you the diff type of inventory script
 
 2) aws_ec2 plugin:
 
