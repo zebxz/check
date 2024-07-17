@@ -519,9 +519,11 @@ but remember, we saw the limitation of when we import (if am using import,the da
   dest: /usr/share/httpd/no index/index.html
 notify:
 
-
-in the playbook he added a handler bc he added a notifier
-**********so the task module goes into the task (main.yml) dir, handlers goes to handler(main.yml) but the file: index.html.j2, needs to exist inside the template dir
+he created the httpd1.yml file then copied and pasted the template module , so the httpd1.yml is now our role playbook
+in the role playbook he added a handler bc he added a notifier
+then he initialized the httpd1 role
+now having gotten the role structure,
+**********the task module goes into the task (main.yml) dir, handlers goes to handler(main.yml) but the file: index.html.j2, needs to exist inside the template dir
 inside the template ill create a file 
 i can call  the file: index.html.j2  bt its a jinger2 template bc it has dynamic data
 
@@ -640,6 +642,8 @@ but in role1, it will always be task1, task2, task3 till the end , then when tha
 but if i hv those 2 roles but smt in role1 fails then the playbk will fail bc ansible is procedural
 
 
+
+  *******  2:06:00                                       DYNAMIC INVENTORY 
 
 
 
