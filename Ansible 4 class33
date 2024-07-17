@@ -919,7 +919,31 @@ that as we ve seen you are able to use a plugging
 
 
 
+      QUESTION
 
+1) i was wondering hw u wud hv used the iam role to acces the instance since we didnt do that , dnt knw if its in our notes
+
+ANS:
+ an i am role, we normally acttach a role to an instance , u can create a role and attach your instance bc your instance it needs credentials  bc we are quering an API in 
+aws, aws api, so bc of that we need to configure a role, we need credentials but i dnt knw why my role wasnt working in aws
+
+
+3:09:14
+
+when you create a role it creates what is called an instance profile, it gives ur instance a certain profile with permission, so am giving it permission to access other
+aws services bc by default services hv , bc of IAM, all services hv deny policy, they are denied to access any other services unless you explicitly allow them 
+so thats why now for ec2, bc am running my workload frm an ecs instance so this ec2 instance (my ansible control node) it needs permission bc its accsesing other instances 
+to find their meta data so bc of that it needs permission and that permisson u can create a role but as we saw the role wasnt working thats why i created a secret and access
+key but that is a security issue, we are nt suppose to store accsess key and secret key inside of your instance soinstaed u always use a role bc role are short lived 
+they are nt like permanent, bc they hv sessions, i think a section by default will last for an hour then that session will be over 
+
+3;14;00
+but if i was running that on my local env(terrfrm) and bc am running it on mac which is linux, therfpre am able to run ansible, am able to install ansible on mac bc its a 
+linux env 
+i run ansible , i see i hv ansible installed
+
+3:19:00  ;;....   bla bla bla 
+he passed a custom AMi
 
 
 
