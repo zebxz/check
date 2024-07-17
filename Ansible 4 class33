@@ -885,6 +885,41 @@ restarts it, now it has another ip  .... lets run ansible and see hw it handles 
 ansible@ip-172-31-16-91:~/Ansible-mc-series$ ansible all -m ping
 so now it finds it too
 so now i see it doesnt matter the state of my instances 
+ansible bc of the plugging will go and get me dynmic inventory based on what is happening here, so i dnt hv to create a host file 
+so am jsut craeting as long as i can run terfrm to create my instances then i just run ansible with dynamic inventory then that inventory,it will just go to aws whatever 
+region its goin to find that inventory, even ifi hv 60instances, it will find the instances and ansible will be able to connect to them
+
+  *****  for us to be able to achieve this 
+what comapnies do in production, so thats why they will use custom amis
+it just mean that u are goin to firts create an instance and bc this instance you hv already exchanged the key so ull create an ami fmr this instance 
+then you will spin up all other instances in your env using that custom ami
+now with that once you run ansible, ansible will just mk connection to all of them bc already the key has been exchanged so ull just hv ssh connection by default
+so thats what companies in prod do , so ull always use a custom ami
+
+########### so for yoy guys what ill like you to do for your project is 
+use this inventory but create a custom AMi
+what i mean is go tru the process to mk passwordless authentication just with one server
+now once you hv that one server that ansible is able to connect to, u hv used a custom iventory then u are goin to copy that AMi or rather you are goin to create an ami 
+frm that instance
+
+e.g 
+using my ubuntu1, i hv already exchanged the key 
+i will create an ami frm it, u hv to create an image, u hv to stop it then create an image fmr this particular instance
+then the image will be available as one that you own, then copy that ami id and now cm to your terrfrm code (ec2.tf)
+***********  3:04:10 bc now you are using a custom ami , inside the  tfrrm code, in place of your (resource for ubuntu) ami pass the ami id,  and also for your host
+you can pass it as a variable
+it jst means that all your host will already hv the key configured
+so u will always be using a custom ami and now with that u are able to run your dynmica inventory and it will always succeed bc ur key has already been exchanged
+so this is how we use dynamic inventory to manage our servers
+
+
+
+
+
+
+
+
+
 
 
 
