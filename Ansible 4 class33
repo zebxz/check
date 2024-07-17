@@ -836,7 +836,14 @@ he opens it and scrolls to the inventory section  and changed
 inventory=/etc/ansible/hosts  to inventory=./aws_ec2.yaml
 so am setting my inventory bc my config file is in this pwd but its a file called: aws_ec2.yaml
 once i pass this, this is now what is called custom inventory and its a custom config file
-bc we say the order for which ansible looks for 
+bc we say the order for which ansible looks for either an env variable if it doesnt see that it wil look in the pwd 
+so if i hv a config file in the pwd then this will tk precedent , it wil be reading frm this file and it will not be reading frm the etc/ansible dir 
+bc thats the deafult so that wil be the last option
+so b c a hv a config file in the pwd so this is a custom inventory but in that inventory i need to mk sure am pointing my inventory to this aws ec2 plugging (aws_ec2.yaml)
+so hv set our plugging and obviously we hv host key checking set to false
+still inside the custom inventory/config file, we scroll to hostkey checking 
+we can either check for it or in the same inventory section we add
+host_key_checking = false
 
 
 
