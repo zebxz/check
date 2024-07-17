@@ -463,6 +463,7 @@ if i hv files that are dynamic, ie files that wil change during execution then p
 thats how you can easily create a role
 
 
+### 6)
                                                 3WAYS TO USE ROLES
 1:24:00
 ******* 
@@ -496,7 +497,8 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
 3) or i can import roles ,, so i can say either include or import,
 but remember, we saw the limitation of when we import (if am using import,the data shud be static, but if dynamic ill use include)
 
-                                   EXAMPLE 3
+  5v)                                
+ #########                                           EXAMPLE 3
 
                               CREATING A ROLE (that has a template) 
 1:33:17          making an example using the Template module (httpd.yml), in our github
@@ -577,13 +579,25 @@ Tasks
 but bc its dynamic thats why we are using a template module, its goin to tk that file &transfer it into user, share, httpd ,no index and its goin to replace that index.html
 before  and that will be the destination and the values will be dynamically replaced
 
+                                 
+                                                    QUESTION
 
 
+**** 1:56:40       frm the last eg 5v) above, u did src and dest and i know when u were teaching us b4 abt copying and all that thers a place "  remote source =yes
+does it apply in this case, if not wher is it applicable??
 
-**** 1:53:05
+i think he was refrering to the Tomcat playbook in video3, (3:00:1)
 
+  unarchive:                                                                
+          src: "/usr/local/apache-tomcat-{{req_tomcat_ver}}.tar.gz"          
+          dest: /usr/local                                                       
+          remote_src: yes    
 
+ANS:
 
+its not bc our index.html file is right here, its on our control node, we are like copying frm where we are , our conrol node &its goin to a remote, so thats why we are not 
+doing a remote src but if this index.html (src: index.html) was inside of this server then we could say the src, we will give it the path to where it is then the dest, then
+we ll put remote src = yes bc all this action is happening in this server bt in our case we created our index.html in our local host which is running our ansible
 
 
 
