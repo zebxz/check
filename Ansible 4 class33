@@ -686,28 +686,30 @@ command:         ill xplain what that means .....
 
 STATIC AND DYNAMIC INVENTORY:
 
-A static inventory file is a plain text file containing a list of managed hosts (just like the hostfile we configured) or remote nodes whose numbers and IP addresses remain 
-fairly constant.
+A static inventory file is a plain text file containing a list of managed hosts (just like the hostfile list we configured) or remote nodes whose numbers and IP addresses 
+remain fairly constant.
 On the other hand, a dynamic host file keeps changing as you add new hosts or decommission old ones.
-The IP addresses of hosts are also dynamic as you stop and start new host systems.
-eg(if i go into aws and create more ec2 instance, my static file will nt change bc i hv to configure it, but if i had a dynamic inventory and i created 5more instances then
+******eg(if i go into aws and create more ec2 instance, my static file will nt change bc i hv to configure it, but if i had a dynamic inventory and i created 5more instances then
 my inventory will change bc the pluggin will find and additioanl instances)
+ The IP addresses of hosts are also dynamic as you stop and start new host systems. (so bc of that, that is dynamic,so you wnat an inventory that when the system changes
+it will also chnage so that it gets the right ip)
+there are 2ways for you to do it
 
 Ansible Dynamic Inventory for AWS:
 
 1) Script
 
-Search for the ec2.py script.
+Search for the ec2.py script.                    ***** we hv a python script , but to use it u need to install  boto/boto3 -SDK
 
 Install boto /boto3 -SDK
 
 You can use this script in one of two ways.
 
 a) Ansible’s -i command-line option and specify the path to the script after marking it executable
-
  $ ansible -i ec2.py -u ubuntu us-east-a -m ping
+
 b) The second option is to copy the script to /etc/ansible/hosts and chmod +x it. You must also copy the ec2.ini file to /etc/ansible/ec2.ini. Then you can run ansible as
-you would normally.
+you would normally. ie, instead of the host file list we configure, we copy this and paste it in there
 
 To make a successful API call to AWS, you must configure Boto (the Python interface to AWS). You can do this in several ways available, but the simplest is by exporting two
 environment variables like follows.
