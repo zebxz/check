@@ -970,6 +970,88 @@ but its able now to provison your entire infrastructure just using terfrm and an
 
 
 
+3:28:24
+  QUESTION
+
+DID We at any stage exchange key with my other instance(d once we created directly on aws) that we created bc hw is ansible master absle to ping my other instance since it
+wasnt created frm terfrm 
+
+ANS:
+the way inventory works is its not necessary that it needs to be created with tefrm, it just goes in your aws, whatever inatsnce it finds there it get sit ip adress
+so whather u created it with tefrm or nt it will just go to a region and find all instances and return them 
+but if you wnat to select specific ones that swhy ull now use tags 
+if i want to confihure only instances with a specific tag then i can pass that in my playbk, i can say this playbk will run on instances with a tag called tomcat so thats
+how dynamic inventory will wrk , its now goin to use tag to filter to deter which instances to use 
+so thats why whenevr u are provisioning instances you hv to tag them give them a name in prod that show it works
+if its a server that belongs to prod , it has to be tagged ad prod  etc, cos when ansible goes to do configuration it is looking for those particular tag for it to be able 
+to configur
+
+2) in prod do we actiually shut doen servers??
+ANS:
+NO , it depends , if its in prod thats a downtime , ur instances dont, but if its goin for maintenance
+but then in prod we use elasic ips bc u asign an elastic ip on your instance so that even if your instance stops or it goes down,it will stil maintain the same ip bc of dns
+we always want your ip not to change so must of ur instances in prod will hv elastic ips 
+
+
+3) i was aksed this question in an interview and i was really kind of confused 
+in production if for example the manger approves a line of code, how does the process go ???  frm the tesing to prod and now the manager has approved that the code is fine
+how do we proceed frm ther
+
+ANS:
+
+if its approved , if its anything that has to do with code then that particular code is merged depending on whatever line 
+if ur working on dev branch or staging branch or a bug fix that always needs somebody to look at or if its a new feature that you are developing then once the code has been 
+written and ther has a peer review, it has been reviewed , and the pipelines have run and they hv succeeded and they hv run all the test and it has been approved
+once it has beeen approved then you can click the button to merge bc your pull request has been approved now now you can click the button to merge and your now merging it 
+into main or your merginging it into whatever branch that ur suppose to be merging into once that is merged then basically the pipeline wil tk over and run & create a build 
+frm there
+but its always that once you do your work your peers or manager has to approve nad thats why you will craete a pull req, ie ur asking for other to review your wrk before its 
+merged bc u cannot approve your own work, someone else has to and for that to ahppen they hv to look at what uv done 
+
+
+
+the main is what is in prod so ur creating a branch out of your mainand if its just a hot fix,u do ur modification/changes and do your pull reQ wnwich i stour requeting for 
+your hotfix to be merged back into main cos your just modifying, it was a bug or smt so you create a pull REq , ur peer or peers will look at it if its approved , you obviusly 
+once you create an hotfix branch as you creater apull REq A PIPELINE WILL RUN TO ENUSRE THAT DOES WHTAT SSUPPOSE TO DO , once it passes and its approved then u can merge 
+directly into the main and that resolve the isue that wa running in production
+
+
+
+ that brings us to the end of what need to knw about ansible
+but ill send you a video on ansible vault , abt 10minutes 
+abt ansible vault its just commands in which you run
+ill send you a short video on hw to use ansible vault
+we jsut use ansible vault in terms of encrypting our  playbks or encrypintg our PW, sorry
+Its just smt that we need to knw abt how do we encrypt our playbk, w evan use ansible vault to do that
+but otherwise all that u hv abt playbk adhoc commands , and how to configure your env that is is the foundation of what you need to knw abt ansible
+but once you go tru the bootcamp, hopefull now ill hv more info but also ull hv more time to play around with playbooks and just undestand
+once u understand how playbks aworks and how roles wrks that the whole of ansible that you need to know 
+cos ansible is bat playbooks and roles 
+you just need to know hw to write them, how to configure them esp using import, when to import
+bc in ansible ull be uaisng a lot of variables 
+so mastaer hw to use template , using roles and passing them in diff env
+and obviously u will encounter a lot of other ansible module sthat we hvant evne looked out 
+but again the prequisite whne u go to an interview they will ask you what ansible module hv you used 
+we hv the basic modules, what are the ansible default modules
+again we knw the default modules ie the comand and setup
+what does the setup module do, how do you disable it 
+what are the limitation of the ocmmand module
+so those are the basic things that we need to understand about ansible
+
+
+
+
+
+
+
+
+
+
+   ill send the vault video
+
+
+
+
 
 
 
