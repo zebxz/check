@@ -851,7 +851,64 @@ unbale to locate credentials, so its trying to use the credentials but its unabl
 you can attach a role to your server, a role that will mk api calls to your servers
 now in aws , he wants to attach a role to the ansible server
 he needs to give the instance permission 
-so click actions, security then modify role
+so click actions, security then modify role.
+i currently hv an anasible terfrm role so i can attach that and update , or i can create a role an just give it permission 
+
+*********** 2:40:45 those permission needs to hv ec2 but that role has adminitrator permission so create a role 
+and it has been 
+i hv a mac so i can run ansible on my local env 
+so if am runing it locally, it will just use my proflie , it will us ethe credentials that hv configured when i did aws configure so those are the credentials that it wil use
+once it uses those credentials ,its able to query using boto3, its able to mk api calls 
+so hv attached my role to my ansible server
+ansible@ip-172-31-16-91:~/Ansible-mc-series$ ansible all -m ping
+still error
+decided to create an admin role
+2:42:42******* now in aws IAM  but he cant update a role
+***** 2:48:40   ... decided to create keys, which is nt the recommended way
+needs to run aws configure bt first aws cli
+for security this is nt the secured way bc this an instance that wil hv multiple people accessing it so you cant pass static credentials like that, thas why we always attach 
+roles, but i dnt knw why its not working
+ansible@ip-172-31-16-91:~/Ansible-mc-series$ ansible all -m ping
+success
+so it has found 3servers n its been able to connect to them but also, it has found 2others in my inventory,, 2others that are nt part of the inventory but that pluggin went 
+and found 
+if i check aws, ill see 5instances that are running 
+bt these 3instances are the once that i has already exchanged the keys thats why ansible is able to make an ssh connection to them 
+for the other 2, unreachable, the key have nt been exchanged
+but your dynamic inventory is finding the instances
+lets say i launch 2other instance 
+let me see if i can use ansible to find them#
+ansible@ip-172-31-16-91:~/Ansible-mc-series$ ansible all -m ping
+ansible finds them, so its able to dynamically find these instances 
+lets stop one instance in aws so that its ip changes 
+restarts it, now it has another ip  .... lets run ansible and see hw it handles it 
+ansible@ip-172-31-16-91:~/Ansible-mc-series$ ansible all -m ping
+so now it finds it too
+so now i see it doesnt matter the state of my instances 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
