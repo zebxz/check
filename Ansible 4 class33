@@ -647,7 +647,8 @@ but if i hv those 2 roles but smt in role1 fails then the playbk will fail bc an
 
 
     what we'v been configuring, when we configure our host list inside of our hostfile (in etc/ansible)and change our inventory (ie when he added the ip addresses of our 
-host servers) so bc our inventory ha sbeen changed, this is static so in our hostfile here, we hv been using static inventory bc this (ip address, then i guess its private)
+host servers) so bc our inventory ha sbeen changed, this is static so in our hostfile here, we hv been using static inventory bc this (ip address, below he said we hv to 
+configure it for it to change)
 does nt change bt you could hv what we call dynamic inventory.
 ansible comes with various dynamic inventory pluggin , one of which is aws ec2, so with the pluggin installed then we can mg8 our inventory instead of us having a static 
 iventory, we can manage it dynamically.
@@ -675,20 +676,22 @@ etc. All of these individual configuration files can be placed within the ./ansi
 ***************Eg(  production_useast_aws_ec2.yml, this could be in a diff account or diff region, i could be configuring my prod env in us east, my test env in US West, or 
 it could be in diff aws account, so i can configure this pluggins, this names that am passing they are just meta data, just for me to knw what pluggin am using, once hv 
 configured the pluggin, i can put them either in the ansible plugging dir)
-                ***** (he said ansible.cfg file)
+              
+           ***** (he said ansible.cfg file)
 If you have the ansible.cfg with inventory = ./ansible_plugins you will be able to view AWS EC2 inventory based on the aws_ec2 plugin configuration file with the following
-command:
+command:         ill xplain what that means .....
 
  $ ansible-inventory --list --yaml
 
 
 STATIC AND DYNAMIC INVENTORY:
 
-A static inventory file is a plain text file containing a list of managed hosts or remote nodes whose numbers and IP addresses remain fairly constant.
-
+A static inventory file is a plain text file containing a list of managed hosts (just like the hostfile we configured) or remote nodes whose numbers and IP addresses remain 
+fairly constant.
 On the other hand, a dynamic host file keeps changing as you add new hosts or decommission old ones.
-
 The IP addresses of hosts are also dynamic as you stop and start new host systems.
+eg(if i go into aws and create more ec2 instance, my static file will nt change bc i hv to configure it, but if i had a dynamic inventory and i created 5more instances then
+my inventory will change bc the pluggin will find and additioanl instances)
 
 Ansible Dynamic Inventory for AWS:
 
