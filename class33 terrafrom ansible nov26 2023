@@ -87,6 +87,27 @@ file name test.sh
 cat test.sh
 we see: terraform is good
 
+######## 
+in the terfrm woklow, we hv to define the scope, what do we want to achieve?
+frm the scope we can get the plan but before that we must first initialize with terfrm init
+
+                           TO CREATE A  NEW FILE 
+
+ terraform {
+         required_providers{
+            local = {                                       
+               source = "hashicorp/local"
+            }
+           }
+}
+resource "local_file" "dev"{                   
+ content = "terraform is good"
+ filename = "test.sh"
+}     
+resource "local_file" "qa"{                        ***** we have to change the name , we cant use the same name as "dev"            
+ content = "devops is the best"
+ filename = "deploy.java"
+}
 
 AWS:
    ec2-instances  \ VPC / EKS  / S3  / ETC.  
