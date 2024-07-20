@@ -91,7 +91,8 @@ we see: terraform is good
 in the terfrm woklow, we hv to define the scope, what do we want to achieve?
 frm the scope we can get the plan but before that we must first initialize with terfrm init
 
-                           TO CREATE A  NEW FILE 
+                         
+                                             TO CREATE A  NEW FILE 
 
  terraform {
          required_providers{
@@ -103,11 +104,20 @@ frm the scope we can get the plan but before that we must first initialize with 
 resource "local_file" "dev"{                   
  content = "terraform is good"
  filename = "test.sh"
-}     
+}                                                 45:10 
 resource "local_file" "qa"{                        ***** we have to change the name , we cant use the same name as "dev"            
  content = "devops is the best"
  filename = "deploy.java"
 }
+
+*******  to destroy 
+tefrm destroy
+ * to recreate it 
+terrafrm apply --auto approve 
+ls
+we see the file recreated
+
+
 
 AWS:
    ec2-instances  \ VPC / EKS  / S3  / ETC.  
