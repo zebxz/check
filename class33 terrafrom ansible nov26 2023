@@ -57,7 +57,7 @@ terfrm has a very rich resource online
 search for a local provider   ... ....  e.g in google seacrh for a local provide:  terraform local provider 
 brings up his vscode
 
-                                    USING A LOCAL PROVIDER
+                                    USING A LOCAL PROVIDER (we want to craete a local file 
   32:49  ******* 
 
    terraform {
@@ -67,10 +67,15 @@ brings up his vscode
             }
            }
 }
-resource "local_file" "dev"{                    ****** the file is recognised in terfr as "dev"
+resource "local_file" "dev"{                    ****** the file is recognised in terfrm here as "dev"
  content = "terraform is good"
  filename = "test.sh"
 }     
+
+
+****** now run terfrm init
+if i run ls -a,  we hv a .terraform file created
+terfrm plan 
 
 
 
