@@ -1,3 +1,5 @@
+USING A LOCAL PROVIDER
+
 1. Terraform   -- Provisioning
 -------------------------------
 
@@ -54,6 +56,21 @@ your main task is you shud be able to create a configuration file in terfrm to d
 terfrm has a very rich resource online 
 search for a local provider   ... ....  e.g in google seacrh for a local provide:  terraform local provider 
 brings up his vscode
+
+                                    USING A LOCAL PROVIDER
+  32:49  ******* 
+
+   terraform {
+         required_providers{
+            local = {                               *********  the default provider, we ant to use the default provider to create a file           
+               source = "hashicorp/local"
+            }
+           }
+}
+resource "local_file" "dev"{                    ****** the file is recognised in terfr as "dev"
+ content = "terraform is good"
+ filename = "test.sh"
+}     
 
 
 
