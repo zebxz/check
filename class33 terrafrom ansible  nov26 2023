@@ -1,4 +1,4 @@
-USING A LOCAL PROVIDER , Creating a LOCAL FILE , DEFAULT PROVIDER
+USING A LOCAL PROVIDER , Creating a LOCAL FILE , DEFAULT PROVIDER, PACKAGE MANAGER IS UNIVERSAL
 
 59.03
 ************   the default provider in terrafrm is harshicorp/local  ie the local provider
@@ -232,7 +232,25 @@ How to perform the tasks and ansible workflow:
                              (multiple plays in one playbk )
 app.yml  
 =======
-host
+
+host:all
+vars:
+tasks:
+  name: install apache
+  yum: name-httpd state=latest
+  name:
+  name:
+  handlers:
+
+
+host:appservers
+host:dbservers
+host:k8s
+host:docker
+
+
+
+
 
 destroy options :
   terraform destroy --auto-approve  
