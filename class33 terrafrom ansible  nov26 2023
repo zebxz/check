@@ -256,12 +256,21 @@ tasks:
   copy: 
     src: index.html
     dest: /var/www/html/
+   notify:
   handlers:                                       ******* we can use the service module or the systemd module to restart apache
        name: restart apache                          hnadler is a task that can only be executed if there are some changes                     
        service: name=httpd state=started 
 
 
-
+the key things in ansible:
+ modules 
+   playbooks: 
+     plays  
+     variables
+     tasks  
+     handlers   
+     modules      ****   examples:   [ yum / copy / service / template / apt / package / shell ] 
+                     command / setup / systemd / 
 
 
 
