@@ -251,14 +251,14 @@ tasks:
   when:os_family="redhat"                    OR INSTEAD OF Using yum, ill use pacakge module, its universal, it works for ubuntu & redhat, bt am still specifying the condition                                                   
   name: start apache                         
   systemd: name=httpd state=started          ****** we can use the service module or systemd module to start apache
-  ignore_errors: yes                      *****another condition, if there is an error proceed to the next phase
+  ignore_errors: yes                      1:43:35 *****another condition, if there is an error proceed to the next phase
    name:   copy index file  
   copy: 
     src: index.html
     dest: /var/www/html/
-  handlers:
-                           
-
+  handlers:                                       ******* we can use the service module or the systemd module to restart apache
+       name: restart apache                          hnadler is a task that can only be executed if there are some changes                     
+       service: name=httpd state=started 
 
 
 
