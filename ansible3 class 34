@@ -360,12 +360,16 @@ ansible-vault edit /etc/ansible/group_vars/all.yml
 ansible-vault rekey /etc/ansible/group_vars/all.yml
 ansible-vault create  /etc/ansible/group_vars/all.yml
 
+10;00
+***********************************  *********************************     START
+
+
 Playbook composition:
 
   1. plays = 
        - hosts: dev 
        - hosts: dbservers  
-  2. tasks 
+  2. tasks                           ********* task is a list and each of the list wil have a name 
   3. handlers  
   4. modules = 
         yum / file / apt / copy / template / script / lineinfile
