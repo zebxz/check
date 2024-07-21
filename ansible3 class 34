@@ -444,7 +444,7 @@ Difference b/w copy and template module? :
   template module copy both static and dynamic file content 
   copy modules copies only static file content 
 
-Which module does gather_facts uses? setup
+Which module does gather_facts uses? setup module
 We can refer variables in ansible-playbook using this ginger template -- {{ varName }}  
 
 
@@ -468,17 +468,27 @@ what can we do to fix a problem wher we want to copy a file but it doesnt allow 
 ANS:
 we pass ignore error= true
 
+we can also run -vvv
+ansible-playbook tag.yml -e "index=dEVOPS"  -vvv
+it will give us more info about the problem 
+it will troubleshoot your ansible playbk
 
 
 This is {{ class }}
 
 LandmarkTechnology
 
+1:06:17
+*********************************************
+
 Ansible role --> :
   It's is a set of tasks, handlers, variables, files and other 
   components organised in a predefined structure to configured specific 
   requirements. It is easy to understand, maintained and shared.
   Roles are used in ansible-playbooks
+
+*********** so u can hv an ansible playbk with 1000lines and you reduce it to 4lines 
+and when we create a role it will cm up with an entire directory structure, it will organis ethe file 
 
 - hosts: all
   become: yes
