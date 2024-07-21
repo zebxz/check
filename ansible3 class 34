@@ -362,6 +362,7 @@ ansible-vault create  /etc/ansible/group_vars/all.yml
 
 10;00
 ***********************************  *********************************     START
+HOW TO ADD TAGS ,TO RUN SPECIFIC TASCK IN A PLAYBK,
 
 
 Playbook composition:
@@ -406,12 +407,30 @@ pb.yml:
     tags:
     - start
 
+***************  
 
+   29:00
+***************************  ******************************************************* 
+Before w erun the play book we can first run these commands to check the if the playbk is well written
+ ansible-playbook apach2.yml --syntax-check
+what is dry run in ansible???
+ ansible-playbook apach2.yml --check =# dry run      *******  we will see what exactly the playbk will achieve, the diff task that wil run 
+ ansible-playbook apache.yml --step                     ** the diff task that will be executed in the playbk
+ ansible-playbook apache.yml --list-host      ******** to knw all the host listed in the playbk
+
+33:28
+********** the setup modules is resposible for gathering facts in th eplaybk
+if u want to knw aby ur os, hw your host is configured is setup module
+we can say gather facts _falsw
+
+
+36:45
+**************************************  HOW TO RUN SPECIFIC TASK IN A PLAYBK
 
 IQ: How can specific tasks be runned in a playbooks?
 1. ansible-playbook apache.yml  --step
 2. assign tags to tasks 
-  ansible-playbook apache.yml --tags 'install, start'
+  ansible-playbook apache.yml --tags 'install, start'   *********** 41:00      to run A SPecific task in a playbk
   ansible-playbook apache.yml --tags 'copy'
 How can tasks/handlers be skipped in an playbooks?  :
   ansible-playbook apache.yml  --skip-tags 'install,start'
@@ -428,19 +447,6 @@ Difference b/w copy and template module? :
 Which module does gather_facts uses? setup
 We can refer variables in ansible-playbook using this ginger template -- {{ varName }}  
 
-29:00
-***************************  ******************************************************* 
-Before w erun the play book we can first run these commands to check the if the playbk is well written
- ansible-playbook apach2.yml --syntax-check
-what is dry run in ansible???
- ansible-playbook apach2.yml --check =# dry run      *******  we will see what exactly the playbk will achieve, the diff task that wil run 
- ansible-playbook apache.yml --step                     ** the diff task that will be executed in the playbk
- ansible-playbook apache.yml --list-host      ******** to knw all the host listed in the playbk
-
-33:28
-********** the setup modules is resposible for gathering facts in th eplaybk
-if u want to knw aby ur os, hw your host is configured is setup module
-we can say gather facts _falsw
 
 
 what is verbose mode in ansible? -v -vv -vvv
