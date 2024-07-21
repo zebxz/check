@@ -1,1 +1,583 @@
 
+Ansible can be installed in Linux OS. 
+====================================
+Ticket01: provision an ec2-instance in aws call ansible using ubuntu 
+Search official documentation for creating aws ec2-instance
+
+resource "aws_instance" "web" {
+  ami           = "ami-0c7217cdde317cfec"
+  instance_type = "t2.micro"
+  subnet_id     = "subnet-0301f6ce6f3fe5f9c"
+  key_name      = "class35"
+  security_groups = [ "sg-07fe099f5be5a1aba"  ]
+  tags = {
+    Name = "ansible"
+  }
+}
+
+
+#1 Ansible installation in ubuntu using python3-pip
+sudo useradd ansible
+sudo passwd ansible
+ echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+sudo su - ansible
+sudo apt install python3
+sudo apt update
+sudo apt install python3-pip
+pip3 install ansible --user
+sudo apt update
+sudo apt install sshpass
+sudo mkdir /etc/ansible
+sudo chown -R ansible:ansible /etc/ansible/
+vi  /etc/ansible/ansible.cfg
+vi  /etc/ansible/hosts
+
+#2 Ansible installation in ubuntu using apt repo
+Ansible installation in ubuntu
+ sudo adduser ansible
+ echo "ansible  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+ sudo su - ansible
+ sudo apt-add-repository ppa:ansible/ansible  
+ sudo apt install ansible  -y 
+ sudo chown -R ansible:ansible /etc/ansible/
+
+
+/etc/ansible/hosts  
+[web]
+54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[db] 
+172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[k8s]
+34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+[docker]
+10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+Ansible concepts:
+1. Ansible commands:  
+
+2. Ansible modules: are python scripts that can be invoke in playbooks 
+   modules = ping / shell / command / apt / yum / copy 
+3. playbooks:
+============
+Playbooks
+  It's a configuration script written in yml. It contains plays and tasks.
+  those tasks will be executed in the hosts.
+4. roles  
+5. Ansible galaxy   
+6. Inventory = static and dynamic 
+
+1. Ansible commands:  
+    ansible hosts -m module -a "df -f"
+      -m=modules
+      -a=arguements
+  hosts: db / web / app / localhost / all     
+      ansible all -m ping
+      ansible localhost -m ping
+
+  [80appServers =app]
+  [40dbServers  =db]
+  [40webServers =web]
+
+  ansible hosts -m module -a "df -f"
+
+  ansible appservers -m ping
+  ansible appservers -m ping -a "ping"    
+  ping 
+
+
+ ansible web -m command -a "df -h"
+ ansible localhost -m command -a "df -h"
+ ansible localhost -m command -a "df -h"
+
+    UsersMGT
+    FilesMGT
+    deploymentMGT
+    ServicesMGT
+    PackagesMGT
+
+Ticket:
+  Create 3 appservers using terraform. 
+  Use ansible to create ansible_user in the servers.   
+
+54.164.88.200 172.31.41.41  
+34.228.191.84 172.31.32.13
+18.232.158.138 172.31.34.33  
+54.175.72.219 172.31.36.121
+34.233.124.124 
+
+[app] 
+172.31.41.41  ansible_user=ubuntu  ansible_ssh_private_key_file=/tmp/key.pem 
+172.31.32.13  ansible_user=ubuntu  ansible_ssh_private_key_file=/tmp/key.pem
+172.31.34.33  ansible_user=ubuntu  ansible_ssh_private_key_file=/tmp/key.pem
+
+[db]
+172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/key.pem
+
+[web]
+54.164.88.200  ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/key.pem
+34.228.191.84  ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/key.pem
+18.232.158.138 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/key.pem
+[k8s]
+34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/key.pem
+
+[docker]
+172.31.34.33  ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/key.pem
+172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/key.pem
+
+ansible web -m shell -a "free -m" 
+ansible web -m shell -a "free -m" -i hosts
+ansible web -m shell -a "df -h" -i hosts
+ansible web -m command -a "df -h" -i hosts
+The default ansible hosts file is "/etc/ansible/hosts"  
+The default modules are:
+  command and setups modules 
+ansible web -m command -a "df -h" -i hosts
+ansible web -a "df -h" -i hosts  
+
+ansible k8s -m apt -a "name=tree state=present"
+ansible db -m yum -a "name=tree state=present" -i myhosts -b   
+ansible db -a "name=tree state=present" -i myhosts    
+ansible dk -a "apt install docker.io" 
+ansible dk -m apt -a "name=docker.io state=present" 
+
+2. Ansible modules: written python scripts that can be invoke in playbooks  
+    ping / :
+       ansible all -m ping
+    command / :
+       ansible all -m commad -a "ping"
+       ansible all -m shell -a "ping"
+       ansible all -m commad -a "df -h"
+       ansible all  -a "df -h"
+       ansible docker -m command -a "apt install docker.io"
+       ansible docker -a "apt install docker.io" 
+    shell / :
+       ansible all -m shell -a "ping"
+       ansible docker -m shell -a "apt install docker.io"
+    service/systemd / systemctl / :
+       ansible db -m service -a "name=sshd state=restarted"
+       ansible db -m systemd -a "name=httpd state=started"
+copy :
+ ansible app -m copy -a "src=/home/ansible/app.war dest=/opt/tomcat/webapps/"
+ ansible web -m copy -a "src=/home/ansible/index.html dest=/var/www/html/"
+    yum / apt / package:  
+      ansible app -m yum -a "name=httpd state=present"
+      ansible app -m yum -a "name=httpd state=absent"
+      ansible docker -m apt -a "name=docker.i state=present"
+
+  ansible-doc -l
+  https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: testing
+    api_version: v1
+    kind: Namespace
+    state: present
+
+3. playbooks:
+============
+user.yml 
+- hosts: all 
+  tasks:
+  - name: test connection
+    ping 
+- hosts: db
+  become: true   
+  tasks:
+  - name: install apache
+    yum: name=httpd state=present   
+  - name: start apache  
+    service: name=httpd state=started      
+- hosts: k8s
+  tasks: 
+  - name: Create a k8s namespace
+    kubernetes.core.k8s:
+      name: testing
+      api_version: v1
+      kind: Namespace
+      state: present
+
+Ticket:
+  Create 3 appservers using terraform. 
+  Use ansible to create ansible_user in the servers.  
+
+create_user.yml   
+===============
+# ansible <group/host Name> -m ping -u <userName> --private-key=~/devops.pem
+# ansible-playbook -b ansible-createuser.yml -u <userName> --private-key=~/devops.pem
+- hosts: all
+  tasks:
+  - name: Create Ansible User
+    user:
+      name: ansible
+      create_home: true
+      shell: /bin/bash
+      comment: "Ansible Management Account"
+      expires: -1
+      password: "{{ 'DevOps@2020' | password_hash('sha512','A512') }}"
+  - name: Deploy Local User SSH Key
+    authorized_key:
+      user: ansible
+      state: present
+      manage_dir: true
+      key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+  - name: Setup Sudo Access for Ansible User
+    copy:
+      dest: /etc/sudoers.d/ansible
+      content: 'ansible ALL=(ALL) NOPASSWD: ALL' 
+      validate: /usr/sbin/visudo -cf %s
+  -  name: Disable Password Authentication
+     lineinfile:
+        dest=/etc/ssh/sshd_config
+        regexp='^PasswordAuthentication'
+        line="PasswordAuthentication no"
+        state=present
+        backup=yes
+     notify:
+       - restart ssh
+  handlers:
+  - name: restart ssh
+    service:
+      name=sshd
+      state=restarted
+
+ssh-copy-id 
+  /home/ansible/.ssh/id_rsa.pub
+
+ssh-copy-id  -i /tmp/key.pem ubuntu@172.31.36.121
+ssh-copy-id  -i /tmp/key.pem 
+
+
+- hosts: docker
+  become: true    
+  tasks:
+  - name: install apache 
+    package: name=httpd state=latest    
+  - name: start apache 
+    service: name=httpd state=started  
+  - name: copy index.html file     
+    copy: src=index.html dest=/var/www/html/ 
+    notify:
+    - restart apache     
+  handlers:
+  - name: restart apache  
+    service: name=httpd state=restarted      
+
+index.html     
+  <h1> Welcome to Landmark Technologies </h1>
+    <h1> Welcome to Landmark Technologies </h1>
+      <h1> Welcome to Landmark Technologies </h1>
+
+ ansible-playbook apach2.yml --syntax-check
+ ansible-playbook apach2.yml --syntax-check  
+ ansible-playbook apache.yml --check 
+ ansible-playbook apache.yml 
+ 
+ setup module Gather Facts:
+
+ ansible dk -m setup  
+
+  loops
+ ========== 
+Playbooks with loops/conditions:
+web [ ubuntu / Redhat / windows ]
+- hosts: localhost  
+  become: true
+  gather_facts: false  
+  tasks:
+   - name: Install packages
+     package:
+       name: ['nano', 'wget', 'vim', 'zip', 'unzip', 'tree']
+       state: latest  
+     when: ("ansible_distribution" == "Ubuntu")
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Install list of packages
+      become: true  
+      yum: name='{{item}}' state=present
+      with_items:
+       - nano
+       - wget
+       - vim
+       - zip
+       - unzip  
+
+ansible web -m setup  
+
+variables in ansible:
+vars.yml 
+---
+- hosts: localhost
+  vars:
+    name: From Playbook
+    password: dev@123
+  tasks:
+  - name:  demo vars
+    debug:
+      msg: "{{name}}"
+  - name: vars demo2
+    debug:
+      msg: "{{password}}"
+
+Variables:
+  1. runtime variables 
+  2. playbook variables 
+  3. host_vars variables 
+  4. group_vars variables
+
+vars2.yml  
+- hosts: localhost 
+  gather_facts: false      
+  tasks:
+  - name: your password    
+    debug:
+      msg: "{{ mypassword }}"
+
+ mkdir /etc/ansible/group_vars/
+ touch /etc/ansible/group_vars/all.yml  
+ touch /etc/ansible/group_vars/dk.yml  
+
+Variables:
+  1. runtime variables    = 1st  place  
+  2. playbook variables   = 2nd  place
+  3. host_vars variables  = 3rd place
+  4. group_vars variables = 4th place  
+
+hashicorp VAULT.:
+It is use to create and store secrets in hashicorp.
+
+ANSIBLE VAULT.:
+=============== 
+stores and encrypt confidential or secrets  data.
+ [password / sshkeys / tokens / certificates ]   
+
+ansible-vault encrypt /etc/ansible/group_vars/all.yml
+
+ansible-vault decrypt /etc/ansible/group_vars/all.yml
+ansible-vault view /etc/ansible/group_vars/all.yml
+ansible-vault edit /etc/ansible/group_vars/all.yml
+ansible-vault rekey /etc/ansible/group_vars/all.yml
+ansible-vault create  /etc/ansible/group_vars/all.yml
+
+Playbook composition:
+
+  1. plays = 
+       - hosts: dev 
+       - hosts: dbservers  
+  2. tasks 
+  3. handlers  
+  4. modules = 
+        yum / file / apt / copy / template / script / lineinfile
+        package / shell / setup / command / ping / authorized_keys
+  5. loops
+  6. conditions
+  7. variables
+  8. roles   
+
+pb.yml:
+======
+- hosts: dk  
+  become: true
+  gather_facts: false
+  tasks:
+  - name: install apache
+    yum: name=httpd state=latest
+    notify:
+    - start apache
+    ignore_errors: true
+    tags:
+    - install
+  - name: copy index.html
+    template: src=app/index.html  dest=/var/www/html/
+    tags:
+    - copy
+  handlers:
+  - name: start apache
+    service: name=httpd state=started
+    tags:
+    - start
+IQ: How can specific tasks be runned in a playbooks?
+1. ansible-playbook apache.yml  --step
+2. assign tags to tasks 
+  ansible-playbook apache.yml --tags 'install, start'
+  ansible-playbook apache.yml --tags 'copy'
+How can tasks/handlers be skipped in an playbooks?  :
+  ansible-playbook apache.yml  --skip-tags 'install,start'
+
+What is the difference between tasks and handlers?:
+Tasks are executed by default from top to bottom.
+Some tasks has to notify handlers. 
+Handler will be executed only if the tasks changes.
+
+Difference b/w copy and template module? :  
+  template module copy both static and dynamic file content 
+  copy modules copies only static file content 
+
+Which module does gather_facts uses? setup
+We can refer variables in ansible-playbook using this ginger template -- {{ varName }}  
+
+This is {{ class }}
+
+LandmarkTechnology
+
+Ansible role --> :
+  It's is a set of tasks, handlers, variables, files and other 
+  components organised in a predefined structure to configured specific 
+  requirements. It is easy to understand, maintained and shared.
+  Roles are used in ansible-playbooks
+
+- hosts: all
+  become: yes
+  roles:
+   - httpd
+   - tomcat  
+
+ansible-galaxy init httpd 
+ansible-galaxy init tomcat  
+.
+├── README.md
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+
+https://github.com/LandmakTechnology/AnsiblePlaybooks
+
+https://github.com/LandmakTechnology/AnsibleRoles
+
+
+  Linux distribution:
+      ubuntu  
+      redhat  
+      amazon-linux 
+sudo yum install java-1.8.0-openjdk
+
+Dynamic Inventory:
+=================
+Dynamic Inventory uses scripts and Plugins to classify hosts from a cloud provider.
+  appservers  
+  dbservers  
+  webservers  
+  devServers   
+The default ansible static host file  = /etc/ansible/hosts   
+The custom ansible  static host file  = anywhere in the server 
+                                       /home/ansible/hosts 
+                                       /tmp/hosts  
+                                        /home/ansible/myhosts
+ scripts:
+    ec2.py  and 
+    ec2.ini 
+ 
+ Plugins:
+  ec2       
+sudo yum -y install python3-pip
+sudo apt -y install python3-pip
+pip3 install boto3 botocore --user
+pip3 install --upgrade requests --user
+
+Ansible will fetch and group servers/hosts/ec2  
+vi dynamic-inventory-aws_ec2.yml  
+vi dynamic-inventory.yml
+vi di-aws_ec2.yml
+plugin: aws_ec2
+aws_access_key: 
+aws_secret_key: 
+regions:
+  - us-east-1
+  - us-east-2
+  - us-west-1
+filters:
+  instance-state-name : running
+keyed_groups:
+  - key: tags.Name
+    prefix: ""
+    separator: ""
+hostnames:
+  - private-ip-address
+compose:
+  ansible_host: private_ip_address
+
+
+
+ansible all -i di-aws_ec2.yml -m ping -u ec2-user
+ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml   
+ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml
+ansible all -i dynamic-inventory-aws_ec2.yml -m ping -u ubuntu --private-key=/tmp/key.pem
+ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml  --private-key=/tmp/key.pem -l app
+ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml -u ubuntu --private-key=/tmp/key.pem -l kops
+ansible-playbook test.yml -i di-aws_ec2.yml -u ec2-user --private-key=/tmp/key.pem --limit app 
+
+
+automation ticket001247:
+  continuous provisioning      - Jenkins-Terraform integration []    
+  continuous configuration MGT - Jenkins-Ansible integration   
+  continuous integration       - Build and Release [Jenkins/maven/Sonarqube/nexus]   
+  continuous deployment        - Jenkins and docker/Kubernetes integration
+  continuous Monitoring        - Jenkins and Kubernetes/P-G integration
+  continuous Monitoring        - Jenkins and Kubernetes/EFK integration
+
+Triggers:
+  pollSCM / github-webhook
+  Build other projects  
+  Build after other projects are built  
+
+Infrastructure Engineering:
+  console / 
+  commands = aws s3 mb s3://test31   
+             aws eks create-cluster --name eks31 --region us-west-1  
+             eksctl create-cluster --name eks31 --region us-west-1  
+  scripts: infrastructure as a code 
+           Terraform scripts  
+           CloudFormation scripts 
+           version controlled using git/github  
+           easy to reused  
+  servers/vm/ec2:
+    maven / Sonarqube / nexus / tomcat / docker / eks  
+  network: vpc / route53 / vpn / aws direct connect  
+  security: iam / sg / nacl / waf /  
+  elb / asg /  
+  storage: ebs / efs / s3 
+
+Rancher Installations in a docker server:
+$ Install docker
+$ sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+
+  52.87.183.168  
+
+  docker logs  container-id  2>&1 | grep "Bootstrap Password:"  
+
+  docker logs  container-id  2>&1 | grep "Bootstrap Password:"
+
+  docker logs ea57f674cdce  2>&1 | grep "Bootstrap Password:"
+  Bootstrap Password: twgf8l75hnmvdnl6vdlph77hg9vbslvxnr25wmnczbvx2sfw54kgs6  
+    new password = admin1234....
+
+
+
+student encounters 
+1. DR. Henry Tatangang 
+     Inspector General of Employment
+     16years as University Professor 
+     Counsellor - Retired in 2009
+     75years 
+2.  Prince Chefah Forchu  
+    BSc. in Political Sciences   
+3. Isaac  = Manufacturing 
+4. Michelle koundou -  BA  
+5. Obianuju Nnoli - BSc maths 
+6. Emilie -
+7. Ayomitunde Sogbesan
+8. Mercy N nsoh = BSc Banking   
+9. Johnpaul Emenogu = food safety
