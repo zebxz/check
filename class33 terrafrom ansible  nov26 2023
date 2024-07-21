@@ -5,6 +5,7 @@ USING A LOCAL PROVIDER , Creating a LOCAL FILE , DEFAULT PROVIDER, PACKAGE MANAG
 1:0:40******* the resource block is the most important block
 ******  each terfrm blk is a module 
 1:13:53  ******  u can pnly initialize in a dir where you hv terfrm code/file
+1:41:11 *********    OR INSTEAD OF Using yum, ill use pacakge module, its universal, it works for ubuntu & redhat
 
 ******* 1:03:14      interview 
 
@@ -232,21 +233,34 @@ How to perform the tasks and ansible workflow:
                              (multiple plays in one playbk )
 app.yml  
 =======
-
-host:all
-vars:
-tasks:
-  name: install apache
-  yum: name-httpd state=latest
-  name:
-  name:
-  handlers:
-
-
+                             ****** this is a playbk with multiple plays
 host:appservers
 host:dbservers
 host:k8s
 host:docker
+
+  
+*********************************************************
+            this playbk is making use of package module, making use of conditions like when
+
+host:all
+vars:
+tasks:
+  name: install apache                        1:40:08
+  yum: name-httpd state=latest       ** this will use the yum module to install apache on all my servers bt if some of my servers are ubuntu,window, redhat, ill pass a condition
+  when:os_family="redhat"                    OR INSTEAD OF Using yum, ill use pacakge module, its universal, it works for ubuntu & redhat, bt am still specifying the condition                                                   
+  name: start apache                         
+  systemd: name=httpd state=started          ****** we can use the service module or systemd module to start apache
+  ignore_errors: yes                      *****another condition, if there is an error proceed to the next phase
+   name:   copy index file  
+  copy: 
+    src: index.html
+    dest: /var/www/html/
+  handlers:
+                           
+
+
+
 
 
 
