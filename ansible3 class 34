@@ -365,6 +365,8 @@ ansible-vault create  /etc/ansible/group_vars/all.yml
  DRY RUN,  EXECUTING A PLAY BK WITH OTHER OPTIONS, HOW TO ADD TAGS ,TO RUN SPECIFIC TASCK IN A PLAYBK, TO SKIP A TASK , VERBOSE MODE, ROLES
 
 ********* roles in ansible a re similar to helm chart in k8
+1:20:20
+***************** we can ls roles
 
 
 Playbook composition:
@@ -542,6 +544,19 @@ https://github.com/LandmakTechnology/AnsibleRoles
       redhat  
       amazon-linux 
 sudo yum install java-1.8.0-openjdk
+
+1:30:12
+********** he ls an we saw
+group_vars hosts READ.md roles  site.yml 'untitled Diagram.drawio'
+ls roles/tomcat
+files handlers tasks templates
+ls roles/tomcat/templates/                      ******** in templates, we have the below files 
+iptables-save  server.xml tomcat-users.xml                   ***** bc users can change we are paassing it here as a variable     
+cat
+<user username=......                                              *********this line is not commented,  we see tomcat user is defined as a variable
+
+********** so we hv been able to deploy tomcat using ansible 
+
 
 Dynamic Inventory:
 =================
