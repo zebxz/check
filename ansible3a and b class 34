@@ -120,6 +120,15 @@ Ticket:                  ********** 17:36
 3:50                                created new ansible server 
 **********      installed ansible using the apt package manager
 
+just this 2lines are installing ansible
+
+43:00
+************* while your creating the server it comes with a default user
+1:02:03
+********** the command ...........     free -m falls under sysytem mgt
+
+
+
 54.164.88.200 172.31.41.41  
 34.228.191.84 172.31.32.13
 18.232.158.138 172.31.34.33  
@@ -148,7 +157,7 @@ Ticket:                  ********** 17:36
 ansible web -m shell -a "free -m" 
 ansible web -m shell -a "free -m" -i hosts
 ansible web -m shell -a "df -h" -i hosts
-ansible web -m command -a "df -h" -i hosts
+ansible web -m shell -a "df -h" -i hosts                   ******** to check the file system
 The default ansible hosts file is "/etc/ansible/hosts"  
 The default modules are:
   command and setups modules 
@@ -160,6 +169,16 @@ ansible db -m yum -a "name=tree state=present" -i myhosts -b
 ansible db -a "name=tree state=present" -i myhosts    
 ansible dk -a "apt install docker.io" 
 ansible dk -m apt -a "name=docker.io state=present" 
+
+1:04:10
+ ####################  
+
+we can use ansible to achieve this task 
+theres a command called the ansible module
+command module is a default module in ansible 
+
+instead of using shell i can use command 
+ansible web -m command -a "df -h" -i hosts 
 
 2. Ansible modules: written python scripts that can be invoke in playbooks  
     ping / :
