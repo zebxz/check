@@ -55,6 +55,13 @@ Ansible installation in ubuntu
 10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
 
 
+##############################################################
+                       STARTS
+
+1:11:50
+*********** priviledge escalation , -b command ,......  become 
+
+
  ...........  ansible brings automation
 ansible modules are python scripts that can be invoked in a playbook
 when it comes to bash shell scripting, there are a lot of work that needs to be done but when it comes to ansible, those job has already been done and they hv been modulized
@@ -159,10 +166,7 @@ ansible web -m shell -a "free -m" -i hosts
 ansible web -m shell -a "df -h" -i hosts
 ansible web -m shell -a "df -h" -i hosts                   ******** to check the file system
 The default ansible hosts file is "/etc/ansible/hosts"  
-The default modules are:
-  command and setups modules 
-ansible web -m command -a "df -h" -i hosts
-ansible web -a "df -h" -i hosts  
+
 
 ansible k8s -m apt -a "name=tree state=present"
 ansible db -m yum -a "name=tree state=present" -i myhosts -b   
@@ -179,6 +183,12 @@ command module is a default module in ansible
 
 instead of using shell i can use command 
 ansible web -m command -a "df -h" -i hosts 
+
+******
+The default modules are:
+  command and setups modules 
+ansible web -m command -a "df -h" -i myhosts
+ansible web -a "df -h" -i hosts  
 
 2. Ansible modules: written python scripts that can be invoke in playbooks  
     ping / :
