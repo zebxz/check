@@ -214,8 +214,19 @@ copy :
       ansible app -m yum -a "name=httpd state=absent"
       ansible docker -m apt -a "name=docker.i state=present"
 
+
+************1:20:14                                    ALL THE MODULES AVAILABLE
+
   ansible-doc -l
   https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+these are the doumetations about modules, so if you dnt want to use command line, you can use the console 
+
+
+   *********** this didnt work 
+1:24:40                                           CREATING A NAME SPACE
+****************
+SO ansible got everything you need,
+i can use ansible to mg8 deployment in k8 , having seen the list of modules, yes we can 
 
 - name: Create a k8s namespace
   kubernetes.core.k8s:
@@ -224,13 +235,13 @@ copy :
     kind: Namespace
     state: present
 
-3. playbooks:
+3. playbooks:                     1:27:28
 ============
 user.yml 
 - hosts: all 
   tasks:
   - name: test connection
-    ping 
+    ping                                       *********** ping module to test connection
 - hosts: db
   become: true   
   tasks:
@@ -247,6 +258,8 @@ user.yml
       kind: Namespace
       state: present
 
+
+**********   1:41:00
 Ticket:
   Create 3 appservers using terraform. 
   Use ansible to create ansible_user in the servers.  
@@ -265,7 +278,7 @@ create_user.yml
       comment: "Ansible Management Account"
       expires: -1
       password: "{{ 'DevOps@2020' | password_hash('sha512','A512') }}"
-  - name: Deploy Local User SSH Key
+  - name: Deploy Local User SSH Key                                     ******* deploying the key using ansible playbk
     authorized_key:
       user: ansible
       state: present
@@ -291,11 +304,20 @@ create_user.yml
       name=sshd
       state=restarted
 
-ssh-copy-id 
+1:53:00
+**********************************************  DEFAULT AUTHENTICTAION OPTION 
+
+it is ssh public key 
+this is the command used to moved the public key into a server 
+
+ssh-copy-id                               ********* this is when you are doing it manually
   /home/ansible/.ssh/id_rsa.pub
 
 ssh-copy-id  -i /tmp/key.pem ubuntu@172.31.36.121
 ssh-copy-id  -i /tmp/key.pem 
+
+ssh ansible@172.31.36.121
+establishing a passwordless connection, you must deploy your ssh key 
 
 
 - hosts: docker
