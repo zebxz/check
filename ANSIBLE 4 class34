@@ -74,6 +74,22 @@ ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml -u ubuntu --private-k
 ansible-playbook test.yml -i di-aws_ec2.yml -u ec2-user --private-key=/tmp/key.pem --limit app 
 
 
+19:00                                                       STATIC INVENTORY
+*****************
+/etc/ansible/hosts  
+[web]
+54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[db] 
+172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+[k8s]
+34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+[docker]
+10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+
+
+
+
+
 automation ticket001247:
   continuous provisioning      - Jenkins-Terraform integration []    
   continuous configuration MGT - Jenkins-Ansible integration   
