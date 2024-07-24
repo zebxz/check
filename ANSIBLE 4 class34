@@ -31,12 +31,17 @@ vi dynamic-inventory.yml
 
 
                                  ******** this is infrastructure as a code
-vi di-aws_ec2.yml
+
+10:30:00             using dynamic inventory
+                    dynamic files end with .yml
+
+
+vi di-aws_ec2.yml                             ***** file name , vi and paste the file 
 plugin: aws_ec2
 aws_access_key: 
 aws_secret_key: 
-regions:
-  - us-east-1
+regions:                                    ****** to list specific regions
+  - us-east-1                     
   - us-east-2
   - us-west-1
 filters:
@@ -55,13 +60,13 @@ compose:
 5:10
     ******** if you dont want to do IAC,  then 
 you will assign an IAM role to your ANsible control server with REQ permissions to grup servers
-and when we use roles, confidential details are not displayed like bel (the key info)
+and when we use roles, confidential details are not displayed (the key info)
 
 
 
 
 ansible all -i di-aws_ec2.yml -m ping -u ec2-user
-ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml   
+ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml                ******** dynamically listing the resources/servers in aws
 ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml
 ansible all -i dynamic-inventory-aws_ec2.yml -m ping -u ubuntu --private-key=/tmp/key.pem
 ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml  --private-key=/tmp/key.pem -l app
