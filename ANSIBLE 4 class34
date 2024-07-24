@@ -1,3 +1,7 @@
+24:40 ********  -l means limit 
+
+
+
 Dynamic Inventory:
 =================
 Dynamic Inventory uses scripts and Plugins to classify hosts from a cloud provider.
@@ -100,9 +104,10 @@ so we run the command like user , w ewant to ping the server with user ubuntu
 
                              "  the inventory file"               
 ansible-playbook test.yml -i di-aws_ec2.yml -m ping -u ubuntu --private-key=/tmp/key.pem           ** playbk called test.yml, whterver we wnt to do is defined in the playbk 
-                                                                                                              the key is found in /tmp
+                                                      ec2-user                                                     the key is found in /tmp
 
-
+*********** some of the servers were nt able to ping bc they are ec2 not ubuntu 
+so we can also change the user to ec2-user
 
 
 
