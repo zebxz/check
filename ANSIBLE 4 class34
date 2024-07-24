@@ -126,8 +126,18 @@ so he wants to recycle his key
 
 
 
+**********************  so we hv seen how to use dynamic inventory to achieve specific tasks 
+
 41:10
-************* thers a jenkins integration job we will look at 
+************* lets assume thers a jenkins integration job we will look at 
+but in my github env with dynamic inventory , i hv this job , i want to install tomcat , this is my yml file to install tomcat
+
+using dynamic inventory
+ansible-playbook tomcat.yml -i di-aws_ec2.yml -u ec2-user --private-key=/tmp/key.pem -l tomcat           **** limiting the installation to only tomcat server 
+                                                                                       **** tomcat server
+        
+******* in our inventory, in our etc/ansible host, we dnt hv any list of tomcat servers but we hv a tomcat server here 
+so please this is dynamic inventory 
 
 
 
