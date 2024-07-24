@@ -78,13 +78,33 @@ ansible-playbook test.yml -i di-aws_ec2.yml -u ec2-user --private-key=/tmp/key.p
 *****************
 /etc/ansible/hosts  
 [web]
-54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
+54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem                   ******** but with dynamic we dont have this file 
+54.175.72.219 ansible_user=ec2-user ansible_password=admin123
 [db] 
 172.31.36.121 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
 [k8s]
 34.233.124.124 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
 [docker]
 10.0.4.60 ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/kkk.pem
+
+
+19:41  
+when we create a server in aws it comes with an ssh private key 
+and when connecting to your ubuntu server for the first time you:
+ssh -i demo.pem ubuntu@172.31.80.9
+when we create a server for the first time, it doesnt come with an ansible user , 
+cos when you pass smt like this it means you wnat to use a default user, but thers no default user 
+so it is presummed that this servers hv just been created so if we want to ping the server, we can only ping the server with the default user that the server came with
+so we run the command like user , w ewant to ping the server with user ubuntu 
+
+
+                             "  the inventory file"               
+ansible-playbook test.yml -i di-aws_ec2.yml -m ping -u ubuntu --private-key=/tmp/key.pem           ** playbk called test.yml, whterver we wnt to do is defined in the playbk 
+                                                                                                              the key is found in /tmp
+
+
+
+
 
 
 
