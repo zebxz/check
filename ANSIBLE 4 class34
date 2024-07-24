@@ -16,14 +16,21 @@ The custom ansible  static host file  = anywhere in the server
  
  Plugins:
   ec2       
-sudo yum -y install python3-pip
+sudo yum -y install python3-pip                               ********** first install python p
 sudo apt -y install python3-pip
-pip3 install boto3 botocore --user                           ****** if you are installing for a specific user
+pip3 install boto3 botocore --user                           ****** if you are installing for a particular user
 pip3 install --upgrade requests --user                        ******* then upgrade
 
-Ansible will fetch and group servers/hosts/ec2  
+
+
+we hv an aws account so
+Ansible will fetch and group servers/hosts/ec2                *********   and in ansible servers are called ec2
+
 vi dynamic-inventory-aws_ec2.yml  
 vi dynamic-inventory.yml
+
+
+                                 ******** this is infrastructure as a code
 vi di-aws_ec2.yml
 plugin: aws_ec2
 aws_access_key: 
@@ -42,6 +49,14 @@ hostnames:
   - private-ip-address
 compose:
   ansible_host: private_ip_address
+
+
+
+5:10
+    ******** if you dont want to do IAC,  then 
+you will assign an IAM role to your ANsible control server with REQ permissions to grup servers
+and when we use roles, confidential details are not displayed like bel (the key info)
+
 
 
 
