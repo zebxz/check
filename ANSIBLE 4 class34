@@ -66,7 +66,7 @@ and when we use roles, confidential details are not displayed (the key info)
 
 
 ansible all -i di-aws_ec2.yml -m ping -u ec2-user
-ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml                ******** dynamically listing the resources/servers in aws
+ansible-inventory --graph -i di -aws_ec2.yml                ******** dynamically listing the resources/servers in aws
 ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml
 ansible all -i dynamic-inventory-aws_ec2.yml -m ping -u ubuntu --private-key=/tmp/key.pem
 ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml  --private-key=/tmp/key.pem -l app
