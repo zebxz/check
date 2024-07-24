@@ -1,0 +1,117 @@
+Dynamic Inventory:
+=================
+Dynamic Inventory uses scripts and Plugins to classify hosts from a cloud provider.
+  appservers  
+  dbservers  
+  webservers  
+  devServers   
+The default ansible static host file  = /etc/ansible/hosts   
+The custom ansible  static host file  = anywhere in the server 
+                                       /home/ansible/hosts 
+                                       /tmp/hosts  
+                                        /home/ansible/myhosts
+ scripts:
+    ec2.py  and 
+    ec2.ini 
+ 
+ Plugins:
+  ec2       
+sudo yum -y install python3-pip
+sudo apt -y install python3-pip
+pip3 install boto3 botocore --user
+pip3 install --upgrade requests --user
+
+Ansible will fetch and group servers/hosts/ec2  
+vi dynamic-inventory-aws_ec2.yml  
+vi dynamic-inventory.yml
+vi di-aws_ec2.yml
+plugin: aws_ec2
+aws_access_key: 
+aws_secret_key: 
+regions:
+  - us-east-1
+  - us-east-2
+  - us-west-1
+filters:
+  instance-state-name : running
+keyed_groups:
+  - key: tags.Name
+    prefix: ""
+    separator: ""
+hostnames:
+  - private-ip-address
+compose:
+  ansible_host: private_ip_address
+
+
+
+ansible all -i di-aws_ec2.yml -m ping -u ec2-user
+ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml   
+ansible-inventory --graph -i dynamic-inventory-aws_ec2.yml
+ansible all -i dynamic-inventory-aws_ec2.yml -m ping -u ubuntu --private-key=/tmp/key.pem
+ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml  --private-key=/tmp/key.pem -l app
+ansible-playbook ping.yml -i dynamic-inventory-aws_ec2.yml -u ubuntu --private-key=/tmp/key.pem -l kops
+ansible-playbook test.yml -i di-aws_ec2.yml -u ec2-user --private-key=/tmp/key.pem --limit app 
+
+
+automation ticket001247:
+  continuous provisioning      - Jenkins-Terraform integration []    
+  continuous configuration MGT - Jenkins-Ansible integration   
+  continuous integration       - Build and Release [Jenkins/maven/Sonarqube/nexus]   
+  continuous deployment        - Jenkins and docker/Kubernetes integration
+  continuous Monitoring        - Jenkins and Kubernetes/P-G integration
+  continuous Monitoring        - Jenkins and Kubernetes/EFK integration
+
+Triggers:
+  pollSCM / github-webhook
+  Build other projects  
+  Build after other projects are built  
+
+Infrastructure Engineering:
+  console / 
+  commands = aws s3 mb s3://test31   
+             aws eks create-cluster --name eks31 --region us-west-1  
+             eksctl create-cluster --name eks31 --region us-west-1  
+  scripts: infrastructure as a code 
+           Terraform scripts  
+           CloudFormation scripts 
+           version controlled using git/github  
+           easy to reused  
+  servers/vm/ec2:
+    maven / Sonarqube / nexus / tomcat / docker / eks  
+  network: vpc / route53 / vpn / aws direct connect  
+  security: iam / sg / nacl / waf /  
+  elb / asg /  
+  storage: ebs / efs / s3 
+
+Rancher Installations in a docker server:
+$ Install docker
+$ sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+
+  52.87.183.168  
+
+  docker logs  container-id  2>&1 | grep "Bootstrap Password:"  
+
+  docker logs  container-id  2>&1 | grep "Bootstrap Password:"
+
+  docker logs ea57f674cdce  2>&1 | grep "Bootstrap Password:"
+  Bootstrap Password: twgf8l75hnmvdnl6vdlph77hg9vbslvxnr25wmnczbvx2sfw54kgs6  
+    new password = admin1234....
+
+
+
+student encounters 
+1. DR. Henry Tatangang 
+     Inspector General of Employment
+     16years as University Professor 
+     Counsellor - Retired in 2009
+     75years 
+2.  Prince Chefah Forchu  
+    BSc. in Political Sciences   
+3. Isaac  = Manufacturing 
+4. Michelle koundou -  BA  
+5. Obianuju Nnoli - BSc maths 
+6. Emilie -
+7. Ayomitunde Sogbesan
+8. Mercy N nsoh = BSc Banking   
+9. Johnpaul Emenogu = food safety
