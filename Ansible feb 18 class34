@@ -30,7 +30,7 @@ Variables:
 
 ***********
 variables in ansible:
-vars.yml                 ******** variable file
+vars2.yml                 ******** variable file
 ---
 - hosts: localhost
   vars:
@@ -75,6 +75,30 @@ TO ENCRYPT MY all.yml file :
 ansible-vault encrypt /etc/ansible/group_vars/all.yml
 
 ........... and you will be requested to setup a password after which when u cat your file ull see that your password has been encrypted
+so the passwd to vars/all.yml file has been encrypted
+
+now if i try to run a playbook conected with this file :
+ansible-playbook vars2.yml
+
+********** we get an error:, it says Attempting to decrypt but no vault secrets found 
+therfore , i need to inform ansible to ask mef or the vault passwd 
+
+**** ansible-playbook vars2.yml -ask-vault-pass
+
+
+54:41
+*****************
+i can also create a file for my passwd
+vi vault pass
+then paste my passwd
+
+***********  so now i can run:
+ ansible-playbook vars2.yml -vault-password=vaultpass
+
+
+****** so this is ansible for you
+you can create a secret like a passwd and you can encrypt it using ansible vault 
+
 
 ansible-vault decrypt /etc/ansible/group_vars/all.yml
 ansible-vault view /etc/ansible/group_vars/all.yml
