@@ -1,3 +1,5 @@
+TYPES OF VARIABLE , VAULT 
+
 9:00
 prof diff btw task and handler 
 task is executed in the playbook chronlogically frm top to bottom while 
@@ -45,16 +47,34 @@ vars.yml                 ******** variable file
 
 
 5:07
-displace variable
+*********** 
+ displace variable:
+
+In order of priority, run time variable wil take 1st place 
+ runtime variables   = ist
+  playbook variables  = 2nd
+  host_vars variables  = 3rd
+  group_vars variables = 4th
+
 
 
 51:20 
+
+ bc its not safe for sensitive info like passwd in an un encrypted format , ie anybody can view so we can use either hashicorp vault or ansible vault
+
+HAshicorp vault:
+it is used to create  and store secrets in hashicorp
+
 ANSIBLE VAULT.:
-=============== 
-stores and encrypt confidential or secrets  data.
+===============    
+stores and encrypt confidential or secrets  data. in ansible like:
  [password / sshkeys / tokens / certificates ]   
 
+
+TO ENCRYPT MY all.yml file :
 ansible-vault encrypt /etc/ansible/group_vars/all.yml
+
+........... and you will be requested to setup a password after which when u cat your file ull see that your password has been encrypted
 
 ansible-vault decrypt /etc/ansible/group_vars/all.yml
 ansible-vault view /etc/ansible/group_vars/all.yml
@@ -94,22 +114,6 @@ web [ ubuntu / Redhat / windows ]
        - zip
        - unzip  
 
-ansible web -m setup  
-
-variables in ansible:
-vars.yml 
----
-- hosts: localhost
-  vars:
-    name: From Playbook
-    password: dev@123
-  tasks:
-  - name:  demo vars
-    debug:
-      msg: "{{name}}"
-  - name: vars demo2
-    debug:
-      msg: "{{password}}"
 
 
 
