@@ -109,6 +109,14 @@ ansible-vault create  /etc/ansible/group_vars/all.yml
 
 
 
+    INTERVIEW QUESTION
+
+How can specific tasks be runned in a playbook? 
+1) ansible-playbook apache.yml --step                        *********  we can define the playbook by steps and this will work with the help of tags , assign tags to tasks
+2) assign tags to tasks
+e.g ansible -playbook apache.yml --tags 'install, start'      ****this is goin to run only the install and start tags
+eg ansible -playbook apache.yml --tags 'copy'  
+
 ################
 
  loops
