@@ -26,6 +26,23 @@ Variables:
   4. group_vars variables
 
 
+***********
+variables in ansible:
+vars.yml                 ******** variable file
+---
+- hosts: localhost
+  vars:
+    name: From Playbook
+    password: dev@123
+  tasks:
+  - name:  demo vars
+    debug:
+      msg: "{{name}}"
+  - name: vars demo2
+    debug:
+      msg: "{{password}}"
+
+
 
 5:07
 displace variable
