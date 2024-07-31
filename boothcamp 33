@@ -47,7 +47,57 @@ and if the unit test cases passes in maven then the packages are created , so wi
 AND HOW IS IT POSSIBLE THAT MAVEN CAN DO ALL  OF THIS ?
 
 its possible bc maven makes use of pluggins, dependencies and with the help of this maven is able to validate the code, compile java classes, run unit test cases and able to 
-create packages, so you see that when it comes to devops processes, deveops is all about improvement, so when it brings in maven, maven ensures that packages 
+create packages, so you see that when it comes to devops processes, deveops is all about improvement, so once it brings in maven, maven ensures that packages but it doent 
+just end there, bc a good pipeline considers several factors including security, diaster recovery etc , so once maven informs us that these are packages created within our 
+devops cycle, we hv a tool thats incharge of the code quality.called quality checker, which is sonarqube, sonarqube has been part of our project, it is part of our project, it
+performs code quality analysis and establishes report that informs of the quality, ie, good,medium or poor quality but before that in our env we hv created our benchmark for
+code quality called quality gates/profiles, our benchmark hv been created eg, for most our project our becnchmark is expected to be atleast 90%, which implies that developers
+are expected to write atleast 9 out of 10 lines for test cases , so sonarqube wil be checking if this is what the developers actually did, so deveops with all of this, jenkins
+is helping to connect all of this tool together to integrtae them together so with the help of jenkins we can achieve continous integration where once developers commit a code
+and evrything is fine then artifacts are created
+so this is what devops is all about, it stretches beyound that point bc once we hv sonarqube performing that task the nxt tin is that we hv our artifacts once sonarqube validates
+and tell us that these are good code, the nxt tin is we nid to backup the artifact just inacse thers a disater and we use artifactries to be able to be upload our artifacts into
+and in our env we use an open source artifactory called nexus and of course ther are other artifactries you could ude like jfork, amazon, ecr bt in our env we principally use
+nexus for that purpose so once the artifcats are uploaded we are now reday for deployment and to deploy we get into a predeployment phase where we hv a  docker file which we 
+use to containerise our appl bc we are basically managing containerized appl with the help of a docker file we are able to create images, share the imgaes in docker registry for
+eg in our env we using dockerhub ....... 
+
+************ so u must always speak as someone who is at work not one in the class u see when am speaking i want to tk u bk to my env, 
+
+ and once the images are in dockerhub we no whv our container ochestra, we hv a tool we are using to ochetrate these containers which is called k8, so with the help of k8
+our containers are created, scaled, managed, if thers a problem it comes to a self healing capability,  eg if theres a problem k8 will ensure that eg if a port went down 
+since we always use controller mangers in our deployment, they will recretae the port , if a node goes down, all the pods running on that node will be evicted and automatically 
+assigned to new node.. thats how we achieve our build release and deployment job , just bc we mk use of devops and devops helps use to be able to integrate with diff tools to
+be able to achieve our objectives but we dnt only deploy the appl and end ther
+we ask our selves whta happens if the appl goes down how are we goint o be made aware, how are we goin to be made informed, so still within our devops processes using automation
+tool like jenkins we hv what is called continous monitoring , we hv to observe hw the appl is performing so contantly we are observing, is the appl perfroming well or not
+how are we goin to know , so since we manage containerized appl in our env, we hv what is called promthus and grafana , and with this we deploy an apll monitoring tool kit 
+that monitors all the appl and if thers a prob we will be allerted bc promethus comes with couple of micro services and one of them is the alert manger. we hv creatd alert manger 
+eg if a pod is down an alert is down a alert will be triggered, if a node is down an alert is triggered, if a node is low on cpu or memory, an alert will be trigerred , we hv
+configured all of this . when it comes to monitoring tha apll but this is not all , we want to also knw hw our appl are behaving, so we hv a log mgt appl in our ev equally 
+called elastic search hybrid and kibana, it tells us how our appl are behaving , this is also deployed in our env, in all of this we also ensure that everything is done securely 
+so continous securtiy is of eptical importance in our env
+
+********** so if you ask me the question of what devops is all about it can take you to any level that you want to go, you can go any dirextion bt whatever direction u want to 
+use the bottom line is that u just hv to ensure that your communication is intelligent as per what devops is all about
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
