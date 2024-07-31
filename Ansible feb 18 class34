@@ -19,17 +19,19 @@ debug is like able command in linux
 40:37
 types of variable
 
+Variables:
+  1. runtime variables 
+  2. playbook variables 
+  3. host_vars variables 
+  4. group_vars variables
+
+
+
 5:07
 displace variable
 
+
 51:20 
-vault
-
-
-
-
-
-
 ANSIBLE VAULT.:
 =============== 
 stores and encrypt confidential or secrets  data.
@@ -42,3 +44,55 @@ ansible-vault view /etc/ansible/group_vars/all.yml
 ansible-vault edit /etc/ansible/group_vars/all.yml
 ansible-vault rekey /etc/ansible/group_vars/all.yml
 ansible-vault create  /etc/ansible/group_vars/all.yml
+
+
+
+
+################
+
+ loops
+ ========== 
+Playbooks with loops/conditions:
+web [ ubuntu / Redhat / windows ]
+- hosts: localhost  
+  become: true
+  gather_facts: false  
+  tasks:
+   - name: Install packages
+     package:
+       name: ['nano', 'wget', 'vim', 'zip', 'unzip', 'tree']
+       state: latest  
+     when: ("ansible_distribution" == "Ubuntu")
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Install list of packages
+      become: true  
+      yum: name='{{item}}' state=present
+      with_items:
+       - nano
+       - wget
+       - vim
+       - zip
+       - unzip  
+
+ansible web -m setup  
+
+variables in ansible:
+vars.yml 
+---
+- hosts: localhost
+  vars:
+    name: From Playbook
+    password: dev@123
+  tasks:
+  - name:  demo vars
+    debug:
+      msg: "{{name}}"
+  - name: vars demo2
+    debug:
+      msg: "{{password}}"
+
+
+
