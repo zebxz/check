@@ -79,7 +79,10 @@ developers submit the codes to source code (SCM) MGt tools eg of codes submitted
 ******** Our project is  a java project 
 this is an end to end application , its developed using IAC and a good example is terraform which we can use to create this entire environment 
 
-         DIAGRAM   (our project is a java project)
+
+********************************
+                                       
+                                                  DIAGRAM   (our project is a java project)
 
 Dev 1                    developers comiting to our source code manger                    1) SCM :
 (app java)         ...........>>>>>>>>>>>>>>..                                               Github/gitlab/Bit bucket/
@@ -97,7 +100,7 @@ Dev 3                                                                           
  (jenkins ci/cd automation)                     (jenkins ci/cd automation)            (jenkins ci/cd automation)           (jenkins ci/cd automation)
            !                                           !                                    !                                    !
            !                        
-                                                      !                                    ! upload artifacts                    !                                                                                      
+                                                      !                                    ! upload artifacts                    !  COPY                                                                                 
            ! 
           ! (Test/build)                              ! (code quALITY)                    !                                    6)!Ansible 
           !                              
@@ -106,9 +109,9 @@ Dev 3                                                                           
   eg of other build tool:                                                               ! storing Jar/War/Ear                            >>deploy>>>   server2, server3
 ANT/Craddle/jar/war/ear                   
 The code need to go tru a build pha                                                                                                            !
-for the build to tk place we will use a                                                                                                         !
-build tool depending on the project we are                                                                                                      !
-working on. MAVEN converts the raw code
+for the build to tk place we will use a                                                                                                         !We copy in Ansible with the
+build tool depending on the project we are                                                                                                      ! help of the automation
+working on. MAVEN converts the raw code                                                                                                            which does the deployment
                                                                                                                                                  !
                                                                                                                                                  !
                                                                                                                                                   APN monitoring 
@@ -121,9 +124,11 @@ working on. MAVEN converts the raw code
                                                                                                                                                    SUPPORT TEAM
                                                                                                                                                         !
                                                                                                                                                         !
-                                                                                                                                                        TICKETING
-                                                                                                                                                      Servicenow/jira
-
+                                                   DEVeloper1   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<          TICKETING
+                                                    App java                                                                                          Servicenow/jira
+                                                 Developer 2     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   
+                                                   Deploy Java
+                                                   Developer3       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   
 
 
                                                                                                  
