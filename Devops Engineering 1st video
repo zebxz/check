@@ -145,8 +145,17 @@ the coy(teslA)app server but before deplymentwe have to check for code quality  
 analysis.the tool used for this process is call code quality  sonar qube /sonar cloud. until CQA is successful we cant take package to cx
 Once the code quality analyses is successful, it means that we can take the packages to the cx.
 To prevent a disaster such as interruption in maven server, we create a backup called artifactory (step5) Using tools like nexus /frog to atore our jar/war/ear after artifacts
-are uploaded it means everything is ok , so we can deploy app/packages to cx
+are uploaded it means everything is ok , so we can deploy app/packages to cx.
+Step6) In tesla we will hv maultiple servers incase of multiple reQ, ONce we hv the multiple appservers we then create another automation tool for deployment ie ansible
+which will help to automate our deployment process even if we have a 100 app servers
 
+********** finally, what if something goes wrong with any of the process or application, eg server is nt running well, how do we get notified, how do we fix it??
+Another monitoring tool in our env that will be observing how the appl is performing, the tool does whats called monitoring & observability tool. eg include NewRelic/Naglos
+etc. also cslled (APN) APplication observance monitoring.
+these tools helps to monitor/observe the application, it also goes into continous monitoring. it notices that smt could be wrong and it has to provide solution immediately
+and for that to happen,it has to contact the support team, therefore depending on whats realised, tickets are raised ie ticketing; for ticketing we use stuffs like servicenow
+or jira. 
+The ticketing tool ensures that issues relating to developers are referred to them ie developers are contacted to help fix the issue with the app they develpoed
 
 **************** This type of application that is been developed in this example is called Monolithic anchitecture Therfore, this application is developed using monolithic
 Architecture
