@@ -142,8 +142,11 @@ the raw codes (that are now in maven cannot go straight to tesla app servers), c
 after the build process, it creates packages or arctifacts  (step 5)
 eg jar/war/ear packages other companies may not use maven eg they can use ANT/CRADDLE , these are build tools but regardless, artifacts are created which are then taken to 
 the coy(teslA)app server but before deplymentwe have to check for code quality  (step 4) ie how good are your written codes , therfore, it goes through a code quality 
-analysis
-the tool used for this process is call code quality  sonar qube /sonar cloud. until CQA is successful w ecant take package to cx
+analysis.the tool used for this process is call code quality  sonar qube /sonar cloud. until CQA is successful we cant take package to cx
+Once the code quality analyses is successful, it means that we can take the packages to the cx.
+To prevent a disaster such as interruption in maven server, we create a backup called artifactory (step5) Using tools like nexus /frog to atore our jar/war/ear after artifacts
+are uploaded it means everything is ok , so we can deploy app/packages to cx
+
 
 **************** This type of application that is been developed in this example is called Monolithic anchitecture Therfore, this application is developed using monolithic
 Architecture
