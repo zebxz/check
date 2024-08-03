@@ -17,7 +17,7 @@ AFTer the deployment endusers need to access the appl,in our env our appl are ru
  appl by placing a webserver in front of our app servers therfrore endusers traffic only talk to our webserver and the webserver since we are using ngnix ingress, we hv been
 able to create ngress rules that route traffic to the backend appservers 
 
-so thers how u will presnt your facts and thats my main focus 
+so thers how u will present your facts and thats my main focus 
 
 
 *********** 1:38:35
@@ -25,6 +25,17 @@ whats the diff btw netwrk lb and appl load balancer  and whats the diff btw ssl 
 
 ANS: 
 ill add this to our list of questions to address
+when ur tryin to expose web content to endusers you want a situation where the info that is goin to endusers is not intercepted midway
+we hv what is called man in the middle attack , eg  you are working for bank of America , u are the one setting up their env, interms of hw users access their account etc
+and they go online and type their account details like user name ,passwd, etc and those info is been transferred over the internet , it has to get to the bank of america 
+databases ,so its goin tru what is called hypertext transfer protocol, httpp 
+if thats hw the data is been transferred hw do i ensure that the transmission is secured, i need to kinda encrypt that transmission such that once the info is typed (eg passwd)
+whoseover is trying to the passwd access the data inbtw  once its been transmitted, he will nt be able to see the passwd info , he will see some deadbrigde bc i hv suceeded
+in encrypting the data, and to encrypt data ill use certificate either ssl or tls , so we will look at it as well 
+
+but i can also transfer data via clear text , so u can transferr data tru http or https , https is hypertext transfer protocol secured
+this is what is enecrypted from end to end, data is encrypted from end to end , data is encrypted at rest and in transit  and to do that you need certificate to achieve it
+which is either ssl certificate secure layer or tls .
 
 
 1:21:20
