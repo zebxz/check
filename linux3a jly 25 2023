@@ -139,6 +139,54 @@ sudo yum install tree
 OR
 sudo -u root yum install tree
 
+########
+the most secure option to run this will  not be to switch user to root but to run the command under the ec2-user while assuming root priviledges.
+[ec2-user@demo~] $ sudo yum insatll tree
+
+
+APPLY THE COMMANDS: 
+
+cd = change/leave 
+cd ../    navigate one directory backward
+cd -      ( forward)  navigate to your last working directory
+
+
+[ec2-user@demo~] $ pwd
+homw/ec2-user
+[ec2-user@demo~] $ cd dev
+ec2-user@demo dev
+[ec2-user@demo~ dev] $ ls 
+git
+[ec2-user@demo~dev] $ cd git 
+ec2-user@demo~git $ 
+ec2-user@demo~git $ cd maven
+ec2-user@demo~maven $ 
+ec2-user@demo~maven $ ls
+aws
+ec2-user@demo~maven $ cd aws
+ec2-user@demo~aws $ 
+ec2-user@demo~aws $ pwd 
+ec2-user dev/git/maven/aws
+ec2-user@demo~aws $ cd../
+ec2-user@demo~maven $ 
+ec2-user@demo~maven $ cd../
+ec2-user@demo~git$ 
+ec2-user@demo~git $ cd -
+ec2-user@demo~maven$ 
+ec2-user@demo~maven $ cd../../
+ec2-user@demo~dev$ 
+ec2-user@demo~dev $ cd - home/ec2-user/dev/git/maven
+ec2-user@demo~maven $ cd../../../ 
+ec2-user@demo~ $       ie 3 steps backwards
+
+
+
+
+
+
+
+
+
 
 
 
