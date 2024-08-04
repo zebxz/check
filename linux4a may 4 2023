@@ -79,7 +79,7 @@ default Permissions   0644   0755    0644   0755
 
 IQ: What is the umask value for a normal user and the rootUser?
 IQ: What is the umask value?
-    It is use to define file/dir Permissions at creation.  
+    It is used to define file/dir Permissions at creation.  
 
             normal user        rootUser
             file     dir       file     dir  
@@ -90,6 +90,7 @@ IQ: What is the umask value?
 
 
 PERMISSON FOR ROOT USER:
+   ( i bliv the root user always has the default permission)
 
 switch to the rootUser:
   sudo su - or 
@@ -105,10 +106,12 @@ d rwx r-x r-x. 2 root root 6 May  4 23:45 billionaire
        r--=4    r-x=5
        r--=4    r-x=5  
 
-****** whne a mask value is set, it is used to determine the type of permission the file will have 
+****** when a mask value is set, it is used to determine the type of permission the file will have 
 
+1)
 IQ:Create a umask value that will assign full Permissions 
    to files CREATED by the ec2-user 
+ANS: our default permission becomes full permission
 
                       normal user    rootUser:
                       file   dir     file   dir
@@ -118,22 +121,32 @@ default Permissions   0666   0777    0644   0755
  umask                0000   0000    0022   0022    :
                       ----   ----    ----   ----
 
-IQ:Create a umask value that will assign 0600 Permissions 
-   to files CREATED by the ec2-user 
+******** i bliv the default permission for the normal user has to be set to full permission
+to set the unmask value= umask 0000
+
+
+**************     
+2)
+IQ:Create a umask value that will assign 0600 Permissions to files CREATED by the ec2-user 
+   *********   the unmask value is the permission we wnat to set that the files will hv at creation ie we want to set the permission the file will hv when we create it
+                                so we know the permission (default) , we now need to knw the unmask value
 
 Full Permissions      0666   0777
-default Permissions   0600   0711
+default Permissions   0600     ?            0777-0066 = 0711
                       ----   ----
  umask                0066   0066
                       ----   ----  
 
 0 6 0 0 = rw-- --- --- 
+next we set the unmask value to 0066
+
 
 what is umask value?? umask is use to determine/set
 the Permissions that files and directories will inherit at creation. 
 It is Good for file security. 
 umask value set the Default files permissions for users.
 
+9 out of 10 situations we will not be using unmask 
 9/10  = chmod 
 1/10  = umask  
 
@@ -142,7 +155,7 @@ chmod 600 fileName
 chown   = use change file ownership  
 chgroup = use change file group ownership   
 =======
-                 owner   group
+        owner   group  other
 d rwx--x--x. 2 ec2-user ec2-user    billions
 
 - rw-------. 1 ec2-user ec2-user    blessed.me
@@ -152,9 +165,14 @@ owner   ec2-user   7            6
 group   ec2-user   1            0
 others  anyone     1            0
 
-Assign permission for dominion user to read the blessed.me file  
+3)Assign permission for dominion user (ie other) to read the blessed.me file  
+     *********** here, we want to make the permission, the question gave us the umask value (read=4) and then its requesting for permission so the user can read
+
 chmod +r fileName 
 chmod 604 fileName   
+
+
+
 
 Assign permission for the ec2-user group to modify the blessed.me file  
 chmod +r fileName 
