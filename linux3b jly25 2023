@@ -181,6 +181,21 @@ ln -s new.txt mylist
 eg, original file can be 250mb in size but softlink can be 5mb in size
 
 
+[ec2-user@demo paypal]$ ll
+total 56
+TYPE:
+-    rw-r--r--. 1 ec2-user ec2-user     0 Jul 26 01:25 class33
+l    rwxrwxrwx. 1 ec2-user ec2-user     6 Jul 26 01:28 notes.yml -> rn.txt  : SL  
+-    rw-r--r--. 2 ec2-user ec2-user 25297 Jul 26 01:05 notes33.yml :  HARD LINK
+d    rwxr-xr-x. 2 ec2-user ec2-user     6 Jul 26 01:20 pay
+-    rw-r--r--. 2 ec2-user ec2-user 25297 Jul 26 01:05 rn.txt
+
+
+softlink starts with letter 'L'
+hardlink starts with a '-'
+
+
+
                      HIDDEN FILES
 FIles that start with .
 ls- a = to list hidden files
