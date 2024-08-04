@@ -35,6 +35,149 @@ other (any other person)
 
 
 
+  
+File security / Permissions:
+============================
+Who can access a file?
+  owner   
+  groupOwners   
+  others
+Access levels:        
+  read    = r = 4   
+  write   = w = 2
+  execute = x = 1 
+
+  owner group  others
+- rw-   r--    r--.    1 ec2-user ec2-user  class.txt
+d rwx   r-x    r-x.    3 ec2-user ec2-user  dev
+
+           owner  group  others   default Permissions
+class.txt  rw-=6  r--=4  r--=4      0644    
+dev        rwx=7  r-x=5  r-x=5      0755
+
+The default Permissions assign to files depends on;
+The class of the user[normal user or rootUser]
+                      normal user    rootUser:
+                      file   dir     file   dir
+Full Permissions      0666   0777    0666   0777
+default Permissions   0644   0755    0644   0755
+                      ----   ----    ----   ----
+ umask                0022   0022    0022   0022    :
+                      ----   ----    ----   ----
+IQ: What is the umask value for a normal user and the rootUser?
+IQ: What is the umask value?
+    It is use to define file/dir Permissions at creation.  
+
+            normal user        rootUser
+            file     dir       file     dir  
+ owner   = rw-=6    rwx=7      rw-=6    rwx=7   
+ group   = rw-=6    rwx=7      r--=4    r-x=5
+ others  = rw-=6    rwx=7      r--=4    r-x=5  
+
+switch to the rootUser:
+  sudo su - or 
+  sudo -i  
+
+d rwx r-x r-x. 2 root root 6 May  4 23:45 billionaire
+- rw- r-- r--. 1 root root 0 May  4 23:45 rich.me
+
+IQ:Create a umask value that will assign full Permissions 
+   to files CREATED by the ec2-user 
+
+                      normal user    rootUser:
+                      file   dir     file   dir
+Full Permissions      0666   0777    0666   0777
+default Permissions   0666   0777    0644   0755
+                      ----   ----    ----   ----
+ umask                0000   0000    0022   0022    :
+                      ----   ----    ----   ----
+
+IQ:Create a umask value that will assign 0600 Permissions 
+   to files CREATED by the ec2-user 
+
+Full Permissions      0666   0777
+default Permissions   0600   0711
+                      ----   ----
+ umask                0066   0066
+                      ----   ----  
+
+0 6 0 0 = rw-- --- --- 
+
+what is umask value?? umask is use to determine/set
+the Permissions that files and directories will inherit at creation. 
+It is Good for file security. 
+umask value set the Default files permissions for users.
+
+9/10  = chmod 
+1/10  = umask  
+
+chmod  = change the permissions for individual files and directories  
+chmod 600 fileName    
+chown   = use change file ownership  
+chgroup = use change file group ownership   
+=======
+                 owner   group
+d rwx--x--x. 2 ec2-user ec2-user    billions
+
+- rw-------. 1 ec2-user ec2-user    blessed.me
+
+                  billions    blessed.me
+owner   ec2-user   7            6
+group   ec2-user   1            0
+others  anyone     1            0
+
+Assign permission for dominion user to read the blessed.me file  
+chmod +r fileName 
+chmod 604 fileName   
+
+Assign permission for the ec2-user group to modify the blessed.me file  
+chmod +r fileName 
+chmod 664 fileName  
+
+
+read=4 
+write=2
+execute=1   
+
+ec2-user  landmark  obi 
+
+[ec2-user@demo ~]$ ll blessed.me
+-rw-rw-r--. 1 ec2-user ec2-user 0 May  5 00:02 blessed.me
+
+obi will be working on the blessed.me for this sprint, 
+please grant ownership of the file to obi  
+This practice is good for automation and easy deployment
+of tasks/workloads. 
+
+chown newOwner fileName   
+chown obi blessed.me    
+[ec2-user@demo ~]$ chown obi blessed.me
+chown: changing ownership of 'blessed.me': 
+  Operation not permitted
+[ec2-user@demo ~]$
+
+chown and chgroup commands can ONLY be run by the rootUser
+sudo is a command used to run commands as another user  
+sudo -u root chown obi blessed.me 
+    sudo chown obi blessed.me  
+sudo -u obi  chown obi blessed.me      
+
+sudo -u obi  chgroup obi blessed.me  
+[ec2-user@demo ~]$ sudo -u obi  chgrp obi blessed.me
+chgrp: cannot access 'blessed.me': Permission denied
+
+sudo chgrp obi blessed.me
+
+obi will be working on the billions directory for this sprint, 
+please grant ownership and group ownership of the dir to obi  
+
+sudo chown obi billions  
+sudo chgrp obi billions  
+
+sudo chown obi:obi billions 
+
+
+
 
  
 
