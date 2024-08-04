@@ -172,12 +172,22 @@ chmod +r fileName
 chmod 604 fileName   
 
 
+                      files   files
+Full Permissions      0666    0666
+default Permissions     ?  =    ?   = 0062
+                      ----    ----
+ umask                0600    0604
+                      ----    ----  
 
+default permission  = 0666 - 0604 = 0062
 
 Assign permission for the ec2-user group to modify the blessed.me file  
 chmod +r fileName 
 chmod 664 fileName  
 
+
+##################
+while question is requesting for the unmask value for file that that will be created ,question3 is asking for the default persmission already gave us the unmask value (read)
 
 read=4 
 write=2
