@@ -1,1 +1,112 @@
 
+
+Ticket080:
+=========
+ 1. create groups for; developers, qa, and Engineers and verify.
+ 2. delete datti user account  
+ 3. Delete james user account including his home Directory    
+ 4. Create a user account for legah and add him to the engineers, qa and manager's groups.
+ 5. delete the Engineers group   
+ 6. List important files in userMGT   
+ 7. list important commands in userMGT    
+
+Ticket080 solution:
+==================
+
+1. sudo groupadd developers 
+   sudo groupadd qa 
+   sudo groupadd engineers 
+   cat /etc/group  
+
+  [landmark@demo ~]$ sudo groupadd developers
+  [landmark@demo ~]$
+  [landmark@demo ~]$ sudo groupadd qa
+  [landmark@demo ~]$ sudo groupadd engineers
+  [landmark@demo ~]$
+  [landmark@demo ~]$ tail -5 /etc/group
+  james:x:1006:
+  managers:x:1007:landmark
+  developers:x:1008:
+  qa:x:1009:
+  engineers:x:1010:
+
+2. deleting datti's account  
+   sudo userdel userName  
+   sudo userdel datti   
+[landmark@demo ~]$ sudo userdel datti
+[landmark@demo ~]$
+[landmark@demo ~]$ id datti
+id: ‘datti’: no such user
+
+3. deleting james's user account including his home Directory  
+   sudo userdel -r userName  
+   sudo userdel james   
+
+4a. creating legah's account
+    sudo useradd legah 
+
+4b: adding legah to groups  
+    sudo usermod -aG managers legah  
+    sudo usermod -aG engineers legah
+    sudo usermod -aG qa legah
+[landmark@demo ~]$ id legah
+uid=1006(legah) gid=1006(legah) groups=1006(legah),1007(managers),1009(qa),1010(engineers)
+
+5. deleting a group  
+   sudo groupdel groupName
+   sudo groupdel engineers
+   [landmark@demo ~]$ grep engineers /etc/group
+   engineers:x:1010:legah
+    [landmark@demo ~]$
+    [landmark@demo ~]$ sudo groupdel engineers
+  [landmark@demo ~]$
+  [landmark@demo ~]$ grep engineers /etc/group
+  [landmark@demo ~]$
+  [landmark@demo ~]$
+
+ 6. List important files in userMGT   
+      /etc/passwd   = contains user's details
+      /etc/shadow   = contains user's password
+      /etc/group    = contains group details 
+      /etc/sudoers  = Use to grant/remove sudo access   
+
+ 7. list important commands in userMGT 
+      useradd 
+      adduser  
+      groupadd 
+      userdel  
+      usermod  
+      groupdel  
+      passwd  
+      chage  
+      userdel -r    
+      sudo      
+
+=======================
+connecting to a user account  
+stephane course  
+recorded   
+
+
+Ticket081:
+=========
+
+
+
+
+
+
+Break: 20mins 
+       8:50pm EST  
+userMGT, 
+systemMGT  
+
+Technology stack 
+
+
+
+
+
+
+
+
