@@ -1,1 +1,312 @@
 
+serviceMGT:
+  service serviceName arguments
+  service sshd status 
+  sudo service sshd start
+  sudo service sshd stop/start/status/enable/disable/restart 
+  sudo service httpd stop/start/status/enable/disable/restart  
+
+  systemctl arguments serviceName
+  systemctl stop/start/status/enable/disable/restart sshd 
+  systemctl start/stop/status httpd  
+  systemctl  
+
+Explain your experience with Linux systems?
+I have over 7 years experience perfoming various tasks on Linux systems including;
+    FileMGT 
+    userMGT 
+    ProcessMGT
+    securityMGT
+    packageMGT
+    serviceMGT 
+    systemMGT 
+    Monitoring 
+    dbBackup  
+
+1. Deploying, provisioning and creating Linux Servers in AWS Cloud.
+   and connecting to servers using - ssh protocol  
+       
+2. Configuring, optimising, commissioning, decommissioning 
+   and securing Linux servers
+
+3. Running workloads in Linux servers/systems using:
+  GUI  - CONSOLE  
+  Commands - CLI  
+  scripts  -  
+  Examples of workloads/tasks executed:
+    FileMGT /  = touch, vi, echo, ls, umask, chmod, mkdir, chown
+    userMGT /  = adduser, usermod, userdel, chage, groupadd, groupdel, passwd  
+    ProcessMGT = top, ps -ef, jobs, kill, bg, fg 
+    securityMGT= passwd, selinux, firewall 
+
+    packageMGT = wget, yum/apt, rpm,  
+
+    serviceMGT = systemctl start/stop/enable/status serviceName  
+                 systemctl start/stop/enable/status sshd/httpd/ntpd/chrond
+                 service serviceName arguments
+                 service sshd status/start/stop/disable
+
+    systemMGT & Monitoring = df -h, free -m,    
+
+4. scheduling and Automating tasks using cron tables 
+   1. Backup all databases every midnight
+   2. Deploy the latest version of the application every Sunday at midnight
+   3. optimise our appServers every month on the 28th day  at midnight  
+       yum update -y &&  yum upgrade -y    
+   4. monitor system resources and send alerts using threshold every minute
+       if cpu/mem usage exceed 80% send email df -h  = cpu 
+
+Archive/Data Backup Commands:
+zip :   Package and compress (archive) files  
+unzip:  Extract compressed files in a ZIP archive.  
+tar :   It is used to archive the directory/file
+
+   tar -cfv  notes.txt  
+
+tar = is used to :
+  tar -cvf fileName fileName.tar.gz     = compress files  
+  tar -cvf mynotes.tar.gz notes.txt  
+
+  tar -xvf fileName fileName.tar.gz     = extract files  
+  tar -xvf mynotes.tar.gz 
+
+zip is used to:
+  zip newFileName.zip fileName   
+  zip notes33.zip notes    
+
+Other commands;
+===============
+clear : Clears the terminal screen.
+cal : Displays a calendar
+cal  
+cal oct 2023 
+
+wget: The non-interactive network downloader use to download packages.
+https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
+wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
+
+https://download.sonatype.com/nexus/3/nexus-3.58.1-02-unix.tar.gz
+wget https://download.sonatype.com/nexus/3/nexus-3.58.1-02-unix.tar.gz
+
+package managers are also used to download and install packages:
+  yum/apt/dnf/rpm/apk/chocolatey/brew/ 
+  yum install packageName  - redhat/centOS systems  
+  yum install/remove/updates/upgrade   
+  apt install packageName  - debian/ubuntu systems  
+  brew install packageName - Mac-Apple systems   
+  choco install packageName- windows systems     
+
+tee:  This command is used to store and view the
+     the output of any other command.
+     (both at the same time)     
+
+echo "I am the finest Engineer"
+
+[obi@demo33 ~]$ echo "Landmark Engineers are the best in 2023" > best
+
+[obi@demo33 ~]$ echo "Landmark Engineers are the best in 2023" | tee best
+Landmark Engineers are the best in 2023
+
+[obi@demo33 ~]$ tail -5  /etc/passwd > newusers
+[obi@demo33 ~]$
+[obi@demo33 ~]$ cat newusers
+paul:x:1003:1003::/home/paul:/bin/bash
+landmark:x:1005:1005::/home/landmark:/bin/bash
+legah:x:1006:1006::/home/legah:/bin/bash
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+nginx:x:992:992:Nginx web server:/var/lib/nginx:/sbin/nologin
+
+tail -5 /etc/passwd | tee new.txt  
+
+
+ping: The ping command sends ICMP ECHO_REQUEST to network hosts.
+      This verify if the host is alive 
+   ping localhost  = check if your local system is alive/running   
+   ping landmark.cm  
+   ping mylandmarktech.com  
+   ping google.com  
+
+
+telnet: 
+    a server/system/computer have 0-65535(65536) ports/addresses  
+    ssh   = 22  
+    http  = 80
+    https = 443
+
+ telnet 172.31.31.46 22 
+  telnet 172.31.31.46 80  
+   telnet 172.31.31.46 443 
+    telnet 172.31.31.46 3389   
+       telnet landmark.cm 80 
+   telnet mylandmarktech.com 8080 
+   telnet google.com 80    
+
+history : Displays the recently executed commands .
+
+uname: describes your system  
+   uname -a 
+   cat /etc/*release
+   cat /etc/*os*
+
+[obi@demo33 ~]$ cat /etc/*release
+Amazon Linux release 2023 (Amazon Linux)
+NAME="Amazon Linux"
+VERSION="2023"
+ID="amzn"
+ID_LIKE="fedora"
+VERSION_ID="2023"
+PLATFORM_ID="platform:al2023"
+PRETTY_NAME="Amazon Linux 2023"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2023"
+HOME_URL="https://aws.amazon.com/linux/"
+BUG_REPORT_URL="https://github.com/amazonlinux/amazon-linux-2023"
+SUPPORT_END="2028-03-01"
+Amazon Linux release 2023 (Amazon Linux)
+
+netstat -tunlp:
+  a server/system/computer have 0-65535(65536) ports/addresses 
+  server ports/address = 22/80/443/etc  
+  tomcat requires to use port 8080 by default 
+  sudo yum install tomcat  
+  sudo systemctl start tomcat   
+
+  nginx uses port 80 by default
+    sudo yum install nginx  
+    sudo systemctl start nginx   
+  http server also uses port 80 by default 
+    sudo yum install httpd  
+    sudo systemctl start httpd   
+
+    SW 405 B   
+
+netstat -tunlp
+  t = tcp 
+  u = udp  
+  l = listening  
+  p = port 
+  n = number  : 
+
+netstat -tulpn  
+
+sudo yum -y install net-tools
+
+ protocols        ports/address    
+   ssh              22  
+   http             80  
+   https            443  
+   nfs              2089  
+   rdp              3389 
+   smtp            25/465/587   
+   tomcat           8080 --- 8000  
+   jenkins          8080      
+
+watch: Using watch command we can execute the command periodically.
+  watch df -f 
+  watch free -m 
+
+man : Display the on-line manual pages.
+      man ls 
+
+info:
+  info ls 
+
+help:
+  ls --help
+
+[obi@demo33 ~]$ watch free -m
+[obi@demo33 ~]$
+[obi@demo33 ~]$ man ls
+[obi@demo33 ~]$
+[obi@demo33 ~]$ info ls
+[obi@demo33 ~]$
+[obi@demo33 ~]$ ls --help
+
+
+whatis: The whatis command displays a summary line from the
+        man page for the specified command in Linux.
+
+whatis ls  
+[obi@demo33 ~]$ whatis ls
+ls (1)               - list directory contents
+ls (1p)              - list directory contents
+
+service : It will give the status of service.
+  service sshd start 
+  systemctl start sshd   
+
+systemctl list-unit-files: It will list all services.
+
+uptime: Tells how long the system has been running.
+   server1 = 5 years  
+   server2 = 5 months 
+
+last: show listing of last logged in users.   
+
+shutdown:
+  sudo shutdown 
+  sudo init 0  
+
+restart/reboot:
+    sudo init 6 
+    sudo reboot  
+
+John is unable to connect to the server. Please explain what could 
+be the problem.
+1. Check if John is running the ssh commands correctly
+    ssh userName@ipaddress vs ssh ipaddress@userName 
+    ssh 172.31.31.46@John  vs ssh John@172.31.31.46 
+
+2. Check if the ssh-Port22 is open on the firewall/SG and 
+   respond accordingly[]  
+   inbound Rule: open port 22 for John to have access    
+
+3. Check if the server is up and running 
+     ping ipaddress/hostname/dns    
+
+4. check if the ssh service(sshd) is running and react accordingly   
+     systemctl status sshd 
+     sudo systemctl status sshd  
+
+
+=====================================
+How can you resolve issues encountered??
+ 1. Try to fixed/resolve the situation yourself    80%  
+ 2. Post the problem with a screen-shot in class33 telegram solution Group  
+    wait for 1-5min or 5-10mins for help from Fellow Classmates  
+     snipping tool for screen-shots:
+ 3. Post the problem in the 24/7 Landmark helpdesk in telegram and
+    wait for 5-10 mins for help. Landmark community 
+ 4. Create a zoom meeting and invite others to help.  
+        https://t.me/c/1951356178/42
+ 5. Contact your Team members for help. 12 members 
+
+ 6. Contact Class32 Admins via WhatsApp/Telegram 
+       Prof. Legah          +1 437 215 2483     :
+       Ayafor Emmanuel      +1 (206) 210-4445  [ Class Manager ]:
+       Ann Woghiren         +1 437 221 3099    [Finance and Fees]
+       Armstrong            +1 (202) 888-2860
+       Abimbola             +1 (647) 267-6399
+       Serene               +1 (320) 207-8009
+
+ 7. Contact Prof Legah via telegram   
+      +1 437 215 2483 Prof. Legah  
+
+Listen to the lectures;
+Don't try to practice along side the professor. 
+Watch the video and practice before the next class. 
+Read the running notes and the pdf notes.
+
+8. Pray for: 
+     wisdom, 
+     good health, [  ]
+     quick understanding and 
+     knowledge. 
+     Excellent 
+
+5: siblings all hired via   
+
+6: Speak faith
+
+7:   
+
