@@ -78,6 +78,17 @@ solution:
 
 
                                                     CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, 
+                       this will enable me to connect to my server from an external source 
+this is good in situation where 2 or more members at diff location need access to work on the same server 
+once i have created account for the user and assigned passwd, i then need to configure the server to accept password so the users can hv access
+
+ 52.10.100.198   
+    ssh landmark@52.10.100.198 
+    ssh landmark@52.10.100.198
+      Warning: Permanently added '52.10.100.198' (ED25519) to the list of known hosts.
+      landmark@52.10.100.198: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).  
+
+********** permission denied bc server has nt been configured for passwd
 
   5. allow users to connect to the server using their password
      by default user's can ONLY connect to aws ec2 linux servers using ssh-private-Key
@@ -90,25 +101,20 @@ solution:
  ssh username@ipaddress         OR
 ssh username@hostname
 
+
 *********************  Go to terminal >>>>>   open new tab   >>>>>> detach 
 ssh kelvin@ip address      (after step 5 above hv been configured)
-  
-     52.10.100.198   
-    ssh landmark@52.10.100.198 
-    ssh landmark@52.10.100.198
-      Warning: Permanently added '52.10.100.198' (ED25519) to the list of known hosts.
-      landmark@52.10.100.198: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).  
-
 
 *******   1;26:10
-the 1st ssh client : mobaxterm
+1st connection:
 
 [ec2-user@demo~] $  whoami
 ec2-user                                 ********* i am connected externally as ec2-user USING THE private key
 [ec2-user@demo~] $  su - landmark
 [landmark@demo~] $                   ***** i am connected internally as landmark
 
-on another ssh client (his gitbash) he ran:
+2nd connection:
+opening a local terminal on the same mobaxterm he ran:
 ssh landmark@52.10.100.198 
 
 then passwd and connected
@@ -118,7 +124,7 @@ then passwd and connected
 pwd by RUNNING  :ssh landmark@52.10.100.198 
  
 
-**** ALSO, with server configured for passwd, on either of both ssh client any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
+**** ALSO, with server configured for passwd, any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
 advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLYto server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
  
 
