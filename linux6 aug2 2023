@@ -54,8 +54,11 @@ must be root usr ot change hostname
 hostname is the name of your server, its very imp for security, automation, testing and connection 
 
      ******** TO CHECK HOSTNAME
-sudo hostname  new hostname = to set temporal/current-session new hostname 
+1)sudo hostname  new hostname = to set temporal/current-session new hostname 
 sudo hostname class33 
+
+2)sudo hostnamectl set-hostname newhostname-set a permanent new hostname
+
 
 hostname -i = list your privateIP address  
     [obi@demo33 ~]$ hostname -i
@@ -63,7 +66,9 @@ hostname -i = list your privateIP address
      ipv4 = 172.31.31.46
 
    
-
+         TO CHECK IF SERVER IS RUNNING 
+Ping hostname OR ping Ip address 
+ping localhost
 
   ping 172.31.31.46   
   ping fe80::50:b8ff:fe51:243%enX0  
@@ -72,10 +77,19 @@ hostname -i = list your privateIP address
 if i ping a public address, -4 packets transmitted, 0 received
 it menas my server is not allowing any access on this public address
 
+
  ip a     = list the privateIP address including network interfaces
  ifconfig = list the privateIP address including network interfaces  
 curl ifconfig.me  = list the publicIP address
 
+
+     DIFF WAYS TO CONNECT TO SERVER
+1) USING the hostname - ssh ec2-user@ demo33
+2) using public ip address-ec2-user@40.208.35.48
+3) using private ip address -112.31.84.211
+
+
+             TO KNOW WHO IS CONNECTED TO MY SERVER 
 who  = list the users connected to the server 
        and from where and since when    
    [obi@demo33 ~]$ who
