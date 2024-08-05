@@ -1,1 +1,170 @@
 
+System Resources/MGT Commands:  
+===============================
+date : Print or set the system date and time
+      date   
+date -s "02Aug2023 19:10:00"
+      [obi@demo ~]$ sudo date -s "02Aug2023 19:10:00"
+      Wed Aug  2 19:10:00 EDT 2023
+      [obi@demo ~]$
+      [obi@demo ~]$ date
+      Wed Aug  2 19:10:04 EDT 2023
+      [obi@demo ~]$
+      [obi@demo ~]$ sudo date -s "02Aug2023 19:24:00"
+      Wed Aug  2 19:24:00 EDT 2023
+
+  sudo timedatectl set-timezone 'America/New_York'
+  sudo timedatectl set-timezone 'Africa/Lagos'
+
+df : Report file system disk space usage
+
+    [obi@demo ~]$ df -h
+    Filesystem      Size  Used Avail Use% Mounted on
+    devtmpfs        4.0M     0  4.0M   0% /dev
+    tmpfs           475M     0  475M   0% /dev/shm
+    tmpfs           190M  2.8M  188M   2% /run
+    /dev/xvda1      8.0G  7.7G  6.3G  91% /           :
+    tmpfs           475M  4.0K  475M   1% /tmp
+    /dev/xvda128     10M  1.3M  8.7M  13% /boot/efi
+    tmpfs            95M     0   95M   0% /run/user/1005
+
+du : Estimate file space usage.
+  du -h   
+
+hostname : Show or set the system hostname.
+   James / mary  /   obi  / legah  
+   hostname  
+   sudo hostname newHostname    = set a Temporal/current-session new hostname 
+   sudo hostnamectl set-hostname newHostname - set a permanent new hostname
+   sudo hostnamectl set-hostname demo33  
+   ssh ec2-user@demo33  
+   ssh ec2-user@demo33 
+   ssh obi@172.31.31.46
+   ssh obi@52.10.100.198
+
+hostname -i = list your privateIP address  
+    [obi@demo33 ~]$ hostname -i
+     ipv6 = fe80::50:b8ff:fe51:243%enX0 
+     ipv4 = 172.31.31.46
+
+  ping 172.31.31.46   
+  ping fe80::50:b8ff:fe51:243%enX0  
+
+ ip a     = list the privateIP address including network interfaces
+ ifconfig = list the privateIP address including network interfaces  
+
+curl ifconfig.me  = list the publicIP address
+
+who  = list the users connected to the server 
+       and from where and since when    
+   [obi@demo33 ~]$ who
+   landmark pts/0        2023-08-01 19:06 (102.215.56.212)
+   obi      pts/1        2023-08-02 19:46 (102.215.56.212)
+   ec2-user pts/2        2023-08-02 19:46 (102.215.56.212)
+
+   https://whatismyipaddress.com/   
+   My IP Address is:
+      IPv6:  2c0f:2a80:d4:2810:2dee:32db:6e37:4419
+      IPv4:  102.215.56.212
+    Your location may be exposed!
+   My IP Information:
+  ISP: Starlink POP Lagos NG
+  City: Lagos
+  Region: Lagos
+  Country: Nigeria
+
+w  = list the users connected to the server 
+     and their idle time including load average/uptime     
+
+[obi@demo33 ~]$ w
+ 19:52:16 up 8 days, 39 min,  3 users,  load average: 0.00, 0.00, 0.00
+USER     TTY        LOGIN@   IDLE   JCPU   PCPU WHAT
+landmark pts/0     Tue19    0.00s  0.11s  0.02s sshd: landmark [priv]
+obi      pts/1     19:46    5:52s  0.00s  0.00s -bash
+oke      pts/3     19:46 4:50:52s  0.00s  0.00s -bash
+   load average: 0.90, 0.80, 0.94
+   uptime = server1 = 8 days, 39 min
+            server2 = 388 days, 55 min
+
+whoami  
+users  
+whereis  
+curl ifconfig.me  = list the publicIP address
+
+packageMGT, processMGT and ServiceMGT commands:
+================================================
+How to install, updates and remove packages in redhat linux 
+sudo yum install wget -y  
+     https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip          
+
+Ticket088:
+==========
+install, start and verify the apache webServer
+sudo yum install httpd -y   
+systemctl status httpd  
+ps -ef | grep httpd  
+sudo systemctl start httpd  
+sudo systemctl enable httpd  
+
+  packageMGT, 
+     sudo yum install httpd -y
+  serviceMGT,
+    sudo systemctl start httpd  
+    sudo systemctl enable httpd 
+    systemctl status httpd 
+  processMGT
+    ps -ef | grep httpd  
+    ps -ef | grep sshd  
+    ps -ef | grep ntpd
+
+    dnf install chrony
+    yum install chrony
+  
+
+
+processMGT commands:
+===================
+  ps  
+  ps -ef 
+    ps -ef | grep httpd  
+    ps -ef | grep sshd   
+  top     
+  
+  You observed that a process  is consuming over 90% of cpu/memory, what action 
+  should you take 
+  kill the process with  
+    kill -9 processID  
+
+[obi@demo33 ~]$ ps
+    PID TTY          TIME CMD
+ 371978 pts/0    00:00:00 bash
+ 372812 pts/0    00:00:00 bash
+ 373804 pts/0    00:00:00 ps
+
+[obi@demo33 ~]$ ps -ef
+
+
+serviceMGT:
+  service serviceName arguments
+  service sshd status 
+  sudo service sshd start
+  sudo service sshd stop/start/status/enable/disable/restart 
+  sudo service httpd stop/start/status/enable/disable/restart  
+
+  systemctl arguments serviceName
+  systemctl stop/start/status/enable/disable/restart sshd 
+  systemctl start/stop/status httpd  
+  systemctl  
+
+
+
+
+
+
+
+
+
+
+
+
