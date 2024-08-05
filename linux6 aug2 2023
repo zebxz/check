@@ -157,7 +157,7 @@ packageMGT, processMGT and ServiceMGT commands:
     sudo systemctl enable httpd 
     systemctl status httpd 
  
-processMGT                            ********** what evre happens in linux is a command 
+processMGT                            ********** what ever happens in linux is a command 
     ps -ef | grep httpd  
     ps -ef | grep sshd  
     ps -ef | grep ntpd
@@ -217,26 +217,39 @@ ntpd
 Ticket088:
 ==========
 install, start and verify the apache webServer
-sudo yum install httpd -y   
-systemctl status httpd  
-ps -ef | grep httpd  
-sudo systemctl start httpd  
-sudo systemctl enable httpd  
+sudo yum install httpd -y        (install, this is  package mgt command )               
+systemctl status httpd              (system/service mgt command )
+ps -ef | grep ntpd              ( service is called daemon) ******* to chwck if the netwrk time protocol for the server is running 
+ps -ef | grep httpd                     (process mgt command)
+sudo systemctl start httpd             (service mgt command)
+sudo systemctl enable httpd           (service mgt command)
+sudo systemctl start ntpd
+
+*** to insatll ntpd; check google (how to insatll ntpd)
+sudo yum install chrony
+
+********** this ticket involved 
+1)package mgt
+2) service mgt
+3) process mgt
 
 processMGT commands:
 ===================
 
                                  ********** what evre happens in linux is a command 
-  ps  
-  ps -ef 
-    ps -ef | grep httpd  
-    ps -ef | grep sshd   
-  top     
+  ps    - to list the process
+  ps -ef  - list all the processes running
+    ps -ef | grep httpd    - grep for apache service   (to show apache is running 
+    ps -ef | grep sshd      - shows process ids (all those that are using the same service
+  top        -    tells the number of processes running 
   
   You observed that a process  is consuming over 90% of cpu/memory, what action 
-  should you take 
+  should you take ?
   kill the process with  
     kill -9 processID  
+
+the parent process
+the child process
 
 [obi@demo33 ~]$ ps
     PID TTY          TIME CMD
@@ -245,6 +258,10 @@ processMGT commands:
  373804 pts/0    00:00:00 ps
 
 [obi@demo33 ~]$ ps -ef
+
+
+***************************************************   END 
+
 
 
 serviceMGT:
