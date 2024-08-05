@@ -167,6 +167,8 @@ processMGT                            ********** what evre happens in linux is a
 
                                 How to install, updates and remove packages in redhat linux 
 
+************ y is only associated with package command , it doesnt apply to any other process or command 
+
 sudo yum insatll, wget -y  -- to install
 sudo yum remove wget -y    ---  to delete
 
@@ -187,14 +189,6 @@ sudo yum install wget -y
      https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip
 wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip          
 
-Ticket088:
-==========
-install, start and verify the apache webServer
-sudo yum install httpd -y   
-systemctl status httpd  
-ps -ef | grep httpd  
-sudo systemctl start httpd  
-sudo systemctl enable httpd  
 
 
 
@@ -211,8 +205,23 @@ yum install/remove/updates/upgrade
 
     dnf install chrony
     yum install chrony
-  
 
+
+SERVICE NAMES
+httpd
+sshd
+ntpd
+
+
+
+Ticket088:
+==========
+install, start and verify the apache webServer
+sudo yum install httpd -y   
+systemctl status httpd  
+ps -ef | grep httpd  
+sudo systemctl start httpd  
+sudo systemctl enable httpd  
 
 processMGT commands:
 ===================
