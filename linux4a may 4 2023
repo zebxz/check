@@ -168,7 +168,7 @@ others  anyone     1            0
 3)Assign permission for dominion user (ie other) to read the blessed.me file  
      *********** here, we want to make the permission, the question gave us the umask value (read=4) and then its requesting for permission so the user can read
 
-chmod +r fileName 
+chmod +r fileName  : gives evryone permission to read
 chmod 604 fileName   
 
 
@@ -180,6 +180,9 @@ default Permissions     ?  =    ?   = 0062
                       ----    ----  
 
 default permission  = 0666 - 0604 = 0062
+
+##################
+while question is requesting for the unmask value for file that that will be created ,question3 is asking for the default persmission already gave us the unmask value (read)
 
 
 Assignment:
@@ -214,9 +217,10 @@ default Permissions   ?    =    ?            0666-0721= 0935  OR 0045
 default permisssion=  0666 - 0721 = 0935 ( subractracted mathematcally by borrowing )lol
 
 *************************************************************************************************************
-##################
-while question is requesting for the unmask value for file that that will be created ,question3 is asking for the default persmission already gave us the unmask value (read)
 
+
+                                                 FILE MGT COMMANDS
+WE can use the chmod command to assign /chnage permission to specify files for all the files created to have/ inherit a particular specify permission
 
 read=4 
 write=2
@@ -226,6 +230,9 @@ ec2-user  landmark  obi
 
 [ec2-user@demo ~]$ ll blessed.me
 -rw-rw-r--. 1 ec2-user ec2-user 0 May  5 00:02 blessed.me
+
+
+   ***************** 
 
 obi will be working on the blessed.me for this sprint, 
 please grant ownership of the file to obi  
