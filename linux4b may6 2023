@@ -152,14 +152,20 @@ DATTI grant oke sudoer access
 
 
 CREATE THE GROUP FIRST B4 ADDING A USER
-sudo usermod -aG managers oke  
-sudo groupadd = create a group     
+sudo usermod -aG groupname username
+sudo usermod -aG managers oke  = to add oke to the mangers group
+(aG) appends a secondary group called amangers to oke bc oke has a pry group called oke 
+sudo groupadd group name = create a group     
   cat /etc/group   
-  sudo groupadd managers 
-  sudo groupadd directors  
-  sudo groupadd developers  
-  sudo groupadd testers   
-  sudo groupadd tesla      
+  sudo groupadd managers  = create group for mangers
+  sudo groupadd directors  = create group for directors
+  sudo groupadd developers  = create group for developers
+  sudo groupadd testers   = cretae group for testers
+  sudo groupadd tesla      = create group for tesla
+sudo userdel userName  = delete a user's account   
+sudo userdel -r userName  = delete a user's account including the home Directory
+sudo passwd username = assigns password to a new user 
+sudo usermod  = modifies user accounts 
 
 
 
@@ -190,8 +196,6 @@ password key:   $6$tUY/AKwYnjZr.Mb7$6jTh5mLGIINyQT5bLx50qDY/8KOqgRdeXpCAV..0vRRq
 
 
                           TO MODIFY A USER
-sudo userdel userName  = delete a user's account   
-sudo userdel -r userName  = delete a user's account including the home Directory
 sudo usermod  = modifies user accounts 
 
  [ec2-user@demo~]$ sudo usermod - aG telsa oke  
