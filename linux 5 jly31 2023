@@ -77,7 +77,12 @@ solution:
         Account Expiration Date (YYYY-MM-DD) [-1]: 2023-10-30
 
 
-                                                    CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, 
+   
+
+5)  allow users to connect to the server using their password        
+
+
+                                     CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, 
                        this will enable me to connect to my server from an external source 
 this is good in situation where 2 or more members at diff location need access to work on the same server 
 once i have created account for the user and assigned passwd, i then need to configure the server to accept password so the users can hv access
@@ -101,31 +106,31 @@ once i have created account for the user and assigned passwd, i then need to con
  ssh username@ipaddress         OR
 ssh username@hostname
 
+                                          i bliv this is (CONNECT EXTERNALLY USING SSH)
+A)our external source we are using to connect:
+opening a local terminal on the same mobaxterm he : *********************  Go to terminal >>>>>   open new tab   >>>>>> detach 
+ssh landmark@52.10.100.198 
 
-*********************  Go to terminal >>>>>   open new tab   >>>>>> detach 
-ssh kelvin@ip address      (after step 5 above hv been configured)
+###  then passwd and connected
 
+
+B)while            ( THE DEFAULT CONNECTION USING PRIVATE KEY )  EXTERNALLY 
 *******   1;26:10
-1st connection:
+the 1st connection we have on mobaxterm:
 
 [ec2-user@demo~] $  whoami
 ec2-user                                 ********* i am connected externally as ec2-user USING THE private key
 [ec2-user@demo~] $  su - landmark
 [landmark@demo~] $                   ***** i am connected internally as landmark
 
-2nd connection:
-opening a local terminal on the same mobaxterm he ran:
-ssh landmark@52.10.100.198 
-
-then passwd and connected
 
 
-*******************  now bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server right in my
-pwd by RUNNING  :ssh landmark@52.10.100.198 
+******************* THERFORE, bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server by RUNNING  :
+ssh landmark@52.10.100.198  (A above)
  
-
-**** ALSO, with server configured for passwd, any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
-advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLYto server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
+                                               (CONNECT EXTERNALLY WITHOUT PRIVATE KEY)
+C)**** ALSO, with server configured for passwd, any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
+advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLY to server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
  
 
 
