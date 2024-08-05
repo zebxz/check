@@ -99,8 +99,27 @@ ssh kelvin@ip address      (after step 5 above hv been configured)
       Warning: Permanently added '52.10.100.198' (ED25519) to the list of known hosts.
       landmark@52.10.100.198: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).  
 
-******  with server configured for passwd, any user can go straight to session , SSH, fill in ip address and username to connect EXTERNALLYto server OR  EXTERNALLY connect
-to my server right in my pwd by RUNNING  :ssh landmark@52.10.100.198 
+
+*******   1;26:10
+the 1st ssh client : mobaxterm
+
+[ec2-user@demo~] $  whoami
+ec2-user                                 ********* i am connected externally as ec2-user USING THE private key
+[ec2-user@demo~] $  su - landmark
+[landmark@demo~] $                   ***** i am connected internally as landmark
+
+on another ssh client (his gitbash) he ran:
+ssh landmark@52.10.100.198 
+
+then passwd and connected
+
+
+*******************  now bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server right in my
+pwd by RUNNING  :ssh landmark@52.10.100.198 
+ 
+
+**** ALSO, with server configured for passwd, on either of both ssh client any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
+advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLYto server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
  
 
 
@@ -109,17 +128,6 @@ METHOD2:
 2)restart the ssh service with;
           sudo systemctl restart sshd   OR sudo service sshd restart  
 
-
-*******   1;26:10
-
-[ec2-user@demo~] $  whoami
-ec2-user                                 ********* i am connected externally as ec2-user USING THE private key
-[ec2-user@demo~] $  su - landmark
-[landmark@demo~] $                   ***** i am connected internally as landmark
-
-*******************  now bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server right in my
-pwd by RUNNING  :ssh landmark@52.10.100.198 
- 
 
 
   7. sudo passwd -l userName  
