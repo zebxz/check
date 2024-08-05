@@ -149,7 +149,40 @@ curl ifconfig.me  = list the publicIP address
 
 packageMGT, processMGT and ServiceMGT commands:
 ================================================
-How to install, updates and remove packages in redhat linux 
+
+   packageMGT, 
+     sudo yum install httpd -y
+  serviceMGT,
+    sudo systemctl start httpd  
+    sudo systemctl enable httpd 
+    systemctl status httpd 
+ 
+processMGT                            ********** what evre happens in linux is a command 
+    ps -ef | grep httpd  
+    ps -ef | grep sshd  
+    ps -ef | grep ntpd
+
+
+                                        PAckage MGT COMMAND
+
+                                How to install, updates and remove packages in redhat linux 
+
+sudo yum insatll, wget -y  -- to install
+sudo yum remove wget -y    ---  to delete
+
+
+wget helps to download but 
+package managers downlaod and install packages
+
+
+webget: wget is a non-interactive netwrk downloaader used to download packages 
+                        eg, download the tomcat9
+wget|httpds://dlcdn.apache.org/tomcat/tomcat-9/9.0.78/bin/apache
+
+***** so long as wget is already installed, it can be used to download packages with the download link
+wget can be used to download packages for our server
+
+
 sudo yum install wget -y  
      https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip
 wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip          
@@ -163,16 +196,18 @@ ps -ef | grep httpd
 sudo systemctl start httpd  
 sudo systemctl enable httpd  
 
-  packageMGT, 
-     sudo yum install httpd -y
-  serviceMGT,
-    sudo systemctl start httpd  
-    sudo systemctl enable httpd 
-    systemctl status httpd 
-  processMGT
-    ps -ef | grep httpd  
-    ps -ef | grep sshd  
-    ps -ef | grep ntpd
+
+
+apt install packageName- debian/ubuntu systems
+brew install packageName - Mac - APPLe systems
+choco install packageName - windows systems
+yum install packageName - good for redhat/contos systems
+
+
+Package managers are also used to downloadand install packages
+yum/apt/duff/rpm/apk/chocolatey (windows system) /brew (mac)
+yum install/remove/updates/upgrade
+
 
     dnf install chrony
     yum install chrony
@@ -181,6 +216,8 @@ sudo systemctl enable httpd
 
 processMGT commands:
 ===================
+
+                                 ********** what evre happens in linux is a command 
   ps  
   ps -ef 
     ps -ef | grep httpd  
