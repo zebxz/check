@@ -140,7 +140,13 @@ for that to happen, we are using eks which is managed k8 solution and it also co
 
 so hv been able to setup my k8 using an eks cl8 , i hv used both the console to achieve that process,hv used CLI, but most recently v deployed my eks cl8 using terraform
 this i did by modified our existing module for eks, we hv an existing module terrfrm module for eks, i modifies this module and ensured that all the componnets that needed to 
-be created was part of the module and once that took place, it now became a very simple terfrm process with terfafrm init, terfrm format, terfrm validate 
+be created was part of the module and once that took place, it now became a very simple terfrm process with terfafrm init, terfrm format, terfrm validate , terfrm plan
+terfrm plan informs us if our infrastructure will be created or destroyed so with terfrm plan we can see the resources that willl be created and in this case it will tell
+us that we are creating an eks cl8, and the cl8 will be created in a particular vpc, the number of subnet in the vpc, both public and private , it alos infoems us that some
+nodes will also be created, so node groups are been deployed and once we are sactisfied with the plan, we hv terfm apply
+
+tefrm apply will create the resources and once the eks cl8 is created, we hv an output, terfrm output, this output for eg will display for some very useful imfo and in this
+case the info we get is our kube config file, so the output gives us the kube config file and this file is needed ot access our eks cl8
 
 
 
