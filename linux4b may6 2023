@@ -1,1 +1,140 @@
+The absolute path to a file starts from the root Directory  
+The relative path to a file starts from the pwd  
+
+Ticket078: Search for a binary file called 'pwd' 
+   binary files are commands found in the bin/sbin directories
+
+   whereis pwd 
+   whereis ls/cat/less/more/tail/head/grep/  
+
+The date command is use to show and to  modify dates/time  
+
+  date  
+     [ec2-user@demo dev]$ date
+      Sat May  6 13:45:44 UTC 2023
+
+  timedatectl list-timezones
+  sudo timedatectl set-timezone "America/New_York" 
+
+[ec2-user@demo dev]$ sudo timedatectl set-timezone "America/New_York"
+[ec2-user@demo dev]$
+[ec2-user@demo dev]$ date
+Sat May  6 09:47:44 EDT 2023
+
+setting the server with the correct time and timezone is important
+for task execution and scheduling automation:
+
+Class32 time-table = 
+   THU = 7pm EST    
+   SAT = 8AM EST  
+   Sun = 3pm EST        
+
+  Thu =  7PM PST  
+
+
+User Mgt:
+=======
+
+User/group Management:
+=====================
+root user = The root user is the administrator or admin user superuser  
+            that can run all commands and tasks unrestricted 
+            He has unrestricted access into files, etc.    
+
+In Linux the root user is called = root 
+root user is created by system when a server is Launch/created. 
+
+Normal Users: Are created by the administrator [root user]    
+
+adduser = will create a user in a linux server   
+useradd = will create a user in a linux server
+
+Ticket078:
+  Create user accounts for landmark and datti and verify?  :
+
+[ec2-user@demo dev]$ adduser datti
+                     adduser: Permission denied.
+    1. User account creation require root access 
+       sudo -u root adduser datti
+       sudo adduser datti
+  NB" sudo rights/priviledges are only assigned to designated users 
+      By default the ec2-user has sudo priviledges    
+
+  su command is used to switch from one user to another  
+switch to a user :
+  su - userName  
+  su - root    or 
+  su - or sudo -i  
+
+[ec2-user@demo dev]$ su datti
+Password:
+ONLY the root user can switch to another without a password request  
+
+[ec2-user@demo dev]$ sudo su - datti
+
+Ticket079:
+  assign a password the user 'datti'
+  passwd userName  
+  passwd datti  
+
+Ticket080:
+  Hello datti please create oke user's account   
+  adduser oke -- permission denied    
+ [datti@demo ~]$ sudo adduser oke -- permission denied    
+  datti is not in the sudoers file.
+  ec2-user is not in the sudoers file.
+
+Hello simon, please grant datti sudo access to execute ticket080
+
+When to grant sudo access to a user in Linux
+
+why grant sudo access - 
+   sudo access should granted to permit trusted users to perform admin tasks        
+
+How to grant sudo access to a user in Linux  :
+1. sudo vi /etc/sudoers   or   
+   sudo visudo 
+2. sudo echo "userName ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/userName
+   sudo echo "oke ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/oke
+
+sudo adduser userName  = create a new user
+ How to verify if a user account is running/active.
+   cat /etc/passwd  
+   grep userName /etc/passwd  
+   id userName
+sudo passwd userName   = assigns password to a new user
+ How to verify if a user has an active password.
+   sudo cat /etc/shadow  
+   sudo grep userName /etc/shadow  
+   id userName
+
+[oke@demo ~]$ sudo grep oke /etc/shadow
+oke:!!:19483:0:99999:7:::
+
+[oke@demo ~]$ sudo grep datti /etc/shadow
+datti:$6$tUY/AKwYnjZr.Mb7$6jTh5mLGIINyQT5bLx50qDY/8KOqgRdeXpCAV..0vRRqVcFQrFLmJgK2.vKP12FGaLi9WTFOhdEW1bEWI7iWW0:19483:0:99999:7:::
+[oke@demo ~]$
+
+
+sudo userdel userName  = delete a user's account   
+sudo userdel -r userName  = delete a user's account including the home Directory
+sudo usermod  = modifies user accounts 
+  sudo usermod -aG managers oke  
+sudo groupadd = create a group     
+  cat /etc/group   
+  sudo groupadd managers 
+  sudo groupadd directors  
+  sudo groupadd developers  
+  sudo groupadd testers   
+  sudo groupadd tesla      
+
+grant and remove admin/sudo prilvileges:
+
+  lock user accounts = sudo/root access  is required to lock and unlock accounts:
+    passwd -l userName
+
+
+
+
+
 
