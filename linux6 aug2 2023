@@ -1,8 +1,13 @@
-
+https:whatismy ipaddress.com
 System Resources/MGT Commands:  
 ===============================
+
+                           how to mg8 your system
+
+
 date : Print or set the system date and time
-      date   
+      date -S "ddmmyyy Time"
+
 date -s "02Aug2023 19:10:00"
       [obi@demo ~]$ sudo date -s "02Aug2023 19:10:00"
       Wed Aug  2 19:10:00 EDT 2023
@@ -17,6 +22,7 @@ date -s "02Aug2023 19:10:00"
   sudo timedatectl set-timezone 'Africa/Lagos'
 
 df : Report file system disk space usage
+       how much space are files ultilizing 
 
     [obi@demo ~]$ df -h
     Filesystem      Size  Used Avail Use% Mounted on
@@ -42,17 +48,27 @@ hostname : Show or set the system hostname.
    ssh obi@172.31.31.46
    ssh obi@52.10.100.198
 
+
+              SHOW OR SET THE SYSTEM HOSTNAME 
+must be root usr ot change hostname 
+hostname is the name of your server, its very imp for security, automation, testing and connection 
+
 hostname -i = list your privateIP address  
     [obi@demo33 ~]$ hostname -i
      ipv6 = fe80::50:b8ff:fe51:243%enX0 
      ipv4 = 172.31.31.46
 
+
+
   ping 172.31.31.46   
   ping fe80::50:b8ff:fe51:243%enX0  
 
+*********** you cant ping a public address 
+if i ping a public address, -4 packets transmitted, 0 received
+it menas my server is not allowing any access on this public address
+
  ip a     = list the privateIP address including network interfaces
  ifconfig = list the privateIP address including network interfaces  
-
 curl ifconfig.me  = list the publicIP address
 
 who  = list the users connected to the server 
