@@ -34,6 +34,51 @@ the code that ensure that devlopers hv done a great job in presentation of the p
 java code in bycode that the java virtual machine can easily understand so compilation goes into effect and it is worth mentioning that once that takes place successfully, unit
 test cases are bein run and if the test gives us a pass then maven will do a build.
 
+so this is all about maven and what maven helps us to ahieve in our automated pipeline jobs
+
+
+40.00
+once artifacts are created, our major conecrn is to ensure that our clients are satisfied, so in our env we are very keen abt quality
+we hv a tool we use for code quality called sonarqube and in sonarqube we hv created a bench mark for all our project which states that code coverage for eg  must be atleast
+99% bc the appl we manage are fintech appl and we dnt make provison for any type of failure so we hv code coverage and we equally ensure that we dnt hv code smell in our 
+benchmark, we ensure that our duplictaions, duplicate lines is less than 5%, so ll of that has been setup as a benchmark when it comes to code quality, so we hv used quality
+gate snad profiles to create our baenchmark so once sonarqube runs sonaqube analysis, sonarqube is actually comapring actual result frm standared/expected result 
+so if the actual result is as expectd which imples that code coverage for eg execeds 90% it means that the software devloped by developers has met a cerstain minmum 
+quality xpectation and once that happens we are goin to proceed bt if it fails then our pipeline breaks at that point and an email will be forwarded to developers informing 
+them of the problem that occurred and it shud be resolved b4 we can proceed
+
+but if the code quality was successful, this meeans we hv met our quality benchmark and we are ready to deploy our appl to the lcient env bt b4 this deployment takes place
+ther aer a few things that we always consider :
+the first , we need to ensure that our artifacts/ deployable pacakages are well manged and backedup so we upload into a distribution mgt env , into an artifactoyr called
+nexus , so we use nexus as our artifactory repository and once that happens we are now ready for deplyment 
+so first we deploy our appl to a test env , in this env  what are we checking, we are ensuring that this appl works as expected and meets the general threshold, so we firts 
+deploy in the user testing env once the appl works effectively and we are sactified then our pipeline will trigger a production env deployment and for appl to be deployed in 
+the prod env, ther a few factors that are considered:
+additional testing is perfromed in the test env like perforamnce tesing, security testing, penetration testing, regression testing after all this and we are sure, now our 
+client will hv to agrree that this is what they expect from us so they sign a white document agreeing to the performance of the apppl and onec that is doen we now deploy
+the appl to the client env and in deploying this appl we ensure that the client env is secured enough
+
+so this is the  end to end deployment of our appl, when it comes to deplyment
+so this is what happens in rela time 
+
+
+45:00
+
+this is another explanation i did in class34
+
+where is deployment taking place
+we see deployment is taking place in UAT , UAT deploymentin this env
+
+
+
+
+
+
+
+
+
+
+
 
 
 
