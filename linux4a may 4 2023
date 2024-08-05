@@ -306,7 +306,7 @@ grep -i simon list
  where -i =  ignores case sensitivity   ie caps letter
 
 
-grep usr information
+grep user information
 
  [ec2-user@demo ~]$ grep obi  /etc/passwd
 obi:x:1001:1001::/home/obi:/bin/bash
@@ -315,24 +315,57 @@ obi:x:1001:1001::/home/obi:/bin/bash
 grep chown = grep chown (file) history.sh
 
 
+
+IQ: explain the grep and the pipe commands ?
+
+  
 pipe command = |  
    Enable the output of a command to be
    the input of another/next command 
 
-cat list | grep -i legah   
+cat list| grep -i legah ( i can cat the list file and grep for legal in the list file)
+ie the output of the cat command is the input of the grep command 
 
-IQ: explain the grep and the pipe commands ?
+eg
+[ec2-user@demo ~]$ cat list 
+simon legah
+simon peter
+james
+obi
+datti
+samason
+amaka
+paulzz
+
 
 [ec2-user@demo ~]$ cat list | sort | grep a
-James
-Simon Legah
-amaka
-datti
+J(a)mes
+Simon Leg(a)h
+(a)m (a)k (a)
+d(a)tti
 paulZZ
 samson
 
+[ec2-user@demo ~]$ sort list (rearranges in alphabetical order)
+james
+obi
+simon legah
+simon peter
+amaka
+daitti
+paul
+samason
+simon
+
+
+
+
 cp fileName  --  
 mv fileName 
+                                             FIND
+                          find / -name list 
+
+************  QUESTION:
 
 Ticket077: Search for a file called list
 find = search for files and directories  
