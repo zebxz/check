@@ -121,45 +121,38 @@ Ticket080:
   Hello datti please create oke user's account   
   adduser oke -- permission denied    
  [datti@demo ~]$ sudo adduser oke -- permission denied    
-  datti is not in the sudoers file.
+  datti is not in the sudoers file. ( and so he cant add user, hes just a normal user)
   ec2-user is not in the sudoers file.
 
+
+HOW TO GRANT SUDO ACCESS TO A USER IN LINUX  ( when to grant access/why grant access)
+once added to the sudoers file , you can run command  with -sudo 
+
+therfore, daitti will write to his manger:
+hello simon please grant me sudo access to to execute ticket 080
 Hello simon, please grant datti sudo access to execute ticket080
 
-When to grant sudo access to a user in Linux
+*********** When to grant sudo access to a user in Linux
 
 why grant sudo access - 
-   sudo access should granted to permit trusted users to perform admin tasks        
+ 1)  sudo access should granted to permit trusted users to perform admin tasks        
+2)sudo access dhould be granted if admin task needs to be executed
 
-How to grant sudo access to a user in Linux  :
-1. sudo vi /etc/sudoers   or   
+
+How to grant sudo access to a user in Linux  : (
+1. sudo vi /etc/sudoers    ( then edit the file that opens) or   
    sudo visudo 
 2. sudo echo "userName ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/userName
+
+after datti has been added to sudoer file by simon, datti can then :sudo adduser oke (successfully) 
+
+TICKET009:
+DATTI grant oke sudoer access
    sudo echo "oke ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/oke
 
-sudo adduser userName  = create a new user
- How to verify if a user account is running/active.
-   cat /etc/passwd  
-   grep userName /etc/passwd  
-   id userName
-sudo passwd userName   = assigns password to a new user
- How to verify if a user has an active password.
-   sudo cat /etc/shadow  
-   sudo grep userName /etc/shadow  
-   id userName
 
-[oke@demo ~]$ sudo grep oke /etc/shadow
-oke:!!:19483:0:99999:7:::
-
-[oke@demo ~]$ sudo grep datti /etc/shadow
-datti:$6$tUY/AKwYnjZr.Mb7$6jTh5mLGIINyQT5bLx50qDY/8KOqgRdeXpCAV..0vRRqVcFQrFLmJgK2.vKP12FGaLi9WTFOhdEW1bEWI7iWW0:19483:0:99999:7:::
-[oke@demo ~]$
-
-
-sudo userdel userName  = delete a user's account   
-sudo userdel -r userName  = delete a user's account including the home Directory
-sudo usermod  = modifies user accounts 
-  sudo usermod -aG managers oke  
+CREATE THE GROUP FIRST B4 ADDING A USER
+sudo usermod -aG managers oke  
 sudo groupadd = create a group     
   cat /etc/group   
   sudo groupadd managers 
@@ -168,11 +161,54 @@ sudo groupadd = create a group
   sudo groupadd testers   
   sudo groupadd tesla      
 
+
+
+a)sudo adduser userName  = create a new user
+ How to verify if a user account is running/active.
+   cat /etc/passwd  
+   grep userName /etc/passwd  
+   id userName =
+[ec2-user@demo~]$ id paul
+user id  uid = 1004 (oke) gid = 1004 (oke) groups= 1004 (oke)
+sudo passwd userName   = assigns password to a new user
+b)
+How to verify if a user has an active password.
+   sudo cat /etc/shadow  
+   sudo grep userName /etc/shadow  
+   id userName
+sudo tail -5 /etc/shadow
+
+[oke@demo ~]$ sudo grep oke /etc/shadow
+output: oke:!!:19483:0:99999:7:::       **** the password is encrypted bc we didnt create passwd for him 
+
+      but datti has 
+[oke@demo ~]$ sudo grep datti /etc/shadow
+output:  datti:$6$tUY/AKwYnjZr.Mb7$6jTh5mLGIINyQT5bLx50qDY/8KOqgRdeXpCAV..0vRRqVcFQrFLmJgK2.vKP12FGaLi9WTFOhdEW1bEWI7iWW0:19483:0:99999:7:::
+password key:   $6$tUY/AKwYnjZr.Mb7$6jTh5mLGIINyQT5bLx50qDY/8KOqgRdeXpCAV..0vRRqVcFQrFLmJgK2.vKP12FGaLi9WTFOhdEW1bEWI7iWW0:19483:0:99999:7:::
+
+    ********* if datti forgets his password we can delete the password key 
+
+
+                          TO MODIFY A USER
+sudo userdel userName  = delete a user's account   
+sudo userdel -r userName  = delete a user's account including the home Directory
+sudo usermod  = modifies user accounts 
+
+ [ec2-user@demo~]$ sudo usermod - aG telsa oke  
+[ec2-user@demo~]$ id oke                          pry grp        sec grp
+user id  uid = 1001 (oke) gid = 1001(oke) groups= 1004 (oke), 1008 (Tesla)
+  
+
+TO REMOVE ADMIN/SUDO PRIVILEDGES
 grant and remove admin/sudo prilvileges:
+1) Sudo vi/etc/sudoers : go into the file and remove the user that is need to be removed
+
+2) when a staff is fired from the coy, locking his acount is the first thing to do 
 
   lock user accounts = sudo/root access  is required to lock and unlock accounts:
     passwd -l userName
-
+sudo passwd- l username = lock
+sudo passwd - u username = unlock
 
 
 
