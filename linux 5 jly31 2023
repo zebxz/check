@@ -1,4 +1,112 @@
 
+Ticket078:
+  1. Create user accounts for landmark and datti and verify?  :
+  2. assign password to landmark and datti users?  :
+  3. grant sudo access to landmark user ONLY?  :
+  4. Set the expiration of datti account to 90days ?  
+  5. configure/setup your server for password authentication?  
+  6. connect to the server externally as landmark as landmark user using password?
+  7. Lock datti's password and server access?  
+  8. Create manager's group and add user landmark to it.   
+
+solution:
+  1. sudo useradd landmark   
+     sudo useradd datti 
+  to verify:
+      id userName [ id datti && id landmark ]
+      tail -4 /etc/passwd  
+      grep datti /etc/passwd && grep landmark /etc/passwd  
+
+  2.  assigning password to user accounts:
+       sudo passwd userName [ sudo passwd datti  ]
+       sudo passwd landmark
+  3. granting sudo/admin priviledges/access  ;  
+       root access is required to grant sudo access to any user  
+       sudo visudo  
+       sudo vi /etc/sudoers    
+
+    [ec2-user@demo ~]$ sudo vi /etc/sudoers
+    [ec2-user@demo ~]$
+    [ec2-user@demo ~]$ su - landmark
+    Password:
+    [landmark@demo ~]$
+    [landmark@demo ~]$ whoami
+    landmark
+    [landmark@demo ~]$ sudo adduser james
+
+    We trust you have received the usual lecture from the local System
+    Administrator. It usually boils down to these three things:
+
+    -#1) Respect the privacy of others.
+    -#2) Think before you type.
+    -#3) With great power comes great responsibility.
+
+    For security reasons, the password you type will not be visible.
+
+      [sudo] password for landmark:
+      landmark is not in the sudoers file.
+
+      [ec2-user@demo ~]$ su - landmark
+      Password:
+    Last login: Mon Jul 31 20:21:10 EDT 2023 on pts/0
+    [landmark@demo ~]$
+    [landmark@demo ~]$ sudo adduser james
+    [landmark@demo ~]$
+    [landmark@demo ~]$ whoami
+    landmark
+
+
+  4. setting 90 days expiration for datti's account:  
+       sudo chage 
+       [landmark@demo ~]$ sudo chage datti
+      Changing the aging information for datti
+      Enter the new value, or press ENTER for the default
+        Minimum Password Age [0]:
+        Maximum Password Age [99999]: 90
+        Last Password Change (YYYY-MM-DD) [2023-08-01]:
+        Password Expiration Warning [7]:
+        Password Inactive [-1]: 7
+        Account Expiration Date (YYYY-MM-DD) [-1]: 2023-10-30
+  
+  5. allow users to connect to the server using their password
+     by default user's can ONLY connect to aws ec2 linux servers using ssh-private-Key
+     allow users to connect to the server using their password by:
+      1. sudo vi /etc/ssh/sshd_config and change password authentication to yes    
+      2. restart the ssh service with;
+          sudo systemctl restart sshd    
+  6. 
+    52.10.100.198   
+    ssh landmark@52.10.100.198 
+    ssh landmark@52.10.100.198
+      Warning: Permanently added '52.10.100.198' (ED25519) to the list of known hosts.
+      landmark@52.10.100.198: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).  
+
+  7. sudo passwd -l userName  
+     sudo passwd -l datti   
+     ssh datti@52.10.100.198 
+
+  7b. unlock datti's password/account  
+     sudo passwd -u userName  
+     sudo passwd -u datti   
+     ssh datti@52.10.100.198 
+
+  8. Creating manager's group  
+     sudo groupadd groupName 
+     sudo groupadd managers 
+     sudo usermod -aG groupName userName  
+     sudo usermod -aG managers landmark    
+
+    [landmark@demo ~]$ sudo groupadd managers
+    [landmark@demo ~]$
+    [landmark@demo ~]$ id landmark
+    uid=1005(landmark) gid=1005(landmark) groups=1005(landmark)
+     [landmark@demo ~]$
+    [landmark@demo ~]$ sudo usermod -aG managers landmark
+   [landmark@demo ~]$
+   [landmark@demo ~]$ id landmark
+   uid=1005(landmark) gid=1005(landmark) groups=1005(landmark),1007(managers)
+
+
 
 Ticket080:
 =========
