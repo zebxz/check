@@ -102,7 +102,14 @@ therefore we configure the server in no. 5 below
       1. sudo vi /etc/ssh/sshd_config and change password authentication to yes    
       2. restart the ssh service with;
           sudo systemctl restart sshd    
+
+METHOD2:
+1)sudo ed.-i"}{po¬|^[#]*passwordAuthentication[[:space]]no/c\PasswordAuthenticationyes"/etc/ssh/sshd_config
+2)restart the ssh service with;
+          sudo systemctl restart sshd   OR sudo service sshd restart  
+
   
+
 6. To connect externally:
  ssh username@ipaddress         OR
 ssh username@hostname
@@ -135,11 +142,6 @@ C)**** ALSO, with server configured for passwd, any user can go straight to sess
 advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLY to server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
  
 
-
-METHOD2:
-1)sudo ed.-i"}{po¬|^[#]*passwordAuthentication[[:space]]no/c\PasswordAuthenticationyes"/etc/ssh/sshd_config
-2)restart the ssh service with;
-          sudo systemctl restart sshd   OR sudo service sshd restart  
 
 
 
