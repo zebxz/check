@@ -181,13 +181,42 @@ default Permissions     ?  =    ?   = 0062
 
 default permission  = 0666 - 0604 = 0062
 
+
+Assignment:
 Assign permission for the ec2-user group to modify the blessed.me file  
 chmod +r fileName 
 chmod 664 fileName  
 
+                      file   file
+Full Permissions      0666   0666
+default Permissions   ?    =    ?            0666-0624 = 0042
+                      ----   ----
+ umask                0600   0624
+                      ----   ----  
 
+
+default permisssion=  0666 - 0624 = 0042
+
+
+***************************************************************************************
+Assignment: i  set myself
+Assign permission for the ec2-user group to modify the billions file  
+chmod +r fileName 
+chmod 721 fileName  
+
+                      file   file
+Full Permissions      0666   0666
+default Permissions   ?    =    ?            0666-0721= 0935  OR 0045
+                      ----   ----
+ umask                0711   0721
+                      ----   ----  
+
+default permisssion=  0666 - 0721 = 0935 ( subractracted mathematcally by borrowing )lol
+
+*************************************************************************************************************
 ##################
 while question is requesting for the unmask value for file that that will be created ,question3 is asking for the default persmission already gave us the unmask value (read)
+
 
 read=4 
 write=2
