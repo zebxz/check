@@ -130,11 +130,17 @@ you can use either terrfrm, console, CLI
 this is a project hv been tasked to mg8 , and when it comes to this project in particular, our env is heavy on k8 and most most recently we decide to go for a managed 
 k8 solution and AMAZON eks was our choice and with the help of eks, i hv been able to dpeloy k8 cl8 that comes along side other aws services/resources
 like virtual private cloud like vpc , vpc and its components include: subnets, route table, internetgateway, nat gateways
-other aws services we hv ec2 instances , server, serverless farget, ebs, RDS ;relational databases, so all of this can be deployed alongside your k8 cl8
-we also hv auto sclaing grps ,launch template LT, launch configuration LC, ELB, IAM 
+other aws services we hv ec2 instances , server, serverless farget, ebs, RDS ;relational databases, s3 so all of this can be deployed alongside your k8 cl8
+we also hv auto sclaing grps ,launch template LT, launch configuration LC, ELB, most important for security we hv IAM 
 
+IT is important for us to knw that an eks cl8 is a mnaged solution/service which implies it gives us enough time to mg8 our appl rtaher than mg8 the infratstructure on which our
+appl is running on  and generally our infratructure is k8.
+so if i deploy my appl shud i be more bothered on my appl or if k8 is working or not ,of course i shud be bothered abt my appl
+for that to happen, we are using eks which is managed k8 solution and it also comes with other aaws services like listed above 
 
-
+so hv been able to setup my k8 using an eks cl8 , i hv used both the console to achieve that process,hv used CLI, but most recently v deployed my eks cl8 using terraform
+this i did by modified our existing module for eks, we hv an existing module terrfrm module for eks, i modifies this module and ensured that all the componnets that needed to 
+be created was part of the module and once that took place, it now became a very simple terfrm process with terfafrm init, terfrm format, terfrm validate 
 
 
 
