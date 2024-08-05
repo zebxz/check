@@ -17,6 +17,26 @@ the find command is used to search for a file in the server
 find= serach for files and directories
 
 
+
+A) searching a file in the user's home Directory:
+   find /home/ec2-user -name fileName or find ~ -name fileName 
+   find /home/ec2-user -name list  or find ~ -name list  
+
+B) searching a file in the present working Directory:
+   find /home/ec2-user/dev -name list   or   find .name list     
+
+c) searching a file in the root Directory:
+  find / -name list 
+  sudo -u root find / -name list    
+OR   sudo find / -name list  
+********** the output to this command is the root path to the file 
+
+[ec2-user@demo dev]$ sudo -u root find / -name list
+/sys/kernel/debug/error_injection/list
+/sys/kernel/debug/kprobes/list
+/home/ec2-user/dev/list
+/home/ec2-user/list
+
 THE DATE COMMAND 
 The date command is use to show and to  modify dates/time  
 
