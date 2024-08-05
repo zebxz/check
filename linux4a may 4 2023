@@ -1,7 +1,10 @@
 history to check history
 
+FIELDS FOR FILES, GREP COMMANDS , FILE PERMISSION/SECURITY, HOW TO CALCULATE /DETERMINE PERMISSION FOR FILES, 
 
-                    FIELDS FOR RULES
+
+
+                    FIELDS FOR FILES
 1) FILE TYPE: its either :- File, d= directory, l= soft link, - = hardlink
 
 
@@ -62,6 +65,10 @@ dev        rwx=7  r-x=5  r-x=5      0755
 Ie
 class.txt  rw-= (4+2)6  r--=4         r--=4      0644    
 dev        rwx= (4+2+1)7  r-x=(4+1)5       r-x=5      0755
+
+
+   
+                            HOW TO CALCULATE /DETERMINE PERMISSION  FOR FILES
 
 
                    PERMISSION FOR NORMAL USER
@@ -260,23 +267,36 @@ chown: changing ownership of 'blessed.me':
 This is because:
 chown and chgroup commands can ONLY be run by the rootUser
 sudo is a command used to run commands as another user  
+
+**************  therfore the correct command : 
 sudo -u root chown obi blessed.me 
     sudo chown obi blessed.me  
 sudo -u obi  chown obi blessed.me      
 
-sudo -u obi  chgroup obi blessed.me  
+before you run the command mk sure the owner is running the command  ( i bliv chown without sudo , u hv to be rootuser)
+[ec2-user@demo ~]$ sudo - u root chown obi blessed.me   OR  sudo chown obi blessed.me
+
+
+
+***********     TO change group ownership
+
 [ec2-user@demo ~]$ sudo -u obi  chgrp obi blessed.me
 chgrp: cannot access 'blessed.me': Permission denied
 
 sudo chgrp obi blessed.me
 
-obi will be working on the billions directory for this sprint, 
+QUESTION:
+   ****************    obi will be working on the billions directory for this sprint, 
 please grant ownership and group ownership of the dir to obi  
 
 sudo chown obi billions  
 sudo chgrp obi billions  
 
-sudo chown obi:obi billions 
+sudo chown obi:obi billions   ...... the best
+
+
+
+                                   GREP COMMAND
 
 
 grep command = extract patterns from files  
