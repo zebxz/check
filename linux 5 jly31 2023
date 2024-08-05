@@ -94,6 +94,7 @@ once i have created account for the user and assigned passwd, i then need to con
       landmark@52.10.100.198: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).  
 
 ********** permission denied bc server has nt been configured for passwd
+therefore we configure the server in no. 5 below
 
   5. allow users to connect to the server using their password
      by default user's can ONLY connect to aws ec2 linux servers using ssh-private-Key
@@ -119,7 +120,7 @@ B)while            ( THE DEFAULT CONNECTION USING PRIVATE KEY )  EXTERNALLY
 the 1st connection we have on mobaxterm:
 
 [ec2-user@demo~] $  whoami
-ec2-user                                 ********* i am connected externally as ec2-user USING THE private key
+ec2-user                                 ********* i am connected externally as ec2-user USING THE private key , no i can internally switch to any user
 [ec2-user@demo~] $  su - landmark
 [landmark@demo~] $                   ***** i am connected internally as landmark
 
@@ -128,14 +129,15 @@ ec2-user                                 ********* i am connected externally as 
 ******************* THERFORE, bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server by RUNNING  :
 ssh landmark@52.10.100.198  (A above)
  
-                                               (CONNECT EXTERNALLY WITHOUT PRIVATE KEY)
+                                            
+                                 (CONNECT EXTERNALLY WITHOUT PRIVATE KEY)
 C)**** ALSO, with server configured for passwd, any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
 advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLY to server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
  
 
 
 METHOD2:
-1)
+1)sudo ed.-i"}{po¬|^[#]*passwordAuthentication[[:space]]no/c\PasswordAuthenticationyes"/etc/ssh/sshd_config
 2)restart the ssh service with;
           sudo systemctl restart sshd   OR sudo service sshd restart  
 
