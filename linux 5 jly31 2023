@@ -79,7 +79,11 @@ solution:
 
    
 
-5)  allow users to connect to the server using their password        
+5)  allow users to connect to the server using their password      
+IQ: How can users access an ec2- Linux instance/server externally using passwords?
+1. Enable PasswordAuthentication in the server
+2. Restart the ssh service
+
 
 
                                      CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, 
@@ -99,6 +103,8 @@ therefore we configure the server in no. 5 below
   5. allow users to connect to the server using their password
      by default user's can ONLY connect to aws ec2 linux servers using ssh-private-Key
      allow users to connect to the server using their password by:
+
+METHOD1:
       1. sudo vi /etc/ssh/sshd_config and change password authentication to yes    
       2. restart the ssh service with;
           sudo systemctl restart sshd    
