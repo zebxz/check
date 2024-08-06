@@ -290,9 +290,14 @@ single line commend ends
 
 
 
+MULTI LINE COMMENTS
+Multi line comment starts with :<< and a word (<< boy)
+the multiline script must end with  the same word after the two << which it started with 
+only lines written before <<(boy) will display and lines written at the end after the starting word (boy) has been written will display as well when you run the script but
+lines written after <<(boy) and before (boy) is written at the end will not display whne you run the script 
 
-single line comment starts
-mlc.sh 
+
+mlc.sh    (script name)
 echo "Multi-line comment starts"
 <<boy
 This script welcome Engineers to Landmark.
@@ -305,11 +310,15 @@ echo "Multi-line comment ends"
 date
 whoami
 
+******** when the script is run,as seen below , only line 1,8,9 and 10 will display bc any line written between the first (boy) and last (boy) wont display
+
 [oke@demo22 ~]$ sh mlc.sh
 Multi-line comment starts
 Multi-line comment ends
 Thu May 18 20:40:35 EDT 2023
 oke
+
+
 
 
 <<rich
@@ -345,6 +354,9 @@ Making your script portable.
 1. Hard coding 
 2. soft coding   
 
+
+
+ 
 using variables in scripting:
 ============================
 name=SimonLegah
