@@ -74,6 +74,8 @@ zip is used to:
   zip newFileName.zip fileName   
   zip notes33.zip notes    
 
+Unzip filename.zip     - inflate/extract the original file 
+
 Other commands;
 ===============
 clear : Clears the terminal screen.
@@ -96,6 +98,7 @@ package managers are also used to download and install packages:
   brew install packageName - Mac-Apple systems   
   choco install packageName- windows systems     
 
+                                                          TEE COMMAND
 tee:  This command is used to store and view the
      the output of any other command.
      (both at the same time)     
@@ -103,9 +106,11 @@ tee:  This command is used to store and view the
 echo "I am the finest Engineer"
 
 [obi@demo33 ~]$ echo "Landmark Engineers are the best in 2023" > best
+result ...send ..  landmark engineers are the best into the file without displaying 
 
+BUT:
 [obi@demo33 ~]$ echo "Landmark Engineers are the best in 2023" | tee best
-Landmark Engineers are the best in 2023
+Landmark Engineers are the best in 2023     .... (the input is stored and displayed at the same time)
 
 [obi@demo33 ~]$ tail -5  /etc/passwd > newusers
 [obi@demo33 ~]$
@@ -116,19 +121,30 @@ legah:x:1006:1006::/home/legah:/bin/bash
 apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
 nginx:x:992:992:Nginx web server:/var/lib/nginx:/sbin/nologin
 
+
+******** 
 tail -5 /etc/passwd | tee new.txt  
 
+result:
+  it created the file new.txt and directs the tail info into it and displays the info as well
+
+
+                                      PING
 
 ping: The ping command sends ICMP ECHO_REQUEST to network hosts.
       This verify if the host is alive 
    ping localhost  = check if your local system is alive/running   
    ping landmark.cm  
-   ping mylandmarktech.com  
+   ping mylandmarktech.com                **** you are working for a coy and a cx calls and says the website is nt working, you can ping the website 
    ping google.com  
 
-
+                                          TELNET
+                      To check if a particular is running or not
 telnet: 
-    a server/system/computer have 0-65535(65536) ports/addresses  
+for any computer or system;    a server/system/computer have 0-65535(65536) ports/addresses  
+0-65535, ie port range
+(65536 , ie no. of port or addresses
+
     ssh   = 22  
     http  = 80
     https = 443
@@ -142,6 +158,12 @@ telnet:
    telnet google.com 80    
 
 history : Displays the recently executed commands .
+
+
+STEP1: 
+check for ip addresses = hostname -i
+next 
+telnet ip address portnumber
 
 uname: describes your system  
    uname -a 
