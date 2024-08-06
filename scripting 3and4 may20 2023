@@ -1,1 +1,275 @@
 
+  export class=DevOpsMasterClass
+
+system defined variables:
+  echo sdv starts  
+   echo $HISTSIZE  
+   echo $USER 
+   echo $HOME  
+   echo $PATH  
+   echo $LOGNAME
+   echo $SHELL 
+echo sdv ends   
+
+[oke@demo22 ~]$  echo $HISTSIZE
+                 1000
+export HISTSIZE=2000
+=============================
+
+dynamic script  :
+  1. echo $name Welcome to $cpy  
+
+static script:
+  1. echo Oke Welcome to MTN    
+
+$name Welcome to Landmark Technology
+
+User defined variables:
+var1.sh 
+   name=SimonLegah 
+   cpy=LandmarkTechnology
+   echo $name Welcome to $cpy  
+
+write a script to authenticate bank users:
+===========================================
+[oke@demo22 ~]$ cat read1.sh
+echo 'Please enter your name'
+read name
+echo "$name, welcome to TD Bank"
+echo 'please enter your card'
+echo 'please enter your pin'
+read pin
+echo "$pin is the correct pin, $name, how may we help you today?"
+
+======================================
+TICKET0045: Write a scipt to dynamically create users. 
+   userMGT commands: adduser / usermod / userdel /  groupadd / groupdel 
+      sudo adduser/userdel/usermod/ groupadd / groupdel 
+userCreate.sh  
+[oke@demo22 ~]$ cat createuser.sh
+#!/bin/bash
+# This script requires root/sudo access
+echo "Please enter the name of the newUser"
+read newuser
+echo "Now ready to create $newuser account "
+sudo adduser  $newuser
+echo "$newuser account is created successfully"
+grep $newuser /etc/passwd # to verify
+[oke@demo22 ~]$
+
+IQ: Explain your experience in shell scripting  ?
+1. using bash shell scripts for userMGT. 100% [New Graduate]    
+2. In my environment/company/Landmark i use scripting for userMGT for over 5 years. 
+
+userMGT.sh  :   
+echo "creating a newuser account" 
+echo "enter the new username's name"
+read name  
+sudo adduser $name 
+sudo usermod -aG manager $name   
+id $name 
+
+bank.sh   
+-------
+echo "Please enter your name"
+read name
+echo "$name, welcome to TB Bank"
+echo "Please enter your pin"
+read -s pin  # -s pass a secret variable
+echo "$name you entered an invalid pin"
+[obi@sc ~]$
+
+Security is inherent in our environment.  
+
+Command Line Arguments = CLAs  
+===============================
+TICKET0047: write a script to backup databases in our environment.  
+touch db_backup.sh
+ echo "echo database backup initiated" > db_backup.sh
+ echo "echo database backup completed" >> db_backup.sh
+
+-# sh script.sh  arg1  arg2  arg3 ...  agr10
+-#     $o         $1    $2    $3       $10
+
+cla.sh   
+#echo please pass 3 arguments with your script
+echo "The 1st argument is $1"
+echo "The 2nd argument is $2"
+echo "The 10th argument is ${10}"
+echo The number argument is $#
+echo The list of  argument are $@
+echo The list of  argument are $*
+Date
+echo The status of your last run command is $?
+mkdir backup
+cp *  backup/
+echo The process id is  $$
+
+
+[oke@demo22 ~]$ echo $?
+127
+[oke@demo22 ~]$ cat ss
+cat: ss: No such file or directory
+[oke@demo22 ~]$ echo $?
+1
+
+IQ: What is the significance of $? in scripting.
+  It gives the status of your last run command.
+  The value can be = 0 [Its okay]   or 
+  The value can be = 1-127 [Its not okay]   
+
+[oke@demo22 ~]$ ls
+app      cla.sh         db_backup.sh  mlc.sh      sdv1.sh  usermgt.sh
+backup   comment.sh     deploy.sh     read1.sh    sdv2.sh  var1.sh
+bank.sh  createuser.sh  deployment    script1.sh  udv1.sh  welcome.sh
+[oke@demo22 ~]$ echo $? = 0
+[oke@demo22 ~]$ LS
+-bash: LS: command not found
+[oke@demo22 ~]$ echo $? = 127
+[oke@demo22 ~]$ cat ss
+cat: ss: No such file or directory
+[oke@demo22 ~]$ echo $? = 1
+
+
+command Line arguments:
+    The 1st argument is  = $1"
+    The 2nd argument is  = $2"
+    The 3rd argument is  = $3"
+    The 6th argument is  = $6"
+    The scriptName  is   = $0"
+    The 10th argument is = ${10}"
+    The number argument is $#
+    The list of argument are $@
+    The list of argument are $*
+    The status of the last run command is = $?  
+    The process id is = $$  
+
+CLA = $? displays the status of your   
+  last run command with 2 possible values 
+     $? = 0 = command ran successfully
+     $? = 1-127 = something is wrong        
+
+  1-127 are error codes :
+      1   = 
+      2   = 
+      3   = 
+      127 = 
+
+An argument, also called command line argument, 
+can be defined as input given to a command line 
+to process that input with the help of given command. 
+Argument can be in the form of a file or directory. 
+Arguments are entered in the terminal or console after entering command.
+
+sudo service sshd 
+
+cat deploy.sc     
+if [ $?==0 ] 
+then
+echo "We succeeded" 
+else  
+echo "We failed, please troubleshoot" 
+fi  
+
+cat deploy.sc     
+if [ $#==3 ] 
+then
+echo "We succeeded" 
+else  
+echo "Please pass 3 arguments with your script" 
+fi 
+
+Inequality signs :
+=================
+-eq  or  == represent equals to 
+           (( $? == 0 )) [ X -eq = y]
+-ne  or  != represent not equals to 
+-gt  or  >  represent greater than
+-lt  or  <  represent less than 
+-ge  or >= greater than or equals to
+-le  0r <= less than  or equals to 
+
+if [ votes -gt 50% ]
+then 
+echo he won the elections 
+fi  
+
+conditions :
+if statement  
+Syntax:
+if (( conditions ))
+then 
+commands 
+else  
+commands  
+fi
+
+if1.sh  
+
+echo "welcome to Landmark DevOpsMasterClass" 
+echo "How much are you willing to pay"
+read price
+if [ $price -ge 4000 ]
+then 
+echo "your are admitted"  
+else  
+echo "sorry you can't be admitted today "
+fi  
+
+if2.sh   
+echo "Please enter for pin"
+read pin  
+if (( $pin == 4100 ))
+then 
+echo "You have entered the correct pin"
+echo "Thank you for banking with TD Bank"
+else  
+echo "sorry you entered the wrong pin"
+echo "your account is blocked for your protection"
+echo "Please visit a branch for further assistance"
+fi  
+
+
+---
+Debugging issues:
+vi debug.sh   
+==========
+whoami  
+Date  
+Pwd 
+echo $?   
+whatis ls  
+echo $?  
+echo $$ 
+
+IQ: How do you troubleshoot issues in scripting??
+    run the script in debugging mode  
+    sh -x scriptName   
+
+Debugging problems in scripting  
+===============================
+  sh -x scriptName  
+
+Input output redirection  
+=============================
+Standard output  
+standard error  
+Redirect Standard output --   :   
+  sh scriptName > log  
+  sh debug.sh > log or sh debug.sh 1> log  
+
+Redirect Standard errors --   : 
+  sh scriptName 2>fileName   
+  sh debug.sh 2>error.log  
+
+Redirect Standard output & errors --   :
+  sh scriptName  > fileName  2>&1 
+  sh debug.sh  > all.log  2>&1 
+
+tail -5 /etc/passwd > users.txt
+
+
+tail -1 /etc/passwd > new-users.txt   = This will replaced existing content  
+tail -1 /etc/passwd >> new-users.txt  = This will add to existing content  
+
+
