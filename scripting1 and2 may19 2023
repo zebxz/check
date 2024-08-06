@@ -28,7 +28,7 @@ Computer/systems:
         Windows OS [ 7/xp/8/9/10/11 ]
         MacOS 
         Solaris  
-        Linux  OS:
+        Linux  OS: distributors
           Radhat 6/7/8/9 / 
           ubuntu  [16/18/20/22] / 
           centos 6/7/8/9 / 
@@ -40,8 +40,22 @@ Computer/systems:
          mobaXterm / gitbash / telegram /    
          Microsoft word/Excell  
 
+
+
+
 Examples of workloads:
-  fileMGT / userMGT / packageMGT/ securityMGT / systemMGT / etc.
+  fileMGT :mg8 file
+ userMGT: mange users
+ packageMGT: manage the packages given to my system
+ securityMGT : ensures my system is secure
+ systemMGT : ensures the system is functioning very well
+ etc.
+
+
+
+******* for us to be able to achieve this workload and more what do we need 
+for our workload to be deployed to production, workload mgt on computing systems 
+
 
 Workload management on Computer systems [LINUX OS] :
     GUI: = Graphical user interface  -- 5%
@@ -51,44 +65,69 @@ Workload management on Computer systems [LINUX OS] :
       ls:   = list the content of a directory
       touch test.txt
 
+
+
+BUT NOW WE WANT TO TALK ABOUT SCRIPTING 
     scripts: a shell-script is a collection of one or more commands in a file 
              a script is a file containing commands  
     write a simple script that welcomes Engineers to work?
-    welcome.sh
+ 
+
+   welcome.sh    :       (name of my script)  
     ==========
-     #!/bin/bash 
+     #!/bin/bash           ( the shell script starts with what is called a shebang !, to indicate the interpreter)
      echo "Good morning"
      whoami
      echo "Welcome to Landmark Technologies" 
      echo "Today is"
      date 
+
+ ********* now the script has been created
+we can cat the file to see the content
+cat welcom.sh
+
+
      run the script by:
-       ./scriptName
-       ./welcome.sh
+       ./scriptName = ./welcome.sh
        ./script1.sh
+
 [oke@demo22 ~]$  ./welcome.sh
 -bash: ./welcome.sh: Permission denied
 [oke@demo22 ~]$ ll
 -rw-r--r--. 1 oke oke 107 May 18 19:42 welcome.sh
  644 Permissions  
  The file/script need executable Permissions to run  
-    chmod 744 welcome.sh  
-    chmod  u+x scriptName 
-    chmod   +x scriptName  
-   [oke@demo22 ~]$ ll
-   -rwx-r--r--. 1 oke oke 107 May 18 19:42 welcome.sh
-Assign executable Permission:
-  chmod +x fileName   
+
+therfore assign executable permissions
+    chmod 744 welcome.sh            .... executable permission only to the user
+    chmod  u+x scriptName            ......... executable permission only to the user 
+    chmod   +x scriptName              ........ will add executable permission to both the owner, the group, and others
+     chmod +x fileName   
   chmod +x script1.sh
   chmod 775 fileName 
   chmod 700 fileName 
 
-    shell: A shell is an interpreter that interpretes commands to the OS. 
+  
+[oke@demo22 ~]$ ll
+   -rwx-r--r--. 1 oke oke 107 May 18 19:42 welcome.sh
 
+now the file ha executable permission
+
+ 
+    shell: A shell is an interpreter that interpretes commands to the OS. 
+its a program that takes commands from the keyboard and gives them to the operating system to perform (in a file) 
+
+
+therfore an interpreter is needed when executing a script
+
+40.00
 shells command interpreters:
   Boune Shell  (sh)
   Boune Again Shell (bash)
   csh / ksh / tsh / zsh  
+
+
+                                  HOW TO CHECK FOR THE INTERPRETERS RUNNING INMY SYSTEM OR THE ONE AM USING TO EXECUTE COMMAND 
 
   echo $SHELL       =  List your current shell
       /bin/bash
@@ -103,8 +142,8 @@ shells command interpreters:
     /usr/bin/tcsh
 
   sudo yum install ksh zsh -y 
-  [oke@demo22 ~]$ cat /etc/shells
-/bin/sh
+  [oke@demo22 ~]$ cat /etc/shells           
+/bin/sh                                ******  WE CAN interprete our script using any of the interpreter
 /bin/bash
 /usr/bin/sh
 /usr/bin/bash
@@ -123,7 +162,12 @@ shells command interpreters:
   cat /home/oke/welcome.sh  [accessing the file using the absolute path]
   cat welcome.sh  [accessing the file using the relative path]
 
-Bash shell Scripting:
+
+Running a script with interpreter doesnt require executable permission
+
+
+                          Bash shell Scripting:
+a shell script must end with .sh oR .sc
 
 Naming convention:
 Naming conventions best practices:
@@ -141,7 +185,11 @@ Shell-scripts has '.sc' or '.sh' extensions
   app.yaml   = playbook or manifest file [*.yml] 
   main.tf    = terraform scripts/codes [*.tf]
 ==============================================
-script1.sh  
+
+
+eg 
+file name : script1.sh
+then vi script1.sh  
 #!/bin/bash
 echo "Good morning Millionaire,"
 whoami
@@ -149,15 +197,19 @@ echo Welcome to Landmark Technologies Millionaire Deployment
 echo Today is,
 date
 
+now the script has been created
+
+we can run the script = sh
+
 [oke@demo22 ~]$ sh /home/oke/script1.sh
-Good morning Millionaire,
+Good morning Millionaire,                         ********* the script wa sable to run bc we used an interpreter (sh)
 oke
 Welcome to Landmark Technologies Millionaire Deployment
 Today is,
 Thu May 18 20:13:41 EDT 2023
 [oke@demo22 ~]$
 [oke@demo22 ~]$ /home/oke/script1.sh
-bash: /home/oke/script1.sh: Permission denied
+bash: /home/oke/script1.sh: Permission denied        ********* because it needs permission
 [oke@demo22 ~]$
 [oke@demo22 ~]$ sh script1.sh
 Good morning Millionaire,
@@ -165,6 +217,8 @@ oke
 Welcome to Landmark Technologies Millionaire Deployment
 Today is,
 Thu May 18 20:14:15 EDT 2023
+
+
 
 Scripting or automation langauges :
   1. Bash Shell Scripting
