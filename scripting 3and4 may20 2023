@@ -255,7 +255,11 @@ dev= our environment
 db11 = server
 Admin = cecilia
 
-sudo service sshd 
+
+          ARGUMENTS WITH CONDITION
+*** if asked whatelse can be done iwth $?  
+         ( it can be used to run a command with conditions)
+
 
 cat deploy.sc     
 if [ $?==0 ] 
@@ -273,6 +277,10 @@ else
 echo "Please pass 3 arguments with your script" 
 fi 
 
+
+                             INEQUALITY SIGN
+
+
 Inequality signs :
 =================
 -eq  or  == represent equals to 
@@ -288,6 +296,8 @@ then
 echo he won the elections 
 fi  
 
+
+                                        CONDITIONS: 
 conditions :
 if statement  
 Syntax:
@@ -297,6 +307,8 @@ commands
 else  
 commands  
 fi
+
+
 
 if1.sh  
 
@@ -310,7 +322,8 @@ else
 echo "sorry you can't be admitted today "
 fi  
 
-if2.sh   
+
+if2.sh    ( to authenticate customers)
 echo "Please enter for pin"
 read pin  
 if (( $pin == 4100 ))
@@ -323,6 +336,29 @@ echo "your account is blocked for your protection"
 echo "Please visit a branch for further assistance"
 fi  
 
+
+ from next video 
+
+VI if2.sh
+
+echo 'enter your GPA'
+read gpa 
+if [$gpa - gt 4]
+then
+echo "congratulation"
+echo "you are a 1st class student"
+elif [$gpa - ge 3 ]
+then
+
+
+echo "congrats you are a 2nd class student "
+elif [$gpa -ge2]
+then
+echo congratulations
+echo you are a 3rd class student
+else 
+echo "you an do better"
+fi
 
 
 
@@ -373,7 +409,7 @@ echo $?
 echo $$ 
 
 
-################
+################    END 
 
  
 cla.sh   
