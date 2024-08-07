@@ -227,11 +227,33 @@ the 1st argument is db11
 the 2nd argument is simon
  the scriptname is db_backup.sh
 
+
+
+*** if asked whatelse can be done iwth $?
+we cansay if [$/ = o ] then ... 
+
+CLA are diff options we can use while running a script 
+
+                            
+
+                                              ARGUMENT
+
+
 An argument, also called command line argument, 
 can be defined as input given to a command line 
 to process that input with the help of given command. 
 Argument can be in the form of a file or directory. 
 Arguments are entered in the terminal or console after entering command.
+
+
+******* we can pass arguments depending on the project we are working on 
+eg 
+the 1st argument = dev
+the 2nd argument = db11
+the 3rd argument = cecilia 
+dev= our environment 
+db11 = server
+Admin = cecilia
 
 sudo service sshd 
 
@@ -302,31 +324,30 @@ echo "Please visit a branch for further assistance"
 fi  
 
 
----
-Debugging issues:
-vi debug.sh   
-==========
-whoami  
-Date  
-Pwd 
-echo $?   
-whatis ls  
-echo $?  
-echo $$ 
 
-IQ: How do you troubleshoot issues in scripting??
-    run the script in debugging mode  
-    sh -x scriptName   
+
+---
+
+
+
+
+                                       DEBUGGING ISSUES
+
 
 Debugging problems in scripting  
 ===============================
-  sh -x scriptName  
+
+IQ: 
+hOw do you troubleshoot issues in scripting?
+
+ANS:
+ Run the script in debugging mode
+sh -x scriptName  
 
 Input output redirection  
 =============================
-Standard output  
-standard error  
-Redirect Standard output --   :   
+ 
+Redirect Standard output --   :      (script name = debug.sh
   sh scriptName > log  
   sh debug.sh > log or sh debug.sh 1> log  
 
@@ -338,16 +359,21 @@ Redirect Standard output & errors --   :
   sh scriptName  > fileName  2>&1 
   sh debug.sh  > all.log  2>&1 
 
-tail -5 /etc/passwd > users.txt
 
 
-tail -1 /etc/passwd > new-users.txt   = This will replaced existing content  
-tail -1 /etc/passwd >> new-users.txt  = This will add to existing content  
+Debugging issues:
+vi debug.sh   
+==========
+whoami  
+Date  
+Pwd 
+echo $?   
+whatis ls  
+echo $?  
+echo $$ 
 
 
-
-
-  ##########
+################
 
  
 cla.sh   
