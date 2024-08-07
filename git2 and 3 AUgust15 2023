@@ -119,17 +119,11 @@ Ticket01 answer:
   git branch dev             =  create dev from the master
   git switch dev             =  change from master to dev and vice versa
   git diff dev               =    commit ID  b0f7fcf  , run the command in the master branch to review what was done in the dev branch     
-  git merge b0f7fcf     
-  git branch           = list the branchless 
-git checkout/switch branch name =  git switch dev
-git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github
-git push pp --all 
-git branch - v             =  display all branches in your repo and also tell you what branch your currently working in
+  git merge dev    
+ 
 
 
-git remote remove alias Name    =  remove repo from the local environment 
-git remote remove repo URL 
-
+******* i think this was me summarizing the steps
 
 1) git branch               = to confirm we have created dev
 2)git branch dev             =  we run this command to create dev branch
@@ -140,7 +134,7 @@ git remote remove repo URL
 7) git switch :                 = move from dev to master
 8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
                                   git diff (b0f7fcf) ie ID of the commit done in dev branch               
-9) git merge dev               = if we are satisfied with the changes (done in master in local repo)     ****** i think this should be master in remote repo
+9) git merge dev               = if we are satisfied with the changes (done in master in local repo)     ****** i think this is an error cos i thought the push was to master
 10) git push aliasName --all     = git push pp --all ( this is done in master in our local repo )        ******* in what case scenario can dis happen, to push to all
                                      creates dev branch in remote repo and pushes the chnages from local repo to dev/master in remote repo
 
@@ -148,14 +142,43 @@ git remote remove repo URL
 **********************   The master branch is the upstreamBranch for the dev Branch  
   The dev branch is the downstream of the master branch   
 
-git fetch (aliasName) ie PP    =  To bring the changes from remote repo to local 
-                                      changes ie pull reQ done in remote repo 
+
+     
+
+          TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
+         i bliv ie pull reQ, done in the remote repo
+
+
+git fetch (aliasName) ie PP    =  
+
 
 
 11)
 
 
 
+
+ git push aliasName branchName  
+eg;  git push pp master                   ***** Pushing to the master banch
+
+git branch           = list the branchless 
+git checkout/switch branch name =  git switch dev
+git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github
+git push pp --all 
+git branch - v             =  display all branches in your repo and also tell you what branch your currently working i
+git remote remove alias Name    =  remove repo from the local environment 
+git remote remove repo URL 
+
+
+
+
+
+
+
+
+
+
+ 
 git status  -- File appears in red [in the workingArea]
 git add fileName  
 git add .  
@@ -170,9 +193,7 @@ git add list.txt
   git remote add aliasName repoURL  
   git remote add pp https://github.com/LandmakTechnology/paypal.git  
 
-  git push aliasName branchName  
-  git push pp master  
-
+ 
   User@LandmarkTech MINGW64 ~/Documents/paypal (master)
 $ git remote add pp https://github.com/LandmakTechnology/paypal.git
 
