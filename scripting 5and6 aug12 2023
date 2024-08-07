@@ -329,32 +329,44 @@ done
 
 
                                    SWITCH CASES
+                THis is when you have multiple conditions to manage
+
+
 switch case:
 ==========
-  systemctl start|status|restart|stop|enable|disable sshd 
+
+eg
+
+for systemctl we can  start|status|restart|stop|enable|disable sshd 
   yum install/remove/updates/upgrade
+
+********* so when we hv situation like this we use "switch case"
+
 tomcat:
   catalina.sh | status | start | stop | restart | version
   catalina.sh start tomcat 
   catalina.sh stop  tomcat   
   catalina.sh restart  tomcat   
+
 sonarQube:
   sonar.sh  | status | restart | stop | start | version
 
  sh sonar.sh start 
  sh catalina.sh stop tomcat
-     $0         $1    $2  
+     $0         $1    $2           ***** these numbers can change
 
 Syntax for switch case:
 case $1 in  
-    option1)
+    option1)                ******* start
       Commands;;
-    option2)
+    option2)                   ******* stop
       Commands;;
-    option3)
+    option3)                    ******** restart
       Commands;;
-    *)
+    option4)                    ******** status
       Commands;;
+      *)
+       commands;;
 esac 
 
 case $1 in  
@@ -374,6 +386,21 @@ case $1 in
       echo "you entered an invalid option"
       echo "Please enter start, stop, status or restart option" ;;
 esac 
+
+
+******* 
+1)the syntax starts with 'case' and ends with 'esac'
+2) anything entered that doesnt fall under (stop/start/restart and status) will be represented under * wildcat
+3) the cases entered (start/stop/restart/status) must end with;;
+
+
+
+ticket 0014:
+create a new user in our env :
+1) import/call/invoke the usermgt function
+
+
+                                     FUNCTIONS
 
 functions :
   Functions:   
