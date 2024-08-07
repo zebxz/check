@@ -288,6 +288,55 @@ git reset        = to go back to working area form staging area
 
 
 
+       GIT SHOW COMMIT 
+
+git show - shows  what happened in a commit after we  run git log ( and get the commit id)
+
+eg with the id of a commit = 138dccf
+       git show 138dccf
+
+and it tells us this ocmmit wa sfirst done by simon and on this particular day, it was a new file, and thers was no changes to the file 
+the next thing for us to ensure is that the job that we can see in simon local environment, has a version been pushed to our SCM (where we hv a repository paypal)
+is oke able to collaboarate with simon?
+for them to be able to collaboarate the job simon has done has to be pushed to our SCM 
+
+1:39
+git remote -v    = to tell us if we have any repository detail in our local environment 
+Tells us how many remote repository we are managing 
+
+1:40
+
+
+5i) to add a repository  URL in our local environment 
+      git remote add paypal https://github.com /zebxz/paypal
+
+( the repository url in my local environment is being replaced by paypal, so i am using an alias paypal name with the repo url )
+
+******* git remote add is done so that other collaborators can have access to the task in the SCM 
+we hv the paypal repo in the SCM so i have to add it in my local environment so i push commit from my local repo to remote repo in SCM 
+
+
+
+6)   GIT PUSH      (alias Name )  master
+                
+            (alias name)
+  git push  paypal master (from my local environment to general SCM)
+  username for https://github.com:ceekeh
+password for https://\legal 2045@github.com: token
+we have to create a token bc git no longer accepts password
+
+ ******* go to github 
+select settings aand developers settings 
+
+                   token classic
+select personal access token and generate token    (less than 30days )
+selecet all repository 
+
+7)   GIT PULL
+
+After the task i pushed has been executed/worked on by other developers
+ === GIT PULL paypal master 
+
 remote repository in github 
 https://github.com/landmarkss/paypal
 
@@ -299,6 +348,10 @@ https://github.com/landmarkss/paypal
   [obim@demo22 paypal]$ git push paypal master
 Username for 'https://github.com': legah2045
 Password for 'https://\legah2045@github.com': 
+
+
+
+ASSIGNMENT 
 
 Class32Teams:
 Project:
