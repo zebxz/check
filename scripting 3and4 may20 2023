@@ -16,58 +16,60 @@ echo sdv ends
 export HISTSIZE=2000
 =============================
 
+
+
+ls-a
+
+                                     TYPES OF SCRIPT
+
+
+
 dynamic script  :
+can have multiple usage by various  people 
   1. echo $name Welcome to $cpy  
 
 static script:
-  1. echo Oke Welcome to MTN    
+can only be used by one person
+  1. echo Oke Welcome to MTN          ***** it doesnt give the option to change the variable 
 
 $name Welcome to Landmark Technology
 
-User defined variables:
-var1.sh 
-   name=SimonLegah 
-   cpy=LandmarkTechnology
-   echo $name Welcome to $cpy  
+User defined variables:      udv
 
-write a script to authenticate bank users:
+ name=cecilia ekeh
+ cpy=LandmarkTechnology  
+ city=Toronto
+ echo $name Welcome to $cpy  
+export class = devops master class        **** we are changing the value of the SDv ... class
+echo $class = devopsmasterclass
+
+
+******** we can also us export to change the value of SDV but the change value will only last for that given login session
+eg SDV for HISTSIZE = 1000
+to change it = export HISTSIZE = 2000
+echo $HISTSIZE  =2000
+   BUT once the user logs out the HISTSIZE changes to 1000
+
+
+                     HOW TO MAKE A VARIABLE DYNAMIC 
+
+(the read command is used to obtain dynamic variable or input variable from users)
+read -s  = secret variable (security  is inherent in our environment)
+
+      DYNAMIC SCRIPT
+
+eg       write a script to authenticate bank users:
 ===========================================
-[oke@demo22 ~]$ cat read1.sh
-echo 'Please enter your name'
+
+                                           line   1,3,4,5,7 are  dynamic variables
+
+echo 'Please enter your name'        ( we collect the variable from the cx)
 read name
 echo "$name, welcome to TD Bank"
 echo 'please enter your card'
 echo 'please enter your pin'
 read pin
 echo "$pin is the correct pin, $name, how may we help you today?"
-
-======================================
-TICKET0045: Write a scipt to dynamically create users. 
-   userMGT commands: adduser / usermod / userdel /  groupadd / groupdel 
-      sudo adduser/userdel/usermod/ groupadd / groupdel 
-userCreate.sh  
-[oke@demo22 ~]$ cat createuser.sh
-#!/bin/bash
-# This script requires root/sudo access
-echo "Please enter the name of the newUser"
-read newuser
-echo "Now ready to create $newuser account "
-sudo adduser  $newuser
-echo "$newuser account is created successfully"
-grep $newuser /etc/passwd # to verify
-[oke@demo22 ~]$
-
-IQ: Explain your experience in shell scripting  ?
-1. using bash shell scripts for userMGT. 100% [New Graduate]    
-2. In my environment/company/Landmark i use scripting for userMGT for over 5 years. 
-
-userMGT.sh  :   
-echo "creating a newuser account" 
-echo "enter the new username's name"
-read name  
-sudo adduser $name 
-sudo usermod -aG manager $name   
-id $name 
 
 bank.sh   
 -------
@@ -79,7 +81,47 @@ read -s pin  # -s pass a secret variable
 echo "$name you entered an invalid pin"
 [obi@sc ~]$
 
-Security is inherent in our environment.  
+Security is inherent in our environment
+
+======================================
+
+with the help of scripting , creating user becomes very simple 
+            
+TICKET0045: Write a scipt to dynamically create users. 
+   userMGT commands: adduser / usermod / userdel /  groupadd / groupdel 
+   root access:    sudo adduser/userdel/usermod/ groupadd / groupdel 
+ 
+
+vi userCreate.sh  
+
+[oke@demo22 ~]$ cat createuser.sh
+#!/bin/bash
+# This script requires root/sudo access
+echo "Please enter the name of the newUser"
+read newuser
+echo "Now ready to create $newuser account "
+sudo adduser  $newuser
+echo "$newuser account is created successfully"
+grep $newuser /etc/passwd                        # to verify  that user is created    
+[oke@demo22 ~]$
+
+
+
+IQ: Explain your experience in shell scripting  ?
+1. using bash shell scripts for userMGT. 100% [New Graduate]    
+2. In my environment/company/Landmark i use scripting for userMGT for over 5 years. 
+
+vi userMGT.sh  :   
+
+echo "creating a newuser account" 
+echo "enter the new username's name"
+read name  
+sudo adduser $name 
+sudo usermod -aG manager $name                *** the mangers grp shud hv been created already 
+id $name 
+
+
+.  
 
 Command Line Arguments = CLAs  
 ===============================
