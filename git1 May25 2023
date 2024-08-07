@@ -102,7 +102,7 @@ In our environments (Landmark) we use Git for Versioning.
 
                                                          SCM
 git comes with source code managers
-in each loacl environment gitbash is installed so it captures everything that is done with relative ease
+in each loCAL environment gitbash is installed so it captures everything that is done with relative ease
 so before we even submit the codes from our local env to scm, GIT  is already installed
 
 
@@ -138,11 +138,14 @@ if approached by a cx to help mange their applications with git
            pride22
            Anyong87
            Ngohtez
-           angeltemmy
-       Grant permissions/roles to team members and collaborators:
+           angeltemmy                                                                  go to teams and then select settings
+       Grant permissions/roles to team members and collaborators:           ******** excess priviledge which is security vulnerability
            read  -- you can view codes   
            write -- you can view codes and make changes  
            admin/maintainer - ownership  
+
+******* after accounts, organisation and teams have been created we then create repositories and assign members/write permission
+
    4. Create repositories in SCM [GitHub] 
       repo url = https://github.com/landmarkss/paypal
 
@@ -190,39 +193,77 @@ remote repository in github
 https://github.com/landmarkss/paypal
 mkdir paypal && cd paypal
 
-Assume the role of a Developer
+
+                        ****** the project we want to manage is paypal
+
+1)
+************   Assume the role of a Developer
 We are developing for our paypal FinTech client. 
 1. create a directory for Development   
    mkdir paypal && cd paypal  
 2. Initialise this directory to keep track of 
-   any change or changes in the files/codes  
+   any change or changes in the files/codes       ... by running git init
 
+******** whenevr we add a file or make changes to a file, we comment-m
 [obim@demo22 paypal]$ git --version
    git version 2.39.2
 
+
+
+
+2)                                       GIT COMMANDS 
+
+
 Git Commands:
-  git status 
-  git init 
-    create a Local repository [.git]  
+  git status --- tells us if our local repository we are creating has been initialized as a repository or not and also if any file has beeen commited to our repository
+  git init   --- the first command       
+    creates a Local repository [.git]  
     initialises the git repository
-  git add 
-  git init  
+****without git init command, that is not a development repository, it  will not support any git command
+git log           = to list the number of commit that we have 
+                     ( so we git commit  -m "first version", then git log) then we get the commit id 
 
- touch list  
- echo simon >> list 
+then next
 
- workingArea  stagingArea LocalRepo RemoteRepo  :
-   git add *   
-              git commit  
-                           git push 
 
-  git add fileName  
-  git add .   
-  git add *  
+3) the next stage is to move our files form our working area to the staging area
+so we touch a file in our working area
+(in orderwords, task in our working environment is not tracked by git)
+ for it to be tracked by git, we move it from our working area where development is taking place to our staging area
+     ( next video 46.39, git add. can be used to add 1file)
+git add filename : git add boo
+       OR 
+   git add.
+
+one file 
+git add filename
+few files
+git add.
+many files
+git add*
+
+   ****** files in the working area appear in RED
+
+working area to staging area 
+ (workshop)       (staging room)
+
+
+
+4)      TO COMMIT the changes
+
+In our staging area  >>>>>>>>>>>> local repository
+     git commit -m  "   "
+
+2.06  
+git commit -m "first commit" (our msg bc it is our first version)
+the git commit  will move the changes to the working area and create  a new commit with a commit id and that new commit is like a new version created 
+
+
 
 [obim@demo22 paypal]$ 
  git config --global user.email "legah2000@gmail.com"
  git config --global user.name "Simon Legah"
+
 
 with THE "git commit command -m " a version is created with a version number[commitID]  
 
@@ -233,6 +274,10 @@ git log           = list all commits
 git add           = move files to staging area from working area
 git commit -m     = move files to the local repository FROM STAGING AREA
                     good commit message for tracking changes created by authors are recommended
+
+git reset        = to go back to working area form staging area
+
+
 
 remote repository in github 
 https://github.com/landmarkss/paypal
@@ -255,3 +300,22 @@ Project:
        Create a Team in your created organisation for paypal and add members of your 
        your group with write access 
 
+
+
+
+##########
+
+  git add 
+  git init  
+
+ touch list  
+ echo simon >> list 
+
+ workingArea  stagingArea LocalRepo RemoteRepo  :
+   git add *   
+              git commit  
+                           git push 
+
+  git add fileName  
+  git add .   
+  git add *  
