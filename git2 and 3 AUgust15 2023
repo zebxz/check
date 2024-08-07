@@ -134,33 +134,53 @@ Ticket01 answer:
 6) we commit "m"
 7) git switch :                 = move from dev to master
 8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
-                                  git diff (b0f7fcf) ie ID of the commit done in dev branch               
+                                  git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
 9) git merge dev               = if we are satisfied with the changes (done in master in local repo)     ****** i think this is an error cos i thought the push was to master
 10) we ls  / get log       = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
 11) git push aliasName --all     = git push pp --all ( this is done in master in our local repo )        ******* in what case scenario can dis happen, to push to all
                                      creates dev branch in remote repo and pushes the chnages from local repo to dev/master in remote repo
+
+git push aliasName branchName  
 
 
 **********************   The master branch is the upstreamBranch for the dev Branch  
   The dev branch is the downstream of the master branch   
 
 
-     
 
-          TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
-         i bliv ie pull reQ, done in the remote repo
-
-
-git fetch (aliasName) ie PP    =  
+Git fetch         =  it brings changes in the code from the remote repo to the local repo 
+Git pull          =   it brings changes in the code from the remote repo to the local repo and working area
+Git clone         =   it brings the entire code to the working area
 
 
+                                               
 
-11)
+*********************************
+
+github
+                                              Remote repo
+                                                paypal
+                                                master
+                                               bugfix         >>>>> whenever ther is an error/bug in the code, we create a bug fix branch from the master
+if the org say they want a new feature >>>>     feature
+we create a feature branch  from                 stage
+ the master branch                                 dev
 
 
 
 
- git push aliasName branchName  
+                        PULL REQUEST : PR ( in the remote repo)
+PR is used to review changes in one branch b4 merging in another branch 
+this is recommended for any merge in the master/release branch
+
+eg
+compare and pull request:  when a change is done in dev bransch , to create a a review, we can seethis option in the master branch informing us of a change , so we use the 
+option
+
+
+
+***********
+git push aliasName branchName  
 eg;  git push pp master                   ***** Pushing to the master banch
 
 git branch           = list the branchless 
@@ -174,6 +194,55 @@ git remote remove repo URL
 
 
 
+****************
+
+  
+          TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
+         i bliv ie pull reQ, done in the remote repo
+
+
+git pull pp (ie alias name)
+
+                 OR
+git fetch (aliasName) ie PP    
+Git diff pp/master   = to see the changes we are bringing over  ( i blv from the master branch)
+then git merge pp/master    = form local repo to workin area 
+
+
+
+         git push alias name --all
+this will create branches in other repositories that didnt have such branch 
+eg when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
+other effected changes/commit 
+
+
+
+
+***********
+* the master branch is the most most critical branch bc production goes to the market from the master branch therfore, it is better for development to start in development
+branch so if there are any changes in the dev branch that needs to be applied in the master branch then more work has to be done. so before we deploy from dev to master
+we need to ensure that its actually what is wanted .
+make sure the work is reviewed before its merged in the master branch
+
+
+
+
+     IQ: How many branches are you supporting in your projects?
+    Branches are used to create lines of development in git. 
+    A branch is a line of development 
+ In our environment in landmark , We maintain / support a minimun of 3 branches:
+        development branch ,staging branch, master branch  
+
+codes form the dev branch is deployed to the development branch env, code from the staging branch to testing/QA/UAT envand from the master they are deployed to production
+from the master we can create a feature branch or a bug -fixed branch 
+           
+
+
+
+
+
+############################# END
+   
 
 
 
@@ -288,16 +357,7 @@ git merge development
 
 
 
-IQ: How many branches are you supporting in your projects?
-    Branches are used to create lines of development in git. 
-    A branch is a line of development 
- In our environment We maintain a minimun of 3 branches:
-        development branch  
-           app.java     
-        staging branch  
-           app.java
-        master branch  
-           app.java
+
 
   git branch  = list all the branches [lines of development]
   git branch branchName   = create a new branch     
