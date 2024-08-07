@@ -1,1 +1,167 @@
 
+https://github.com/LandmakTechnology/paypal.git
+
+git status  -- File appears in red [in the workingArea]
+git add fileName  
+git add .  
+git add * 
+git add list.txt    
+
+
+ git config --global user.email "legah2000@gmail.com"
+ git config --global user.name "Legah"
+
+  git remote -v 
+  git remote add aliasName repoURL  
+  git remote add pp https://github.com/LandmakTechnology/paypal.git  
+
+  git push aliasName branchName  
+  git push pp master  
+
+  User@LandmarkTech MINGW64 ~/Documents/paypal (master)
+$ git remote add pp https://github.com/LandmakTechnology/paypal.git
+
+User@LandmarkTech MINGW64 ~/Documents/paypal (master)
+$ git remote -v
+pp      https://github.com/LandmakTechnology/paypal.git (fetch)
+pp      https://github.com/LandmakTechnology/paypal.git (push)
+
+
+  working area        staging     localRepo     RemoteRepo[GitHub]    :
+  -----------        -------      ---------     ------------------  
+  Untracked files     git add     git commit    git push 
+    red                green     
+
+  git push aliasName branchName  
+  git push pp master  
+
+
+ repoURL = https://github.com/LandmakTechnology/paypal
+ git clone https://github.com/LandmakTechnology/paypal  
+
+git config --global user.email "mary@gmail.com"
+git config --global user.name "Mary"
+
+[ec2-user@demo33 paypal]$ git remote -v
+origin  https://github.com/LandmakTechnology/paypal (fetch)
+origin  https://github.com/LandmakTechnology/paypal (push)
+
+  git push aliasName branchName  
+  git push origin master 
+
+[ec2-user@demo33 paypal]$  git push origin master
+Username for 'https://github.com': legah2045
+Password for 'https://legah2045@github.com': [Admin@123] PersonalAccessToken   
+Password for 'https://legah2045@github.com': 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
+
+  working area        staging     localRepo     RemoteRepo[GitHub]    :
+  -----------        -------      ---------     ------------------  
+  Untracked files     git add     git commit    git push 
+    red                green     
+ 
+with THE "git commit command -m " a version is created with a version number[commitID]  
+
+git init          = to initialised a git empty repository
+                    create the default branch[master, main]
+git status        = to track files location
+git log           = list all commits/versions     
+git add           = move files to staging area from working area
+git commit -m     = move files to the local repository FROM STAGING AREA
+                    Creates a new version of the application
+                    good commit message for tracking changes created by authors are recommended
+
+Legah 
+Mary  
+  paypal-01 = Legah = git commit -m "First commit"    
+  paypal-02 = Mary  = git commit -m ""    
+  paypal-03 = Mary  = git commit -m    
+  paypal-04 = Legah = git commit -m  
+
+
+git show commitID  
+Git commands:
+  git init/show/add/commit/status/log/clone/pull/push/remote -v/ remote add/config/version  
+
+Git Branch :
+  In git a branch is a line of Development  
+    development branch
+    stage branch 
+    master branch
+
+        dev    [ rich / list.txt / deploy.sh  ] 
+        stage  [ rich / list.txt / deploy.sh  ] 
+        master branch [ rich / list.txt / deploy.sh  ] 
+
+        dev   branch   ---> development environment  
+        stage branch   ---> testing/UAT/QA environment  
+        master branch  ---> production environment  
+
+Ticket01:
+  Create a dev branch from the master branch  
+  Switch to the dev branch and create the app.java file  
+  Commit the changes and Switch to the master branch  
+  Review the changes in dev and merge with the master branch  
+
+  The master branch is the upstreamBranch for the dev Branch  
+  The dev branch is the downstream of the master branch   
+
+Ticket01 answer:
+  git branch branchName  
+  git branch dev  
+  git switch dev  
+  git diff dev   
+  git merge b0f7fcf     
+
+git branch -help  
+==================
+
+git branch branchName   = creates a new branch
+git branch development  = created the development branch 
+
+master branch is the upstream of the Development branch  
+
+upstream branch = development :
+  development branch =  usermgt.java  = 10,000 lines  
+downstream branch = stage :
+  git branch stage   =  usermgt.java  = 10,000 lines    
+
+
+git switch master
+git diff development 
+git merge development
+
+git push aliasName --all  = push changes to all branches 
+git push pp --all 
+
+
+IQ: How many branches are you supporting in your projects?
+    Branches are used to create lines of development in git. 
+    A branch is a line of development 
+ In our environment We maintain a minimun of 3 branches:
+        development branch  
+           app.java     
+        staging branch  
+           app.java
+        master branch  
+           app.java
+
+  git branch  = list all the branches [lines of development]
+  git branch branchName   = create a new branch     
+  git checkout branchName = switch branches 
+  git switch branchName = switch branches 
+
+  git fetch --> It brings changes in the code to the LocalRepo
+  git pull --> It brings changes in the code to the localRepoand & Working area 
+  git clone --> It brings the entire code to the working area 
+
+Pull Request- PR:
+  PR is use to review changes in one branch before merging in another branch. 
+  This is recommended for any merge in the master/release branch 
+    Legah 
+    Mary  
+    Landmark 
+    Amaka 
+    chidi 
+    Anna 
+    Obi  
+
