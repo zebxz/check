@@ -1,3 +1,6 @@
+jrnkins 1&2 
+5:30 ...... commit is a function of branches
+
 
 
                                                   MANAGING APPLICATIONS
@@ -60,14 +63,40 @@ production environment  >>>>>>>...               master
 
 
 
+                                            GIT BRANCH
+   one branch = 1line of production
+A branch is a line of development 
+ A file must have been moved to the staging area before it can be pushed
+
+dvelopment branch : writing our cde
+stage branch : then moved to stage and once its done
+master branch: deployed to production environment , taken to the market
 
 
 
+***** in development its good to have multiple dev lines so that if there is an issue with on line, it can be resolved from the other line
+ 
+******* The master branch is the upstreamBranch for the dev Branch  
+  The dev branch is the downstream of the master branch   
 
+Ticket01:
+  Create a dev branch from the master branch  
+  Switch to the dev branch and create the app.java file  
+  Commit the changes and Switch to the master branch  
+  Review the changes in dev and merge with the master branch  
 
-
-
-
+ 
+Ticket01 answer:
+  git branch branchName      = creates a new branch
+  git branch dev             =  create dev from the master
+  git switch dev             =  change from master to dev and vice versa
+  git diff dev               =    commit ID  b0f7fcf  , run the command in the master branch to review what was done in the dev branch     
+  git merge b0f7fcf     
+  git branch           = list the branchless 
+git checkout/switch branch name =  git switch dev
+git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github
+git push pp --all 
+git branch - v             =  display all branches in your repo and also tell you what branch your currently working in
 
 
 git status  -- File appears in red [in the workingArea]
@@ -157,21 +186,7 @@ Git Branch :
         stage branch   ---> testing/UAT/QA environment  
         master branch  ---> production environment  
 
-Ticket01:
-  Create a dev branch from the master branch  
-  Switch to the dev branch and create the app.java file  
-  Commit the changes and Switch to the master branch  
-  Review the changes in dev and merge with the master branch  
 
-  The master branch is the upstreamBranch for the dev Branch  
-  The dev branch is the downstream of the master branch   
-
-Ticket01 answer:
-  git branch branchName  
-  git branch dev  
-  git switch dev  
-  git diff dev   
-  git merge b0f7fcf     
 
 git branch -help  
 ==================
@@ -191,8 +206,6 @@ git switch master
 git diff development 
 git merge development
 
-git push aliasName --all  = push changes to all branches 
-git push pp --all 
 
 
 IQ: How many branches are you supporting in your projects?
