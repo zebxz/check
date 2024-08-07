@@ -1,4 +1,8 @@
-                                                                  
+
+  USING Scripts for package management, FILE MGT,  CONTROL COMMANDS = CONDITIONS, LOOPS, WHILE LOOPS, USES OF LOOPS, SWITCH CASES, FUNCTION, SCP COMMANDS , PATHS
+,
+
+
                                       USING Scripts for package management:
                                       ====================================
 we can use script for packages installing
@@ -407,6 +411,9 @@ functions :
  A function is a piece of code that perfoms
  a specific task and avoids code repetition/duplication.
 
+
+                        SYNtaax for functions
+
 usermgt(){
    echo "Enter the username of the new user"
    read name
@@ -443,6 +450,11 @@ filemgt
 db_backup
 
 
+****** when i wnat to create a user i can call or invoke this function
+to invike the function = usermgt
+
+
+
 Ticker00147_create a new user in our environment:
 ============================================= 
 1. import/call/invoke the usermgt function
@@ -452,12 +464,18 @@ IQ: Examples of autamted tasks:
 AMSWER:
  In my environment I have written, Maintained/modified
   shell scripts to:
-    monitor_servers.sh  
-    dataBase_backup.sh 
-    deploy_app.sh 
-    access_account.sh  
-    user_management.sh  
-    file_management.sh  
+    monitor_servers.sh    - to monitor servers
+    dataBase_backup.sh     -  to backup databases
+    deploy_app.sh          - to display application
+    access_account.sh      - access accounts
+    user_management.sh    -     to mg8 users
+    file_management.sh     -       for filr mgt
+
+
+******** have equally written functions to avoid repetition of codes
+
+
+                               SCP COMMANDS
 
 scp command:
   It is use to transfer files from one server to another and vice-versa
@@ -467,13 +485,17 @@ scp command:
 TICKET0019 -- 
  Tranfer files from your Windows system to your Linux server
 
+
+COMMAND:
   scp fileName username@ip:/path/to/dir  
   scp app.yml simon@52.10.100.198:/home/simon/
+ssh-key: scp -i key.pem filename username@ip address
+
 
 TICKET0020 -- 
  Tranfer directory from your Windows system to your Linux server
- scp -r app simon@52.10.100.198:/home/simon/
- scp -r -i key.pem app simon@52.10.100.198:/home/simon/ 
+ scp -r app simon@52.10.100.198:/home/simon/                         ***** if your server is configured for password authentication
+ scp -r -i key.pem app simon@52.10.100.198:/home/simon/                ******* using ssh key
 
 Password for authentication:
    scp filename ubuntu@52.201.217.3 
@@ -484,10 +506,19 @@ Password for authentication:
 
 ssh-key for authentication:
    scp -i key.pem app.war  ubuntu@52.201.217.3 
-   scp -i key.pem filename username@ipaddress   
+   scp -i key.pem filename username@ipaddress              ******* for file
 
    scp -i key.pem -r direname ubuntu@52.201.217.3 
-   scp -i key.pem -r direname username@ipaddress 
+   scp -i key.pem -r direname username@ipaddress           **** for difrectory
+
+
+
+                                               PATHS
+
+                       1) (WE must use the absolute path when automating , why??? )
+                        2)  what did we use tgenerator link bc i didnt use it but my log showedup 
+                         3) what next to do with the log file created 
+
 
 Path to files and directories: 
 =============================
@@ -504,6 +535,8 @@ Path to files and directories:
     image: mylandmarktech/hello
     ports:
     - containerPort: 80
+
+
 
 cronJobs:
 ==========
@@ -525,20 +558,38 @@ sudo yum install cronie
 - yum -y update
 - sudo yum install vixie-cron
 
+
+
 Create a ticket to monitor_servers every minute
-==============================================
-/home/ec2-user/monitor_server.sh > /tmp/log  
+============================================== 
+/home/ec2-user/monitor_server.sh > /tmp/log                          
 * * * * * /home/ec2-user/monitor_server.sh > /dev/null 2>&1
 * * * * * /home/ec2-user/monitor_server.sh > /tmp/log 2>&1
 
 
+**** to fill the command to generate , we go this link:
+https://crontab-generator.org/
+and select evry minute, hour, day, month and week 
+
+
+*  = every minute 
+*  = every hour
+*  = every day 
+*  = every month 
+*  = every week 
+
+
+
+******* the log file is created when the script starts running because it is scheduled to run every minute
+
+
+1)  vi home/ec2-user/monitor_server.sh > /tmp/log                          **** this is the absolute path
 #!/bin/bash
 date
 free -m
 whoami
 Pwd 
 
-https://crontab-generator.org/
 
 crontab generator online: 
   https://crontab-generator.org/
@@ -553,6 +604,20 @@ crontab generator online:
 *  = every day 
 *  = every month 
 *  = every week 
+
+2) crontab -e
+* * * * * /home/ec2-user/monitor_server.sh > /dev/null 2>&1
+* * * * * /home/ec2-user/monitor_server.sh > /tmp/log 2>&1
+
+
+to verify :
+ls /tmp/
+
+#########################################    END 
+
+
+
+
 
 Team:
 project 1
