@@ -1,1 +1,477 @@
 
+USING Scripts for package management:
+====================================
+We can install, remove, updates and 
+upgrade packages in our servers.
+examples of packages:
+  nano, tree, vim, httpd, 
+  java, maven, tomcat, jenkins,
+  kubernetes, kubelet, docker
+  terraform, etc.  
+We can download and install packages 
+using package managers like:
+   yum/dnf          -- centos, redhat
+   apt/apt-get      -- ubuntu, debain
+   chocolatey/choco -- windows OS  
+   brew             --  mac  
+   helm,  -- kubernetes 
+   pip,   -- python 
+   rpm 
+
+centos/redhat/amazon linux/:
+  yum install nano 
+
+TICKET0017 - Write a simple script to install and start apache
+========
+-#!/bin/bash
+[root@demo33 ec2-user]# cat package.sh
+#!/bin/bash
+##This script will install and start the apache http webServer
+ sudo yum install httpd -y
+ sudo systemctl start httpd
+ sudo systemctl enable httpd
+ systemctl status httpd
+ sudo echo " JESUS IS LORD " > /var/www/html/index.html
+ sudo echo " I am rich " >> /var/www/html/index.html
+
+  fileMGT_index.html
+ ------------------
+ [oke@demo22 ~]$ cat index.hmtl
+
+<h1> Welcome to LandmarkTech </h1>
+<h2>The Pride of Africa</h2>
+
+sudo vi  /var/www/html/index.html
+<h1> Welcome to LandmarkTech </h1>
+<h2>The Pride of Africa</h2>
+<h2>The Pride of Africa</h2>
+<h3>The Pride of Africa</h3>
+<h4>The Pride of Africa</h4>
+
+package2.sh  
+==========
+yum install ksh zsh tsh -y  
+yum install vim git -y   
+
+=========================================
+control commands = conditions:
+==============================
+if statements:
+Syntax:  
+  if [ conditions ] 
+  then 
+  commands  
+  else  
+  commands
+  fi 
+
+Syntax:  
+  if (( conditions ))  
+  then 
+  commands  
+  else  
+  commands
+  fi 
+if1.sh  
+echo " Please enter your prediction "
+read p
+if [ $p == 4008 ]
+then
+echo "Congratulations"
+echo "you are the winner"
+else
+echo "Your prediction is wrong,"
+echo "Please, try again"
+fi
+
+if2.sh 
+echo 'ENTER YOUR GPA'
+read gpa
+if [ $gpa -gt 4 ]
+then
+echo "Congratulations,"
+echo "You are a 1st class student"
+elif [ $gpa -ge 3 ]
+then 
+echo "Congratulations,"
+echo "You are a 2nd class student"
+elif [ $gpa -ge 2 ]
+then 
+echo "Congratulations,"
+echo "You are a 3rd class student"
+else
+echo "You can do better, please work harder"
+fi
+
+[ec2-user@demo33 ~]$ cat if5.sh
+echo "Please enter your pin"
+read p
+if [ $p == 5032 ]
+then
+echo "You enter a valid pin "
+echo "Welcome to TD Bank "
+elif [ $p == 5068 ]
+then
+echo "This  pin was changed 3weeks ago "
+echo "Please try again "
+else
+echo "You entered the wrong pin"
+echo "You have 2 more attempts"
+fi
+
+if6.sh 
+------
+if [ uid == 0 ]
+then
+echo read username
+read username
+echo "Creating $username user account"
+useradd $username
+else
+echo "sorry only the root can run this script"
+fi
+
+[ec2-user@demo33 ~]$ head -1 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+[ec2-user@demo33 ~]$
+[ec2-user@demo33 ~]$ id root
+uid=0(root) gid=0(root) groups=0(root)
+
+
+
+if [ condition ]
+then 
+command1 
+command2
+elif [ condition ]
+then 
+command1 
+command2
+elif [ condition ]
+then 
+command1 
+command2
+else 
+command1 
+command2
+fi   
+
+Loops: When a condition can be satisfied multiple times.
+======
+for  loop  
+=========
+Loops: condition with multiple iterations 
+x < 100 
+x= [0, 1, 2, 3, ..., 99] 
+Syntax:
+for loop  
+for [ initiallation;conditions;inc/dec ]
+do  
+
+execute all command/script until the condition is 
+longer met/satisfied. 
+(And repeat all statement between do and done) 
+done 
+
+for loops:
+==========
+for (( initiation;conditions;inc/dec ))
+do 
+commands 
+commands 
+done
+
+fl.sh  
+for  (( a=1;a<=5;a++ )) 
+do  
+echo $a   
+done  
+
+Expected output:
+a=1  
+a=1 + 1 = 2 
+a=2 + 1 = 3 
+a=3 + 1 = 4  
+a=4 + 1 = 5 
+look breaks   
+a=5 + 1 = 6 
+
+Assignment:
+Write a shell script to print numbers from 100-90 
+using for-loop [100, 99, 98, ---, 90]
+
+while loop
+=========
+Syntax:
+initiallation 
+while [ condition ]
+do 
+commands/statements
+done
+
+yl.sh   
+echo "while loop starts"
+echo "performing load testing for tesla"
+l=10000
+while [ $l -le 90000 ]
+do
+echo "Carrying load of "
+echo $l
+l=`expr $l + 10000 `
+done
+echo "while loop ends"
+
+output:
+  performing load testing
+  Carrying load of
+  l = 10000
+  Carrying load of
+  l = 10000 + 10000 = 20000
+  Carrying load of
+  l = 20000 + 10000 = 30000
+  Carrying load of
+  l = 30000 + 10000 = 40000
+
+yl2.sh   
+echo "while loop starts"
+echo "performing load testing for tesla"
+l=10000
+while [ $l -ge 10000 ]
+do
+echo "Carrying load of "
+echo $l
+l=`expr $l + 10000 `
+done
+echo "while loop ends"
+
+use cases for loops:
+===================
+To run load test  
+To get range of values   
+====================
+
+Assignment:
+Write a shell script to print numbers from 1-9 
+using while-loop 
+----
+i=9  
+while [ $i -ge 1 ]   
+do  
+echo $i 
+i=`expr $i - 1 `  
+done   
+
+switch case:
+==========
+  systemctl start|status|restart|stop|enable|disable sshd 
+  yum install/remove/updates/upgrade
+tomcat:
+  catalina.sh | status | start | stop | restart | version
+  catalina.sh start tomcat 
+  catalina.sh stop  tomcat   
+  catalina.sh restart  tomcat   
+sonarQube:
+  sonar.sh  | status | restart | stop | start | version
+
+ sh sonar.sh start 
+ sh catalina.sh stop tomcat
+     $0         $1    $2  
+
+Syntax for switch case:
+case $1 in  
+    option1)
+      Commands;;
+    option2)
+      Commands;;
+    option3)
+      Commands;;
+    *)
+      Commands;;
+esac 
+
+case $1 in  
+    start)
+      echo "sonarQube server starting"
+      echo "sonarQube server started" ;;
+    stop)
+      echo "sonarQube server stopping"
+      echo "sonarQube server stopped" ;; 
+    restart)
+      echo "sonarQube server restarting"
+      echo "sonarQube server restarted" ;;
+    status)
+      echo "sonarQube server running"
+      echo "The process ID is $$ " ;;
+    *)
+      echo "you entered an invalid option"
+      echo "Please enter start, stop, status or restart option" ;;
+esac 
+
+functions :
+  Functions:   
+ A function is a piece of code that perfoms
+ a specific task and avoids code repetition/duplication.
+
+usermgt(){
+   echo "Enter the username of the new user"
+   read name
+   sudo adduser $name
+   grep $name /etc/passwd  
+   id $name   
+}
+filemgt(){
+  if [ -e /etc/passwd ]
+  then
+   echo "File management is easy with scripting"
+   echo "The file exist. Please proceed ..."
+   grep simon /etc/passwd
+   touch test.java /tmp  
+  else
+    echo "It doesn't exist"
+  fi
+}
+packagemgt(){
+  sudo yum update -y
+  sudo yum install tree nano vim unzip -y
+}
+db_backup(){
+  mkdir /tmp/backup  
+  cp -r * /tmp/backup/
+}
+monitoring(){
+  df -h
+  free -m
+  top
+}  
+usermgt  
+filemgt  
+db_backup
+
+
+Ticker00147_create a new user in our environment:
+============================================= 
+1. import/call/invoke the usermgt function
+
+IQ: Examples of autamted tasks:
+  Explain your experience in bash shell scripting??
+AMSWER:
+ In my environment I have written, Maintained/modified
+  shell scripts to:
+    monitor_servers.sh  
+    dataBase_backup.sh 
+    deploy_app.sh 
+    access_account.sh  
+    user_management.sh  
+    file_management.sh  
+
+scp command:
+  It is use to transfer files from one server to another and vice-versa
+  It is good for data migration, application deployment, etc. 
+  scp tranfer files and directory securely using the ssh protocol 
+
+TICKET0019 -- 
+ Tranfer files from your Windows system to your Linux server
+
+  scp fileName username@ip:/path/to/dir  
+  scp app.yml simon@52.10.100.198:/home/simon/
+
+TICKET0020 -- 
+ Tranfer directory from your Windows system to your Linux server
+ scp -r app simon@52.10.100.198:/home/simon/
+ scp -r -i key.pem app simon@52.10.100.198:/home/simon/ 
+
+Password for authentication:
+   scp filename ubuntu@52.201.217.3 
+   scp filename username@ipaddress   
+
+   scp -r direname ubuntu@52.201.217.3 
+   scp -r direname username@ipaddress 
+
+ssh-key for authentication:
+   scp -i key.pem app.war  ubuntu@52.201.217.3 
+   scp -i key.pem filename username@ipaddress   
+
+   scp -i key.pem -r direname ubuntu@52.201.217.3 
+   scp -i key.pem -r direname username@ipaddress 
+
+Path to files and directories: 
+=============================
+  Relative path: start From pwd    
+  Absolute path: start From / (root)
+
+
+[simon@demo33 ~]$ tail -3 hello.yml
+    image: mylandmarktech/hello
+    ports:
+    - containerPort: 80
+[simon@demo33 ~]$
+[simon@demo33 ~]$ tail -3 /home/simon/hello.yml
+    image: mylandmarktech/hello
+    ports:
+    - containerPort: 80
+
+cronJobs:
+==========
+Scheduling Tasks/Workloads for automation.
+Assignment/Ticket:
+  1. Write a script that monitors servers every minutes 
+     This script should alert management of anomalies 
+  2. Write a script that backup dbServers every midnight
+
+Execution:
+1. We shall use cronJobs and create cron tables to achieve this 
+   Automation and Schedule the tasks to run as expected. 
+
+   cron table   = contains scheduled tasks   
+   crontab -e   = To edit the cron table 
+   crontab -l   = List the cron table
+
+sudo yum install cronie
+- yum -y update
+- sudo yum install vixie-cron
+
+Create a ticket to monitor_servers every minute
+==============================================
+/home/ec2-user/monitor_server.sh > /tmp/log  
+* * * * * /home/ec2-user/monitor_server.sh > /dev/null 2>&1
+* * * * * /home/ec2-user/monitor_server.sh > /tmp/log 2>&1
+
+
+#!/bin/bash
+date
+free -m
+whoami
+Pwd 
+
+https://crontab-generator.org/
+
+crontab generator online: 
+  https://crontab-generator.org/
+
+* * * * * /home/simon/monitor_servers.sh >/dev/null 2>&1
+* * * * * /home/simon/monitor_servers.sh >/tmp/log 2>&1
+
+* * * * * /home/simon/monitor_servers.sh >>/tmp/log 2>&1
+
+*  = every minute 
+*  = every hour
+*  = every day 
+*  = every month 
+*  = every week 
+
+Team:
+project 1
+========
+1. AWS Accounts are created for all team members 
+2. Create a redhat8 linux server 
+3. Connect to the redhat8 server using mobaXterm/terminal ssh-cleint 
+4. Program or configure the server for password authentication   
+5. Create a user call dominion and assign a password [admin123] 
+6. Connect to your server using dominion's user
+7. Run commands in the server as dominion's user 
+    
+project 2
+========    
+7. Connect to your server using dominion user's details  
+8. Run your scripts as dominion user
+
