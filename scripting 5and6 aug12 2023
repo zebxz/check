@@ -198,18 +198,24 @@ command1
 command2
 fi   
 
+
+                                       LOOPS
+
 Loops: When a condition can be satisfied multiple times.
-======
+======        condition with multiple iterations 
 for  loop  
 =========
 Loops: condition with multiple iterations 
-x < 100 
+
+eg
+x < 100      ie  can be satisfied multiple times because X can be 1, 10 , 25, 14, 7, 35, 80 , etc
 x= [0, 1, 2, 3, ..., 99] 
+
+
 Syntax:
 for loop  
-for [ initiallation;conditions;inc/dec ]
-do  
-
+for [ initiallation;conditions;increasing/decreasing ]
+for
 execute all command/script until the condition is 
 longer met/satisfied. 
 (And repeat all statement between do and done) 
@@ -223,7 +229,7 @@ commands
 commands 
 done
 
-fl.sh  
+for loop.sh (fl.sh)  
 for  (( a=1;a<=5;a++ )) 
 do  
 echo $a   
@@ -242,14 +248,28 @@ Assignment:
 Write a shell script to print numbers from 100-90 
 using for-loop [100, 99, 98, ---, 90]
 
+my ANS:
+vi for loopasg.sh
+for ((a=90; a<=100; a+1))
+do 
+echo $a
+done
+
+
+                                                  WHILE LOOP
+                            Also conditions with multiple iterations
+
 while loop
 =========
-Syntax:
+Syntax for while loop
 initiallation 
 while [ condition ]
 do 
 commands/statements
 done
+
+
+****** he didnt give the question
 
 yl.sh   
 echo "while loop starts"
@@ -286,11 +306,15 @@ l=`expr $l + 10000 `
 done
 echo "while loop ends"
 
+
+                              USES OF LOOPS
 use cases for loops:
 ===================
-To run load test  
-To get range of values   
-====================
+WE CAN use loops to run load test
+we can use loops to get a range of values
+
+
+
 
 Assignment:
 Write a shell script to print numbers from 1-9 
@@ -303,6 +327,8 @@ echo $i
 i=`expr $i - 1 `  
 done   
 
+
+                                   SWITCH CASES
 switch case:
 ==========
   systemctl start|status|restart|stop|enable|disable sshd 
