@@ -244,7 +244,7 @@ git add*
 
    ****** files in the working area appear in RED
 
-working area to staging area 
+working area to staging area   
  (workshop)       (staging room)
 
 
@@ -257,6 +257,14 @@ In our staging area  >>>>>>>>>>>> local repository
 2.06  
 git commit -m "first commit" (our msg bc it is our first version)
 the git commit  will move the changes to the working area and create  a new commit with a commit id and that new commit is like a new version created 
+but you can run this commit if we dnt knw who you are ( for data intergrity) for trcaking who did what
+  global configuration  ==  git config -- global usre.email "your email address'
+                            git config  --- global user.name "yourname"
+then we run git log to check , after which we run git commit -m  and git log again to check
+
+
+5) local repository   >>>> Remote repository
+       git push ( push changes from local environment to remote repository)
 
 
 
@@ -269,10 +277,11 @@ with THE "git commit command -m " a version is created with a version number[com
 
 git init          = to initialised a git empty repository
                     create the default branch[master, main]
-git status        = to track files location
-git log           = list all commits  
+git status        = to track files location                    *** to check if our working tree is clean or not 
+                      tells eher files are located are all the files being trcaked by git or not 
+git log           = list all commits  ( with their id) all versions
 git add           = move files to staging area from working area
-git commit -m     = move files to the local repository FROM STAGING AREA
+git commit -m     = move files to the local repository FROM STAGING AREA , it creates a new version of the application
                     good commit message for tracking changes created by authors are recommended
 
 git reset        = to go back to working area form staging area
