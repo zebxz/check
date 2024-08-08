@@ -42,6 +42,58 @@ in git?  = by using the ;
 git cherry - pick commitID 
 
 
+eg
+WE have several commits in the dev or stage branch
+we can select a particular commit to merge in master
+so we run = git - cherry  - pick commitID
+
+But when we try to merge the dev or stage branch to master we will get a merge conflict bc of the other commits that have not been merged manually 
+
+therfore, we vi into the file and delete  <<<<< HEAD
+FINALLy, git commit -a -m "conflict fixed"
+
+
+                     HOW TO MERGE CHANGES IN GIT
+
+git merge:
+ stage commit 1    ie sc1
+  sc1 [version1] -->sc2 [version2] --->sc3 [version3] 
+                  = mc1 [master version1]                     ******* when we merge, we get jst one version 
+
+ie when we have several commits in the stage /or dev branch and try to merge to master branch , it gives merge conflict, so we have to commit it maually
+and when we that is done it commits  (git commit -a -m) it as one version in the master branch (master version)
+
+
+
+   BUT FOR REBASE
+
+git rebase
+     sc1 [version1] -->sc2 [version2] --->sc3 [version3] 
+                   = mc1 [version1] -->mc2 [version2] --->mc3 [version3]               
+ 
+   ******** for rebase:
+when we have several commits in the stage / or dev branch and run git rebate stage or dev, it gives us the various versions in master
+just as it was in the stage  / or dev barnch 
+therfore if we need to refer back to the commits work in the future the rebase makes it easy for us to have access to ecah commit/versions
+
+How can we merge a particular commit among many commits in git??
+By using the;
+
+git cherry-pick   = merging specific commits
+
+
+*******
+
+git clean -n : tell you the files/changes that would be deleted in working working area
+git clean -f : cleans the working area
+git reset
+git revert commitID 
+
+
+How to determine what happened in a commit
+  git show commitID
+  git cherry-pick 518110e  
+  git commit -a -m "CONFLICT fixed"
 
 
 
