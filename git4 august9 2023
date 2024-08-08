@@ -187,9 +187,9 @@ then git stash apply,  then we can continue working on the file
 
 
 git stash       =     to take backup
-git stash  list
+git stash  list  = to list all the backups 
 
-  commit 
+eg we have a number of backups 
 
 stash@{0}
 stash@{1}
@@ -204,24 +204,45 @@ git stash pop stash@{1}    = It apply & drop backup 1.
 git stash pop
 
 
-connecting to scm/github using ssh
+
+the private key is like a lock, so you slot the public key in ito the lock and it gives you access
+we copied the public key and added it to our github account so when you try to access your github account, the private key will be authenticated against the public key 
+
+
+CONNECTING TO SCM/GITHUB USING SSH KEY
+
+This automates your authentication access to github ie no need for password PAT
+
+ls/home/ec2-user/.ssh
    ssh-keygen   
- 
- ssh-url   = git@github.com:LandmakTechnology/paypal.git
- git remote add psh git@github.com:LandmakTechnology/paypal.git  
- 
- https-url = https://github.com/LandmakTechnology/paypal.git
- git remote add pp https://github.com/LandmakTechnology/paypal.git
+ then copy /home/ec2-user/.ssh/id_rsa.pub
+cat  /home/ec2-user/.ssh/id_rsa.pub
+copy the key and paste in SSH tray in github
+copy ssh url in github (find it in code in repository)
+create an alias name for ssh url = Ada
+ssh url = Ada git@github.com:zebxz/paypal.git
+git remote add Ada git git@github.com:zebxz/paypal.git
+to push = git push ada master
 
-Github-webhook --- Jenkins  
+github - webhook --jenkins( we will look at it when we get to jenkins)
 
-.gitinore file  
-  Developers use IDE to write code   
-   IDEs include = vscode, esclipes, atom, etc.  
-     .classpath modules  
+IDES: integrated development environment ( are sofwares that eases code writing)
+
+.gitignore file
+developers use IE to write code
+IDE include = vscode, esclipes, atom etc
+
+****** git will not track changes in .gitignore file
 
 
-Git Best Practices:
+IQ:
+   WHAT IS THE USE OF .GITignore file
+this is used to list files that should not be tracked by git
+most of the time these files are file sthat are craeted by the software, the integrated dev environment, the IDE or any files that we dnt want git to track changes in the
+file or directory , we use the .gitignore file to list them there.
+
+
+  Git Best Practices:
     Use branching strategy and pull requests
     Commit once you finish your task. 
     Avoid merge Conflicts.
@@ -233,6 +254,27 @@ Git Best Practices:
     use rebase over git merge
     use branch protection strategy  
     use best branching strategy
+
+
+
+
+****** the PAT prevents unauthorized users from cloning our projects
+it can prevent unauthorized access bc you can deceide what the PAT can and cant do 
+eg can clone public or private repository/modify/push code
+with PAT you can determine the scope of what can be done 
+eg
+i can create and assign a PAT to a personnal user as well as define the scope for which it can be used for.
+
+in the past password was used but that will grant everyone full admin access, thats why they removed passwd support to PAT so that access can be defined, the scope can be 
+restrited
+
+
+
+
+####################################   END
+
+
+
 
 IDEs = Integrated development environment
  are software that eases code writing  
