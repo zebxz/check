@@ -1,1 +1,93 @@
 
+What is the difference between Git & Github:
+Git is an open source Distributed Version Control System(DVCS) which records
+changes made to files (codes) laying emphasis on speed, data integrity in a
+distributed non-linear workflows.  
+GitHub is a source code management[SCM] tool
+
+Explain your branching strategy in LandmakTechnology ?? 
+Explain your branching strategy in Dominion systems ??
+Explain your branching strategy in your Environment ?? 
+
+1. Number of branches = WE maintain 3 branches
+  dev branch    ---> develoment Environment
+  stage branch  ---> Testing/QA/UAT Environment
+  master branch ---> PRODUCTION 
+    feature 
+    bug_fixed 
+
+2. Branch security = 
+   All commits in the master branch must go through PR 
+
+3. Switching branches =  working tree should be clean 
+    DevOps Engineer [dev branch / master--bugfixed]
+    If neccesary backup incomplete tasks before switching  
+      git stash command  
+4. git rebase over git merge
+5. review changes [git diff] before merging
+6. Use PR before committing to the master branch 
+7. avoid merge conflicts  
+
+
+git stash       =     to take backup
+git stash  list
+
+  commit 
+
+stash@{0}
+stash@{1}
+stash@{2}
+stash@{3}
+
+git stash apply            = resume wip for the most recent backup
+git stash apply stash@{0}  = resume wip for the 1st backup
+git stash apply stash@{5}  = resume wip for 6th backup
+git stash drop stash@{0}   = will delete backup
+git stash pop stash@{1}    = It apply & drop backup 1.
+git stash pop
+
+
+connecting to scm/github using ssh
+   ssh-keygen   
+ 
+ ssh-url   = git@github.com:LandmakTechnology/paypal.git
+ git remote add psh git@github.com:LandmakTechnology/paypal.git  
+ 
+ https-url = https://github.com/LandmakTechnology/paypal.git
+ git remote add pp https://github.com/LandmakTechnology/paypal.git
+
+Github-webhook --- Jenkins  
+
+.gitinore file  
+  Developers use IDE to write code   
+   IDEs include = vscode, esclipes, atom, etc.  
+     .classpath modules  
+
+
+Git Best Practices:
+    Use branching strategy and pull requests
+    Commit once you finish your task. 
+    Avoid merge Conflicts.
+    Don’t Commit Half-Done code - backup with git stash
+    Test your code before committing.
+    Write Good Commit Messages before committing 
+    Try to use git commands rather than GUI tools.
+    use ssh url and PAT over https url  
+    use rebase over git merge
+    use branch protection strategy  
+    use best branching strategy
+
+IDEs = Integrated development environment
+ are software that eases code writing  
+
+[ec2-user@demo33 paypal]$ ls /home/ec2-user/.ssh/
+authorized_keys  
+id_rsa       = ssh-private-key
+id_rsa.pub   = ssh-public-key  
+known_hosts  
+known_hosts.old
+
+
+
+Maven / Tomcat / apache Webserver / SonarQube / Nexus / Jenkins :
+==========================================================
