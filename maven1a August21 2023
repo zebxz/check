@@ -529,17 +529,31 @@ now we need to clone the codes frm scm in github with the git clone command
 run the tree command = tree msa/, now we see our project 
 file (pom.xml) we can see the 12 dir and 3 files , we have the pom.xml, the code ('helloword.java), the test case (hello world test.java)
 developers are working on this application , they hv written the code , test cases and the project pile (pom.xml)
-     
-     pom.xml 
-     <groupId>com.mt</groupId>
-        <artifactId>maven-stanalone-application</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <packaging>jar</packaging>
 
-        <name>maven-stanalone-application</name>
-        <url>http://mylandmarktech.com</url>
+vi pom.xml >>> in pom.xml it has defined the project properties, dependencies (Junit testing has to be performed
 
-maven-stanalone-application-0.0.1-SNAPSHOT.jar 
+
+5) cd msa/ 
+
+6) ls and we see pom.xml & src
+
+7)ls src/ & we can see main & test case file 
+
+
+in maven we are running the mvn package command bc in maven we are building package, when we run the command it create the packages in the target directory , so we can find
+the packages in the target directory 
+
+maven has a goal called the clean rule 
+== mvn clean: delete everything in the target directory
+rm -rf is also an option but mvn clean is better
+
+
+cd msa/
+head pom.xml : this project file will include stuffs like project dependencies and srtifacts (it will be creating some artifacts)
+for this project to be executed a few things are needed,
+scm is in github , everything has been defined
+
+
 
 Maven uses dependencies and plugins to test and create packages. 
 Examples of maven dependencies 
@@ -549,34 +563,59 @@ Examples of maven dependencies
 build.gradle   --- BuildScript for gradle
 pom.xml        --- BuildScript for maven
 pom = project object model      
-dependencies:  
+dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
 repositories  
 plugins:    
 properties: 
 version:
 
-<dependencies>
-      <dependency>Selenium</dependency>
+<dependencies>                             **** developers are doing this stuff for us for the dependency tag
+      <dependency>Selenium</dependency>      *** selenium, or log4, or Junit will be used to test automation
       <dependency>log4j</dependency>
       <dependency>JUNit</dependency>
 </dependencies>
+
+
+DEvelopers will identify the dependencies, plugging and properties version
+
+Repositories:
+pluggins: to run the testing ( maven  1b 56:30)
+properties:
+versions:
+
+maven 1b 40:45
+******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
+dependency 
+
+
+                                               WHERE DEPENCIES ARE FOUND 
 
 ==================
 where are these dependencies found/located??? :
 dependencies and/or are located in maven repositories
   https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
-
-<repositories> 
-   mavenLocalRepo  
-   mavenRemoteRepo  
-   mavenProxyRepo  
-   mavenCentralRepo
+    
+          we can have diff repository
+                                                                                                                                                       for the project
+<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo
+   mavenLocalRepo         (maven server)    ****** .m2/repository = default                             
+   mavenRemoteRepo         (nexus server)
+   mavenProxyRepo           (nexus server apache maven )
+   mavenCentralRepo         the internet    ****** https://mvnrepository.com/repos/central
 </repositories>
+
+
+maven 1b 39:30
+when maven is trying to create packages it will use these pluggin
+
+
+                                   
+MAVEN 1B 40:50                                           TYPES OF DEPENDENCIES
 
 selenium:
   <dependency>
     <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
+    <artifactId>selenium-java</artifactId>               these are my project dependencies
     <version>4.6.0</version>
   </dependency>
 log4j: 
@@ -586,12 +625,22 @@ log4j:
     <version>1.2.17</version>
   </dependency>
 
-where are these dependencies found/located??? :
-  1. Maven local repository 
-      .m2/repository = default 
-  2. Maven remote/proxy repository 
-  3. Maven central repository
-      https://mvnrepository.com/repos/central
+we go to the internet to get these dependency on maven central repository
+
+
+
+this extract is from our file pom.xml
+pom.xml
+the group id              : <groupid> com.Mt </groupid>
+the name of the artifact   : <version> 0.01-SNAPSHOT </version>
+<packaging> jar <packaging>
+
+<name> maven-stanalone-application </home>
+<url>http://mylandmarktech.com </url>
+
+1:46    if you create this artifact based on what developers have created versioning 
+== maven -stanalone-application-0.0.1-SNAPSHOT.jar               ****** the packaging says its a jar pakackage 
+
 
 IQ : Explain the maven lifecycle  ??
 Maven has 3 lifecycles: 
@@ -602,20 +651,27 @@ Maven has 3 lifecycles:
 
 Lifecycles      Goal(s)
 ----------      -----   
-Clean            clean  (mvn clean)
-  mvn clean      delete old builds 
+1)  Clean            clean  (mvn clean)
+  mvn clean         delete old builds 
 
-Site/Swagger     site
-                   create java classes (byte code)
-                   JVM 
-                   app.java = 'echo DevOps is great'
-                   app.class = 012450012354
+2) Site/Swagger       site
+                    create java classes (byte code)
+                    JVM 
+                    app.java = 'echo DevOps is great'        **** side goal
+                    app.class = 012450012354
 
-                Goals:
-default        mvn validate:
+
+for eg if you have app.java once the side goal is executed it will create binary codes ie app.class that can be understood by JVM
+
+   ******** MAVEN HAS TO HAVE BEEN installed before we can run mvn package
+
+
+                  Goals:
+3) default        mvn validate:
                   It will validate the project structure and resource files
                mvn compile:
                   It will compile all java classes and test classes
+                  these are byte code that will be used to create packages     ***** byte code that is used to run the test cases
                mvn test:
                   It will run the unit test cases (JUNit)
                mvn package:
@@ -627,6 +683,37 @@ default        mvn validate:
                
                mvn deploy:  NEXUS
                   It will upload the build artifacts into maven-remote-repo
+                   by default it will be in nexus in our environment
+
+
+
+
+               ON OUR PROJECT
+
+1) mvn package - to create package
+  we ls  - a new dir target has been created 
+ ls target/ - in target , maven - standalone -app has been created
+ mvn clean - to clean the build (the whole artifacts)
+again we run : mvn package  >log
+vi log - to check that the build, testing was successful
+ls -a /home/ec2-user/ .m2/  to see hiddden repository               ******* or tail log  (58:00 maven 1b)
+ls  /home/ec2-user/ .m2/repository
+rm -rf /home/ec2-user/.m2/                       **** to delete our repository (.m2)
+ls -a  to see .m2
+
+
+
+***** maven uses plugging/depemdencies in  the build process
+
+
+where are these dependencies found/located??? :
+  1. Maven local repository 
+      .m2/repository = default 
+  2. Maven remote/proxy repository 
+  3. Maven central repository
+      https://mvnrepository.com/repos/central
+
+
 ---
 mvn package: 
   1. validate
@@ -718,7 +805,16 @@ Do not share any Landmark resources [videos, notes, class links etc.] except for
 
 
 
+     pom.xml 
+     <groupId>com.mt</groupId>
+        <artifactId>maven-stanalone-application</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <packaging>jar</packaging>
 
+        <name>maven-stanalone-application</name>
+        <url>http://mylandmarktech.com</url>
+
+maven-stanalone-application-0.0.1-SNAPSHOT.jar 
 
 
 
