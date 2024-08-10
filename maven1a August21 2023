@@ -708,15 +708,54 @@ ls -a  to see .m2
 
 
 
-***** maven uses plugging/depemdencies in  the build process
+***** maven uses plugging/dependencies in the build process
+WHICH ARE FOUND in maven local repo=.m2/repository
+ls -a/home/ec2-user can be represented as ls -a
+/home/ec2-user = the home dir of ec2-user 
+ec2-user owns the m.2/repository
 
 
-where are these dependencies found/located??? :
-  1. Maven local repository 
-      .m2/repository = default 
-  2. Maven remote/proxy repository 
-  3. Maven central repository
-      https://mvnrepository.com/repos/central
+
+principally by default, 
+maven wil search for the the pluggins and dependencies in maven local repo 
+1)maven local repository :.m2/repository = default, if its not here 
+2) maven remote /proxy repository , if it is configures, if its not here, it will search 
+3) maven central repository (the internet)              ****** not a secured option , which takes more time in building 
+     https://mvnrepository.com/repos/central
+
+
+***** WHEN a package is being created (mvn package), maven will search for the pluggings in the local repo, if its not there it search in remote repo, if its not there it 
+downloads the pluggins from maven central (internet) which takes more time for the buid process compared to if it had sourced the pluggins from the maven local repo
+
+once the package is successfully created, our .m2/repository which is our maven local repo is created automatically and in the repo we can locate our dependencies
+
+**** therfore, maven has downloaded our dependencies from maven central and has stored them in .m2/repository (our local repo) and then use the dependencies to do a build
+or building for the first time
+this is for situation where the mvn package is being run for the first time or situation where the maven local repo (.m2) doesnt exists.
+
+subsequently, when mvn package is run, it doesnt need to download pluggins and dependencies from the central repo because we now have the .m2 and this will make the package
+build process time lesser compared to when it had to download pluggins from the central 
+
+
+** even when target is deleted, the .m2 (where we have our stored dependencies/pluggins ) remains because its owned by ec2-user and available in our server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---
