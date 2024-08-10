@@ -323,34 +323,60 @@ The maven home directory is wher the maven software is extracted == /opt/maven
 and we can ls to see the content of the MHD
 
 
-  Maven home: /opt/maven
+
+  Maven home directory:  /opt/maven
+the directory is represented by = M2 _HOME
 MHD = /opt/maven [ M2_HOME ]:
 
-export M2_HOME=/opt/maven
-export PATH=$PATH:$M2_HOME/bin
+
 MHD = /opt/maven 
 The MHD is where the maven software is extracted.
-   wget url  
-   unzip  maven.zip  
 
-[ec2-user@maven maven]$ ls
+*** some companies, the home directory can be /app/maven
+so if thats where the software was extracted then thats the home directory fo rmaven 
+   
+***** wherever you extract your maven software is your MHD 
+in OUR CASE = /opt/maven               ***** ie opt is the home  for maven dir 
+
+(in my own understanding) ie bc we had to cd into opt directory to download and isntall and the download name was changed to maven 
+
+
+now we ls to see the content /composition of our maven home dir 
+
+ [ec2-user@maven maven]$ ls
 mavenHomeDir = M2_HOME = /opt/maven :
-  bin --- binary files
-          mvn 
-  conf  --configuration files 
-          settings.xml 
+  bin --- binary files and the most impoetant file is mvn        *** 23,maven 1b, (the paths to where the dir are found in )
+            
+  conf  --configuration files and the most imp fie is settings.xml 
+          
   lib -- jar files and libraries 
   boot  
 
-LICENSE  NOTICE  README.txt
+
+STEP3 :
+
+SEt environmental variable for specific user eg ec2-user
+vi ~/.bash_profile    and add lines below
+export M2_HOME=/opt/maven
+export PATH=$PATH:$M2_HOME/bin
+
+
+
+STEP4: 
+    Refresh the profile and verify if maven is running
+source ~/.bash_profile
+mvn - version
+
+
+                                           BUILD APPS 
+
 
 Ticket_0014_build_apps :
 ========================
-We use maven to build and manage applications 
-for java codes  in our environment :
+We use maven to build and manage applications for java codes  in our environment :
 
-Generally We have:
-  stanalone applications -  jar [app.jar, hello.jar]
+Generally We have THERE ARE 3 CATEGORIES OF APPLICTAION :
+  stanalone applications -            ***** when a stanalone appl is created, it creates jar packages -jar [app.jar, hello.jar]
   web applications    -     war [app.war] 
   enterprise applications - ear 
 
@@ -375,8 +401,258 @@ maven: creates packages (jar, war and/OR ear)
     aa.ear 
     tesla.ear
     td.ear 
+
 Archieves:
   tar files = tesla.gz.tar   
+zip files = tesla.zip 
+  tesla.jar  
+  tesla.war  
+  tesla.ear 
+
+Standalone Applications – *.jar  Java Archieve
+=============================================  
+ java code ONLY   
+    contains only java classes
+    jar = .classfiles
+    maven-standalone-application.jar
+    app.jar 
+
+Web Applications  – .war  web Archieve
+======================================
+Java code + 
+web content ( CSS, HTML, JS, videos, images…,) 
+Backend code   - frontend code
+maven-web-app.war
+tesla.war
+
+Enterprise applications – .ear –
+==================================
+ Enterprise Archieve
+    Multiple Modules
+      Java code + web content 
+    Ear =  war(s) + jar(s)
+    Banking applications
+    maven-web-application.war
+    maven-enterprise-application.ear
+   modules:
+    login / 
+    accountCreation / 
+    moneyTransfer 
+Based on our project we are going to create 
+   multiple packages either;  jar, war or ear packages:
+
+What are we building? 
+ we are creating deployable packages from java codes:
+  1.  src-- source code   :
+  2.  Unit-Test-Cases     : 
+         JAVA  --> JUnit test cases 
+         .Net  --> NUnit test cases 
+          C++  --> CPPUnit test cases   
+  3. BuildScripts  -- pom.xml     :  
+        xml  = extensible mark-up language 
+               It is a dynamic language. 
+               Tags can be created based on the user preferences 
+             Paul: <welcome>Welcome to Landmark</welcome>
+             Mary: <tesla>Welcome to Tesla</tesla>
+             Obi : <greet>Welcome to Landmark</greet>
+
+        html = hyperText mark-up language
+               It comes with pre-define tags that can't be changed 
+               TAGS: h1, h2, h3, p, 
+                   <h1>Welcome to Landmark</h1>
+
+   pom.xml = This is the BuildScript for maven  
+             developers should define name, plugins, tags, versions,
+             project dependencies and more in the BuildScript(pom.xml)
+
+
+Standalone Applications
+Ticket_saa_tesla0014  
+===================
+Requirements:
+1. project repository in the SCM [GitHub / GitLab]
+   https://github.com/Landmark-Technologies/maven-standalone-application
+2. We need a server with java & maven installed and configured   
+3. Create a project directory in the maven/build server
+    mkdir java-projects  
+4. Clone the codes from github in the project directory  
+   git clone https://github.com/Landmark-Technologies/maven-standalone-application
+     src/main  
+     src/test
+     
+     pom.xml 
+     <groupId>com.mt</groupId>
+        <artifactId>maven-stanalone-application</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <packaging>jar</packaging>
+
+        <name>maven-stanalone-application</name>
+        <url>http://mylandmarktech.com</url>
+
+maven-stanalone-application-0.0.1-SNAPSHOT.jar 
+
+Maven uses dependencies and plugins to test and create packages. 
+Examples of maven dependencies 
+   Selenium 
+   JUNit 
+   log4j
+build.gradle   --- BuildScript for gradle
+pom.xml        --- BuildScript for maven
+pom = project object model      
+dependencies:  
+repositories  
+plugins:    
+properties: 
+version:
+
+<dependencies>
+      <dependency>Selenium</dependency>
+      <dependency>log4j</dependency>
+      <dependency>JUNit</dependency>
+</dependencies>
+
+==================
+where are these dependencies found/located??? :
+dependencies and/or are located in maven repositories
+  https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
+
+<repositories> 
+   mavenLocalRepo  
+   mavenRemoteRepo  
+   mavenProxyRepo  
+   mavenCentralRepo
+</repositories>
+
+selenium:
+  <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>4.6.0</version>
+  </dependency>
+log4j: 
+  <dependency>
+    <groupId>log4j</groupId>
+    <artifactId>log4j</artifactId>
+    <version>1.2.17</version>
+  </dependency>
+
+where are these dependencies found/located??? :
+  1. Maven local repository 
+      .m2/repository = default 
+  2. Maven remote/proxy repository 
+  3. Maven central repository
+      https://mvnrepository.com/repos/central
+
+IQ : Explain the maven lifecycle  ??
+Maven has 3 lifecycles: 
+  Clean, 
+  site/swagger and 
+  default
+  Clean, site and default
+
+Lifecycles      Goal(s)
+----------      -----   
+Clean            clean  (mvn clean)
+  mvn clean      delete old builds 
+
+Site/Swagger     site
+                   create java classes (byte code)
+                   JVM 
+                   app.java = 'echo DevOps is great'
+                   app.class = 012450012354
+
+                Goals:
+default        mvn validate:
+                  It will validate the project structure and resource files
+               mvn compile:
+                  It will compile all java classes and test classes
+               mvn test:
+                  It will run the unit test cases (JUNit)
+               mvn package:
+                  It will create packages in target directory 
+                      (*.jar/*.war/*ear) app.war
+               mvn install:
+                  It will store the build artifacts in MAVEN LOCAL REPO
+                     default location: .m2/repository
+               
+               mvn deploy:  NEXUS
+                  It will upload the build artifacts into maven-remote-repo
+---
+mvn package: 
+  1. validate
+  2. compile 
+  3. RunUnitTesting 
+  4. create the packages [jar/war/ear]
+
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+BUILD SUCCESS
+[INFO] Total time:  2.877 s
+
+Maven uses plugins/dependencies in th build Process.
+   ls -a ~
+   ls -a /home/ec2-user  
+    mavenLocalRepo = .m2/repository  
+    ls  ~/.m2/repository/
+
+  1. Maven local repository 
+        .m2/repository = default 
+
+  2. Maven remote/proxy repository 
+
+  3. Maven central repository
+      https://mvnrepository.com/repos/central
+
+
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.577 s
+
+
+BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.845 s
+
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.408 s
+
+mavenLocalRepo = .m2/repository is deleted in error 
+Securing the maven local repo:
+  1. By creating a custom maven local repo  
+       .m2/repository/
+     settings.xml  
+        /home/ec2-user/.mlr  
+   sudo vi /opt/maven/conf/settings.xml  
+
+  <!-- localRepository
+          The path to the local repository maven will use to store artifacts.
+          Default: ${user.home}/.m2/repository
+        <localRepository>/path/to/local/repo</localRepository>
+  -->
+  <localRepository>/home/ec2-user/.mlr</localRepository>
+
+<!--    
+-->
+ sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>" >> /opt/maven/conf/settings.xml  
+
+rm -rf target  
+mvn clean  
+
+timedatectl list-timezones
+sudo  timedatectl set-timezone "Africa/Douala"
+sudo  timedatectl set-timezone America/New_York
+
+===============================
+maven video 1 --- March 6, 2023
+================================
+https://landmarkmetropolitanuniversity.zoom.us/rec/share/_-W34LOSlPVuWLfzxmEpFKfulql8cld8YsKWDLrOJVsv3cVhBIV_xWwMvUR962v4.amlEGpcBn9uK3HDq
+
+Do not share any Landmark resources [videos, notes, class links etc.] except for those on youtube
+============================================================================================
+
 
 
 
