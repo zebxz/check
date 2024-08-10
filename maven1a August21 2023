@@ -203,16 +203,89 @@ when you execute the file javac hello.java  ---> hello.class      ****** it gene
 ****** but for this compilation to take place, we need a compiler  - java software 
 
 
+45:36
+if you work in a coy that doenst use aws, maybe they use GCP that means you have to create a GCP account
 
+once you compile a java code like javac hello.java, the result will be - hello.class
+
+JVM only read binary files 
+jvm = Java Virtual Machine 
+
+
+                                                      MAVEN INSTALLATION
+Maven installation:
+https://maven.apache.org/download.cgi
+  Maven can be installed in Any platform:    (OPerating system = cross platform)
+    Linux --: 
+      RedHat / Ubuntu / CentOS
+    Windows:
+      server2012/2016/2019 
+      Windows XP/7/8/10/11
+    MacOS :
+    Solaris:   
+
+
+44:09
+
+Ticket_maven-001 
+Install Maven on a RedHat Linux 9 Server  
+
+2. Java is a pre-requisite for maven to run 
+    JRE --> JAVA RUNTIME ENVIRONMENT
+    JDK --> JAVA DEVELOPMENT KIT 1.8+
+            JVM will also be installed      (once java is installed, this installs automatically)
+
+43:30
+we already hv some notes in our githubwhich we can use for maven installation , package management, maven installation
+
+****** there are other sources where we can create our server from but we are creating it from AWS, where we are getting our redhat server from
+
+openJDK1.8+,  // openJDK4.1   
+==============
+https://maven.apache.org/download.cgi
+https://github.com/LandmakTechnology/package-management
+https://github.com/LandmakTechnology/package-management/blob/master/Maven-installation/READme.md
+connect to the server and setup maven:
+  publicIP = 54.204.78.6
+  userName = ec2-user 
+  ssh-key  = class301key.pem 
+  ssh -i class301key.pem ec2-user@54.204.78.6  
 
 
   
-developers 
-Who writes unit test cases     = developers  
-who performs/runs unit testing = developers  
+STEP 1          
+
+PREREQUISITE   = AWS Account
+
+we created a redhat server in Aws and on the redhat walls, we wnat to install maven sofware and once it is installed we can call the server our maven server
+
+connect to the server and setup maven:
+  publicIP = 54.204.78.6
+  userName = ec2-user 
+  ssh-key  = class301key.pem 
+  ssh -i class301key.pem ec2-user@54.204.78.6  
+
+****** you have to be in the in the dir where your downloaded key is and cd into the dir 
+
+change hostname to maven = sudo hostnamectl set.hostname maven
+changing my shell = sudo su -exc-user
+
+
+** based on our linux file structure, the "opt directory is recommended for installing packages 
 
 
 
+*****
+FOR step2, we can easily run yum install maven to install maven easily but ther are some additionale setup which we had to change some files in the setting.xml ,
+we change our maven local repo , we configured a customized maven local repo but when you install using package manager yum install, it limits what can be customised but we 
+wanted to customise our server thats why we downloaded and extracted
+
+
+
+
+
+                    DOWNLOAD AND EXTRACT AND INSTALL MAVEN 
+ 
 
 
 
