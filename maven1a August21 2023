@@ -323,6 +323,60 @@ The maven home directory is wher the maven software is extracted == /opt/maven
 and we can ls to see the content of the MHD
 
 
+  Maven home: /opt/maven
+MHD = /opt/maven [ M2_HOME ]:
+
+export M2_HOME=/opt/maven
+export PATH=$PATH:$M2_HOME/bin
+MHD = /opt/maven 
+The MHD is where the maven software is extracted.
+   wget url  
+   unzip  maven.zip  
+
+[ec2-user@maven maven]$ ls
+mavenHomeDir = M2_HOME = /opt/maven :
+  bin --- binary files
+          mvn 
+  conf  --configuration files 
+          settings.xml 
+  lib -- jar files and libraries 
+  boot  
+
+LICENSE  NOTICE  README.txt
+
+Ticket_0014_build_apps :
+========================
+We use maven to build and manage applications 
+for java codes  in our environment :
+
+Generally We have:
+  stanalone applications -  jar [app.jar, hello.jar]
+  web applications    -     war [app.war] 
+  enterprise applications - ear 
+
+hello.java:
+After using maven to build the following options are possible
+   hello.java --> hello.jar  [stanalone applications] 
+   hello.java --> hello.war  [web applications]
+   hello.java --> hello.ear  [enterprise applications]
+
+maven: creates packages (jar, war and/OR ear)
+  jar: Standalone Applications
+    ebay.jar
+    paypal.jar
+    tesla.jar 
+    *.jar  
+
+  war: web Applications
+    boa.war
+    tesla.war
+
+  ear: Enterprise Applications
+    aa.ear 
+    tesla.ear
+    td.ear 
+Archieves:
+  tar files = tesla.gz.tar   
 
 
 
