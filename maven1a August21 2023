@@ -718,8 +718,8 @@ ec2-user owns the m.2/repository
 
 principally by default, 
 maven wil search for the the pluggins and dependencies in maven local repo 
-1)maven local repository :.m2/repository = default, if its not here 
-2) maven remote /proxy repository , if it is configures, if its not here, it will search 
+1)maven local repository :.m2/repository = default, if its not here   , it will search in no.2                      ****** no.1 fastest and most secured ;
+2) maven remote /proxy repository , if it is configures, if its not here, it will search in no.3
 3) maven central repository (the internet)              ****** not a secured option , which takes more time in building 
      https://mvnrepository.com/repos/central
 
@@ -740,8 +740,37 @@ build process time lesser compared to when it had to download pluggins from the 
 ** even when target is deleted, the .m2 (where we have our stored dependencies/pluggins ) remains because its owned by ec2-user and available in our server
 
 
+****** our build time increases if our maven local is deleted in error
 
 
+   2:38:38 
+                                                      QUSETION
+
+is it possible to create the maven repo without vi/ing into the file,   ???
+    without vi into the /opt/maven/conf/setting.xml   ??
+
+
+                                                                     1:43:33 
+                 cd java-projects  ,  now i run tree msa, n we see we hv 12dir &3files, this is the project we are working on,we see d code,include d pom.xml d project file
+                                        ( msa is maven stanalone appl)         cd msa/  & when we ls we see (src and pom.xml), now no package hv been created
+                                            to create a package we run mvn package, packages created build successful and a new dir target has been created
+
+                                                 2:20:14   ( now this is the file we are modifying;  opt/maven/conf/setting.xml ) , seacrhing for maven local repo        
+
+ANS:
+ITS possible to create the maven repo without vi/ing into the file but again you need to vi
+
+but how could we create the maven repo without vi/ing??
+                                                                                                          
+ now this is the file we are modifying;  opt/maven/conf/setting.xml                                        
+we could do something like this, like we can also
+
+we can aslo : sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>">> /opt/maven/conf/setting
+so we want to echo this information, we are redirecting to this file .. /opt
+so i want to append this line into this file 
+                    **********  you hv to do sudo before you can echo bc not every user can write in this file , the file is owned by the root user
+ if you run it the first time it will work but if you try to change it again it will be a problem 
+so vi/ng into the file is the best
 
 
 
