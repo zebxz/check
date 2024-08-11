@@ -779,10 +779,12 @@ so vi/ng into the file is the best
 
 Securing the maven local repo:
   1. By creating a custom maven local repo  
-       .m2/repository/
+       .m2/repository/                              ***** our default repo ( if maven local repo is deleted, it is a serious problem that will cause us time and security
      settings.xml  
+to create a new maven repo in the home of ec2-user
         /home/ec2-user/.mlr  
-   sudo vi /opt/maven/conf/settings.xml  
+   sudo vi /opt/maven/conf/settings.xml               *** because 
+  ls -l /opt/maven/conf/    shows us that settings.xml is owned by root user , the file is rw-r-r, no executory access for any other user but root
 
   <!-- localRepository
           The path to the local repository maven will use to store artifacts.
