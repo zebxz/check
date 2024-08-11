@@ -95,13 +95,92 @@ app.war
 tesla-web app.war
 
 
+                        **** WE ARE going to look at tomcat & JBOSS when we are talkingabout web applications 
+IQ:
+HOW ARE JAVA BASED web applications deployed??
+
+ANS:
+Are deployed in Tomcat/JBOSS servers
+if you want to deploy a maven web application, we need a maven software installed like tomcat/OR JBOSS
+
+
+IQ:
+for maven to know which package to create its a function of our project
+when we vi pom.xml we can see our packing indication? war
+
+
+How are java based enterprise applications deployed??
+enterprise application are deployed in JBOSS servers
+
+
+39:00 mvn install goal
+
+
+41:00  in target dir an artifact was created called tesla.war
+
+ mvn install: it will
+  1. validate - 2min 
+  2. compile  - 5min
+  3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
+  4. create packages [jar/war/ear] in the target directory  
+  5. the package has been created in target dir but we are installing the packages in maven local repository
+       ls/home/ec2-user/.mlr/com/mt/maven-web-application/0.0.2
+  so we have the artifacts created in the maven dir and we also have the artifacts backed up in the maven local repo
+
+linux command  rm -rf but mvn clean is better
+mvn clean will delete the artifacts in our target dir but will not delete the artifacts in maven local repo
+mvn clean will delete everyfile in target dir 
+
+**** this is how web applications are managed
 
 
 
+Maven Enterprise applications:
+  MavenEnterpriseApp-ear.ear
+  MavenEnterpriseApplication.war
+
+https://github.com/mylandmarktechs/maven-enterprise-application
+git clone https://github.com/mylandmarktechs/maven-enterprise-application
 
 
+1) cd..
+2) clone
+3) mv maven-enterprise-application/meapp
+4) cd meapp
+5) tree
 
-mvn clean package  
+in the tree we can see the parent pom.xml below while the child pom.xml above in the tree are 2
+
+52:00
+to view child pom.xml = cat maven enterprise App- web/pom.xml
+when your in a parent pom.xml you will see a parent tag
+
+since we have our project files written by developers we can build 
+
+6) mvn package 
+
+we have 2 modules when we run ls
+1) maven enterprise App-ear 
+2) maven enterprise App-web pom.xml
+
+ls maven enterprise App-ear = we see pom.xml src target
+ls maven enterprise App-ear /target/ = application.xml maven-archive 
+                                          maven enterpriseApp.ear
+
+ 
+53:00  so when you have an enterprise app it will create a .ear file principally
+
+also
+ls maven Enterprise App-web/ = pom.xml src target
+ls maven enterprise App-web/target/ = maven Enterprise Application.war       test-classes
+
+
+53:30
+so if you create Enter Application by default it will come with many modules
+
+1:32:17 
+the child pom.xml is referring to the parent which means thers can of an intersection, so when you run mvn build all those pom.xml will be ultilized
+
 
   
 
@@ -115,19 +194,8 @@ How are java based stanalone applications deployed??
 How are java based Enterprise applications deployed??
    Enterprise applications Are deployed in JBoss servers  
 
-mvn install: 
-  1. validate - 2min 
-  2. compile  - 5min
-  3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
-  4. create packages [jar/war/ear] in the target directory  
-  5. install 
 
-Maven Enterprise applications:
-  MavenEnterpriseApp-ear.ear
-  MavenEnterpriseApplication.war
 
-https://github.com/mylandmarktechs/maven-enterprise-application
-git clone https://github.com/mylandmarktechs/maven-enterprise-application
 
 [ec2-user@maven meapp]$ tree
 .
