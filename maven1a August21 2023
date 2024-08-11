@@ -749,7 +749,7 @@ build process time lesser compared to when it had to download pluggins from the 
 is it possible to create the maven repo without vi/ing into the file,   ???
     without vi into the /opt/maven/conf/setting.xml   ??
 
-
+                                                                       (THIS IS JUST ME on why we cd into msa)
                                                                      1:43:33 
                  cd java-projects  ,  now i run tree msa, n we see we hv 12dir &3files, this is the project we are working on,we see d code,include d pom.xml d project file
                                         ( msa is maven stanalone appl)         cd msa/  & when we ls we see (src and pom.xml), now no package hv been created
@@ -775,7 +775,21 @@ so vi/ng into the file is the best
 
 
 
+                       SECURING THE MAVEN LOCAL REPO
 
+Securing the maven local repo:
+  1. By creating a custom maven local repo  
+       .m2/repository/
+     settings.xml  
+        /home/ec2-user/.mlr  
+   sudo vi /opt/maven/conf/settings.xml  
+
+  <!-- localRepository
+          The path to the local repository maven will use to store artifacts.
+          Default: ${user.home}/.m2/repository
+        <localRepository>/path/to/local/repo</localRepository>
+  -->
+  <localRepository>/home/ec2-user/.mlr</localRepository>
 
 
 
@@ -830,19 +844,7 @@ BUILD SUCCESS
 [INFO] Total time:  5.408 s
 
 mavenLocalRepo = .m2/repository is deleted in error 
-Securing the maven local repo:
-  1. By creating a custom maven local repo  
-       .m2/repository/
-     settings.xml  
-        /home/ec2-user/.mlr  
-   sudo vi /opt/maven/conf/settings.xml  
 
-  <!-- localRepository
-          The path to the local repository maven will use to store artifacts.
-          Default: ${user.home}/.m2/repository
-        <localRepository>/path/to/local/repo</localRepository>
-  -->
-  <localRepository>/home/ec2-user/.mlr</localRepository>
 
 <!--    
 -->
