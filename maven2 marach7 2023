@@ -1,49 +1,109 @@
+AFter commit the codes by developers the next thing is to build
 
-aven has Quality Gates, checking that test cases passes before  packages created.  :
+6:30 when you execute mvn package which is uploading the artifacts into the maven default repo, for this packages to be executed what happens in the background is that maven 
+extends it functinality      ........... ??? incomplete statement
+it uses pluggins and dependencies to do a build
+
+
+
+
+******** mvn package ecompasses of the other default goals ie mvn validate, mvn compile , mvn test
+so its better to execute mvn package which is faster compared to running each other
+
+
+***** to deploy java based stanalone applictaions java must be installed 
+java must be installed (java here neabs java must be running)
+
+1)ls target/
+copy our maven standalone -app
+cp target/maven-stanalone-application-0.0.1-SNAPSHOT.jar               ***** app.jar, this is just a placeholder it can be any name you choose)
+ls
+we can see app.jar (a copy of our standalone-app)
+to deploy  = java -jar app.jar    (place holder, app.jar )
+
+
+
+******* maven has quality gates ie checking that test cases passes before packages are created
+
+maven has Quality Gates, checking that test cases passes before  packages created.  :
   IQ:1. Assuming that 699 Testcases passed and 1 fails, 
         what can be done for  maven to still do a build? 
-           mvn package -DskipTests
-           mvn package -Dmaven.test.skip=true
+          ****** by default maven wont do a build, it will inform us that somthing is wrong 
+          Also we can decide that since 699 testcases passed and i failed we should proceed with the deployment
 
-    2. Some projects are taking long to build how can we resolve the issue:?
-       By skipping the test goal with
-           mvn package -DskipTests
+24:15   but what can be done for maven to still do a build if a (1)test fails
+           mvn package -DskipTests OR mvn package -Dmaven.test.skip=true
+           This will skip the testing processing
+
+    2. Also Some projects are taking long to build how can we resolve the issue:?
+       we skip the test goal   (this may comprise quality)
+           by running the test the first time we got to know that 699 passed and i failed, so it is possible for me to skip the test cases
+          mvn package -DskipTests
            mvn package -Dmaven.test.skip=true  
 
-mvn package: 
-  1. validate - 2min 
-  2. compile  - 5min
-  3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
-  4. create the packages [jar/war/ear]
-
-mvn package 
 
 3. What problems have you faced in your project recently? 
 =========================================================
-  Maven taking longer than expected time to build artifacts.
-  Maven uses plugins and dependencies to validate,
+  Maven taking longer than expected time to build artifacts.  (this is a serious problem)
+ now Maven uses plugins and dependencies to validate,
   compile, RunUnitTests and creates artifacts. 
-    These plugins and dependencies are located in either:
+    so if its taking much time to run the testing, we can skip the testing process
+
+alos These plugins and dependencies are located in either:
     1. MavenLocalRepo  or
     2. maven-remote-repo or
     3. maven-proxy-repo or 
     3. Maven-central repo  
-  Pulling plugins and dependencies from mavenLocalRepo give    
+
+
+to expedite the process
+**** so we can ensure that maven has direct access to maven local repo to be able to get dependencies and pluggins
+
+28:30
+pulling plugins and dependencies from mavenLocalRepo give    
   the best/fastest Results regarding time. 
   Maven-local-repo was accidentally deleted by a Jr. Engineer  
+
+if a project is taking longer than expected to execute it could mean that maven is closing from the internet and that takes longer time naturally
+
 
 maven-web-applications:
 =======================
 https://github.com/LandmakTechnology/maven-web-application
 git clone https://github.com/LandmakTechnology/maven-web-application
-  mvn clean package  
+ 
+1) to leave msa  ==cd ..
+2) we clone
+3) Rename : mv maven -web-application/mwa
+4) cd mwa
+when we ls: we can see our maven web app, developers have written the project file pom.xml, but we dnt have the target file, we also hv our some file src which is very 
+important bc if we are going to do a build the 2files maven is using is the pom.xml and the src
 
-  maven-web-app.war
-  boa-app.war
-  paypal-app-0.0.1-SNAPSHOT.war
-  app.war 
-  maven-web-application-0.0.1-SNAPSHOT.war
-  tesla-webapp.war
+32:00
+5) vi pom.xml
+6) ls target/ and we have an appliaction called tesla.war
+we have deployed this application bc inside our build server we executed mvn clean, this will delete the old builds and create new ones
+therefore we have done a build for web application, just incase you are asked to do one 
+when we vi pom.xml we can see the final name tesla but its going to create a war package
+
+
+  examples of web applications (whatever it is it must end with war)
+maven-web-app.war
+boa-app.war
+paypal-app-0.0.1-SNAPSHOT.war
+app.war
+tesla-web app.war
+
+
+
+
+
+
+
+
+mvn clean package  
+
+  
 
 ---------------
 How are java based web applications deployed??
