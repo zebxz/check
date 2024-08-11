@@ -1,1 +1,180 @@
 
+aven has Quality Gates, checking that test cases passes before  packages created.  :
+  IQ:1. Assuming that 699 Testcases passed and 1 fails, 
+        what can be done for  maven to still do a build? 
+           mvn package -DskipTests
+           mvn package -Dmaven.test.skip=true
+
+    2. Some projects are taking long to build how can we resolve the issue:?
+       By skipping the test goal with
+           mvn package -DskipTests
+           mvn package -Dmaven.test.skip=true  
+
+mvn package: 
+  1. validate - 2min 
+  2. compile  - 5min
+  3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
+  4. create the packages [jar/war/ear]
+
+mvn package 
+
+3. What problems have you faced in your project recently? 
+=========================================================
+  Maven taking longer than expected time to build artifacts.
+  Maven uses plugins and dependencies to validate,
+  compile, RunUnitTests and creates artifacts. 
+    These plugins and dependencies are located in either:
+    1. MavenLocalRepo  or
+    2. maven-remote-repo or
+    3. maven-proxy-repo or 
+    3. Maven-central repo  
+  Pulling plugins and dependencies from mavenLocalRepo give    
+  the best/fastest Results regarding time. 
+  Maven-local-repo was accidentally deleted by a Jr. Engineer  
+
+maven-web-applications:
+=======================
+https://github.com/LandmakTechnology/maven-web-application
+git clone https://github.com/LandmakTechnology/maven-web-application
+  mvn clean package  
+
+  maven-web-app.war
+  boa-app.war
+  paypal-app-0.0.1-SNAPSHOT.war
+  app.war 
+  maven-web-application-0.0.1-SNAPSHOT.war
+  tesla-webapp.war
+
+---------------
+How are java based web applications deployed??
+   Are deployed in Tomcat/JBoss servers 
+
+How are java based stanalone applications deployed??
+   java -jar app.jar   
+
+How are java based Enterprise applications deployed??
+   Enterprise applications Are deployed in JBoss servers  
+
+mvn install: 
+  1. validate - 2min 
+  2. compile  - 5min
+  3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
+  4. create packages [jar/war/ear] in the target directory  
+  5. install 
+
+Maven Enterprise applications:
+  MavenEnterpriseApp-ear.ear
+  MavenEnterpriseApplication.war
+
+https://github.com/mylandmarktechs/maven-enterprise-application
+git clone https://github.com/mylandmarktechs/maven-enterprise-application
+
+[ec2-user@maven meapp]$ tree
+.
+├── MavenEnterpriseApp-ear
+│   ├── pom.xml
+│   └── src
+│       └── main
+│           └── application
+│               └── META-INF
+│                   └── MANIFEST.MF
+├── MavenEnterpriseApp-web
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── mt
+│       │   │           └── HelloWorldController.java
+│       │   └── webapp
+│       │       └── WEB-INF
+│       │           ├── home.jsp
+│       │           ├── mvc-dispatcher-servlet.xml
+│       │           └── web.xml
+│       └── test
+│           └── java
+│               └── com
+│                   └── mt                       └── TestController.java
+└── pom.xml
+
+
+I'm managing federated web & Enterprise micro-service applications
+for fintech clients 
+
+Enterprise applications with over 21 modules
+      1.  MavenEnterpriseApp-ear  
+      2.  MavenEnterpriseApp-web  
+      21. MavenEnterpriseApp-ear  
+
+How can a Specific module be built in maven-enterprise-applications ?
+
+    mvn  package -pl MavenEnterpriseApp-web
+  
+    mvn  package -P profilename
+      MavenEnterpriseApp-ear  
+      MavenEnterpriseApp-web  
+      pom.xml
+  mvn package -pl MavenEnterpriseApp-web  
+  mvn package -P MavenEnterpriseApp-web   
+
+   Artifacts management:
+     Maven-local-repo   -- maven server
+     maven-remote-repo  -- nexus server
+
+   Plugins/dependency management:
+                        location
+   Maven-local-repo   -- maven server
+   maven-remote-repo  -- nexus server 
+   maven-proxy-repo   -- nexus server
+   maven-central-repo -- apache maven/internet   
+
+How can we trouble-shoot a fail build IN MAVEN? 
+   Check the logs to understand the Errors 
+   mvn -X package (BUILD in debugging mode)
+ What is the function of Tomcat -->
+
+ What do we consider in selecting dependencies-->?
+     Type of project -- we manage java projects 
+                        log4j, JUNit, selenium  
+==========================================================
+1. Maven is a java based open source build tool  
+2. Maven can be install on any platform [Linux/Windows/macOS, Solaris]
+3. The Maven server must have atleast 2GB of free space for maven to run.  
+
+4. With maven packages can be created by running the commands below:
+     mvn package  
+     mvn install 
+5. Maven uses plugins and dependencies to validate, compile, test and to Build
+
+6. Java1.8+ must be running on the maven server before maven can work.
+
+7. maven will create jar, war and ear packages for stanalone, web and enterprise applications
+   respectively  
+8. Maven will search for dependencies and plugins from :
+      1. mavenLocalRepo   
+      2. mavenRemoteRepo  
+      3. mavenProxyRepo  
+      4. maven central repository  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
