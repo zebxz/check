@@ -178,74 +178,43 @@ ls maven enterprise App-web/target/ = maven Enterprise Application.war       tes
 53:30
 so if you create Enter Application by default it will come with many modules
 
-1:32:17 
-the child pom.xml is referring to the parent which means thers can of an intersection, so when you run mvn build all those pom.xml will be ultilized
+
+what do we consider in selecting dependencies
+type of project - we merge java projects 
+                              log4j, Junit , selenium       ****** we can see our project dependencies in maven local repo
+
+   ***** maven local repo can be located in .m2/repository but this location can be changed in settings pom.xml
 
 
-  
+55:00 
+IQ: 
+IN managing federated web and enterprise micro- service applications for fintech clients 
 
----------------
-How are java based web applications deployed??
-   Are deployed in Tomcat/JBoss servers 
+An enterpriseapplication with over 21 modules
 
-How are java based stanalone applications deployed??
-   java -jar app.jar   
+how can a specific module be built in maven-enterprise application
+for example, developers have done a change in module one 
 
-How are java based Enterprise applications deployed??
-   Enterprise applications Are deployed in JBoss servers  
+ by passing the PL flag
+mvn package -P1 profile name
+mvn package - P1 maven enterprise -web
+mvn package - P maven Enterprise -web
 
+57:45
+if there are many modules but cahnge in only one module 
+we build by choosing that particular profile
+by using the ? web flag
 
-
-
-[ec2-user@maven meapp]$ tree
-.
-├── MavenEnterpriseApp-ear
-│   ├── pom.xml
-│   └── src
-│       └── main
-│           └── application
-│               └── META-INF
-│                   └── MANIFEST.MF
-├── MavenEnterpriseApp-web
-│   ├── pom.xml
-│   └── src
-│       ├── main
-│       │   ├── java
-│       │   │   └── com
-│       │   │       └── mt
-│       │   │           └── HelloWorldController.java
-│       │   └── webapp
-│       │       └── WEB-INF
-│       │           ├── home.jsp
-│       │           ├── mvc-dispatcher-servlet.xml
-│       │           └── web.xml
-│       └── test
-│           └── java
-│               └── com
-│                   └── mt                       └── TestController.java
-└── pom.xml
+1:16 
+FOR ARTIFACT  to be created maven has to be installed and for us to be able to pull clone the codes from github, in our build server we hv to yum install git 
 
 
-I'm managing federated web & Enterprise micro-service applications
-for fintech clients 
+59:30
+  by default maven is going to be bilding using artifacts 
 
-Enterprise applications with over 21 modules
-      1.  MavenEnterpriseApp-ear  
-      2.  MavenEnterpriseApp-web  
-      21. MavenEnterpriseApp-ear  
+** Artifacts management : artifacts are stored in maven local repo in our maven servers
 
-How can a Specific module be built in maven-enterprise-applications ?
-
-    mvn  package -pl MavenEnterpriseApp-web
-  
-    mvn  package -P profilename
-      MavenEnterpriseApp-ear  
-      MavenEnterpriseApp-web  
-      pom.xml
-  mvn package -pl MavenEnterpriseApp-web  
-  mvn package -P MavenEnterpriseApp-web   
-
-   Artifacts management:
+ Artifacts management:
      Maven-local-repo   -- maven server
      maven-remote-repo  -- nexus server
 
@@ -256,51 +225,35 @@ How can a Specific module be built in maven-enterprise-applications ?
    maven-proxy-repo   -- nexus server
    maven-central-repo -- apache maven/internet   
 
-How can we trouble-shoot a fail build IN MAVEN? 
-   Check the logs to understand the Errors 
-   mvn -X package (BUILD in debugging mode)
- What is the function of Tomcat -->
 
- What do we consider in selecting dependencies-->?
-     Type of project -- we manage java projects 
-                        log4j, JUNit, selenium  
-==========================================================
-1. Maven is a java based open source build tool  
-2. Maven can be install on any platform [Linux/Windows/macOS, Solaris]
-3. The Maven server must have atleast 2GB of free space for maven to run.  
 
-4. With maven packages can be created by running the commands below:
-     mvn package  
-     mvn install 
-5. Maven uses plugins and dependencies to validate, compile, test and to Build
-
-6. Java1.8+ must be running on the maven server before maven can work.
-
-7. maven will create jar, war and ear packages for stanalone, web and enterprise applications
-   respectively  
-8. Maven will search for dependencies and plugins from :
-      1. mavenLocalRepo   
-      2. mavenRemoteRepo  
-      3. mavenProxyRepo  
-      4. maven central repository  
+1:32:17 
+the child pom.xml is referring to the parent which means thers can of an intersection, so when you run mvn build all those pom.xml will be ultilized
 
 
 
 
+  1:00 
+how can we trouble -shoot a fail build in MAVEN ??
+Check the logs to understand the errors
+mvn - x package (BUILD in debugging mode) This will build in debugging mode 
+
+
+1:24 there are some issues i can TS as a devops engineer AND there are some issue i will escalate to the developers that this build is not responding pls correct them 
+accordingly or pls modify the project file ie pom.xml
+
+
+1:24:54
+
+if you are doing a build and you are not doing it in the project file the build will fail or in a diff dir it wont work 
+you must be in the project directory 
 
 
 
+what is the function of tomcat 
 
 
-
-
-
-
-
-
-
-
-
+#########################################################   END 
 
 
 
