@@ -125,15 +125,16 @@ a security breach which is highly risky.
 so inbetween the appservers and users we place the webserver/lb therefore to access the appserver, it is routed through the webserver/lb
 this system is highly secured
 
+40:00
+when traffic comes from enduser, the webserver expects traffic to come on http or 443, so the webserver is listening for the request from users. when ths users are trying
+to access the appserver they are making some request on the port number either 80 or 443 while the webserver is listening for the request to determine if its from the right
+user. if its the right user, it will authenticate the user and route the traffic but if the user is not authenticated it wont route the traffic 
+************ thers a video on utube explaning this 41:00
 
-    webServers-- 
-      LoadBalancers
-      JumpServers  
-
-60musers -----> webServers/LB ------> appServers   
+   APPlication SErver:   
 
 Application Server: 
-IBM WebSphere Application Server (WAS)  --> IBM
+IBM WebSphere Application Server (WAS)  --> IBM    (developed by)
 Apache Tomcat:   --> Apache  --> OS
 
 JBoss/WildFly:   --> Redhat/IBM 
@@ -144,6 +145,8 @@ JBoss/WildFly:   --> Redhat/IBM
     git branch and git tag 
 
 WebLogic --> Oracle  :
+
+
 
 IQ: What is the d/f b/w JBoss/WildFly and Tomcat? 
     vendors: Tomcat==Apache  
