@@ -102,23 +102,27 @@ all these information needs to be stored in this database very sensitive informa
 
 
 
+24:00
+                                                                                                      Backend appserver Tier          db Tier
+
+                        LSS                                 code build                                 >>  appserver1
+                    SCM- github                               maven                    ansible         >>>   tomcat                                     
+                   Remote Repo/paypal       gitpull          app.war                                   >>>       
+                    pom xml             >>>>>>>>>> >>>>      *war         >>>>>>>                      >>> appserver2    >>>>>    database
+Developers >>>>     unit Test cases         gitclone                                                   >>>   tomcat                    
+                 src - source code                                                                                                              
+                                                                                                            !20M
+                                                                                                            ! 20M
+                                                                                                            ! 20M
+                                                                                                            !
+                                                                                                            !
+                                                                                         listen HTTP 80    webserver
+                                                                                            http 443       apache httpd
+                                                                                                          loadbalancer
+
+                                                                                              (Frontend webserver/LB tier)
+
 31:00
-
-
-                                  LSS                                               
-                                SCM- github                                                                                                  
-                                Remote Repo/paypal         
-                                  pom xml                          >>>>>>>>>>>>>                 >>>>>>>>>>>>>>>>            
-Developers   >>>>>>>>>          unit Test cases                                                                                              
-                                 src - source code                                                                                                                
-
-
-
-
-
-
-
-
 whatelse is the webserver doing?
 lets assume that beyond the appserver, endusers are able to access this account and do diff transaction or create account when they do that they will enter their names, DOB,
 email. All the date generated in this process has to be captured
