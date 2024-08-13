@@ -308,7 +308,7 @@ and also to access our tomcat server on the browser
 curl public ip:8177
 
 
-                                        TOMCAT HOME DIRECTION
+                                        TOMCAT HOME DIRECTORY
 
                                       
 
@@ -513,21 +513,106 @@ we have to config paswd authentication in tomcat
      sudo password username : Admin123
 
 
-
 2:04:00
+
+cd opt
+
                     TO DEPLOY APPLICATION IN TOMCAT
 1) watch ls  /opt/tomcat9/webapps/
-2) we go back to maven server and run scp target/* war
+2) we go back to maven server and run scp target/* war            **************  we were able to deploy in tomcat using the scp command 
 and it will now request for password : Admin123
 Now we can see 'tesla.war" above 
 3) Now we go back to tomcat server and in our 'watch' we can see  tesla.war
 4) also, if we check our tomcat gui on my browser, i also see teslar.war in my list of applications 
 
 
+**************
+ 2:07:10
 
-        
+   scp -i' key33.pem
+i want to copy a file found in the target dir
+the file name is tesla.war
+i want to idnetify myself in the receiving server as ec2-user
+my public ip for tomcat server is 3.90.51.187                                       
+the path to where the file will be deployed: /opt/tomcat9/webapps/app.war"              ****** the file name is app.war  & *** the env we are deploying to webapps dir
+  it is converting tesla.war to app.war
 
-               
+
+
+
+   To DEPLOY USING SSH KEY FOR AUTHENTICATION
+i) vi key33.pem
+ii) chmod 400 key33.pem
+ii) scp -i key33.pem target/tesla.war ec2-user@3.90.51.187:/opt/tomcat/webappps/app.war
+when we check list of application on gui we can see app
+
+
+
+2:22 
+***********  to mg8 my sever/system bc server is a system 
+       df -h : how much file system you have terms of storage 
+
+
+
+
+                       HOT FIX
+ls /opt/tomcat9/webapps/
+ls /opt/tomcat9/webapps/tesla
+ls /opt/tomcat9/webapps/tesla/jsps/
+then vi /opt/tomcat9/webapps/tesla/jsps/
+scroll to the section where the caption needs connection and change it
+
+on the list of application
+we can stop, reload, undeploy 
+
+we undeploy it means we want to delete the application code (app app.war) from the web app dir
+2:15:4   ie when you deploy it copies the war file into the webapp dir and unpack it
+unpack: ie when we copied the file we copied maven web app but when it goes to web apps it extract it, so when you do deploy you are copying this war file into the webapp
+dir and when it gets there its a automatically extracted which means it is unpacked.
+
+when we deploy 
+ls /opt/tomcat9/webapps/
+app app.war does examples host-manager manager maven-web-app maven-web-app ROOT tesla  teslar.war
+
+
+2:25 latency
+  
+                                   AWS/GCP/AZURE/ONPREM 
+ Redhat  linux server   >>>      ec2 Redhat! address     !    }
+                                 instance  !  ports      !    }  this is the cloud environment
+Software   >>>>>>>>>>>>>>>       tomcat9   !   o-65536   !    }
+
+
+1) example of cloud providers can be launched in : aws
+2) Gcp
+3) Azure
+
+  OR i can own my on system and called it onprem system 
+a) once i launch my server 
+****** then i give myserver a name  1) the name of my server can be ec2Redhat instance                 ****redhat is a linux server
+3) i install a tomcat9 software 
+4) the server comes with addresses and they are called ports 
+the point range is from 0-65536 for any server created  either windows , linux, etc
+
+
+port number or server addresses:
+
+ 80  -- http
+    443 -- https
+    8080 -- Jenkins / Tomcat  / JBoss
+    0-1024 -- Reserve ports
+    1025-65535  
+    465 --- SMTP
+    587  --- SMTP
+    22   --- ssh
+    23   -- ftp
+a server has 65536 ports/addresses    
+
+
+
+
+
+
 
 
 
