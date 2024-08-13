@@ -177,21 +177,130 @@ JBoss/WildFly:   --> Redhat/IBM
 WebLogic --> Oracle  :
 
 
-
+43:20
 
 IQ: What is the d/f b/w JBoss/WildFly and Tomcat? 
-    vendors: Tomcat==Apache  
+    
+1)vendors: Tomcat==Apache  
              JBoss=Redhat  
-    Applications:          
+    
+ 2) Applications:          
         JBoss; Web applications .WAR 
                enterprise applications .ear 
         Tomcat; web applications ONLY 
 ============================
+
+ 
+                                              TOMCAT INSTALLATION
+43:40
+
+                  
 Tomcat Installation:
 ---------------------
 https://tomcat.apache.org/download-90.cgi
 https://github.com/LandmakTechnology/package-management/blob/master/Tomcat-installation/READme.md
 https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.zip
+
+
+
+58:30 
+
+          https://github.com/LandmakTechnology/package-management/tree/master/Tomcat-installation
+   
+
+1:03
+
+change hostname
+shange shell
+cd opt
+install = sudo yum install git wget unzip -y
+sudo yum install java-1.8.0-openjdk- devel -y
+to verify = java -version
+install tomcat: 
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.zip
+sudo unzip apache-tomcat-9.0.89.zip
+sudo rm -rf apache-tomcat-9.0.89.zip
+### rename tomcat for good naming convention
+sudo mv apache-tomcat-9.0.89 tomcat9 
+### assign executable permissions to the tomcat home directory
+sudo chmod 777 -R /opt/tomcat9
+sudo chown ec2-user -R /opt/tomcat9                   ********** ( but we did 775)
+change user to avoid access denied
+now when we ll, we can see  user has changed from root to ec2user
+### start tomcat
+ls, cd tomcat9/, pwd, ls, ls bin/
+in the bin dir these are files we can use to start tomcat
+eg
+catalina.sh, startup.sh
+so to start tomcat = sh/opt/tomcat9/bin/startup.sh
+
+
+cd opt, cd tomcat9
+
+1:09
+with the symbolic path we dnt have to cd tomcat9 to start or stop tomcat we can start & stop from anywhere
+
+
+1:11:00
+****** the difference between
+[ec2-user@tomcat tomcat9]$ sh /opt/tomcat9/bin/startup.sh
+this is the absolute path atarting the root directory
+
+          WHILE
+[ec2-user@tomcat tomcat9]$ sh startup.sh (says no such file or dir)
+this is the relative path starting the pwd
+                                                  
+                                              1:12:22
+As path of our tomcat installation we are going to create a link to stop & start tomcat from anywhere 
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     **(this can be any name at all)
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+
+so we can run = starttomcat to start
+               OR = stoptomcat  to stop
+
+
+when i run ls, i get a respnse because a symbolic path has been created
+
+
+2:18
+the bin dir is where we are suppose to run start and stop  but because of the symbolic link we can start from pwd
+
+
+then sudo su -ec2-user                        ********* if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
+                                                  curl -v OR local host curl -v local host:8080 public ip 80:80 
+1:14:22                                                                                                      tomcat server
+to verify if tomcat is running : we need the ip address &portnumber of :
+Tomcat publicIP =  34.219.51.216 
+ Tomcat portNumber = 8080  
+so we can access this server on port 8080
+now we can in our CLI check if tomcat is running or not by running the curl verbose to get a response
+the curl -v 34.219.51.216:8080   
+ OR                                   
+                                 in verbose
+We can check on local host =  curl -v localhost:8080 
+To check on our browser  = 34.219.51.216:8080   
+and also to access our tomcat server on the browser
+
+
+**** from commandline ie mobaxterm check our local environment , curl localhost 8177 to check if someone from outside can access our server 
+curl public ip:8177
+
+
+
+  Tomcat Home directory - THD = /opt/tomcat9
+THD: The Tomcat Home Directory is 
+     where the tomcat software is extracted 
+      we used wget to download tomcat  
+      and unzip  to extract
+
+
+
+********
+
+
+
+
+
 
 publicIP =  34.219.51.216
 username =  ec2-user   
