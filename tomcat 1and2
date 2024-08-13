@@ -286,12 +286,92 @@ and also to access our tomcat server on the browser
 curl public ip:8177
 
 
+                                        TOMCAT  HOME DIRECTION
+
+                                      
 
   Tomcat Home directory - THD = /opt/tomcat9
 THD: The Tomcat Home Directory is 
      where the tomcat software is extracted 
       we used wget to download tomcat  
       and unzip  to extract
+
+
+                                           EXPLAINING THE CONTENT OF THE THD
+
+when we ls, we see bin, conf, lib, logs, webapps, temp
+
+ bin :
+ls bin/ contains:
+    bin: --- binary files  (important files like )
+      startup.sh    --->  for LINUX SYSTEM
+      startup.bat   ---->  for  WINDOWS OS
+      shutdown.sh
+      shutdown.bat     ----> for WINDOWS OS
+      catalina.sh start
+      catalina.sh stop | start | restart | status  
+      version.sh
+      version.bat           
+    
+
+1:22
+ls conf /  vi conf/server.xml to view conf file
+
+conf: 
+
+eg of files in conf:
+     server.xml          
+      tomcat-users.xml, users.xml for those that work in the bank
+               contains configuration information about tomcat server, any changes can be done here
+
+ webapps:
+      we effect deployments in Tomcat in the webapps Directory
+       if you want to deploy in tomcat, its where deployment is taking place 
+      The default deployment Directory in Tomcat is = webapps 
+       therfore all the war files
+      like maven-web-app.war created from # mvn package 
+       we have to copy to the webapps dir because thats where deployment takes places 
+        cp *.war /webapps
+        cp *war   /opt/tomcat9/webapps/maven-web-app.war
+
+
+    lib :
+        contain all the jar files
+
+    logs :   contains log files
+      catalina.out
+      host-manager.log
+
+
+IQ:  What are the log files available in the tomcat log dir?
+      catalina.out                     ****** check here if tomcat is not running
+      host-manager.log        
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
