@@ -3,9 +3,25 @@ MULTI - TIER APPLICATION DEPLOYMENT,  TOMCAT INSTALLATION, SYMBOLIC PATH, TOMCAT
 HOW TO CHANGE PUBLIC IP OF TOMCAT SERVER
 
 
-TO check if my server is listening and to get my ipaddress 
+********  TO check if my server is listening and to get my ipaddress 
 curl ifconfig.io
 curl ifconfig.me
+
+
+1:43:00, 1:44
+***** we have installed tomcat and seen how we can use tomcat to deploy applications
+we have seen how to install a server and call it a maven server by installingthe maven software and also installing a server and call it a tomcat server by installing 
+the tomcat software on the server
+we also saw how to grant gui access, so someone can manage our tomcat server from gui by configuring and setting up the server
+
+
+
+
+
+
+               START
+
+
 
 
 
@@ -292,7 +308,7 @@ and also to access our tomcat server on the browser
 curl public ip:8177
 
 
-                                        TOMCAT  HOME DIRECTION
+                                        TOMCAT HOME DIRECTION
 
                                       
 
@@ -354,35 +370,93 @@ IQ:  What are the log files available in the tomcat log dir?
       host-manager.log        
    
 
+                                          HOW TO VERIFY IF TOMCAT SERVER OR PROCESS IS RUNNING 
+
+AFTER INSTALLING TOMCAT
+
+    Verify if the tomcat service/process is running:
+   We can run the :
+    ps -ef | grep tomcat  
+    telnet localhost 8080 
+    curl -v localhost:8080 
+    curl -v publicip:8080
+    curl -v 34.219.51.216:8080
+    curl -v 34.219.51.216:8177
+
+
+ to install tomcat: sudo yum install telnet
 
 
 
 
+               HOW TO CHANGE PUBLIC IP OF TOMCAT SERVER
+    ***** whenever we change anything in the config file we have to restart tomcat
+
+Ticket:
+  Change the default portNumber for tomcat from 8080 to 8177 
+
+Absolute path is 
+vim or vi  /opt/tomcat9/conf/server.xml
+
+to install vim :sudo yum install vim
+
+
+1:32:50
+then once we vi or vim /opt/tomcat9/conf/server.xml
+we go to section "connector" and change 8080 to 8177
+then stop and restart tomcat
+
+
+1:31:17
+       ***** whenever we change anything in the config file we have to restart tomcat
 
 
 
+1:33:13                          TO ACCESS TOMCAT AS A USER  
+                         (BY default you can only access and manage tomcat as a local host)
 
 
+ public ip: 8177     on our browser
+then click on manage App
+it shows its 403 error - Access denied
+
+1:35:46
+so we have to conf tomcat server
+
+1) enable external tomcat mgt access
+vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+this file is permitting tomcat to be managed as local host
+showing , allow = "127\.df, which only allows broadcast /traffic from local host
+ therfore we comment the line above by inserting <!--
+                                                  -->
 
 
+   By commenting the line, it means that i am changing the configuration such that other traffic can be allowed into my tomcat server
+
+now once we try to public ip: 8177 on our browser its asking for username the password
 
 
+guess this is setting up
+2) next we create tomcat user with access roles:
+vi or vim  /opt/tomcat9/conf/tomcat-user.xml             # to add user
 
 
+1:40
+
+a) <user username = "cecilia" password = "admin123" roles = "manager-gui admin -g
+  ceceilia has manger role ie he can manage from the gui(graphic user interface) he has admin while simon has admin gui
+b<user username = "simon" password = "admin123" roles = "admin- gui"/>
+
+****** imputing username :Cecilia and password admin123, i can log in
 
 
-
-
-
-
-
-
-
-
-
-
-********
-
+1:49:15
+                  HOW TO DEPLOY IN TOMCAT 
+1)By uploading artifacts we can get the artifacts in our server and upload it 
+ls   /opt/tomcat9//webapps
+once i log in as manager on my public ip:8817 on my browser
+webapps directory 
+in WAR files to deploy
 
 
 
