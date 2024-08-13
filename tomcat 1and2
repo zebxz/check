@@ -1,0 +1,255 @@
+How to deploy java based applications:
+maven-standalone-application
+   java -jar appName.jar 
+        .jar
+    java -jar packageName.jar
+    java -jar user-banking.jar 
+      java openJDK 1.7+
+
+maven-web-application  :
+java based web-application  :
+    app.war / *.war / paypal.war  
+    Tomcat
+    JBoss/WildFly
+
+maven-enterprise-application
+java based enterprise application  :
+    app.ear / paypal.ear  
+    JBoss/WildFly
+ aa.com,  
+
+60musers -----> boa.war  
+GitHub---->Maven[boa.war]---->appServer 
+80musers ------->  appServer
+
+multi-tier applications Deploment:
+
+60mUsers ------> appServers 
+
+                frontend tier    backend tiers
+            webServers/LBTier    appTier      dbTier
+ users(60m) -->webServers/LB -->appServer-->database  :
+                                      userName/
+                                      Password/
+                                      addresses/
+                                      SSN/DOB/tel   
+
+multi-tier applications :
+  backend tiers :  
+     : High security   = Militarised zone = MZ 
+      applications tier 
+      data base tier  
+   frontend tier  : Medium security = D-Militarised zone = DMZ 
+      webServers-- 
+      LoadBalancers
+      JumpServers  
+
+60musers -----> webServers/LB ------> appServers   
+
+Application Server: 
+IBM WebSphere Application Server (WAS)  --> IBM
+Apache Tomcat:   --> Apache  --> OS
+
+JBoss/WildFly:   --> Redhat/IBM 
+    1.0.0 to 7.0.9
+    1.x to 7.x --> JBoss
+    from 8.x-->    WildFly
+         versioning  
+    git branch and git tag 
+
+WebLogic --> Oracle  :
+
+IQ: What is the d/f b/w JBoss/WildFly and Tomcat? 
+    vendors: Tomcat==Apache  
+             JBoss=Redhat  
+    Applications:          
+        JBoss; Web applications .WAR 
+               enterprise applications .ear 
+        Tomcat; web applications ONLY 
+============================
+Tomcat Installation:
+---------------------
+https://tomcat.apache.org/download-90.cgi
+https://github.com/LandmakTechnology/package-management/blob/master/Tomcat-installation/READme.md
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.zip
+
+publicIP =  34.219.51.216
+username =  ec2-user   
+sshPrivateKey = c32.pem  
+
+ssh -i c32.pem ec2-user@34.219.51.216   
+
+ssh -i "c32.pem" ec2-user@ec2-34-219-51-216.us-west-2.compute.amazonaws.com
+
+
+maven server:
+  IP = 52.25.10.4   
+
+[ec2-user@tomcat tomcat9]$ sh /opt/tomcat9/bin/startup.sh 
+   absolute path starting the root directory    
+
+[ec2-user@tomcat tomcat9]$ sh startup.sh
+   relative path starting the pwd
+
+[ec2-user@tomcat tomcat9]$ sh startup.sh
+sh: startup.sh: No such file or directory    
+
+# create a soft link to start and stop tomcat from anywhere
+# This will enable us to manage tomcat as a service
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+starttomcat
+sudo su - ec2-user
+
+ publicIP =  34.219.51.216 
+ Tomcat portNumber = 8080  
+  curl -v 34.219.51.216:8080   
+  curl -v localhost:8080 
+
+Tomcat Home directory - THD = /opt/tomcat9
+THD: The Tomcat Home Directory is 
+     where the tomcat software is extracted 
+        wget to download tomcat  
+        unzip  to extract
+Explain the content of the THD.  :
+  [ec2-user@tomcat tomcat9]$ pwd
+/opt/tomcat9
+[ec2-user@tomcat tomcat9]$ ls
+    bin :
+    bin: --- binary files  
+      startup.sh    --->  LINUX SYSTEM
+      startup.bat   ----> WINDOWS OS
+      shutdown.sh
+      shutdown.bat     ----> WINDOWS OS
+      catalina.sh start
+      catalina.sh stop | start | restart | status  
+      version.sh
+      version.bat           
+    conf:
+      server.xml          
+      tomcat-users.xml               
+    lib :
+        contain all the jar files
+
+    logs :
+      catalina.out
+      host-manager.log
+IQ:  What are the log files available in the tomcat log dir?
+      catalina.out
+      host-manager.log        
+    webapps:
+      we effect deployments in Tomcat in the webapps Directory
+      The default deployment Directory in Tomcat is = webapps 
+        war files
+        maven-web-app.war  # mvn package 
+        maven-web-app
+        cp *.war /webapps
+        cp *war   /opt/tomcat9/webapps/maven-web-app.war
+    temp         
+    work
+
+ Verify if the tomcat service/process is running:
+    ps -ef | grep tomcat  
+    telnet localhost 8080 
+    curl -v localhost:8080 
+    curl -v 34.219.51.216:8080
+    curl -v 34.219.51.216:8177
+Ticket:
+  Change the default portNumber for tomcat from 8080 to 8177 
+
+  vim /opt/tomcat9/conf/server.xml  
+      <Connector port="8177" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               maxParameterCount="1000"
+               />
+
+http://34.219.51.216:8177/
+
+403 Access Denied
+
+configure tomcat server:
+ 1.  Enable external tomcat mgt access
+     vim /opt/tomcat9/webapps/manager/META-INF/context.xml
+
+from:
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /
+to:
+<!--
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /
+-->
+
+2. create tomcat users with access roles  :
+vim /opt/tomcat9/conf/tomcat-users.xml  =# to add user
+vi /opt/tomcat9/conf/tomcat-users.xml
+
+<user username="landmark" password="admin123" roles="manager-gui,admin-gui,manager-script"/>
+<user username="simon" password="admin123" roles="admin-gui"/> 
+
+https://github.com/LandmakTechnology/package-management/blob/master/Tomcat-installation/install-tomcat.sh
+
+
+http://34.219.51.216:8177/maven-web-app/
+
+webapps Directory:
+   git clone https://github.com/LandmakTechnology/maven-web-application
+
+  scp -i c32.pem  target/*war ec2-user@34.219.51.216:/opt/tomcat9/webapps/app.war    
+  scp target/*war ec2-user@34.219.51.216:/opt/tomcat9/webapps/  
+
+configure password authentication:
+  1. sudo vi /etc/ssh/sshd_config 
+       change password authentication no to yes   
+  2. sudo sustemctl restart sshd   
+  3. assign password 
+     sudo passwd username  
+
+HotFixes:
+  Class34 will start on Oct 14, 2023.
+  We are raising millionaires in IT globally.   
+
+ vi /opt/tomcat9/webapps/tesla/jsps/home.jsp
+
+  Port no or server addresses:
+    80  -- http
+    443 -- https
+    8080 -- Jenkins / Tomcat  / JBoss
+    0-1024 -- Reserve ports
+    1025-65535  
+    465 --- SMTP
+    587  --- SMTP
+    22   --- ssh
+    23   -- ftp
+a server has 65536 ports/addresses    
+
+How to improve tomcat server performance?
+  Multiple deployments will reduce tomcat server performance.
+  Multiple requests on a single tomcat server will affect performance
+  The resource level or computing capacity OF   your tomcat server   
+    SERVER1 =  8GB RAM,   480GB Hard drive HDD 
+    SERVER2 =  64GB RAM,  4000GB Hard drive SSD   
+
+  01 appServer  
+  10 appServers  
+
+  heapsize = 64mb -- 128mb/256mb    
+
+SONARQUBE:
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+c
