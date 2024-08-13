@@ -3,8 +3,8 @@ APPLICATION DEPLOYMENT, HOW TO DEPLOY JAVA BASED APPLICATION, WHAT IS AN APPLICA
 
 
 
-LSS                                                    code build with eith                                                     Application
-SCM with                                                  maven/Ant/Graddle                                                      server
+LSS                                                    code build with github                                                 Application
+SCM github                                                maven/Ant/Graddle                                                      server
 Remote Repo/paypal          push/clone
 pom xml                   >>>>>>>>>>>>>>>>>          for deploying.jar application we need          >>>>>>>>>>>>>>>>            open Jdk 1.7+
 unit Test cases                                         app.war/*war , ear                                                       Tomcat/Jboss
@@ -98,6 +98,32 @@ therefore we break down the deployment into
 all these information needs to be stored in this database very sensitive information
 
 
+
+
+
+
+31:00
+
+
+                                  LSS                                               
+                                SCM- github                                                                                                  
+                                Remote Repo/paypal         
+                                  pom xml                          >>>>>>>>>>>>>                 >>>>>>>>>>>>>>>>            
+Developers   >>>>>>>>>          unit Test cases                                                                                              
+                                 src - source code                                                                                                                
+
+
+
+
+
+
+
+
+whatelse is the webserver doing?
+lets assume that beyond the appserver, endusers are able to access this account and do diff transaction or create account when they do that they will enter their names, DOB,
+email. All the date generated in this process has to be captured
+whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
+
  Our Appserver is Tomcat, we do not deploy to one appserver, so we have appserver 1,2,3 and for this process to be automated we need a tool called ansible. so when we do a 
 build, with the help of ansible automating the process that is deploying the application to multiple appservers all of the servers have tomcat installed. 
 now to expose this application to user and we have 60m user, these users need to access this application . traffic from this users need to get to the applictaion . traffic
@@ -145,6 +171,7 @@ JBoss/WildFly:   --> Redhat/IBM
     git branch and git tag 
 
 WebLogic --> Oracle  :
+
 
 
 
