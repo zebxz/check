@@ -1,3 +1,7 @@
+APPLICATION DEPLOYMENT
+
+
+
 
 LSS                                                    code build with eith                                                     Application
 SCM with                                                  maven/Ant/Graddle                                                      server
@@ -9,36 +13,42 @@ src - source code                                                               
 
 
 
+9:48
+
+when we do a build, the code will be packaged compiled and artifacts will be created, these packages can be jar/war/ear
+before that can happen we are going to pull the code with the command gitpull/clone and once the build is done w ecan deploy the application to the application sever 
+
+
+                                 APPLICATION DEPLOYMENT
+which can of projects are we managing?
+we are managing java based projects - projects that are developed in the java lanaguage
 
 
 
+                                HOW TO DEPLOY JAVA BASED APPLICATION
+If you have a maven-standalone-application 
+you want to deploy the application? what we need is java
 
-
-
-
-
-
-
-
-How to deploy java based applications:
-maven-standalone-application
    java -jar appName.jar 
-        .jar
-    java -jar packageName.jar
+eg we have :    java -jar packageName.jar
     java -jar user-banking.jar 
-      java openJDK 1.7+
+  the java needed =    java openJDK 1.7+       (java development key 1.7+)
+thats what we need to deploy a java stanalone application
+we need java installed before the application can run
 
-maven-web-application  :
-java based web-application  :
-    app.war / *.war / paypal.war  
-    Tomcat
-    JBoss/WildFly
+19:20
 
-maven-enterprise-application
-java based enterprise application  :
-    app.ear / paypal.ear  
-    JBoss/WildFly
- aa.com,  
+  To deploy maven-web-application  :
+its actually java based web-application  : app.war / *.war / paypal.war          **** anyname at all but it must end with .war 
+    the application must be deployed either to Tomcat server or 
+     server running with JBoss/WildFly
+
+
+  For maven-enterprise-application
+if we are deploy a java based enterprise application  : then the application 
+   should create artifacts the end with .ear  app.ear / paypal.ear  
+  these applications can be deployed into  JBoss/WildFly
+ 
 
 60musers -----> boa.war  
 GitHub---->Maven[boa.war]---->appServer 
