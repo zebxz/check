@@ -92,12 +92,22 @@ was done and i was priviledged to be the one teaching members of our team on how
                                                                    !
 First stage:                                                       !
                                  2)                                !                                             3)                                            4)                     
-   Developers               SCM/Github                                              test/build       
-1) COMMIT/PUSHES   >>>>     Repo/Tesla                           JENKINS             >>>>>> >>>>>>>            maven build          code quality             code quality
+   Developers               SCM/Github                                                    test/build       
+1) COMMIT/PUSHES   >>>>     Repo/Tesla                           JENKINS                 >>>>>> >>>>>>>        maven build           code quality             code quality
                               Src                 >>>>>>>>      AUTOMATION                                      mvn package        >>>>>>>>>>>>>>>>>>         analysis
                              Junittestcases                                                                     tesla.war             anlaysis                sonarqube   
-                            pom.xml
-
+                            pom.xml                             !       !         !
+                                                                !       !         !   
+                                                                !       !         !
+                                                  5)            !  6) Deploymnt   ! 
+                                            upload artifacts    !       !         !
+                                            nexus/Jfrog         !       !         !   7) Monitoring
+                                        repo/tesla.war          !       !         !    NewRelic
+                                                                        !         !    
+                                                                       Tesla      !
+                                                                    tomcat server1 !
+                                                                    tomcat/JBOSS   !
+                                                                                   !
 
 
 
