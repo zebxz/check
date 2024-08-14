@@ -76,13 +76,357 @@ however, it runs unit testing on the number of testcase developers
 have written but most of the time developers will not write the code as desired thats why we need code quality tool to check, but maven doesnt check if developers have written 
 the desired number of testcases
 
-  Using code quality tool quality tool in 
+  Using code quality tool quality tool in the same example above 
+ src                  = 10,000l
+Junit -Test-Cases     = 4,000L
+CODE COVERAGE         = 4,000/10000 * 100 = 40%
+Developers have tested ONLY 40% of their job/softwares
+This could result to poor quality software developed
+
+IQ: Tell us a project/change you introduce in your environment 
+    which you are proud of.
+    Answer = I introduce sonarqube for code quality 
+
+CodeQuality Benchmarks:
+sonarqube/Benchmarking for CodeQuality:
+Standards for CodeQuality :
+  1. code covergae   = 80% plus 
+  2. code smells     = less than 5  
+  3. bugs            = 0   
+  4. vulnerabilities = 0  
+  5. portability     = high   
+  6. duplicate lines = less than 5%  [ functions ]  
+ name=paul 
+ echo "My name is $name"
+ 
+ echo 'WHAT IS YOUR NAME'
+ read name
+ echo "welcome $name"
+ code smells can be the duplicate code, dead code
+
+
+Standards:
+1000 lines of code, Developers should write and execute atleast 800 Junit-Test-Cases
+
+actual results:
+1000 lines of code, Developers wrote and executed atleast 900 Junit-Test-Cases
+1000 lines of code, Developers wrote and executed atleast 600 Junit-Test-Cases
+
+comparing actual results against the benchmark/standards is analysis:
+1. How many unit test cases were run?
+   How many test cases should have been run? 
+
+2. Is our code readable with ease? 
+    ----> code smells 
+
+3. Is our code portable [ environment independent ]?
+    -- if not code smells / hard coding 
+
+4. Are there vulnerabilities in the code ?
+    ---> if they are then --- 
+       password -- any 4 characters 
+
+Benchmark/standards for a quality Software/application:
+1. Code coverage should be greater than 85%  
+2. Dublicate lines should be less than 5% 
+3. There should be no vulnerabilities in the code [pw=1234] 
+4. Code smells should be less than 5  
+
+Code Quality expectations:
+• Duplicated code  --- Functions
+• Coding standards ---  
+• Unit tests
+• Complex code --- 
+• Comments
+• Potential Bugs
+• Architecture & Design
+
+                                CodeQuality Reports:
+                   Standard     actual   results
+Code coverage        >85%        70%      Fail 
+Duplicate Codes      <5%         15%      Fail  
+Bugs                 3            10      Fail 
+
+SonarQube comprises of:
+  1. sonarqube Scanner: 
+  2. sonarqube server :
+       Compute engine 
+       database - h2 database
+       search engine - elasticsearch
+       web-server 
+Databases:
+1. mySQL = RDS   = Relational databases
+  generally data is structured and stored in tables[rows and columns] format
+  SQL is a langague use to qwery  RDS.   :
+  SQL = structured qwery langaguage  
+    Oracle
+    mySQL  - OS
+    PostgreSql  - OS
+    MSSQL (MicrosoftSQL)
+    DB2
+    Sybase
+    MySQL, Oracle, Microsoft SQL Server, PostgreSQL 
+     USES ROWS AND columns :
+SN    NAME       ID-no
+1001  Paul       LT0147   user1
+1002  Amaka      LT0155   user2  
+1003  Simon      LT0163   user3  
+1004  Landmark   LT0171   user4 
+1005  Dominion   LT0179   user5
+1006  Isaac      LT0187   user6
+1007  James      LT0195   user7
+
+2. noSQL = noRDS = non Relational databases
+  user1 = name/tel/address  
+  user2 = name/ssn/date of birth  
+  user3 = place of birth / profession / tel
+   generally data is unstructured and stored in JSON format  
+Examples:
+    MongoDB ---
+    Cassandra
+    CouchDB, 
+    CouchBase, 
+    HBase, 
+    Redis, 
+    Riak, 
+
+Neo4J are the popular NoSQL databases.
+
+UnStructured data:
+  user1:   FirstName=Simon 
+  user2:   ID=01245
+  user3:   dob=01/01/1980 
+  user4:   tel=12457861
+  user1:   LastName=Amaka 
+  user100: email=100@hotmail.com
+
+users{
+  user1{
+    FirstName: simon 
+  }
+  user2{
+    ID: 01245
+  }
+  user3{
+    dob: 01/01/1980 
+  }
+}
+
+Installation of sonarqube:
+  https://docs.sonarqube.org/latest/requirements/requirements/
+  https://www.sonarqube.org/downloads/
+https://github.com/LandmakTechnology/package-management/tree/master/soarQube-Installation
+
+ server-IP = 34.213.64.100
+ userName  = ec2-user  
+ ssh-privateKey= c32.pem
+
+ ssh -i c32.pem  ec2-user@34.213.64.100   
+
+ 34.213.64.100:9000
+ http://34.213.64.100:9000/about
+
+ publicIP:9000
+ 34.213.64.100:9000
+curl -v localhost:9000
+
+34.213.64.100:9000
+default USERNAME: admin
+default password: admin
+
+/opt/sonarqube  
+SonarQube Home directory = :
+What is the sonarqube home directory?
+This is where the sonarqube Software is extracted = /opt/sonarqube
+wget and unzip 
+    /opt/sonarqube  
+   /opt/sonar
+   /app/sonar
+
+ls
+bin:
+  binary files / sonar.sh 
+  sh sonar.sh [start|status|stop|restart ]  
+  sh /opt/sonarqube/bin/linux-x86-64/sonar.sh [start|status|stop|restart] 
+  sh /opt/sonarqube/bin/linux-x86-64/sonar.sh status     
+
+conf:  
+  sonar.properties
+COPYING  
+data  
+elasticsearch  
+extensions  
+lib  
+logs  
+temp  
+web
+
+versions of sonarqube:
+enterprise version 
+datacenter version   
+Free version  :
+  Java,  = 30,000 lines 
+  JavaScript,
+JavaScript,
+  C#, 
+  TypeScript,
+  Kotlin,
+  Ruby, Go, Scala, Flex, Python, PHP, HTML, CSS, XML and 
+  VB.NET
+
+Project for TESLA0045:
+======================
+https://github.com/LandmakTechnology/maven-web-application
+1. Developers commit/push code to SCM = github   
+2. Test + Build using maven  
+    mvn package 
+
+3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   :
+   comparing actual results against the benchnark/standards
+    mvn sonar:sonar   
+         1. goal = Sonar  
+         2. plugin = sonar
+    vi into pom.xml in the maven server and enter sonarqube server   
+     credentials under the properties tag  
+    connect to your sonarQube server from the browser 
+      login_username= admin 
+      login_password= admin 
+
+    publicIP  =   34.213.64.100  
+    privateIP =   172.0.0.7
+    SONARQUBEportNumber = 9000 
+
+
+        <properties>
+                <jdk.version>1.8</jdk.version>
+                <spring.version>5.1.2.RELEASE</spring.version>
+                <junit.version>4.11</junit.version>
+                <log4j.version>1.2.17</log4j.version>
+                <sonar.host.url>http:172.0.0.7:9000/</sonar.host.url>
+                <sonar.login>admin</sonar.login>
+                <sonar.password>admin</sonar.password>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        </properties>
+
+ [ERROR] SonarQube server [http:54.175.245.26:9000] can not be reached
+
+http error code 400 errors = client side     
+  400 / 401 / 402 / 403  
+Not authorized.
+ Not authorized. 
+Please check the properties sonar.login and sonar.password.
+
+ANALYSIS SUCCESSFUL, you can browse http://172.0.0.7:9000/dashboard?id=com.mt%3Amaven-web-application
+
+SonarQube 2b running notes starts  
+==================================
+
+results:
+Coverage on New Code                 is less than  80.0%
+Duplicated Lines on New Code         is greater than 3.0%
+Maintainability Rating on New Code   is worse than A
+Reliability Rating on New Code       is worse than A
+Security Rating on New Code          is worse than A
+
+[INFO] Quality profile for java: Sonar way
+[INFO] Quality profile for jsp: Sonar way
+[INFO] Quality profile for xml: Sonar way
+
+SonarQube Reports depends on:
+  1. Rules  
+  2. Quality profile
+  3. Quality Gates 
+
+Quality Profiles are collections of rules to apply during an analysis.
+For each language there is a default Quality profile  
+
+Use tokens instead of passwords:
+
+        <properties>
+                <jdk.version>1.8</jdk.version>
+                <spring.version>5.1.2.RELEASE</spring.version>
+                <junit.version>4.11</junit.version>
+                <log4j.version>1.2.17</log4j.version>
+                <sonar.host.url>http://172.31.90.124:9000/</sonar.host.url>
+                <sonar.login>class31</sonar.login>
+                <sonar.password>admin123</sonar.password>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        </properties>
 
 
 
 
 
+token = 0e25e7125d55f2799499cc871be2416d1fd766de 
+userName/Password  
 
+         <properties>
+                <jdk.version>1.8</jdk.version>
+                <spring.version>5.1.2.RELEASE</spring.version>
+                <junit.version>4.11</junit.version>
+                <log4j.version>1.2.17</log4j.version>
+                <sonar.host.url>http://172.31.90.124:9000/</sonar.host.url>
+                <sonar.login>0e25e7125d55f2799499cc871be2416d1fd766de</sonar.login>
+                <!-- <sonar.password>admin123</sonar.password>  --> 
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        </properties>
+
+Background:
+  CodeQuality []  
+
+
+
+SonarCloud = SaaS  
+   https://docs.sonarcloud.io/  
+
+GitHub = 
+
+SonarQube  = IaaS  
+
+Sonarqube 2b  — March 16, 2023
+
+
+Running Background checks  :
+
+sonarQube:
+
+sonarQube2
+==========
+Please watch and practice Sonarqube 2  video above before next class.
+
+SonarQube 2b running notes starts  
+==================================
+
+results:
+Coverage on New Code                 is less than  80.0%
+Duplicated Lines on New Code         is greater than 3.0%
+Maintainability Rating on New Code   is worse than A
+Reliability Rating on New Code       is worse than A
+Security Rating on New Code          is worse than A
+
+[INFO] Quality profile for java: Sonar way
+[INFO] Quality profile for jsp: Sonar way
+[INFO] Quality profile for xml: Sonar way
+
+SonarQube Reports depends on:
+  1. Rules  
+  2. Quality profile
+  3. Quality Gates 
+
+Quality Profiles are collections of rules to apply during an analysis.
+For each language there is a default Quality profile  
+
+Use tokens instead of passwords:
+
+        <properties>
+                <jdk.version>1.8</jdk.version>
+                <spring.version>5.1.2.RELEASE</spring.version>
+                <junit.version>4.11</junit.version>
+                <log4j.version>1.2.17</log4j.version>
+                <sonar.ho
 
 
 
