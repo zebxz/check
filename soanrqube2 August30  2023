@@ -84,19 +84,22 @@ was done and i was priviledged to be the one teaching members of our team on how
 
 
  DIAGRAM
-
-
-                                                               Email Alerts
+                                                              Email Alerts
                                                             Slack notification
-                                                                   !
-                                                                   !
-First stage:                                                       !
-                                 2)                                !                                             3)                                            4)                     
-   Developers               SCM/Github                                                    test/build       
-1) COMMIT/PUSHES   >>>>     Repo/Tesla                           JENKINS                 >>>>>> >>>>>>>        maven build           code quality             code quality
-                              Src                 >>>>>>>>      AUTOMATION                                      mvn package        >>>>>>>>>>>>>>>>>>         analysis
-                             Junittestcases                                                                     tesla.war             anlaysis                sonarqube   
-                            pom.xml                             !       !         !
+                                                                   ^
+                                                                   ^
+                                                                   ^
+                                                                   ^
+                                                                   ^
+                                                                   ^
+                                                                   ^
+First stage:                                                       !   
+                                 2)                             JENKINS                      Test/build              3) Mvaven Build , mvn package (teslar.war)                           
+   Developers               SCM/Github   >>>>>>>>>>>>>>>>     AUTOMATION                  >>>>>>>>>>>>>>
+1) COMMIT/PUSHES   >>>>     Repo/Tesla                         JENKINS                     code quality              4)  code quality
+                              Src                             AUTOMATION                  >>>>>>>>>>>>>>>                 analysis
+                             Junittestcases                                                   anlaysis                sonarqube   
+                            pom.xml                             !       !         
                                                                 !       !         !   
                                                                 !       !         !
                                                   5)            !  6) Deploymnt   ! 
