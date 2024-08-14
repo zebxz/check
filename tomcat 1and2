@@ -141,7 +141,7 @@ Developers >>>>     unit Test cases         gitclone                            
                                                                                                             !
                                                                                                             !
                                                                                          listen HTTP 80    webserver
-                                                                                            http 443       apache httpd
+                                                         60M Users                       http 443       apache httpd
                                                                                                           loadbalancer
 
                                                                                               (Frontend webserver/LB tier)
@@ -152,6 +152,8 @@ lets assume that beyond the appserver, endusers are able to access this account 
 email. All the date generated in this process has to be captured
 whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
 
+
+24:00
  Our Appserver is Tomcat, we do not deploy to one appserver, so we have appserver 1,2,3 and for this process to be automated we need a tool called ansible. so when we do a 
 build, with the help of ansible automating the process that is deploying the application to multiple appservers all of the servers have tomcat installed. 
 now to expose this application to user and we have 60m user, these users need to access this application . traffic from this users need to get to the applictaion . traffic
