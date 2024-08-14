@@ -83,10 +83,20 @@ i had adviced that we should add a tool to check for code quality and in the pro
 was done and i was priviledged to be the one teaching members of our team on how to use sonarqube and that happened effectively but initially developers were not happy. 
 
 
-                                 DIAGRAM
+ DIAGRAM
 
 
-
+                                                               Email Alerts
+                                                            Slack notification
+                                                                   !
+                                                                   !
+First stage:                                                       !
+                                 2)                                !                                             3)                                            4)                     
+   Developers               SCM/Github                                              test/build       
+1) COMMIT/PUSHES   >>>>     Repo/Tesla                           JENKINS             >>>>>> >>>>>>>            maven build          code quality             code quality
+                              Src                 >>>>>>>>      AUTOMATION                                      mvn package        >>>>>>>>>>>>>>>>>>         analysis
+                             Junittestcases                                                                     tesla.war             anlaysis                sonarqube   
+                            pom.xml
 
 
 
