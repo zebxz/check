@@ -118,44 +118,34 @@ eg OF code smell is not following the right syntax , writing bad codes with poor
 duplication can be avoided by using function
 
 
-
-
-
-name=paul 
- echo "My name is $name"
- 
- echo 'WHAT IS YOUR NAME'
- read name
- echo "welcome $name"
- code smells can be the duplicate code, dead code
-
-
-Standards:
-1000 lines of code, Developers should write and execute atleast 800 Junit-Test-Cases
-
-actual results:
-1000 lines of code, Developers wrote and executed atleast 900 Junit-Test-Cases
-1000 lines of code, Developers wrote and executed atleast 600 Junit-Test-Cases
+                              COMPARING ACTUAL RESULT AGAINST BENCHMARK
 
 comparing actual results against the benchmark/standards is analysis:
 1. How many unit test cases were run?
    How many test cases should have been run? 
 
-2. Is our code readable with ease? 
+2. Is our code readable with ease?   ........ AVoid complex code
     ----> code smells 
 
 3. Is our code portable [ environment independent ]?
+portable code means the code is not environment indenpendent 
+we can run the code in diff environment like diff environment , port environment & test environment
     -- if not code smells / hard coding 
 
 4. Are there vulnerabilities in the code ?
     ---> if they are then --- 
-       password -- any 4 characters 
+     eg  password is only 4 characters can result in security breach
+
+Therfore we can set our standard
 
 Benchmark/standards for a quality Software/application:
 1. Code coverage should be greater than 85%  
 2. Dublicate lines should be less than 5% 
 3. There should be no vulnerabilities in the code [pw=1234] 
 4. Code smells should be less than 5  
+
+
+                                              CODE QUALITY
 
 Code Quality expectations:
 • Duplicated code  --- Functions
@@ -166,31 +156,38 @@ Code Quality expectations:
 • Potential Bugs
 • Architecture & Design
 
-                                CodeQuality Reports:
-                   Standard     actual   results
-Code coverage        >85%        70%      Fail 
-Duplicate Codes      <5%         15%      Fail  
-Bugs                 3            10      Fail 
+                                  SONARQUBE COMPRISES OF 
 
 SonarQube comprises of:
   1. sonarqube Scanner: 
-  2. sonarqube server :
+  2. sonarqube server :   This comprises of 
        Compute engine 
        database - h2 database
        search engine - elasticsearch
-       web-server 
+       web-server : means we can access sonarqube informationon the browser
+
+1:005
+
 Databases:
 1. mySQL = RDS   = Relational databases
-  generally data is structured and stored in tables[rows and columns] format
+  generally data is structured and stored in tables[rows and columns] format         ******* it uses rows and column
   SQL is a langague use to qwery  RDS.   :
   SQL = structured qwery langaguage  
-    Oracle
+  oracle
+eg of structured databases
+    oracle
     mySQL  - OS
     PostgreSql  - OS
     MSSQL (MicrosoftSQL)
     DB2
     Sybase
     MySQL, Oracle, Microsoft SQL Server, PostgreSQL 
+
+
+    ***** it uses rows and column
+the data is organised, following a specific pattern , where we have serial no, name ID 
+This type of structured is used to prepare report if we are collecting structured data from end users
+
      USES ROWS AND columns :
 SN    NAME       ID-no
 1001  Paul       LT0147   user1
@@ -201,12 +198,13 @@ SN    NAME       ID-no
 1006  Isaac      LT0187   user6
 1007  James      LT0195   user7
 
-2. noSQL = noRDS = non Relational databases
+2. noSQL = noRDS = non Relational databases, unstructured data and stopped in JSON format
   user1 = name/tel/address  
   user2 = name/ssn/date of birth  
   user3 = place of birth / profession / tel
    generally data is unstructured and stored in JSON format  
-Examples:
+
+Examples of non Relational databases:
     MongoDB ---
     Cassandra
     CouchDB, 
@@ -217,7 +215,7 @@ Examples:
 
 Neo4J are the popular NoSQL databases.
 
-UnStructured data:
+eg UnStructured data:
   user1:   FirstName=Simon 
   user2:   ID=01245
   user3:   dob=01/01/1980 
@@ -225,6 +223,8 @@ UnStructured data:
   user1:   LastName=Amaka 
   user100: email=100@hotmail.com
 
+
+USING Json format to store the users information/data
 users{
   user1{
     FirstName: simon 
@@ -237,10 +237,109 @@ users{
   }
 }
 
+
+                    WHERE IS THE SONARQUBE HOME DIR 
+
+The home dir is where the software is extracted and in my work environment its = /opt/sonarqube, its also where we extract the software
+THe sonarqube was downloaded with wget and unzipped to extract the software
+
+1:32
+1:40
+
+Bin dir: binary contains files like sonar.sh to start sonar
+conf dir : conf file like sonar properties where we can change anything 
+
+
+
+******* commands to install and check if sonar is running are in (package mgt link)
+must be (sonar sonar) to start and check sonar status
+sh/opt/sonarqube/bin/linux - x86-64/sonar.sh start/stop/status/restart
+when sonar is restarted in AWS, we must start sonar sonar in CLI and after that 
+we must vi pom.xml in maven server and change sonar public again 
+
+
+                    VERSIONS OF SONARQUBE WE CAN INSTALL IN OUR ENVIRONMENT
+
+ versions of sonarqube:
+
+enterprise version 
+datacenter version   
+Free version  Supports :
+  Java,  = 30,000 lines 
+  JavaScript,
+JavaScript,
+  C#, 
+  TypeScript,
+  Kotlin,
+  Ruby, Go, Scala, Flex, Python, PHP, HTML, CSS, XML and 
+  VB.NET
+
+
+  Project for TESLA0045:                  we have an application we are managing for Telsa
+======================
+https://github.com/LandmakTechnology/maven-web-application           **** this is the github repository
+
+1:32:00
+(cd /opt/ , cd sonarqube , in sonar server in CLI , sudo yum install tree -y, when we ls we see the content of sonarqube home dir )
+
+
+The first step
+1. Developers commit/push code to SCM = github   
+2. Test + Build using maven   
+    mvn package 
+
+3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   :
+   Now my maven server needs to be ups and running then cd/web
+   Then mvn clean package to create artifacts                               ******** 1:37:30
+   Next is to execute code quality analysis therefore we need to integrate our sonarqube in maven using our project file pom.xml
+     vi into pom.xml in the maven server and enter sonarqube server   
+     credentials under the properties tag  
+    connect to your sonarQube server from the browser: sonar public Ip : 9000
+      login_username= admin 
+      login_password= admin
+
+  1:38:52    To execute  COde quality analysis = mvn sonar : sonar           *** mvn sonar:sonar  this is done for maven to connect to the sonar
+comparing actual results against the benchnark/standards
+    mvn sonar:sonar   
+         1. goal = Sonar  
+         2. plugin = sonar
+
+***** sonar qube public ip and sonarqube portnumber = 9000
+
+  First in sonar we install sonar and ensure its running
+
+***** 1:36:26 
+then we go into maven server
+in maven, cd maven-web-application
+we integrate sonaqube for code quality analysis
+so we vi pom.xml and insert the public ip of sonar
+                                private ip
+then mvn sonar:sonar
+
+nexus 1:54:00     mvn package , then restart sonar
+mvn sonar:sonar,
+mvn deploy 
+
+
+
+
+
+
 Installation of sonarqube:
   https://docs.sonarqube.org/latest/requirements/requirements/
   https://www.sonarqube.org/downloads/
 https://github.com/LandmakTechnology/package-management/tree/master/soarQube-Installation
+
+
+
+
+
+
+
+~~~~~~~~~#################################### 
+
+
+
 
  server-IP = 34.213.64.100
  userName  = ec2-user  
@@ -286,36 +385,9 @@ logs
 temp  
 web
 
-versions of sonarqube:
-enterprise version 
-datacenter version   
-Free version  :
-  Java,  = 30,000 lines 
-  JavaScript,
-JavaScript,
-  C#, 
-  TypeScript,
-  Kotlin,
-  Ruby, Go, Scala, Flex, Python, PHP, HTML, CSS, XML and 
-  VB.NET
 
-Project for TESLA0045:
-======================
-https://github.com/LandmakTechnology/maven-web-application
-1. Developers commit/push code to SCM = github   
-2. Test + Build using maven  
-    mvn package 
 
-3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   :
-   comparing actual results against the benchnark/standards
-    mvn sonar:sonar   
-         1. goal = Sonar  
-         2. plugin = sonar
-    vi into pom.xml in the maven server and enter sonarqube server   
-     credentials under the properties tag  
-    connect to your sonarQube server from the browser 
-      login_username= admin 
-      login_password= admin 
+
 
     publicIP  =   34.213.64.100  
     privateIP =   172.0.0.7
@@ -455,6 +527,30 @@ Use tokens instead of passwords:
 
 
 
+  ****************
+  name=paul 
+ echo "My name is $name"
+ 
+ echo 'WHAT IS YOUR NAME'
+ read name
+ echo "welcome $name"
+ code smells can be the duplicate code, dead code
+
+
+Standards:
+1000 lines of code, Developers should write and execute atleast 800 Junit-Test-Cases
+
+actual results:
+1000 lines of code, Developers wrote and executed atleast 900 Junit-Test-Cases
+1000 lines of code, Developers wrote and executed atleast 600 Junit-Test-Cases
+
+
+
+                 CodeQuality Reports:
+                   Standard     actual   results
+Code coverage        >85%        70%      Fail 
+Duplicate Codes      <5%         15%      Fail  
+Bugs                 3            10      Fail
 
 
 
