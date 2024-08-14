@@ -596,9 +596,10 @@ a) once i launch my server
 the point range is from 0-65536 for any server created  either windows , linux, etc
 
 
+2:31:30
 port number or server addresses:
 
- 80  -- http
+    80  -- http     , Hyper text  transfer protocol
     443 -- https
     8080 -- Jenkins / Tomcat  / JBoss
     0-1024 -- Reserve ports
@@ -608,6 +609,54 @@ port number or server addresses:
     22   --- ssh
     23   -- ftp
 a server has 65536 ports/addresses    
+
+
+on our security  grp  you can open a port or choose not to source from a particular        
+we open address by using securing and firewall (firewall rules)  in AWs they are called security groups 
+
+2:33
+if you choose number of address and you want to accept traffic if the traffic listen on 
+if a traffic needs a particular port number, that number must be in existence . it must be open before the traffic can flow in 
+
+
+                         CAN WE  RUN TOMCAT AND MAVEN IN ONE SERVER
+
+YEs you can but its  not recommended because it can lead to one single point of failure ie if maven server is down, tomcat also goes down , if tomcat has a problem, 
+maven is also down 
+
+
+                            HOW TO IMPROVE TOMCAT SERVER PERFORMNACE 
+
+1) multiple request on a single tomcat server will affect performance
+2)  Multiple deployments will reduce tomcat server performance.
+  therefore its recommended  tohave multiple tomcat server 
+3) The resource level or computing capacity OF your tomcat server   
+     8GB RAM,   480GB Hard drive HDD  is better than 64GB RAM,  4000GB Hard drive SSD   
+
+  2:39:10
+4) HDD hard drive  is/are of less performnace than SSD
+
+5) HEAPSIZE 
+  We can increase the heapsize of the server 
+Normally, tomcat by default allocates 64mb but we can increase to 128mb/256mb
+  heapsize = 64mb -- 128mb/256mb    
+
+
+
+
+***** session with engr armstrong
+
+    you always have to starttomcat
+
+  WHY DO WE START TOMCAT BUT NOT MAVEN 
+
+We start tomcat because its a software that is accessible in the internet/browser and it has to be accessible because customers need to utilize the apps in tomcat server
+but maven is a build tool, nothing is coming in or going out , maven doesnt listen to/on any port . it can do builds, change codes from machine readable to human readable
+maven is not accessible on the internet , it uses just port 22and our server is ready to build.
+
+we also access sonar qube, jenkins on the internet/browser because people need to see that ecerything that is required for the code is successful
+
+
 
 
 
