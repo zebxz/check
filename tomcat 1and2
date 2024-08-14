@@ -2,7 +2,7 @@ APPLICATION DEPLOYMENT, HOW TO DEPLOY JAVA BASED APPLICATION, WHAT IS AN APPLICA
 MULTI - TIER APPLICATION DEPLOYMENT,  TOMCAT INSTALLATION, SYMBOLIC PATH, TOMCAT HOME DIRECTORY, HOW DO WE VERIFY IF TOMCAT SERVER OR PROCESS IS RUNNING
 HOW TO CHANGE PUBLIC IP OF TOMCAT SERVER, TO ACCESS TOMCAT AS A USER, HOW TO DEPLOY IN TOMCAT , HOW TO DEPLOY IN TOMCAT,   DePLOYING FROM SERVER TO SERVER, TO ASSIGN PASSWD 
 TO MAVEN SERVER,  CONFIGURE PASSWD AUTHENTICATION IN TOMCAT, TO DEPLOY APPLICATION IN TOMCAT, To DEPLOY USING SSH KEY FOR AUTHENTICATION, HOTFIX, CAN WE  RUN TOMCAT AND MAVEN IN ONE SERVER
-HOW TO IMPROVE TOMCAT SERVER PERFORMANCE 
+HOW TO IMPROVE TOMCAT SERVER PERFORMANCE, WHY DO WE START TOMCAT BUT NOT MAVEN 
 
 
 ********  TO check if my server is listening and to get my ipaddress 
@@ -649,7 +649,7 @@ Normally, tomcat by default allocates 64mb but we can increase to 128mb/256mb
 
     you always have to starttomcat
 
-  WHY DO WE START TOMCAT BUT NOT MAVEN 
+                                       WHY DO WE START TOMCAT BUT NOT MAVEN 
 
 We start tomcat because its a software that is accessible in the internet/browser and it has to be accessible because customers need to utilize the apps in tomcat server
 but maven is a build tool, nothing is coming in or going out , maven doesnt listen to/on any port . it can do builds, change codes from machine readable to human readable
@@ -658,11 +658,64 @@ maven is not accessible on the internet , it uses just port 22and our server is 
 we also access sonar qube, jenkins on the internet/browser because people need to see that ecerything that is required for the code is successful
 
 
+  ******* 
+ chmod 400 always
+then if using terminal  -sshh ikey33.pem @ec2user: public ip OR copy command from AWS in connect
+ then starttomcat 
+then curl localhost 
+then curl ifconfig 
+
+
+Ls /opt/tomcat9 = bin conf webapps
 
 
 
 
+   SUMMARY 
 
+1) Install tomcat
+2) verify if tomcat is running
+3) if it can receive   curl ifconfig.me    |curlifconfig.io
+4) RBAC - role based  accesss control 
+ tomcat - user.xml file 
+ simon  (username/passwd/ roles)
+ dominion 
+landmark 
+5) copy: scp/ scp:
+           but if you first copy to the home of tomcat server 
+7:35     = scp target /tesla.war landmark @ 18:234.79:/ home ec2-user
+          you will still have to copy it to the webapps dir to deploy 
+         = cp  /home /ec2-user/teslar.war/opt/tomcat9/webapps
+
+6) performing hot fixes
+   vi /opt/tomcat9/webapps/app/jsps/home.jsp
+
+7) enhancing/ turning up the performance of our tomcat servers by increase ing the heap size
+
+
+   24:30
+   WEBSERVERS: eg  nginx , apache 
+    this is used to serve static content & images 
+   we use webservers to server webcontent to user 
+
+
+
+       TICKET 0014   nginx , Apache  http 
+   write a script  to deploy apache webserver 
+
+
+installing apache as the rootuser  = sudo - i 
+vi apache.sh  & create a script ( webserver installation) 
+
+
+  #!/bin/sh
+# install apache as the admin/root user  
+sudo yum install httd -y 
+
+
+       
+
+   ######################################################## ################## 
 
 
 
