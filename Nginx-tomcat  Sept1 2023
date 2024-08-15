@@ -121,12 +121,22 @@ ANS: YES we can
 ANS: its justbc i wnat you guys to understand both redhat and ubuntu, when we inastlled doecker, we installed it on ubuntu and tomorrow we ill configure k8 on ubuntu
 so but its good for you to have both exposure Redhat and ubuntu
 
+
+********* i think this is form another video
 3)if there are 2 availability zone,  will there be 2 ngnix in the 2availabilty zones?
 if you have a VBC : virtual private cloud ie your private inetwrk, in this private network you can have about 6subnets depending on the region 
 so now we have 3private subnets and 3public subnets
 
 now in aws global resources you have:
-   global >>> Regions >>> Availab
+   global >>> Regions >>> Availability zone 
+inside AZ you ahve data centers
+when you create a vpc where you want to launch your resources, assuming you want to create your VBC in US East1 ie us virginia, it has 6 diff AZs meaning that i can create
+my 6subnets/servers in all this availabity zones to ensure high availability
+if i have my ngnix webserver running in the public subnet, can route traffic to all the servers/ec2s since all the servers are in the same vpc they are in the same netwrk,
+45:39  so my ngnix can laod bal traffic to all servers or ec2s running in both private and public subnet
+
+
+
 
 46:00
 The application we deploy , we deploy them in virtual machines in vms
