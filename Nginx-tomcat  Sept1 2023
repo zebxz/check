@@ -86,6 +86,41 @@ the backend
 patching upgrading
 
 
+52:00
+IQ       WHAT HAPPENS WHEN YOU TYPE  app.com or google.com    (domain name service)
+54:30
+  once you type google.com it going to query global DNS searching for the webservers that are associated to this hostname and once it locates the server, immediately traffic
+will be routed to that server
+
+
+for example, why you type www.landmark.org, what happens is that in the backend you are going to query global DNS(global Domain name service) and there is a command is the 
+backend called NS look up, it is going to be searching for the server.
+
+53:15
+eg    if i run nslookup www.landmark.org shows the address of our ngnix webserver
+
+                                                
+                                          WHAT CAN MAKE A SERVER UNHEALTHY/ TO FAIL
+56:00
+
+1) There could be a spike in the CPM, lets assume that a lot of processes are running in the server or the server is receiving a lot of traffic, it may not be haelthy to 
+recieve additional traffic . and thats one of the reason that can make a server to be unhealthy
+
+2)if for some reason the java process is not running in the tomact server, if java is not running, tomcat not to start, if you deploy appl you cant access it so if java 
+process fail, it can make a server to be unhealthy and as such the webserver will not route to an unhealthy traffic thats why ngnix is important for load balancing because 
+it has all this advantages
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
