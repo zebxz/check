@@ -1,1 +1,196 @@
 
+Nexus
+
+What can be done if the packages are deleted IN MAVEN?
+What can be done if the packages can't be access 
+because the build server is down?
+
+Disaster recovery:
+Disaster management:
+  We need to create backups for artifacts in artifactories
+Coding:
+  Local computers (Laptops) 
+  What will happened if a developers laptop or env't breakdowns 
+  developers commits changes in code in their local Repository 
+  developers push their commits to the remote Repository in GitHub
+  GIT = DVCS  
+
+yum install tree git  
+choco install tree git 
+apt install tree    
+Examples of artifacts:
+Artifactory Repository    packages                      :
+  maven Repository       [jar/war/ear] 
+  NodeJs Repository      [npm, node packages ]
+  yum   Repository       [ yum packages]
+  chocolatey repo.       [choco packages]
+  apt  Repository        [ apt packages]
+  docker
+  terraform  
+
+artifacts to be created depends on the project's language:
+  java   --> app.jar, maven-web-app.war, boa.ear 
+             app.[jar/war/ear]
+
+  docker -->   Docker Image 
+               docker build
+               docker run 
+  NodeJs  -- > NPM Packages = node package manager
+  yum --- > yum Packages  =  
+            yum install maven git httpd tree
+            yum is a package manager for Redhat and CentOS  
+  
+       yum install maven
+
+  apt  -->  apt install tree 
+            apt is a package manager for Ubuntu/Debian linux servers
+
+  chocolatey --> choco install terraform 
+             --> chocolatey is a package manager for windows OS  
+
+  brew:     brew install terraform    
+         --> brew is a package manager for mac OS  
+  
+  helm-->  is a package manager for kubernetes
+
+  pip --> is a is a package manager for python 
+===============
+-----
+IQ: How have you applied Nexus in your environment?
+    1. Installation and configuration of the nexus server in Redhat.  
+    2. Creating maven-remote-repos[artifactories] in nexus   
+    3. uploading java, NodeJs, etc. artifacts into Nexus
+    5. retrieving packages from Nexus
+    4. Securing the nexus server   
+    5. troubleshooting build and uploading related issues  
+
+IQ: what is your experience with nexus?
+    What problems have you encountered with Nexus and how did you   
+    resolve it  .
+
+Nexus: Is an Open source Artifactory Repository
+       It is used to store and retrieve build artifacts
+       We can retrieve artifacts when needed
+       Nexus acts as a Disaster recovery server for maven    
+
+JFrog: Is an  Artifactory Repository - Licence
+       It is used to store and retrieve build artifacts 
+
+Amazon CodeArtifacts:
+     It is used to store and retrieve build artifacts 
+
+We support Java based application dev't.
+maven goals:
+ mvn package  
+    This will validate, compile, test and Creates
+    artifacts in the target directory
+ mvn install 
+   Creates and store artifacts in maven-local-repo & target directory
+
+mvn deploy: uploads the build artifacts to maven remote repository (nexus)
+    - validate
+    - compile
+    - test
+    - create package in target directory
+    - Packages created in mavenlocalrepo   
+    - uploads THE PACKAGE to Nexus (Maven remote-repo)
+
+How will MAVEN connect with nexus?
+maven and nexus intergration: 
+
+nexus Installation:
+-------------
+ https://www.sonatype.com/download-oss-sonatype
+   PUBLIC-IP = 54.85.4.8
+   ssh-key   = class30key.pem  
+   userName  = ec2-user  
+   ssh -i class30key.pem  ec2-user@54.85.4.8                 = RP  
+   ssh -i /home/ec2-user/class30key.pem  ec2-user@54.85.4.8  = AP  
+   ssh -i /tmp/class30key.pem  ec2-user@54.85.4.8 
+
+ http://54.85.4.8:8081/
+
+ echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
+ echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
+
+http://54.85.4.8:8081/  
+default nexus login:
+  userName = admin 
+  password=admin123
+
+Nexus Home directory:
+  /opt/nexus 
+    bin  = binary files [nexus]   
+    lib  = 
+    etc  = configuration files
+             nexus-default.properties  
+
+# Jetty section
+application-port=8081
+application-host=0.0.0.0
+nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-requestlog.xml
+nexus-context-path=/
+
+
+   http://54.85.4.8:8081/
+
+http://54.85.4.8:8081/landmarktech   
+
+http://54.85.4.8:8181/mylandmarktech     
+
+http://54.85.4.8:8081/
+ 
+
+
+
+maven-remote-repo:  
+  Repourl = http://54.85.4.8:8181/mylandmarktech/repository/tesla-snapshots/
+  Repourl = http://54.85.4.8:8181/mylandmarktech/repository/tesla-releases/
+
+  snapshots-repos/
+  releases-repos/
+
+maven, nexus integration: 
+  1. Create artifactories[maven-remote-repos] and add them in the  
+     distributionMGT tag in pom.xml 
+
+     <url>http://54.85.4.8:8181/mylandmarktech/repository/tesla-releases/</url>
+     <url>http://54.85.4.8:8181/mylandmarktech/repository/tesla-snapshots/</url>
+
+      Connect to 52.53.227.31:8191 [/52.53.227.31] failed: 
+      status: 400 Repository version policy:
+      status: 400 Repository version policy:
+      status: 401 Unauthorized -- authentication failed
+      400 Repository does not allow updating assets: tesla-releases
+  <name>Landmark Technologies Snapshot Nexus Repository </name>
+  <url>http://54.85.4.8:8181/mylandmarktech/repository/tesla-releases/</url>
+
+
+  2. Configure nexus login credentials in settings.xml file in the  
+     conf directory in the maven server  
+           userName = admin 
+           password= admin@123
+
+   <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>admin@123</password>
+    </server>
+
+
+com/mt/maven-web-application/0.0.3-SNAPSHOT/maven-web-application-0.0.3-20221211.225747-2.war
+
+Who decides on codeQuality:
+===========================
+Code Quality is generally a Team decision =   
+Sprint planning meeting  
+1. 25 rules --- Quality Profiles = javaAppQP    
+2. Conditions -- Quality GATE = 
+   code coverage => 90%
+
+
+Is nexus built from a different env't  :
+  We leverage aws cloud  servers = AZ  
+  us-east-1  = NV [AZ1 , ... AZ6]  
+
+  What’s the difference between code coverage and code quality
