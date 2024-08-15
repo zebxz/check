@@ -17,43 +17,69 @@ together create quality gates.
 quality gate is usually a combination of conditions 
 
                      WHAT DO WE CONSIDER WHEN IT COMES TO A QUQLITY SOFTWARE
-                  what do we consider when it comes to a quality software
+                  
+14:50   
+
+                         Conditions:
+     this is                  { 1) code coverage:   > 85% if less then 85 its not a good software 
+                              {2) Duplicated lines <4%, vulunerability <1,  code smells <5, bug =0, security hot spot =0
+     what the 
+     the company will                 We are explaining that
+     decide                     {7) Developers must USE BEST RECOMMENDED CODING STANDARDS
 
 
 
 
 
 
+                               NEXUS
 
+19:00
+****************** 
 
-
-
-
-Nexus
+           Nexus
 
 What can be done if the packages are deleted IN MAVEN?
 What can be done if the packages can't be access 
 because the build server is down?
 
+
+                            DISASTER MGT/DISASTER RECOVERY
+
 Disaster recovery:
 Disaster management:
-  We need to create backups for artifacts in artifactories
-Coding:
-  Local computers (Laptops) 
-  What will happened if a developers laptop or env't breakdowns 
-  developers commits changes in code in their local Repository 
-  developers push their commits to the remote Repository in GitHub
-  GIT = DVCS  
+  We need to create backups for artifacts in artifactories to do this backup we can use other NEXUS or JFROG (the 2 common artifactories), Its like a epository where we 
+store /upload artifacts. we are backing up the war files
 
-yum install tree git  
-choco install tree git 
-apt install tree    
-Examples of artifacts:
+  *******  which type of artifacts are stored here  ??
+
+in our environment, once the artifacts are created in maven, we upload the jar packages, war and ear 
+we didnt deploy to the client straight from MAVEN 
+
+In a situation where the MAVEN server goes down in the deployment process we pull from our artifactories thatas how we manage the end to end process
+
+
+coding
+****** what willl happen if a developer laptop environment breaks down   ??
+
+
+23:50   ANS:    
+developers commits changes in code in their local repository 
+developers push their commits to the remote repository in github 
+GIT = DVCs, so where there is a problem we can easily recover from the disaster
+
+
+                        To install in windows, choco install tree
+   
+Examples of artifacts:    
+in maven we can create an artifactory repository where we can upload artifacts
+this artifactory can store  jar/war/ear artifacts/packages
 Artifactory Repository    packages                      :
   maven Repository       [jar/war/ear] 
-  NodeJs Repository      [npm, node packages ]
-  yum   Repository       [ yum packages]
-  chocolatey repo.       [choco packages]
+  NodeJs Repository      [npm, node packages ]   if we have a NodeJS project we are managing = Node Repo:npm node packages
+  yum   Repository       [ yum packages]                   ****** this is meant for holding and anaging RPM packages, so when you run the 
+                                                     yum install,the command goes to the yum repo and search for the free package or any package you want to install
+  chocolatey repo.       [choco packages]        
   apt  Repository        [ apt packages]
   docker
   terraform  
