@@ -1,1 +1,28 @@
 
+                                    WHAT IS CONTAINERIZED SERVVER 
+Takes second to launch, light weight 
+Virtual machines take longer to launch. They are heavy weight eg ngnix serevr 
+** so any company you take containerization to it’s a big deal
+
+                     
+
+                        Mv tesla.wa tisla.war
+In maven I renamed tesla to tisla
+
+It is not  a good practice that when you want to access your application, you access them directly where endusers traffic goes directly to the application server.
+
+Sow we are going to create a proxy ngnix server, so its going to be acting a sour frontend proxy such that end users cannot talk directly, they must go through webserver
+
+Install ngnix
+1)	We want to install ngnix to act as a proxy which implies that enduser traffic will be routed by the ngnix webserver so ngnix is acting as a load balancer, he receives the traffic from clients/endusers and route it to our backend application and our application will talk to our data bases
+2)	We back up  the conf file by configuring the config file = sudo mv /etc/ngnix.conf  /etc/ngnix/ngnix
+Vi /etc/ngnix/ngnix.conf    and copy our tomcat private ip into it. Therefor I have this for my backend server
+19:45, in the backend, I have my ngnix server any traffic that comes it talks to the ngnix server and its route it to any of the tomcat servers
+
+3)	We ensure the configuration is valid by executing;ngnix –t 
+4)	Sudo ngnix –s reload but since I am already sudo ill run nginx –s 
+5)	Sudo system ctl restart ngnix
+6)	We check our browser if we can access ngnix server
+It says 502 bad gateway, its because thers a security in linux called selinux which is enforced at this stage 
+Setsebool  –P httpd
+Therefore we will disable the security by running: can_netwrk_connect true
