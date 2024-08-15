@@ -1,3 +1,7 @@
+disable salinex but its not working
+tried to setup ngnix but it says not suported
+
+
 
                                     WHAT IS CONTAINERIZED SERVVER 
 Takes second to launch, light weight 
@@ -42,7 +46,41 @@ The Question is :
              HOW  DOES IT LOAD BAL OUR TRAFFIC 
 
 The default option: t uses to bal traffic is called:
-Round robin:  Request/traffic is distributed evenly accross the servers , with the  
+Round robin:  Request/traffic is distributed evenly accross the servers , with server weight taken into consideration, ngnix will be routing traffic to this backend servers 
+depending on the load traffic will be distributed equally.
+
+
+
+26:00
+  OTHER METHODS INCLUDE
+
+Least connections:  A request is sent to the server with the least no of active connectors , also server weight is considered
+iP hash: eg, we can decide that Ip address from Africa let it go to appserver1, Ip address of America let it go to server2 etc
+the server to which a request is sent is determined from the client IP address. eg it can decide that any address that has a specific octcts, that is it comes from a specific
+destination should go to appserver one etc. thats is what is called ip hash.
+
+
+                        
+                                        HOW WE SUSTAIN THE MAINTENANCE PERIOD
+26:59
+if a server is down or undergoing maintenance/ upgrading it, vi the config file and write : "down" beside the server ip address
+Also for the server we want to allocate more traffic we will write "weight =4", 
+eg
+we have 5m requests/users, we can assign  1m to the other server with 8GB  and 4M to that server with 64GB, ie 4x the number of users
+
+load balancers helps to 
+load balancers
+                                                                    users >>> LB >>>> APP >>>> DB
+security: Acts like a layer of security ie if anyone is trying to hack into our app it can be stopped at this stage which is very important 
+
+
+
+
+
+
+
+
+
 
 
 
