@@ -135,6 +135,27 @@ my 6subnets/servers in all this availabity zones to ensure high availability
 if i have my ngnix webserver running in the public subnet, can route traffic to all the servers/ec2s since all the servers are in the same vpc they are in the same netwrk,
 45:39  so my ngnix can laod bal traffic to all servers or ec2s running in both private and public subnet
 
+43:07 But if we have vpc1 and vpc2 , to ensure that connection happens we are goin to do vpc pairing so that even though they are in diff netwrk the pairing puts them  in the 
+same netwrk that way you can still use a webserver to load bal traffic accross all your servers and this is the adv of using aws
+
+
+
+                                                      QUESTION
+47:00 ... if a user wants to access any of those applications, are they going to be using their individual ips or virtual ip of the ngnix 
+
+ANS:
+Before when users want to access their application they have to access individual servers ip but now we have to put all of them under one ngnix webserver, so all the traffic 
+via the ngnix webserver .
+they dont have to type https://3.090.240/app/ but now, mylandmark/register
+
+
+48:20
+
+A service in aws we are going to do 
+Route 53 = DNS  ( Domian Name Service )
+
+if you have dns, we go to our route 53 and create hosted 
+
 
 
 
