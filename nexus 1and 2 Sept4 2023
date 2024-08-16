@@ -187,7 +187,7 @@ mvn deploy: uploads the build artifacts to maven remote repository (nexus), bt b
     - validate  ( the file structure)
     - compile   ( the jave classes)
     - test       (run unit test cases)
-    - create package in target directory
+    - create (artifacts) package in target directory
     - Packages created in mavenlocalrepo   
     - uploads THE PACKAGE to Nexus (Maven remote-repo)
 
@@ -198,8 +198,27 @@ mvn deploy: uploads the build artifacts to maven remote repository (nexus), bt b
 
 QUESTION 
 How will MAVEN connect with nexus?
-maven and nexus intergration: 
+maven and nexus intergration:
 
+
+
+
+43:50   ******** nexus is called jivor type Nexus 
+
+51:16
+ ********* we can use scripting for package mgt
+
+54:45  ***** once i run this script , it will break once it switch to nexus user bc i am running the script as ec2user, ec2user is trying to run the script
+
+55:00    ******* therefore run the command one by one using package 
+
+1:07:59  we hv 2 scripts for it to work 
+next time run the 2script seperately to install nexus 
+
+etc replaces conf and it contains the configuration files
+
+
+sudo hostnamectl set-hostname 
 nexus Installation:
 -------------
  https://www.sonatype.com/download-oss-sonatype
@@ -215,14 +234,66 @@ nexus Installation:
  echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
  echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
 
+
+
+*********
+
+1:11
+Nexus Home directory:
+  /opt/nexus                                 *****it is where the nexus software is extracted
+
 http://54.85.4.8:8081/  
 default nexus login:
   userName = admin 
   password=admin123
 
-Nexus Home directory:
-  /opt/nexus 
-    bin  = binary files [nexus]   
+
+
+*******so to login = nexus public ip:8081/engrcecilia 
+  userName = admin 
+  password=admin123
+
+
+1:18
+*** to change port
+
+
+1:23:00
+
+ls /opt/nexus/etc 
+vim/opt/nexus/etc/nexus -default -properties
+to change nexus-content-path=/  to   /landmarktech
+then 
+
+
+
+1:37
+*********** we create maven-remote-repo in nexus , where we will upload our artifacts
+
+we create snapshots and releases Repo in Nexus
+when a job is being done, artifacts from the dev branch area
+
+1:42  stored in the sbapshots Repo  while artifacts from the master branch are uploaded in the releases repo
+
+in our environment we talk about the master branch but some company deploy from release branch, we deploy directly from the master branch 
+
+
+1:44:30
+maven
+
+
+
+
+
+
+
+
+
+
+
+
+
+   bin  = binary files [nexus]   
     lib  = 
     etc  = configuration files
              nexus-default.properties  
