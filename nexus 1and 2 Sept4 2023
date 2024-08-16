@@ -3,6 +3,10 @@ Who decides on codeQuality:
 
 
 
+sudo systemctl restart nexus
+
+                                  START
+
 SDLC
 WHy do  we add sonarqube in our software development life cycle
 
@@ -124,47 +128,72 @@ artifacts to be created depends on the project's language:
   pip --> is a is a package manager for python 
 ===============
 -----
+
+
+                                    HOW HAVE YOU APPLIED NEXUS IN YOUR ENVIRONMENT
+
 IQ: How have you applied Nexus in your environment?
+
+    have been able to setup and install 
     1. Installation and configuration of the nexus server in Redhat.  
     2. Creating maven-remote-repos[artifactories] in nexus   
     3. uploading java, NodeJs, etc. artifacts into Nexus
     5. retrieving packages from Nexus
     4. Securing the nexus server   
     5. troubleshooting build and uploading related issues  
+      Trying to integrate maven & configuring wrong credentials or wrong nexus IP address
 
 IQ: what is your experience with nexus?
     What problems have you encountered with Nexus and how did you   
     resolve it  .
 
-Nexus: Is an Open source Artifactory Repository
-       It is used to store and retrieve build artifacts
-       We can retrieve artifacts when needed
+       ********** As we are apply nexus now we are going to be encountering problems
+
+
+44:00   INstallation       port 8081
+45:20   to medium Redhat   Redhat
+51:47   ec2user to install
+54:12   it will stop to awitch user or run the installation as a seperate scripts
+
+                
+                                              
+
+                                     WHAT IS NEXUS
+
+Nexus: Is an Open source Artifactory Repository, It is used to store and retrieve build artifacts, We can retrieve artifacts when needed
        Nexus acts as a Disaster recovery server for maven    
 
-JFrog: Is an  Artifactory Repository - Licence
+JFrog: Is an  Artifactory Repository - it is Licence
        It is used to store and retrieve build artifacts 
 
 Amazon CodeArtifacts:
      It is used to store and retrieve build artifacts 
 
-We support Java based application dev't.
+
+********* in these application how do we create packages in maven 
+in maven we generally run the mvn package goal
+(We support Java based application dev't.)
+
+
 maven goals:
  mvn package  
     This will validate, compile, test and Creates
     artifacts in the target directory
- mvn install 
+
+mvn install 
    Creates and store artifacts in maven-local-repo & target directory
 
-mvn deploy: uploads the build artifacts to maven remote repository (nexus)
-    - validate
-    - compile
-    - test
+mvn deploy: uploads the build artifacts to maven remote repository (nexus), bt before it does this, it will first 
+    - validate  ( the file structure)
+    - compile   ( the jave classes)
+    - test       (run unit test cases)
     - create package in target directory
     - Packages created in mavenlocalrepo   
     - uploads THE PACKAGE to Nexus (Maven remote-repo)
 
 
 
+ 
                                    MAVEN / NEXUS INTEGRATION,  NEXUS INSTALLATION
 
 QUESTION 
