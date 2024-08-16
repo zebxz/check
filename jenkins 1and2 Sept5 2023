@@ -1,1 +1,53 @@
 
+27:14  this is the pipeline process
+jenkins automates the end to end process
+
+     
+we are managing java projects so we are using amven to do a build 
+
+10:00     stage1
+maven is going to be using maven repository concept  ie searcihng for dependencies in the maven central repo of central repo, it downloads the dependencies into maven server b4 it 
+can do a build 
+
+stage2 : maven clones by automation
+
+but its not a good security measure for the dependencies to be downloaded straighnt form the internet . it is not recommnded therfore we are making use of proxy server and we can 
+
+stage 3: test and build
+configure the maven proxy repo OR maven remote repo and this is found in nexus, so we can configure our proxy in nexus. therefpre the build server doesnt talk to the internet 
+directl to get dependencies rather it talks to the proxy .
+the proxy is configured such that it can download/get dependencies from the internet
+once our build is done we deploy in tomcat (war artifacts) in /opt/tomcat/webapps/ or in the webapps dir . so we can have webapps/teslar.war
+
+4)
+but before deploy to tomcat we are running code quality analysis 
+if this is a fail it prevents deploymnet to tomcat and developers will be informed to fix it. but if its a pass the good quality software can be deployed to the client
+environment.
+
+
+stage 5)
+but before we deploy to the client we upload packages in nexus/Jgrog
+
+stage6)
+we deploy in tomcat
+
+29:00
+in nexus we can create snapshot and realease artifacts
+Artifacts uploaded to the snapshots artifactory/repository is clone from the dev branch
+artifacts uploaded from to the release artifactory is cloned from the master branch but some company call it release branch 
+ie we are ready to deploy to production
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
