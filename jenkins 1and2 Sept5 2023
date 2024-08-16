@@ -149,14 +149,8 @@ what do you mean github is a source code manager
 
 
 
-56:27
 
-     JENKINS IS An automation tool
-its an open source continous integration (CI) Tool within in java
-
-
-
-    
+      
 
     Jenkins integration with:
    Git/Github  
@@ -166,10 +160,18 @@ its an open source continous integration (CI) Tool within in java
    tomcat  
    nginx webserver  
 
-Jenkins
-   Is an automation tool 
-   Is an open source continuous integration (CI) tool written in java.
 
+
+
+56:27
+
+     JENKINS IS An automation tool
+its an open source continous integration (CI) Tool within in java
+
+
+
+                                                 WHAT IS JENKINS AUTOMATION  ??
+ 
 What is Jenkins automating ?
   
 How do you use Jenkins for CI/CD automation ?
@@ -185,6 +187,7 @@ Financial Technology can perform the following;
 3. credit management 
 2. etc. 
 
+1:00 
 FinTech = Financial Technology can be use by any company.  
 POS Machine =   
   Banks     = TD / RBC / BOA / CHASE / Barclays / UBA / Ecobank / BICEC
@@ -223,12 +226,25 @@ POS Machine =
 
   auto = Tesla, Toyota, Mercedes, BMW, Honda, GMC, 
 
+
+  ****** FROm jenkins installation script 
+always start jenkins
+sudo systemctl  enable jenkins 
+start
+
+
+
+   *********** Saas ( software as a service) doesnt take much time like Iaas which requires server installation
+
+
+
+
 Explain your experience as a DevOps Engineer?
 I have over 6 years experience managing FinTech clients. 95%
 
 1/2/3/4/5 =    
 
-What is the difference b/w github and nexus??   
+What is the difference b/w github and nexus??       They are both softwares 
   - infrastructure difference 
       - GITHUB is a SaaS tool ---  server Installation NOT required    
       - Nexus is an IaaS tool ---  server Installation required        
@@ -240,15 +256,11 @@ What is the difference b/w github and nexus??
       - GITHUB = Microsoft 
       - Nexus  = Sonatype Nexus    
 
-What is the difference b/w Sonarqube and SonarCloud??   
-  - infrastructure difference 
-      - SonarCloud is a SaaS tool ---  server Installation NOT required    
-      - Sonarqube is an IaaS tool ---  server Installation required   
-
-Explain your experience in SaaS solutions? 
-   = Github, SonarCloud, 
+******* but github is a software as a service while Nexus is an infrastructure as a service, Nexus needs an infrastructure to install nexus software 
 
 
+1;14:54   Jenkins can be installed in multiple platforms 
+linux, windows, MacOs, Solaris
 
 Jenkins, is an open source Continuous Integration (ci/cd)
 tool written in Java. 
@@ -258,18 +270,46 @@ Jenkins can be installed in Multiple Platforms:
   macOS 
   Solaris 
 
+
+***** not all software can be installed on all platform eg Ansible 
 ansible  can be installed in Linux Platforms ONLY  : 
+
+
+
 Explain your EXPERIENCE in open source Technologies?? :
   Linux OS, maven, tomcat, sonarQube, Nexus, Nginx, Git, GitHub  
+
+
+
+
+What is the difference b/w Sonarqube and SonarCloud??   
+  - infrastructure difference 
+      - SonarCloud is a SaaS tool ---  server Installation NOT required    
+      - Sonarqube is an IaaS tool ---  server Installation required   
+
+
+
+Explain your experience in SaaS solutions? 
+   = Github, SonarCloud, 
+
+
+
+
+
 
 IQ: Explain you EXPERIENCE in applying Jenkins?? 
 Ticket001:
 Install Jenkins in redhat9 server (ec2 instance in aws)
    https://github.com/LandmakTechnology/package-management
    https://www.jenkins.io/doc/book/installing/   :
-   www.jenkins.io
+   www.jenkins.io                             **********    the website of jenkins , this is the official document for jenkins 
    https://www.jenkins.io/doc/book/installing/linux/
 
+Resource2: where can i go to either i can go to the company documentation
+
+
+
+1:37:34     *********  jenkins installation script  (jenkins-Redhat-install.sh)
 
 sudo wget -O /etc/yum.repos.d/jenkins.repo \
     https://pkg.jenkins.io/redhat-stable/jenkins.repo
@@ -309,33 +349,46 @@ public-ip:  34.219.46.160
 Jenkins portNumber: 8080  
 34.219.46.160:8080  
 
-initial password = /var/lib/jenkins/secrets/initialAdminPassword
- cat /var/lib/jenkins/secrets/initialAdminPassword
+
 
 
   35.92.54.50
 
 
+jenkins was successfully installed with a script bc we did not have to give access to another user 
+
+
+After installation, to get password, to unloack jenkins :
+  initial password =  /var/lib/jenkins/secrets/initialAdminPassword
+ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+then install suggested pluggins
+
 ====
 Installation of CloudBees Jenkins: ENTERPRISE  -EE
 
 
+
+1:45
 IQ = Have you managed Continuous Delivery and Continuous Deployment projects??
 YES:
- Internal projects: In house  --> Continuous Deployment
- External projects: Clients  ---> Continuous Delivery
+ Internal projects: In house  --> Continuous Deployment, this is automated
+ External projects: Clients  ---> Continuous Delivery,  ther a gateway where the cx will need to accept that it is waht they want before it is deployed
+
+
 
 Nature of application:
   We support critical applications for a FinTech/e-commerce CLIENTS 
 
 DevOps/JENKINS is all about automation   
-7Cs:
+
+7Cs:  to take note of
    CD,t---> Continuous Development [Git/GitHub/IDEs /GitBranch/gitTag
    
    CI --> Continuous Integration [Git/GitHub/Jenkins/maven/sonarqube/nexus] 
               [Build and Release Engineering]
    
-   CD --> Continuous Delivery [build=packages/artifacts-->testing/UAT--manualApproval--- prod]
+   CD --> Continuous Delivery [build=packages/artifacts-->testing/UAT--manualApproval--- prod]   but wahen it goes to auto from UAT/testing = continous deployment
    
    CD --> Continuous Deployment [build=packages/artifacts-->testing/UAT--auto--- prod]
    
@@ -345,6 +398,16 @@ DevOps/JENKINS is all about automation
 
    CS --> Continuous security
    CT --> Continuous Testing 
+
+
+
+2:03:40
+click new item 
+enter new item name 
+click freestyle project, then ok 
+after which select project name 
+then configure 
+
 
 Tesla Client:
    java web applications    
@@ -357,18 +420,24 @@ Ticket002:
  project repo: https://github.com/LandmakTechnology/maven-web-application
  private project repo: https://github.com/LandmakTechnology/maven-web-app
 
+
 1. Jenkins Git Integration -- 
       Ensure that Git plugins/Software is installed in the Jenkins server   
       sudo yum install git -y  
-2. Jenkins GitHub Integration
+
+first and foremost, we are creating the job  -Github
+2. we need Jenkins Git Integration  ie, installing git in jenkins
+   jenkins  Github   - jenkins need to integrate with git 
       configure github login credentials in the Jenkins server:  
+
+******** to access jenkins
         userName: legah2045   
         password: Admin@123  
         PERSONAL Access token:  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
-3. Jenkins maven Integration 
+b. Jenkins maven Integration 
       Jenkins-Dashboard--manage Jenkins ---Tools and configure --maven   
 
-4. Jenkins sonarQube Integration   mvn sonar:sonar :
+c. Jenkins sonarQube Integration   mvn sonar:sonar :
 ----------------------------------------------  
 NB: Your SonarQube server must be running 
     sudo su - sonar 
@@ -384,14 +453,14 @@ NB: Your SonarQube server must be running
 
       <Property>
 
-2. Open required ports in Jenkins server to allow traffic from jenkins server
+ii. Open required ports in Jenkins server to allow traffic from jenkins server
          port 9000 should be open in the firewall/security group
   or Install and configure JaCoCo plugin in Jenkins UI:
 
-Jenkins Nexus Integration;  mvn deploy:
+d) Jenkins Nexus Integration;  mvn deploy:
 Upload build artifacts:
-5. Jenkins nexus  Integration
-6. Jenkins tomcat Integration 
+  Jenkins nexus  Integration
+E) Jenkins tomcat Integration 
 
 
 
