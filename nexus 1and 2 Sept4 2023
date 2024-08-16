@@ -5,6 +5,8 @@ Who decides on codeQuality:
 
 sudo systemctl restart nexus
 
+ what is 400 error and 500 error  , 400 error, there was an error with my ip address, i didnt add  /engrcecilia for nexus server
+
                                   START
 
 SDLC
@@ -333,7 +335,27 @@ we can place our nexus server in a diff AZ from where our maven server is runnin
 
 
 
+** 1:05:40
+we want to create a service to run nexus ie we want to run nexus as a service 
 
+
+*** why is the symbolic path we die in tomcat diff from that of nexus 
+
+**** why do we have to create the dir /etc/unit.d/nexus
+
+inside  /etc/init.d directory we are creating a link for nexus, which is the file to start/run nexus
+
+ALWAYS START NEXUS
+sudo su - Nexus
+cd/opt
+nexus nexus: sudo systemctl enable nexus 
+then start nexus 
+
+
+cd  /opt
+ls nexus/
+ls nexus/bin
+ls nexus/bin/nexus                     **********  file  to start/run nexus
 
 
 
