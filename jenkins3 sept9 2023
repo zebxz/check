@@ -3,15 +3,17 @@
 we dont have webhook integration with sonarqube but sonarcloud
 
 
+
+D)
 Jenkins Nexus Integration;  mvn deploy:
 ======================================
 Upload build artifacts:
 http://34.217.27.159:8081/    
 
-1. Install, configure and start the nexus nexus server  
+i. Install, configure and start the nexus nexus server  
    https://github.com/LandmakTechnology/package-management/tree/master/nexus-installation
 
-2. Create releases and snapshots artifactory repositories in nexus-UI for artifacts upload  
+11. Create releases and snapshots artifactory repositories in nexus-UI for artifacts upload  
    http://34.217.27.159:8081/  
         default-username = admin  
         default-password = admin123
@@ -21,11 +23,25 @@ http://34.217.27.159:8081/
     http://34.217.27.159:8081/repository/tesla-snapshots/
     snapshots artifactories is use to upload artifacts when build is from the dev branch
 
-3. modify 'distributionManagement' tag with nexus repos details  in  pom.xml in github
+iii. modify 'distributionManagement' tag with nexus repos details  in  pom.xml in github
         vi pom.xml
         distributionManagement>
- http://34.217.27.159:8081/repository/tesla-releases/
- http://34.217.27.159:8081/repository/tesla-snapshots/ 
+then in jenkins server 
+configure -Add build step- invoke top level maven
+version :maven 3.9.4 - Goal deploy , then save and build now 
+
+*********** from jenkins jenkins our prod is 
+/var/lib/jenkins
+ls
+we see tools and other files
+ls tools 
+hudson.task
+
+
+44:20
+ he ran sudo su-jenkins but it didnt change so he ran sudo vi /etc/passwd and changed false to bash
+change the jenkins server shell to /bin/bash
+
 
    <distributionManagement>
       <repository>
@@ -49,29 +65,16 @@ com.mt:maven-web-application:pom:0.0.2-20230909.235101-1
 from/to nexus (http://34.217.27.159:8081/repository/tesla-snapshots/): 
 status code:  401, reason phrase: Unauthorized (401) -> [Help 1]
 
-4. modify /maven/conf/setting.xml in JENKINS-server with nexus login credentials  
-   =# vi /nexus/conf/setting.xml
-    http://34.219.46.160:8080/
 
-[ec2-user@jenkins ~]$ whoami
-ec2-user
-[ec2-user@jenkins ~]$
-[ec2-user@jenkins ~]$ sudo su - jenkins
-Last login: Tue Sep  5 21:32:17 EDT 2023 on pts/2
-[ec2-user@jenkins ~]$
-[ec2-user@jenkins ~]$ whoami
-ec2-user
-[ec2-user@jenkins ~]$ grep jenkins /etc/passwd
-jenkins:x:987:987:Jenkins Automation Server:/var/lib/jenkins:/bin/false     :
-[ec2-user@jenkins ~]$ grep ec2-user /etc/passwd
-ec2-user:x:1000:1000:Cloud User:/home/ec2-user:/bin/bash                    :
-sudo vi /etc/passwd  = change the jenkins server shell to /bin/bash  
-
-4. modify /maven/conf/setting.xml in JENKINS-server with nexus login credentials  
-   =# vi /nexus/conf/setting.xml
+               **** ill use private ip when am doing this again
+47:34
+iv. modify /maven/conf/setting.xml in JENKINS-server with nexus login credentials  
+   =# vi /nexus/conf/setting.xml          ******(Relative path)
     http://34.217.27.159:8081/
-vi tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml
+vi tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml              ********  (Absolute path)
 vi /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml
+
+******* before the server closing tag, we add another server details 
 
             <server>
                 <id>nexus</id>
@@ -79,7 +82,7 @@ vi /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/s
                 <password>admin123</password>
             </server>
 
-5. Open required ports[8081] in Nexus server firewall/SG to allow traffic from jenkins server
+v. Open required ports[8081] in Nexus server firewall/SG to allow traffic from jenkins server
 
 
 6. Jenkins tomcat Integration   :
