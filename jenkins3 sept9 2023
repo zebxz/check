@@ -10,7 +10,11 @@ we dont have webhook integration with sonarqube but sonarcloud
   1:27:14  ..... task to do                           
 
 
-                                      START
+                                   
+
+                                              START
+
+  AUTOMATING BUILD IN JENKINS 
 
 
 25:00
@@ -148,26 +152,24 @@ shows: [var/lib/jenkins/workspace/javawebapp/target/teslar.war]
 in our project repo, select src/main-webapp-jsps-homejsps
 and make the description changes and commit changes
 
+                                         select
+dashboard-manage jenkins-pluggins-search available pluggin
+Type dep in search bar &choose deploy to container & install
+dashboard- click on project, configure- select add post build action
+deploy war/ear to container- WAR/Ear files:target/*war
+select Add container-select Tomcat9x
+credentials, select, add:jenkins then select the tomcat credentials just created
+ID & description: tomcat-credentials/ username (passwd) is the name of user added in tomcat user.xml
+copy tomcat server url&paste, apply save - build now
 
+
+1:27:30
+to copy the configuration of another project
+select new item-write the name of the project to be copied in "copy from"
+select "source code mgt to see the replica & buildnow
   http://34.219.51.216:8177/
 
-  Uploaded to nexus: http://34.217.27.159:8081/repository/tesla-snapshots/com/mt/maven-web-application/maven-metadata.xml (287 B at 4.9 kB/s)
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.226 s
-[INFO] Finished at: 2023-09-09T20:27:49-04:00
-[INFO] ------------------------------------------------------------------------
-[DeployPublisher][INFO] Attempting to deploy 1 war file(s)
-[DeployPublisher][INFO] Deploying /var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war 
-     to container Tomcat 9.x Remote with context null
-  Redeploying [/var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war]
-  Undeploying [/var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war]
-  Deploying [/var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war]
-Finished: SUCCESS
-
-    http://34.219.51.216:8177/tesla 
-
+ 
 Ticket003:
 tesla-webapp2023 PROJECT: =  
 Onboard a new project for Tesla  web-app =  
@@ -197,6 +199,9 @@ Requirements:
   git clone https://github.com/LandmakTechnology/maven-web-app          = privateRepo    
   git clone https://github.com/LandmakTechnology/maven-web-application  = publicRepo
 
+
+                                     
+                                                     AUTOMATING BUILD IN JENKINS 
 ========================
 How do you automate builds in Jenkins?   
 ======================================
