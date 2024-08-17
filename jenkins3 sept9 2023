@@ -209,10 +209,11 @@ Build Now:  is a limited measure of automation
 
 Automate builds using build triggers.
 ===================================== 
-1. build periodically = Timer [cronjob / crontab ] =   :
+                         we can use a timer   1:33:17
+1. build periodically = Timer [cronjob / crontab ] =   :    ******** Build periodically is triggered by the timer
      run this job every mid night [database backup]  
      run this job every 2am       [database backup] 
-     run this job every minute = * * * * *
+     run this job every minute = * * * * *                        ****** to build every minute 
      run this job every HOUR   = H * * * * 
         Do you really mean "every minute" when you say "* * * * *"? 
         Perhaps you meant "H * * * *" to poll once per hour
@@ -221,24 +222,54 @@ Automate builds using build triggers.
    Started by user landmartech33  
    Running as SYSTEM
 
-   use cases:
+   use cases for build periodically:
      database backup
      system Monitoring   
      system update   
-     application performance Monitoring
+     application performance Monitoring   (apm)
+
+
+1:35:35
+if u are doing software builds where developers are creating new version of the application, they are changing stuff constantly, we can configure pull SCM 
 
 2. poll SCM - Timer + Changes in SCM via   :
+  configure - triggers:pull SCM 
+   In schedule :    *************************  apply and save
      * * * * * Every minute Jenkins will check for changes in the src to trigger a build  
      H * * * * Every hour Jenkins will check for changes in the src to trigger a build
-   use cases:
+  
+use cases:
      Software builds 
      application build and Deployment
      Started by an SCM change
+   
 
      Started by user: LandmarkTechnologies = BuildNow  
      Started by timer: build periodically 
      Changes in SCM  : pollSCM
 
+when we configure pull SCM , a build will be triggered but this only happens if theres a new version of the application
+
+******* so i have a job java base fintech project in jenkins and bc i hv configured pull SCM, every minute will make a REq IN GITHUB  searching for new version to do a 
+a build  ( its all about versiong) if theres no new version , it doesnt do a build .    **** scm changes ie changes in SCM
+
+
+
+                           New version
+   SCM/Github     <---------------------------                  jnekins
+repo/java based                                                  ci/cd
+Src/unit test        -------------------------------------->    java base
+pom.xml                                                          fintech
+                                                                 project
+
+
+
+
+
+
+
+
+1:45
 3. GitHub-webhook :
    GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
      
@@ -272,4 +303,6 @@ Automate builds using build triggers.
 
 
 
-       
+       ****** 1:55:51
+webhook doesnt work with sonarqube
+webhook is the fastes of the triggers it happens in seconds, once thers a new version 
