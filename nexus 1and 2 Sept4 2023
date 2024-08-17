@@ -1,5 +1,5 @@
 SDLC, WHAT DO WE CONSIDER WHEN IT COMES TO A QUQLITY SOFTWARE, NEXUS, DISASTER MGT/DISASTER RECOVERY,  MAVEN / NEXUS INTEGRATION,  NEXUS INSTALLATION, 
-Who decides on codeQuality:
+Who decides on codeQuality:,   What’s the difference between code coverage and code quality.  
 
 
 
@@ -7,7 +7,9 @@ sudo systemctl restart nexus
 
  what is 400 error and 500 error  , 400 error, there was an error with my ip address, i didnt add  /engrcecilia for nexus server
 
-                                  START
+                                 
+
+                                                 START
 
 SDLC
 WHy do  we add sonarqube in our software development life cycle
@@ -366,21 +368,33 @@ ls nexus/bin/nexus                     **********  file  to start/run nexus
     etc  = configuration files
              nexus-default.properties  
 
-# Jetty section
-application-port=8081
-application-host=0.0.0.0
-nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-requestlog.xml
-nexus-context-path=/
+
+Who decides on codeQuality:
+===========================
+Code Quality is generally a Team decision =   
+Sprint planning meeting  
+1. 25 rules --- Quality Profiles = javaAppQP    
+2. Conditions -- Quality GATE = 
+   code coverage => 90%
 
 
-   http://54.85.4.8:8081/
+Is nexus built from a different env't  :
+  We leverage aws cloud  servers = AZ  
+  us-east-1  = NV [AZ1 , ... AZ6]  
 
-http://54.85.4.8:8081/landmarktech   
 
-http://54.85.4.8:8181/mylandmarktech     
 
-http://54.85.4.8:8081/
- 
+What’s the difference between code coverage and code quality
+
+2:31:24    nexus
+ we can decide that 25rules - have to be set for our quality profiles diff between code quality and code coverage
+2:37:40 
+code quality is the umbrella that code coverage comes under
+code quality means that developers should write good software, should take their time in writing their codes and ensure the SOftware meets all our quality expectations and
+code coverage is part of code quality and it means asking what is the proportion of unittestcases written by developers 
+eg
+10lines of code means they should write 10unit test cases.
+
 
 
 
@@ -421,17 +435,3 @@ maven, nexus integration:
 
 com/mt/maven-web-application/0.0.3-SNAPSHOT/maven-web-application-0.0.3-20221211.225747-2.war
 
-Who decides on codeQuality:
-===========================
-Code Quality is generally a Team decision =   
-Sprint planning meeting  
-1. 25 rules --- Quality Profiles = javaAppQP    
-2. Conditions -- Quality GATE = 
-   code coverage => 90%
-
-
-Is nexus built from a different env't  :
-  We leverage aws cloud  servers = AZ  
-  us-east-1  = NV [AZ1 , ... AZ6]  
-
-  What’s the difference between code coverage and code quality
