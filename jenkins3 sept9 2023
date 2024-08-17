@@ -2,8 +2,15 @@
 
 we dont have webhook integration with sonarqube but sonarcloud
 
+***** Always remember to change tomcat url in jenkins container and snapshot/url in pom.xml releases
 
 
+58:46, i tried catalina but it says no such file/dir
+
+                             START
+
+
+25:00
 D)
 Jenkins Nexus Integration;  mvn deploy:
 ======================================
@@ -75,12 +82,18 @@ vi tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml      
 vi /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml
 
 ******* before the server closing tag, we add another server details 
+add under the arrow 
+<servers> nexus-admin-admin123 then we can go to jenkins and click configure 
+then check nexus server to see the created artifacts
+
+
 
             <server>
                 <id>nexus</id>
                 <username>admin</username>
                 <password>admin123</password>
             </server>
+
 
 v. Open required ports[8081] in Nexus server firewall/SG to allow traffic from jenkins server
 
