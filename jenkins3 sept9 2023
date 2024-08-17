@@ -272,25 +272,35 @@ pom.xml                                                          fintech
 1:45
 3. GitHub-webhook :
    GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
+
+****** so in github, we will create a webhook, if thers any change inour application , software or code, github will notify jenkins so therfore no need for a timer 
+if thers a new version of the applictaion , if developers commit new version 
+we can also configure webhook for something else eg if we want to do code quality analysis with sonarcloud , we can configure github webhook so that if developers commit new
+version of the applictaion, code quality analysis will be executed in sonarcloud and report will be created
+
+1:48:00
+we will know thers a new version bc of new commits or pushes, the webhook will be triggered
      
      Jenkins Server url = http://34.219.46.160:8080/
      GitHub-webhook     = http://34.219.46.160:8080/github-webhook/ 
 
-    use cases:      
+    use cases for github webhook:      
      Software builds 
      application build and Deployment
      Started by GitHub push by legah2045 
 
-    Started by GitHub push by legah2045
 
+under automation we can have 
 4. Build other projects:  
-     1. cloneCode from SCM   
-     2. RunUnitTesting   
+eg
+     1. cloneCode from SCM    triggers:
+     2. RunUnitTesting   , triggers:
      3. CreateArtifacts  
      4. Run CodeQualityAnalysis  
      5. UploadArtifacts if 4 above is successful   
      6. deploy application to UAT environment     
 
+2:00
 5. Build after other projects:  
      Upstrean project  
        1. app-Test   
