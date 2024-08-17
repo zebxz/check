@@ -284,10 +284,25 @@ version of the applictaion, code quality analysis will be executed in sonarcloud
 
 1:48:00
 we will know thers a new version bc of new commits or pushes, the webhook will be triggered
-     
-     Jenkins Server url = http://34.219.46.160:8080/
-     GitHub-webhook     = http://34.219.46.160:8080/github-webhook/ 
 
+
+1:50
+      HOW T O CREATE WEBHOOK
+      
+GitHub-webhook     = http://jenkins public ip:8080/github-webhook/ 
+configure - build triggers- select github hook trigger
+                                            (up)
+in my github account, the settings of my project - seslect webhooks-add webhook
+paste the jenkins webhook url content type: applictaion/json
+ http:///34.219.46.160:8080/github-webhook/
+                     ie if thers a new version
+select the events (push the event) , add webhook
+
+then to confirm the webhook is working:
+in jenkins copy project url into the browser: check webhooks to see the tick mark 
+
+     
+  
     use cases for github webhook:      
      Software builds 
      application build and Deployment                              configuration
