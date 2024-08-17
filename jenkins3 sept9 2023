@@ -1,1 +1,226 @@
 
+Jenkins Nexus Integration;  mvn deploy:
+======================================
+Upload build artifacts:
+http://34.217.27.159:8081/    
+
+1. Install, configure and start the nexus nexus server  
+   https://github.com/LandmakTechnology/package-management/tree/master/nexus-installation
+
+2. Create releases and snapshots artifactory repositories in nexus-UI for artifacts upload  
+   http://34.217.27.159:8081/  
+        default-username = admin  
+        default-password = admin123
+    http://34.217.27.159:8081/repository/tesla-releases/ 
+    releases artifactories is use to upload artifacts when build is from the master branch 
+
+    http://34.217.27.159:8081/repository/tesla-snapshots/
+    snapshots artifactories is use to upload artifacts when build is from the dev branch
+
+3. modify 'distributionManagement' tag with nexus repos details  in  pom.xml in github
+        vi pom.xml
+        distributionManagement>
+ http://34.217.27.159:8081/repository/tesla-releases/
+ http://34.217.27.159:8081/repository/tesla-snapshots/ 
+
+   <distributionManagement>
+      <repository>
+        <id>nexus</id>
+        <name>Landmark Technologies Releases Nexus Repository</name>
+        <url>http://34.217.27.159:8081/repository/tesla-releases/</url>
+      </repository>
+      
+      <snapshotRepository>
+        <id>nexus</id>
+        <name>Landmark Technologies Snapshot Nexus Repository </name>
+        <url>http://34.217.27.159:8081/repository/tesla-snapshots/</url>
+      </snapshotRepository>
+      
+  </distributionManagement>
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin:3.1.1:deploy
+ (default-deploy) on project maven-web-application: 
+Failed to deploy artifacts: Could not transfer artifact 
+com.mt:maven-web-application:pom:0.0.2-20230909.235101-1 
+from/to nexus (http://34.217.27.159:8081/repository/tesla-snapshots/): 
+status code:  401, reason phrase: Unauthorized (401) -> [Help 1]
+
+4. modify /maven/conf/setting.xml in JENKINS-server with nexus login credentials  
+   =# vi /nexus/conf/setting.xml
+    http://34.219.46.160:8080/
+
+[ec2-user@jenkins ~]$ whoami
+ec2-user
+[ec2-user@jenkins ~]$
+[ec2-user@jenkins ~]$ sudo su - jenkins
+Last login: Tue Sep  5 21:32:17 EDT 2023 on pts/2
+[ec2-user@jenkins ~]$
+[ec2-user@jenkins ~]$ whoami
+ec2-user
+[ec2-user@jenkins ~]$ grep jenkins /etc/passwd
+jenkins:x:987:987:Jenkins Automation Server:/var/lib/jenkins:/bin/false     :
+[ec2-user@jenkins ~]$ grep ec2-user /etc/passwd
+ec2-user:x:1000:1000:Cloud User:/home/ec2-user:/bin/bash                    :
+sudo vi /etc/passwd  = change the jenkins server shell to /bin/bash  
+
+4. modify /maven/conf/setting.xml in JENKINS-server with nexus login credentials  
+   =# vi /nexus/conf/setting.xml
+    http://34.217.27.159:8081/
+vi tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml
+vi /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.4/conf/settings.xml
+
+            <server>
+                <id>nexus</id>
+                <username>admin</username>
+                <password>admin123</password>
+            </server>
+
+5. Open required ports[8081] in Nexus server firewall/SG to allow traffic from jenkins server
+
+
+6. Jenkins tomcat Integration   :
+============================= 
+ This is required for web application Deployment in the tomcat webapps directory
+1. Your tomcat server must be confired and running.   
+     curl -v 34.219.51.216:8080  
+     http://34.219.51.216:8080 
+     ps -ef | grep tomcat  
+     # Start tomcat if not running  
+     sh startup.sh  
+     sh /opt/tomcat9/bin/startup.sh  
+     sh catalina.sh start   
+     sh /opt/tomcat9/bin/catalina.sh start 
+
+   http://34.219.51.216:8177/ 
+     curl -v 34.219.51.216:8177  
+     http://34.219.51.216:8177  
+
+2. INSTALL 'Deploy to container' Plugin on Jenkins UI
+   This plugin allows you to deploy a war to a container after a successful build. 
+   Plugins extends the functionality of jenkins for automation
+   server address = http://34.219.51.216:8177 
+
+3. ADD A TOMCAT USER in /opt/tomcat9/conf/tomcat-users.xml 
+   sudo vi /tomcat9/conf/tomcat-users.xml
+   <user username="myLandmark" password="admin123" roles="manager-gui,admin-gui,manager-script"/>
+   <user username="landmark" password="admin123" roles="manager-gui,admin-gui,manager-script"/>
+
+  http://34.219.51.216:8177/
+
+  Uploaded to nexus: http://34.217.27.159:8081/repository/tesla-snapshots/com/mt/maven-web-application/maven-metadata.xml (287 B at 4.9 kB/s)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.226 s
+[INFO] Finished at: 2023-09-09T20:27:49-04:00
+[INFO] ------------------------------------------------------------------------
+[DeployPublisher][INFO] Attempting to deploy 1 war file(s)
+[DeployPublisher][INFO] Deploying /var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war 
+     to container Tomcat 9.x Remote with context null
+  Redeploying [/var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war]
+  Undeploying [/var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war]
+  Deploying [/var/lib/jenkins/workspace/tesla-javaWebApp/target/tesla.war]
+Finished: SUCCESS
+
+    http://34.219.51.216:8177/tesla 
+
+Ticket003:
+tesla-webapp2023 PROJECT: =  
+Onboard a new project for Tesla  web-app =  
+Create a Jenkins job to test, build and deploy the application to a tomcat server
+configure build triggers to automate the build process   
+Requirements:
+  1. Create Teams in our GitHub company a/c add and assign member's roles and tasks
+  2. Create a github repository for the  project  
+  3. share the repository details with Team members and developers for Source Code Mgt in SCM  
+  4. Install and configure:
+      jenkins SERVER setup for ci/cd Automation
+      setup jenkins-maven integration to automate builds   
+      setup jenkins-SonarQube integration to automate CodeQualityAnalysis  
+      setup jenkins-nexus integration to automate artifacts uploads     
+      setup jenkins-tomcat integration to automate application Deployment
+      setup nginx as web server for secure application access by end users  
+  6. Create a Jenkins job for the project  
+  7. configure Jenkins:
+        git Integration
+        GitHub  Integration
+        maven Integration  
+        SonarQube Integration  
+        nexus integration  
+        tomcat integration  
+        notification [slack, email]
+
+  git clone https://github.com/LandmakTechnology/maven-web-app          = privateRepo    
+  git clone https://github.com/LandmakTechnology/maven-web-application  = publicRepo
+
+========================
+How do you automate builds in Jenkins?   
+======================================
+Build Now:  is a limited measure of automation  
+
+Automate builds using build triggers.
+===================================== 
+1. build periodically = Timer [cronjob / crontab ] =   :
+     run this job every mid night [database backup]  
+     run this job every 2am       [database backup] 
+     run this job every minute = * * * * *
+     run this job every HOUR   = H * * * * 
+        Do you really mean "every minute" when you say "* * * * *"? 
+        Perhaps you meant "H * * * *" to poll once per hour
+
+   Started by timer:
+   Started by user landmartech33  
+   Running as SYSTEM
+
+   use cases:
+     database backup
+     system Monitoring   
+     system update   
+     application performance Monitoring
+
+2. poll SCM - Timer + Changes in SCM via   :
+     * * * * * Every minute Jenkins will check for changes in the src to trigger a build  
+     H * * * * Every hour Jenkins will check for changes in the src to trigger a build
+   use cases:
+     Software builds 
+     application build and Deployment
+     Started by an SCM change
+
+     Started by user: LandmarkTechnologies = BuildNow  
+     Started by timer: build periodically 
+     Changes in SCM  : pollSCM
+
+3. GitHub-webhook :
+   GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
+     
+     Jenkins Server url = http://34.219.46.160:8080/
+     GitHub-webhook     = http://34.219.46.160:8080/github-webhook/ 
+
+    use cases:      
+     Software builds 
+     application build and Deployment
+     Started by GitHub push by legah2045 
+
+    Started by GitHub push by legah2045
+
+4. Build other projects:  
+     1. cloneCode from SCM   
+     2. RunUnitTesting   
+     3. CreateArtifacts  
+     4. Run CodeQualityAnalysis  
+     5. UploadArtifacts if 4 above is successful   
+     6. deploy application to UAT environment     
+
+5. Build after other projects:  
+     Upstrean project  
+       1. app-Test   
+       2. app-Build+Release
+       3. app-deployment-UAT/QA  
+       4. app_deployment-Production   
+       5. app_apm
+       6. app-logMGT  
+       7. app-discovery[webSevers/Services]    
+
+
+
+       
