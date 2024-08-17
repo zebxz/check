@@ -104,11 +104,17 @@ v. Open required ports[8081] in Nexus server firewall/SG to allow traffic from j
 6. Jenkins tomcat Integration   :
 ============================= 
  This is required for web application Deployment in the tomcat webapps directory
-1. Your tomcat server must be confired and running.   
+i. Your tomcat server must be confired and running.   
+
+  On CLI : 
      curl -v 34.219.51.216:8080  
+
+On browser:
      http://34.219.51.216:8080 
+
+OR: grep
      ps -ef | grep tomcat  
-     # Start tomcat if not running  
+     # Start tomcat if not running             ********* with my symbolic path i run starttomcat
      sh startup.sh  
      sh /opt/tomcat9/bin/startup.sh  
      sh catalina.sh start   
@@ -118,12 +124,12 @@ v. Open required ports[8081] in Nexus server firewall/SG to allow traffic from j
      curl -v 34.219.51.216:8177  
      http://34.219.51.216:8177  
 
-2. INSTALL 'Deploy to container' Plugin on Jenkins UI
-   This plugin allows you to deploy a war to a container after a successful build. 
+ii. INSTALL 'Deploy to container' Plugin on Jenkins UI
+   This plugin allows you to deploy a war to a container after a successful build. , without pluggins we are unable to deploy to tomcat
    Plugins extends the functionality of jenkins for automation
    server address = http://34.219.51.216:8177 
 
-3. ADD A TOMCAT USER in /opt/tomcat9/conf/tomcat-users.xml 
+iii. ADD A TOMCAT USER in /opt/tomcat9/conf/tomcat-users.xml 
    sudo vi /tomcat9/conf/tomcat-users.xml
    <user username="myLandmark" password="admin123" roles="manager-gui,admin-gui,manager-script"/>
    <user username="landmark" password="admin123" roles="manager-gui,admin-gui,manager-script"/>
