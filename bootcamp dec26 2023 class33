@@ -185,6 +185,17 @@ so if theres a problem check the logs
 
 
 
+58:00
+    Thank you for this question
+
+in my env i am incharge of manging artifacts , and as part of my job, i set up my nexus artifactory  by creating a nexus serevr, ensuring that nexus is fully installed, 
+ensure thats its running as expected, i create artifactories, repositories in nexus n i use the artifcatory  repository url to modify my project file which is pom.xml,
+this wil permit us to upload artifacts into this artifcatories, when we build frm the development branch, artifacts are uploaded into the nexus releases repository
+when we build form the master or the relaese branch, artifacts are uploaded into the release repository
+i was tasked to upload some artifacts into the release repository and i realised for some reason i kept getting build fail and when i checked the logs i realised i was using 
+the wrong version in my pom.xml, instaed of ensuring that the versioning is tagged to releases it was tagged to snapshot, so i quickly went to my pom.xml modified the version
+used the corret version which was snapshot and once i had to rebuld again via my pipeline that failure never existed because it was now uploading artifacts into the snapshot
+repository that was expected.
 
 
 
