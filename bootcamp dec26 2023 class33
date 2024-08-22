@@ -78,6 +78,28 @@ pat of k8
 
 
 29:00
+                 SETTING UP A CL8 USING KOPS 
+   Walk me tru your kops kubernetes cluster setup
+
+thnk u so much fo rthis question 
+Kops is a software that permits us to deploy a production ready k8 cl8 in aws and other platforms
+    ******* this is a generic definition, u hv to narrow down your explanantion to your environment 
+
+in our env we hv setup our kops cl8 server using ubuntu   (( bc it doesnt mean that its only ubnuntu server that u can deploy kops on ) 
+in my env i have been tasked to setup a kops cl8 on an ubuntu server. and for that to happen, the kops software needs permission to be able to create the entire cl8  ie 
+the worker n the master node in aws, such that when we run the command:
+
+ kops create cluster --$NAME
+
+this will create worker node and master node 
+creates VPC with all components
+it creates auto saclling group (ASG) for workernodes and masternodes
+creates ELB for the apiServer
+Creates launch templates for workernode and masternode
+creates dynamic storage classes
+it uses s3 as a kopstatestore   ie kops state store is in S3
+
+
 
 
 
