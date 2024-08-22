@@ -1,5 +1,42 @@
 
 12:36 to 16:12
 
-your explanation when it comes to migration from monolecthic to micro services
+
+XPLAIN THE K8 ARCHITECTURE
+
+k8 is a grp of servers that are working together to be able to ochestrate containerize applications, its made up of a control plane & worker node, the control planee comes with
+components line the API server which is the main adminstrative point and the entry point into the cl8 & it does generally authentication & authoriztion & it ensures that whatevr
+Req GETS into the cl8 is been made by an authorized & authenticated individual, apart of the API server, we hv the etcd that persists data in the cl8, it acts as a database ,
+whatevr reQ is been made by whoever engr that inf is stored and persisted in the etcd and frm there we also hv the scheduler, which is incharge of scheduling  eg if ports are
+been REQuested to be scheduled the sheduler will schedule that considering the nodes that hv available resources for such a port to be hosted and if thers any other constrain
+all the constraint are been factored in
+we also hv the controler managers that is able to ensure that at all times we hv a  number of nodes running , pods running , deplyments are runing as expected
+we also hv the worker nodes comes with the kublets which is the pry node agent, we equally hv the kube proxy, which is incharge of netwrk 
+also the container run time, there are diff types of container run time that you can use, docker used to be one of them , also container-D, container runtime is any software in 
+your node that is able to create and start containers bc k8 is all abt managing containerized appl n in our env we use containerD as our container run time, we cud hv as well 
+choosen other run time but we are using containerD
+
+Also the k8 architecture is such that calls are made into the cl8 and that happens using the k8 client like kubectl or k8 UI form there we can mk certain API calls either to 
+create containers, namespaces, security like RBAC and for any of these to happen, authentication must happen via the kube config file
+
+so thats the k8 architecture
+
+
+
+your explanation when it comes to migration from monolecthic archited applications to micro services 
+
 17:30 to 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
