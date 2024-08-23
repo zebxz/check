@@ -237,13 +237,39 @@ our answer cud be abt k8, which problem hv you faced in k8 and how did you fix i
  they used dice, indeed, linkedin
 
 
+                        1:32:18` your jenkins pipeline
 
+thank you for that question, i work as a devops engr for over 6yrs
+my basic task is to create automated piplelines where we are able to build appli, test and deploy them in their respestive env
+and we use jenkins bc it comes with all its automated features , so we use jenkins to automate the entire process and my piplrine strats frm me setting up my architecture
+all what is needed as a a requirement and based on our requirement we hv jenkins ., its required thats wher everytin is automated, we hv git and github is required when it 
+comes to devloping and versioning application
+in our env we are managing java projects so we are building with maven and maven is part of the pipeline and we run maven as a jenkins slave and as a result, we enusre that 
+maven is one of my  jenkins slave, so in the jenkins slave architecture, am attaching a slave called maven , once that happens the next thing that goes into the pipeline 
+gets to do with code quality analysis and we are using sonarqube so i ensure my sonarqube srever is setup and running and once that happens i integrate sonarqube with jenkins 
+and the integration happens using the project file , pom.xml, i equally intergrate sonarqube with nexus for artifacts to be uploaded, the automated process of uploading 
+artifacts into nexus, i integrate jenkins with docker, the reason i do that is bc we mg8 conatinerize appli, micro service applications , this ensures the appli has been 
+well packged , we hv to dpeloy the appli and we are using docker so we containerize the sppli by creating docker images and shipping them to dockerhub, so once that proces
+is done, we are now ready to deploy our applictaion and in the first deployment we deploy to a user acceptance  testing env for the user to be able to appreciate the quality
+of sofware developed on their behalf , if the client is happy they sign a doc called a signup doc to agrree that he wants us to dpeloy to production and that proces sof 
+deploying to production frm UAT via a manual approval is what is called continous delivery . 
+in some few of our projects we dnt need manual approval , everything is automated and thats continuos deployment
+so this is my expeience as far as th ejnkins pipeline is concerned
 
 as part of my job, i write pipeline scripts, i write jenkins file , i also modify existing jenkins file to be able to have this entire end to end process automated
 you cud walk them tru your jenkins pipeline like that 
 you cud also go ahead and tell them that ..:
 its imp to note that jenkins is able to integrate with all the components highlighted bc of the fact that jenkins can extend its functionalities tru pluggins 
 
+
+   ********** you can also go ahead and talk up to that once the application is deployed, the nxt tin is to ensure the appl is monitored, we observe the monitoring of the appl with promethus n grafana
+
+
+    i was going tru the vidoes
+1:41:00     we can scan our images, containers, application before we actually pull them for deployment  , we use some  tools like sleek, trivy, whitehouse for vulnerability
+
+                   ****** whats the difference btw this scanning tools and sonarqube
+sonarqube scan code that are in github, the raw code, while the tools are tools that scan images for vulnerability , docker images..... thats the difference
 
 
 
