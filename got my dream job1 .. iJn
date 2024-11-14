@@ -220,8 +220,9 @@ Examples of workloads:
 
 
 
-******* for us to be able to achieve this workload and more what do we need 
-for our workload to be deployed to production, workload mgt on computing systems 
+******* for us to be able to achieve this workload and more what do we need for our workload to be deployed to production
+
+              workload mgt on computing systems 
 
 
 Workload management on Computer systems [LINUX OS] :
@@ -240,18 +241,139 @@ BUT NOW WE WANT TO TALK ABOUT SCRIPTING
     write a simple script that welcomes Engineers to work?
  
 
+ welcome.sh    :       (name of my script)  
+    ==========
+     #!/bin/bash           ( the shell script starts with what is called a shebang #!, to indicate the interpreter /bin/bash)
+
+
+
+ shell: A shell is an interpreter that interpretes commands to the OS. 
+its a program that takes commands from the keyboard and gives them to the operating system to perform (in a file) 
+
+therfore an interpreter is needed when executing a script
+
+
+shells command interpreters:
+  Boune Shell  (sh)
+  Boune Again Shell (bash)
+  csh / ksh / tsh / zsh  
+
+
+                                  HOW TO CHECK FOR THE INTERPRETERS RUNNING INMY SYSTEM OR THE ONE AM USING TO EXECUTE COMMAND 
+
+  echo $SHELL       =  List your current shell
+      /bin/bash
+  cat /etc/shells   = List all shells in your system
+     /bin/sh
+     /bin/bash
+     /usr/bin/sh
+     /usr/bin/bash
+     /bin/csh
+     /bin/tcsh
+     /usr/bin/csh
+    /usr/bin/tcsh
+
+  sudo yum install ksh zsh -y 
+  [oke@demo22 ~]$ cat /etc/shells           
+/bin/sh                                ******  WE CAN interprete our script using any of the interpreter
+/bin/bash
+/usr/bin/sh
+/usr/bin/bash
+/bin/csh
+/bin/tcsh
+/usr/bin/csh
+/usr/bin/tcsh
+/usr/bin/zsh
+/bin/zsh
+/bin/ksh
+/bin/rksh
+/usr/bin/ksh
+/usr/bin/rksh
+
+  bash -c ls  or ls   
+  cat /home/oke/welcome.sh  [accessing the file using the absolute path]
+  cat welcome.sh  [accessing the file using the relative path]
+
+
+Running a script with interpreter doesnt require executable permission
+
+
+                          Bash shell Scripting:
+a shell script must end with .sh oR .sc
+
+Naming convention:
+Naming conventions best practices:
+bash Shell-scripts   = script.sh or hello.sc  
+Shell-scripts has '.sc' or '.sh' extensions 
+    scriptname.sh  or 
+    scriptName.sc or 
+    *.sh or 
+    *.sc 
+  deploy.sh  = Shell-script [*.sh]
+  test.txt   = text file    [*.txt]
+  app.sc     = Shell-script [*.sc]
+  app.java   = java code    [*.java] 
+  monitor.py = python code/script [*.py] 
+  app.yaml   = playbook or manifest file [*.yml] 
+  main.tf    = terraform scripts/codes [*.tf]
+==============================================
+
+
+
+           Scripting or automation langauges :
+ 
+1. Bash Shell Scripting
+  2. Python       ( we will cover some python scripting)
+  3. Groovy  (Jenkins)
+  3. Ruby                ( we will nt cover the course)
+  4. Yaml  
+      (k8s, Ansible, CloudFormation)
+  5. JSon / java                       (some projects)
+  6. HCL - Terraform                      (configuration language)
+  7. XML = 
+  8. html 
+  9. go/golang 
+  10. powershell 
+
+
+
+ #COMMENT
+MEANS THE LINE IS commented and cannot be executed, commented lines start with #
+
+
+MULTI LINE COMMENTS
+Multi line comment starts with :<< and a word (<< boy)
+the multiline script must end with  the same word after the two << which it started with 
+only lines written before <<(boy) will display and lines written at the end after the starting word (boy) has been written will display as well when you run the script but
+lines written after <<(boy) and before (boy) is written at the end will not display whne you run the script 
 
 
 
 
+  How to make your codes/scripts:
+  easily readable/understandable 
+  1. by adding notes/comments/explanations 
+it gives meaning to a script, it gives more explnantion 
+the script can easily be used again in the future
+even people without IT knowledge can easily appreciate some technology documents
 
 
+Who are the comments meant for?
+  1. It make your script/code to be understood by you and others over time. 
+  2. It make your script/code easily reusable in the future
+  3. Facilitate/ease troubleshooting and debugging
+  4. comments are Good for teams: Team of 14 
+        6. developers writing codes/scripts 
+        1. Scrum master 
+        3. DevOps Engineers 
+        1. DevOps Security Engineer 
+
+Making your script portable.  
+1. Hard coding 
+2. soft coding   
 
 
-
-
-
-
+                                                        USING VARIABLES IN SCRIPTING
 
 
 
