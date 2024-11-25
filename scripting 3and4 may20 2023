@@ -68,7 +68,7 @@ so even when we log out this user/session  sudo su - ec2-user  HISTSIZE is still
                      HOW TO MAKE A VARIABLE DYNAMIC 
   Variables help us to make a script dynamic, howevre we must make sure the variable is dynamic
 
-(the read command is used to obtain dynamic variable or input variable from users)
+(the read command is used to obtain dynamic variable or input variable from users)  ****** 28:00
 read -s  = secret variable (security  is inherent in our environment)
 
       DYNAMIC SCRIPT
@@ -92,15 +92,15 @@ echo "Please enter your name"
 read name
 echo "$name, welcome to TB Bank"
 echo "Please enter your pin"
-read -s pin  # -s pass a secret variable
+read -s pin  # -s pass a secret variable     ******* 54:00 ...  ******** when writing a script and you want to read a sensitive value pass the "-s"
 echo "$name you entered an invalid pin"
 [obi@sc ~]$
 
-Security is inherent in our environment
+Security is inherent in our environment so we pass  (-s)
 
 ======================================
 
-with the help of scripting , creating user becomes very simple 
+with the help of scripting , creating user becomes very simple , it easy to manage task like this ***** 49:50
             
 TICKET0045: Write a scipt to dynamically create users. 
    userMGT commands: adduser / usermod / userdel /  groupadd / groupdel 
@@ -116,7 +116,7 @@ echo "Please enter the name of the newUser"
 read newuser
 echo "Now ready to create $newuser account "
 sudo adduser  $newuser
-echo "$newuser account is created successfully"
+echo "$newuser account is created successfully"         ****** WE want to get this message : successfully created
 grep $newuser /etc/passwd                        # to verify  that user is created    
 [oke@demo22 ~]$
 
@@ -132,25 +132,28 @@ echo "creating a newuser account"
 echo "enter the new username's name"
 read name  
 sudo adduser $name 
-sudo usermod -aG manager $name                *** the mangers grp shud hv been created already 
+sudo usermod -aG manager $name              48:25  *** the mangers grp shud hv been created already 
 id $name 
 
 
 .  
+  ****** in bash shell scripting we hv what is called CLI argument 
 
 Command Line Arguments = CLAs  
 ===============================
 TICKET0047: write a script to backup databases in our environment.  
-touch db_backup.sh
- echo "echo database backup initiated" > db_backup.sh
+we can vi db_backup.sh  OR  touch db_backup.sh     ( touch to create an empty file)
+ echo "echo database backup initiated" > db_backup.sh  ... > OR >> ,> redirect to replace the content/line of code  in the file OR append >> to add the line of code/content
  echo "echo database backup completed" >> db_backup.sh
 
 
-IQ: What is the significance of $? in scripting.
+IQ: What is the significance of $? in scripting.        
   It gives the status of your last run command.
   The value can be = 0 [Its okay]   or 
   The value can be = 1-127 [Its not okay]   
 
+
+****** 1:8:00
 [oke@demo22 ~]$ ls
 app      cla.sh         db_backup.sh  mlc.sh      sdv1.sh  usermgt.sh
 backup   comment.sh     deploy.sh     read1.sh    sdv2.sh  var1.sh
