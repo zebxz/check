@@ -573,4 +573,33 @@ vi db_backup.sh  OR touch db_backup.sh     ..... ( touch to create an empty file
 ****1:04:00 .. without quote, with single quote, or double quote , the script will run bt for  use double " for best practices ... 1:04:58
 
 
+****** 1:05:31 .......... as part of comment run this script (db.backup.sh) with 2 arguments [dataserver and admin]
+                                              the dataserver is dbserver11 and the admin is simon
+
+vi db.backup .sh
+#!/bin/bash
+#this bash shell script will back database in linux systems
+#Author:cecilia ekeh
+#run this srcipt with 2 arguments  [dataserver and admin]
+#sh db_backup.sh dbserver11 simon
+echo database backup initiated
+echo database backup completed 
+echo all backups successful
+echo the 1st argument is $1
+echo the 2nd argument is $2
+echo the scriptname is $0
+
+
+************  to run the script    ........ when we run the script, we see the arguments displayed : (db11 and simon)
+
+[ec2-user@demo~] $ sh sd_backup.sh db11 simon
+ database backup initiated
+ database backup completed 
+ all backups successful
+the 1st argument is db11
+the 2nd argument is simon
+ the scriptname is db_backup.sh
+
+
+
 
