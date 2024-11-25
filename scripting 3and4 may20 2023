@@ -205,9 +205,6 @@ CLA = $? displays the status of your
       127 = 
 
 
- -# sh script.sh  arg1  arg2  arg3 ...  agr10
--#     $o         $1    $2    $3       $10
-
 
 
 ****** 1:05:31 .......... as part of comment run this script with 2 arguments [dataserver and admin]
@@ -236,6 +233,44 @@ echo the scriptname is $0
 the 1st argument is db11
 the 2nd argument is simon
  the scriptname is db_backup.sh
+
+
+***** 1:11:24 ..   
+ 
+ -# sh script.sh  arg1  arg2  arg3 ...  agr10   ......... up to as many as needed for the project
+-#     $o         $1    $2    $3       $10
+
+
+
+
+******1:13:24 ..... we want to backup some files so we create a backup directory 
+
+we are creating a new script called: cla.sh
+#echo please pass 3 arguments with your script
+echo "The 1st argument is  = $1"
+echo "The 2nd argument is  = $2"
+echo "The 3rd argument is  = $3"
+echo "The 6th argument is  = $6"
+echo "The scriptName  is   = $0"
+echo "The 10th argument is = ${10}"
+echo "The number argument is $#
+echo "The list of argument are $@          ******* $@ and $* are the same 
+echo "The list of argument are $*
+    The status of the last run command is = $?  
+    The process id is = $$  
+
+
+
+CLA = $? displays the status of your   
+  last run command with 2 possible values 
+     $? = 0 = command ran successfully
+     $? = 1-127 = something is wrong        
+
+  1-127 are error codes :
+      1   = 
+      2   = 
+      3   = 
+      127 = 
 
 
 
