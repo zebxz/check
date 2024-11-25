@@ -481,13 +481,11 @@ echo sdv ends
 
 [oke@demo22 ~]$  echo $HISTSIZE
                  1000
-export HISTSIZE=2000   .........   we use export to change the SDV value but the change value will only last for that given login session
+export HISTSIZE=2000   ......... (we run it on the CLI ) we use export to temporarily change the SDV value but the change value will only last for that given login session
  
 
 
     TYPES OF SCRIPT
-
-
 
 dynamic script  :
 can have multiple usage by various  people 
@@ -497,4 +495,18 @@ static script:
 can only be used by one person
   1. echo Oke Welcome to MTN          ***** it doesnt give the option to change the variable 
 
-$name Welcome to Landmark Technology
+
+
+
+  CHANGING SDV PERMANENTLY
+
+1) ls -a = to get our hidden files .bashrc
+2) then vi .bashrc and change HISTSIZE value
+
+  = export HISTSIZE = 1500 , Save & exit file 
+3)To enforce the changes, we run the source command 
+     = source.bashrc
+4) check = echo $HISTSIZE . will give us 1500
+so even when we log out this user/session  sudo su - ec2-user  HISTSIZE is still 1500
+
+
