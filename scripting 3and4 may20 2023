@@ -153,26 +153,6 @@ we can vi db_backup.sh  OR  touch db_backup.sh     ( touch to create an empty fi
 ****1:04:00 .. without quote, with single quote, or double quote , the script will run bt for  use double " for best practices ... 1:04:58
 
 
-##
-delete 
-command Line arguments:
-    The 1st argument is  = $1"
-    The 2nd argument is  = $2"
-    The 3rd argument is  = $3"
-    The 6th argument is  = $6"
-    The scriptName  is   = $0"
-    The 10th argument is = ${10}"
-    The number argument is $#
-    The list of argument are $@          ******* $@ and $* are the same 
-    The list of argument are $*
-    The status of the last run command is = $?  
-    The process id is = $$  
-##
-
-
-
-
-
 ****** 1:05:31 .......... as part of comment run this script with 2 arguments [dataserver and admin]
                                               the dataserver is dbserver11 and the admin is simon
 
@@ -211,6 +191,8 @@ the 2nd argument is simon
 
 ******1:13:24 ..... in the script cla.sh, we want to backup some files so we create a backup directory .. mkdir but he deleted it 
 
+
+  **************************************************** get correct script
 we are creating a new script called: cla.sh
 #echo please pass 3 arguments with your script
 echo "The 1st argument is  = $1"
@@ -223,17 +205,9 @@ date
 echo The status of the last run command is $?  
 echo The process id is = $$  
 
-
+    ###########################################
 
           
-                                              ARGUMENT
-
-
-An argument, also called command line argument, 
-can be defined as input given to a command line 
-to process that input with the help of given command. 
-Argument can be in the form of a file or directory. 
-Arguments are entered in the terminal or console after entering command.
 
 
 ******* we can pass arguments depending on the project we are working on  (dev)
@@ -280,17 +254,6 @@ cat: ss: No such file or directory
 
 
 
-CLA = $? displays the status of your   
-  last run command with 2 possible values       .********** (i bliv 0 & 1)
-     $? = 0 = command ran successfully
-     $? = 1-127 = something is wrong        
-
-  1-127 are error codes :
-      1   = 
-      2   = 
-      3   = 
-      127 = 
-
 
 *********** 1:25:00
 
@@ -320,7 +283,58 @@ bank.sh  createuser.sh  deployment    script1.sh  udv1.sh  welcome.sh
 
 What is the significance of $$ in linux     ?
 ANS:
-This represents the process ID of the last command (because whatever w edo in linux there is a process ID created for it)
+This represents the process ID of the last command (because whatever wedo in linux there is a process ID created for it)
+
+
+1:26:45         >>>> for exmaple 
+[oke@demo22 ~]$ sh  cla.sh       .... (we pass the script without any argument)
+ the 1st argument is 
+the 2nd argument is 
+the 10th argument is 
+the number argument is 0
+the list of argument are
+the list of argument are 
+cla.sh: line 8: Date: command not found         ******** error
+the status of your last run command is 127           ******* 127 because the last command is error
+the process id is 266170
+
+
+************ we could have smt like this
+
+ command Line arguments:
+    The 1st argument is  = $1"
+    The 2nd argument is  = $2"
+    The 3rd argument is  = $3"
+    The 6th argument is  = $6"
+    The scriptName  is   = $0"
+    The 10th argument is = ${10}"
+    The number argument is $#
+    The list of argument are $@          ******* $@ and $* are the same 
+    The list of argument are $*
+    The status of the last run command is = $?  
+    The process id is = $$  
+
+
+CLA = $? displays the status of your   
+  last run command with 2 possible values       .********** (i bliv 0 & 1)
+     $? = 0 = command ran successfully
+     $? = 1-127 = something is wrong        
+
+  1-127 are error codes :
+      1   = 
+      2   = 
+      3   = 
+      127 = 
+
+
+  *********** 1:29:00
+
+                                            ARGUMENT
+
+
+An argument, also called command line argument, can be defined as input given to a command line to process that input with the help of given command. 
+Argument can be in the form of a file or directory. Arguments are entered in the terminal or console after entering command
+
 
 
 
@@ -332,7 +346,7 @@ CLA are diff options we can use while running a script
 
 
           ARGUMENTS WITH CONDITION
-*** if asked whatelse can be done iwth $?  
+*** if asked whatelse can be done with $?  
          ( it can be used to run a command with conditions)
 
 
