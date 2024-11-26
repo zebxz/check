@@ -1,3 +1,7 @@
+TYPES OF SCRIPT,   TEmporarily changing SDV, CHANGING SDV PERMANENTLY, HOW TO MAKE A VARIABLE DYNAMIC, (-S , for secured info), dynamic useful for user mgt
+Command Line Arguments = CLAs , ARGUMENTS, WHAT is $ and $$ , ARGUMENTS WITH CONDITION
+
+
 
   export class=DevOpsMasterClass
 
@@ -46,6 +50,7 @@ export class = devops master class        **** we are changing the value of the 
 echo $class = devopsmasterclass
 
 
+                             TEmporarily changing SDV
 ******** we can also use export to change the value of SDV but the change value will only last for that given login session
 eg SDV for HISTSIZE = 1000
 to change it = export HISTSIZE = 2000
@@ -148,36 +153,8 @@ we can vi db_backup.sh  OR  touch db_backup.sh     ( touch to create an empty fi
 ****1:04:00 .. without quote, with single quote, or double quote , the script will run bt for  use double " for best practices ... 1:04:58
 
 
-IQ: What is the significance of $? in scripting.        
-  It gives the status of your last run command.
-  The value can be = 0 [Its okay]   or 
-  The value can be = 1-127 [Its not okay]   
-
-
-[oke@demo22 ~]$ ls
-app      cla.sh         db_backup.sh  mlc.sh      sdv1.sh  usermgt.sh
-backup   comment.sh     deploy.sh     read1.sh    sdv2.sh  var1.sh
-bank.sh  createuser.sh  deployment    script1.sh  udv1.sh  welcome.sh
-[oke@demo22 ~]$ echo $? = 0           ******** correct
-
-[oke@demo22 ~]$ LS
--bash: LS: command not found
-[oke@demo22 ~]$ echo $? = 127            ***** wrong
-
-[oke@demo22 ~]$ cat ss
-cat: ss: No such file or directory
-[oke@demo22 ~]$ echo $? = 1                 ***** wrong
-
-
-
-IQ
-What is the significance of $$ in linux
-
-ANS:
-This represents the process ID of the last command because whatever w edo in linux there is a process ID created for it 
-
-
-
+##
+delete 
 command Line arguments:
     The 1st argument is  = $1"
     The 2nd argument is  = $2"
@@ -190,19 +167,8 @@ command Line arguments:
     The list of argument are $*
     The status of the last run command is = $?  
     The process id is = $$  
+##
 
-
-
-CLA = $? displays the status of your   
-  last run command with 2 possible values 
-     $? = 0 = command ran successfully
-     $? = 1-127 = something is wrong        
-
-  1-127 are error codes :
-      1   = 
-      2   = 
-      3   = 
-      127 = 
 
 
 
@@ -226,7 +192,7 @@ echo the scriptname is $0
 
 ************  to run the script    ........ when we run the script, we see the arguments displayed : (db11 and simon)
 
-[ec2-user@demo~] $ sh sd_backup.sh db11 simon
+[ec2-user@demo~] $ sh sd_backup.sh db11 simon    ......  (we run the script with the argument)
  database backup initiated
  database backup completed 
  all backups successful
@@ -237,50 +203,29 @@ the 2nd argument is simon
 
 ***** 1:11:24 ..   
  
- -# sh script.sh  arg1  arg2  arg3 ...  agr10   ......... up to as many as needed for the project
+ -# sh script.sh  arg1  arg2  arg3 ...  agr10   ......... we can create as arguments as needed for the project
 -#     $o         $1    $2    $3       $10
 
 
 
 
-******1:13:24 ..... we want to backup some files so we create a backup directory 
+******1:13:24 ..... in the script cla.sh, we want to backup some files so we create a backup directory .. mkdir but he deleted it 
 
 we are creating a new script called: cla.sh
 #echo please pass 3 arguments with your script
 echo "The 1st argument is  = $1"
 echo "The 2nd argument is  = $2"
-echo "The 3rd argument is  = $3"
-echo "The 6th argument is  = $6"
-echo "The scriptName  is   = $0"
-echo "The 10th argument is = ${10}"
-echo "The number argument is $#
-echo "The list of argument are $@          ******* $@ and $* are the same 
+echo "The 10th argument is  = ${10}"
+echo "The number of argument is  = $#
+echo "The list of argument are = $@"
 echo "The list of argument are $*
-    The status of the last run command is = $?  
-    The process id is = $$  
+date
+echo The status of the last run command is $?  
+echo The process id is = $$  
 
 
 
-CLA = $? displays the status of your   
-  last run command with 2 possible values 
-     $? = 0 = command ran successfully
-     $? = 1-127 = something is wrong        
-
-  1-127 are error codes :
-      1   = 
-      2   = 
-      3   = 
-      127 = 
-
-
-
-*** if asked whatelse can be done iwth $?
-we cansay if [$/ = o ] then ... 
-
-CLA are diff options we can use while running a script 
-
-                            
-
+          
                                               ARGUMENT
 
 
@@ -291,7 +236,7 @@ Argument can be in the form of a file or directory.
 Arguments are entered in the terminal or console after entering command.
 
 
-******* we can pass arguments depending on the project we are working on 
+******* we can pass arguments depending on the project we are working on  (dev)
 eg 
 the 1st argument = dev
 the 2nd argument = db11
@@ -299,6 +244,91 @@ the 3rd argument = cecilia
 dev= our environment 
 db11 = server
 Admin = cecilia
+
+
+
+
+**** 1:18:50
+****** the status of your last run command is respresented as : echo $?
+its very imp when it comes to Command line argument  ..  
+
+
+IQ
+ What is the significance of $? in scripting.  ......    (and this can be the only interview question you are asked in scripting)
+ANS:
+  It gives the status of your last run command.
+
+The value can be = 0 [Its okay]   or 
+  The value can be = 1-127 [Its not okay]   
+
+
+
+if we run ls and then echo $ to check our last command, its =0 , and thats correct:
+[oke@demo22 ~]$ ls
+app      cla.sh         db_backup.sh  mlc.sh      sdv1.sh  usermgt.sh
+backup   comment.sh     deploy.sh     read1.sh    sdv2.sh  var1.sh
+bank.sh  createuser.sh  deployment    script1.sh  udv1.sh  welcome.sh
+[oke@demo22 ~]$ echo $? = 0           ******** correct
+
+[oke@demo22 ~]$ LS
+-bash: LS: command not found
+[oke@demo22 ~]$ echo $? = 127            ***** wrong    ..... bc the command is wrong, we dnt use capital letters
+
+[oke@demo22 ~]$ cat ss
+cat: ss: No such file or directory
+[oke@demo22 ~]$ echo $? = 1                 ***** wrong  .......... i cat a file that does nt exists
+
+
+
+CLA = $? displays the status of your   
+  last run command with 2 possible values       .********** (i bliv 0 & 1)
+     $? = 0 = command ran successfully
+     $? = 1-127 = something is wrong        
+
+  1-127 are error codes :
+      1   = 
+      2   = 
+      3   = 
+      127 = 
+
+
+*********** 1:25:00
+
+ we are creating a new script called: cla.sh
+#echo please pass 3 arguments with your script
+echo "The 1st argument is  = $1"
+echo "The 2nd argument is  = $2"
+echo "The 10th argument is  = ${10}"
+echo "The number of argument is  = $#
+echo "The list of argument are = $@"
+echo "The list of argument are $*
+date
+echo The status of the last run command is $?  
+echo The process id is = $$  
+
+[oke@demo22 ~]$ ls
+app      cla.sh         db_backup.sh  mlc.sh      sdv1.sh  usermgt.sh
+backup   comment.sh     deploy.sh     read1.sh    sdv2.sh  var1.sh
+bank.sh  createuser.sh  deployment    script1.sh  udv1.sh  welcome.sh
+
+[oke@demo22 ~]$ echo $$ = 263701
+    ********* this value is called the process id because ,anything that happens in linux is a process
+
+
+
+***** 1:25:42
+
+What is the significance of $$ in linux     ?
+ANS:
+This represents the process ID of the last command (because whatever w edo in linux there is a process ID created for it)
+
+
+
+*** if asked whatelse can be done iwth $?
+we cansay if [$/ = o ] then ... 
+
+CLA are diff options we can use while running a script 
+
 
 
           ARGUMENTS WITH CONDITION
