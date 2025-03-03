@@ -611,3 +611,147 @@ the 2nd argument is simon
 An argument, also called command line argument, can be defined as input given to a command line to process that input with the help of given command. 
 Argument can be in the form of a file or directory. Arguments are entered in the terminal or console after entering command.
 
+CLA are diff options we can use while running a script 
+
+*** if asked whatelse can be done with $?
+we can say if [$/ = o ] then ... 
+
+   ARGUMENTS WITH CONDITION
+*** if asked whatelse can be done with $?  
+         ( it can be used to run a command with conditions)
+
+
+cat deploy.sc     
+if [ $?==0 ] 
+then
+echo "We succeeded" 
+else  
+echo "We failed, please troubleshoot" 
+fi  
+
+cat deploy.sc     
+if [ $#==3 ] 
+then
+echo "We succeeded" 
+else  
+echo "Please pass 3 arguments with your script" 
+fi 
+
+
+                             INEQUALITY SIGN
+
+
+Inequality signs :
+=================
+-eq  or  == represent equals to 
+           (( $? == 0 )) [ X -eq = y]
+-ne  or  != represent not equals to 
+-gt  or  >  represent greater than
+-lt  or  <  represent less than 
+-ge  or >= greater than or equals to
+-le  0r <= less than  or equals to 
+
+if [ votes -gt 50% ]
+then 
+echo he won the elections 
+fi  
+
+
+                             CONDITIONS: 
+conditions :
+if statement  
+Syntax:
+if (( conditions ))
+then 
+commands 
+else  
+commands  
+fi
+
+
+
+if1.sh  
+
+echo "welcome to Landmark DevOpsMasterClass" 
+echo "How much are you willing to pay"
+read price
+if [ $price -ge 4000 ]
+then 
+echo "your are admitted"  
+else  
+echo "sorry you can't be admitted today "
+fi  
+
+
+if2.sh    ( to authenticate customers)
+echo "Please enter for pin"
+read pin  
+if (( $pin == 4100 ))
+then 
+echo "You have entered the correct pin"
+echo "Thank you for banking with TD Bank"
+else  
+echo "sorry you entered the wrong pin"
+echo "your account is blocked for your protection"
+echo "Please visit a branch for further assistance"
+fi  
+
+
+ from next video 
+
+VI if2.sh
+
+echo 'enter your GPA'
+read gpa 
+if [$gpa - gt 4]
+then
+echo "congratulation"
+echo "you are a 1st class student"
+elif [$gpa - ge 3 ]
+then
+
+
+echo "congrats you are a 2nd class student "
+elif [$gpa -ge2]
+then
+echo congratulations
+echo you are a 3rd class student
+else 
+echo "you an do better"
+fi
+
+
+
+---
+
+
+
+
+                                       DEBUGGING ISSUES
+
+
+Debugging problems in scripting  
+===============================
+
+IQ: 
+hOw do you troubleshoot issues in scripting?
+
+ANS:
+ Run the script in debugging mode
+sh -x scriptName  
+
+Input output redirection  
+=============================
+ 
+Redirect Standard output --   :      (script name = debug.sh
+  sh scriptName > log  
+  sh debug.sh > log or sh debug.sh 1> log  
+
+Redirect Standard errors --   : 
+  sh scriptName 2>fileName   
+  sh debug.sh 2>error.log  
+
+Redirect Standard output & errors --   :
+  sh scriptName  > fileName  2>&1 
+  sh debug.sh  > all.log  2>&1 
+
