@@ -611,10 +611,8 @@ and select evry minute, hour, day, month and week
 
 
 
-******* the log file is created when the script starts running because it is scheduled to run every minute
-
 2:02:00
-create the:monitor_server.sh  (redirected both standard output& error into a log file) /tmp/log 
+create the: monitor_server.sh  (redirected both standard output& error into a log file) /tmp/log 
 1)  vi home/ec2-user/monitor_server.sh > /tmp/log         **** this is the absolute path
 #!/bin/bash
 date             ****we want to also run these command in the script
@@ -622,7 +620,17 @@ free -m
 whoami
 Pwd 
 
-check the 
+2:07:00
+**** to run the script:
+sh home/ec2-user/monitor_server.sh         **** using the absolute path
+and we can see the standard output & standard error 
+ monitor_server.sh **** using the relative path we get the same result but when am automating, i must use the absolute path
+
+*** we run ls /tmp/  bt thers no log file yet bc its scheduled to run every minute 
+******* the log file is created when the script starts running because it is scheduled to run every minute
+
+
+****  check the 
 crontab generator online: 
   https://crontab-generator.org/
 
