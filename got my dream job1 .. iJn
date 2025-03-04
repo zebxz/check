@@ -948,3 +948,44 @@ usermgt(){
    id $name   
 }
 
+                  SCP COMMANDS
+
+scp command:
+  It is use to transfer files from one server to another and vice-versa
+  It is good for data migration, application deployment, etc. 
+  scp tranfer files and directory securely using the ssh protocol 
+
+COMMAND:
+  scp fileName username@ip:/path/to/dir  
+ passwrd auth; scp app.yml simon@52.10.100.198:/home/simon/      ***simon is the name of the user we are copying to
+using ssh-key: scp -i key.pem filename username@ip address
+
+
+Password for authentication:
+   scp filename ubuntu@52.201.217.3 
+   scp filename username@ipaddress   
+
+   scp -r direname ubuntu@52.201.217.3 
+   scp -r direname username@ipaddress 
+
+ssh-key for authentication:
+   scp -i key.pem app.war  ubuntu@52.201.217.3 
+   scp -i key.pem filename username@ipaddress              ******* for file
+
+   scp -i key.pem -r direname ubuntu@52.201.217.3 
+   scp -i key.pem -r direname username@ipaddress           **** for difrectory
+
+
+                                                                        PATHS
+
+                       1) (WE must use the absolute path when automating , why??? )
+                        2)  what did we use generator link bc i didnt use it but my log showedup 
+                         3) what next to do with the log file created 
+
+
+Path to files and directories: 
+=============================
+  Relative path: start From pwd    
+  Absolute path: start From / (root)
+
+
