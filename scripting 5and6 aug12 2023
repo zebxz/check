@@ -565,8 +565,10 @@ Path to files and directories:
     - containerPort: 80
  
                                                               CRONTABLES
+ CRON TABLES : contains scheduled tasks
 
-cronJobs:
+ most times when we write our scripts we wont be there to observe them run, so we shall use cron tables and cron
+jobs to achieve the expected automation and schedule the task to run as expected
 ==========
 Scheduling Tasks/Workloads for automation.
 Assignment/Ticket:
@@ -582,6 +584,7 @@ Execution:
    crontab -e   = To edit the cron table 
    crontab -l   = List the cron table
 
+***** 1:58:24
 sudo yum install cronie
 - yum -y update
 - sudo yum install vixie-cron
@@ -591,8 +594,8 @@ sudo yum install cronie
 Create a ticket to monitor_servers every minute
 ============================================== 
 /home/ec2-user/monitor_server.sh > /tmp/log                          
-* * * * * /home/ec2-user/monitor_server.sh > /dev/null 2>&1
-* * * * * /home/ec2-user/monitor_server.sh > /tmp/log 2>&1
+* * * * * /home/ec2-user/monitor_server.sh > /dev/null 2>&1  (redirecting result into /dev/null )
+* * * * * /home/ec2-user/monitor_server.sh > /tmp/log 2>&1   (redirecting result into /tmp/log )
 
 
 **** to fill the command to generate , we go this link:
@@ -610,15 +613,16 @@ and select evry minute, hour, day, month and week
 
 ******* the log file is created when the script starts running because it is scheduled to run every minute
 
-
-1)  vi home/ec2-user/monitor_server.sh > /tmp/log                          **** this is the absolute path
+2:02:00
+create the:monitor_server.sh  (redirected both standard output& error into a log file) /tmp/log 
+1)  vi home/ec2-user/monitor_server.sh > /tmp/log         **** this is the absolute path
 #!/bin/bash
-date
+date             ****we want to also run these command in the script
 free -m
 whoami
 Pwd 
 
-
+check the 
 crontab generator online: 
   https://crontab-generator.org/
 
@@ -633,7 +637,7 @@ crontab generator online:
 *  = every month 
 *  = every week 
 
-2) crontab -e
+2) crontab -e       **** to edit the file to introduce tasks to be run by cron
 * * * * * /home/ec2-user/monitor_server.sh > /dev/null 2>&1
 * * * * * /home/ec2-user/monitor_server.sh > /tmp/log 2>&1
 
