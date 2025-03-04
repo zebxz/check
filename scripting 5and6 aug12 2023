@@ -416,7 +416,7 @@ esac
 ******* 
 1)the syntax starts with 'case' and ends with 'esac'
 2) anything entered that doesnt fall under (stop/start/restart and status) will be represented under * wildcat
-3) the cases entered (start/stop/restart/status) must end with;;
+3) the cases entered (start/stop/restart/status) must end with ";;"
 
 
 
@@ -434,14 +434,15 @@ functions :
 
 
                         SYNtaax for functions
+   we can write multiple functions, diff functions to perform specific tasks
 
 usermgt(){
    echo "Enter the username of the new user"
    read name
    sudo adduser $name
-   grep $name /etc/passwd  
+   grep $name /etc/passwd  ***** to confirm new user was created, we can grep the name in the etc/passwd file OR id $name
    id $name   
-}
+    }
 filemgt(){
   if [ -e /etc/passwd ]
   then
@@ -466,13 +467,14 @@ monitoring(){
   free -m
   top
 }  
-usermgt  
+usermgt     ****** if i want to call only this 3functions but if i want to create a user then il call only usermgt function
 filemgt  
-db_backup
+db_backup         1:31:00
 
 
-****** when i wnat to create a user i can call or invoke this function
-to invike the function = usermgt
+to invoke this function script, ill 
+vi fn.sh
+then paste the script
 
 
 
