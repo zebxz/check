@@ -209,18 +209,18 @@ command2
 fi   
 
 
-                                       LOOPS
+                                       LOOPS ( a situstion where we have a repeated scenario)
 
 Loops: When a condition can be satisfied multiple times.
 ======        condition with multiple iterations 
-for  loop  
+for  loop  starts with a "do" and ends with "done"
 =========
 Loops: condition with multiple iterations 
 
 eg
-x < 100      ie  can be satisfied multiple times because X can be 1, 10 , 25, 14, 7, 35, 80 , etc
+x < 100      ie  can be satisfied multiple times because X can be 1, 10 , 25, 14, 7, 35, 80 , etc , so x can abe satified until all these is exhausted
 x= [0, 1, 2, 3, ..., 99] 
-
+    lets looks at for loop syntax
 
 Syntax:
 for loop  
@@ -239,6 +239,7 @@ commands
 commands 
 done
 
+eg
 for loop.sh (fl.sh)  
 for  (( a=1;a<=5;a++ )) 
 do  
@@ -251,8 +252,17 @@ a=1 + 1 = 2
 a=2 + 1 = 3 
 a=3 + 1 = 4  
 a=4 + 1 = 5 
-look breaks   
+look breaks when condition is no longer satisfied bc 5+1 is greater than 5
 a=5 + 1 = 6 
+
+1:00  ***** so what we see when we run the script is:
+[root@demo33 ec2-user]# sh fl.sh
+1
+2
+3
+4
+5
+
 
 Assignment:
 Write a shell script to print numbers from 100-90 
