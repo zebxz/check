@@ -926,4 +926,25 @@ esac
 3) the cases entered (start/stop/restart/status) must end with ";;"
 
 
+                                    FUNCTIONS
+
+functions :we can use functions to write repetitive tasks without rewriting codes
+  Functions:   
+ A function is a piece of code that perfoms
+ a specific task and avoids code repetition/duplication.
+********** we invoke the function by writing the name of the function at the end of the script  .....  1:35: 28
+}
+uermgt
+
+
+                        SYNtaax for functions
+   we can write multiple functions, diff functions to perform specific tasks
+
+usermgt(){
+   echo "Enter the username of the new user"
+   read name
+   sudo adduser $name
+   grep $name /etc/passwd  ***** to confirm new user was created, we can grep the name in the etc/passwd file OR id $name
+   id $name   
+}
 
