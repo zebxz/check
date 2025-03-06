@@ -153,6 +153,106 @@ ROOT DIR for linux is - forward /               ( / this is root dir, its root e
 
 the root directory [/] is the main principal dir where other directories and sub-directories are created from 
 
+COMMANDS:
+sudo - to create a new user
+Ls -a = list directory content with files and & dir 
+starting with . ie including (hidden)files   ********* i added this hidded when i was making the summarized notes
+                                                           
+commands : ls dir name =  eg ls pwd                                          ls/filename1/file inside file1
+ls = list the content of a directory = list the content of your pwd eg ls OR ls /home/ec2-user  ... BC /home/ec2user is my pwd
+pwd = present working directory
+hostname = serverName
+cd = change directory
+commands to change hostname : sudo hostnamectl set-hostname demo
+                                sudo su - ec2-user
+sudo su - user = to switch user
+
+
+root directory 
+[root -user@demo ~ ] ls       ***** checking for files in the home dir
+[root -user@demo ~ ]............ we get  nothing bc we dnt hv any files (yet)in the home dir, i added yet while makin summary note
+[root -user@demo ~ ] ls /      ie to list the content of the root dir
+bin home media  root sys
+boot lib mnt run tmp
+dev lib64 opt sbin usr
+etc local proc  siv var
+
+                                            HOME; contains users' home directory details 
+home contains user home directory information eg
+when we check
+[ec2-user@demo~] $ ls/home 
+ec2-user
+ec2-user [a user created by the system}
+lets add user domi(sudo add user domi) 
+lets add user obi (sudo adduser obi) 
+[ec2-user@demo~] $ sudo adduser obi
+[ec2-user@demo~] $
+[ec2-user@demo~] $ ls/home 
+ec2-user domi obi
+
+
+bin contains binary files (commands)
+cat fileName: used to read the content of a file
+ls, pwd, clear, cd, touch (to create a new file)    eg  touch test.txt
+cat -n filename
+******30:18
+i just did adduser paul and paul was created
+
+                                              SBIN 
+we also hv system binary files ,can only be executed by user with admin priviledges ,the admin-user/or the root user/administrator 
+sbin: contains system binary files/commands
+eg of system binary files : 
+adduser, to add user
+passwd, : can be used to assign passwd to users
+chage, used to modify users expiry date 
+chown  change own 
+
+we aslo hv the etc dir 
+also var dir 
+
+****** administrator is called root user
+
+************************************  in performing task in linux, there are diff category of users
+
+26:00/30.35
+                             INTERVIEW QUESTION
+What is the diff btw bin and sbin directory in linux ??
+SBIN: are system binary files only executable by users with adminstrative or elevated priviledges or admin/root user
+eg adduser , chage
+
+                              WHILE
+BIN : Binary fies executable by any user (normal user& admin user)
+eg ls, pwd, cd, touch
+
+****33;50
+          ###########what is configuration file ??
+  configuration files (commonly known simply as config files) are files used to configure the parameters and initial settings for some computer programs or applications, 
+server processes and operating system settings.
+
+
+we can cat to check the content of etc/shadow ie info abt the passwd of user
+[root@demo~] # cat/etc/shadow 
+
+etc : contains configuration files
+/etc/shadow = detail information about users passwd
+/etc/passwd = detail inf abt users                         ****** contains file of all users
+/etc/ssh/sshd_config = ssh configuration details
+   ssh=secure shell
+sshd = ssh service/ daemon = user Name/passwd    eg to access your server via ssh you need username/passwd OR username & ssh key
+UserName/ssh -private-key
+
+- tmp: temporal files
+-opt: directory where softwares & packages should be installed, it is the best place to install 
+- var: var directory contains dynamic files
+eg /var/logs/messages
+
+-pro directory: Contains inf about the hardware (hardware info)
+eg mem info - memory information
+cpu info  - cpu information
+［root@demo-# cat/proc/meminfo = to check for info about my memory
+
+
+
 
  
 
