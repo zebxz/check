@@ -6,17 +6,6 @@ but as ec2user (or any other user) you do : sudo adduser paul
   * i think someone asked about recovering files like in recycle bin for windows
 
 
-
-(FILE MGT:dir mgt command , install command not found ;INSTALL TREE, CREATING DIR, sudo, cd ; forward and backward move, create hidden file, how to run task in linux )
-
-                                               LINUX BASIC COMMANDS (basic linux commands)
-performimg tasks in linux systems uisng the (CLI) command line interface
-A directory is a container of files and sub-directories (directory commands)
-A folder is a container of files
-
-
-****** we hv a client tesla, lets create a dir for telsa
-
 [root@demo~] # exit
 logout
 [ec2-user@demo~] $ 
@@ -42,6 +31,8 @@ root
 domi ec2-user obi paul
 
 
+LIN3
+***************************************************************
 
 3:15
 As a devops engr, i work with my team to :
@@ -63,24 +54,6 @@ and the task are executed either using GUI or CLI
 Taks like; File mgt(directory related commands & file related command), user mgt, system mgt
 
 
-                               FILE MGT
-             DIRECTORY MGT COMMANDS
-mkdir = create a directory or directories
-rmdir = delete an empty dir
-rm -rf = delete my dir
-cd =  directory navigation
-pwd = present working dir
-ls = list of the dir content
-tree = show me both parent and child dir
-
-
-TICKET001:
-Create work directories for telsa client
-[ec2-user@demo~] $  mkdir tesla
-
-to check if the directory was created 
-[ec2-user@demo~] $ ls
-telsa (test.txt)       , our proof
 
                **** 7;50
                           FILE RELATED COMMANDS 
@@ -94,163 +67,4 @@ it is more secured to connect as an IAM user bc as a root user u hv authority to
 
 ****** 44:30 
 vi file name; vi is a file editor used to create and/or modify files
-
-********************************************************************************************************* ill check where i got the notes below from
-
-                                  TO CREATE HIDDEN FILES   **** not clear , is this dir for hidden files?
-mkdir.filename
-
-
-******** ********
-
-ctrl C = to kill a process
-exit = logout/exit rootuser
-exit = logout a session
-
-
-
-
-TICKET002:      create directory (mkdir)
-create project 01  directory using the format below 
-dev/git/maven/aws        nexus/java
-
-it means that we want to create a dir called dev, inside dev there will be git, inside ther will be maven, inside amven aws nexus
-
-the command to use is  = mkdir -p  dev/git/maven/aws
-we can also  = mkdir -p-v dev/git/maven/aws
-   OR -pv
--p = create including the parent directory 
--v = create in verbose mode (its a system informing what has happened
-
-eg mkdir -v class33
-[ec2-user@demo~] $ 
-[ec2-user@demo~] $  mkdir -v class33
-mkdir; created directory class33
-
-
-
-[ec2-user@demo~] $ mkdir -pv  dev/git/maven/aws
-mkdir: created directory 'dev' ie directory dev created 
-mkdir: created directory 'dev/git' ie directory git which is inside dev created
-mkdir: created directory 'dev/git/maven ie directory maven which is inside git and dev created
-mkdir : created directory  'dev/git/maven/aws
-
-
-******** with commands automation is very possible 
-
-
-
-     HOW TO RUN TASK IN LINUX SYSTEMS
--GUI/console 
-- CLI = commands with some automation
-- script with more automation
-
-
-TO CONFIRM THE DIREECTORIES WERE FORMED
-[ec2-user@demo~] $  Ls dev
-git
-[ec2-user@demo~] $ ls dev/git
-maven
-
-
-************* cd = to navigate the user home directory 
-cd.. = to navigate one directory backward
-cd../../../../ = navigate 4 directories backward
-
-
-       TO INSTALL A COMMAND NOT FOUND 
-
-we can install the command using a package manger
-
-su -root - switch user to root ( it requests for root user password )
-sudo -i switch user to root without password
-sudo -u-
-switch user to paul : su - paul
-[root@demo~] # su - ec2-user
-
-
-******** to install tree using root command/priviledges
-sudo yum install tree 
-OR
-sudo -u root yum install tree
-
-########
-the most secure option to run this will  not be to switch user to root but to run the command under the ec2-user while assuming root priviledges.
-[ec2-user@demo~] $ sudo yum insatll tree
-
-
-APPLY THE COMMANDS: 
-
-cd = change/leave 
-cd ../    navigate one directory backward
-cd -      ( forward)  navigate to your last working directory
-
-
-[ec2-user@demo~] $ pwd
-homw/ec2-user
-[ec2-user@demo~] $ cd dev
-ec2-user@demo dev
-[ec2-user@demo~ dev] $ ls 
-git
-[ec2-user@demo~dev] $ cd git 
-ec2-user@demo~git $ 
-ec2-user@demo~git $ cd maven
-ec2-user@demo~maven $ 
-ec2-user@demo~maven $ ls
-aws
-ec2-user@demo~maven $ cd aws
-ec2-user@demo~aws $ 
-ec2-user@demo~aws $ pwd 
-ec2-user dev/git/maven/aws
-ec2-user@demo~aws $ cd../                backward to maven frm aws
-ec2-user@demo~maven $ 
-ec2-user@demo~maven $ cd../               frm maven to git
-ec2-user@demo~git$ 
-ec2-user@demo~git $ cd -                      forward, frm git to maven
-ec2-user@demo~maven$ 
-ec2-user@demo~maven $ cd../../                2steps backward move to dev
-ec2-user@demo~dev$ 
-ec2-user@demo~dev $ cd -            forward, from dev to maven
-home/ec2-user/dev/git/maven
-ec2-user@demo~maven $ cd../../../           from maven to ec2-user home
-ec2-user@demo~ $       ie 3 steps backwards
-
-
-
-                    COMMANDS TO DELETE DIRECTORIES
-rmdir dirName = deletes empty directory/directories
-directory with content cannot be deleted by rmdir only empty dir can be deleted
-
-******* to delete directory with content
-rm -rf dirName = deletes any directories with or without content
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
