@@ -231,6 +231,19 @@ TO CONFIRM THE DIREECTORIES WERE FORMED
 git
 [ec2-user@demo~] $ ls dev/git
 maven
+[ec2-user@demo~] $ ls dev/git/maven/
+aws
+[ec2-user@demo~] $ ls dev/git/maven/aws
+[ec2-user@demo~] $ .... nothing is in aws
+
+
+56:21
+***** but which command can i run that can show me all my dir, both the parent and child
+thers a command called the tree command 
+[ec2-user@demo~] $ tree
+bash tree :command not found
+but when i execute the tree command, it says command not found
+once its nt found, we can install the command
 
 
 ************* cd = to navigate the user home directory 
@@ -241,22 +254,45 @@ cd../../../../ = navigate 4 directories backward
        TO INSTALL A COMMAND NOT FOUND 
 
 we can install the command using a package manger
+sudo is a command that permit admin to run commands as another user .. 58.50
+install tree  ....  *** this is an admin task
 
-su -root - switch user to root ( it requests for root user password )
-sudo -i switch user to root without password
-sudo -u-
-switch user to paul : su - paul
-[root@demo~] # su - ec2-user
+59:30
+******** remember that ther are some users that we craeted, let me try paul
+[ec2-user@demo~] $ sudo -u paul yum install tree
+acces denied bc hes nt a root user
+this comman can only be run wit super user priviledge, only the root user on most systems
+********* lets change it now to root user
+[ec2-user@demo~] $ sudo -u root yum install tree  .... **** bc ec2user is a root user that was created by the system
+successful
 
-57:50
+******1:01;03
+as a root user, u can either run
 ******** to install tree using root command/priviledges
-sudo yum install tree  ....  *** this is an admin task
+sudo yum install tree  
 OR
 sudo -u root yum install tree
+both commands means that you are assuming the root user position
+but the first is preferred bc you are typing less
+
+#######
+su -root - switch user to root ( it requests for root user password )& if u dnt hv the passwd, u cant switch user to become root
+sudo -i switch user to root without password
+sudo -u-
+
+**** when you switch to oot user  eg
+[ec2-user@demo~] $ sudo -i
+[root@demo~] $ 
+[root@demo~] $  yum install tree    ... bc i am now root user so no need for sudo
+
+
 
 ########
 the most secure option to run this will  not be to switch user to root but to run the command under the ec2-user while assuming root priviledges.
-[ec2-user@demo~] $ sudo yum insatll tree
+[ec2-user@demo~] $ sudo yum install tree
+
+******
+ec2user has some some sudo right so he can run this task assuming  sudo priveledges
 
 
 APPLY THE COMMANDS: 
