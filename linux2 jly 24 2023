@@ -106,6 +106,8 @@ also var dir
 
 ************************************  in performing task in linux, there are diff category of users
 
+
+
 26:00/30.35
                              INTERVIEW QUESTION
 What is the diff btw bin and sbin directory in linux ??
@@ -133,6 +135,7 @@ etc : contains configuration files
 sshd = ssh service/ daemon = user Name/passwd    eg to access your server via ssh you need username/passwd OR username & ssh key
 UserName/ssh -private-key
 
+****38:35
 - tmp: temporal files
 -opt: directory where softwares & packages should be installed, it is the best place to install 
 - var: var directory contains dynamic files
@@ -151,3 +154,161 @@ eg mem info - memory information
 cpu info  - cpu information
 ［root@demo-# cat/proc/meminfo = to check for info about my memory
 [root@demo~# Cat/proc/cpu info
+
+
+   ***40:52
+                                               LINUX BASIC COMMANDS (basic linux commands)
+performimg tasks in linux systems uisng the (CLI) command line interface
+A directory is a container of files and sub-directories (directory commands)
+A folder is a container of files
+
+
+*****42:58
+                               FILE MGT
+             DIRECTORY MGT COMMANDS
+mkdir = create a directory or directories
+rmdir = delete an empty dir
+rm -rf = delete my dir
+cd =  directory navigation
+pwd = present working dir
+ls = list of the dir content
+tree = show me both parent and child dir
+
+47:20
+TICKET001:
+Create work directories for telsa client
+[ec2-user@demo~] $  mkdir tesla
+
+to check if the directory was created 
+[ec2-user@demo~] $ ls
+telsa (test.txt)       , our proof
+
+*****47:58
+TICKET002:      create directory (mkdir)
+create project 01  directory using the format below 
+dev/git/maven/aws        nexus/java
+
+it means that we want to create a dir called dev, inside dev there will be git, inside ther will be maven, inside amven aws nexus
+
+the command to use is  = mkdir -p  dev/git/maven/aws
+we can also  = mkdir -p-v dev/git/maven/aws
+   OR -pv
+-p = create including the parent directory 
+-v = create in verbose mode (its a system informing what has happened
+
+******51:40 ... mkdir class33 and mkdir -v class33 , are 2 diff commands
+when we create in verbose mode, the system informs you what has happened as seen below 
+****52:10
+eg mkdir -v class33
+[ec2-user@demo~] $ 
+[ec2-user@demo~] $  mkdir -v class33
+mkdir; created directory class33
+
+
+**** now we wil create our tcicket002 in verbose mode
+
+[ec2-user@demo~] $ mkdir -pv  dev/git/maven/aws
+mkdir: created directory 'dev' ie directory dev created 
+mkdir: created directory 'dev/git' ie directory git which is inside dev created
+mkdir: created directory 'dev/git/maven ie directory maven which is inside git and dev created
+mkdir : created directory  'dev/git/maven/aws
+
+
+******** with commands automation is very possible, so we are taking advantage of automation
+
+
+53:27
+BUT HOW ELSE CAN WE CARRY OUT THIS TASK IF WE DNT USE COMMANDS 
+
+  HOW TO RUN TASK IN LINUX SYSTEMS
+-GUI/console 
+- CLI = commands with some automation
+- script with more automation
+
+
+TO CONFIRM THE DIREECTORIES WERE FORMED
+[ec2-user@demo~] $  Ls dev
+git
+[ec2-user@demo~] $ ls dev/git
+maven
+
+
+************* cd = to navigate the user home directory 
+cd.. = to navigate one directory backward
+cd../../../../ = navigate 4 directories backward
+
+
+       TO INSTALL A COMMAND NOT FOUND 
+
+we can install the command using a package manger
+
+su -root - switch user to root ( it requests for root user password )
+sudo -i switch user to root without password
+sudo -u-
+switch user to paul : su - paul
+[root@demo~] # su - ec2-user
+
+57:50
+******** to install tree using root command/priviledges
+sudo yum install tree  ....  *** this is an admin task
+OR
+sudo -u root yum install tree
+
+########
+the most secure option to run this will  not be to switch user to root but to run the command under the ec2-user while assuming root priviledges.
+[ec2-user@demo~] $ sudo yum insatll tree
+
+
+APPLY THE COMMANDS: 
+
+cd = change/leave 
+cd ../    navigate one directory backward
+cd -      ( forward)  navigate to your last working directory
+
+
+[ec2-user@demo~] $ pwd
+homw/ec2-user
+[ec2-user@demo~] $ cd dev
+ec2-user@demo dev
+[ec2-user@demo~ dev] $ ls 
+git
+[ec2-user@demo~dev] $ cd git 
+ec2-user@demo~git $ 
+ec2-user@demo~git $ cd maven
+ec2-user@demo~maven $ 
+ec2-user@demo~maven $ ls
+aws
+ec2-user@demo~maven $ cd aws
+ec2-user@demo~aws $ 
+ec2-user@demo~aws $ pwd 
+ec2-user dev/git/maven/aws
+ec2-user@demo~aws $ cd../                backward to maven frm aws
+ec2-user@demo~maven $ 
+ec2-user@demo~maven $ cd../               frm maven to git
+ec2-user@demo~git$ 
+ec2-user@demo~git $ cd -                      forward, frm git to maven
+ec2-user@demo~maven$ 
+ec2-user@demo~maven $ cd../../                2steps backward move to dev
+ec2-user@demo~dev$ 
+ec2-user@demo~dev $ cd -            forward, from dev to maven
+home/ec2-user/dev/git/maven
+ec2-user@demo~maven $ cd../../../           from maven to ec2-user home
+ec2-user@demo~ $       ie 3 steps backwards
+
+
+
+                    COMMANDS TO DELETE DIRECTORIES
+rmdir dirName = deletes empty directory/directories
+directory with content cannot be deleted by rmdir only empty dir can be deleted
+
+******* to delete directory with content
+rm -rf dirName = deletes any directories with or without content
+
+              
+
+
+
+
+ctrl C = to kill a process
+exit = logout/exit rootuser
+exit = logout a session
