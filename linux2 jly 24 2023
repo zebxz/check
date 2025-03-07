@@ -246,11 +246,6 @@ but when i execute the tree command, it says command not found
 once its nt found, we can install the command
 
 
-************* cd = to navigate the user home directory 
-cd.. = to navigate one directory backward
-cd../../../../ = navigate 4 directories backward
-
-
        TO INSTALL A COMMAND NOT FOUND 
 
 we can install the command using a package manger
@@ -289,10 +284,28 @@ sudo -u-
 
 ########
 the most secure option to run this will  not be to switch user to root but to run the command under the ec2-user while assuming root priviledges.
-[ec2-user@demo~] $ sudo yum install tree
+
+
+1:05
+[root@demo~] # exit
+logout
+[ec2-user@demo~] $ 
+[ec2-user@demo~] $ who am i
+ec2-user
+[ec2-user@demo~] $ 
+[ec2-user@demo~] $ sudo -i
+[root@demo~] #
+[root@demo~] # exit
+logout 
+[ec2-user@demo~] $
 
 ******
 ec2user has some some sudo right so he can run this task assuming  sudo priveledges
+[ec2-user@demo~] $ sudo yum install tree
+
+[ec2-user@demo~] $ sudo tree
+ now wee see the files in a very nice directory strutcure ....  *1:06:40
+
 
 
 APPLY THE COMMANDS: 
@@ -300,6 +313,11 @@ APPLY THE COMMANDS:
 cd = change/leave 
 cd ../    navigate one directory backward
 cd -      ( forward)  navigate to your last working directory
+
+************* cd = to navigate the user home directory 
+cd.. = to navigate one directory backward
+cd../../../../ = navigate 4 directories backward
+
 
 
 [ec2-user@demo~] $ pwd
