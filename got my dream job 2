@@ -317,6 +317,146 @@ textmate,bracket, notrpad , vscode, atom, eclipse
 
                                            LINUX3B
 
+Cont.....  ***** RUNNING TASKS ON YOUR SERVER,( read file content/info of users, file bk up, Renaming &relocating  files /directories counting line & character in a file, deleting file,
+RESOURCEULTILIZATION (soft link,'L', hard link'-', CREATIG SHORTCUT /LINK TO FILES, fields for file (file type,permissions,number of links,owner,grp owner,size, date &time file name/dir),
+hidden files, long list, search for file (find)
+
+
+       Read the content of a file:
+cat fileName:  Read /display file content
+cat -n fileName : list content of a file 
+head fileName ; display the 1st 10 lines
+head -3 fileName: : Display the 1st 3lines
+head -1 fileName : display the 1st file line 
+tail file name : display the last 10 lines              the press 'q' to leave
+less fileName : you can go back and fort pages in a file with many pages
+more file name: to read page by page
+
+
+    READ THE INFO OF USERS
+cat/etc/password = all the users detail in our server
+tail etc/passwd  = users recently created 
+tail -3/etc/passwd = -3 last user
+
+
+     FILE BACKUP
+CP = creates another copy of your file
+cp = filename new filename 
+
+
+      Renaming files /directories 
+mv filename  new filename
+mv dirname   new dirname
+
+
+      Relocating file / directories
+mv file to be maoved New locataion (file dir) 
+eg we have a file in one  home/ec2-usere  (in our present working dir) but once its moved we cant find it in ls again
+ie it lists the content of our pwd
+
+
+
+              Deleting file (with or without content)
+rm filename
+
+
+**********                      counting line and character in a file 
+wc fileanme = in the order of lines/words/character
+
+wc -l = no. of lines
+wc -c = no. of character
+wc -w = no. of words
+
+wc fileName  
+  wc note.rn  
+other commands:
+  clear, sudo, exit   
+[ec2-user@demo ~]$ wc list.txt
+   17  16 121 list.txt
+   lines=17 
+   words=16 
+   characters=121
+[ec2-user@demo ~]$
+[ec2-user@demo ~]$
+[ec2-user@demo ~]$ wc paypal/rn.txt
+  913  3362 25297 paypal/rn.txt
+   lines=913 
+   words=3362 
+   characters=25297
+
+
+
+                  RESOURCE ULTILIZATION
+sOft link is more resource efficient bc it uses minimal resources of our system 
+soft link points to our original file/doc but hard link is a copy of the file 
+
+while the original file is deleted, we cannot access the original link frm the soft link bc its a symbol to the file but we can access the original file form the hard copy
+bc its a copy of the original file 
+
+
+   CREATIG SHORTCUT /LINK TO FILES
+Hard link : copy of a file (hard link starts with '_') just like a normal file 
+ln fieName linkName
+ln list.txt my list
+hardlink maintains original file size  eg if original file size is 250, hardlink will also be 250
+
+
+softlink: symbolic to the file ) short cut link to the file
+ln-s filename linkname
+ln -s new.txt mylist
+*** soft link starts with  l & the file size is smaller compared to the original file 
+eg, original file can be 250mb in size but softlink can be 5mb in size
+
+
+[ec2-user@demo paypal]$ ll
+total 56
+TYPE:
+-    rw-r--r--. 1 ec2-user ec2-user     0 Jul 26 01:25 class33
+l    rwxrwxrwx. 1 ec2-user ec2-user     6 Jul 26 01:28 notes.yml -> rn.txt  : SL  
+-    rw-r--r--. 2 ec2-user ec2-user 25297 Jul 26 01:05 notes33.yml :  HARD LINK
+d    rwxr-xr-x. 2 ec2-user ec2-user     6 Jul 26 01:20 pay
+-    rw-r--r--. 2 ec2-user ec2-user 25297 Jul 26 01:05 rn.txt
+
+
+softlink starts with letter 'L'
+hardlink starts with a '-'
+
+
+Fields for files:
+  1)  File type    [-file, d=dir, l=soft link]   
+
+  2)  Permissions [ owner=rwx  group=r-x  others=r-x ]   2023 G Wagon  = Ifoema 
+           
+  3)  Number of links
+  4)  Owner [ ec2-user ]
+  5)  Group Owner [ Engineer ]
+  6)  Size of the File in Bytes
+  7)  Date and Time of creation
+  8)  File name/Dir Name
+
+file type, permissions,number of links,owner,grp owner,size, date &time file name/dir
+
+
+                     HIDDEN FILES
+FIles that start with .
+ls- a = to list hidden files
+
+
+                  LONG list
+ll -t  : lists files from last created to the file that was created first     (based on the time file was created)
+ls -l  : lists files in alphabectical order    (sort)
+ls -ltr  : list files based on reverse order (file created first on top will be created last below)
+reverses the time file was created
+ll   : long list
+
+
+
+       TO SEARCH FOR FILE 
+Find
+
+
+                                    4A
+
 
    
 
