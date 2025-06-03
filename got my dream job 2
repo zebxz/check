@@ -144,7 +144,7 @@ home dir of ec2user (default user ie created by the sys) and home dir of any oth
 CONFIGURATION FILE,LINUX BASIC COMMANDS, HOW TO RUN TASK IN LINUX SYSTEMS(cli,gui,script)
 TYPES OF TASKS (FILE MGT:dir mgt command , install command not found ;INSTALL TREE, CREATING DIR, sudo, cd ; forward and backward move, create hidden file, how to run task in linux )
         (other tasks we will explore are: Task like; user mgt, system mgt,process mgt, security mgt, package mgt, serveice mgt, monitoring)
- )
+ 
 
 
      LINUX COMMANDS
@@ -480,6 +480,102 @@ delete user's account , delete user's account including home dir.
 
 
 LINUS 6
+system mgt commands, Date, set, show, check ,change hostname,change date, ping server, check if server is runing, diff ways to connect to server, how to know who is connected to my server , 
+package mgt, service names, process mgt, process mgt
+
+ how to mg8 your system
+To know your ip adress ; copy & paste in your browser.....  https:whatismyipaddress.com
+
+curl ifconfig.me  = list the publicIP address
+
+1)date : Print or set the system date and time
+      date -S "ddmmyyy Time"
+
+  2)sudo timedatectl set-timezone 'America/New_York
+df : Report file system disk space usage
+   df -h    how much space are files ultilizing 
+
+3)hostname; sudo hostname newHostname    = set a Temporal/current-session new hostname 
+   sudo hostnamectl set-hostname newHostname - set a permanent new hostname
+
+4)hostname -i = list your privateIP address  
+5)If server is working; Ping hostname OR ping Ip address 
+ping localhost
+ip a     = list the privateIP address including network interfaces
+
+6)   DIFF WAYS TO CONNECT TO SERVER
+1) USING the hostname - ssh ec2-user@ demo33
+2) using public ip address-ec2-user@40.208.35.48
+3) using private ip address -112.31.84.211
+
+7)who  = list the users connected to the server and from where and since when    
+w  = list the users connected to the server 
+     and their idle time including load average/uptime     
+
+uptime= shows how long a system has been running/has ran without shutting down 
+           (higher uptime hsows better performance of system)
+
+users = how many users are connected
+
+load avarage: 0.90, OR 0.80 OR 0.94 , shows that we have to check the system very well bc the system resource is over utilized and the system is running on very minimal 
+resources
+
+whoami  
+whereis  
+curl ifconfig.me  = list the publicIP address
+
+
+Package managers come in two main categories: dependency managers and operating system package managers. Dependency managers, like Maven, npm, and Gradle, handle project-specific
+dependencies and their versions for programming languages and frameworks. Operating system package managers, such as apt, yum,& Homebrew, manage software and system packages for specific
+operating systems. 
+
+
+  packageMGT, 
+     sudo yum install httpd -y
+  serviceMGT,
+    sudo systemctl start httpd  
+    sudo systemctl enable httpd 
+    systemctl status httpd 
+ 
+processMGT                            ********** what ever happens in linux is a command 
+    ps -ef | grep httpd  
+    ps -ef | grep sshd  
+    ps -ef | grep ntpd
+
+
+ How to install, updates and remove packages in redhat linux 
+
+************ y is only associated with package command , it doesnt apply to any other process or command 
+
+sudo yum insatll, wget -y  -- to install
+sudo yum remove wget -y    ---  to delete
+
+
+wget helps to download (software appl/packages)but 
+package managers downlaod and install packages
+
+webget: wget is a non-interactive netwrk downloaader used to download packages 
+                        eg, download the tomcat9 websserver/java application/software package
+wget|httpds://dlcdn.apache.org/tomcat/tomcat-9/9.0.78/bin/apache
+
+***** so long as wget is already installed, it can be used to download packages with the download link
+wget can be used to download software packages for our server
+
+**** To Install Wget : sudo yum install wget -y  
+     https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip
+Using Wget to install tomcat package : wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.zip          
+
+
+
+
+apt install packageName- debian/ubuntu systems
+brew install packageName - Mac - APPLe systems
+choco install packageName - windows systems
+yum install packageName - good for redhat/contos systems
+
+
+
+
 
 
 
