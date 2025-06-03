@@ -160,31 +160,25 @@ Ticket078:
 
 
 LINUX 6
- 
-uptime= shows how long a system has been running/has ran without shutting down 
-           (higher uptime hsows better performance of system)
 
-users = how many users are connected
+Ticket088:
+==========
+install, start and verify the apache webServer
+sudo yum install httpd -y        (install, this is  package mgt command )               
+systemctl status httpd              (system/service mgt command )
+ps -ef | grep ntpd              ( service is called daemon) ******* to chwck if the netwrk time protocol for the server is running 
+ps -ef | grep httpd                     (process mgt command)
+sudo systemctl start httpd             (service mgt command)
+sudo systemctl enable httpd           (service mgt command)
+sudo systemctl start ntpd
 
-load avarage: 0.90, OR 0.80 OR 0.94 , shows that we have to check the system very well bc the system resource is over utilized and the system is running on very minimal 
-resources
+*** to insatll ntpd; check google (how to insatll ntpd)
+sudo yum install chrony
 
-whoami  
-whereis  
-curl ifconfig.me  = list the publicIP address
-
-
-  packageMGT, 
-     sudo yum install httpd -y
-  serviceMGT,
-    sudo systemctl start httpd  
-    sudo systemctl enable httpd 
-    systemctl status httpd 
- 
-processMGT                            ********** what ever happens in linux is a command 
-    ps -ef | grep httpd  
-    ps -ef | grep sshd  
-    ps -ef | grep ntpd
+********** this ticket involved 
+1)package mgt
+2) service mgt
+3) process mgt
 
 
 
