@@ -525,6 +525,12 @@ whereis
 curl ifconfig.me  = list the publicIP address
 
 
+
+packageMGT, processMGT and ServiceMGT commands:
+================================================
+
+
+
   PACKAGE MGT
 
 Package managers come in two main categories: dependency managers and operating system package managers.
@@ -534,31 +540,20 @@ Package managers come in two main categories: dependency managers and operating 
 System packages are collections of software, documentation, and configuration files that are bundled together to make it easier to install, manage, and utilize a specific software program
 or application. Examples include software suites like Microsoft Office, which includes Word, Excel, and PowerPoint. Other examples include web browsers like Chrome, and Firefox, and 
 operating systems like Windows. 
+    
 
-
-  packageMGT, 
-     sudo yum install httpd -y
-  serviceMGT,
-    sudo systemctl start httpd  
-    sudo systemctl enable httpd 
-    systemctl status httpd 
- 
-processMGT                            ********** what ever happens in linux is a command 
-    ps -ef | grep httpd  
-    ps -ef | grep sshd  
-    ps -ef | grep ntpd
-
-Package mgt
+                                 PACKAGE MANAGEMENT COMMAND
  How to install, updates and remove packages in redhat linux 
 
 ************ y is only associated with package command , it doesnt apply to any other process or command 
 
 sudo yum insatll, wget -y  -- to install
 sudo yum remove wget -y    ---  to delete
+ sudo yum install httpd -y
 
 
 wget helps to download (software appl/packages)but 
-package managers download and install packages
+package managers download and install sofware & system packages
 
 webget: wget is a non-interactive netwrk downloaader used to download (software)packages 
                         eg, download the tomcat9 websserver/java application/software package
@@ -573,12 +568,60 @@ Using Wget to install tomcat package : wget https://dlcdn.apache.org/tomcat/tomc
 
 
 
-
+USING PACKAGE MANAGERS
 apt install packageName- debian/ubuntu systems
 brew install packageName - Mac - APPLe systems
 choco install packageName - windows systems
 yum install packageName - good for redhat/contos systems
 
+dnf install chrony
+    yum install chrony
+
+
+SERVICE NAMES
+httpd
+sshd
+ntpd
+
+
+  processMGT commands:
+===================
+
+processMGT                            ********** what ever happens in linux is a command 
+    ps -ef | grep httpd  
+    ps -ef | grep sshd  
+    ps -ef | grep ntpd 
+
+ps    - to list the process
+  ps -ef  - list all the processes running
+    ps -ef | grep httpd    - grep for apache service   (to show apache is running 
+    ps -ef | grep sshd      - shows process ids (all those that are using the same service
+  top        -    tells the number of processes running 
+  
+  You observed that a process  is consuming over 90% of cpu/memory, what action 
+  should you take ?
+  kill the process with  
+    kill -9 processID  
+
+the parent process
+the child process
+
+
+serviceMGT,
+    sudo systemctl start httpd  
+    sudo systemctl enable httpd 
+    systemctl status httpd 
+
+ service serviceName arguments
+  service sshd status 
+  sudo service sshd start
+  sudo service sshd stop/start/status/enable/disable/restart 
+  sudo service httpd stop/start/status/enable/disable/restart  
+
+  systemctl arguments serviceName
+  systemctl stop/start/status/enable/disable/restart sshd 
+  systemctl start/stop/status httpd  
+  systemctl  
 
 
 
