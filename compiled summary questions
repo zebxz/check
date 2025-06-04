@@ -181,6 +181,51 @@ sudo yum install chrony
 3) process mgt
 
 
+LINUX 7
+
+TICKET 004:
+
+John is unable to connect to the server. Please explain what could 
+be the problem.
+1. Check if John is running the ssh commands correctly
+    ssh userName@ipaddress vs ssh ipaddress@userName 
+    ssh 172.31.31.46@John  vs ssh John@172.31.31.46 
+
+2. Check if the ssh-Port22 is open on the firewall/SG and 
+   respond accordingly[]  
+   inbound Rule: open port 22 for John to have access    
+
+3. Check if the server is up and running 
+     ping ipaddress/hostname/dns    
+
+4. check if the ssh service(sshd) is running and react accordingly   
+     systemctl status sshd 
+     sudo systemctl status sshd  
+
+GIT1
+Interview Questions
+As a DevOps Engineer, what are your roles & responsilities
+    in Versioning with Git?
+Answer:
+  1. We ensure that Developers environments are configured and secured 
+     We create an enabling environment for Developers to code/Develop
+       DevelopmentServers are created in AWS/GCP.  
+       share login details with Developers/Team [ userName/password ]  
+       Ensure that git package/Software is installed 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
