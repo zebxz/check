@@ -1,4 +1,3 @@
-
 GIT, VC- VERSION CONTROL, DVC, SCM, creating git account,  GIT SHOW, GIT COMMIT , PULL , CLONE , GIT COMMAND , GIT INSTALLATION, DEBUGGING
 
 
@@ -9,15 +8,12 @@ Landmark-SS -                 Paypal:
 
 Applications are the output of softwares
 Applictaions are developed by developers
-
-******* SOFTWARE Engineers and developers develop applictaions
+******* SOFTWARE Engineers and developers develop applications
 
 
 ******** we are deploying a web application for our client paypal , once it is developed, tested, built, we monitor the application for paypal so the customers can connect to
 paypal website and carryout transactions
-
-
-    Develops, Tests, Builds, deploys & monitors applications 
+Develops, Tests, Builds, deploys & monitors applications 
     Applications are the output from Softwares  
 
 paypal:
@@ -51,10 +47,17 @@ RollBack  --> version3 --> version2
                                           VERSIONING
 In the diff VCS , WE have a local system and in the local system there are developers writing code
 
+Version control systems come in three main types: Local, Centralized, and Distributed. Local systems are simple, used for individual projects and changes are tracked locally. 
+Centralized systems maintain a central repository where all changes are stored, providing quick access for teams. Distributed systems allow each developer to have a local copy of the
+repository, fostering collaboration and redundancy. 
+
 
 Versioning in Software Development:
 ===================================
 Version control systems = VCS:
+A local version control system is a local database located on your local computer, in which every file change is stored as a patch. Every patch set contains only the changes made to the 
+file since its last version. In order to see what the file looked like at any given moment, it is necessary to add up all the relevant patches to the file in order until that given moment.
+
   Local = version1, 
           version2,[5000LINES ] 
           version3 [2000LINES ] 
@@ -65,7 +68,7 @@ Version control systems = VCS:
          can't RollBack        *** ie , if the local environment goes down its a serious problem
 
   
-  Centralised:             *** here we create a server
+  Centralised:     *** here we create a server, All changes are stored in a central repository
     cons: can't RollBack
           The central server can fail    ** the server wher developers have saved data can fail 
 
@@ -74,7 +77,7 @@ developers can collaborate to an extent
 
 
 
-Distributed VCS:
+Distributed VCS:  Each developer has a complete copy of the repository ,Can be more complex to set up and use. 
 ===============
 GIT: DVCs 
   Distributed Version Control system 
@@ -162,8 +165,193 @@ url =  https://github.com/landmarkss
 Team url = https://github.com/orgs/landmarkss/teams/paypalteam
 repo url = https://github.com/landmarkss/paypal
 
-  6. Ensure that Git and relevant IDEs are installed by Developers 
+6. Ensure that Git and relevant IDEs are installed by Developers 
 
 
                                        GIT INTSTALLATION
+   GIT INTSTALLATION
+
+Git Installations
+-----------------
+Git Installations differs depending on your operating system:
+Pre Requisite Software Download/ Registration :
+Install git in Windows   :  
+  Install gitbash @ https://git-scm.com/downloads [git.exe]
+  $ git -v
+    git version 2.38.1.windows.1
+
+Install in RedHAT Linux servers:
+    sudo yum install git  -y 
+
+Install in ubuntu Linux servers:
+    sudo apt install git  -y 
+=============================
+remote repository in github 
+https://github.com/landmarkss/paypal
+mkdir paypal && cd paypal
+
+
+                        ****** the project we want to manage is paypal
+
+1)
+************   Assume the role of a Developer
+We are developing for our paypal FinTech client. 
+1. create a directory for Development   
+   mkdir paypal && cd paypal  
+2. Initialise this directory to keep track of 
+   any change or changes in the files/codes       ... by running git init
+
+******** whenevr we add a file or make changes to a file, we comment-m
+[obim@demo22 paypal]$ git --version
+   git version 2.39.2
+
+
+
+
+2)                                       GIT COMMANDS 
+
+
+Git Commands:
+  git status --- tells us if our local repository we are creating has been initialized as a repository or not and also if any file has beeen commited to our repository
+  git init   --- the first command       
+    creates a Local repository [.git]  
+    initialises the git repository
+****without git init command, that is not a development repository, it  will not support any git command
+git log           = to list the number of commit that we have 
+                     ( so we git commit  -m "first version", then git log) then we get the commit id 
+
+then next
+
+
+3) the next stage is to move our files form our working area to the staging area
+so we touch a file in our working area
+(in orderwords, task in our working environment is not tracked by git)
+ for it to be tracked by git, we move it from our working area where development is taking place to our staging area
+     ( next video 46.39, git add. can be used to add 1file)
+git add filename : git add boo
+       OR 
+   git add.
+
+one file 
+git add filename
+few files
+git add.
+many files
+git add*
+
+   ****** files in the working area appear in RED
+
+working area to staging area   
+ (workshop)       (staging room)
+
+
+
+4)      TO COMMIT the changes
+
+In our staging area  >>>>>>>>>>>> local repository
+     git commit -m  "   "
+
+2.06  
+git commit -m "first commit" (our msg bc it is our first version)
+the git commit  will move the changes to the working area and create  a new commit with a commit id and that new commit is like a new version created 
+but you can run this commit if we dnt knw who you are ( for data intergrity) for trcaking who did what
+  global configuration  ==  git config -- global usre.email "your email address'
+                            git config  --- global user.name "yourname"
+then we run git log to check , after which we run git commit -m  and git log again to check
+
+
+5) local repository   >>>> Remote repository
+       git push ( push changes from local environment to remote repository)
+
+
+
+[obim@demo22 paypal]$ 
+ git config --global user.email "legah2000@gmail.com"
+ git config --global user.name "Simon Legah"
+
+
+with THE "git commit command -m " a version is created with a version number[commitID]  
+
+git init          = to initialised a git empty repository
+                    create the default branch[master, main]
+git status        = to track files location                    *** to check if our working tree is clean or not 
+                      tells eher files are located are all the files being trcaked by git or not 
+git log           = list all commits  ( with their id) all versions
+git add           = move files to staging area from working area
+git commit -m     = move files to the local repository FROM STAGING AREA , it creates a new version of the application
+                    good commit message for tracking changes created by authors are recommended
+
+git reset        = to go back to working area form staging area
+
+
+
+       GIT SHOW COMMIT 
+
+git show - shows  what happened in a commit after we  run git log ( and get the commit id)
+
+eg with the id of a commit = 138dccf
+       git show 138dccf
+
+and it tells us this ocmmit wa sfirst done by simon and on this particular day, it was a new file, and thers was no changes to the file 
+the next thing for us to ensure is that the job that we can see in simon local environment, has a version been pushed to our SCM (where we hv a repository paypal)
+is oke able to collaboarate with simon?
+for them to be able to collaboarate the job simon has done has to be pushed to our SCM 
+
+1:39
+git remote -v    = to tell us if we have any repository detail in our local environment 
+Tells us how many remote repository we are managing 
+
+1:40
+
+
+5i) to add a repository  URL in our local environment 
+      git remote add paypal https://github.com /zebxz/paypal
+
+( the repository url in my local environment is being replaced by paypal, so i am using an alias paypal name with the repo url )
+
+******* git remote add is done so that other collaborators can have access to the task in the SCM 
+we hv the paypal repo in the SCM so i have to add it in my local environment so i push commit from my local repo to remote repo in SCM 
+
+
+
+
+ git push aliasName branchName  
+eg;  git push pp master                   ***** Pushing to the master banch
+
+6)   GIT PUSH      (alias Name )master
+                
+            (alias name)
+  git push  paypal master (from my local environment to general SCM)
+  username for https://github.com:ceekeh
+password for https://\legal 2045@github.com: token
+we have to create a token bc git no longer accepts password
+
+ ******* go to github 
+select settings aand developers settings 
+
+                   token classic
+select personal access token and generate token    (less than 30days )
+selecet all repository 
+
+
+7)   GIT PULL
+
+After the task i pushed has been executed/worked on by other developers
+ === GIT PULL paypal master 
+
+remote repository in github 
+https://github.com/landmarkss/paypal
+
+  git remote -v 
+  git remote add aliasName repoURL  
+  git remote add paypal https://github.com/landmarkss/paypal
+ git push aliasName branchName  
+  git push paypal master  
+  [obim@demo22 paypal]$ git push paypal master
+Username for 'https://github.com': legah2045
+Password for 'https://\legah2045@github.com': 
+
+
+
+
 
