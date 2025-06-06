@@ -398,6 +398,218 @@ git clean  -f: cleans the working area
 MANAGING APPLICATIONS, STAGES OF DEVELOPMENTAL PROCESS, GIT PULL/CLONE,  GIT BRANCH,  PULL REQUEST , TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
 
                                                   MANAGING APPLICATIONS
+
+
+MY QUESTION:
+
+                                    watch the video again and verify no. 9  **** bt i can also ask prof  , in what branch do we run git push ??
+No. 9       
+ git merge dev               = if we are satisfied with the changes (done in master in local repo)     ****** i think this is an error cos i thought the push was to master
+10) git push aliasName --all     = git push pp --all      ******* in what case scenario can dis happen, to push to all, and frm what branch is this command ran
+
+
+
+jenkins 1&2 
+5:30 ...... commit is a function of branches
+
+
+whatever paypal is going to do is captured as releases
+
+
+
+we hv to ensure that we have a local repository in our env by runing :
+git remote add paypal https://github.com/zebxz/paypal
+ie we choose any alias name of our choice in this case' paypal' and with the url of our remote repo , we create/add a local repo in our environment 
+
+****** to check if we have a local repo in our env we run:   git remote -v 
+to push from our local repo to remote repo = git push (aliasName) master
+
+
+
+from the diagram below, i bliv in each developers local env there is a working area, staging area and local repo/master (i bliv also called master)
+so working area, the files are moved to the staging area then to the local repo and from there to the dev branch in the  remote repo in github
+from his diagram of github,  i bliv since we push frm our local repo which we called paypal ( paypal signifies the pushes that were made from our local repo which we called 
+paypal). while master is the master branch which i sthe final stage that leads us to production 
+
+
+
+
+                                                  MANAGING APPLICATIONS
+             APPLICATIONS ARE THE OUTPUT FROM SOFTWARES
+
+
+This process includes develops, tests, builds, deploy and monitors applications
+our main focus is on development and when applications are developed multiple versions of the application can be developed
+
+we need to use a version control system that brings all the advantages of version control and that is a distributed version control system
+
+a good example of DVCs is git
+in our environment (landmark) WE USE git for versioning 
+
+
+     STAGES OF DEVELOPMENTAL PROCESS
+
+
+  working area        staging     localRepo     RemoteRepo[GitHub]    :
+  -----------        -------      ---------     ------------------  
+  Untracked files     git add     git commit    git push 
+    red                green     https://github.com/LandmakTechnology/paypal.git
+
+
+                   GIT PULL/CLONE
+Git pull: pulls changes to your local environment
+git clone: downloads a version of the entire development work to your local environment
+
+repoURL =  https://github.com/zebxz/paypal
+ git clone  = https://github.com/the peson's organisation name/repository name
+
+this is done to be able to pull  the task done by others to my own local environment/working area
+then i have to config to be able to execute the same commit/ be part of the project
+this is to be done by each member/collaborator of the project
+
+
+                   OR 
+Git pull (the persons repo name) master
+
+                                                  github
+                                                Remote/repo
+                                                 paypal/
+production environment  >>>>>>>...               master
+                                                  stage                             <<<<<< staging/QA  environment  
+                                                   dev                              <<<<<<<<< dev development
+
+                                                ^                ^
+                                                ! !              ! ! 
+                                         git    ! !              ! !   
+                                         push   ! !git           ! ! git
+                                                ! !pull          ! !pull
+                                                ! !              ! !
+                                                   
+                                            Norbert              legal
+                                         working area            working area
+                                         staging area            staging area
+                                           local repo             local repo
+
+
+
+
+
+                                            GIT BRANCH
+   one branch = 1line of production
+A branch is a line of development 
+ A file must have been moved to the staging area before it can be pushed
+
+dvelopment branch : writing our cde
+stage branch : then moved to stage and once its done
+master branch: deployed to production environment , taken to the market
+
+
+
+***** in development its good to have multiple dev lines so that if there is an issue with on line, it can be resolved from the other line
+ 
+******* The master branch is the upstreamBranch for the dev Branch  
+  The dev branch is the downstream of the master branch   
+
+ 
+
+
+******* i think this was me summarizing the steps
+
+1) git branch               = to confirm we have created dev
+2)git branch dev             =  we run this command to create dev branch
+3) git switch dev             =  change from master to dev and vice versa
+4) we vi into app.java file
+5)we git add.
+6) we commit "m"
+7) git switch :                 = move from dev to master
+8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
+                                  git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
+9) git merge dev               = if we are satisfied with the changes (done in master in local repo)     ****** i think this is an error cos i thought the push was to master
+10) we ls  / get log       = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
+11) git push aliasName --all     = git push pp --all ( this is done in master in our local repo )        ******* in what case scenario can dis happen, to push to all
+                                     creates dev branch in remote repo and pushes the chnages from local repo to dev/master in remote repo
+
+git push aliasName branchName  
+
+
+**********************   The master branch is the upstreamBranch for the dev Branch  
+  The dev branch is the downstream of the master branch   
+
+
+
+Git fetch         =  it brings changes in the code from the remote repo to the local repo 
+Git pull          =   it brings changes in the code from the remote repo to the local repo and working area
+Git clone         =   it brings the entire code to the working area
+
+
+                                               
+
+*********************************
+
+github
+                                              Remote repo
+                                                paypal
+                                                master
+                                               bugfix         >>>>> whenever ther is an error/bug in the code, we create a bug fix branch from the master
+if the org say they want a new feature >>>>     feature
+we create a feature branch  from                 stage
+ the master branch                                 dev
+
+
+
+
+                        PULL REQUEST : PR ( in the remote repo)
+PR is used to review changes in one branch b4 merging in another branch 
+this is recommended for any merge in the master/release branch
+
+eg
+compare and pull request:  when a change is done in dev branch , to create a a review, we can see this option in the master branch informing us of a change , so we use the 
+option
+
+
+
+***********
+git push aliasName branchName  
+eg;  git push pp master                   ***** Pushing to the master banch
+
+git branch           = list the branchless 
+git checkout/switch branch name =  git switch dev
+git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github
+git push pp --all 
+git branch - v             =  display all branches in your repo and also tell you what branch your currently working i
+git remote remove alias Name    =  remove repo from the local environment 
+git remote remove repo URL 
+
+
+
+
+****************
+
+  
+          TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
+         i bliv ie pull reQ, done in the remote repo
+
+
+git pull pp (ie alias name)
+
+                 OR
+git fetch (aliasName) ie PP    
+Git diff pp/master   = to see the changes we are bringing over  ( i blv from the master branch)
+then git merge pp/master    = form local repo to workin area 
+
+
+
+         git push alias name --all
+this will create branches in other repositories that didnt have such branch 
+eg when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
+other effected changes/commit 
+
+
+
+
+                       GIT 3
+
+
              APPLICATIONS ARE THE OUTPUT FROM SOFTWARES
 
 
