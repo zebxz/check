@@ -398,7 +398,11 @@ git clean  -f: cleans the working area
 
 
 
-                                           GIT 2
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+                                        
+                                                                      GIT 2
 MANAGING APPLICATIONS, STAGES OF DEVELOPMENTAL PROCESS, GIT PULL/CLONE,  GIT BRANCH,  PULL REQUEST , TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
 
                                                   MANAGING APPLICATIONS
@@ -615,13 +619,14 @@ branch so if there are any changes in the dev branch that needs to be applied in
 we need to ensure that its actually what is wanted .
 make sure the work is reviewed before its merged in the master branch
 
- 
-
 codes form the dev branch is deployed to the development branch env, code from the staging branch to testing/QA/UAT envand from the master they are deployed to production
 from the master we can create a feature branch or a bug -fixed branch 
            
 
 
+
+   //////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                        GIT 3
 
@@ -727,8 +732,292 @@ git merge development
 
 
 
-                          GIT 4
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+&&&887&*(????????//////////////////////////////////////////////////////////////////
+
+                                                      GIT 4
+GIT BASH, resolving conflict, GIT CHERRY, HOW TO MERGE CHANGES IN GIT,  BUT FOR REBASE, DIFF BETWEEN TAGS & BRANCHES, What is the difference between Git & Github:
+Branch security, SWITCHING BRANCHES, BRANCH SECURITY, CONNECTING TO SCM/GITHUB USING SSH KEY, more COMMANDS, CONNECTING TO SCM/GITHUB USING SSH KEY, IDE, .gitignore, 
+GIT BEST PRACTICES
+
+
+
+   GITBASH
+
+To add and commit at once (the chnages in already existingfiles) 
+git commit -a -m "commit message"
+git add.&& git commit -m "commit message"
+
+
+           resolving conflict
+we resolve merge conflict by merging manually 
+avoid merge conflict for best practices
+
+
+example
+we git switch to dev frpm master
+vi app.java & edit , add and commit 
+when we git log we can see the recent commit
+then we switch back to master 
+we vi app.java, add & commit 
+when we git log we can see only the commit done in the master branch
+BUT when we git diff dev to see the changes in dev & merge dev
+we get a merge conflict in app.java
+
+
+
+               TO RESOLVE THE CONFLICT
+Vi app.java, delete  <<< HEAD  &  >>>>>>>>   stage
+we git status : show us both files have been modified 
+                        " both modified"
+
+******* we resolve merge conflict by merging manually 
+finally we run: git commit -a -m "merge conflict resolved"
+
+
+IQ: 
+how can we merge a particular commit among many commits
+
+ANS:
+in git?  = by using the ; 
+git cherry - pick commitID 
+
+
+eg
+WE have several commits in the dev or stage branch
+we can select a particular commit to merge in master
+so we run = git - cherry  - pick commitID
+
+But when we try to merge the dev or stage branch to master we will get a merge conflict bc of the other commits that have not been merged manually 
+
+therfore, we vi into the file and delete  <<<<< HEAD
+FINALLy, git commit -a -m "conflict fixed"
+
+
+                     HOW TO MERGE CHANGES IN GIT
+
+git merge:
+ stage commit 1    ie sc1
+  sc1 [version1] -->sc2 [version2] --->sc3 [version3] 
+                  = mc1 [master version1]                     ******* when we merge, we get jst one version 
+
+ie when we have several commits in the stage /or dev branch and try to merge to master branch , it gives merge conflict, so we have to commit it maually
+and when we that is done it commits  (git commit -a -m) it as one version in the master branch (master version)
+
+
+
+   BUT FOR REBASE
+
+git rebase
+     sc1 [version1] -->sc2 [version2] --->sc3 [version3] 
+                   = mc1 [version1] -->mc2 [version2] --->mc3 [version3]               
+ 
+   ******** for rebase:
+when we have several commits in the stage / or dev branch and run git rebate stage or dev, it gives us the various versions in master
+just as it was in the stage  / or dev barnch 
+therfore if we need to refer back to the commits work in the future the rebase makes it easy for us to have access to ecah commit/versions
+
+
+26:00
+How can we merge a particular commit among many commits in git??
+By using the;
+
+git cherry-pick   = merging specific commits
+
+
+*******
+
+git clean -n : tell you the files/changes that would be deleted in working working area
+git clean -f : cleans the working area
+git reset
+git revert commitID 
+
+
+How to determine what happened in a commit
+  git show commitID
+  git cherry-pick 518110e  
+  git commit -a -m "CONFLICT fixed"
+
+
+                    DIFF BETWEEN TAGS & BRANCHES
+difference b/w tags and branches :
+=== Tags                                                  ==Branch
+immutable                                                   mutable
+Tags are unmodifiable                                      branch can be modified/modifiable
+Tags are created After Production                          creates while development is still -WIP 
+recommneded to be created from Master  branch              can be created from any branch 
+to create a tag: git tag TagName                           git branch BN
+git push an (an alias Name)--tags                          git push an --all           
+git push AliasName tag TN                                  git push an (alias Name) BM              
+git tag -d TN                                              git branch -d BN
+
+
+
+
+
+git Tag
+create tag: git tag paypal - 1.0.02
+1 = higher version
+2 = lower version
+3 = patch
+
+
+
+What is the difference between Git & Github:
+Git is an open source Distributed Version Control System(DVCS) which records
+changes made to files (codes) laying emphasis on speed, data integrity in a
+distributed non-linear workflows.  
+GitHub is a source code management[SCM] tool
+
+
+
+Explain your branching strategy in LandmakTechnology ?? 
+Explain your branching strategy in Dominion systems ??
+Explain your branching strategy in your Environment ?? 
+
+1. Number of branches = WE maintain 3 branches
+  dev branch    ---> develoment Environment
+  stage branch  ---> Testing/QA/UAT Environment
+  master branch ---> PRODUCTION 
+    feature 
+    bug_fixed
+
+
+
+2. Branch security = 
+   All commits in the master branch must go through PR 
+
+we also have branch security in our branching strategy 
+our branch security is such that no one can commit directly to the master branch, all commit in the master branch must go through  PR (pair review) or there must be a pull
+request
+
+3. Switching branches =  working tree should be clean 
+    DevOps Engineer [dev branch / master--bugfixed]
+    If neccesary backup incomplete tasks before switching  
+      git stash command  
+
+1:12
+therfore always run git status to check and then git stash to backup the files/WIP , after which you can switch branch
+to get back to the WIP files, run switch to the initial branch 
+then git stash list : to list all the backups
+then git stash apply,  then we can continue working on the file 
+
+
+4. git rebase over git merge
+5. review changes [git diff] before merging
+6. Use PR before committing to the master branch 
+7. avoid merge conflicts  
+
+*************
+
+git stash       =     to take backup
+git stash  list  = to list all the backups 
+
+eg we have a number of backups 
+
+stash@{0}
+stash@{1}
+stash@{2}
+stash@{3}
+
+git stash apply            = resume wip for the most recent backup
+git stash apply stash@{0}  = resume wip for the 1st backup
+git stash apply stash@{5}  = resume wip for 6th backup
+git stash drop stash@{0}   = will delete backup
+git stash pop stash@{1}    = It apply & drop backup 1.
+git stash pop
+
+
+
+the private key is like a lock, so you slot the public key in ito the lock and it gives you access
+we copied the public key and added it to our github account so when you try to access your github account, the private key will be authenticated against the public key 
+
+
+CONNECTING TO SCM/GITHUB USING SSH KEY
+
+This automates your authentication access to github ie no need for password PAT
+
+ls/home/ec2-user/.ssh
+   ssh-keygen   
+ then copy /home/ec2-user/.ssh/id_rsa.pub
+cat  /home/ec2-user/.ssh/id_rsa.pub
+copy the key and paste in SSH tray in github
+copy ssh url in github (find it in code in repository)
+create an alias name for ssh url = Ada
+ssh url = Ada git@github.com:zebxz/paypal.git
+git remote add Ada git git@github.com:zebxz/paypal.git
+to push = git push ada master
+
+github - webhook --jenkins( we will look at it when we get to jenkins)
+
+IDES: integrated development environment ( are sofwares that eases code writing)
+
+.gitignore file
+developers use IE to write code
+IDE include = vscode, esclipes, atom etc
+
+****** git will not track changes in .gitignore file
+
+
+
+1:37
+IQ:
+   WHAT IS THE USE OF .GITignore file
+this is used to list files that should not be tracked by git
+most of the time these files are file sthat are craeted by the software, the integrated dev environment, the IDE or any files that we dnt want git to track changes in the
+file or directory , we use the .gitignore file to list them there.
+
+
+  Git Best Practices:
+    Use branching strategy and pull requests
+    Commit once you finish your task. 
+    Avoid merge Conflicts.
+    Don’t Commit Half-Done code - backup with git stash
+    Test your code before committing.
+    Write Good Commit Messages before committing 
+    Try to use git commands rather than GUI tools.
+    use ssh url and PAT over https url  
+    use rebase over git merge
+    use branch protection strategy  
+    use best branching strategy
+
+
+
+
+****** the PAT prevents unauthorized users from cloning our projects
+it can prevent unauthorized access bc you can deceide what the PAT can and cant do 
+eg can clone public or private repository/modify/push code
+with PAT you can determine the scope of what can be done 
+eg
+i can create and assign a PAT to a personnal user as well as define the scope for which it can be used for.
+
+in the past password was used but that will grant everyone full admin access, thats why they removed passwd support to PAT so that access can be defined, the scope can be 
+restrited
+
+
+
+
+####################################   END
+
+
+
+
+IDEs = Integrated development environment
+ are software that eases code writing  
+
+[ec2-user@demo33 paypal]$ ls /home/ec2-user/.ssh/
+authorized_keys  
+id_rsa       = ssh-private-key
+id_rsa.pub   = ssh-public-key  
+known_hosts  
+known_hosts.old
+
+
+
+Maven / Tomcat / apache Webserver / SonarQube / Nexus / Jenkins :
+==========================================================
 
 
 
