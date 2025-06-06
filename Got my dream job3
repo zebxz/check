@@ -606,11 +606,121 @@ other effected changes/commit
 
 
 
+ the master branch is the most most critical branch bc production goes to the market from the master branch therfore, it is better for development to start in development
+branch so if there are any changes in the dev branch that needs to be applied in the master branch then more work has to be done. so before we deploy from dev to master
+we need to ensure that its actually what is wanted .
+make sure the work is reviewed before its merged in the master branch
+
+ 
+
+codes form the dev branch is deployed to the development branch env, code from the staging branch to testing/QA/UAT envand from the master they are deployed to production
+from the master we can create a feature branch or a bug -fixed branch 
+           
+
+
 
                        GIT 3
 
+User@LandmarkTech MINGW64 ~/Documents/paypal (master)
+$ git remote -v
+pp      https://github.com/LandmakTechnology/paypal.git (fetch)
+pp      https://github.com/LandmakTechnology/paypal.git (push)
 
-             APPLICATIONS ARE THE OUTPUT FROM SOFTWARES
+
+  git push aliasName branchName  
+  git push pp master  
+
+
+ repoURL = https://github.com/LandmakTechnology/paypal
+ git clone https://github.com/LandmakTechnology/paypal  
+
+git config --global user.email "mary@gmail.com"
+git config --global user.name "Mary"
+
+[ec2-user@demo33 paypal]$ git remote -v
+origin  https://github.com/LandmakTechnology/paypal (fetch)
+origin  https://github.com/LandmakTechnology/paypal (push)
+
+  git push aliasName branchName  
+  git push origin master 
+
+[ec2-user@demo33 paypal]$  git push origin master
+Username for 'https://github.com': legah2045
+Password for 'https://legah2045@github.com': [Admin@123] PersonalAccessToken   
+Password for 'https://legah2045@github.com': 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
+
+
+ 
+with THE "git commit command -m " a version is created with a version number[commitID]  
+
+git init          = to initialised a git empty repository
+                    create the default branch[master, main]
+git status        = to track files location
+git log           = list all commits/versions     
+git add           = move files to staging area from working area
+git commit -m     = move files to the local repository FROM STAGING AREA
+                    Creates a new version of the application
+                    good commit message for tracking changes created by authors are recommended
+
+Legah 
+Mary  
+  paypal-01 = Legah = git commit -m "First commit"    
+  paypal-02 = Mary  = git commit -m ""    
+  paypal-03 = Mary  = git commit -m    
+  paypal-04 = Legah = git commit -m  
+
+
+git show commitID  
+Git commands:
+  git init/show/add/commit/status/log/clone/pull/push/remote -v/ remote add/config/version  
+
+Git Branch :
+  In git a branch is a line of Development  
+    development branch
+    stage branch 
+    master branch
+
+        dev    [ rich / list.txt / deploy.sh  ] 
+        stage  [ rich / list.txt / deploy.sh  ] 
+        master branch [ rich / list.txt / deploy.sh  ] 
+
+        dev   branch   ---> development environment  
+        stage branch   ---> testing/UAT/QA environment  
+        master branch  ---> production environment  
+
+
+
+git branch -help  
+==================
+
+git branch branchName   = creates a new branch
+git branch development  = created the development branch 
+
+master branch is the upstream of the Development branch  
+
+upstream branch = development :
+  development branch =  usermgt.java  = 10,000 lines  
+downstream branch = stage :
+  git branch stage   =  usermgt.java  = 10,000 lines    
+
+
+git switch master
+git diff development 
+git merge development
+
+
+
+
+
+  git branch  = list all the branches [lines of development]
+  git branch branchName   = create a new branch     
+  git checkout branchName = switch branches 
+  git switch branchName = switch branches 
+
+  git fetch --> It brings changes in the code to the LocalRepo
+  git pull --> It brings changes in the code to the localRepoand & Working area 
+  git clone --> It brings the entire code to the working area 
+
 
 
 
