@@ -27,6 +27,7 @@ Assign permission for the ec2-user group to modify the blessed.me file
 chmod +r fileName 
 chmod 664 fileName  
 
+
 Ticket078:
   Create user accounts for landmark and datti and verify?  :
 
@@ -42,6 +43,27 @@ chmod +r fileName
 chmod 664 fileName  
 
 
+ linX4b 
+ QUESTION1:
+Ticket078: Search for a binary file called 'pwd' 
+   binary files are commands found in the bin/sbin directories
+whereis pwd 
+
+c) searching a file in the root Directory:
+  find / -name list 
+  sudo -u root find / -name list    
+OR   sudo find / -name list  
+********** the output to this command is the root path to the file 
+
+Ticket078:
+  Create user accounts for landmark and datti and verify?  :
+
+
+TICKET009:
+DATTI grant oke sudoer access
+   sudo echo "oke ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/oke
+
+
 LINUX5B
 Ticket078:
   1. Create user accounts for landmark and datti and verify?  :
@@ -52,5 +74,50 @@ Ticket078:
   6. connect to the server externally as landmark as landmark user using password?
   7. Lock datti's password and server access?  
   8. Create manager's group and add user landmark to it.
+
+
+LINUX 6
+
+Ticket088:
+==========
+install, start and verify the apache webServer
+sudo yum install httpd -y        (install, this is  package mgt command )               
+systemctl status httpd              (system/service mgt command )
+ps -ef | grep ntpd              ( service is called daemon) ******* to chwck if the netwrk time protocol for the server is running 
+ps -ef | grep httpd                     (process mgt command)
+sudo systemctl start httpd             (service mgt command)
+sudo systemctl enable httpd           (service mgt command)
+sudo systemctl start ntpd
+
+*** to insatll ntpd; check google (how to insatll ntpd)
+sudo yum install chrony
+
+********** this ticket involved 
+1)package mgt
+2) service mgt
+3) process mgt
+
+
+LINUX 7
+
+TICKET 004:
+
+John is unable to connect to the server. Please explain what could 
+be the problem.
+1. Check if John is running the ssh commands correctly
+    ssh userName@ipaddress vs ssh ipaddress@userName 
+    ssh 172.31.31.46@John  vs ssh John@172.31.31.46 
+
+2. Check if the ssh-Port22 is open on the firewall/SG and 
+   respond accordingly[]  
+   inbound Rule: open port 22 for John to have access    
+
+3. Check if the server is up and running 
+     ping ipaddress/hostname/dns    
+
+4. check if the ssh service(sshd) is running and react accordingly   
+     systemctl status sshd 
+     sudo systemctl status sshd  
+
 
 SCRIPTING
