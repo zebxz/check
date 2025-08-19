@@ -551,7 +551,9 @@ production environment  >>>>>>>...               master
 
 
                                             GIT BRANCH
-   one branch = 1line of production
+        **** 1:53:04       ( our branch rule is that we dnt work directly in the master branch, bc master branch deploys to production)
+   
+  one branch = 1line of production
 A branch is a line of development 
  A file must have been moved to the staging area before it can be pushed
 
@@ -641,13 +643,15 @@ git remote remove repo URL
 
 
 
-****************
-
-
-          TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
+**************** 1:52:27   TO SEE THE DIFF BTW GIT PULL & GIT FETCH, WE will use the illustration below;
+  git fetch --> It brings changes in the code to the LocalRepo
+  git pull --> It brings changes in the code to the localRepo and & Working area 
+    
+     TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
          so for us to merge the changes in the remote repo to the local repo 
-git fetch pay = we can run git pull or git fetch
-but git fetch doesnt merge the changes yet so we run git diff
+for us to update the changes we can run git fetch or git pull
+git fetch pay = git fetch
+but when we cat the app.java file we see its not yet updated bc git fetch doesnt merge the changes (bc git fetch brings the changes only to the local repo) so we run git diff
 git diff pp/master = git diff to review the changes ( pp is prof repository alias name) 
 git merge pp/master = to merge the changes
 
