@@ -357,6 +357,8 @@ Tells us how many remote repository we are managing
 
 5i) to add a repository  URL in our local environment 
       git remote add paypal https://github.com /zebxz/paypal
+ git remote add paypal https://github.comzebxz/paypal    
+     i just realised that the "paypal i" before https thats the aiiasname not the last paypal
 
 ( the repository url in my local environment is being replaced by paypal, so i am using an alias paypal name with the repo url )
 
@@ -559,7 +561,7 @@ A branch is a line of development
  A file must have been moved to the staging area before it can be pushed
 
 dvelopment branch : writing our code
-stage branch : then moved to stage and once its done ( based on the video & my practice, i think we dnt really create a staging branch like we do the dev branch, the staging branch is where the codes are committed.
+stage branch : then moved to stage and once its done 
 master branch: deployed to production environment , taken to the market
 
 
@@ -598,7 +600,7 @@ git push aliasName branchName
 
 
 Git fetch         =  it brings changes in the code from the remote repo to the local repo 
-Git pull          =   it brings changes in the code from the remote repo to the local repo and working area
+Git pull alias name branchname   =   it brings changes in the code from the remote repo to the local repo and working area
 Git clone         =   it brings the entire code to the working area
 
 
@@ -619,7 +621,7 @@ we create a feature branch  from                 stage
 
 1:49:00 ********To expand more on Ticket001 above:
                         PULL REQUEST : PR ( in the remote repo)
-1:33:00  in the remote repo in github, in the dev branch, we added a new line to the app.java file , after which in the master branch we see the "compare & pull request" notification, i can add a branch protection rule, eg  
+1:33:00  in the remote repo in github, in the dev branch, we added a new line to the app.java file , after which in both branches we see the "compare & pull request" notification, i can add a branch protection rule, eg  
 PR is used to review changes in one branch b4 merging in another branch                                                                               the senior software engr must review before any merge is completed
 this is recommended for any merge in the master/release branch
 
@@ -645,8 +647,9 @@ git remote remove repo URL
 
 
 **************** 1:52:27   TO SEE THE DIFF BTW GIT PULL & GIT FETCH, WE will use the illustration below;
-  git fetch --> It brings changes in the code to the LocalRepo
-  git pull --> It brings changes in the code to the localRepo and & Working area 
+   git fetch --> It brings changes in the code to the LocalRepo   *** 2:10:00 ( this requires a review before merging) , MOSTLY recommended
+  git pull --> It brings changes in the code to the localRepo and & Working area    ( this merges without a review)
+
     
      TO SYNCHRONIZE/BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
          so for us to merge the changes in the remote repo to the local repo 
@@ -657,26 +660,24 @@ git diff pp/master = git diff to review the changes ( pp is prof repository alia
 git merge pp/master = to merge the changes
 
 
-1:58:00 ******* in the remote repo in github, he also created a stage branch from the master branch, then updated the app.java file 
+    git push alias name --all
+this will create the branches in other repositories that didnt have such branch **** but first, you have to specifically push to the master branch in that/those repo
+eg in the local repo when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
+other effected changes/commit  
+
+iluustration
+1:53:48******* in the remote repo in github, he also created a stage branch from the master branch, then updated the app.java file 
          got the pull req in the master baranch, accepted reQ 
-     finally in the local repo, he  run the git pull command to bring the changes from the remote repo to both the local rep & working env.
+     finally in the local repo, he run the git pull (git pull pay master) command to bring the changes from the remote repo to both the local rep & working env.
 
 
-  ************** END*************888
+  ************** END*************
 
 git pull pp (ie alias name)
                  OR
 git fetch (aliasName) ie PP    
 Git diff pp/master   = to see the changes we are bringing over  (from the "master&dev branch" in the remote repo)
 then git merge pp/master    = form local repo to workin area 
-
-
-
-         git push alias name --all
-this will create branches in other repositories that didnt have such branch **** think this is an error, bc it didnt create the branches in the new repo i created before i pushed
-eg when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
-other effected changes/commit 
-
 
 
  the master branch is the most most critical branch bc production goes to the market from the master branch therfore, it is better for development to start in development
