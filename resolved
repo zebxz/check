@@ -6,7 +6,24 @@ SOLUTION: https://stackoverflow.com/questions/50361138/destination-path-already-
 This error comes up when you try to clone a repository in a folder which still contains .git folder (Hidden folder).
 meeee...... you can  make a new dir (mkdir projects) & change dir (cd projects) then clone the repo andcan further cd into the repo ( cd paypal) & ls to see its content.
      
-1:53:48 ******* in the remote repo in github, he also created a stage branch from the master branch, then updated the app.java file 
+
+
+Ticket :1:53:48 ******* in the remote repo in github, he also created a stage branch from the master branch, then updated the app.java file 
          got the pull req in the master baranch, accepted reQ 
      finally in the local repo, he run the git pull (git pull pay master) command to bring the changes from the remote repo to both the local rep & working env.
 
+***** SOLUTION .....
+I ran only git pull pay master & didnt run the same in the dev branch 
+Then I tried to run the push command  "git push pay --all"  but it wasnt working
+finally i cd into dev branch then run (git pull pay dev)
+then "git push pay --all" worked.
+
+**** THE ERROR *****
+$ git push pay --all
+To https://github.com/bibiblee/pay
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/bibiblee/pay'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
