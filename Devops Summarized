@@ -112,7 +112,7 @@ Ticket01:  *** done
 
 ----  i think this was me summarizing the steps to resolve the ticket
 
- ***** first ensure yu are in the project directory
+ ***** first ensure yu are in the project directory (still using paypal dir we created earlier)
 1) git branch               = to confirm we have created dev
 2)git branch branch name    = eg, git branch dev; we run this command to create dev branch
 3) git switch dev             =  change from master to dev and vice versa
@@ -124,7 +124,7 @@ Ticket01:  *** done
                                   git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
 9) git merge dev               = if we are satisfied with the changes (done in dev in local repo)     
 10) we ls  / get log     ( we see head >master,dev)  = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
-11) git push aliasName --all     = (we want to commit all the changes) git push pp --all ( this is done in master in our local repo )       
+11) git push aliasName --all     = (we want to commit all the changes) git push pay --all ( this is done in master in our local repo )       
                                      it will creates dev branch in remote repo and pushes all the chnages from local repo to dev/master in remote repo
 
 git push aliasName branchName  
@@ -134,7 +134,7 @@ git push aliasName branchName
   The dev branch is the downstream of the master branch bc the dev branch was created from the master.
 
 
-
+1:31:53
 Git fetch         =  it brings changes in the code from the remote repo to the local repo 
 Git pull          =   it brings changes in the code from the remote repo to the local repo and working area
 Git clone         =   it brings the entire code to the working area
@@ -155,15 +155,48 @@ we create a feature branch  from                 stage
 
 
 
-
+1:49:00 ********To expand more on Ticket001 above:
                         PULL REQUEST : PR ( in the remote repo)
-PR is used to review changes in one branch b4 merging in another branch 
+1:33:00  in the remote repo in github, in the dev branch, we added a new line to the app.java file , after which we see the "compare & pull request" notification, i can add a branch protection rule, eg the senior 
+PR is used to review changes in one branch b4 merging in another branch                                                                                   software engr must review before any merge is completed
 this is recommended for any merge in the master/release branch
 
 eg
 compare and pull request:  when a change is done in dev branch , to create a a review, we can see this option in the master branch informing us of a change , so we use the 
 option
+                       
 
+******   TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
+       so for us to merge the changes in the remote repo to th elocal repo 
+git fetch pay = we can run git pull or git fetch
+but git fetch doesnt merge the changes yet so we run git diff
+then git diff 
+
+
+git pull pp (ie alias name)
+
+                 OR
+git fetch (aliasName) ie PP    
+Git diff pp/master   = to see the changes we are bringing over  ( i blv from the master branch)
+then git merge pp/master    = form local repo to workin area 
+
+
+
+         git push alias name --all
+this will create branches in other repositories that didnt have such branch **** think this is an error, bc it didnt create the branches in the new repo i created before i pushed.
+eg when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
+other effected changes/commit 
+
+
+
+ the master branch is the most most critical branch bc production goes to the market from the master branch therfore, it is better for development to start in development
+branch so if there are any changes in the dev branch that needs to be applied in the master branch then more work has to be done. so before we deploy from dev to master
+we need to ensure that its actually what is wanted .
+make sure the work is reviewed before its merged in the master branch
+
+codes form the dev branch is deployed to the development branch env, code from the staging branch to testing/QA/UAT env and from the master they are deployed to production
+from the master we can create a feature branch or a bug -fixed branch 
+           
 
 
 ***********
