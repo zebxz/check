@@ -614,9 +614,10 @@ we create a feature branch  from                 stage
 
 
 
-
+1:49:00 ********To expand more on Ticket001 above:
                         PULL REQUEST : PR ( in the remote repo)
-PR is used to review changes in one branch b4 merging in another branch 
+1:33:00  in the remote repo in github, in the dev branch, we added a new line to the app.java file , after which we see the "compare & pull request" notification, i can add a branch protection rule, eg the senior 
+PR is used to review changes in one branch b4 merging in another branch                                                                                   software engr must review before any merge is completed
 this is recommended for any merge in the master/release branch
 
 eg
@@ -631,7 +632,7 @@ eg;  git push pp master                   ***** Pushing to the master banch
 
 git branch           = list the branchless 
 git checkout/switch branch name =  git switch dev
-git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github
+git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github (automatically creates a  dev branch if there was no dev branch before)
 git push pp --all 
 git branch - v             =  display all branches in your repo and also tell you what branch your currently working i
 git remote remove alias Name    =  remove repo from the local environment 
@@ -642,22 +643,25 @@ git remote remove repo URL
 
 ****************
 
-  
+
           TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
-         i bliv ie pull reQ, done in the remote repo
+         so for us to merge the changes in the remote repo to the local repo 
+git fetch pay = we can run git pull or git fetch
+but git fetch doesnt merge the changes yet so we run git diff
+git diff pp/master = git diff to review the changes ( pp is prof repository alias name) 
+git merge pp/master = to merge the changes
 
 
 git pull pp (ie alias name)
-
                  OR
 git fetch (aliasName) ie PP    
-Git diff pp/master   = to see the changes we are bringing over  ( i blv from the master branch)
+Git diff pp/master   = to see the changes we are bringing over  (from the "master&dev branch" in the remote repo)
 then git merge pp/master    = form local repo to workin area 
 
 
 
          git push alias name --all
-this will create branches in other repositories that didnt have such branch 
+this will create branches in other repositories that didnt have such branch **** think this is an error, bc it didnt create the branches in the new repo i created before i pushed
 eg when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
 other effected changes/commit 
 
