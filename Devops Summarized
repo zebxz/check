@@ -1,11 +1,11 @@
 **** windows is an operating system as linux and they all have commnd line 
 in windows we can install Git (our DVCs) by downloading it while for linux; we login to mobaxterm and use package manager while utilizing sudo "sudo yum install git" to install git
  MobaXterm is a versatile and powerful tool for interacting with Linux systems from a Windows machine
-git2.... 11:40 on git inmobaxterm we first cd documents/ then mkdir but on git in windows we mkdir and cd into it
+git2.... 11:40 on git in mobaxterm we first cd documents/ then mkdir but on git in windows we mkdir and cd into it
 
 
 The steps as a developer for our fintech client
-   WORKING AREA (workshop) git add >>> STAGING AREA (show room) git commit >>>> LOCAL REPOSITORY AND THE (git push) >>>>> REMOTE REPO 
+   WORKING AREA (workshop) git add to move to staging >>> STAGING AREA (show room) git commit  to move to local repo >>>> LOCAL REPOSITORY AND THE (git push) >>>>> REMOTE REPO 
    Dvelopment takes place in the working area 
 
 ( i confirmed that the name of the directory you initialize must not be the same as the alias name you added as the name of the remote repo url in the local env/repo)
@@ -60,6 +60,7 @@ Tells us how many remote repository we are managing
 to add a repository  URL in our local environment 
  *****     git remote add paypal https://github.com/zebxz/paypal     ( ie this repository url is been replaced by paypal "the alias name i created in  in my local enveiroment )
 i had to use: git remote add pay https://github.com/bibiblee/pay    (Because zebxz/paypal refushed to accept the push 
+     i just realised that it sthe "pay" before https thats the aiiasname not the last pay
 ************* at this point when we check in github, we cant see anything like the new version of the app in github/remote repository
 we want our developers to collab with each other so we have to push
 
@@ -87,13 +88,15 @@ A branch is a line of development
                   
 
                          GIT BRANCH
+              **** 1:53:04  ( our branch rule is that we dnt work directly in the master branch, bc master branch deploys to production)
+
    one branch = 1line of production
 A branch is a line of development 
  A file must have been moved to the staging area before it can be pushed
 1:11:00 once we are done with the dev branch, we can create a new branch from dev called stage branch and whatsoever is in the dev branch will also be found in the dev and stage branch.
 
 development branch : writing our code, once developers are satisfied they move it to the stage branch
-stage branch : then moved to stage and once its done  ( based on the video & my practice, i think we dnt really create a staging branch like we do the dev branch, the staging branch is where the codes are committed.
+stage branch : then moved to stage and once its done  
 master branch: deployed to production environment , taken to the market
 
 ****whatsoever is in dev branch is deployed to dev environment, from stage branch to  staging/testing/QA  and from master to production/market
@@ -136,7 +139,7 @@ git push aliasName branchName
 
 1:31:53
 Git fetch         =  it brings changes in the code from the remote repo to the local repo 
-Git pull          =   it brings changes in the code from the remote repo to the local repo and working area
+Git pull          = (git pull aliasname branchname)  it brings changes in the code from the remote repo to the local repo and working area
 Git clone         =   it brings the entire code to the working area
 
 
@@ -157,8 +160,8 @@ we create a feature branch  from                 stage
 
 1:49:00 ********To expand more on Ticket001 above:
                         PULL REQUEST : PR ( in the remote repo)
-1:33:00  in the remote repo in github, in the dev branch, we added a new line to the app.java file , after which we see the "compare & pull request" notification, i can add a branch protection rule, eg the senior 
-PR is used to review changes in one branch b4 merging in another branch                                                                                   software engr must review before any merge is completed
+1:33:00  in the remote repo in github, in the dev branch, we added a new line to the app.java file , after which in both branches we see the "compare & pull request" notification, i can add a branch protection rule, eg 
+PR is used to review changes in one branch b4 merging in another branch                                                                                 the senior software engr must review before any merge is completed
 this is recommended for any merge in the master/release branch
 
 eg
@@ -166,26 +169,38 @@ compare and pull request:  when a change is done in dev branch , to create a a r
 option
                        
 
-******   TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
-       so for us to merge the changes in the remote repo to th elocal repo 
-git fetch pay = we can run git pull or git fetch
-but git fetch doesnt merge the changes yet so we run git diff
-then git diff 
+************* 1:52:27   TO SEE THE DIFF BTW GIT PULL & GIT FETCH, WE will use the illustration below;
+   git fetch --> It brings changes in the code to the LocalRepo   *** 2:10:00 ( this requires a review before merging) , MOSTLY recommended
+  git pull --> It brings changes in the code to the localRepo and & Working area    ( this merges without a review)
+
+    
+     TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
+         so for us to merge the changes in the remote repo to the local repo 
+for us to update the changes we can run git fetch or git pull
+git fetch pay = git fetch
+but when we cat the app.java file we see its not yet updated bc git fetch doesnt merge the changes (bc git fetch brings the changes only to the local repo) so we run git diff
+git diff pay/master = git diff to review the changes ( pay is our repository alias name) 
+git merge pay/master = to merge the changes
+
+
+1:53:48 ******* in the remote repo in github, he also created a stage branch from the master branch, then updated the app.java file 
+         got the pull req in the master baranch, accepted reQ 
+     finally in the local repo, he run the git pull (git pull pay master) command to bring the changes from the remote repo to both the local rep & working env.
+
+
+git push alias name --all   ****2:11:40 
+this will create the branches in other repositories that didnt have such branch **** but first, you have to specifically push to the master branch in that/those repo
+eg in the local repo when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
+other effected changes/commit
+
+ ********* END******
 
 
 git pull pp (ie alias name)
-
                  OR
-git fetch (aliasName) ie PP    
-Git diff pp/master   = to see the changes we are bringing over  ( i blv from the master branch)
-then git merge pp/master    = form local repo to workin area 
-
-
-
-         git push alias name --all
-this will create branches in other repositories that didnt have such branch **** think this is an error, bc it didnt create the branches in the new repo i created before i pushed.
-eg when the stage /dev branch is created in the master branch and you run git push alias name --all , all the repositories will equally have a dev and stage branch and all
-other effected changes/commit 
+git fetch (aliasName) ie Pay   
+Git diff pay/master   = to see the changes we are bringing over  (from the "master&dev branch" in the remote repo)
+then git merge pay/master    = form local repo to workin area  
 
 
 
@@ -218,6 +233,4 @@ git remote remove repo URL
 
 
   
-          TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
-         i bliv ie pull reQ, done in the remote repo
-
+       
