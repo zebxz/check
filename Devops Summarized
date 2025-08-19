@@ -101,28 +101,35 @@ master branch: deployed to production environment , taken to the market
 ******* The master branch is the upstream Branch for the dev Branch  
   The dev branch is the downstream of the master branch   
 
-  i think this was me summarizing the steps
+
+Ticket01:  *** done
+  Create a dev branch from the master branch  
+  Switch to the dev branch and create the app.java file    **** so vi java application development
+  Commit the changes and Switch to the master branch  
+  Review the changes in dev and merge with the master branch  
+
+----  i think this was me summarizing the steps to resolve the ticket
 
  ***** first ensure yu are in the project directory
 1) git branch               = to confirm we have created dev
 2)git branch branch name    = eg, git branch dev; we run this command to create dev branch
 3) git switch dev             =  change from master to dev and vice versa
-4) we vi into app.java file
-5)we git add.
+4) we vi into app.java file  ( ie create app.java file)
+5)we git add.           = to file to the staging area
 6) we commit "m"
 7) git switch :                 = move from dev to master
 8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
                                   git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
-9) git merge dev               = if we are satisfied with the changes (done in master in local repo)     ****** i think this is an error cos i thought the push was to master
-10) we ls  / get log       = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
-11) git push aliasName --all     = git push pp --all ( this is done in master in our local repo )        ******* in what case scenario can dis happen, to push to all
-                                     creates dev branch in remote repo and pushes the chnages from local repo to dev/master in remote repo
+9) git merge dev               = if we are satisfied with the changes (done in dev in local repo)     
+10) we ls  / get log     ( we see head >master,dev)  = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
+11) git push aliasName --all     = (we want to commit all the changes) git push pp --all ( this is done in master in our local repo )       
+                                     it will creates dev branch in remote repo and pushes all the chnages from local repo to dev/master in remote repo
 
 git push aliasName branchName  
 
 
-**********************   The master branch is the upstreamBranch for the dev Branch  
-  The dev branch is the downstream of the master branch   
+1:26:40 Regarding this ticket**********************  bc am creating a dev branch from master  The master branch is the upstream Branch for the dev Branch  
+  The dev branch is the downstream of the master branch bc the dev branch was created from the master.
 
 
 
@@ -173,6 +180,7 @@ git remote remove repo URL
 
 
 ****************
+
 
   
           TO BRING THE CHANGES FROM THE REMOTE REPO TO THE LOCAL REPO
