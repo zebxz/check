@@ -1,3 +1,4 @@
+
 GIT FOR VERSIONING, MAVEN FOR BUILD
 
 **** windows is an operating system as linux and they all have commnd line 
@@ -45,12 +46,17 @@ so we are now in the local repository
 ***** Git status;  shows the state of the working directory and staging area, eg to know if the project directory has been initialized, to check if our working tree is clean or not
 It lists: Tracked files (modified, staged, or deleted).
 
-
+             TO MOVE THE FILE FROM THE WORKING AREA TO THE STAGING AREA (Once a file has been added, you only edit/add ines to the file, commit it (then to unify the various brances, run git diff then git merge)
 C) For git to track our work (In the working area we run git add)
  To move our files form our working area ( file appears in RED)to the staging area (File appears in GREEN)
 **** git add.filename   TO ENSURE THAT OUR WORK IS TRACKED BY GIT, ((in orderwords, task in our working environment is not tracked by git)
 TO create a file : vi OR touch filename
 so we touch a file in our working area and move it
+        GIT4:  ( commiting to an already modified file)
+git commit -a -m "commit message"
+To add and commit at once (the new changes in an already existing files) 
+git add.&& git commit -m "commit message"
+
 
 D)  TO COMMIT the changes
 In our staging area  >>>>>>>>>>>> local repository
@@ -96,7 +102,7 @@ There are other platforms we can use for SCM like git lab, git hub, git bucket a
 A branch is a line of development
                   
 
-                         GIT BRANCH
+                        (GIT2) GIT BRANCH
               **** 1:53:04  ( our branch rule is that we dnt work directly in the master branch, bc master branch deploys to production)
 
    one branch = 1line of production
@@ -134,7 +140,8 @@ Ticket01:  *** done
 7) git switch :                 = move from dev to master
 8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
                                   git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
-9) git merge dev               = if we are satisfied with the changes (done in dev in local repo)     
+9) git merge dev               = if we are satisfied with the changes (done in dev in local repo)
+   GIT4: 
 10) we ls  / get log     ( we see head >master,dev)  = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
 11) git push aliasName --all     = (we want to commit all the changes) git push pay --all ( this is done in master in our local repo )       
                                      it will creates dev branch in remote repo and pushes all the chnages from local repo to dev/master in remote repo
@@ -236,7 +243,12 @@ git remote remove repo URL
 
 
 
-****************
+****************                        GIT4
+
+
+ resolving conflict
+we resolve merge conflict by merging manually to avoid merge conflict for best practices
+
 
 
   
