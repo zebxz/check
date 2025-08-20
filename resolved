@@ -29,8 +29,8 @@ hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 
-
- ***** NEXT:
+   ##### I went further to experiment and after the try & error below,in remote repo i realsied that when you edit/add a line in a file, even after confirming the pull REQ, u have to switch to the other branches & make sure to update them if it says its behind if nt in 
+1) ***** NEXT:                                                                                                             in the local repo, when u pull, it will say update to date even when its not as seen in (1) below (mayb to clone is better but for now i dnt know)
  In the remote repo, in stage i added a line in app.java 
 confirmed pull request in master branch
 in the local repo, in master i tried to run " git push pay --all" but it says error 
@@ -53,8 +53,46 @@ i tried to pull it says everything up to datei run "git push pay --all", it says
 but when i check app.java, its not ?
 
 
+2)**** NEXT, 
+In the remote repo, in dev branch, i see "this branach is 3 commit behind master so i clicked on it and confirmed merge
+then in the local repo, i ran git push pay --all but got error
 
-  **** To push to all repositories at once
+ekehc@DESKTOP-OQQ2EQ9 MINGW64 ~/paypal (dev)
+$ git push pay --all
+To https://github.com/bibiblee/pay
+ ! [rejected]        dev -> dev (fetch first)
+error: failed to push some refs to 'https://github.com/bibiblee/pay'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details
+
+
+3)*** NEXT
+In the local repo, in dev branch, i ran git pull pay dev
+ran git push pay --all, but erroe again
+
+ekehc@DESKTOP-OQQ2EQ9 MINGW64 ~/paypal (dev)
+$  git push pay --all
+To https://github.com/bibiblee/pay
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/bibiblee/pay'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+
+******* NEXT, i switch to master , pulled and ran git push pay --all
+and everything was ok
+
+
+
+
+
+  **** TO PUSH to all repositories at once
 https://stackoverflow.com/questions/6865302/push-local-git-repo-to-new-remote-including-all-branches-and-tags
 To push all your branches, use either (replace REMOTE with the name of the remote, for example "origin"):
 
