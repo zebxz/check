@@ -188,5 +188,42 @@ create tag: git tag paypal - 1.0.02
 3 = 3 represents the patch
 
 
+git stash        =     to take backup
+git stash  list  = to list all the backups 
+
+eg we have a number of backups 
+
+stash@{0}
+stash@{1}
+stash@{2}
+stash@{3}
+
+git stash apply            = resume wip for the most recent backup
+git stash apply stash@{0}  = resume wip for the 1st backup
+git stash apply stash@{5}  = resume wip for 6th backup
+git stash drop stash@{0}   = will delete backup
+git stash pop stash@{1}    = It apply & drop backup 1.
+git stash pop
+
+
+ CONNECTING TO SCM/GITHUB USING SSH KEY
+         1:49;14  ****  he said the ssh key can work for any of the repositories bc it was notadded under any repository, we just went to settings and added it 
+
+This automates your authentication access to github ie no need for password PAT
+
+        CEATING SSH KEY  ( and copy to your github account) *** **** 1:50:00, you can use the key with any of your rrepositories
+ls/home/ec2-user/.ssh      **** he said he has a file called .ssh
+ to create ssh key:   ssh-keygen  
+the key has been created
+then  ls/home/ec2-user/.ssh  
+ then copy /home/ec2-user/.ssh/id_rsa.pub
+cat  /home/ec2-user/.ssh/id_rsa.pub
+*** 1:23:03 copy the key and paste in SSH tray in github then add the key 
+*** 1:24:37 copy ssh url in github (find it in "code" in github)
+****1:26;19 create an alias name for ssh url = Ada
+ssh url = Ada git@github.com:zebxz/paypal.git
+git remote add Ada git@github.com:zebxz/paypal.git
+to push = git push ada master ( Ada now replaces the repo aliasname which we used that requested for pw initially)
+
 
       MAVEN
