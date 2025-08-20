@@ -27,3 +27,42 @@ hint: Updates were rejected because the tip of your current branch is behind
 hint: its remote counterpart. If you want to integrate the remote changes,
 hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+
+
+ ***** NEXT:
+ In the remote repo, in stage i added a line in app.java 
+confirmed pull request in master branch
+in the local repo, in master i tried to run " git push pay --all" but it says error 
+
+ekehc@DESKTOP-OQQ2EQ9 MINGW64 ~/paypal (master)
+$ git push pay --all
+To https://github.com/bibiblee/pay
+ ! [rejected]        stage -> stage (non-fast-forward)
+error: failed to push some refs to 'https://github.com/bibiblee/pay'
+hint: Updates were rejected because a pushed branch tip is behind its remote
+hint: counterpart. If you want to integrate the remote changes, use 'git pull'
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+*** I switched to both dev and stage app.java was not updated 
+so in stage branch i pulled, 
+then again in master ran " git push pay --all" and it worked 
+but when i switched to dev again and checked app.java, it was nt update
+i tried to pull it says everything up to date?
+
+
+
+  **** To push to all repositories at once
+https://stackoverflow.com/questions/6865302/push-local-git-repo-to-new-remote-including-all-branches-and-tags
+To push all your branches, use either (replace REMOTE with the name of the remote, for example "origin"):
+
+git push REMOTE '*:*'
+git push REMOTE --all
+To push all your tags:
+
+git push REMOTE --tags
+Finally, I think you can do this all in one command with:
+
+git push REMOTE --mirror
+However, in addition --mirror, will also push your remotes, so this might not be exactly what you want.
