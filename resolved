@@ -29,8 +29,15 @@ hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 
-   ##### I went further to experiment and after the try & error below,in remote repo i realsied that when you edit/add a line in a file, even after confirming the pull REQ, u have to switch to the other branches & make sure to update them if it says its behind if nt in 
-1) ***** NEXT:                                                                                                             in the local repo, when u pull, it will say update to date even when its not as seen in (1) below (mayb to clone is better but for now i dnt know)
+
+                                    TO  EDITING A FILE IN THE REMOTE REPO & TO RUN "git push pay --all" IN THE LOCAL REPO
+   ##### I went further to experiment and with the try & error below i realised that ,in remote repo when you edit/add a line in a file(eg file name project) for eg in stage branch, even after confirming the pull REQ in master, u have to switch to the other branch (dev)  
+& make sure to update it, if it says the dev branch is behind if nt in the local repo, when u pull, it will say update to date even when its not as seen in (1) below (mayb to clone is better but for now i dnt know)
+ALSO, In the local repo, even after pulling in the dev repo, you have switch to the amster branch and pull before you can successfully run  git push pay --all
+
+
+
+1) ***** NEXT:                                                                                                            
  In the remote repo, in stage i added a line in app.java 
 confirmed pull request in master branch
 in the local repo, in master i tried to run " git push pay --all" but it says error 
@@ -70,8 +77,8 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details
 
 
 3)*** NEXT
-In the local repo, in dev branch, i ran git pull pay dev
-ran git push pay --all, but erroe again
+In the local repo, in dev branch, i ran git pull pay dev , & checked the app.java, it was updated
+ran git push pay --all, but error again
 
 ekehc@DESKTOP-OQQ2EQ9 MINGW64 ~/paypal (dev)
 $  git push pay --all
