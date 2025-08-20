@@ -669,7 +669,8 @@ git merge pp/master = to merge the changes
          got the pull req in the master baranch, accepted reQ 
      finally in the local repo, he run the git pull (git pull pay master) command to bring the changes from the remote repo to both the local rep & working env.
 
-    git push alias name --all          (so i created a new repo with aliasname "ok")
+   
+ ********  git push alias name --all          (so i created a new repo with aliasname "ok")
 this will create the branches in other repositories that didnt have such branch **** but first, you have to specifically push to the master branch in that/those repo
 eg in the local repo when the stage /dev branch is created in the master branch and you run git push alias name --all , (alias name ie the new repo) all the repositories will equally have a dev and stage branch and all
 other effected changes/commit  
@@ -822,22 +823,22 @@ git merge development
 &&&887&*(????????//////////////////////////////////////////////////////////////////
 
                                                       GIT 4
-GIT BASH, resolving conflict, GIT CHERRY, HOW TO MERGE CHANGES IN GIT,  BUT FOR REBASE, DIFF BETWEEN TAGS & BRANCHES, What is the difference between Git & Github:
+GIT BASH, COMMITING TO AN EXISTING MODIFIED FILE, resolving conflict, GIT CHERRY, HOW TO MERGE CHANGES IN GIT,  BUT FOR REBASE, DIFF BETWEEN TAGS & BRANCHES, What is the difference between Git & Github:
 Branch security, SWITCHING BRANCHES, BRANCH SECURITY, CONNECTING TO SCM/GITHUB USING SSH KEY, more COMMANDS, CONNECTING TO SCM/GITHUB USING SSH KEY, IDE, .gitignore, 
 GIT BEST PRACTICES
 
 
 
-   GITBASH
+   GITBASH ( commiting to an already modified file)
 
-To add and commit at once (the chnages in already existingfiles) 
 git commit -a -m "commit message"
+To add and commit at once (the new changes in an already existing files) 
 git add.&& git commit -m "commit message"
 
 
-           resolving conflict
+           RESOLVING CONFLICT (when there is a conflict, we hv to merge manually ie in master ,you have to run git diff (dev or stage) & delete the conflict ie (the errors>>> & its lines)
 we resolve merge conflict by merging manually 
-avoid merge conflict for best practices
+however avoid merge conflict for best practices
 
 
 example
@@ -846,9 +847,9 @@ vi app.java & edit , add and commit
 when we git log we can see the recent commit
 then we switch back to master 
 we vi app.java, add & commit 
-when we git log we can see only the commit done in the master branch
+when we git log we can see only the commit done in the master branch, we dnt see the commit done in the stage branch
 BUT when we git diff dev to see the changes in dev & merge dev
-we get a merge conflict in app.java
+vi app.java we see a merge conflict in app.java
 
 
 
@@ -858,7 +859,7 @@ we git status : show us both files have been modified
                         " both modified"
 
 ******* we resolve merge conflict by merging manually 
-finally we run: git commit -a -m "merge conflict resolved"
+finally we run: git commit -a -m "merge conflict resolved"  , the recommndation is to write good commit messages
 
 
 
