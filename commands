@@ -86,17 +86,107 @@ After the task i pushed has been executed/worked on by other developers
 
 
 
+                 git2 
+1) git branch               = to confirm we have created dev
+2)git branch dev             =  we run this command to create dev branch
+3) git switch dev             =  change from master to dev and vice versa
+4) we vi into app.java file
+5)we git add.
+6) we commit "m"
+7) git switch :                 = move from dev to master
+8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
+                                  git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
+ GIT4;  git diff (dev or stage) to see the changes then vi into the file & delete the conflict ie (the errors>>> & its lines)
+         GIT4: Git diff pp/master   = to see the changes we are bringing over  (from the "master&dev branch" in the remote repo)
+9) git merge dev               = if we are satisfied with the changes (done in dev in local repo)    
+10) we ls  / get log    ( we see head >master,dev)   = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
+11) git push aliasName --all     = git push pp --all ( this is done in master in our local repo )        ******* in what case scenario can dis happen, to push to all
+                                     creates dev branch in remote repo and pushes the chnages from local repo to dev/master in remote repo
+
+git push aliasName branchName      to push to a particular branch
 
 
+git branch           = list the branchless 
+git checkout/switch branch name =  git switch dev
+git push aliasName --all  = push changes to all branches  ie to the master and dev branch in github (automatically creates a  dev branch if there was no dev branch before)
+git push pp --all 
+git branch - v             =  display all branches in your repo and also tell you what branch your currently working i
+git remote remove alias Name    =  remove repo from the local environment 
+git remote remove repo URL 
 
+
+   git fetch --> It brings changes in the code to the LocalRepo   *** 2:10:00 ( this requires a review before merging) , MOSTLY recommended
+  git pull --> It brings changes in the code to the localRepo and & Working area    ( this merges without a review)
+
+git diff pp/master = git diff to review the changes ( pp is prof repository alias name) 
+git merge pp/master = to merge the changes
+
+git pull pp (ie alias name)
+                 OR
+git fetch (aliasName) ie PP    
+Git diff pp/master   = to see the changes we are bringing over  (from the "master&dev branch" in the remote repo)
+then git merge pp/master    = form local repo to workin area bc we used git fetch & git fetch brings the changes to only the local r
 
 
 GIT4
- DEBUGGING
-Git clean 
+ TO RESOLVE THE CONFLICT
+Vi app.java, delete  <<< HEAD  &  >>>>>>>>   stage
+we git status : show us both files have been modified 
+                        " both modified"
+
+
+ Git cherry - pick commitID 
+we merge a particular commit among many commits
+
+ 
+
+                     HOW TO MERGE CHANGES IN GIT
+HOW TO MERGE CHANGES IN GIT
+ git merge
+git cherry pick
+git rebase
+
+DEBUGGING
+  IN THE WORKING AREA , to clean a code we are not satisfied with
+git clean
 git clean -n : tell you the files/changes that would be deleted in working working area
 git clean -f : cleans the working area
-git reset
-git revert commitID 
+git reset   : to move a file back to the working area from the staging area
+git revert commitID :  to delete the latest commited files in the local repo for a specific commit
+                        eg, he created a file, added it & commited, then ran "git revert the commitID" to delete the committed files both from the local repo & the working area, therefore the file no longer exists.
 
 
+How to see/determine what happened in a commit
+to see the details;           git show commitID
+to merge a specific commit;   git cherry-pick 518110e  
+good commit msg:"conflict fixed"  git commit -a -m "CONFLICT fixed"
+
+
+55:30 ***********    DIFF BETWEEN TAGS & BRANCHES
+difference b/w tags and branches :
+=== Tags                                                  ==Branch
+immutable                                                   mutable
+Tags are unmodifiable                                      branch can be modified/modifiable
+Tags are created After Production, once thers 
+a release, it creates a tag                                creates while development is still -WIP 
+recommneded to be created from Master  branch              can be created from any branch 
+ to se aour tags: git tag                                   git branch
+to create a tag: git tag TagName                           git branch BN
+git push an (an alias Name)--tags                         to push to all branches; git push an --all           
+git push AliasName tag TN                                 to push to a particular branch; git push an (alias Name) BM              
+git tag -d TN                                              git branch -d BN
+
+
+
+
+   ******59:00     CREATING TAGS
+ git tag TagName
+******meee******  TAG WITH version & patch 
+create tag: git tag paypal - 1.0.02
+1 = 1 represents a higher version
+2 = 2 represents a lower version
+3 = 3 represents the patch
+
+
+
+      MAVEN
