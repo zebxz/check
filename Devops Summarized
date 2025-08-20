@@ -244,7 +244,7 @@ git remote remove repo URL
 
 
 ****************                        GIT4
-
+GIT CONFLICT, CHERRY PICKING, HOW TO MERGE CHANGES IN GIT,  WHY GIT REBASE IS BETTER THAN GIT MERGE
 
  RESOLVING CONFLICT (when there is a conflict, we hv to merge manually ie in master ,you have to run git diff (dev or stage) to see the changes then vi into the file & delete the conflict ie (the errors>>> & its lines)
 we resolve merge conflict by merging manually 
@@ -272,4 +272,39 @@ we git status : show us both files have been modified
 finally we run: git commit -a -m "merge conflict resolved"  , the recommndation is to write good commit messages
 
   
+
+    HOW TO MERGE CHANGES IN GIT
+HOW TO MERGE CHANGES IN GIT
+ git merge
+git cherry pick
+git rebase
+
+
+WHY GIT REBASE IS BETTER THAN GIT MERGE
+
+FOR git merge:
+ stage commit 1    ie sc1
+  sc1 [this is git tracking the changes like version1] -->sc2 [version2] --->sc3 [version3] 
+                  = mc1 [master version1]                     ******* when we merge, we get jst one version 
+
+ie when we have several commits in the stage /or dev branch and try to merge to master branch , it gives merge conflict, so we have to commit it maually
+and when we that is done it commits  (git commit -a -m) it as one version in the master branch (master version)
+
+
+
+   BUT FOR REBASE ( When we use git rebase in place of git merge )
+
+git rebase
+     sc1 [version1] -->sc2 [version2] --->sc3 [version3] 
+                   = mc1 [version1] -->mc2 [version2] --->mc3 [version3]               
+ **** when we merge, we get 3 versions
+
+   ******** for rebase:
+when we have several commits in the stage / or dev branch and run git rebate stage or dev, it gives us the various versions in master
+just as it was in the stage  / or dev barnch 
+therfore rebase gives us the actually benefits of git which is for versioning bc in future, if we need to refer back to the commits the rebase makes it easy for us to see each commit/versions
+
+
+**** 40;40 ., when he tried it there was still merge conflict,  so he merged it manually & he didnt say if we got just 1 version or multiple versions (as is the case if we run git merge)
+
        
