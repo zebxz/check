@@ -311,4 +311,76 @@ therfore rebase gives us the actually benefits of git which is for versioning bc
 
 **** 40;40 ., when he tried it there was still merge conflict,  so he merged it manually & he didnt say if we got just 1 version or multiple versions (as is the case if we run git merge)
 
+
+46:00         UNDO CHANGES IN GIT
+
+IN THE WORKING AREA , to clean a code we are not satisfied with
+git clean
+git clean -n : tell you the files/changes that would be deleted in working working area
+git clean -f : cleans the working area
+git reset   : to move a file back to the working area from the staging area
+git revert commitID :  to delete the latest commited files in the local repo for a specific commit
+                        eg, he created a file, added it & commited, then ran "git revert the commitID" to delete the committed files both from the local repo & the working area, therefore the file no longer exists.
+
+
+How to determine what happened in a commit
+to see the details;           git show commitID
+to merge a specific commit;   git cherry-pick 518110e  
+good commit msg:"conflict fixed"  git commit -a -m "CONFLICT fixed"
+
+
+
+               **** 56:15, check out the pdf file for the git commands
+TAGS: Are similar to branches but the diff is that tags are immutable, it means tag is a branch which nobody intends to modify. Once a tag is created for a particular commit,
+even if you create a new commit, it will not be updated.  usually, developers create tags for produdct releases.
+
+55:30 ***********    DIFF BETWEEN TAGS & BRANCHES
+difference b/w tags and branches :
+=== Tags                                                  ==Branch
+immutable                                                   mutable
+Tags are unmodifiable                                      branch can be modified/modifiable
+Tags are created After Production, once thers 
+a release, it creates a tag                                creates while development is still -WIP 
+recommneded to be created from Master  branch              can be created from any branch 
+ to se aour tags: git tag                                   git branch
+to create a tag: git tag TagName                           git branch BN
+git push an (an alias Name)--tags                         to push to all branches; git push an --all           
+git push AliasName tag TN                                 to push to a particular branch; git push an (alias Name) BM              
+git tag -d TN                                              git branch -d BN
+
+
+
+
+   ******59:00     CREATING TAGS
+ git tag TagName
+******meee******  TAG WITH version & patch 
+create tag: git tag paypal - 1.0.02
+1 = 1 represents a higher version
+2 = 2 represents a lower version
+3 = 3 represents the patch
+
+
+ Branch security = 
+   All commits in the master branch must go through PR 
+
+we also have branch security in our branching strategy 
+our branch security is such that no one can commit directly to the master branch, all commit in the master branch must go through  PR (pair review) or there must be a pull
+request
+
+3. Switching branches =  working tree should be clean 
+    DevOps Engineer [dev branch / master--bugfixed]
+    If neccesary backup incomplete tasks before switching  
+      git stash command  
+
+1:12
+therfore always run git status to check and then git stash to backup the files/WIP , after which you can switch branch
+to get back to the WIP files, run switch to the initial branch 
+then git stash list : to list all the backups
+then git stash apply,  then we can continue working on the file 
+
+
+4. git rebase over git merge
+5. review changes [git diff] before merging
+6. Use PR before committing to the master branch 
+7. avoid merge conflicts  
        
