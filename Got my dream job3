@@ -822,9 +822,9 @@ git merge development
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 &&&887&*(????????//////////////////////////////////////////////////////////////////
 
-                                                      GIT 4
-GIT BASH, COMMITING TO AN EXISTING MODIFIED FILE, resolving conflict, GIT CHERRY, HOW TO MERGE CHANGES IN GIT, WHY GIT REBASE IS BETTER THAN GIT MERGE, DIFF BETWEEN TAGS & BRANCHES, What is the difference between 
-Git & Github: Branch security, SWITCHING BRANCHES, BRANCH SECURITY, CONNECTING TO SCM/GITHUB USING SSH KEY, more COMMANDS, CONNECTING TO SCM/GITHUB USING SSH KEY, IDE, .gitignore, 
+                                                      GIT 4 (WHY GIT REBASE IS BETTER THAN GIT MERGE)                                   
+GIT BASH, COMMITING TO AN EXISTING MODIFIED FILE, resolving conflict, GIT CHERRY, HOW TO MERGE CHANGES IN GIT, WHY GIT REBASE IS BETTER THAN GIT MERGE, DEBUGGIN ISSUES/UNDO CHANGES IN GIT, DIFF BETWEEN TAGS & BRANCHES,  
+What is the difference between Git & Github: Branch security, SWITCHING BRANCHES, BRANCH SECURITY, CONNECTING TO SCM/GITHUB USING SSH KEY, more COMMANDS, CONNECTING TO SCM/GITHUB USING SSH KEY, IDE, .gitignore, 
 GIT BEST PRACTICES
 
 
@@ -916,12 +916,17 @@ By using the;
 git cherry-pick   = merging specific commits
 
 
-*******
 
+******* 41;20  DEBUGGING ISSUES ( started again in 46:00)
+46:00         UNDO CHANGES IN GIT
+
+IN THE WORKING AREA , to clean a code we are not satisfied with
+git clean
 git clean -n : tell you the files/changes that would be deleted in working working area
 git clean -f : cleans the working area
-git reset
-git revert commitID 
+git reset   : to move a file back to the working area from the staging area
+git revert commitID :  to delete the latest commited files in the local repo for a specific commit
+                        eg, he created a file, added it & commited, then ran "git revert the commitID" to delete the committed files both from the local repo & the working area, therefore the file no longer exists.
 
 
 How to determine what happened in a commit
@@ -930,7 +935,7 @@ to merge a specific commit;   git cherry-pick 518110e
 good commit msg:"conflict fixed"  git commit -a -m "CONFLICT fixed"
 
 
-                    DIFF BETWEEN TAGS & BRANCHES
+51:30 ***********    DIFF BETWEEN TAGS & BRANCHES
 difference b/w tags and branches :
 === Tags                                                  ==Branch
 immutable                                                   mutable
