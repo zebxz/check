@@ -140,6 +140,7 @@ Ticket01:  *** done
 7) git switch :                 = move from dev to master
 8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
                                   git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
+   GIT 4:  git diff (dev or stage) & delete the conflict ie (the errors>>> & its lines)
 9) git merge dev               = if we are satisfied with the changes (done in dev in local repo)
    GIT4: 
 10) we ls  / get log     ( we see head >master,dev)  = to ensure all changes  from (git merge dev ) were applied in the master branch (ie we hv all the files/commit in the master )
@@ -246,10 +247,30 @@ git remote remove repo URL
 ****************                        GIT4
 
 
- resolving conflict
-we resolve merge conflict by merging manually to avoid merge conflict for best practices
+ RESOLVING CONFLICT (when there is a conflict, we hv to merge manually ie in master ,you have to run git diff (dev or stage) & delete the conflict ie (the errors>>> & its lines)
+we resolve merge conflict by merging manually 
+however avoid merge conflict for best practices
 
 
+example
+we git switch to dev frpm master
+vi app.java & edit , add and commit 
+when we git log we can see the recent commit
+then we switch back to master 
+we vi app.java, add & commit 
+when we git log we can see only the commit done in the master branch, we dnt see the commit done in the stage branch
+BUT when we git diff dev to see the changes in dev & merge dev
+vi app.java we see a merge conflict in app.java
+
+
+
+               TO RESOLVE THE CONFLICT
+Vi app.java, delete  <<< HEAD  &  >>>>>>>>   stage
+we git status : show us both files have been modified 
+                        " both modified"
+
+******* we resolve merge conflict by merging manually 
+finally we run: git commit -a -m "merge conflict resolved"  , the recommndation is to write good commit messages
 
   
        
