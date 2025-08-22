@@ -130,6 +130,74 @@ textmate,bracket, notrpad , vscode, atom, eclipse
 
 
 
+               3B
+    Read the content of a file:
+cat fileName:  Read /display file content
+cat -n fileName : list content of a file 
+head fileName ; display the 1st 10 lines
+head -3 fileName: : Display the 1st 3lines
+head -1 fileName : display the 1st file line 
+tail file name : display the last 10 lines              the press 'q' to leave
+less fileName : you can go back and fort pages in a file with many pages
+more file name: to read page by page
+
+
+    READ THE INFO OF USERS
+cat/etc/password = all the users detail in our server
+tail etc/passwd  = users recently created 
+tail -3/etc/passwd = -3 last user
+
+
+     FILE BACKUP
+CP = creates another copy of your file
+cp = filename new filename 
+
+
+      Renaming files /directories 
+mv filename  new filename
+mv dirname   new dirname
+
+
+      Relocating file / directories
+mv file to be maoved New locataion (file dir) 
+eg we have a file in one  home/ec2-usere  (in our present working dir) but once its moved we cant find it in ls again
+ie it lists the content of our pwd
+
+
+
+              Deleting file (with or without content)
+rm filename
+
+ online
+To remove a directory using the rm command in Linux, follow these steps:
+1) rmdir dirname           :  to delete an empty dir 
+2) rm:                     :  to delete empty and non-empty directories
+  a) rm -r dirname         :  If a directory or a file within the directory is write-protected, you will be prompted to confirm the deletion
+  b) rm -rf                :  To remove a directory without being prompted
+  c) rm -r dir1 dir2 dir3  :   To remove multiple directories at once, with a prompt to confirm
+  d) rm -rI dir1           :  To remove multiple directories without a prompt
+  e) rm -rv directory_name :  To see a list of deleted files
+
+
+**********                      counting line and character in a file 
+wc fileanme = in the order of lines/words/character
+
+wc -l = no. of lines
+wc -c = no. of character
+wc -w = no. of words
+
+wc fileName  
+  wc note.rn  
+other commands:
+  clear, sudo, exit   
+[ec2-user@demo ~]$ wc list.txt
+   17  16 121 list.txt
+   lines=17 
+   words=16 
+characters=121
+
+
+
 
 
 SCRIPTING
