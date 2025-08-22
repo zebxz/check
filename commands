@@ -30,6 +30,7 @@ iii) Gitbash and powershell
 
 
 
+
                                                  LINUX 2
 LINUX COMMANDS, FILE MGT RELATED TASKS( LINUX FILE STRUCTURE), ROOT DIR (/),(home contains home dir details of that user eg we hv home dir of the root user,
 home dir of ec2user (default user ie created by the sys) and home dir of any other user that we create) CONTENT OF ROOT DIR;BIN,SBIN (excuted by users with priviledge),diff users in linux
@@ -98,6 +99,7 @@ eg /var/logs/messages
 eg mem info - memory information
 cpu info  - cpu information
 ［root@demo-# cat/proc/meminfo = to check for info about my memory
+
 
 
 
@@ -311,6 +313,325 @@ CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, connecting to server wi
  connect to the server externally as landmark as landmark user using password, Lock datti's password and server access, Create manager's group and add user landmark to it.
 delete user's account , delete user's account including home dir. 
 
+
+
+
+                                          LINUS 6
+system mgt commands, Date, set, show, check ,change hostname,change date, ping server, check if server is runing, diff ways to connect to server, how to know who is connected to my server , 
+package mgt, service names, process mgt, process mgt
+
+ how to mg8 your system
+To know your ip adress ; copy & paste in your browser.....  https:whatismyipaddress.com
+
+curl ifconfig.me  = list the publicIP address
+
+1)date : Print or set the system date and time
+      date -S "ddmmyyy Time"
+
+  2)sudo timedatectl set-timezone 'America/New_York
+df : Report file system disk space usage
+   df -h    how much space are files ultilizing 
+
+3)hostname; sudo hostname newHostname    = set a Temporal/current-session new hostname 
+   sudo hostnamectl set-hostname newHostname - set a permanent new hostname
+
+4)hostname -i = list your privateIP address  
+5)If server is working; Ping hostname OR ping Ip address 
+ping localhost
+ip a     = list the privateIP address including network interfaces
+
+6)   DIFF WAYS TO CONNECT TO SERVER
+1) USING the hostname - ssh ec2-user@ demo33
+2) using public ip address-ec2-user@40.208.35.48
+3) using private ip address -112.31.84.211
+
+7)who  = list the users connected to the server and from where and since when    
+w  = list the users connected to the server 
+     and their idle time including load average/uptime     
+
+uptime= shows how long a system has been running/has ran without shutting down 
+           (higher uptime hsows better performance of system)
+
+users = how many users are connected
+
+load avarage: 0.90, OR 0.80 OR 0.94 , shows that we have to check the system very well bc the system resource is over utilized and the system is running on very minimal 
+resources
+
+whoami  
+whereis  
+
+
+
+          PACKAGE MANAGEMENT COMMAND
+ How to install, updates and remove packages in redhat linux 
+
+USING PACKAGE MANAGERS
+apt install packageName- debian/ubuntu systems
+brew install packageName - Mac - APPLe systems
+choco install packageName - windows systems
+yum install packageName - good for redhat/contos systems
+
+dnf install chrony
+    yum install chrony
+
+sudo yum insatll, wget -y  -- to install
+sudo yum remove wget -y    ---  to delete
+ sudo yum install httpd -y
+
+
+processMGT commands:
+===================
+
+processMGT                            ********** what ever happens in linux is a command 
+    ps -ef | grep httpd  
+    ps -ef | grep sshd  
+    ps -ef | grep ntpd 
+
+ps    - to list the process
+  ps -ef  - list all the processes running
+    ps -ef | grep httpd    - grep for apache service   (to show apache is running 
+    ps -ef | grep sshd      - shows process ids (all those that are using the same service
+  top        -    tells the number of processes running 
+  
+  You observed that a process  is consuming over 90% of cpu/memory, what action 
+  should you take ?
+  kill the process with  
+    kill -9 processID  
+
+the parent process
+the child process
+
+    ProcessMGT = top, ps -ef, jobs, kill, bg, fg 
+
+
+
+
+
+       LINUX7
+Service mgt, Archive/Data Backup Commands, other commands, tree, echo, telnet, netstat -tunlp, net-tools, ports to watch out for , other commands in linux
+
+serviceMGT,
+    sudo systemctl start httpd  
+    sudo systemctl enable httpd 
+    systemctl status httpd 
+
+ service serviceName arguments
+  service sshd status 
+  sudo service sshd start
+  sudo service sshd stop/start/status/enable/disable/restart 
+  sudo service httpd stop/start/status/enable/disable/restart  
+
+  systemctl arguments serviceName
+  systemctl stop/start/status/enable/disable/restart sshd 
+  systemctl start/stop/status httpd  
+  systemctl  
+
+
+Archive/Data Backup Commands:
+zip :   Package and compress (archive) files  
+unzip:  Extract compressed files in a ZIP archive.  
+  zip newFileName.zip fileName   
+  zip notes33.zip notes    
+  Unzip filename.zip     - inflate/extract the original file 
+
+tar :   It is used to archive the directory/file
+
+   tar -cfv  notes.txt  
+
+  tar -cvf fileName fileName.tar.gz     = compress files  
+  tar -cvf mynotes.tar.gz notes.txt  
+  tar -xvf fileName fileName.tar.gz     = extract files  
+  tar -xvf mynotes.tar.gz 
+
+
+Other commands;
+===============
+clear : Clears the terminal screen.
+cal : Displays a calendar
+history : Displays the recently executed commands .
+
+
+                                                          TEE COMMAND
+tee:  This command is used to store and view the
+     the output of any other command.
+     (both at the same time)     
+
+echo "I am the finest Engineer"
+
+[obi@demo33 ~]$ echo "Landmark Engineers are the best in 2023" > best
+result ...send ..  landmark engineers are the best into the file without displaying 
+
+BUT:
+[obi@demo33 ~]$ echo "Landmark Engineers are the best in 2023" | tee best
+Landmark Engineers are the best in 2023     .... (the input is stored and displayed at the same time)
+[obi@demo33 ~]$ tail -5  /etc/passwd > newusers
+[obi@demo33 ~]$
+[obi@demo33 ~]$ cat newusers
+paul:x:1003:1003::/home/paul:/bin/bash
+landmark:x:1005:1005::/home/landmark:/bin/bash
+legah:x:1006:1006::/home/legah:/bin/bash
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+nginx:x:992:992:Nginx web server:/var/lib/nginx:/sbin/nologin
+
+
+******** 
+tail -5 /etc/passwd | tee new.txt  
+
+result:
+  it created the file new.txt and directs the tail info into it and displays the info as well
+
+
+      PING
+
+ping: The ping command sends ICMP ECHO_REQUEST to network hosts.
+      This verify if the host is alive 
+   ping localhost  = check if your local system is alive/running   
+   ping landmark.cm  
+   ping mylandmarktech.com                **** you are working for a coy and a cx calls and says the website is nt working, you can ping the website 
+   ping google.com  
+
+                                          TELNET
+                      To check if a particular is running or not
+telnet: 
+for any computer or system;    a server/system/computer have 0-65535(65536) ports/addresses  
+0-65535, ie port range
+(65536 , ie no. of port or addresses
+
+    ssh   = 22,  http  = 80,  https = 443
+
+ telnet 172.31.31.46 22 
+  telnet 172.31.31.46 80  
+   telnet 172.31.31.46 443 
+    telnet 172.31.31.46 3389   
+       telnet landmark.cm 80 
+   telnet mylandmarktech.com 8080 
+   telnet google.com 80    
+
+
+  STEP1: 
+check for ip addresses = hostname -i
+next 
+telnet ip address portnumber
+
+uname: describes your system  
+   uname -a 
+   cat /etc/*release
+   cat /etc/*os*
+
+
+[obi@demo33 ~]$ cat /etc/*release
+Amazon Linux release 2023 (Amazon Linux)
+NAME="Amazon Linux" , VERSION="2023" , ID="amzn", ID_LIKE="fedora", VERSION_ID="2023", PLATFORM_ID="platform:al2023", PRETTY_NAME="Amazon Linux 2023", ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2023",  HOME_URL="https://aws.amazon.com/linux/", BUG_REPORT_URL="https://github.com/amazonlinux/amazon-linux-2023", SUPPORT_END="2028-03-01"
+Amazon Linux release 2023 (Amazon Linux)
+
+                        
+                             tunlp
+checks available addresses and addresses that are in use 
+
+netstat -tunlp:
+  a server/system/computer have 0-65535(65536) ports/addresses 
+we have address:  server ports/address = 22/80/443/etc  
+  tomcat requires to use port 8080 by default 
+  sudo yum install tomcat  
+  sudo systemctl start tomcat   
+
+  nginx uses port 80 by default
+    sudo yum install nginx  
+    sudo systemctl start nginx   
+  http server also uses port 80 by default 
+    sudo yum install httpd  
+    sudo systemctl start httpd   
+
+
+**** therfore if port 8080 isnt available, tomcat wont install because it requires port 8080 by default for it to install
+      
+To insstall:  sudo yum -y install net-tools
+netstat -tunlp
+  t = tcp,  u = udp,  l = listening, p = port, n = number  : 
+netstat -tulpn  
+
+
+its important to know there are some ports to watch out for 
+
+ protocols        ports/address    
+   ssh              22  
+   http             80  
+   https            443  
+   nfs              2089  
+   rdp              3389  
+   smtp          25/465/587         .....  (simple mail transfer protocol) 
+   tomcat           8080 --- 8000  
+   jenkins          8080      
+
+****** THERFORE, for tomcat to run, we have to change the port address of one of them
+
+
+                 OTHER COMMANDS IN LINUX
+
+                                  WATCH
+watch: Using watch command we can execute the command periodically.
+  watch df -f 
+  watch free -m 
+
+man : Display the on-line manual pages.
+      man ls 
+info:
+  info ls 
+help:
+  ls --help
+
+[obi@demo33 ~]$ watch free -m
+[obi@demo33 ~]$
+[obi@demo33 ~]$ man ls
+[obi@demo33 ~]$
+[obi@demo33 ~]$ info ls
+[obi@demo33 ~]$
+[obi@demo33 ~]$ ls --help
+
+
+whatis: The whatis command displays a summary line from the man page for the specified command in Linux.
+
+whatis ls  
+[obi@demo33 ~]$ whatis ls
+ls (1)               - list directory contents
+ls (1p)              - list directory contents
+
+
+                                                  COMMANDS TO LOOK OUT FOR 
+service : It will give the status of service.
+  service sshd start 
+  systemctl start sshd   
+
+systemctl list-unit-files: It will list all services.
+
+uptime: Tells how long the system has been running.
+   server1 = 5 years  
+   server2 = 5 months 
+
+last: show listing of last logged in users.   
+
+shutdown:
+  sudo shutdown 
+  sudo init 0  
+
+restart/reboot:
+    sudo init 6 
+    sudo reboot  
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+ 
 
 
 
