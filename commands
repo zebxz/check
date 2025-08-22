@@ -5,6 +5,31 @@ netstat -utlpn
 LINUX
 ****** administrator is called root user
 
+Linux pre requisite softwares, WHAT IS A COMPUTER, SOFTWARE COMPONENTS, VENDORS /MANUFACTURERS,CLASSIFCATION OF COMPUTER, ENTERPRISE COMPUTERS, WHAT DETERMINES THE CHOICE OF AN OS 
+(COMPUTER SYSTEM), HOW ARE TASKS EXECUTED/PERFORMED ON A COMPUTER SYSTEM,  LINUX OS AND LINUX COMMANDS: Mobaxterm, HOW CAN SOFTWARES BE PROVIDED,  CREATING AN ACCOUNT IN AWS & LAUNCHING 
+A SERVER 
+
+
+linux 1 
+ **** to create and connect to server, check end of linux1 & begining of linux2 note
+
+Linux 
+pre requisite softwares
+SSH - SECURE SHELL
+  These are some of the softwares to download
+  1) mobaxterm X server with SSH, Telnet, RDP, VNC and X11
+Download link 
+https://mobaxterm, mobatek.net/download - home- edition .html
+
+ii) supper PUTTY
+OR PUTTY
+Download link:
+https://the earth.li/-sgtatham/putty/latest/w64/putty-64-bit-0.74-installer.msi
+
+iii) Gitbash and powershell
+
+
+
 
 sudo - to create a new user
 Ls -a = list directory content with files and & dir 
@@ -131,6 +156,11 @@ textmate,bracket, notrpad , vscode, atom, eclipse
 
 
                3B
+Cont.....  ***** RUNNING TASKS ON YOUR SERVER,( read file content/info of users, file bk up, Renaming &relocating  files /directories counting line & character in a file, deleting file,
+RESOURCEULTILIZATION (soft link,'L', hard link'-', CREATIG SHORTCUT /LINK TO FILES, fields for file (file type,permissions,number of links,owner,grp owner,size, date &time file name/dir),
+hidden files, long list, search for file (find)
+
+
     Read the content of a file:
 cat fileName:  Read /display file content
 cat -n fileName : list content of a file 
@@ -196,6 +226,82 @@ other commands:
    words=16 
 characters=121
 
+
+   CREATIG SHORTCUT /LINK TO FILES
+Hard link : copy of a file (hard link starts with '_') just like a normal file 
+ln fieName linkName
+ln list.txt my list
+
+softlink: symbolic to the file ) short cut link to the file
+ln-s filename linkname
+ln -s new.txt mylist
+*** soft link starts with  l & the file size is smaller compared to the original file 
+eg, original file can be 250mb in size but softlink can be 5mb in size
+
+
+[ec2-user@demo paypal]$ ll
+total 56
+TYPE:
+l    rwxrwxrwx. 1 ec2-user ec2-user     6 Jul 26 01:28 notes.yml -> rn.txt  : SL  
+-    rw-r--r--. 2 ec2-user ec2-user 25297 Jul 26 01:05 notes33.yml :  HARD LINK
+
+
+Fields for files:
+  1)  File type    [-file, d=dir, l=soft link]   
+
+  2)  Permissions [ owner=rwx  group=r-x  others=r-x ]   2023 G Wagon  = Ifoema 
+           
+  3)  Number of links
+  4)  Owner [ ec2-user ]
+  5)  Group Owner [ Engineer ]
+  6)  Size of the File in Bytes
+  7)  Date and Time of creation
+  8)  File name/Dir Name
+
+file type, permissions,number of links,owner,grp owner,size, date &time file name/dir
+
+
+                     HIDDEN FILES
+FIles that start with .
+ls- a = to list hidden files
+
+
+                  LONG list
+ll -t  : lists files from last created to the file that was created first     (based on the time file was created)
+ls -l  : lists files in alphabectical order    (sort)
+ls -ltr  : list files based on reverse order (file created first on top will be created last below)
+reverses the time file was created
+ll   : long list
+
+
+
+       TO SEARCH FOR FILE 
+Find
+
+
+
+
+                                LINUX    4A
+FIELDS FOR FILES, FILE PERMISSION/SECURITY/ Access levels, HOW TO CALCULATE /DETERMINE PERMISSION FOR FILES, FILE MGT COMMANDS ( sudo, chown, chgrp, )GREP, PIPE,COMMANDS, FIND;searhes for
+files & directories (find ~ -name fileName), searching a file in the root Directory:(sudo -u root find / -name fileName)
+
+
+          LINUX  4B 
+SEARCHING FOR FILES;find, ABSOLUTE AND RELATIVE PATH, THE DATE COMMAND ,TO CHANGE TIMEZONE, User Mgt,  HOW TO CREATE USER;su command , CREATING A USER'S PASSWORD ( BY SUDO PRIViledged 
+user),HOW TO GRANT SUDO ACCESS TO A USER IN LINUX  ( when to grant access/why grant access),CREATE THE GROUP FIRST B4 ADDING A USER,  TO MODIFY A USER
+
+         
+                 '
+
+
+
+
+                         LINUX5
+CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, connecting to server with private key and password  and internally (su -)
+******************    by default user's can ONLY connect to aws ec2 linux servers using ssh-private-Key
+ Create user accounts & verify, assign password to users,grant sudo access to specific users, Set the expiration of users account,  configure/setup your server for password authentication?  
+ connect to the server externally as landmark as landmark user using password, Lock datti's password and server access, Create manager's group and add user landmark to it.
+delete user's account , delete user's account including home dir. 
 
 
 
