@@ -3,6 +3,132 @@ netstat -utlpn
 
 
 LINUX
+****** administrator is called root user
+
+
+sudo - to create a new user
+Ls -a = list directory content with files and & dir 
+starting with . ie including (hidden)files   ********* i added this hidded when i was making the summarized notes
+
+
+ls dir name =  eg ls pwd                                          ls/filename1/file inside file1
+ls /      ie to list the content of the root dir
+ls = list the content of a directory = list the content of your pwd eg ls OR ls /home/ec2-user  ... BC /home/ec2user is my pwd
+pwd = present working directory
+hostname = serverName
+cd = change directory
+commands to change hostname : sudo hostnamectl set-hostname demo
+                                sudo su - ec2-user
+sudo su - user = to switch user
+
+ HOME; contains users' home directory details 
+ls/home 
+
+
+bin contains binary files (commands)
+cat fileName: used to read the content of a file
+ls, pwd, clear, cd, touch (to create a new file)    eg  touch test.txt
+cat -n filename
+******30:18
+i just did adduser paul and paul was created
+
+                                              SBIN 
+we also hv system binary files ,can only be executed by user with admin priviledges ,the admin-user/or the root user/administrator 
+sbin: contains system binary files/commands
+eg of system binary files : 
+adduser, to add user
+passwd, : can be used to assign passwd to users
+chage, used to modify users expiry date 
+chown  change own 
+
+we aslo hv the etc dir 
+also var dir 
+
+
+we can cat to check the content of etc/shadow ie info abt the passwd of user
+[root@demo~] # cat/etc/shadow 
+
+******* etc : contains configuration files
+/etc/shadow = detail information about users passwd
+/etc/passwd = detail inf abt users                         ****** contains file of all users
+/etc/ssh/sshd_config = ssh configuration details
+   ssh=secure shell
+sshd = ssh service/ daemon = user Name/passwd    eg to access your server via ssh you need username/passwd OR username & ssh key
+UserName/ssh -private-key
+
+- tmp: temporal files
+-opt: directory where softwares & packages should be installed, it is the best place to install 
+- var: var directory contains dynamic files
+eg /var/logs/messages
+
+-pro directory: Contains inf about the hardware (hardware info)
+eg mem info - memory information
+cpu info  - cpu information
+［root@demo-# cat/proc/meminfo = to check for info about my memory
+
+
+
+
+                                        LINUX 3a
+TASK CARRIED OUT ON COMPUTER;( FILE Mgt: FILE RELATED COMMANDS), CONNECTING TO SERVER AS IAM USER,  AND AS A ROOT USER, 
+
+vi file name; vi is a file editor used to create and/or modify files
+
+                         TO EDIT /MODIFY FILE (LinuxOS )
+vi & vim are text editors
+can be used to modify, create and add contents to files
+
+we shsall use the vi command:
+vi has 'insert mode' and 'command mode'
+
+- Vi FileName:  this is a file editor used to create and/or modify files and also to add content to files
+eg ec2-user@demo ~ ] vi list
+
+you start accessing the file in command mode
+in command mode we cant modify content
+press the 'i'key to enter "insert" mode
+press "esc key" to enter command mode
+
+
+2) save and quit 
+1) press 'esc key' to enter command mode
+2)type ':wq' or ':wq !' and press enter -key to save & quit
+
+2b) short cut save and quit
+press s "esc key"  to enter command mode 
+press and hold the shift key and double click on the "Z" key to save and quit = press+hold
+
+3) Quit without saving
+press "esc key" to enter command mode
+type ":q!' and press enter key to quit without saving 
+
+-vim (vim & vi to modify files)  
+-nano filename: next 
+ start modifying/typing
+1) save and quit , type ctrlx and press 'y'
+2)Quit without saving: type ctrl x and press 'n'
+3) cancel and continue to eedit: type ctrlx and press 'c' to continue editing
+
+vi and vim are text editors can be used to modify,create  and add contents to files
+
+      File editor (windows)
+sublime text
+bracket
+notepad ++
+vs code
+atom
+eclipse
+
+
+   tesxt editors  for mac OS/IPHONE
+textmate,bracket, notrpad , vscode, atom, eclipse
+
+
+((((( to read content : cat, less, more, tail, head.
+
+
+
+
 
 
 
@@ -24,6 +150,7 @@ git log           = to list the number of commit that we have
 
 
 ******  To add a file 
+      ** working area to >>>>>> staging area
 git add filename : git add boo
 one file 
 git add filename
