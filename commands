@@ -302,6 +302,132 @@ FIELDS FOR FILES, FILE PERMISSION/SECURITY/ Access levels, HOW TO CALCULATE /DET
 files & directories (find ~ -name fileName), searching a file in the root Directory:(sudo -u root find / -name fileName)
 
 
+1)permissions (file security/permission) : (owner = rwx, group = r-x, others = r-x  
+rw- r--r = read write & read 
+rwx rwx rwx= read write execute 
+these permission are given to owners of the file, the group that owns the files & to any other person 
+
+eg               (       permission    )
+  file type     owner    group    others    no. of links       owner     grp owner     size         filename
+a)    -        rw-       r--        r--          1           ec2-user    ec2-user      250         class-txt
+b)   d         rwx       r-x        r-x          3           ec2-user     ec2-user     25              dev
+
+
+
+IQ: What is the umask value for a normal user and the rootUser?
+IQ: What is the umask value?
+    It is used to define file/dir Permissions at creation.  
+
+            normal user        rootUser
+            file     dir       file     dir  
+ owner   = rw-=6    rwx=7      rw-=6    rwx=7   
+ group   = rw-=6    rwx=7      r--=4    r-x=5
+ others  = rw-=6    rwx=7      r--=4    r-x=5  
+
+
+
+2)PERMISSON FOR ROOT USER:
+   ( i bliv the root user always has the default permission)
+
+switch to the rootUser:
+  sudo su - or 
+  sudo -i  
+Make a file
+
+d rwx r-x r-x. 2 root root 6 May  4 23:45 billionaire
+- rw- r-- r--. 1 root root 0 May  4 23:45 rich.me
+
+ rootUser
+        file     dir  
+       rw-=6    rwx=7   
+       r--=4    r-x=5
+       r--=4    r-x=5  
+
+****** when a mask value is set, it is used to determine the type of permission the file will have 
+
+
+
+3)what is umask value?? umask is use to determine/set
+the Permissions that files and directories will inherit at creation. 
+It is Good for file security. 
+umask value set the Default files permissions for users.
+
+9 out of 10 situations we will not be using unmask 
+9/10  = chmod 
+1/10  = umask  
+
+chmod  = change the permissions for individual files and directories  
+chmod 600 fileName    
+chown   = use change file ownership  
+chgroup = use change file group ownership
+
+
+4)Assignment:
+Assign permission for the ec2-user group to modify the blessed.me file  
+chmod +r fileName 
+chmod 664 fileName  
+
+                      file   file
+Full Permissions      0666   0666
+default Permissions   ?    =    ?            0666-0624 = 0042
+                      ----   ----
+ umask                0600   0624
+                      ----   ----  
+
+
+default permisssion=  0666 - 0624 = 0042
+
+
+***************************************************************************************
+Assignment: i  set myself
+Assign permission for the ec2-user group to modify the billions file  
+chmod +r fileName 
+chmod 721 fileName  
+
+                      file   file
+Full Permissions      0666   0666
+default Permissions   ?    =    ?            0666-0721= 0935  OR 0045
+                      ----   ----
+ umask                0711   0721
+                      ----   ----  
+
+default permisssion=  0666 - 0721 = 0935 ( subractracted mathematcally by borrowing )lol
+
+
+**** grep command = extract patterns from files  
+eg grep  (name)simon from the file list   =  grep simon list
+grep -i simon list
+ where -i =  ignores case sensitivity   ie caps letter
+
+
+grep user information
+
+ [ec2-user@demo ~]$ grep obi  /etc/passwd
+obi:x:1001:1001::/home/obi:/bin/bash
+
+
+
+Ticket077: Search for a file called list
+find = search for files and directories  
+searching a file in the user's home Directory:
+   find /home/ec2-user -name fileName or find ~ -name fileName 
+   find /home/ec2-user -name list  or find ~ -name list  
+searching a file in the present working Directory:
+   find /home/ec2-user/dev -name list   or   find . list     
+
+searching a file in the root Directory: 
+sudo -u root find / -name fileName
+  find / -name list 
+  sudo -u root find / -name list    
+  sudo find / -name list  
+[ec2-user@demo dev]$ sudo -u root find / -name list
+/sys/kernel/debug/error_injection/list
+/sys/kernel/debug/kprobes/list
+/home/ec2-user/dev/list
+/home/ec2-user/list
+
+
+
           LINUX  4B 
 SEARCHING FOR FILES;find, ABSOLUTE AND RELATIVE PATH, THE DATE COMMAND ,TO CHANGE TIMEZONE, User Mgt,  HOW TO CREATE USER;su command , CREATING A USER'S PASSWORD ( BY SUDO PRIViledged 
 user),HOW TO GRANT SUDO ACCESS TO A USER IN LINUX  ( when to grant access/why grant access),CREATE THE GROUP FIRST B4 ADDING A USER,  TO MODIFY A USER
