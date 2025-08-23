@@ -671,6 +671,77 @@ Find
 FIELDS FOR FILES, FILE PERMISSION/SECURITY/ Access levels, HOW TO CALCULATE /DETERMINE PERMISSION FOR FILES, FILE MGT COMMANDS ( sudo, chown, chgrp, )GREP, PIPE,COMMANDS, FIND;searhes for
 files & directories (find ~ -name fileName), searching a file in the root Directory:(sudo -u root find / -name fileName)
 
+                                                 FILE MGT COMMANDS
+WE can use the chmod command to assign /chnage permission to specify files for all the files created to have/ inherit a particular specify permission
+
+read=4 
+write=2
+execute=1   
+
+ec2-user  landmark  obi 
+
+[ec2-user@demo ~]$ ll blessed.me
+-rw-rw-r--. 1 ec2-user ec2-user 0 May  5 00:02 blessed.me
+
+
+   ***************** 
+
+Assignment:
+Assign permission for the dominon user to read the blessed.me file
+
+chmod 600 filename
+chown = use to change file ownership
+chgroup = use to change file group ownership
+
+
+chmod +r fileName :  gives evryone permission to read
+the correct code = chmod 604 fileName  
+
+
+********************
+obi will be working on the blessed.me for this sprint, 
+please grant ownership of the file to obi  
+This practice is good for automation and easy deployment
+of tasks/workloads. 
+
+ANS:
+chown newOwner fileName   
+chown obi blessed.me    
+[ec2-user@demo ~]$ chown obi blessed.me
+chown: changing ownership of 'blessed.me': 
+  Operation not permitted
+This is because:
+chown and chgroup commands can ONLY be run by the rootUser
+sudo is a command used to run commands as another user  
+
+**************  therfore the correct command : 
+sudo -u root chown obi blessed.me 
+    sudo chown obi blessed.me  
+sudo -u obi  chown obi blessed.me      
+
+before you run the command mk sure the owner is running the command  ( i bliv chown without sudo , u hv to be rootuser)
+[ec2-user@demo ~]$ sudo - u root chown obi blessed.me   OR  sudo chown obi blessed.me
+
+
+
+***********     TO change group ownership
+
+[ec2-user@demo ~]$ sudo -u obi  chgrp obi blessed.me
+chgrp: cannot access 'blessed.me': Permission denied
+
+sudo chgrp obi blessed.me
+
+QUESTION:
+   ****************    obi will be working on the billions directory for this sprint, 
+please grant ownership and group ownership of the dir to obi  
+
+sudo chown obi billions  
+sudo chgrp obi billions  
+
+sudo chown obi:obi billions   ...... the best
+
+
+
 
           LINUX  4B 
 SEARCHING FOR FILES;find, ABSOLUTE AND RELATIVE PATH, THE DATE COMMAND ,TO CHANGE TIMEZONE, User Mgt,  HOW TO CREATE USER;su command , CREATING A USER'S PASSWORD ( BY SUDO PRIViledged 
