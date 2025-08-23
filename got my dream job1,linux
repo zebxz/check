@@ -671,6 +671,11 @@ Find
 FIELDS FOR FILES, FILE PERMISSION/SECURITY/ Access levels, HOW TO CALCULATE /DETERMINE PERMISSION FOR FILES, FILE MGT COMMANDS ( sudo, chown, chgrp, )GREP, PIPE,COMMANDS, FIND;searhes for
 files & directories (find ~ -name fileName), searching a file in the root Directory:(sudo -u root find / -name fileName)
 
+ 
+FILE TYPE: its either :- File, d= directory, l= soft link, - = hardlink
+
+
+
                                                  FILE MGT COMMANDS
 WE can use the chmod command to assign /chnage permission to specify files for all the files created to have/ inherit a particular specify permission
 
@@ -742,6 +747,29 @@ sudo chown obi:obi billions   ...... the best
 
 
 
+QUESTION:
+Ticket077: Search for a file called list
+find = search for files and directories  
+searching a file in the user's home Directory:
+   find /home/ec2-user -name fileName or find ~ -name fileName 
+   find /home/ec2-user -name list  or find ~ -name list  
+searching a file in the present working Directory:
+   find /home/ec2-user/dev -name list   or   find . list     
+
+searching a file in the root Directory: 
+sudo -u root find / -name fileName
+  find / -name list 
+  sudo -u root find / -name list    
+  sudo find / -name list  
+[ec2-user@demo dev]$ sudo -u root find / -name list
+/sys/kernel/debug/error_injection/list
+/sys/kernel/debug/kprobes/list
+/home/ec2-user/dev/list
+/home/ec2-user/list
+
+
+
+*******
 The absolute path to a file starts from the root Directory 
 The relative path to a file starts from the pwd  
 
@@ -1132,6 +1160,7 @@ scripts -  *** mee   (which i will expand on when we get to tools like ;docker, 
 EXamples of workoads/task i execute includes:
 
 file mgt: touch ,    (created files, modified files, make direstories, granted persmission, ,....  File editor (windows) sublime text, vim, vscode, eclipse
+ FILE TYPE: its either :- File, d= directory, l= soft link, - = hardlink
 user mgt: adduser, modify users, defining the scope of users privilidges BY grant sudo access to specific users, assigning paswd, change ownership, granting users permission  Create user accounts & verify, assign password to users,, Set the expiration of users account,  
 configure/setup your server for password authentication?  
 process mgt ; top, ps-ef, jobs, kill,bg, fg starting a process, stop/kill a process 
