@@ -18,14 +18,110 @@ dev/git/maven/aws/nexus/java
 
 LINUX 3A & 3B  was linux commands etc
 
-LINUX 4a
-Assignment:
-Assign permission for the ec2-user group to modify the blessed.me file  
 
+
+
+LINUX 4B
 Assignment:
 Assign permission for the ec2-user group to modify the blessed.me file  
 chmod +r fileName 
 chmod 664 fileName  
+
+                      file   file
+Full Permissions      0666   0666
+default Permissions   ?    =    ?            0666-0624 = 0042
+                      ----   ----
+ umask                0600   0624
+                      ----   ----  
+
+
+default permisssion=  0666 - 0624 = 0042
+
+
+***************************************************************************************
+Assignment: i  set myself
+Assign permission for the ec2-user group to modify the billions file  
+chmod +r fileName 
+chmod 721 fileName  
+
+                      file   file
+Full Permissions      0666   0666
+default Permissions   ?    =    ?            0666-0721= 0935  OR 0045
+                      ----   ----
+ umask                0711   0721
+                      ----   ----  
+
+default permisssion=  0666 - 0721 = 0935 ( subractracted mathematcally by borrowing )lol
+
+
+
+
+Ticket077: Search for a file called list
+find = search for files and directories  
+searching a file in the user's home Directory:
+   find /home/ec2-user -name fileName or find ~ -name fileName 
+   find /home/ec2-user -name list  or find ~ -name list  
+searching a file in the present working Directory:
+   find /home/ec2-user/dev -name list   or   find . list     
+
+searching a file in the root Directory: 
+sudo -u root find / -name fileName
+  find / -name list 
+  sudo -u root find / -name list    
+  sudo find / -name list  
+[ec2-user@demo dev]$ sudo -u root find / -name list
+/sys/kernel/debug/error_injection/list
+/sys/kernel/debug/kprobes/list
+/home/ec2-user/dev/list
+/home/ec2-user/list
+
+
+
+Assignment:
+Assign permission for the dominon user to read the blessed.me file
+
+chmod 600 filename
+chown = use to change file ownership
+chgroup = use to change file group ownership
+
+
+chmod +r fileName :  gives evryone permission to read
+the correct code = chmod 604 fileName  
+
+
+********************
+obi will be working on the blessed.me for this sprint, 
+please grant ownership of the file to obi  
+This practice is good for automation and easy deployment
+of tasks/workloads. 
+
+ANS:
+chown newOwner fileName   
+chown obi blessed.me    
+[ec2-user@demo ~]$ chown obi blessed.me
+chown: changing ownership of 'blessed.me': 
+  Operation not permitted
+This is because:
+chown and chgroup commands can ONLY be run by the rootUser
+sudo is a command used to run commands as another user  
+
+**************  therfore the correct command : 
+sudo -u root chown obi blessed.me 
+    sudo chown obi blessed.me  
+sudo -u obi  chown obi blessed.me      
+
+before you run the command mk sure the owner is running the command  ( i bliv chown without sudo , u hv to be rootuser)
+[ec2-user@demo ~]$ sudo - u root chown obi blessed.me   OR  sudo chown obi blessed.me
+
+
+
+***********     TO change group ownership
+
+[ec2-user@demo ~]$ sudo -u obi  chgrp obi blessed.me
+chgrp: cannot access 'blessed.me': Permission denied
+
+sudo chgrp obi blessed.me
+
 
 
 Ticket078:
