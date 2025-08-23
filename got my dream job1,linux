@@ -747,6 +747,77 @@ sudo chown obi:obi billions   ...... the best
 
 
 
+  GREP COMMAND
+
+
+grep command = extract patterns from files  
+eg grep  (name)simon from the file list   =  grep simon list
+grep -i simon list
+ where -i =  ignores case sensitivity   ie caps letter  bc linux is case sensitive
+1:32:18 **** inorder words,  the command , grep simon list will list only the name "simon" written in small letters and will ignore those written with caps letter
+gor it to grep all the "simon on the list then run " grep -i simon list
+
+
+
+****grep user information
+ie the file that cointains users information, it is created when u create a user
+
+ [ec2-user@demo ~]$ grep obi  /etc/passwd
+obi:x:1001:1001::/home/obi:/bin/bash
+
+- grep pwd = grep pwd  (file ) history.sh   *** To grep pwd frm the hist file, so we can seee all the lines with pwd
+grep chown = grep chown (file) history.sh    *** to see all the time we executed the chown command
+
+
+
+
+IQ: explain the grep and the pipe commands ?
+
+  
+pipe command = |  
+   Enable the output of a command to be
+   the input of another/next command 
+
+cat list| grep -i legah ( i can cat the list file and grep for legal in the list file)
+ie the output of the cat command is the input of the grep command 
+
+eg
+[ec2-user@demo ~]$ cat list 
+simon legah
+simon peter
+james
+obi
+datti
+samason
+amaka
+paulzz
+
+
+[ec2-user@demo ~]$ cat list | sort | grep a
+J(a)mes
+Simon Leg(a)h
+(a)m (a)k (a)
+d(a)tti
+paulZZ
+samson
+
+[ec2-user@demo ~]$ sort list (rearranges in alphabetical order)
+james
+obi
+simon legah
+simon peter
+amaka
+daitti
+paul
+samason
+simon
+
+
+****** THE GRep command is used to extract specify patterns from a file whereas the pipe command helps us to run commands , where the output of one command becomes the 
+input of another and thats possible bc the pipe command will set as a temporary storage (like how does water get to your home , a pipe
+
+
+
 QUESTION:
 Ticket077: Search for a file called list
 find = search for files and directories  
