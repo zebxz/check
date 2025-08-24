@@ -1,4 +1,10 @@
- 
+  run the script by:
+       ./scriptName = ./welcome.sh    *** this is the name/title used when the script was created.
+       ./script1.sh
+
+
+
+
  scripts: a shell-script is a collection of one or more commands in a file 
              a script is a file containing commands  
 
@@ -236,5 +242,128 @@ HOW TO MAKE A VARIABLE DYNAMIC
 read -s  = secret variable (security  is inherent in our environment)
 
       DYNAMIC SCRIPT
+eg       write a script to authenticate bank users:
+===========================================
+
+                                           line   1,3,4,5,7 are  dynamic variables
+
+echo 'Please enter your name'        (we collect the variable from the cx)
+read name
+echo "$name, welcome to TD Bank"
+echo 'please enter your card'
+echo 'please enter your pin'
+read pin
+echo "$pin is the correct pin, $name, how may we help you today?"
+
+******** when writing a script and you want to read a sensitive value pass the "-s"
+because Security is inherent in our environment
 
 
+
+with the help of scripting , creating user becomes very simple , it easy to manage task like this ***** 49:50
+            
+
+
+  ****** in bash shell scripting we hv what is called CLI argument 
+
+Command Line Arguments = CLAs    **** online*** Command line arguments are extra commands you can use when launching a program so that the program's functionality will change
+===============================
+in order words, when we wrote the script extra commands where included ;echo the 1st argument is $1,echo the 2nd argument is $2,echo the scriptname is $0
+in this case to run this script will will pass an/the argument & we will see the arguments displayed, each time we run the script as we see below ; the 1st argument is db11,the 2nd argument is simon, echo the scriptname is $0
+
+
+TICKET0047: write a script to backup databases in our environment.  
+vi db_backup.sh  OR touch db_backup.sh     ..... ( touch to create an empty file)
+ echo "echo database backup initiated" > db_backup.sh ... > OR >> , > redirect to replace the content/line of code  in the file OR append >> to add the line of code/content
+ echo "echo database backup completed" >> db_backup.sh
+
+****1:04:00 .. without quote, with single quote, or double quote , the script will run bt for  use double " for best practices ... 1:04:58
+
+
+****** 1:05:31 .......... as part of comment run this script (db.backup.sh) with 2 arguments [dataserver and admin]
+                                              the dataserver is dbserver11 and the admin is simon
+
+vi db.backup .sh
+#!/bin/bash
+#this bash shell script will back database in linux systems
+#Author:cecilia ekeh
+#run this srcipt with 2 arguments  [dataserver and admin]
+#sh db_backup.sh dbserver11 simon
+echo database backup initiated
+echo database backup completed 
+echo all backups successful
+echo the 1st argument is $1
+echo the 2nd argument is $2
+echo the scriptname is $0
+
+
+************  to run the script    ........ when we run the script, we see the arguments displayed : (db11 and simon)
+
+[ec2-user@demo~] $ sh sd_backup.sh db11 simon    ......  (we run the script with the argument)
+ database backup initiated
+ database backup completed 
+ all backups successful
+the 1st argument is db11
+the 2nd argument is simon
+ the scriptname is db_backup.sh
+
+
+
+                                                  ARGUMENT
+
+
+An argument, also called command line argument, can be defined as input given to a command line to process that input with the help of given command. 
+Argument can be in the form of a file or directory. Arguments are entered in the terminal or console after entering command.
+
+CLA are diff options we can use while running a script 
+
+
+
+  ARGUMENTS WITH CONDITION
+*** if asked whatelse can be done with $?  
+         ( it can be used to run a command with conditions)
+
+*** if asked whatelse can be done with $?
+we can say if [$/ = o ] then ... 
+
+
+cat deploy.sc     
+if [ $?==0 ] 
+then
+echo "We succeeded" 
+else  
+echo "We failed, please troubleshoot" 
+fi  
+
+  CONDITIONS: 
+conditions :
+if statement  
+Syntax:
+if (( conditions ))
+then 
+commands 
+else  
+commands  
+fi
+
+
+
+if1.sh  
+
+echo "welcome to Landmark DevOpsMasterClass" 
+echo "How much are you willing to pay"
+read price
+if [ $price -ge 4000 ]
+then 
+echo "your are admitted"  
+else  
+echo "sorry you can't be admitted today "
+fi  
+
+
+IQ: 
+hOw do you troubleshoot issues in scripting?
+
+ANS:
+ Run the script in debugging mode
+sh -x scriptName  
