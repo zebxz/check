@@ -767,10 +767,29 @@ restart/reboot:
 
 
 
-SCRIPTING
+SCRIPTING 4
+ CHANGING SDV PERMANENTLY
+
+1) ls -a = to get our hidden files .bashrc
+2) then vi .bashrc and change HISTSIZE value
+
+  = export HISTSIZE = 1500 , Save & exit file 
+3)To enforce the changes, we run the source command 
+     = source.bashrc
+4) check = echo $HISTSIZE . will give us 1500
+so even when we log out this user/session  sudo su - ec2-user  HISTSIZE is still 15
+
+system defined variables:
+  echo sdv starts  
+   echo $HISTSIZE  
+   echo $USER 
+   echo $HOME  
+   echo $PATH  
+   echo $LOGNAME
+   echo $SHELL 
 
 
-
+***** run the "env" command to list all the SDV 
 
 
     GIT 1
