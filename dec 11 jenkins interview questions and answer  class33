@@ -1,5 +1,240 @@
  
-A
+ scripts: a shell-script is a collection of one or more commands in a file 
+             a script is a file containing commands  
 
+ #!/bin/bash ( the shell script starts with what is called a shebang #!, to indicate the interpreter /bin/bash)
+shell: A shell is an interpreter that interpretes commands to the OS. 
+its a program that takes commands from the keyboard and gives them to the operating system to perform (in a file) 
+
+
+ write a simple script that welcomes Engineers to work?
+ 
+
+ welcome.sh    :       (name of my script)  
+    ==========
+     #!/bin/bash           ( the shell script starts with what is called a shebang #!, to indicate the interpreter /bin/bash)
+    echo "Good morning"
+     whoami
+     echo "Welcome to Landmark Technologies" 
+     echo "Today is"
+     date 
+
+ ********* now the script has been created
+we can cat the file to see the content
+cat welcom.sh
+
+
+  ********   run the script by:
+       ./scriptName = ./welcome.sh
+       ./script1.sh
+
+
+ assign executable permissions for scripts to run (if you get the ** denied*8 prompt)
+    chmod 744 welcome.sh            .... executable permission only to the user
+    chmod  u+x scriptName            ......... executable permission only to the user 
+    chmod   +x scriptName              ........ will add executable permission to both the owner, the group, and others
+     chmod +x fileName   
+  chmod +x script1.sh
+  chmod 775 fileName 
+  chmod 700 fileName
+
+
+
+
+shell: A shell is an interpreter that interpretes commands to the OS. 
+its a program that takes commands from the keyboard and gives them to the operating system to perform (in a file) 
+
+therfore an interpreter is needed when executing a script
+
+shells command interpreters:
+  Boune Shell  (sh)
+  Boune Again Shell (bash)
+  csh / ksh / tsh / zsh  
+
+
+    HOW TO CHECK FOR THE INTERPRETERS RUNNING INMY SYSTEM OR THE ONE AM USING TO EXECUTE COMMAND 
+
+  echo $SHELL       =  List your current shell
+      /bin/bash
+  cat /etc/shells   = List all shells in your system
+     /bin/sh
+     /bin/bash                 ******  WE CAN interprete our script using any of the interpreter
+     /usr/bin/sh
+     /usr/bin/bash
+     /bin/csh
+     /bin/tcsh
+     /usr/bin/csh
+    /usr/bin/tcsh
+
+Running a script with interpreter doesnt require executable permission
+
+
+Bash shell Scripting:
+a shell script must end with .sh oR .sc
+Naming convention:
+Naming conventions best practices:
+bash Shell-scripts   = script.sh or hello.sc  
+Shell-scripts has '.sc' or '.sh' extensions 
+    scriptname.sh  or 
+    scriptName.sc or 
+    *.sh or 
+    *.sc 
+  deploy.sh  = Shell-script [*.sh]
+  test.txt   = text file    [*.txt]
+  app.sc     = Shell-script [*.sc]
+  app.java   = java code    [*.java] 
+  monitor.py = python code/script [*.py] 
+  app.yaml   = playbook or manifest file [*.yml] 
+  main.tf    = terraform scripts/codes [*.tf]
+=============================================
+
+
+    Scripting or automation langauges :
+ 
+1. Bash Shell Scripting
+  2. Python       ( we will cover some python scripting)
+  3. Groovy  (Jenkins)
+  3. Ruby                ( we will nt cover the course)
+  4. Yaml  
+      (k8s, Ansible, CloudFormation)
+  5. JSon / java                       (some projects)
+  6. HCL - Terraform                      (configuration language)
+  7. XML = 
+  8. html 
+  9. go/golang 
+  10. powershell 
+
+
+
+
+
+1:07:32
+         #COMMENT
+MEANS THE LINE IS commented and cannot be executed, commented lines start with #
+
+
+MULTI LINE COMMENTS
+Multi line comment starts with :<< and a word (<< boy)
+the multiline script must end with  the same word after the two << which it started with 
+only lines written before <<(boy) will display and lines written at the end after the starting word (boy) has been written will display as well when you run the script but
+lines written after <<(boy) and before (boy) is written at the end will not display whne you run the script 
+
+
+
+  How to make your codes/scripts:
+  easily readable/understandable 
+  1. by adding notes/comments/explanations 
+it gives meaning to a script, it gives more explnantion 
+the script can easily be used again in the future
+even people without IT knowledge can easily appreciate some technology documents
+
+
+Who are the comments meant for?
+  1. It make your script/code to be understood by you and others over time. 
+  2. It make your script/code easily reusable in the future
+  3. Facilitate/ease troubleshooting and debugging
+  4. comments are Good for teams: Team of 14 
+        6. developers writing codes/scripts 
+        1. Scrum master 
+        3. DevOps Engineers 
+        1. DevOps Security Engineer 
+
+Making your script portable.  
+1. Hard coding 
+2. soft coding   
+
+
+
+
+                                                   
+using variables in scripting:  Variables help us to make a script dynamic, howevre we must make sure the variable is dynamic
+
+*******1:33:50 ....... to call the script : sh (script name)  eg sh udv.sh
+inside the script we are creating, we define the udv by :  variable name = variable value    eg city = toronto , app = tesla application
+we can refer/call a variable with $variable  ie echo $(variable name)   eg echo $city   and we will get the value as "toronto         .....1:42:13
+
+we run the "env" command to list all the SDV 
+to call a SDV : echo ($variable name) eg echo $PWD,  echo $SHELL     ..... This will give us the SDV for shell
+ 
+
+
+
+
+     HOW TO CALL VARIABLES IN BASH SHELL SCRIPTING
+variables:
+variables are defined by the either the user or the system 
+we can refer/call a variable with $variable  ie $(variable name)
+
+
+                                              USING   VARIABLES IN SCRIPTING
+TYPES OF VARIABLES: udv & SDV       (udv should be written in lowercase so it doesnt clash with SDV) ***** highly recommended so it doesnt clash wit the SDV ....1:39:50
+                                           (i bliv udv ,is user defined variable, while SDV is system defined variable)
+
+
+User defined variables   = UDV  : 
+ Are defined/created by some admins  
+udv.sh  
+ name=SimonLegah
+ cpy=LandmarkTechnology  
+ city=Toronto
+ country=Canada  
+ echo $name works for $cpy located in $city, $country    
+
+
+system defined variables   = SDV  : 
+ SDV Are variables that comes with the OS  
+ Such variables are in uppercase  
+  SHELL=bin/bash
+  echo $SHELL  = /bin/bash
+  env = List all system defined variables  
+
+
+
+system defined variables:
+  echo sdv starts  
+   echo $HISTSIZE  
+   echo $USER 
+   echo $HOME  
+   echo $PATH  
+   echo $LOGNAME
+   echo $SHELL 
+echo sdv ends   
+
+[oke@demo22 ~]$  echo $HISTSIZE
+                 1000
+export HISTSIZE=2000   ......... (we run it on the CLI ) we use export to temporarily change the SDV value but the change value will only last for that given login session
+
+
+CHANGING SDV PERMANENTLY
+
+1) ls -a = to get our hidden files .bashrc
+2) then vi .bashrc and change HISTSIZE value
+
+  = export HISTSIZE = 1500 , Save & exit file 
+3)To enforce the changes, we run the source command 
+     = source.bashrc
+4) check = echo $HISTSIZE . will give us 1500
+so even when we log out this user/session  sudo su - ec2-user  HISTSIZE is still 1500
+
+
+
+TYPES OF SCRIPT
+
+dynamic script  :
+can have multiple usage by various  people 
+  1. echo $name Welcome to $cpy  
+
+static script:
+can only be used by one person
+  1. echo Oke Welcome to MTN          ***** it doesnt give the option to change the variable 
+
+
+HOW TO MAKE A VARIABLE DYNAMIC 
+  Variables help us to make a script dynamic, howevre we must make sure the variable is dynamic
+
+(the read command is used to obtain dynamic variable or input variable from users)
+read -s  = secret variable (security  is inherent in our environment)
+
+      DYNAMIC SCRIPT
 
 
