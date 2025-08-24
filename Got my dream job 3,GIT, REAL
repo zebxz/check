@@ -28,7 +28,7 @@ The steps as a developer for our fintech client
 ( i confirmed that the name of the directory you initialize must not be the same as the alias name you added as the name of the remote repo url in the local env/repo)
  the alias name make s it easy so u dnt have to type the enter repo url each time you wnat to push or pull
 
-
+Our main task is project onboarding:
 1)Project Onboarding: we onboard projects by;
    1. create a github account for your organisation or self & Create organisations where applicable
 . Create organisations where applicable in a SCM ['GitHub']  
@@ -117,9 +117,9 @@ A branch is a line of development
 
 
    one branch = 1line of production
-A branch is a line of development 
+A branch is a line of development    *** meeeee, if we main 3branches then that means 3lines of development..
  A file must have been moved to the staging area before it can be pushed
-1:11:00 once we are done with the dev branch, we can create a new branch from dev called stage branch and whatsoever is in the dev branch will also be found in the dev and stage branch.
+1:11:00 once we are done with the dev branch, we can create a new branch from dev called stage branch and whatsoever is in the dev branch will also be found in the dev and stage branch.  ***1:54:00
 
 development branch : writing our code, once developers are satisfied they move it to the stage branch
 stage branch : then moved to stage and once its done  
@@ -146,8 +146,9 @@ Ticket01:  *** done
 2)git branch branch name    = eg, git branch dev; we run this command to create dev branch
 3) git switch dev             =  change from master to dev and vice versa
 4) we vi into app.java file  ( ie create app.java file)
-5)we git add.           = to file to the staging area
+5)we git add.           = to move file to the staging area
 6) we commit "m"
+   git commit -a -m "commit message  = To add & commit at once
 7) git switch :                 = move from dev to master
 8)git diff dev (commit ID )    = we run this in master to review the changes that happened in dev             
                                   git diff (b0f7fcf) ie ID of the commit done in dev branch                by d push command, i bliv  we can push to either branches
@@ -403,12 +404,12 @@ then git stash apply,  then we can continue working on the file
 7. avoid merge conflicts  
 
 
-CONNECTING TO SCM/GITHUB USING SSH KEY
+CONNECTING TO SCM/GITHUB USING SSH KEY  *** meee*** bc a password is always requested when adding a repo
          1:49;14  ****  he said the ssh key can work for any of the repositories bc it was notadded under any repository, we just went to settings and added it 
 
 This automates your authentication access to github ie no need for password PAT
 
-        CEATING SSH KEY  ( and copy to your github account) *** **** 1:50:00, you can use the key with any of your rrepositories
+        CEATING SSH KEY, to automate your authentication access into github  ( and copy to your github account) *** **** 1:50:00, you can use the key with any of your rrepositories
 ls/home/ec2-user/.ssh      **** he said he has a file called .ssh
  to create ssh key:   ssh-keygen  
 the key has been created
@@ -430,6 +431,7 @@ to push = git push ada master ( Ada now replaces the repo aliasname which we use
 
 github - webhook --jenkins( we will look at it when we get to jenkins)
 
+****1:43:40  you can  install a lot of extensions, like pluggins, it will help your coding experince to be very easy
 IDES: integrated development environment ( are sofwares that eases code writing)
 
 
@@ -447,7 +449,7 @@ file or directory , we use the .gitignore file to list them there.
     Don’t Commit Half-Done code - backup with git stash
     Test your code before committing.
     Write Good Commit Messages before committing 
-    Try to use git commands rather than GUI tools.
+    Try to use git commands rather than GUI tools.   ***1:47:10 ***  gui tool that is writing or adding lines/editing files or creating branches on the console in github (git commands ie run command in the CL in gitbash)
     use ssh url and PAT over https url  
     use rebase over git merge
     use branch protection strategy  
