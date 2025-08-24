@@ -555,6 +555,82 @@ ANS:
  Run the script in debugging mode
 sh -x scriptName  
 
+
+IQ: LOOPS ( a situstion where we have a repeated scenario)
+
+Loops: When a condition can be satisfied multiple times.
+======        condition with multiple iterations 
+for  loop  starts with a "do" and ends with "done
+eg
+x < 100      ie  can be satisfied multiple times because X can be 1, 10 , 25, 14, 7, 35, 80 , etc , so x can abe satified until all these is exhausted
+x= [0, 1, 2, 3, ..., 99] 
+
+
+WHILE LOOP
+                            Also conditions with multiple iterations
+                                        USES OF LOOPS
+use cases for loops:
+===================
+WE CAN use loops to run load test
+we can use loops to get a range of values
+
+
+
+                                   SWITCH CASES
+                THis is when you have multiple conditions to manage
+switch case:
+eg
+
+for systemctl we can  start|status|restart|stop|enable|disable sshd 
+  yum install/remove/updates/upgrade
+
+********* so when we hv situation like this we use "switch case"
+
+sonarQube:
+  sonar.sh  | status | restart | stop | start | version
+
+ sh sonar.sh start 
+ sh catalina.sh stop tomcat
+     $0         $1    $2           ***** these numbers can change
+
+Syntax for switch case:
+case $1 in  
+    option1)                ******* start
+      Commands;;
+    option2)                   ******* stop
+      Commands;;
+    option3)                    ******** restart
+      Commands;;
+    option4)                    ******** status
+      Commands;;
+      *)
+       commands;;
+esac 
+1)the syntax starts with 'case' and ends with 'esac'
+
+
+IQ:  Functions:   
+ A function is a piece of code that perfoms
+ a specific task and avoids code repetition/duplication.
+********** we invoke the function by writing the name of the function at the end of the script  
+  
+
+IQ:    SCP COMMANDS
+
+scp command:
+  It is use to transfer files from one server to another and vice-versa
+  It is good for data migration, application deployment, etc. 
+  scp tranfer files and directory securely using the ssh protocol 
+
+
+IQ:  CRONTABLES
+ CRON TABLES : contains scheduled tasks
+
+ most times when we write our scripts we wont be there to observe them run, so we shall use cron tables and cron
+jobs to achieve the expected automation and schedule the task to run as expected
+
+
+
 IQ: Examples of autamted tasks:
   Explain your experience in bash shell scripting??
 AMSWER:
