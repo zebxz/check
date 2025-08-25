@@ -866,3 +866,535 @@ sudo yum install cronie
 - sudo yum install vixie-cron
 
 
+
+    run the script by:
+       ./scriptName = ./welcome.sh    *** this is the name/title used when the script was created.
+       ./script1.sh
+*************************************************************************************************************************************************************************************************
+
+
+
+
+
+
+SCRIPT SUMMARIZED: FOR interview
+
+ scripts: a shell-script is a collection of one or more commands in a file 
+a script is a file containing commands  
+
+ In my environment I have written, Maintained/modified
+  shell scripts for:
+    package mgt.sh     -       to install, remove, updates and upgrade packages in our servers
+to:
+    monitor_servers.sh    - to monitor our servers
+    dataBase_backup.sh     -  to backup our databases
+    deploy_app.sh          - to display our applications
+    access_account.sh      - access accounts
+    user_management.sh    -     to mg8 users
+    file_management.sh     -       for file mgt
+  
+ Als have written scripts with Loops: ie condition with multiple iterations When a condition can be satisfied multiple times.       
+******** have equally written functions to avoid repetition of codes
+ and aslo  scripts with  SWITCH CASES ie when i have multiple conditions to manage eg sonarQube: we need to start, restart, stop 
+  sonar.sh  | status | restart | stop | start | version
+and also for 
+for systemctl we can  start|status|restart|stop|enable|disable sshd 
+  yum install/remove/updates/upgrade
+
+and finally i use crontables to schedule task 
+ most times when we write our scripts we wont be there to observe them run, so we use cron tables and cron
+jobs to achieve the expected automation and schedule the task to run as expected
+we are Scheduling Tasks/Workloads for automation.
+
+     ***END ***
+****************************************************************************************************************************************************************************************************************
+
+  Scripting or automation langauges :
+ 
+1. Bash Shell Scripting
+  2. Python       ( we will cover some python scripting)
+  3. Groovy  (Jenkins)
+  3. Ruby                ( we will nt cover the course)
+  4. Yaml  
+      (k8s, Ansible, CloudFormation)
+  5. JSon / java                       (some projects)
+  6. HCL - Terraform                      (configuration language)
+  7. XML = 
+  8. html 
+  9. go/golang 
+  10. powershell 
+
+
+***************************************************************************************************************************
+                                THE BELOW IS A MORE SUMMARIZED SCRIPT 1 TO 7 
+
+
+run the script by:
+       ./scriptName = ./welcome.sh    *** this is the name/title used when the script was created.
+       ./script1.sh
+
+
+
+ scripts: a shell-script is a collection of one or more commands in a file 
+a script is a file containing commands
+
+ #!/bin/bash ( the shell script starts with what is called a shebang #!, to indicate the interpreter /bin/bash)
+shell: A shell is an interpreter that interpretes commands to the OS. 
+its a program that takes commands from the keyboard and gives them to the operating system to perform (in a file) 
+
+
+ write a simple script that welcomes Engineers to work?
+ 
+
+ welcome.sh    :       (name of my script)  
+    ==========
+     #!/bin/bash           ( the shell script starts with what is called a shebang #!, to indicate the interpreter /bin/bash)
+    echo "Good morning"
+     whoami
+     echo "Welcome to Landmark Technologies" 
+     echo "Today is"
+     date 
+
+ ********* now the script has been created
+we can cat the file to see the content
+cat welcom.sh
+
+
+  ********   run the script by:
+       ./scriptName = ./welcome.sh
+       ./script1.sh
+
+
+ assign executable permissions for scripts to run (if you get the ** denied*8 prompt)
+    chmod 744 welcome.sh            .... executable permission only to the user
+    chmod  u+x scriptName            ......... executable permission only to the user 
+    chmod   +x scriptName              ........ will add executable permission to both the owner, the group, and others
+     chmod +x fileName   
+  chmod +x script1.sh
+  chmod 775 fileName 
+  chmod 700 fileName
+
+
+
+
+shell: A shell is an interpreter that interpretes commands to the OS. 
+its a program that takes commands from the keyboard and gives them to the operating system to perform (in a file) 
+
+therfore an interpreter is needed when executing a script
+
+shells command interpreters:
+  Boune Shell  (sh)
+  Boune Again Shell (bash)
+  csh / ksh / tsh / zsh  
+
+
+    HOW TO CHECK FOR THE INTERPRETERS RUNNING INMY SYSTEM OR THE ONE AM USING TO EXECUTE COMMAND 
+
+  echo $SHELL       =  List your current shell
+      /bin/bash
+  cat /etc/shells   = List all shells in your system
+     /bin/sh
+     /bin/bash                 ******  WE CAN interprete our script using any of the interpreter
+     /usr/bin/sh
+     /usr/bin/bash
+     /bin/csh
+     /bin/tcsh
+     /usr/bin/csh
+    /usr/bin/tcsh
+
+Running a script with interpreter doesnt require executable permission
+
+
+Bash shell Scripting:
+a shell script must end with .sh oR .sc
+Naming convention:
+Naming conventions best practices:
+bash Shell-scripts   = script.sh or hello.sc  
+Shell-scripts has '.sc' or '.sh' extensions 
+    scriptname.sh  or 
+    scriptName.sc or 
+    *.sh or 
+    *.sc 
+  deploy.sh  = Shell-script [*.sh]
+  test.txt   = text file    [*.txt]
+  app.sc     = Shell-script [*.sc]
+  app.java   = java code    [*.java] 
+  monitor.py = python code/script [*.py] 
+  app.yaml   = playbook or manifest file [*.yml] 
+  main.tf    = terraform scripts/codes [*.tf]
+=============================================
+
+
+    Scripting or automation langauges :
+ 
+1. Bash Shell Scripting
+  2. Python       ( we will cover some python scripting)
+  3. Groovy  (Jenkins)
+  3. Ruby                ( we will nt cover the course)
+  4. Yaml  
+      (k8s, Ansible, CloudFormation)
+  5. JSon / java                       (some projects)
+  6. HCL - Terraform                      (configuration language)
+  7. XML = 
+  8. html 
+  9. go/golang 
+  10. powershell 
+
+
+
+
+
+1:07:32
+         #COMMENT
+MEANS THE LINE IS commented and cannot be executed, commented lines start with #
+
+
+MULTI LINE COMMENTS
+Multi line comment starts with :<< and a word (<< boy)
+the multiline script must end with  the same word after the two << which it started with 
+only lines written before <<(boy) will display and lines written at the end after the starting word (boy) has been written will display as well when you run the script but
+lines written after <<(boy) and before (boy) is written at the end will not display whne you run the script 
+
+
+
+  How to make your codes/scripts:
+  easily readable/understandable 
+  1. by adding notes/comments/explanations 
+it gives meaning to a script, it gives more explnantion 
+the script can easily be used again in the future
+even people without IT knowledge can easily appreciate some technology documents
+
+
+Who are the comments meant for?
+  1. It make your script/code to be understood by you and others over time. 
+  2. It make your script/code easily reusable in the future
+  3. Facilitate/ease troubleshooting and debugging
+  4. comments are Good for teams: Team of 14 
+        6. developers writing codes/scripts 
+        1. Scrum master 
+        3. DevOps Engineers 
+        1. DevOps Security Engineer 
+
+Making your script portable.  
+1. Hard coding 
+2. soft coding   
+
+
+
+
+                                                   
+using variables in scripting:  Variables help us to make a script dynamic, howevre we must make sure the variable is dynamic
+
+*******1:33:50 ....... to call the script : sh (script name)  eg sh udv.sh
+inside the script we are creating, we define the udv by :  variable name = variable value    eg city = toronto , app = tesla application
+we can refer/call a variable with $variable  ie echo $(variable name)   eg echo $city   and we will get the value as "toronto         .....1:42:13
+
+we run the "env" command to list all the SDV 
+to call a SDV : echo ($variable name) eg echo $PWD,  echo $SHELL     ..... This will give us the SDV for shell
+ 
+
+
+
+
+     HOW TO CALL VARIABLES IN BASH SHELL SCRIPTING
+variables:
+variables are defined by the either the user or the system 
+we can refer/call a variable with $variable  ie $(variable name)
+
+
+                                              USING   VARIABLES IN SCRIPTING
+TYPES OF VARIABLES: udv & SDV       (udv should be written in lowercase so it doesnt clash with SDV) ***** highly recommended so it doesnt clash wit the SDV ....1:39:50
+                                           (i bliv udv ,is user defined variable, while SDV is system defined variable)
+
+
+User defined variables   = UDV  : 
+ Are defined/created by some admins  
+udv.sh  
+ name=SimonLegah
+ cpy=LandmarkTechnology  
+ city=Toronto
+ country=Canada  
+ echo $name works for $cpy located in $city, $country    
+
+
+system defined variables   = SDV  : 
+ SDV Are variables that comes with the OS  
+ Such variables are in uppercase  
+  SHELL=bin/bash
+  echo $SHELL  = /bin/bash
+  env = List all system defined variables  
+
+
+
+system defined variables:
+  echo sdv starts  
+   echo $HISTSIZE  
+   echo $USER 
+   echo $HOME  
+   echo $PATH  
+   echo $LOGNAME
+   echo $SHELL 
+echo sdv ends   
+
+[oke@demo22 ~]$  echo $HISTSIZE
+                 1000
+export HISTSIZE=2000   ......... (we run it on the CLI ) we use export to temporarily change the SDV value but the change value will only last for that given login session
+
+
+CHANGING SDV PERMANENTLY
+
+1) ls -a = to get our hidden files .bashrc
+2) then vi .bashrc and change HISTSIZE value
+
+  = export HISTSIZE = 1500 , Save & exit file 
+3)To enforce the changes, we run the source command 
+     = source.bashrc
+4) check = echo $HISTSIZE . will give us 1500
+so even when we log out this user/session  sudo su - ec2-user  HISTSIZE is still 1500
+
+
+
+TYPES OF SCRIPT
+
+dynamic script  :
+can have multiple usage by various  people 
+  1. echo $name Welcome to $cpy  
+
+static script:
+can only be used by one person
+  1. echo Oke Welcome to MTN          ***** it doesnt give the option to change the variable 
+
+
+HOW TO MAKE A VARIABLE DYNAMIC 
+  Variables help us to make a script dynamic, howevre we must make sure the variable is dynamic
+
+(the read command is used to obtain dynamic variable or input variable from users)
+read -s  = secret variable (security  is inherent in our environment)
+
+      DYNAMIC SCRIPT
+eg       write a script to authenticate bank users:
+===========================================
+
+                                           line   1,3,4,5,7 are  dynamic variables
+
+echo 'Please enter your name'        (we collect the variable from the cx)
+read name
+echo "$name, welcome to TD Bank"
+echo 'please enter your card'
+echo 'please enter your pin'
+read pin
+echo "$pin is the correct pin, $name, how may we help you today?"
+
+******** when writing a script and you want to read a sensitive value pass the "-s"
+because Security is inherent in our environment
+
+
+
+with the help of scripting , creating user becomes very simple , it easy to manage task like this ***** 49:50
+            
+
+
+  ****** in bash shell scripting we hv what is called CLI argument 
+
+Command Line Arguments = CLAs    **** online*** Command line arguments are extra commands you can use when launching a program so that the program's functionality will change
+===============================
+in order words, when we wrote the script extra commands where included ;echo the 1st argument is $1,echo the 2nd argument is $2,echo the scriptname is $0
+in this case to run this script will will pass an/the argument & we will see the arguments displayed, each time we run the script as we see below ; the 1st argument is db11,the 2nd argument is simon, echo the scriptname is $0
+
+
+TICKET0047: write a script to backup databases in our environment.  
+vi db_backup.sh  OR touch db_backup.sh     ..... ( touch to create an empty file)
+ echo "echo database backup initiated" > db_backup.sh ... > OR >> , > redirect to replace the content/line of code  in the file OR append >> to add the line of code/content
+ echo "echo database backup completed" >> db_backup.sh
+
+****1:04:00 .. without quote, with single quote, or double quote , the script will run bt for  use double " for best practices ... 1:04:58
+
+
+****** 1:05:31 .......... as part of comment run this script (db.backup.sh) with 2 arguments [dataserver and admin]
+                                              the dataserver is dbserver11 and the admin is simon
+
+vi db.backup .sh
+#!/bin/bash
+#this bash shell script will back database in linux systems
+#Author:cecilia ekeh
+#run this srcipt with 2 arguments  [dataserver and admin]
+#sh db_backup.sh dbserver11 simon
+echo database backup initiated
+echo database backup completed 
+echo all backups successful
+echo the 1st argument is $1
+echo the 2nd argument is $2
+echo the scriptname is $0
+
+
+************  to run the script    ........ when we run the script, we see the arguments displayed : (db11 and simon)
+
+[ec2-user@demo~] $ sh sd_backup.sh db11 simon    ......  (we run the script with the argument)
+ database backup initiated
+ database backup completed 
+ all backups successful
+the 1st argument is db11
+the 2nd argument is simon
+ the scriptname is db_backup.sh
+
+
+
+                                                  ARGUMENT
+
+
+An argument, also called command line argument, can be defined as input given to a command line to process that input with the help of given command. 
+Argument can be in the form of a file or directory. Arguments are entered in the terminal or console after entering command.
+
+CLA are diff options we can use while running a script 
+
+
+
+  ARGUMENTS WITH CONDITION
+*** if asked whatelse can be done with $?  
+         ( it can be used to run a command with conditions)
+
+*** if asked whatelse can be done with $?
+we can say if [$/ = o ] then ... 
+
+
+cat deploy.sc     
+if [ $?==0 ] 
+then
+echo "We succeeded" 
+else  
+echo "We failed, please troubleshoot" 
+fi  
+
+  CONDITIONS: 
+conditions :
+if statement  
+Syntax:
+if (( conditions ))
+then 
+commands 
+else  
+commands  
+fi
+
+
+
+if1.sh  
+
+echo "welcome to Landmark DevOpsMasterClass" 
+echo "How much are you willing to pay"
+read price
+if [ $price -ge 4000 ]
+then 
+echo "your are admitted"  
+else  
+echo "sorry you can't be admitted today "
+fi  
+
+
+IQ: 
+hOw do you troubleshoot issues in scripting?
+
+ANS:
+ Run the script in debugging mode
+sh -x scriptName  
+
+
+
+USING (bash shell)Scripts for package management, FILE MGT,  CONTROL COMMANDS = CONDITIONS, LOOPS, WHILE LOOPS, USES OF LOOPS, SWITCH CASES, FUNCTION, SCP COMMANDS , PATHS (Absolute/
+relative ), CRONTABLE
+
+
+
+                                  
+                                     USING Scripts for package management:
+                                      ===================================
+we can use script for packages installing
+We can install, remove, updates and upgrade packages in our servers.
+
+
+                                   
+examples of packages:
+  nano, tree, vim, httpd, 
+  java, maven, tomcat, jenkins,
+  kubernetes, kubelet, docker
+  terraform, etc.  
+
+We can download and install packages 
+using package managers like:
+   yum/dnf          -- centos, redhat
+   apt/apt-get      -- ubuntu, debain
+   chocolatey/choco -- windows OS  
+   brew             --  mac  
+   helm,  -- kubernetes 
+   pip,   -- python 
+   rpm 
+
+
+                        CONTROL COMMANDS = CONDITIONS
+
+control commands = conditions:                   WE can use if, else "statement " in the property market
+==============================                           we can also use 'if,else' statement to authenticate users
+                                                        Add multiple conditions with 'elif'
+*** IT starts with "if and ends with fi"
+
+if statements:
+Syntax:  
+  if [ conditions ] 
+  then 
+  commands  
+  else  
+  commands
+  fi 
+
+
+
+
+
+                                            LOOPS ( a situstion where we have a repeated scenario)
+
+Loops: When a condition can be satisfied multiple times.
+======        condition with multiple iterations 
+for  loop  starts with a "do" and ends with "done"
+=========
+Loops: condition with multiple iterations 
+
+use cases for loops:
+===================
+WE CAN use loops to run load test
+we can use loops to get a range of values
+
+
+
+                                   SWITCH CASES
+                THis is when you have multiple conditions to manage
+switch case:
+eg
+
+for systemctl we can  start|status|restart|stop|enable|disable sshd 
+  yum install/remove/updates/upgrade
+
+********* so when we hv situation like this we use "switch case"
+
+sonarQube:
+  sonar.sh  | status | restart | stop | start | version
+
+
+
+                                    FUNCTIONS 
+
+functions :we can use functions to write repetitive tasks without rewriting codes
+  Functions:   
+ A function is a piece of code that perfoms
+ a specific task and avoids code repetition/duplication.
+********** we invoke the function by writing the name of the function at the end of the script  .....  1:35: 28
+
+
+
+    CRONTABLES
+ CRON TABLES : contains scheduled tasks
+
+ most times when we write our scripts we wont be there to observe them run, so we shall use cron tables and cron
+jobs to achieve the expected automation and schedule the task to run as expected
+Scheduling Tasks/Workloads for automation.
+
+
