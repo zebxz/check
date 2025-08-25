@@ -712,6 +712,7 @@ performing load testing for tesla
   Carrying load of
   l = 30000 + 10000 = 40000
 
+
                                         USES OF LOOPS
 use cases for loops:
 ===================
@@ -764,14 +765,31 @@ functions :we can use functions to write repetitive tasks without rewriting code
  A function is a piece of code that perfoms
  a specific task and avoids code repetition/duplication.
 ********** we invoke the function by writing the name of the function at the end of the script  .....  1:35: 28
+
+
+  this is the end of the script with, with names of the functions we want to invoke
 }
-uermgt
+usermgt  *** to invoke the usermgt function
+file mgt  *** to invoke th filemgt function
+db_backup   **** to invoke the db_backup function
 
 
-                        SYNtaax for functions
+ALso, when we hv a script containing multiple functions, like usermgt fuction, file mgt function, db_backup function, packagemgt function
+   and we only need to create a user, we only need to invoke the usermgt function, by writting "usermgt" at the end of the script. bc we hv the code to manage users, ie we already wrote the code to mg8 users . *** 1:33:00
+}
+usermgt  *** to invoke the usermgt function
+
+
+ticket 0047, create a new user in our env
+ANS:
+ Import/call/invoke the usermgt function
+
+
+            *** 1:25:38            SYNtaax for functions
    we can write multiple functions, diff functions to perform specific tasks
 
-usermgt(){
+eg of a usermgt function
+usermgt(){    *** syntax for a usermgt function.
    echo "Enter the username of the new user"
    read name
    sudo adduser $name
@@ -779,7 +797,8 @@ usermgt(){
    id $name   
 }
 
-                  SCP COMMANDS
+     
+  ***1:38:37             SCP COMMANDS
 
 scp command:
   It is use to transfer files from one server to another and vice-versa
@@ -808,7 +827,7 @@ ssh-key for authentication:
 
 
                                                                         PATHS
-
+2:04:00
                        1) (WE must use the absolute path when automating , why??? )
                         2)  what did we use generator link bc i didnt use it but my log showedup 
                          3) what next to do with the log file created 
@@ -825,6 +844,17 @@ Path to files and directories:
 
  most times when we write our scripts we wont be there to observe them run, so we shall use cron tables and cron
 jobs to achieve the expected automation and schedule the task to run as expected
+Scheduling Tasks/Workloads for automation.
+
+Assignment/Ticket:
+  1. Write a script that monitors servers every minutes 
+     This script should alert management of anomalies 
+  2. Write a script that backup dbServers every midnight
+
+Execution:
+1. We shall use cronJobs and create cron tables to achieve this 
+   Automation and Schedule the tasks to run as expected. 
+
 
  cron table   = contains scheduled tasks   
    crontab -e   = To edit the cron table 
