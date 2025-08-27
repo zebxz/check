@@ -44,24 +44,24 @@ CLIENT ENVIRONMENT PAYPAL
 
 
  
-    REmeo developer       >>>>>>              SCM/Github
+    REmeo developer       >>>>>>              SCM/(Github or GITLAB,GITBUCKET)
                                                 paypal                        >>>>>> test & build                 >>>>>>>>>> paypal application server
                                                source code                            maven
       Jane developer      >>>>>>>>>          repeated by SRC                          clone code
-                                            unit test cases
+                        gitpush/commit        unit test cases
                                               buildscript
 
 for our test and build we are using maven
 so our build server is maven which will clone codes and for it to run code the git clone has to be installed as well  
 
 
-developers are writing uunit test cases, build script, raw/sourec code , the codes cant run directly in the client server so it has to go through build phase/sever
+developers are writing uunit test cases, build script, raw/sourec code , the codes cant run directly in the client server so it has to go through a tbuild phase/sever
 therefore we will do the test&build 
-in the building process the build platform is going to connect this raw code INTO PACKAGES that the app servers in the client environment can understand
-the test and build process ensures that the app servers can make business logic out of the raw codes developed by developers
+in the build process the building platform is going to convert this raw code INTO PACKAGES that the app servers in the client environment can understand
+the test and build process ensures that the app servers can interprete, can make business logic out of the raw codes developed by developers
 so the raw code goes through the test and build process before it is developed to the client environment 
 
-so we are talkining abt build and how we can do a build for application code & principlally we will be using amven as a build tool
+so we are talkiing abt build and how we can do a build from application code & principlally we will be using amven as a build tool
 
 
 
