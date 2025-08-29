@@ -277,7 +277,7 @@ Install Maven on a RedHat Linux 9 Server
             JVM will also be installed      (once java is installed, this installs automatically)
 
 43:30
-we already hv some notes in our githubwhich we can use for maven installation , package management, maven installation
+we already hv some notes in our github which we can use for maven installation , package management, maven installation
 
 45:36
 if you work in a coy that doenst use aws, maybe they use GCP that means you have to create a GCP account
@@ -305,9 +305,18 @@ connect to the server ie(ssh into mobaxterm using the details below) and then se
 
 ****** you have to be in the in the dir where your downloaded key is and cd into the dir 
 
-change hostname to maven = sudo hostnamectl set.hostname maven
-changing my shell = sudo su -exc-user
+Install Java JDK 11+ and other softares (GIT, wget and tree)
+# install Java JDK 11+ as a pre-requisit for maven to run.
 
+sudo hostnamectl set-hostname maven     ****** change hostname to maven
+sudo su - ec2-user                      ******  changing my shell
+cd /opt
+sudo yum install wget nano tree unzip git-all  -y
+sudo  yum install java-21-openjdk-devel  -y
+java -version
+git --version
+
+ 
 
 ** based on our linux file structure, the "opt directory is recommended for installing packages 
             cd/opt
@@ -385,7 +394,7 @@ mavenHomeDir = M2_HOME = /opt/maven :
   boot  
 
 
-STEP3 :
+STEP4 :
 
 SEt environmental variable for specific user eg ec2-user
 vi ~/.bash_profile    and add lines below
@@ -394,7 +403,7 @@ export PATH=$PATH:$M2_HOME/bin
 
 
 
-STEP4: 
+STEP5: 
     Refresh the profile and verify if maven is running
 source ~/.bash_profile
 mvn - version
