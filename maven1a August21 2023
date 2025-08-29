@@ -279,6 +279,13 @@ Install Maven on a RedHat Linux 9 Server
 43:30
 we already hv some notes in our github which we can use for maven installation , package management, maven installation
 
+openJDK1.8+,  // openJDK4.1   
+==============
+https://maven.apache.org/download.cgi
+https://github.com/LandmakTechnology/package-management
+https://github.com/LandmakTechnology/package-management/blob/master/Maven-installation/READme.md
+
+
 45:36
 if you work in a coy that doenst use aws, maybe they use GCP that means you have to create a GCP account
 Based on the prerequisite, we need a Redhat server
@@ -303,11 +310,23 @@ connect to the server ie(ssh into mobaxterm using the details below) and then se
   ssh-key  = class301key.pem 
   ssh -i class301key.pem ec2-user@54.204.78.6  
 
-****** you have to be in the in the dir where your downloaded key is and cd into the dir 
+(****** you have to be in the in the dir where your downloaded key is and cd into the dir )
 
-Install Java JDK 11+ and other softares (GIT, wget and tree)
+***Install Java JDK 11+ and other softares (GIT, wget and tree)
 # install Java JDK 11+ as a pre-requisit for maven to run.
+** based on our linux file structure, the "opt directory is recommended for installing packages 
+            cd/opt
 
+for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
+***1.01.00
+why do w need git
+we are trying to create our maven server bc we are using maven for test and build 
+so when developers push the codce, we need maven ie our build server to clone the code 
+therfore the git plugging has to be installed for us to be able to run git commands 
+so we are installing all of the prerequisite software java
+java must be installed for maven to run
+
+***** Next: 
 sudo hostnamectl set-hostname maven     ****** change hostname to maven
 sudo su - ec2-user                      ******  changing my shell
 cd /opt
@@ -317,20 +336,8 @@ java -version
 git --version
 
  
-
-** based on our linux file structure, the "opt directory is recommended for installing packages 
-            cd/opt
-
-for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
-
-openJDK1.8+,  // openJDK4.1   
-==============
-https://maven.apache.org/download.cgi
-https://github.com/LandmakTechnology/package-management
-https://github.com/LandmakTechnology/package-management/blob/master/Maven-installation/READme.md
-
-sudo yum insatll wget nano tree unzip git-all-y 
-sudo yum install java -11-open jdk-level java-1.8.0-open jdk-devel-7
+(sudo yum insatll wget nano tree unzip git-all-y)
+(sudo yum install java -11-open jdk-level java-1.8.0-open jdk-devel-7)
 
 *** for maven to run, java must be installed (java prerequisite for maven to run)
 java is the compiler 
@@ -379,7 +386,7 @@ so if thats where the software was extracted then thats the home directory fo rm
 ***** wherever you extract your maven software is your MHD 
 in OUR CASE = /opt/maven               ***** ie opt is the home  for maven dir 
 
-(in my own understanding) ie bc we had to cd into opt directory to download and isntall and the download name was changed to maven 
+(in my own understanding) ie bc we had to cd into opt directory to download and install and the download name was changed to maven 
 
 
 now we ls to see the content /composition of our maven home dir 
