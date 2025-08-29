@@ -196,7 +196,13 @@ git --version
             cd/opt
 
 for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
-
+***1.01.00
+why do w need git
+we are trying to create our maven server bc we are using maven for test and build 
+so when developers push the code, we need maven ie our build server to clone the code 
+therfore the git plugging has to be installed for us to be able to run git commands 
+so we are installing all of the prerequisite software java
+java must be installed for maven to run
 
  
 What is MHD ==  /opt/maven
@@ -216,4 +222,58 @@ in OUR CASE = /opt/maven               ***** ie opt is the home  for maven dir
 (in my own understanding) ie bc we had to cd into opt directory to download and isntall and the download name was changed to maven 
 
 
+now we ls to see the content /composition of our maven home dir 
 
+ [ec2-user@maven maven]$ ls
+mavenHomeDir = M2_HOME = /opt/maven :
+  bin --- binary files and the most impoetant file is mvn        *** 23,maven 1b, (the paths to where the dir are found in )
+            
+  conf  --configuration files and the most imp fie is settings.xml 
+          
+  lib -- jar files and libraries 
+  boot  
+
+
+
+    BUILD APPS 
+
+
+Ticket_0014_build_apps :
+========================
+We use maven to build and manage applications for java codes  in our environment :
+
+
+
+Generally We have THERE ARE 3 CATEGORIES OF APPLICTAION :
+  stanalone applications -            ***** when a stanalone appl is created, it creates jar packages -jar [app.jar, hello.jar]
+  web applications    -     war [app.war] 
+  enterprise applications - ear 
+
+hello.java:
+After using maven to build the following options are possible
+   hello.java --> hello.jar  [stanalone applications] 
+   hello.java --> hello.war  [web applications]
+   hello.java --> hello.ear  [enterprise applications]
+
+maven: creates packages (jar, war and/OR ear)
+  jar: Standalone Applications
+    ebay.jar
+    paypal.jar
+    tesla.jar 
+    *.jar  
+
+  war: web Applications
+    boa.war
+    tesla.war
+
+  ear: Enterprise Applications
+    aa.ear 
+    tesla.ear
+    td.ear 
+
+Archieves:
+  tar files = tesla.gz.tar   
+zip files = tesla.zip 
+  tesla.jar  
+  tesla.war  
+  tesla.ear 
