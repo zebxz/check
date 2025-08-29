@@ -180,8 +180,16 @@ connect to the server ie(ssh into mobaxterm using the details below) and then se
 
 ****** you have to be in the in the dir where your downloaded key is and cd into the dir 
 
-change hostname to maven = sudo hostnamectl set.hostname maven
-changing my shell = sudo su -exc-user
+Install Java JDK 11+ and other softares (GIT, wget and tree)
+# install Java JDK 11+ as a pre-requisit for maven to run.
+
+sudo hostnamectl set-hostname maven     ****** change hostname to maven
+sudo su - ec2-user                      ******  changing my shell
+cd /opt
+sudo yum install wget nano tree unzip git-all  -y
+sudo  yum install java-21-openjdk-devel  -y
+java -version
+git --version
 
 
 ** based on our linux file structure, the "opt directory is recommended for installing packages 
