@@ -48,6 +48,7 @@ Open source edition:
    develop on the existing features
 
 
+
 ***********************************************************************************
 
  START
@@ -287,5 +288,164 @@ zip files = tesla.zip
   tesla.jar  
   tesla.war  
   tesla.ear 
+Based on our project we are going to create 
+   multiple packages either;  jar, war or ear packages:
+
+
+     BUILDING
+1:36
+
+for Build to take place we are going to be using the pom.xml
+thats why they say maven uses the project model, the file is called pom.xml
+
+(developers should have written the source code , unit test cases and buildscript for our packages to be created (4 ds to create our packages eg mvn packages
+
+
+What are we building? 
+ we are creating deployable packages from java codes:
+  1.  src-- source code   :
+  2.  Unit-Test-Cases     : 
+
+the unit test cases will depemd on the language ie if they are supporting a java project  they will write a 
+         JAVA  --> JUnit test cases 
+       if its is .Net >>>> they will write Nunit test cases ,   .Net  --> NUnit test cases 
+          C++  --> CPPUnit test cases   
+
+********* developers need to bring something serious to the table which is called Buid script
+
+3. BuildScripts  -- pom.xml     :    (project object model)
+        xml  = extensible mark-up language 
+               It is a dynamic language. - why
+
+why because :
+               Tags can be created based on the user preferences , ie the user can decide to create whatever tag they want using xml 
+
+the direct comparison which we can use is html
+html = hypertext mark-up language
+     it comes with pre -defined tags that cant be changed
+TAGS like: h1, h2, h3, p (paragraph) , h (heading)
+
+eg using xml : the wat the tag starts its how its going to end 
+             Paul: <welcome>Welcome to Landmark</welcome>
+             Mary: <tesla>Welcome to Tesla</tesla>
+             Obi : <greet>Welcome to Landmark</greet>
+
+        html = you must enter information based on predefined tags   (ie tags that already exists
+               eg
+                   <h1>Welcome to Landmark</h1>
+
+   pom.xml = This is the BuildScript for maven  
+             developers should define name, plugins, tags, versions,  ( your artifacts needs to be assigned versions)
+             project dependencies and more in the BuildScript(pom.xml)
+
+
+
+   ********** maven uses project ,the project object model 
+
+
+Standalone Applications
+Ticket_saa_tesla0014 
+
+****After cloning the cde in the project directory
+in maven we are running the mvn package command bc in maven we are building package, when we run the command it create the packages in the target directory , so we can find
+the packages in the target directory 
+
+maven has a goal called the clean rule 
+== mvn clean: delete everything in the target directory
+rm -rf is also an option but mvn clean is better
+
+
+cd msa/
+head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
+for this project to be executed a few things are needed,
+scm is in github , everything has been defined
+
+
+Maven uses dependencies and plugins to test and create packages. 
+Examples of maven dependencies 
+   Selenium 
+   JUNit 
+   log4j
+pom.xml        --- BuildScript for maven
+pom = project object model      
+dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
+repositories  
+plugins:    
+
+
+DEvelopers will identify the dependencies, plugging and properties version
+
+Repositories:
+pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is trying to create packages it will use these pluggin
+properties:
+versions:
+
+maven 1b 40:45
+******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
+dependency 
+
+
+                                               WHERE DEPENCIES ARE FOUND 
+
+==================
+where are these dependencies found/located??? :
+dependencies and/or are located in maven repositories
+  https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
+    
+          we can have diff repository
+                                                                                                                                                       for the project
+<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo
+   mavenLocalRepo         (maven server)    ****** .m2/repository = default                             
+   mavenRemoteRepo         (nexus server)
+   mavenProxyRepo           (nexus server apache maven )
+   mavenCentralRepo         the internet    ****** https://mvnrepository.com/repos/central
+</repositories>
+we go to the internet to get these dependency on maven central repository
+
+
+
+Maven has 3 lifecycles: 
+  Clean, 
+  site/swagger and 
+  default
+  Clean, site and default
+
+Lifecycles      Goal(s)
+----------      -----   
+1)  Clean            clean  (mvn clean)
+  mvn clean         delete old builds 
+
+2) Site/Swagger       site
+                    create java classes (byte code)
+                    JVM 
+                    app.java = 'echo DevOps is great'        **** side goal
+                    app.class = 012450012354
+
+
+for eg if you have app.java once the side goal is executed it will create binary codes ie app.class that can be understood by JVM
+
+   ******** MAVEN HAS TO HAVE BEEN installed before we can run mvn package
+
+
+                  Goals:
+3) default        mvn validate:
+                  It will validate the project structure and resource files
+               mvn compile:
+                  It will compile all java classes and test classes
+                  these are byte code that will be used to create packages     ***** byte code that is used to run the test cases
+               mvn test:
+                  It will run the unit test cases (JUNit)
+               mvn package:
+                  It will create packages in target directory 
+                      (*.jar/*.war/*ear) app.war
+               mvn install:
+                  It will store the build artifacts in MAVEN LOCAL REPO
+                     default location: .m2/repository
+               
+               mvn deploy:  NEXUS
+                  It will upload the build artifacts into maven-remote-repo
+                   by default it will be in nexus in our environment
+
+
 
 
