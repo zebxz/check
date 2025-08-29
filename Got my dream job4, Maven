@@ -48,7 +48,7 @@ Open source edition:
    develop on the existing features
 
 
-
+***********************************************************************************
 
  START
 
@@ -156,16 +156,56 @@ Install Maven on a RedHat Linux 9 Server
 we already hv some notes in our githubwhich we can use for maven installation , package management, maven installation
 
 *** SEE MAVEN 1, FOR FULL INSTALLATION SCRIPT: https://github.com/LandmakTechnology/package-management
+ Step 1 to 5
 
 
-openJDK1.8+,  // openJDK4.1   
-==============
-https://maven.apache.org/download.cgi
-https://github.com/LandmakTechnology/package-management
-https://github.com/LandmakTechnology/package-management/blob/master/Maven-installation/READme.md
-connect to the server and setup maven:
+
+  ****53.04
+STEP 1          
+
+PREREQUISITE   = AWS Account
+Then createa redhat account
+
+we created a redhat server in Aws and on the redhat walls, we want to install maven sofware and once it is installed we can call the server our maven server
+*** ITS NOT A MAVEN SERVER YET UNTIL THE MAVEN SOFTWARE IS INSTALLED in it....
+
+
+
+STEP 2
+connect to the server ie(ssh into mobaxterm using the details below) and then setup/INSTALL maven:
   publicIP = 54.204.78.6
   userName = ec2-user 
   ssh-key  = class301key.pem 
   ssh -i class301key.pem ec2-user@54.204.78.6  
+
+****** you have to be in the in the dir where your downloaded key is and cd into the dir 
+
+change hostname to maven = sudo hostnamectl set.hostname maven
+changing my shell = sudo su -exc-user
+
+
+** based on our linux file structure, the "opt directory is recommended for installing packages 
+            cd/opt
+
+for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
+
+
+ 
+What is MHD ==  /opt/maven
+The maven home directory is wher the maven software is extracted == /opt/maven 
+and we can ls to see the content of the MHD
+
+  Maven home directory:  /opt/maven
+the directory is represented by = M2 _HOME
+MHD = /opt/maven [ M2_HOME ]:
+
+*** some companies, the home directory can be /app/maven
+so if thats where the software was extracted then thats the home directory fo rmaven 
+   
+***** wherever you extract your maven software is your MHD 
+in OUR CASE = /opt/maven               ***** ie opt is the home  for maven dir 
+
+(in my own understanding) ie bc we had to cd into opt directory to download and isntall and the download name was changed to maven 
+
+
 
