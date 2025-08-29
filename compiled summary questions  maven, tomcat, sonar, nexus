@@ -88,3 +88,26 @@ mavenHomeDir = M2_HOME = /opt/maven :
 
 IQ: pom.xml        --- BuildScript for maven
 
+IQ: where are these dependencies found/located??? :
+dependencies and/or are located in maven repositories
+
+IQ:  we can have diff repository
+                                                                                                                                                       for the project
+<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo
+   mavenLocalRepo         (maven server)    ****** .m2/repository = default                             
+   mavenRemoteRepo         (nexus server)
+   mavenProxyRepo           (nexus server apache maven )
+   mavenCentralRepo         the internet    ****** https://mvnrepository.com/repos/central
+</repositories>
+
+
+IQ:
+when maven is trying to create packages it will use these pluggin
+
+
+IQ : Explain the maven lifecycle  ??
+Maven has 3 lifecycles: 
+  Clean, 
+  site/swagger and 
+  default
+  Clean, site and default
