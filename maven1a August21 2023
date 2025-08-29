@@ -284,22 +284,12 @@ if you work in a coy that doenst use aws, maybe they use GCP that means you have
 Based on the prerequisite, we need a Redhat server
 ****** there are other sources where we can create our server from but we are creating it from AWS, where we are getting our redhat server from
 
-openJDK1.8+,  // openJDK4.1   
-==============
-https://maven.apache.org/download.cgi
-https://github.com/LandmakTechnology/package-management
-https://github.com/LandmakTechnology/package-management/blob/master/Maven-installation/READme.md
-connect to the server and setup maven:
-  publicIP = 54.204.78.6
-  userName = ec2-user 
-  ssh-key  = class301key.pem 
-  ssh -i class301key.pem ec2-user@54.204.78.6  
-
 
   ****53.04
 STEP 1          
 
 PREREQUISITE   = AWS Account
+Then createa redhat account
 
 we created a redhat server in Aws and on the redhat walls, we want to install maven sofware and once it is installed we can call the server our maven server
 *** ITS NOT A MAVEN SERVER YET UNTIL THE MAVEN SOFTWARE IS INSTALLED in it....
@@ -307,7 +297,7 @@ we created a redhat server in Aws and on the redhat walls, we want to install ma
 
 
 STEP 2
-connect to the server and setup/INSTALL maven:
+connect to the server ie(ssh into mobaxterm using the details below) and then setup/INSTALL maven:
   publicIP = 54.204.78.6
   userName = ec2-user 
   ssh-key  = class301key.pem 
@@ -324,6 +314,12 @@ changing my shell = sudo su -exc-user
 
 for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
 
+openJDK1.8+,  // openJDK4.1   
+==============
+https://maven.apache.org/download.cgi
+https://github.com/LandmakTechnology/package-management
+https://github.com/LandmakTechnology/package-management/blob/master/Maven-installation/READme.md
+
 sudo yum insatll wget nano tree unzip git-all-y 
 sudo yum install java -11-open jdk-level java-1.8.0-open jdk-devel-7
 
@@ -331,16 +327,14 @@ sudo yum install java -11-open jdk-level java-1.8.0-open jdk-devel-7
 java is the compiler 
 
 
-   
-*****
-FOR step2, we can easily run yum install maven to install maven easily but ther are some additionale setup which we had to change some files in the setting.xml ,
+***** we can easily run yum install maven to install maven easily but ther are some additionale setup which we had to change some files in the setting.xml ,
 we change our maven local repo , we configured a customized maven local repo but when you install using package manager yum install, it limits what can be customised but we 
 wanted to customise our server thats why we downloaded and extracted
 
 
 
 
-STEP 2
+STEP 3; https://maven.apache.org/download.cgi
                     DOWNLOAD AND EXTRACT AND INSTALL MAVEN 
  
 opt dir needs root access thats why for us to download we need sudo
