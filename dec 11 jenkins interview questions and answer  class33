@@ -14,7 +14,7 @@ TO integrate (the tool)selenium in their environment such that these unit test c
 
 START
 *** ITS NOT A MAVEN SERVER YET UNTIL THE MAVEN SOFTWARE IS INSTALLED in it....
-
+***** maven uses plugging/dependencies in the build process
 
 
 WHAT IS YOUR TASK AS A DEVOPS ENGR
@@ -47,6 +47,21 @@ the directory is represented by = M2 _HOME
 MHD = /opt/maven [ M2_HOME ]:
 ****ignore***opt dir needs root access thats why for us to download we need sudo
 
+
+MAVEN has 3 lifecycles: 
+  Clean, 
+  site/swagger and 
+  default
+  Clean, site and default
+
+DEfault: the command for which maven will use to run
+mvn packge
+1) validate
+2) compile
+3) Run unit testing
+4) Create the packages (jar/war/ear)
+
+
 BUILD APPS 
 maven: creates packages (jar, war and/OR ear)
 1)  jar: Standalone Applications ; contains java code ONLY
@@ -61,35 +76,18 @@ eg
     maven-enterprise-application.ear
 
 
+
 ******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
 dependency 
 Maven uses dependencies and plugins to test and create packages. 
 
 
-we hv diff depencies in the pom.xml file, depending on the project... developers does this for us
+we hv diff dependencies in the pom.xml file, depending on the project... developers does this for us
 EXAMPLES OF MAVEN DEPENDENCIES:    Selenium ,JUNit, log4j
  *** if it starts with dependency, it ends with dependency...
 eg for selenium <dependency>Selenium</dependency>
 this is how the project file will be built up by developers
 DEvelopers will identify the dependencies, plugging and properties version, all this will be defined in the pom.xml file
-
-
-pom.xml        --- BuildScript for maven......... it is written in xml language
-cd msa/  .. the the appl we cloned from git hub and renamed
-head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
-for this project to be executed a few things are needed,
-scm is in github , everything has been defined
-
-
-pom = project object model      
-dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
-repositories    **** all repositories in the repository tag
-plugins:    
-
-Repositories:
-pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is trying to create packages it will use these pluggin
-properties:
-versions:
 
 dependencies and/or are located in maven repositories
   https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
@@ -108,11 +106,55 @@ central repo the dependencies could be log4j/Junit/selenium
 we go to the internet to get these dependency on maven central repository
 
 
-MAVEN has 3 lifecycles: 
-  Clean, 
-  site/swagger and 
-  default
-  Clean, site and default
+principally by default, 
+maven wil search for the the pluggins and dependencies in maven local repo 
+1)maven local repository :.m2/repository = default, if its not here   , it will search in no.2                      ****** no.1 fastest and most secured ;
+2) maven remote /proxy repository , if it is configures, if its not here, it will search in no.3
+3) maven central repository (the internet)              ****** not a secured option , which takes more time in building 
+     https://mvnrepository.com/repos/central
+
+
+***** WHEN a package is being created (mvn package), maven will search for the pluggings in the local repo, if its not there it search in remote repo, if its not there it 
+downloads the pluggins from maven central (internet) which takes more time for the buid process compared to if it had sourced the pluggins from the maven local repo
+
+once the package is successfully created, our .m2/repository which is our maven local repo is created automatically and in the repo we can locate our dependencies
+
+**** therfore, maven has downloaded our dependencies from maven central and has stored them in .m2/repository (our local repo) and then use the dependencies to do a build
+or building for the first time
+this is for situation where the mvn package is being run for the first time or situation where the maven local repo (.m2) doesnt exists.
+
+subsequently, when mvn package is run, it doesnt need to download pluggins and dependencies from the central repo because we now have the .m2 and this will make the package
+build process time lesser compared to when it had to download pluggins from the central 
+
+
+** even when target is deleted, the .m2 (where we have our stored dependencies/pluggins ) remains because its owned by ec2-user and available in our server
+
+****** our build time increases if our maven local is deleted in error
+
+
+
+build.gradle   --- BuildScript for gradle
+pom.xml        --- BuildScript for maven......... it is written in xml language
+cd msa/  .. the the appl we cloned from git hub and renamed
+head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
+for this project to be executed a few things are needed,
+scm is in github , everything has been defined
+
+
+pom = project object model      
+dependencies:  are also written in pom ie xml language and all dependencies are found in the dependency tag 
+repositories    **** all repositories in the repository tag
+plugins:    
+
+Repositories:
+pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is trying to create packages it will use these pluggin
+properties:
+versions:
+
+
+
+
+
 
 
 
