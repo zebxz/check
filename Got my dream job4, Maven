@@ -420,14 +420,36 @@ dependencies and/or are located in maven repositories
   https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
     
           we can have diff repository
-                                                                                                                                                       for the project
-<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo
+                                                                                                                                                       
+<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo for the project
    mavenLocalRepo         (maven server)    ****** .m2/repository = default                             
    mavenRemoteRepo         (nexus server)
    mavenProxyRepo           (nexus server apache maven )
    mavenCentralRepo         the internet    ****** https://mvnrepository.com/repos/central
 </repositories>
 we go to the internet to get these dependency on maven central repository
+
+
+maven 1b 39:30
+when maven is trying to create packages it will use these pluggin
+
+
+
+*****1.45.58
+this extract is from our file pom.xml , after we cloned the project
+pom.xml
+the group id              : <groupid> com.Mt </groupid>
+the name of the artifact   : <version> 0.01-SNAPSHOT </version>
+<packaging> jar <packaging>
+
+<name> maven-stanalone-application </home>
+<url>http://mylandmarktech.com </url>
+
+ the information BASED ON THE EXTRACT; means that
+1:46   if you create the artifact based on what developers have created for versioning 
+it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar  (stating th eversion/properties)      ****** the packaging says its a jar pakackage 
+
+
 
 
 
