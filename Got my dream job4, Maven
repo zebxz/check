@@ -52,6 +52,8 @@ Open source edition:
 ***********************************************************************************
 
  START
+******* maven has quality gates ie checking that test cases passes before packages are created  maven2
+
 
 WHAT IS YOUR TASK AS A DEVOPS ENGR
 as a deveops engr, our expectation is to develop, test and build, qualify the applictaion, back them up , deploy and monitor appliction
@@ -575,11 +577,16 @@ vi pom.xml >>> in pom.xml it has defined the project properties, dependencies (J
 
 7)ls src/ & we can see main & test case file 
 the command for which maven will use to run
+maven2
+when we ls: we can see our maven web app, developers have written the project file pom.xml, but we dnt have the target file, we also hv our some file src which is very 
+important bc if we are going to do a build the 2files maven is using is the pom.xml and the src
 
 ***  cont*** ON OUR PROJECT
 
 1) mvn package - to create package
   we ls  - a new dir target has been created     **** meee** bc packages hv been created, we now hv a target dir
+maven2 ;the package has been created in target dir but we are installing the packages in maven local repository
+  so we have the artifacts created in the maven dir and we also have the artifacts backed up in the maven local repo
  ls target/ - in target , maven - standalone -app has been created
  mvn clean - to clean the build (the whole artifacts)
 again we run : mvn package  >log      *** we want to redirect the outcome into a file called log
@@ -600,7 +607,9 @@ ec2-user owns the m.2/repository
 
      ***2.29.44                                    HOW TO DEPLOY A STANDALONE APP/ TO RUN OUR APPLICATION/TO KNOW THE CONTENT OF OUR APPLICATION
 1)ls 
-src pom.xml target/      **** Its found in the target dir
+src pom.xml target/      ****the package is found in the target dir
+maven2 ;the package has been created in target dir but we are installing the packages in maven local repository
+  so we have the artifacts created in the maven dir and we also have the artifacts backed up in the maven local repo
 
 to deploy  = java -jar app.jar    (place holder, app.jar )   ... maven 2
 2)java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar  **** app.jar, this is just a placeholder it can be any name you choose)
