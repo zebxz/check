@@ -499,7 +499,6 @@ for eg if you have: app.java, once the "ste" goal is executed it will create "ap
                    by default it will be in nexus in our environment
 
 
-
 the command for which maven will use to run
 mvn packge
 1) validate
@@ -507,6 +506,32 @@ mvn packge
 3) Run unit testing
 4) Create the packages (jar/war/ear)
 
+
+principally by default, 
+maven wil search for the the pluggins and dependencies in maven local repo 
+1)maven local repository :.m2/repository = default, if its not here   , it will search in no.2                      ****** no.1 fastest and most secured ;
+2) maven remote /proxy repository , if it is configures, if its not here, it will search in no.3
+3) maven central repository (the internet)              ****** not a secured option , which takes more time in building 
+     https://mvnrepository.com/repos/central
+
+
+***** WHEN a package is being created (mvn package), maven will search for the pluggings in the local repo, if its not there it search in remote repo, if its not there it 
+downloads the pluggins from maven central (internet) which takes more time for the buid process compared to if it had sourced the pluggins from the maven local repo
+
+once the package is successfully created, our .m2/repository which is our maven local repo is created automatically and in the repo we can locate our dependencies
+
+**** therfore, maven has downloaded our dependencies from maven central and has stored them in .m2/repository (our local repo) and then use the dependencies to do a build
+or building for the first time
+this is for situation where the mvn package is being run for the first time or situation where the maven local repo (.m2) doesnt exists.
+
+subsequently, when mvn package is run, it doesnt need to download pluggins and dependencies from the central repo because we now have the .m2 and this will make the package
+build process time lesser compared to when it had to download pluggins from the central 
+
+
+** even when target is deleted, the .m2 (where we have our stored dependencies/pluggins ) remains because its owned by ec2-user and available in our server
+
+
+****** our build time increases if our maven local is deleted in error
 
 
 
@@ -540,7 +565,7 @@ vi pom.xml >>> in pom.xml it has defined the project properties, dependencies (J
 
 5) cd msa/   .. the the appl we cloned from git hub and renamed
 
-6) ls and we see pom.xml & src
+6) ls and we see pom.xml & src      ****
 
 7)ls src/ & we can see main & test case file 
 the command for which maven will use to run
@@ -548,24 +573,59 @@ the command for which maven will use to run
 ***  cont*** ON OUR PROJECT
 
 1) mvn package - to create package
-  we ls  - a new dir target has been created 
+  we ls  - a new dir target has been created     **** meee** bc packages hv been created, we now hv a target dir
  ls target/ - in target , maven - standalone -app has been created
  mvn clean - to clean the build (the whole artifacts)
 again we run : mvn package  >log      *** we want to redirect the outcome into a file called log
 vi log - to check that the build, testing was successful
 ls -a /home/ec2-user/ .m2/  to see hiddden repository               ******* or tail log  (58:00 maven 1b)
-ls  /home/ec2-user/ .m2/repository
+ls  /home/ec2-user/ .m2/repository              .M2/REPOSITORY IS OUR MAVEN LOCAL REPO
 rm -rf /home/ec2-user/.m2/                       **** to delete our repository (.m2)
 ls -a  to see that .m2 has been deleted
 because ec2-user owns the m.2/repository
 
-
-
-***** maven uses plugging/dependencies in the build process
+***** maven uses plugging/dependencies in the build process  AND HOW MAVEN GETS THEM IS VERY IMP inthe real time
 WHICH ARE FOUND in maven local repo=.m2/repository
 ls -a/home/ec2-user can be represented as ls -a    ***meee**** i bliv this is bc 'ls-a' is used to see hidden files, & bc we are in the home of ec2-user; no need to run 'ls -a/home/ec2-user' we can run ls-a to  see the hidden .m2 repository
 /home/ec2-user = the home dir of ec2-user 
 ec2-user owns the m.2/repository
+
+
+
+principally by default, 
+maven wil search for the the pluggins and dependencies in maven local repo 
+1)maven local repository :.m2/repository = default, if its not here   , it will search in no.2                      ****** no.1 fastest and most secured ;
+2) maven remote /proxy repository , if it is configures, if its not here, it will search in no.3
+3) maven central repository (the internet)              ****** not a secured option , which takes more time in building 
+     https://mvnrepository.com/repos/central
+
+
+***** WHEN a package is being created (mvn package), maven will search for the pluggings in the local repo, if its not there it search in remote repo, if its not there it 
+downloads the pluggins from maven central (internet) which takes more time for the buid process compared to if it had sourced the pluggins from the maven local repo
+
+once the package is successfully created, our .m2/repository which is our maven local repo is created automatically and in the repo we can locate our dependencies
+
+**** therfore, maven has downloaded our dependencies from maven central and has stored them in .m2/repository (our local repo) and then use the dependencies to do a build
+or building for the first time
+this is for situation where the mvn package is being run for the first time or situation where the maven local repo (.m2) doesnt exists.
+
+subsequently, when mvn package is run, it doesnt need to download pluggins and dependencies from the central repo because we now have the .m2 and this will make the package
+build process time lesser compared to when it had to download pluggins from the central 
+
+
+** even when target is deleted, the .m2 (where we have our stored dependencies/pluggins ) remains because its owned by ec2-user and available in our server
+
+
+****** our build time increases if our maven local is deleted in error
+
+
+
+                                                                       (THIS IS JUST ME on why we cd into msa)
+                                                                     1:43:33 
+                 cd java-projects  ,  then clone the code from github, now i run tree msa, n we see we hv 12dir &3files, this is the project we are working on,we see d code,include d pom.xml d project file
+                                        ( msa is maven stanalone appl)         cd msa/  & when we ls we see (src and pom.xml), now no package hv been created
+                                            to create a package we run mvn package, packages created build successful and a new dir target has been created
+
 
 
 
