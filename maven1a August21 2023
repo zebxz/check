@@ -519,8 +519,8 @@ Based on our project we are going to create
 1:36
 
 for Build to take place we are going to be using the pom.xml
+in pom.xml it has defined the project properties, dependencies (Junit testing has to be performed
 thats why they say maven uses the project model, the file is called pom.xml
-
 (developers should have written the source code , unit test cases and buildscript for our packages to be created (4 ds to create our packages eg mvn packages
 
 
@@ -627,19 +627,22 @@ build.gradle   --- BuildScript for gradle
 pom.xml        --- BuildScript for maven  .....  it is written in xml language
 pom = project object model      
 dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
-repositories  
+repositories   ***** all repositories in the repository tag
 plugins:    
 properties: 
 version:
 
+ *** if it starts with dependency, it ends with dependency...
 <dependencies>                             **** developers are doing this stuff for us for the dependency tag
       <dependency>Selenium</dependency>      *** selenium, or log4, or Junit will be used to test automation
       <dependency>log4j</dependency>
       <dependency>JUNit</dependency>
 </dependencies>
 
-
-DEvelopers will identify the dependencies, plugging and properties version
+we hv diff depencies in the pom.xml file, depending on the project... developers does this for us
+eg for selenium <dependency>Selenium</dependency>
+this is how the project file will be built up by developers
+DEvelopers will identify the dependencies, plugging and properties version, all this will be defined in the pom.xml file
 
 Repositories:
 pluggins: to run the testing ( maven  1b 56:30)
@@ -691,8 +694,8 @@ log4j:
 we go to the internet to get these dependency on maven central repository
 
 
-
-this extract is from our file pom.xml
+*****1.45.58
+this extract is from our file pom.xml , after we cloned the project
 pom.xml
 the group id              : <groupid> com.Mt </groupid>
 the name of the artifact   : <version> 0.01-SNAPSHOT </version>
@@ -701,8 +704,11 @@ the name of the artifact   : <version> 0.01-SNAPSHOT </version>
 <name> maven-stanalone-application </home>
 <url>http://mylandmarktech.com </url>
 
-1:46    if you create this artifact based on what developers have created versioning 
-== maven -stanalone-application-0.0.1-SNAPSHOT.jar               ****** the packaging says its a jar pakackage 
+ the information BASED ON THE EXTRACT; means that
+1:46   if you create the artifact based on what developers have created for versioning 
+it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar         ****** the packaging says its a jar pakackage 
+
+
 
 
 IQ : Explain the maven lifecycle  ??
