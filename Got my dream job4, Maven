@@ -453,6 +453,7 @@ it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar  (stating th ever
 
 
 
+
 Maven has 3 lifecycles: 
   Clean, 
   site/swagger and 
@@ -465,28 +466,28 @@ Lifecycles      Goal(s)
   mvn clean         delete old builds 
 
 2) Site/Swagger       site
-                    create java classes (byte code)
-                    JVM 
-                    app.java = 'echo DevOps is great'        **** side goal
-                    app.class = 012450012354
+                  this iste is used to create java classes (byte code)
+                  which can be understood by the JVM (java virtual machine)
+                    app.java = 'echo DevOps is great' ***********eg, if u hv; when the "site" goal is executed it creates 
+                    app.class = 012450012354   ********  'app.class" binary codes that can be understood by JVM
 
-
-for eg if you have app.java once the side goal is executed it will create binary codes ie app.class that can be understood by JVM
+for eg if you have: app.java, once the "ste" goal is executed it will create "app.class" binary codes that can be understood by JVM
 
    ******** MAVEN HAS TO HAVE BEEN installed before we can run mvn package
 
 
-                  Goals:
+
+    Goals:
 3) default        mvn validate:
                   It will validate the project structure and resource files
                mvn compile:
                   It will compile all java classes and test classes
-                  these are byte code that will be used to create packages     ***** byte code that is used to run the test cases
+                  these are by code that will be used to create packages     ***** test classes are by code that is used to run the test cases
                mvn test:
                   It will run the unit test cases (JUNit)
                mvn package:
                   It will create packages in target directory 
-                      (*.jar/*.war/*ear) app.war
+                      eg (*.jar/*.war/*ear) app.war
                mvn install:
                   It will store the build artifacts in MAVEN LOCAL REPO
                      default location: .m2/repository
@@ -497,4 +498,41 @@ for eg if you have app.java once the side goal is executed it will create binary
 
 
 
+
+
+
+
+
+Standalone Applications
+Ticket_saa_tesla0014  
+===================
+Requirements:
+1. project repository in the SCM [GitHub / GitLab]
+   https://github.com/Landmark-Technologies/maven-standalone-application       ********** our repo from our source code mgt is in github
+2. We need a server with java & maven installed and configured   
+3. Create a project directory in the maven/build server
+    mkdir java-projects  
+4. Clone the codes from github in the project directory  
+   git clone https://github.com/Landmark-Technologies/maven-standalone-application         ********  this means that developers have written code and committed to github
+     src/main  
+     src/test
+
+1:41:00
+1) mkdir java-projects , then ll
+2) cd java-projects/ (my project repository ) inside this repo developers are working on this project
+now we need to clone the codes frm scm in github with the git clone command 
+3)ls 
+4) rename the file = mv maven-standalone-application/ msa
+run the tree command = tree msa/, now we see our project 
+file (pom.xml) we can see the 12 dir and 3 files , we have the pom.xml, the code ('helloword.java), the test case (hello world test.java)
+developers are carrying out this task for us, they are working on this application , they hv written the code , test cases and the project pile (pom.xml)
+
+vi pom.xml >>> in pom.xml it has defined the project properties, dependencies (Junit testing has to be performed
+
+
+5) cd msa/   .. the the appl we cloned from git hub and renamed
+
+6) ls and we see pom.xml & src
+
+7)ls src/ & we can see main & test case file 
 
