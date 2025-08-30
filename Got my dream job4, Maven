@@ -308,6 +308,9 @@ Based on our project we are going to create
 
 for Build to take place we are going to be using the pom.xml
 thats why they say maven uses the project model, the file is called pom.xml
+ pom.xml        --- BuildScript for maven
+in pom.xml it has defined the project properties, dependencies (Junit testing has to be performed
+
 
 (developers should have written the source code , unit test cases and buildscript for our packages to be created (4 ds to create our packages eg mvn packages
 
@@ -388,14 +391,23 @@ pom = project object model
 dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
 repositories  
 plugins:    
+repositories   ***** all repositories in the repository tag
+plugins:    
+properties: 
+version:
 
 
-DEvelopers will identify the dependencies, plugging and properties version
+ *** if it starts with dependency, it ends with dependency...
+<dependencies>                             **** developers are doing this stuff for us for the dependency tag
+      <dependency>Selenium</dependency>      *** selenium, or log4, or Junit will be used to test automation
+      <dependency>log4j</dependency>
+      <dependency>JUNit</dependency>
+</dependencies>
 
-Repositories:
-pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is trying to create packages it will use these pluggin
-properties:
-versions:
+we hv diff depencies in the pom.xml file, depending on the project... developers does this for us
+eg for selenium <dependency>Selenium</dependency>
+this is how the project file will be built up by developers
+DEvelopers will identify the dependencies, plugging and properties version, all this will be defined in the pom.xml file
 
  
 
