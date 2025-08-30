@@ -107,11 +107,11 @@ PLEASE COPY AND PASTE IT, ABOVE OR BELOW IN THE FILE, Not inbetween lines of inf
 
 
 
-IQ: pom.xml        --- BuildScript for maven
+IQ: pom.xml        --- BuildScript for maven..... it is written in xml language
 in pom.xml it has defined the project properties, dependencies (Junit testing has to be performed
 5) cd msa/   .. the the appl we cloned from git hub and renamed
 
-6) ls and we see pom.xml & srccd msa/
+6) ls and we see pom.xml & src cd msa/
 head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
 for this project to be executed a few things are needed,
 scm is in github , everything has been defined
@@ -148,3 +148,57 @@ Maven has 3 lifecycles:
   site/swagger and 
   default
   Clean, site and default
+
+
+
+2:38:38 
+                                                      QUSETION
+
+is it possible to create the maven repo without vi/ing into the file,   ???
+    without vi into the /opt/maven/conf/setting.xml   ??
+
+                                                                       (THIS IS JUST ME on why we cd into msa)
+                                                                     1:43:33 
+                 cd java-projects  ,  now i run tree msa, n we see we hv 12dir &3files, this is the project we are working on,we see d code,include d pom.xml d project file
+                                        ( msa is maven stanalone appl)         cd msa/  & when we ls we see (src and pom.xml), now no package hv been created
+                                            to create a package we run mvn package, packages created build successful and a new dir target has been created
+
+                                                 2:20:14   ( now this is the file we are modifying;  opt/maven/conf/setting.xml ) , seacrhing for maven local repo        
+
+ANS:
+ITS possible to create the maven repo without vi/ing into the file but again you need to vi
+
+but how could we create the maven repo without vi/ing??
+                                                                                                          
+ now this is the file we are modifying;  opt/maven/conf/setting.xml                                        
+we could do something like this, like we can also
+
+we can aslo : sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>">> /opt/maven/conf/setting
+so we want to echo this information, we are redirecting to this file .. /opt
+so i want to append this line into this file 
+                    **********  you hv to do sudo before you can echo bc not every user can write in this file , the file is owned by the root user
+ if you run it the first time it will work but if you try to change it again it will be a problem 
+so vi/ng into the file is the best
+
+
+
+     HOW DO WE KNOW THE DEPENDENCIES TO DOWNLOAD 
+
+our project ahs a project file called pom.xml and when thers a project, thers a meeting where DEVOPS and developers will agree/decide that for this project there are the 
+dependencies  we are going to need, so it makes it a smooth process in terms of how we are going to define our dependencies in pom.xml
+
+eg
+if ther are 100 dependencies, they can decide thay are goin to use 10 and define the 10 in pom.xml, therfore the project will be deploying with just the 10 that have been 
+choosen to ensure the right dependencies are deployed to production
+
+
+***** maven 1b , 1:40:00
+
+mvn command will not run if maven is not installed correctly and ensuring our maven home is defined  accordingly 
+
+mvn is a binary file that we use to run packages and it can be found in bin 
+
+
+                              TO SEE FILES IN BIN
+
+files in bin = ls /opt/maven/bin/
