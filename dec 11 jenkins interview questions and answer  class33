@@ -64,11 +64,19 @@ so its better to execute mvn package which is faster compared to running each ot
 3) Run unit testing
 4) Create the packages (jar/war/ear)
 
+when you execute mvn package which is uploading the artifacts into the maven default repo, for this packages to be executed what happens in the background is that maven 
+extends it functinality      ........... ??? incomplete statement
+it uses pluggins and dependencies to do a build
+
+
 
 BUILD APPS 
 maven: creates packages (jar, war and/OR ear)
 1)  jar: Standalone Applications ; contains java code ONLY
-app.jar
+app.jar  
+***** to deploy java based stanalone applictaions java must be installed 
+java must be installed (java here neabs java must be running)
+
 2) war: web Applications  ;contains a Single module, ie java code + web content
     boa.war
 3) ear: Enterprise Applications  :     Multiple Modules ie Java code + web content, Ear =  war(s) + jar(s)
@@ -77,10 +85,6 @@ eg
  Banking applications   ; Modules: for: login / for     accountCreation /  for    moneyTransfer 
     maven-web-application.war
     maven-enterprise-application.ear
-
-
-ignore ***** to deploy java based stanalone applictaions java must be installed 
-java must be installed (java here neabs java must be running)
 
 
 ******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
@@ -153,12 +157,16 @@ ls -l /opt/maven/conf/      ***** to access the conf dir
      ***2.29.44                                    HOW TO DEPLOY A STANDALONE APP/ TO RUN OUR APPLICATION/TO KNOW THE CONTENT OF OUR APPLICATION
 1)ls 
 src pom.xml target/      **** Its found in the target dir
-    
-2)java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar 
- we can see the details of the application 
+   
+to deploy  = java -jar app.jar    (place holder, app.jar )   ... maven 2
+2)java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar    **** app.jar, this is just a placeholder it can be any name you choose)
+ we can see app.jar; copy/details of the application 
 Hello Engineers, Welcome to Landmark Technologies DevOps Master Class. You are sudying Maven Build Tool. !! Today Date is:  Sat Aug 30 20:38:50 UTC 2025
 
    
+
+***** to deploy java based stanalone applictaions java must be installed 
+java must be installed (java here neabs java must be running)
 
 
     *************END****************************
