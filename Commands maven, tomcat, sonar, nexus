@@ -77,5 +77,13 @@ sudo  timedatectl list-timezones         **** to get the diff time zones  ( the 
  to set a time zone :  sudo  timedatectl set-timezone America/New_York
 
 
+MAVEN2
+but what can be done for maven to still do a build if a (1)test fails
+           mvn package -DskipTests OR mvn package -Dmaven.test.skip=true
+           This will skip the testing processing
 
+
+linux command  rm -rf but mvn clean is better
+mvn clean will delete the artifacts in our target dir but will not delete the artifacts in maven local repo
+mvn clean will delete everyfile in target dir 
 
