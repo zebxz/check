@@ -292,6 +292,8 @@ Based on the prerequisite, we need a Redhat server
 ****** there are other sources where we can create our server from but we are creating it from AWS, where we are getting our redhat server from
 
 
+
+
   ****53.04
 STEP 1          
 
@@ -416,11 +418,12 @@ ie downloaded and extracted properly
 you have to determine where your maven home directory is defined with the export command
 eg we defined ours in the file ; ~/.bash_profile , ****meeee** **when we copied and pasted the environmental variables
 PLEASE COPY AND PASTE IT, ABOVE OR BELOW IN THE FILE, Not inbetween lines of information.
-   **** we could also use a different location for eg if we use the .bashrc file.  
+   **** we could also use a different location for eg if we use the .bashrc file.
+   ****** then we hv to refresh by running source ~/.bashrc
 
 STEP5: 
     Refresh the profile and verify if maven is running
-      source ~/.bash_profile  **directing maven to search for my home directory in ~/.bash_profile
+      source ~/.bash_profile ***************** **directing maven to search for my home directory in ~/.bash_profile
   if maven has been installed: mvn - version
 
 
@@ -585,22 +588,22 @@ Requirements:
 2) cd java-projects/ (my project repository ) inside this repo developers are working on this project
 now we need to clone the codes frm scm in github with the git clone command 
 3)ls 
-4) rename the file = mv maven-stanalone-application/msa
+4) rename the file = mv maven-standalone-application/ msa
 run the tree command = tree msa/, now we see our project 
 file (pom.xml) we can see the 12 dir and 3 files , we have the pom.xml, the code ('helloword.java), the test case (hello world test.java)
-developers are working on this application , they hv written the code , test cases and the project pile (pom.xml)
+developers are carrying out this task for us, they are working on this application , they hv written the code , test cases and the project pile (pom.xml)
 
 vi pom.xml >>> in pom.xml it has defined the project properties, dependencies (Junit testing has to be performed
 
 
-5) cd msa/ 
+5) cd msa/   .. the the appl we cloned from git hub and renamed
 
 6) ls and we see pom.xml & src
 
 7)ls src/ & we can see main & test case file 
 
 
-in maven we are running the mvn package command bc in maven we are building package, when we run the command it create the packages in the target directory , so we can find
+in maven we are running the mvn package command bc in maven we are building package, when we run the command it creates the packages in the target directory , so we can find
 the packages in the target directory 
 
 maven has a goal called the clean rule 
@@ -621,7 +624,7 @@ Examples of maven dependencies
    JUNit 
    log4j
 build.gradle   --- BuildScript for gradle
-pom.xml        --- BuildScript for maven
+pom.xml        --- BuildScript for maven  .....  it is written in xml language
 pom = project object model      
 dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
 repositories  
