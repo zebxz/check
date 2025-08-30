@@ -15,6 +15,8 @@ TO integrate (the tool)selenium in their environment such that these unit test c
 START
 *** ITS NOT A MAVEN SERVER YET UNTIL THE MAVEN SOFTWARE IS INSTALLED in it....
 ***** maven uses plugging/dependencies in the build process
+files in bin = ls /opt/maven/bin/
+
 
 
 WHAT IS YOUR TASK AS A DEVOPS ENGR
@@ -55,6 +57,8 @@ MAVEN has 3 lifecycles: **** Each of this life cycle has its own goal
 
 DEfault: the command for which maven will use to run
 mvn packge
+******** mvn package ecompasses of the other default goals ie mvn validate, mvn compile , mvn test
+so its better to execute mvn package which is faster compared to running each other
 1) validate
 2) compile
 3) Run unit testing
@@ -75,13 +79,16 @@ eg
     maven-enterprise-application.ear
 
 
+ignore ***** to deploy java based stanalone applictaions java must be installed 
+java must be installed (java here neabs java must be running)
+
 
 ******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
 dependency 
 Maven uses dependencies and plugins to test and create packages. 
 
 
-we hv diff dependencies in the pom.xml file, depending on the project... developers does this for us
+our project has a pom.xml file & we hv diff dependencies in it depending on the project... developers decides/does this for us
 EXAMPLES OF MAVEN DEPENDENCIES:    Selenium ,JUNit, log4j
  *** if it starts with dependency, it ends with dependency...
 eg for selenium <dependency>Selenium</dependency>
@@ -131,6 +138,32 @@ build process time lesser compared to when it had to download pluggins from the 
 ****** our build time increases if our maven local is deleted in error
 
 
+ SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
+.m2/repository/   ***** our default repo ( if maven local repo is deleted, it is a serious problem that will cause us time and security bc our build time will increase, therfore we prevent that by securing it
+  1. By creating a custom maven local repo  
+       to create a new/custom maven repo in the home of ec2-user
+   we can call our custom repo: .mlr
+ /home/ec2-user/.mlr      *** our custom repo
+ls -l /opt/maven/conf/      ***** to access the conf dir
+   sudo vi /opt/maven/conf/settings.xml               *** sudo bc root user owns the file.
+  ls -l /opt/maven/conf/    shows us that settings.xml is owned by root user , the file is rw-r-r, no executory access for any other user but root
+
+
+
+     ***2.29.44                                    HOW TO DEPLOY A STANDALONE APP/ TO RUN OUR APPLICATION/TO KNOW THE CONTENT OF OUR APPLICATION
+1)ls 
+src pom.xml target/      **** Its found in the target dir
+    
+2)java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar 
+ we can see the details of the application 
+Hello Engineers, Welcome to Landmark Technologies DevOps Master Class. You are sudying Maven Build Tool. !! Today Date is:  Sat Aug 30 20:38:50 UTC 2025
+
+   
+
+
+    *************END****************************
+
+
 
 build.gradle   --- BuildScript for gradle
 pom.xml        --- BuildScript for maven......... it is written in xml language
@@ -151,18 +184,7 @@ properties:
 versions:
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
