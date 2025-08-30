@@ -147,8 +147,13 @@ Maven has 3 lifecycles:
   Clean, 
   site/swagger and 
   default
-  Clean, site and default
-
+  
+IQ: How do you secure the maven local repo 
+ sudo vi /opt/maven/conf/settings.xml    **** we vi and create a custom maven repo
+***we can aslo : sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>">> /opt/maven/conf/setting
+so we want to echo this information, we are redirecting to this file .. /opt
+ if you run it the first time it will work but if you try to change it again it will be a problem 
+so vi/ng into the file is the best
 
 
 2:38:38 
@@ -202,3 +207,118 @@ mvn is a binary file that we use to run packages and it can be found in bin
                               TO SEE FILES IN BIN
 
 files in bin = ls /opt/maven/bin/
+
+
+
+MAVEN2
+maven has Quality Gates, checking that test cases passes before  packages created.  :
+  IQ:1. Assuming that 699 Testcases passed and 1 fails, 
+        what can be done for  maven to still do a build? 
+          ****** by default maven wont do a build, it will inform us that somthing is wrong 
+          Also we can decide that since 699 testcases passed and i failed we should proceed with the deployment
+
+24:15   but what can be done for maven to still do a build if a (1)test fails
+           mvn package -DskipTests OR mvn package -Dmaven.test.skip=true
+           This will skip the testing processing
+
+    2. Also Some projects are taking long to build how can we resolve the issue:?
+       we skip the test goal   (this may comprise quality)
+           by running the test the first time we got to know that 699 passed and i failed, so it is possible for me to skip the test cases
+          mvn package -DskipTests
+           mvn package -Dmaven.test.skip=true  
+
+
+3. What problems have you faced in your project recently? 
+=========================================================
+  Maven taking longer than expected time to build artifacts.  (this is a serious problem)
+ now Maven uses plugins and dependencies to validate,
+  compile, RunUnitTests and creates artifacts. 
+    so if its taking much time to run the testing, we can skip the testing process
+
+alos These plugins and dependencies are located in either:
+    1. MavenLocalRepo  or
+    2. maven-remote-repo or
+    3. maven-proxy-repo or 
+    3. Maven-central repo  
+
+
+to expedite the process
+**** so we can ensure that maven has direct access to maven local repo to be able to get dependencies and pluggins
+
+28:30
+pulling plugins and dependencies from mavenLocalRepo give    
+  the best/fastest Results regarding time. 
+  Maven-local-repo was accidentally deleted by a Jr. Engineer  
+
+if a project is taking longer than expected to execute it could mean that maven is closing from the internet and that takes longer time naturally
+
+
+
+
+      **** WE ARE going to look at tomcat & JBOSS when we are talkingabout web applications 
+IQ:
+HOW ARE JAVA BASED web applications deployed??
+
+ANS:
+Are deployed in Tomcat/JBOSS servers
+if you want to deploy a maven web application, we need a maven software installed like tomcat/OR JBOSS
+
+
+IQ:
+for maven to know which package to create its a function of our project
+when we vi pom.xml we can see our packing indication? war
+
+
+How are java based enterprise applications deployed??
+enterprise application are deployed in JBOSS servers
+
+IQ: 
+IN managing federated web and enterprise micro- service applications for fintech clients 
+
+An enterpriseapplication with over 21 modules
+
+how can a specific module be built in maven-enterprise application
+for example, developers have done a change in module one 
+
+ by passing the PL flag                ..........  ?????
+mvn package -P1 profile name
+mvn package - P1 maven enterprise -web
+mvn package - P maven Enterprise -web
+
+57:45
+if there are many modules but cahnge in only one module 
+we build by choosing that particular profile
+by using the ? web flag
+
+
+
+1:16 
+FOR ARTIFACT  to be created maven has to be installed and for us to be able to pull clone the codes from github, in our build server we hv to yum install git 
+
+
+
+1:32:17 
+the child pom.xml is referring to the parent which means thers can of an intersection, so when you run mvn build all those pom.xml will be ultilized
+
+
+
+
+  1:00 
+how can we trouble -shoot a fail build in MAVEN ??
+Check the logs to understand the errors
+mvn - x package (BUILD in debugging mode) This will build in debugging mode 
+
+
+1:24 there are some issues i can TS as a devops engineer AND there are some issue i will escalate to the developers that this build is not responding pls correct them 
+accordingly or pls modify the project file ie pom.xml
+
+
+1:24:54
+
+if you are doing a build and you are not doing it in the project file the build will fail or in a diff dir it wont work 
+you must be in the project directory 
+
+
+
+what is the function of tomcat 
+
