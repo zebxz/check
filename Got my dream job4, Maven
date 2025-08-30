@@ -498,6 +498,12 @@ for eg if you have: app.java, once the "ste" goal is executed it will create "ap
 
 
 
+the command for which maven will use to run
+mvn packge
+1) validate
+2) compile
+3) Run unit testing
+4) Create the packages (jar/war/ear)
 
 
 
@@ -535,4 +541,29 @@ vi pom.xml >>> in pom.xml it has defined the project properties, dependencies (J
 6) ls and we see pom.xml & src
 
 7)ls src/ & we can see main & test case file 
+the command for which maven will use to run
+
+***  cont*** ON OUR PROJECT
+
+1) mvn package - to create package
+  we ls  - a new dir target has been created 
+ ls target/ - in target , maven - standalone -app has been created
+ mvn clean - to clean the build (the whole artifacts)
+again we run : mvn package  >log      *** we want to redirect the outcome into a file called log
+vi log - to check that the build, testing was successful
+ls -a /home/ec2-user/ .m2/  to see hiddden repository               ******* or tail log  (58:00 maven 1b)
+ls  /home/ec2-user/ .m2/repository
+rm -rf /home/ec2-user/.m2/                       **** to delete our repository (.m2)
+ls -a  to see that .m2 has been deleted
+because ec2-user owns the m.2/repository
+
+
+
+***** maven uses plugging/dependencies in the build process
+WHICH ARE FOUND in maven local repo=.m2/repository
+ls -a/home/ec2-user can be represented as ls -a    ***meee**** i bliv this is bc 'ls-a' is used to see hidden files, & bc we are in the home of ec2-user; no need to run 'ls -a/home/ec2-user' we can run ls-a to  see the hidden .m2 repository
+/home/ec2-user = the home dir of ec2-user 
+ec2-user owns the m.2/repository
+
+
 
