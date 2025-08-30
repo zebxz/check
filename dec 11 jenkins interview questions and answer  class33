@@ -14,7 +14,9 @@ TO integrate (the tool)selenium in their environment such that these unit test c
 
 START
 *** ITS NOT A MAVEN SERVER YET UNTIL THE MAVEN SOFTWARE IS INSTALLED in it....
-***** maven uses plugging/dependencies in the build process
+***** maven2 when you execute mvn package which is uploading the artifacts into the maven default repo, for this packages to be executed what happens in the background is that maven 
+extends it functinality      ........... ??? incomplete statement
+it uses pluggins and dependencies to do a build
 files in bin = ls /opt/maven/bin/
 
 
@@ -23,6 +25,7 @@ WHAT IS YOUR TASK AS A DEVOPS ENGR
 as a deveops engr, our expectation is to develop, test and build, qualify the applictaion, back them up , deploy and monitor appliction
 ignore***Applications are the output from softwares development
 therfore, we need a Build tool used to create deployable packages eg tomcat application
+AFter commit of the codes by developers the next thing is to build
 In our env, we use maven; maven is an open source java based build tool, We use maven to build and manage applications for java codes 
 ***ignore*** It was originally developed in java for java codes; The vendor of maven is apache
 Maven is a software project management and comprehensive tool OR 
@@ -79,6 +82,12 @@ java must be installed (java here neabs java must be running)
 
 2) war: web Applications  ;contains a Single module, ie java code + web content
     boa.war
+  examples of web applications (whatever it is it must end with war)
+WE ARE going to look at tomcat & JBOSS when we are talkingabout web applications 
+ JAVA BASED web applications are deployed in Tomcat/JBOSS servers
+if you want to deploy a maven web application, we need a maven software installed like tomcat/OR JBOSS
+
+
 3) ear: Enterprise Applications  :     Multiple Modules ie Java code + web content, Ear =  war(s) + jar(s)
     aa.ear 
 eg
@@ -92,7 +101,9 @@ dependency
 Maven uses dependencies and plugins to test and create packages. 
 
 
+maven2; if we are going to do a build the 2files maven is using is the pom.xml and the src
 our project has a pom.xml file & we hv diff dependencies in it depending on the project... developers decides/does this for us
+for maven to know which package to create its a function of our project; when we vi pom.xml we can see our packing indication? war or jar or ear
 EXAMPLES OF MAVEN DEPENDENCIES:    Selenium ,JUNit, log4j
  *** if it starts with dependency, it ends with dependency...
 eg for selenium <dependency>Selenium</dependency>
@@ -123,6 +134,7 @@ maven wil search for the the pluggins and dependencies in maven local repo
 3) maven central repository (the internet)              ****** not a secured option , which takes more time in building 
      https://mvnrepository.com/repos/central
 
+MAVEN2... if a project is taking longer than expected to execute it could mean that maven is closing from the internet and that takes longer time naturally
 
 ***** WHEN a package is being created (mvn package), maven will search for the pluggings in the local repo, if its not there it search in remote repo, if its not there it 
 downloads the pluggins from maven central (internet) which takes more time for the buid process compared to if it had sourced the pluggins from the maven local repo
