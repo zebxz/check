@@ -28,8 +28,6 @@ we can use maven to mg8 our project, build, reporting and documentation
 *****it is based on the concept of a project object model (POM), maven can mg8 a projects build, repository and documentation.
 its most powerful feature, is its ability to download the project dependency libraries automatically from maven central repo, maven remote repo or local repo
 
-
-
 WHAT KIND OF PROJECT ARE YOU SUPPORTING IN YOUR ENVIRONMENT?
 anS: we suppport java based projects or projects written in java programming language, however; we also support a few.NET, pythn and nodejs projects
 we support apps written in java, nodejs by developers java, .NET, nodejs is a programming language
@@ -49,16 +47,6 @@ the directory is represented by = M2 _HOME
 MHD = /opt/maven [ M2_HOME ]:
 ****ignore***opt dir needs root access thats why for us to download we need sudo
 
-*****ignore****  WHAT CAN MAKE MVN COMMAND NOT TO RUN
-1:38:39 maven also have to be installed properly for mvn command to run
-ie downloaded and extracted properly
-you have to determine where your maven home directory is defined with the export command
-eg we defined ours in the file ; ~/.bash_profile , ****meeee** **when we copied and pasted the environmental variables
-PLEASE COPY AND PASTE IT, ABOVE OR BELOW IN THE FILE, Not inbetween lines of information.
-   **** we could also use a different location for eg if we use the .bashrc file.  
-   ****** then we hv to refresh by running source ~/.bashrc
-
-
 BUILD APPS 
 maven: creates packages (jar, war and/OR ear)
 1)  jar: Standalone Applications ; contains java code ONLY
@@ -77,16 +65,15 @@ eg
 dependency 
 Maven uses dependencies and plugins to test and create packages. 
 
- *** if it starts with dependency, it ends with dependency...
+
 we hv diff depencies in the pom.xml file, depending on the project... developers does this for us
+EXAMPLES OF MAVEN DEPENDENCIES:    Selenium ,JUNit, log4j
+ *** if it starts with dependency, it ends with dependency...
 eg for selenium <dependency>Selenium</dependency>
 this is how the project file will be built up by developers
 DEvelopers will identify the dependencies, plugging and properties version, all this will be defined in the pom.xml file
 
-Examples of maven dependencies 
-   Selenium 
-   JUNit 
-   log4j
+
 pom.xml        --- BuildScript for maven......... it is written in xml language
 cd msa/  .. the the appl we cloned from git hub and renamed
 head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
@@ -96,7 +83,7 @@ scm is in github , everything has been defined
 
 pom = project object model      
 dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
-repositories  
+repositories    **** all repositories in the repository tag
 plugins:    
 
 Repositories:
@@ -104,10 +91,24 @@ pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is
 properties:
 versions:
 
+dependencies and/or are located in maven repositories
+  https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
+    
+          we can have diff repository
+    in the maven server we have the maven local repo
+when doing a build maven will search for pluggin and dependencies in maven local repo, if its not there, it will search in maven proxy, if its ot there, it searches in maven
+central repo the dependencies could be log4j/Junit/selenium       
+
+<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo for the project
+   mavenLocalRepo         (maven server)    ****** .m2/repository = default                             
+   mavenRemoteRepo         (nexus server)
+   mavenProxyRepo           (nexus server apache maven )
+   mavenCentralRepo         the internet    ****** https://mvnrepository.com/repos/central
+</repositories>
+we go to the internet to get these dependency on maven central repository
 
 
-
-Maven has 3 lifecycles: 
+MAVEN has 3 lifecycles: 
   Clean, 
   site/swagger and 
   default
@@ -115,8 +116,22 @@ Maven has 3 lifecycles:
 
 
 
-in the maven server we have the maven local repo
-when doing a build maven will search for pluggin and dependencies in maven local repo, if its not there, it will search in maven proxy, if its ot there, it searches in maven
-central repo the dependencies could be log4j/Junit/selenium
 
+
+
+
+
+
+
+
+
+
+*****ignore****  WHAT CAN MAKE MVN COMMAND NOT TO RUN
+1:38:39 maven also have to be installed properly for mvn command to run
+ie downloaded and extracted properly
+you have to determine where your maven home directory is defined with the export command
+eg we defined ours in the file ; ~/.bash_profile , ****meeee** **when we copied and pasted the environmental variables
+PLEASE COPY AND PASTE IT, ABOVE OR BELOW IN THE FILE, Not inbetween lines of information.
+   **** we could also use a different location for eg if we use the .bashrc file.  
+   ****** then we hv to refresh by running source ~/.bashrc
 
