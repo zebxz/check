@@ -662,8 +662,10 @@ dependencies and/or are located in maven repositories
   https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/4.6.0
     
           we can have diff repository
-                                                                                                                                                       for the project
-<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo
+   when doing a build maven will search for pluggin and dependencies in maven local repo, if its not there, it will search in maven proxy, if its ot there, it searches in maven
+central repo the dependencies could be log4j/Junit/selenium       
+                                                                                                                                                    
+<repositories>             **** dependencies and pluggins are found in any of these repo, maven will search for the project dependencies in any of these repo & use the repo for the project
    mavenLocalRepo         (maven server)    ****** .m2/repository = default                             
    mavenRemoteRepo         (nexus server)
    mavenProxyRepo           (nexus server apache maven )
@@ -706,11 +708,10 @@ the name of the artifact   : <version> 0.01-SNAPSHOT </version>
 
  the information BASED ON THE EXTRACT; means that
 1:46   if you create the artifact based on what developers have created for versioning 
-it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar         ****** the packaging says its a jar pakackage 
+it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar  (stating th eversion/properties)      ****** the packaging says its a jar pakackage 
 
 
-
-
+**** 1:46:40
 IQ : Explain the maven lifecycle  ??
 Maven has 3 lifecycles: 
   Clean, 
@@ -718,19 +719,19 @@ Maven has 3 lifecycles:
   default
   Clean, site and default
 
+**** Each of this life cycle has its own goal 
 Lifecycles      Goal(s)
 ----------      -----   
 1)  Clean            clean  (mvn clean)
   mvn clean         delete old builds 
 
 2) Site/Swagger       site
-                    create java classes (byte code)
-                    JVM 
-                    app.java = 'echo DevOps is great'        **** side goal
-                    app.class = 012450012354
+                  this iste is used to create java classes (byte code)
+                  which can be understood by the JVM (java virtual machine)
+                    app.java = 'echo DevOps is great' ***********eg, if u hv; when the "site" goal is executed it creates 
+                    app.class = 012450012354   ********  'app.class" binary codes that can be understood by JVM
 
-
-for eg if you have app.java once the side goal is executed it will create binary codes ie app.class that can be understood by JVM
+for eg if you have: app.java, once the "ste" goal is executed it will create "app.class" binary codes that can be understood by JVM
 
    ******** MAVEN HAS TO HAVE BEEN installed before we can run mvn package
 
@@ -740,12 +741,12 @@ for eg if you have app.java once the side goal is executed it will create binary
                   It will validate the project structure and resource files
                mvn compile:
                   It will compile all java classes and test classes
-                  these are byte code that will be used to create packages     ***** byte code that is used to run the test cases
+                  these are by code that will be used to create packages     ***** test classes are by code that is used to run the test cases
                mvn test:
                   It will run the unit test cases (JUNit)
                mvn package:
                   It will create packages in target directory 
-                      (*.jar/*.war/*ear) app.war
+                      eg (*.jar/*.war/*ear) app.war
                mvn install:
                   It will store the build artifacts in MAVEN LOCAL REPO
                      default location: .m2/repository
@@ -756,25 +757,36 @@ for eg if you have app.java once the side goal is executed it will create binary
 
 
 
+the command for which maven will use to run
 
-               ON OUR PROJECT
+mvn packge
+1) validate
+2) compile
+3) Run unit testing
+4) Create the packages (jar/war/ear)
+
+            
+2:07:00
+***  cont*** ON OUR PROJECT
 
 1) mvn package - to create package
   we ls  - a new dir target has been created 
  ls target/ - in target , maven - standalone -app has been created
  mvn clean - to clean the build (the whole artifacts)
-again we run : mvn package  >log
+2:13:16
+again we run : mvn package  >log      *** we want to redirect the outcome into a file called log , we see it scanned the project, it compiles, pluggins are needed so it needs a compiler
 vi log - to check that the build, testing was successful
 ls -a /home/ec2-user/ .m2/  to see hiddden repository               ******* or tail log  (58:00 maven 1b)
-ls  /home/ec2-user/ .m2/repository
+ls  /home/ec2-user/ .m2/repository                    .M2/REPOSITORY IS OUR MAVEN LOCAL REPO
 rm -rf /home/ec2-user/.m2/                       **** to delete our repository (.m2)
-ls -a  to see .m2
+ls -a  to see that .m2 has been deleted
+because ec2-user owns the m.2/repository
 
 
 
-***** maven uses plugging/dependencies in the build process
+***** maven uses plugging/dependencies in the build process, AND HOW MAVEN GETS THEM IS VERY IMP inthe real time
 WHICH ARE FOUND in maven local repo=.m2/repository
-ls -a/home/ec2-user can be represented as ls -a
+ls -a/home/ec2-user can be represented as ls -a    ***meee**** i bliv this is bc 'ls-a' is used to see hidden files, & bc we are in the home of ec2-user; no need to run 'ls -a/home/ec2-user' we can run ls-a to  see the hidden .m2 repository
 /home/ec2-user = the home dir of ec2-user 
 ec2-user owns the m.2/repository
 
@@ -797,6 +809,7 @@ once the package is successfully created, our .m2/repository which is our maven 
 or building for the first time
 this is for situation where the mvn package is being run for the first time or situation where the maven local repo (.m2) doesnt exists.
 
+***2:15:00
 subsequently, when mvn package is run, it doesnt need to download pluggins and dependencies from the central repo because we now have the .m2 and this will make the package
 build process time lesser compared to when it had to download pluggins from the central 
 
@@ -807,69 +820,46 @@ build process time lesser compared to when it had to download pluggins from the 
 ****** our build time increases if our maven local is deleted in error
 
 
-   2:38:38 
-                                                      QUSETION
-
-is it possible to create the maven repo without vi/ing into the file,   ???
-    without vi into the /opt/maven/conf/setting.xml   ??
-
-                                                                       (THIS IS JUST ME on why we cd into msa)
-                                                                     1:43:33 
-                 cd java-projects  ,  now i run tree msa, n we see we hv 12dir &3files, this is the project we are working on,we see d code,include d pom.xml d project file
-                                        ( msa is maven stanalone appl)         cd msa/  & when we ls we see (src and pom.xml), now no package hv been created
-                                            to create a package we run mvn package, packages created build successful and a new dir target has been created
-
-                                                 2:20:14   ( now this is the file we are modifying;  opt/maven/conf/setting.xml ) , seacrhing for maven local repo        
-
-ANS:
-ITS possible to create the maven repo without vi/ing into the file but again you need to vi
-
-but how could we create the maven repo without vi/ing??
-                                                                                                          
- now this is the file we are modifying;  opt/maven/conf/setting.xml                                        
-we could do something like this, like we can also
-
-we can aslo : sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>">> /opt/maven/conf/setting
-so we want to echo this information, we are redirecting to this file .. /opt
-so i want to append this line into this file 
-                    **********  you hv to do sudo before you can echo bc not every user can write in this file , the file is owned by the root user
- if you run it the first time it will work but if you try to change it again it will be a problem 
-so vi/ng into the file is the best
+  
 
 
 
-
-                       SECURING THE MAVEN LOCAL REPO
+          **2:12:30             SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
 
 Securing the maven local repo:
   1. By creating a custom maven local repo  
-       .m2/repository/                              ***** our default repo ( if maven local repo is deleted, it is a serious problem that will cause us time and security
+       .m2/repository/             ***** our default repo ( if maven local repo is deleted, it is a serious problem that will cause us time and security bc our build time will increase, therfore we prevent that by securing it
      settings.xml  
 to create a new maven repo in the home of ec2-user
-        /home/ec2-user/.mlr  
-   sudo vi /opt/maven/conf/settings.xml               *** because 
+   we can call our custom repo: .mlr
+ /home/ec2-user/.mlr      *** our custom repo
+ls -l /opt/maven/conf/
+   sudo vi /opt/maven/conf/settings.xml               *** sudo bc root user owns the file.
   ls -l /opt/maven/conf/    shows us that settings.xml is owned by root user , the file is rw-r-r, no executory access for any other user but root
 
 
-******** once we sudo vi vi /opt/maven/conf/settings.xml  
-if we write a comment in the commented line, it willl not run
+******** once we sudo vi vi /opt/maven/conf/settings.xml     ****settings.xml is in the conf dir
 
+
+*****2.22.14
 line 49: our local repsitory                              maven1b 1:24:50  <!--- to comment a line & the line / --> 
-  
-we add: <localRepository>/home/ec2-user/.mlr</localRepository> in the file below (outside the comment )ie  <--!    -->
-
+  the line is commented  in xml; the comment starts with  <!--- to comment a line & the line ends with  / --> 
+if we write a comment in the commented line, it wil not run
+so we add the custom repo outside the comment/commented line in the file: <localRepository>/home/ec2-user/.mlr</localRepository> in the file below (outside the comment )ie  <--!    -->
+   *** i dnt knw why my shift button doesnt allow me move.... am nt suppose to write/paste outside the margin line
 now maven will search from somewhere else when its building bc we hv changed the tag  .m2/repository  to .mylr and the build process will take more time (( we hv configured 
 maven to search elsewhere because our maven local repo is no longer .m2/repository, we now hv a custom)
 
 
 2:27
 
-so when we run = rm -rf target
-then runnmvn package
-maven will download our dependency from maven central and store them in our custom repo = mylr
+so when we run = rm -rf target   ***** to remove the target that was created when we run mvn package previously
+then run nmvn package
+maven will download our dependency from maven central and store them in our custom repo = mlr
 therfore our build will be searching for dependencies from .mylr
 ls -a ~
-ls -a /home/ec2-user/ , we can see .mylr
+ls -a /home/ec2-user/ , we can see .mlr
+then run ls,  now we see "target" 
 
 
 ***** maven is our build tool, we use maven to do a build and in doing so, some goals are being executed and we use the default life cycle goal (mvn package) but for 
@@ -940,5 +930,35 @@ mvn is a binary file that we use to run packages and it can be found in bin
 files in bin = ls /opt/maven/bin/
 
 
+ 2:38:38 
+                                                      QUSETION
+
+is it possible to create the maven repo without vi/ing into the file,   ???
+    without vi into the /opt/maven/conf/setting.xml   ??
+
+                                                                       (THIS IS JUST ME on why we cd into msa)
+                                                                     1:43:33 
+                 cd java-projects  ,  now i run tree msa, n we see we hv 12dir &3files, this is the project we are working on,we see d code,include d pom.xml d project file
+                                        ( msa is maven stanalone appl)         cd msa/  & when we ls we see (src and pom.xml), now no package hv been created
+                                            to create a package we run mvn package, packages created build successful and a new dir target has been created
+
+                                                 2:20:14   ( now this is the file we are modifying;  opt/maven/conf/setting.xml ) , seacrhing for maven local repo        
+
+ANS:
+ITS possible to create the maven repo without vi/ing into the file but again you need to vi
+
+but how could we create the maven repo without vi/ing??
+                                                                                                          
+ now this is the file we are modifying;  opt/maven/conf/setting.xml                                        
+we could do something like this, like we can also
+
+we can aslo : sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>">> /opt/maven/conf/setting
+so we want to echo this information, we are redirecting to this file .. /opt
+so i want to append this line into this file 
+                    **********  you hv to do sudo before you can echo bc not every user can write in this file , the file is owned by the root user
+***we can aslo : sudo echo "<localRepository>/home/ec2-user/.mlr</localRepository>">> /opt/maven/conf/setting
+so we want to echo this information, we are redirecting to this file .. /opt
+ if you run it the first time it will work but if you try to change it again it will be a problem 
+so vi/ng into the file is the best
 
 -
