@@ -1,4 +1,4 @@
-   **check ..3 ?? 
+
 
 AFter commit of the codes by developers the next thing is to build
 
@@ -76,7 +76,7 @@ git clone https://github.com/LandmakTechnology/maven-web-application
  
 1) to leave msa  ==cd ..
 2) we clone
-3) Rename : mv maven -web-application/mwa
+3) Rename : mv maven-web-application/ mwa
 4) cd mwa
 when we ls: we can see our maven web app, developers have written the project file pom.xml, but we dnt have the target dir, we also hv some files & dir; src dir which is very 
 important bc if we are going to do a build the 2files maven is using is the pom.xml and the src
@@ -185,11 +185,19 @@ git clone https://github.com/mylandmarktechs/maven-enterprise-application
 
 1) cd..
 2) clone
-3) mv maven-enterprise-application/meapp
+3) mv maven-enterprise-application/ meapp
 4) cd meapp
 5) tree
 
-in the tree we can see the parent pom.xml below while the child pom.xml above in the tree are 2
+in the tree we can see the parent pom.xml below while 2 child pom.xml are above in the tree
+
+[ec2-user@maven java-projects]$ cd meapp
+[ec2-user@maven meapp]$ ls
+MavenEnterpriseApp-ear  MavenEnterpriseApp-web  pom.xml    *** we see the modules and the parent pom.xml
+[ec2-user@maven meapp]$ ls MavenEnterpriseApp-web
+pom.xml  src                    ************************* we see the child child pom.xml, we dnt see the parent pom.xml
+[ec2-user@maven meapp]$
+
 
 52:00
 to view child pom.xml = cat maven enterprise App- web/pom.xml
@@ -230,17 +238,24 @@ type of project - we merge java projects
 
 55:00 
 IQ: 
-IN managing federated web and enterprise micro- service applications for fintech clients 
-
+Am managing federated web and enterprise micro- service applications for fintech clients 
 An enterpriseapplication with over 21 modules
+
 
 how can a specific module be built in maven-enterprise application
 for example, developers have done a change in module one 
 
- by passing the PL flag                ..........  ?????
-mvn package -P1 profile name
-mvn package - P1 maven enterprise -web
-mvn package - P maven Enterprise -web
+ by passing the PL flag               
+mvn package -P1  for profile name 
+eg
+mvn package - P1 maven enterprise -web  ***** ie we want build only the maven enterprise-web package
+OR
+mvn package - P maven Enterprise -ear  ie we want build only the maven enterprise-EAR package
+
+
+57:00
+so We can use the -p flag to do a build
+by changing the profile name
 
 57:45
 if there are many modules but cahnge in only one module 
