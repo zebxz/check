@@ -455,7 +455,11 @@ it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar  (stating th ever
 
 
 
- **2:12:30             SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
+ 
+          **2:12:30             SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
+*** MAVEN2; WHEN WE RUN "maven install" IT BACKS UP THE Packages in the repo  *** either in the .m2 maven local repo OR the custom maven repo) 
+i checked  the custom repo, the package was in it; ls /home/ec2-user/.mlr/com/ 
+but it was not in  ls /home/ec2-user/.m2/com/
 
 Securing the maven local repo:
   1. By creating a custom maven local repo  
@@ -470,6 +474,16 @@ ls -l /opt/maven/conf/
 
 
 ******** once we sudo vi vi /opt/maven/conf/settings.xml     ****settings.xml is in the conf dir
+
+*****2.22.14
+line 49: our local repsitory                              maven1b 1:24:50  <!--- to comment a line & the line / --> 
+  the line is commented  in xml; the comment starts with  <!--- to comment a line & the line ends with  / --> 
+if we write a comment in the commented line, it wil not run
+so we add the custom repo outside the comment/commented line in the file: <localRepository>/home/ec2-user/.mlr</localRepository> in the file below (outside the comment )ie  <--!    -->
+   *** i dnt knw why my shift button doesnt allow me move.... am nt suppose to write/paste outside the margin line
+now maven will search from somewhere else when its building bc we hv changed the tag  .m2/repository  to .mylr and the build process will take more time (( we hv configured 
+maven to search elsewhere because our maven local repo is no longer .m2/repository, we now hv a custom)
+
 
 
 
@@ -607,11 +621,11 @@ maven2 ;the package has been created in target dir but we are installing the pac
  mvn clean - to clean the build (the whole artifacts)
 again we run : mvn package  >log      *** we want to redirect the outcome into a file called log
 vi log - to check that the build, testing was successful
-ls -a /home/ec2-user/ .m2/  to see hiddden repository               ******* or tail log  (58:00 maven 1b)
-ls  /home/ec2-user/ .m2/repository              .M2/REPOSITORY IS OUR MAVEN LOCAL REPO
+ls -a /home/ec2-user/.m2/  to see hiddden repository               ******* or tail log  (58:00 maven 1b)
+ls /home/ec2-user/.m2/repository              .M2/REPOSITORY IS OUR MAVEN LOCAL REPO
 rm -rf /home/ec2-user/.m2/                       **** to delete our repository (.m2)
 ls -a  to see that .m2 has been deleted
-because ec2-user owns the m.2/repository
+because ec2-user owns the m.2/repository   
 
 ***** maven uses plugging/dependencies in the build process  AND HOW MAVEN GETS THEM IS VERY IMP inthe real time
 WHICH ARE FOUND in maven local repo=.m2/repository
