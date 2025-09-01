@@ -732,6 +732,9 @@ WHAT KIND OF PROJECT ARE YOU SUPPORTING IN YOUR ENVIRONMENT?
 anS: we suppport java based projects or projects written in java programming language, however; we also support a few.NET, pythn and nodejs projects
 we support apps written in java, nodejs by developers java, .NET, nodejs is a programming language
 
+Am managing federated web and enterprise micro- service applications for fintech clients 
+An enterpriseapplication with over 21 modules
+
 BUILD MEANS 
 Build in SDLC Implies:  Software development life cycle
   creating deployable packages from raw codes. for this to happen, it goes through a compiling process
@@ -741,6 +744,7 @@ Also git is required as well;
 we are trying to create our maven server bc we are using maven for test and build 
 so when developers push the code, we need maven ie our build server to clone the code 
 therfore the git plugging has to be installed for us to be able to run git commands 
+also we need a Redhat server in AWS or Gcp
 maven also have to be installed properly for mvn command to run
 our  Maven home directory:  /opt/maven  bc; The MHD is where the maven software is extracted  ie where we downloaded & unzipped the maven file
 the directory is represented by = M2 _HOME
@@ -760,9 +764,14 @@ so its better to execute mvn package which is faster compared to running each ot
 1) validate
 2) compile
 3) Run unit testing
-4) Create the packages (jar/war/ear)
+4) Create the packages in the target dir (jar/war/ear)
 
-when you execute mvn package which is uploading the artifacts into the maven default repo, for this packages to be executed what happens in the background is that maven 
+DIFF BTW ;mvn package (goal) 7 mvn install (goal)
+ ***** mvn install is creating/generating the package in the the target dir of our project & also uploading the artifacts into the maven local/default repo OR custom repo, depending on the configuration in the settings.xml file.
+WHILE 
+mvn package will only create/generating the package in the the target dir of our project
+                                                                                         ***online**
+when you execute mvn package which is creating/generating the package in the the target dir of our project, for this packages to be executed what happens in the background is that maven 
 extends it functinality      ........... ??? incomplete statement
 it uses pluggins and dependencies to do a build
 
@@ -774,12 +783,20 @@ maven: creates packages (jar, war and/OR ear)
 app.jar  
 ***** to deploy java based stanalone applictaions java must be installed 
 java must be installed (java here neabs java must be running)
+HOW ARE JAVA BASED STANALONE applications deployed??
+ANS; 
+java -jar app.jar
+eg; java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar    ***** app.jar, this is just a placeholder it can be any name you choose)
+
 
 2) war: web Applications  ;contains a Single module, ie java code + web content
     boa.war
   examples of web applications (whatever it is it must end with war)
 WE ARE going to look at tomcat & JBOSS when we are talkingabout web applications 
  JAVA BASED web applications are deployed in Tomcat/JBOSS servers
+if you want to deploy a maven web application, we need a maven software installed like tomcat/OR JBOSS
+
+***** JAVA BASED web applications are deployed in Tomcat/JBOSS servers
 if you want to deploy a maven web application, we need a maven software installed like tomcat/OR JBOSS
 
 
@@ -789,6 +806,13 @@ eg
  Banking applications   ; Modules: for: login / for     accountCreation /  for    moneyTransfer 
     maven-web-application.war
     maven-enterprise-application.ear
+therefore; if you create Enter Application by default it will come with many modules
+Am managing federated web and enterprise micro- service applications for fintech clients 
+An enterpriseapplication with over 21 modules
+
+******** How are java based enterprise applications deployed??
+enterprise application are deployed in JBOSS servers
+
 
 
 ******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
@@ -798,7 +822,8 @@ Maven uses dependencies and plugins to test and create packages.
 
 maven2; if we are going to do a build the 2files maven is using is the pom.xml and the src
 our project has a pom.xml file & we hv diff dependencies in it depending on the project... developers decides/does this for us
-for maven to know which package to create its a function of our project; when we vi pom.xml we can see our packing indication? war or jar or ear
+for maven to know which package to create its a function of our project; when we vi pom.xml we can see the archive file/packing indication? jar OR war OR ear
+
 EXAMPLES OF MAVEN DEPENDENCIES:    Selenium ,JUNit, log4j
  *** if it starts with dependency, it ends with dependency...
 eg for selenium <dependency>Selenium</dependency>
@@ -860,7 +885,7 @@ ls -l /opt/maven/conf/      ***** to access the conf dir
   ls -l /opt/maven/conf/    shows us that settings.xml is owned by root user , the file is rw-r-r, no executory access for any other user but root
 
 
-
+ 
      ***2.29.44                                    HOW TO DEPLOY A STANDALONE APP/ TO RUN OUR APPLICATION/TO KNOW THE CONTENT OF OUR APPLICATION
 1)ls 
 src pom.xml target/      **** Its found in the target dir
@@ -874,6 +899,7 @@ Hello Engineers, Welcome to Landmark Technologies DevOps Master Class. You are s
 
 ***** to deploy java based stanalone applictaions java must be installed 
 java must be installed (java here neabs java must be running)
+
 
 
     *************END****************************
@@ -900,6 +926,7 @@ versions:
 
 
     
+
 
 
 
