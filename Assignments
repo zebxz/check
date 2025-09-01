@@ -268,8 +268,42 @@ Ticket01:
 
 
 
-MAVEN
-Standalone Applications
+                                         MAVEN
+
+
+1) Ticket_maven-001    .....  ***************** DONE
+Install Maven on a RedHat Linux 9 Server  
+
+2. Java is a pre-requisite for maven to run 
+    JRE --> JAVA RUNTIME ENVIRONMENT
+    JDK --> JAVA DEVELOPMENT KIT 1.8+
+            JVM will also be installed      (once java is installed, this installs automatically)
+
+ 43:30
+we already hv some notes in our githubwhich we can use for maven installation , package management, maven installation
+
+
+mavenHomeDir = M2_HOME = /opt/maven :
+
+
+STEP4 :
+
+SEt environmental variable for specific user eg ec2-user
+ls -a  /home/ec2-user/
+vi ~/.bash_profile    and add lines below
+export M2_HOME=/opt/maven
+export PATH=$PATH:$M2_HOME/bin
+
+
+
+STEP5: 
+    Refresh the profile and verify if maven is running
+source ~/.bash_profile
+  To see if maven has been installed: mvn - version
+
+
+
+2)Standalone Applications
 Ticket_saa_tesla0014  
 ===================
 Requirements:
@@ -284,6 +318,63 @@ Requirements:
      src/test
 
 
+3)maven-web-applications:
+=======================
+https://github.com/LandmakTechnology/maven-web-application
+git clone https://github.com/LandmakTechnology/maven-web-application
+ 
+1) to leave msa  ==cd ..
+2) we clone
+3) Rename : mv maven -web-application/mwa
+4) cd mwa
+when we ls: we can see our maven web app, developers have written the project file pom.xml, but we dnt have the target file, we also hv our some file src which is very 
+important bc if we are going to do a build the 2files maven is using is the pom.xml and the src
+
+32:00
+5) vi pom.xml
+6) ls target/ and we have an appliaction called tesla.war
+we have deployed this application bc inside our build server we executed mvn clean, this will delete the old builds and create new ones
+therefore we have done a build for web application, just incase you are asked to do one 
+when we vi pom.xml we can see the final name tesla but its going to create a war package
 
 
- MAVEN
+  examples of web applications (whatever it is it must end with war)
+maven-web-app.war
+boa-app.war
+paypal-app-0.0.1-SNAPSHOT.war
+app.war
+tesla-web app.war
+
+
+4)Maven Enterprise applications:
+  MavenEnterpriseApp-ear.ear
+  MavenEnterpriseApplication.war
+
+https://github.com/mylandmarktechs/maven-enterprise-application
+git clone https://github.com/mylandmarktechs/maven-enterprise-application
+
+
+1) cd..
+2) clone
+3) mv maven-enterprise-application/meapp
+4) cd meapp
+5) tree
+
+in the tree we can see the parent pom.xml below while the child pom.xml above in the tree are 2
+
+52:00
+to view child pom.xml = cat maven enterprise App- web/pom.xml
+when your in a parent pom.xml you will see a parent tag
+
+since we have our project files written by developers we can build 
+
+6) mvn package 
+
+we have 2 modules when we run ls
+1) maven enterprise App-ear 
+2) maven enterprise App-web pom.xml
+
+ls maven enterprise App-ear = we see pom.xml src target
+ls maven enterprise App-ear /target/ = application.xml maven-archive 
+                                          maven enterpriseApp.ear
+
