@@ -141,13 +141,13 @@ WHILE mvn package ONLY creates the package in target dir
   2. compile  - 5min
   3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
   4. create packages [jar/war/ear] in the target directory , however it doesnt end ther.
-  5. the package has been created in target dir but when we install, we are installing the packages in maven local repository; ie the .mlr repo" we created earlier.
+  5. the package has been created in target dir and also , we are installing/backing up the artifacts in maven local repository; ie the .mlr repo" we created earlier.
   so we have the artifacts created in the maven dir and we also have the artifacts backed up in the maven local repo  ... 42:12
  ls/home/ec2-user/.mlr/com/mt/maven-web-application/0.0.2-SNAPSHOT    ie the .mlr repo" we created earlier
  ls /home/ec2-user/.mlr/com/mt/maven-web-application/0.0.2-SNAPSHOT    ie the .mlr repo" we created earlier
 ie
-ls -a /home/ec2-user/
-INSIDE the home of ec2-user  he owns/we see the .mlr repo & other files & dir
+ls -a /home/ec2-user/    **** 41:44 inside the home of ec2-user, we create the ".mlr" remote repository
+INSIDE the home of ec2-user  he owns/we see the .mlr repo & other files & dir 
 ; ls /home/ec2-user/.mlr/
 we see com" and other files /dir
  ls /home/ec2-user/.mlr/com 
@@ -162,7 +162,7 @@ we see our application
 
 
 linux command  rm -rf but mvn clean is better
-mvn clean will delete the artifacts in our target dir but will not delete the artifacts in maven local repo
+mvn clean will delete the artifacts (but i think its package) in our target dir but will not delete the artifacts in maven local repo
 mvn clean will delete everyfile in target dir 
 
 **** this is how web applications are managed
