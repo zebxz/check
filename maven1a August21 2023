@@ -835,6 +835,13 @@ build process time lesser compared to when it had to download pluggins from the 
 
 
           **2:12:30             SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
+maven1: 2;12:20
+why is it called securing the maven local repo??
+we created the custom maven repo incase the local repo is deleted, i checked; the package is not backe dup in both repo,based on the configurtaion we did in settings.xml, the package is either backed up in the maven repo OR the custom repo
+therefore; if the packages wont be both repositories, how is creating a custom repo meant to secure the local repo ... does it mean that the custom maven repo cannot be deleted??
+MAVEN2; WHEN WE RUN "maven install" IT BACKS UP THE Packages in the repo  *** either in the .m2 maven local repo OR the custom maven repo) 
+i checked  the custom repo, the package was in it; ls /home/ec2-user/.mlr/com/ 
+but it was not in  ls /home/ec2-user/.m2/com/
 
 Securing the maven local repo:
   1. By creating a custom maven local repo  
