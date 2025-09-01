@@ -389,14 +389,24 @@ Examples of maven dependencies
    JUNit 
    log4j
 pom.xml        --- BuildScript for maven
+build.gradle   --- BuildScript for gradle
+pom.xml        --- BuildScript for maven......... it is written in xml language
+eg on our project
+cd msa/  .. the the appl we cloned from git hub and renamed
+head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
+for this project to be executed a few things are needed,
+scm is in github , everything has been defined
+
+
 pom = project object model      
-dependencies:  are also written in pom language and all dependencies are found in the dependency tag 
-repositories  
+dependencies:  are also written in pom ie xml language and all dependencies are found in the dependency tag 
+repositories    **** all repositories in the repository tag
 plugins:    
-repositories   ***** all repositories in the repository tag
-plugins:    
-properties: 
-version:
+
+Repositories:
+pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is trying to create packages it will use these pluggin
+properties:
+versions:
 
 
  *** if it starts with dependency, it ends with dependency...
@@ -627,7 +637,8 @@ rm -rf /home/ec2-user/.m2/                       **** to delete our repository (
 because ec2-user owns the m.2/repository
 ls -a ~ to see that .m2 has been deleted
 the home of any user is represented as ~" so we can replace ls -a /home/ec2-user with "ls -a ~
- 
+
+                ****** ENDS*******
 
 
 ***** maven uses plugging/dependencies in the build process, AND HOW MAVEN GETS THEM IS VERY IMP inthe real time
@@ -648,6 +659,11 @@ to deploy  = java -jar app.jar    (place holder, app.jar )   ... maven 2
 2)java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar  **** app.jar, this is just a placeholder it can be any name you choose)
  we can see app.jar; copy/details of the application 
 Hello Engineers, Welcome to Landmark Technologies DevOps Master Class. You are sudying Maven Build Tool. !! Today Date is:  Sat Aug 30 20:38:50 UTC 2025
+
+
+
+***** to deploy java based stanalone applictaions java must be installed 
+java must be installed (java here neabs java must be running)
 
 
 
@@ -675,7 +691,7 @@ if there are many modules but cahnge in only one module
 we build by choosing that particular profile
 by using the ? web flag
 
-*****************TICKET ENDS***************************
+***************** ENDS***************************
          
 
 
@@ -770,6 +786,10 @@ we are trying to create our maven server bc we are using maven for test and buil
 so when developers push the code, we need maven ie our build server to clone the code 
 therfore the git plugging has to be installed for us to be able to run git commands 
 also we need a Redhat server in AWS or Gcp
+1;02:00
+The Maven server must have atleast 2GB of free space for maven to run
+it wont run with insufficient resources eg space
+
 maven also have to be installed properly for mvn command to run
 our  Maven home directory:  /opt/maven  bc; The MHD is where the maven software is extracted  ie where we downloaded & unzipped the maven file
 the directory is represented by = M2 _HOME
@@ -839,6 +859,16 @@ An enterprise application with over 21 modules
 enterprise application are deployed in JBOSS servers
 
 
+IQ: how can a specific module be built in maven-enterprise application
+for example, developers have done a change in module one 
+
+ by passing the PL flag               
+mvn package -P1  for profile name 
+eg
+mvn package - P1 maven enterprise -web  ***** ie we want build only the maven enterprise-web packagE
+
+
+
 
 ******* dependencies are just what the project depends on eg the project needs to perform unit testing so all what is needed for the unit testing will be defined in the 
 dependency 
@@ -899,55 +929,14 @@ build process time lesser compared to when it had to download pluggins from the 
 ****** our build time increases if our maven local is deleted in error
 
 
- SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
-.m2/repository/   ***** our default repo ( if maven local repo is deleted, it is a serious problem that will cause us time and security bc our build time will increase, therfore we prevent that by securing it
-  1. By creating a custom maven local repo  
-       to create a new/custom maven repo in the home of ec2-user
-   we can call our custom repo: .mlr
- /home/ec2-user/.mlr      *** our custom repo
-ls -l /opt/maven/conf/      ***** to access the conf dir
-   sudo vi /opt/maven/conf/settings.xml               *** sudo bc root user owns the file.
-  ls -l /opt/maven/conf/    shows us that settings.xml is owned by root user , the file is rw-r-r, no executory access for any other user but root
-
-
- 
-     ***2.29.44                                    HOW TO DEPLOY A STANDALONE APP/ TO RUN OUR APPLICATION/TO KNOW THE CONTENT OF OUR APPLICATION
-1)ls 
-src pom.xml target/      **** Its found in the target dir
-   
-to deploy  = java -jar app.jar    (place holder, app.jar )   ... maven 2
-2)java -jar target/maven-stanalone-application-0.0.1-SNAPSHOT.jar    **** app.jar, this is just a placeholder it can be any name you choose)
- we can see app.jar; copy/details of the application 
-Hello Engineers, Welcome to Landmark Technologies DevOps Master Class. You are sudying Maven Build Tool. !! Today Date is:  Sat Aug 30 20:38:50 UTC 2025
-
-   
-
-***** to deploy java based stanalone applictaions java must be installed 
-java must be installed (java here neabs java must be running)
-
-
 
     *************END****************************
 
 
 
-build.gradle   --- BuildScript for gradle
-pom.xml        --- BuildScript for maven......... it is written in xml language
-cd msa/  .. the the appl we cloned from git hub and renamed
-head pom.xml : this project file will include stuffs like project dependencies and Artifacts (it will be creating some artifacts)
-for this project to be executed a few things are needed,
-scm is in github , everything has been defined
 
 
-pom = project object model      
-dependencies:  are also written in pom ie xml language and all dependencies are found in the dependency tag 
-repositories    **** all repositories in the repository tag
-plugins:    
 
-Repositories:
-pluggins: to run the testing ( maven  1b 56:30) .. maven 1b 39:30; when maven is trying to create packages it will use these pluggin
-properties:
-versions:
 
 
     
