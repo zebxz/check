@@ -455,6 +455,22 @@ it will be  == maven -stanalone-application-0.0.1-SNAPSHOT.jar  (stating th ever
 
 
 
+ **2:12:30             SECURING THE MAVEN LOCAL REPO (by creating a custom maven repo)
+
+Securing the maven local repo:
+  1. By creating a custom maven local repo  
+       .m2/repository/             ***** our default repo ( if maven local repo is deleted, it is a serious problem that will cause us time and security bc our build time will increase, therfore we prevent that by securing it
+     settings.xml  
+to create a new maven repo in the home of ec2-user
+   we can call our custom repo: .mlr
+ /home/ec2-user/.mlr      *** our custom repo
+ls -l /opt/maven/conf/
+   sudo vi /opt/maven/conf/settings.xml               *** sudo bc root user owns the file.
+  ls -l /opt/maven/conf/    shows us that settings.xml is owned by root user , the file is rw-r-r, no executory access for any other user but root
+
+
+******** once we sudo vi vi /opt/maven/conf/settings.xml     ****settings.xml is in the conf dir
+
 
 
 
