@@ -110,26 +110,29 @@ if you want to deploy a maven web application, we need a maven software installe
 
 IQ:
 for maven to know which package to create its a function of our project
-when we vi pom.xml we can see the archive file/packing indication? war
+when we vi pom.xml we can see the archive file/packing indication? jar OR war OR ear
+
 
 
 How are java based enterprise applications deployed??
 enterprise application are deployed in JBOSS servers
 
 
-39:00 mvn install goal ......   ?????????????????
+39:00 mvn install goal ......   
+the package will be  created in target dir and also, we are installing the packages in maven local repository; ie the .mlr repo" we created earlier
+BUT mvn package ONLY creates the package in target dir 
 
-
+**** explanation:
 41:00  in target dir an artifact was created called tesla.war
 
  mvn install: it will
   1. validate - 2min 
   2. compile  - 5min
   3. RunUnitTesting [700Run, 699passed, 1failed] =  50min 
-  4. create packages [jar/war/ear] in the target directory  
-  5. the package has been created in target dir but we are installing the packages in maven local repository
-       ls/home/ec2-user/.mlr/com/mt/maven-web-application/0.0.2
-  so we have the artifacts created in the maven dir and we also have the artifacts backed up in the maven local repo
+  4. create packages [jar/war/ear] in the target directory , however it doesnt end ther.
+  5. the package has been created in target dir but when we install, we are installing the packages in maven local repository; ie the .mlr repo" we created earlier.
+  so we have the artifacts created in the maven dir and we also have the artifacts backed up in the maven local repo  ... 42:12
+ ls/home/ec2-user/.mlr/com/mt/maven-web-application/0.0.2-SNAPSHOT    ie the .mlr repo" we created earlier
 
 linux command  rm -rf but mvn clean is better
 mvn clean will delete the artifacts in our target dir but will not delete the artifacts in maven local repo
