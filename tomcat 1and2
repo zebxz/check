@@ -122,40 +122,27 @@ The way we expose these applications to users is important
 eg
 60musers -----> boa.war        (using the bank of america app)
 GitHub---->Maven[boa.war]---->appServer        (we hv 60m users)  need to access the application running in the appserver
-80musers ------->  appServer
-
-
-                                                 MULTI - TIER APPLICATION DEPLOYMENT
-
- multi-tier applications Deploment:
-
-60mUsers ------> appServers 
-
-We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge 
-therefore we break down the deployment into 
-
-                frontend tier                      and                        backend tiers
-   which is our  webServers/LBTier (this stands in front)                   appTier      dbTier
- users(60m)                -->webServers/LB                            -->appServer-->database  
-                                                              when users try to access their account they are eating their 
-                                                                 userName/ Password/ addresses/
-                                                                            SSN/DOB/tel   
-
-
-
-34:08
-
-all these information needs to be stored in this database very sensitive information
-
-
-
+80musers ------->  appServeR
 
 
 
 24:00
-                                                                                                      Backend appserver Tier          db Tier
 
-                        LSS                                 code build                                 >>  appserver1
+24:00                   MULTI TIER APPL
+ Our Appserver is Tomcat, we do not deploy to one appserver, so we have appserver 1,2,3 and for this process to be automated we need a tool called ansible. so when we do a 
+build, with the help of ansible automating the process that is deploying the application to multiple appservers all of the servers have tomcat installed. 
+now to expose this application to user and we have 60m user, these users need to access this application . traffic from this users need to get to the applictaion . traffic
+ from from the the users is routed to the appserver but for us to manage how traffic is distributed to the appserver we will introduce a security tool which is a webserver, 
+it can be an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
+authenticate the user ifits the right user. our web server will ensure that the appserver doesnt get traffic directly.
+the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
+
+
+                                                                                                  CONTENT/DESIGN OF MULTI TIER APPL
+
+                                                                                                      Backend; conatains the appserver Tier          db Tier
+
+                        LSS                                 code build                                 >>  appserver1           24.00 ****EXPLAINED ABOVE 
                     SCM- github                               maven                    ansible         >>>   tomcat                                     
                    Remote Repo/paypal       gitpull          app.war                                   >>>       
                     pom xml             >>>>>>>>>> >>>>      *war         >>>>>>>                      >>> appserver2    >>>>>    database
@@ -165,12 +152,55 @@ Developers >>>>     unit Test cases         gitclone                            
                                                                                                             ! 20M
                                                                                                             ! 20M
                                                                                                             !
-                                                                                                            !
+                                                                    ****40.00 explained below                                        !
                                                                                          listen HTTP 80    webserver
                                                          60M Users                       http 443       apache httpd
                                                                                                           loadbalancer
 
-                                                                                              (Frontend webserver/LB tier)
+                                                                                              (Frontend; contains the webserver/LB tier)  ***** 36.50, Didnt explain what "tier" is.
+
+
+
+
+ multi-tier applications Deploment:
+
+                                  CONTENT/DESIGN OF MULTI TIER APPL
+
+                frontend tier (DMZ)                      and                        backend tiers (MZ)
+   which is our  webServers/LBTier (this stands in front)                   appTier      dbTier
+ users(60m)                -->webServers/LB                            -->appServer-->database  
+                                                     **** 34:08           when users try to access their account they are entering their 
+                                                                 userName/ Password/ addresses/
+                                                                            SSN/DOB/tel  
+                                                        all these information needs to be stored in this database very sensitive information
+
+
+multi-tier Application helps in high security because the way application are deployed they are highly secured
+
+Backend tiers:
+comes with high security = this is running in militarized zone = MZ
+this includes application tier and database tier
+
+    frontend tier  : Medium security = D-Militarised zone = DMZ
+  Like the webservers, loadbalancers, jumpservers
+
+38:57
+eg we hv 60m users;
+We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge which is highly risky.
+therefore  , inbetween the appservers & users we place the webservsrs/LB
+therefore, if u want to access these appservers, it is routed via the LB or webservers .. & this is very secured 
+60mUsers ------> webserver/LB ----->appServers 
+
+
+40:00
+when traffic comes from enduser, the webserver expects traffic to come on http or 443, so the webserver is listening for the request from users. when ths users are trying
+to access the appserver they are making some request on the port number either 80 or 443 while the webserver is listening for the request to determine if its from the right
+user. if its the right user, it will authenticate the user and route the traffic but if the user is not authenticated it wont route the traffic 
+************ thers a video on utube explaning this 41:00
+
+
+
+
 
 31:00
 whatelse is the webserver doing?
@@ -179,39 +209,13 @@ email. All the date generated in this process has to be captured
 whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
 
 
-24:00
- Our Appserver is Tomcat, we do not deploy to one appserver, so we have appserver 1,2,3 and for this process to be automated we need a tool called ansible. so when we do a 
-build, with the help of ansible automating the process that is deploying the application to multiple appservers all of the servers have tomcat installed. 
-now to expose this application to user and we have 60m user, these users need to access this application . traffic from this users need to get to the applictaion . traffic
- from from the the users is routed to the appserver but for us to manage how traffic is distributed to the appserver we will introduce a security tool which is a webserver, 
-it can be an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
-authenticate the user ifits the right user. our webserver will ensure that the appserver doesnt get traffic directly.
-the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
 
-multi-tier Application helps in high security because the way application are deployed they are highly secured
 
-Backend tiers:
-comes with high security = this is running in militarized zone = MZ
-this includes application tier and database tier
 
- 
-   frontend tier  : Medium security = D-Militarised zone = DMZ
-  Like the webservers, loadbalancers, jumpservers
-    
 
- 38:57
 
-we dont route traffic from the endusers directly to the appuser we dont allow endusers to access the application directly because if it is accesssed directly there can be
-a security breach which is highly risky.
 
-so inbetween the appservers and users we place the webserver/lb therefore to access the appserver, it is routed through the webserver/lb
-this system is highly secured
 
-40:00
-when traffic comes from enduser, the webserver expects traffic to come on http or 443, so the webserver is listening for the request from users. when ths users are trying
-to access the appserver they are making some request on the port number either 80 or 443 while the webserver is listening for the request to determine if its from the right
-user. if its the right user, it will authenticate the user and route the traffic but if the user is not authenticated it wont route the traffic 
-************ thers a video on utube explaning this 41:00
 
    APPlication SErver:   
 
