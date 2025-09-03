@@ -380,6 +380,26 @@ To check on our browser  = 34.219.51.216:8080
 and also to access our tomcat server on the browser
 curl -v 18.223.16.218:8080   .. mine
 curl -v localhost:8080 
+curl localhost:8080 
+
+
+
+    1:26:24                                      HOW TO VERIFY IF TOMCAT SERVER OR PROCESS IS RUNNING 
+
+AFTER INSTALLING TOMCAT
+
+    Verify if the tomcat service/process is running:
+   We can run the :
+    ps -ef | grep tomcat  
+    telnet localhost 8080 
+    curl -v localhost:8080 
+    curl -v publicip:8080
+    curl -v 34.219.51.216:8080
+    curl -v 34.219.51.216:8177
+
+
+ to install telnet: sudo yum install telnet -y
+ to install vim: sudo yum install vim -y
 
 
             **** meee*** SECURITY
@@ -449,26 +469,9 @@ IQ:  What are the log files available in the tomcat log dir?
       host-manager.log        
    
 
-                                          HOW TO VERIFY IF TOMCAT SERVER OR PROCESS IS RUNNING 
-
-AFTER INSTALLING TOMCAT
-
-    Verify if the tomcat service/process is running:
-   We can run the :
-    ps -ef | grep tomcat  
-    telnet localhost 8080 
-    curl -v localhost:8080 
-    curl -v publicip:8080
-    curl -v 34.219.51.216:8080
-    curl -v 34.219.51.216:8177
 
 
- to install tomcat: sudo yum install telnet
-
-
-
-
-               HOW TO CHANGE PUBLIC IP OF TOMCAT SERVER
+               HOW TO CHANGE THE DEFAULT PORT NUMBER OF TOMCAT SERVER
     ***** whenever we change anything in the config file we have to restart tomcat
 
 Ticket:
@@ -502,6 +505,7 @@ it shows its 403 error - Access denied
 1:35:46
 so we have to conf tomcat server
 
+*****1:35:21
 1) enable external tomcat mgt access
 vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
 this file is permitting tomcat to be managed as local host
@@ -509,22 +513,21 @@ showing , allow = "127\.df, which only allows broadcast /traffic from local host
  therfore we comment the line above by inserting <!--
                                                   -->
 
-
-   By commenting the line, it means that i am changing the configuration such that other traffic can be allowed into my tomcat server
+By commenting the line, it means that i am changing the configuration such that other traffic can be allowed into my tomcat server
 
 now once we try to public ip: 8177 on our browser its asking for username the password
 
 
-guess this is setting up
+  *** 1:38:05  guess this is setting up
 2) next we create tomcat user with access roles:
-vi or vim  /opt/tomcat9/conf/tomcat-user.xml             # to add user
+vi or vim  /opt/tomcat9/conf/tomcat-users.xml             # to add user
 
 
 1:40
-
-a) <user username = "cecilia" password = "admin123" roles = "manager-gui admin -g
+       ****** copy and paste to add 2users
+a) <user username="cecilia" password="admin123" roles="manager-gui admin -gui,admin-gui,manager-script"/>
   ceceilia has manger role ie he can manage from the gui(graphic user interface) he has admin while simon has admin gui
-b<user username = "simon" password = "admin123" roles = "admin- gui"/>
+b<user username="simon" password="admin123" roles="admin- gui"/>
 
 ****** imputing username :Cecilia and password admin123, i can log in
 
