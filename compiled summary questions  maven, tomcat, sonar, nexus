@@ -338,6 +338,7 @@ if you are doing a build and you are not doing it in the project file the build 
 you must be in the project directory 
 
 
+Tomcat listens on port 8080
 
 what is the function of tomcat 
 
@@ -356,3 +357,20 @@ IQ: What is the d/f b/w JBoss/WildFly and Tomcat?
         JBoss; Web applications .WAR 
                enterprise applications .ear 
         Tomcat; web applications ONLY 
+
+
+1:11:00
+****** the difference between
+[ec2-user@tomcat tomcat9]$ sh /opt/tomcat9/bin/startup.sh
+this is the absolute path starting the root directory
+
+          WHILE
+[ec2-user@tomcat tomcat9]$ sh startup.sh (says no such file or dir)
+this is the relative path starting the pwd
+
+ 
+
+IQ: CAN WE  RUN TOMCAT AND MAVEN IN ONE SERVER
+
+YEs you can but its  not recommended because it can lead to one single point of failure ie if maven server is down, tomcat also goes down , if tomcat has a problem, 
+maven is also down 
