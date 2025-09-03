@@ -31,3 +31,6 @@ We dont allow traffic from app users to get to the app servers directly because 
 therfore; an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
 authenticate the user if its the right user. 
 the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
+when traffic comes from enduser, the webserver expects traffic to come on http or 443, so the webserver is listening for the request from users. when ths users are trying
+to access the appserver they are making some request on the port number either 80 or 443 while the webserver is listening for the request to determine if its from the right
+user. if its the right user, it will authenticate the user and route the traffic but if the user is not authenticated it wont route the traffic 
