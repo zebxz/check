@@ -6,6 +6,8 @@ HOW TO IMPROVE TOMCAT SERVER PERFORMANCE, WHY DO WE START TOMCAT BUT NOT MAVEN
 
 
 
+********  i think that java is a perequisit for tomcat to run because we are managing java based projects
+
 *** 49.18...this is class 32, we hv gotten to a point wher u can use can create ur servers using auto scaling 
 
 
@@ -285,6 +287,7 @@ change shell
 cd opt
 install = sudo yum install git wget unzip -y
 sudo yum install java-21-openjdk-devel -y     ... now version 21
+sudo yum install wget unzip -y
 to verify = java -version
 install tomcat: 
 sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.zip
@@ -292,9 +295,10 @@ sudo unzip apache-tomcat-9.0.89.zip
 sudo rm -rf apache-tomcat-9.0.89.zip
 ### rename tomcat for good naming convention
 sudo mv apache-tomcat-9.0.89 tomcat9 
+run ll; root user owns the file so;
 ### assign executable permissions to the tomcat home directory
-sudo chmod 777 -R /opt/tomcat9
-sudo chown ec2-user -R /opt/tomcat9                 right now its owned by root to avoid issues like not the the onwer we change it to ec2-user ********** ( but we did 775)
+sudo chmod 777 -R /opt/tomcat9            1.05.58********** ( but we did 775)
+sudo chown ec2-user -R /opt/tomcat9                 right now its owned by root to avoid issues like not the the onwer we change it to ec2-user 
 change user to avoid access denied
 now when we ll, we can see  user has changed from root to ec2user
 ### start tomcat
