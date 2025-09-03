@@ -369,6 +369,14 @@ this is the absolute path starting the root directory
 this is the relative path starting the pwd
 
  
+IQ; if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
+   curl -v public ip80:80 OR curl -v localhost:8080
+
+
+IQ: we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file  ***** whenever we change anything in the config file we have to restart tomcat
+To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+next we create tomcat user with access roles: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
+
 
 IQ: CAN WE  RUN TOMCAT AND MAVEN IN ONE SERVER
 
@@ -399,3 +407,30 @@ eg of files in conf:
 IQ:  What are the log files available in the tomcat log dir?
       catalina.out                     ****** check here if tomcat is not running
       host-manager.log  
+
+
+Tomcat Home directory - THD = /opt/tomcat9
+THD: The Tomcat Home Directory is 
+     where the tomcat software is extracted 
+      we used wget to download tomcat  
+      and unzip  to extract
+
+
+
+
+IQ:  What are the log files available in the tomcat log dir?
+      catalina.out                     ****** check here if tomcat is not running
+      host-manager.log      
+
+
+
+
+
+
+
+
+
+
+
+
+
