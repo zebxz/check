@@ -48,11 +48,45 @@ Also; whatelse is the webserver doing?
 whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
 
 
-
-
 As path of our tomcat installation we are going to create a link to stop & start tomcat from our pwd, ie anywhere 
 sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     
 sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+
+Tomcat Home directory - THD = /opt/tomcat9
+THD:  is where the tomcat software is extracted & unzipped
+        
+    EXPLAINING THE CONTENT OF THE THD
+
+when we ls, we see bin, conf, lib, logs, webapps, temp
+
+      bin :
+ls bin/ contains:
+    bin: --- binary files  (important files like )
+      startup.sh    --->  for LINUX SYSTEM
+
+conf: 
+
+eg of files in conf:
+     server.xml          
+      tomcat-users.xml, users.xml for those that work in the bank
+               contains configuration information about tomcat server, any changes can be done here
+
+lib :
+        contain all the jar files
+
+    logs :   contains log files
+      catalina.out
+      host-manager.log
+
+webapps: The default deployment Directory in Tomcat 
+       its where deployment is taking place 
+       therfore all the war files
+      like maven-web-app.war created from # mvn package 
+       we have to copy to the webapps dir because thats where deployment takes places 
+        cp *.war /webapps
+        cp *war   /
+
+
 
 
 
