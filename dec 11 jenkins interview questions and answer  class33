@@ -9,6 +9,7 @@ when the users are trying to access the appserver they are making some request o
 
 
 Tomcat port 8080
+we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file  ***** whenever we change anything in the config file we have to restart tomcat
 ***52.00 >>> we are deploying from maven to tomcat
 this is the absolute path starting the root directory
   sh /opt/tomcat9/bin/startup.sh
@@ -16,6 +17,8 @@ this is the relative path starting the pwd
 sh startup.sh 
 
 
+
+   **** ************************* START
 APACHE TOMCAT
 Tomcat or Apache Tomcat is a light weight, open source web container used to deploy & run java-based web application.
 it is developed by Apache software foundation (ASF)
@@ -57,8 +60,11 @@ sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat
 sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
 
  if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
-                                                 curl -v public ip80:80 OR curl -v localhost:8080
+                                                 curl -v public ip80:80 OR curl -v localhost:8080 OR telnet 
 
+we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file 
+Absolute path is vim or vi  /opt/tomcat9/conf/server.xml
+then stop and restart tomcat
 
 Tomcat Home directory - THD = /opt/tomcat9
 THD:  is where the tomcat software is extracted & unzipped
