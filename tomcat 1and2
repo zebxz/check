@@ -5,6 +5,10 @@ TO MAVEN SERVER,  CONFIGURE PASSWD AUTHENTICATION IN TOMCAT, TO DEPLOY APPLICATI
 HOW TO IMPROVE TOMCAT SERVER PERFORMANCE, WHY DO WE START TOMCAT BUT NOT MAVEN 
 
 
+
+*** 49.18...this is class 32, we hv gotten to a point wher u can use can create ur servers using auto scaling 
+
+
 ********  TO check if my server is listening and to get my ipaddress 
 curl ifconfig.io
 curl ifconfig.me
@@ -33,7 +37,7 @@ we also access sonar qube, jenkins on the internet/browser because people need t
 
 
                START
-
+***52.00 >>> we are deploying from tomcat to maven
 
 
 
@@ -263,14 +267,24 @@ https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.zip
 
           https://github.com/LandmakTechnology/package-management/tree/master/Tomcat-installation
    
+Apache Tomcat Installation And Setup In AWS EC2 Redhat Instance.
+
+Prerequisite
+first step: AWS Acccount.
+Create Redhat EC2 T2.micro Instance.
+Create Security Group and open Tomcat ports or Required ports.
+8080 ..etc
+Attach Security Group to EC2 Instance.
+Install java openJDK 1.8+
+
 
 1:03
 
 change hostname
-shange shell
+change shell
 cd opt
 install = sudo yum install git wget unzip -y
-sudo yum install java-1.8.0-openjdk- devel -y
+sudo yum install java-21-openjdk-devel -y     ... now version 21
 to verify = java -version
 install tomcat: 
 sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.zip
@@ -280,7 +294,7 @@ sudo rm -rf apache-tomcat-9.0.89.zip
 sudo mv apache-tomcat-9.0.89 tomcat9 
 ### assign executable permissions to the tomcat home directory
 sudo chmod 777 -R /opt/tomcat9
-sudo chown ec2-user -R /opt/tomcat9                   ********** ( but we did 775)
+sudo chown ec2-user -R /opt/tomcat9                 right now its owned by root to avoid issues like not the the onwer we change it to ec2-user ********** ( but we did 775)
 change user to avoid access denied
 now when we ll, we can see  user has changed from root to ec2user
 ### start tomcat
