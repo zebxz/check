@@ -54,20 +54,30 @@ Also; whatelse is the webserver doing?
 **ignore; lets assume that beyond the appserver, endusers are able to access this account & do diff transaction or create account when they do that they will enter their names, DOB,email. All d data generated in this process has to be captured
 whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
 
-
+TOMCAT INSTALLATION
 As path of our tomcat installation we are going to create a link to stop & start tomcat from our pwd, ie anywhere 
 sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     
 sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
 
- if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
-                                                 curl -v public ip80:80 OR curl -v localhost:8080 OR telnet 
+ if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat server/process is running by
+                                                 curl -v public ip80:80 OR curl -v localhost:8080 OR telnet localhost 8080 
+
 
 we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file 
 Absolute path is vim or vi  /opt/tomcat9/conf/server.xml
 then stop and restart tomcat
 
+ TO ACCESS TOMCAT AS A USER  
+  (BY default you can only access and manage tomcat as a local host)
+ To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+this file is permitting tomcat to be managed as local host
+therfore; we comment on the line, thereby changing the configuration such that other traffic can be allowed into my tomcat server
+
+
+
 Tomcat Home directory - THD = /opt/tomcat9
 THD:  is where the tomcat software is extracted & unzipped
+
         
     EXPLAINING THE CONTENT OF THE THD
 
