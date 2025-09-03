@@ -276,11 +276,11 @@ first step: AWS Acccount.
 Create Redhat EC2 T2.micro Instance.
 Create Security Group and open Tomcat ports or Required ports.
 8080 ..etc
+security; ALLow "all traffic for both" inbound & outbound rule , so can access on the browser
 Attach Security Group to EC2 Instance.
 Install java openJDK 1.8+
 
-
-1:03
+1:03****Next
 
 change hostname
 change shell
@@ -290,26 +290,40 @@ sudo yum install java-21-openjdk-devel -y     ... now version 21
 sudo yum install wget unzip -y
 to verify = java -version
 install tomcat: 
-sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.zip
-sudo unzip apache-tomcat-9.0.89.zip
-sudo rm -rf apache-tomcat-9.0.89.zip
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.108/bin/apache-tomcat-9.0.108.zip
+sudo unzip apache-tomcat-9.0.108.zip
+sudo rm -rf apache-tomcat-9.0.108.zip
 ### rename tomcat for good naming convention
-sudo mv apache-tomcat-9.0.89 tomcat9 
+sudo mv apache-tomcat-9.0.108 tomcat9  
 run ll; root user owns the file so;
 ### assign executable permissions to the tomcat home directory
 sudo chmod 777 -R /opt/tomcat9            1.05.58********** ( but we did 775)
 sudo chown ec2-user -R /opt/tomcat9                 right now its owned by root to avoid issues like not the the onwer we change it to ec2-user 
 change user to avoid access denied
 now when we ll, we can see  user has changed from root to ec2user
-### start tomcat
-ls, cd tomcat9/, pwd, ls, ls bin/
+### next start tomcat
+ls, 
+tomcat9
+cd tomcat9/, 
+pwd,
+ls,
+bin
+ls bin/
 in the bin dir these are files we can use to start tomcat
 eg
 catalina.sh, startup.sh
-so to start tomcat = sh/opt/tomcat9/bin/startup.sh
+so to start tomcat = sh /opt/tomcat9/bin/startup.sh
 
 
 cd opt, cd tomcat9
+
+                                              1:12:22
+******* As path of our tomcat installation we are going to create a link to stop & start tomcat from anywhere 
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+
+
+  ********* INSTALLATION ENDS *******************************
 
 1:09
 with the symbolic path we dnt have to cd tomcat9 to start or stop tomcat we can start & stop from anywhere
@@ -318,35 +332,45 @@ with the symbolic path we dnt have to cd tomcat9 to start or stop tomcat we can 
 1:11:00
 ****** the difference between
 [ec2-user@tomcat tomcat9]$ sh /opt/tomcat9/bin/startup.sh
-this is the absolute path atarting the root directory
+this is the absolute path starting the root directory
 
           WHILE
 [ec2-user@tomcat tomcat9]$ sh startup.sh (says no such file or dir)
 this is the relative path starting the pwd
+
+1:11.7
+whereis ls 
+ls: /usr/bin/ls /usr/share/man/man1/ls.1.gz
+*** when we run  "ls", it works but when we run sh "startup.sh", it (says no such file or dir)
+but they are both in the bin dir
+ls works from anywhere because a symbolic path has already been created;therefore for  "startup.sh" to work, we have to create a symbolic link, as part of our tomcat installation
                                                   
                                               1:12:22
 As path of our tomcat installation we are going to create a link to stop & start tomcat from anywhere 
+both commands can be run together
 sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     **(this can be any name at all)
 sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
 
+
+when we change to ; sudo su - ec2-user 
 so we can run = starttomcat to start
-               OR = stoptomcat  to stop
-
-
-when i run ls, i get a respnse because a symbolic path has been created
+               OR = stoptomcat  to stop   ... from anywhere
+ cd /opt/tomcat9
 
 
 2:18
 the bin dir is where we are suppose to run start and stop  but because of the symbolic link we can start from pwd
 
 
-then sudo su -ec2-user                        ********* if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
+
+
+                       ********* if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
                                                   curl -v OR local host curl -v local host:8080 public ip 80:80 
 1:14:22                                                                                                      tomcat server
 to verify if tomcat is running : we need the ip address &portnumber of :
 Tomcat publicIP =  34.219.51.216 
- Tomcat portNumber = 8080  
-so we can access this server on port 8080
+ Tomcat portNumber = 34.219.51.216:8080  , TO access on our browser
+OR 
 now we can in our CLI check if tomcat is running or not by running the curl verbose to get a response
 the curl -v 34.219.51.216:8080   
  OR                                   
@@ -354,8 +378,10 @@ the curl -v 34.219.51.216:8080
 We can check on local host =  curl -v localhost:8080 
 To check on our browser  = 34.219.51.216:8080   
 and also to access our tomcat server on the browser
+curl -v 18.223.16.218:8080   .. mine
 
 
+            **** meee*** SECURITY
 **** from commandline ie mobaxterm check our local environment , curl localhost 8177 to check if someone from outside can access our server 
 curl public ip:8177
 
