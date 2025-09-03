@@ -27,6 +27,7 @@ The way we expose these applications to users is important
 Also, The way we expose these applications to users is important
 now to expose this application to users who need to access this application. traffic from the the users is routed to the appserver but for us to manage how traffic is distributed to the appserver we will introduce a security tool which 
 is a webserver, our web server will ensure that the appserver doesnt get traffic directly.
-it can be an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
+We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge which is highly risky.
+therfore; an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
 authenticate the user if its the right user. 
 the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
