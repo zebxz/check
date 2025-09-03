@@ -1,5 +1,6 @@
 LINUX , scripting, git , maven, tomat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
-In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR TEST & BUILD, TOMCAT for deployment, 
+In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR TEST & BUILD creates the packages & artifacts, TOMCAT for deployment, 
+
 
 
 
@@ -7,11 +8,7 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 APACHE TOMCAT
 Tomcat or Apache Tomcat is a light weight, open source web container used to deploy & run java-based web application.
 it is developed by Apache software foundation (ASF)
-
-
 we are managing java based projects - projects that are developed in the java lanaguage
-
-
 
 when we do a build, the code will be packaged compiled and artifacts will be created, these packages can be jar/war/ear
 before that can happen we are going to pull the code with the command gitpull/clone and once the build is done w ecan deploy the application to the application sever 
@@ -19,9 +16,17 @@ before that can happen we are going to pull the code with the command gitpull/cl
   WHAT IS AN APPLICATION SERVER?
 An application server is a container upon which you can build and expose business logic and processes to client applications through various protocols including HTTP in 
 a n-tier architect
-
-                        Examples of servers
+                       Examples of servers
 Apache Tomcat - Apache, Jboss/wildfly - Redhat, WEblogic - Oracle, websphere Application Server - IBM, Websphere liberty profile - IBM, Galssfish
-
-                      HOW SHOULD WE EXPOSE APPLICATION TO USERS
+                        HOW SHOULD WE EXPOSE APPLICATION TO USERS
 The way we expose these applications to users is important
+
+
+                       MULTI TIER APPL
+ Our Appserver is Tomcat, we do not deploy to one appserver, we are deploying (the application) to multiple appservers all of the servers have tomcat installed & this process is automated with the help of a tool called ansible. 
+Also, The way we expose these applications to users is important
+now to expose this application to users who need to access this application. traffic from the the users is routed to the appserver but for us to manage how traffic is distributed to the appserver we will introduce a security tool which 
+is a webserver, our web server will ensure that the appserver doesnt get traffic directly.
+it can be an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
+authenticate the user if its the right user. 
+the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
