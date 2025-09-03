@@ -10,6 +10,8 @@ when the users are trying to access the appserver they are making some request o
 
 Tomcat port 8080
 we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file  ***** whenever we change anything in the config file we have to restart tomcat
+To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+next we create tomcat user with access roles: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
 ***52.00 >>> we are deploying from maven to tomcat
 this is the absolute path starting the root directory
   sh /opt/tomcat9/bin/startup.sh
@@ -19,6 +21,12 @@ sh startup.sh
 
 
    **** ************************* START
+Summary
+1)Install tomcat 2)verify if tomcat is running 3)if it can receive;curl ifconfig.me  |curlifconfig.io  4)RBAC - role based accesss control;tomcat-user.xml file 5)copy: scp/ scp: 6)performing hot fixes vi /opt/tomcat9/webapps/app/jsps/home.jsp
+7) enhancing/ turning up the performance of our tomcat servers by increase ing the heap size
+
+
+
 APACHE TOMCAT
 Tomcat or Apache Tomcat is a light weight, open source web container used to deploy & run java-based web application.
 it is developed by Apache software foundation (ASF)
@@ -64,14 +72,17 @@ sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
 
 
 we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file 
-Absolute path is vim or vi  /opt/tomcat9/conf/server.xml
-then stop and restart tomcat
+Absolute path is vim or vi /opt/tomcat9/conf/server.xml
+we go to section "connector port" make the change then stop and restart tomcat
 
  TO ACCESS TOMCAT AS A USER  
   (BY default you can only access and manage tomcat as a local host)
- To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+1) To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
 this file is permitting tomcat to be managed as local host
 therfore; we comment on the line, thereby changing the configuration such that other traffic can be allowed into my tomcat server
+
+2) next we create tomcat users with access roles eg manager role, amdim role, etc: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
+
 
 
 
@@ -113,7 +124,21 @@ webapps: The default deployment Directory in Tomcat
 
 
 
+ HOW TO IMPROVE TOMCAT SERVER PERFORMNACE 
 
+1) multiple request on a single tomcat server will affect performance
+2)  Multiple deployments will reduce tomcat server performance.
+  therefore its recommended  tohave multiple tomcat server 
+3) The resource level or computing capacity OF your tomcat server   
+     8GB RAM,   480GB Hard drive HDD  is better than 64GB RAM,  4000GB Hard drive SSD   
+
+  2:39:10
+4) HDD hard drive  is/are of less performnace than SSD
+
+5) HEAPSIZE 
+  We can increase the heapsize of the server 
+Normally, tomcat by default allocates 64mb but we can increase to 128mb/256mb
+  heapsize = 64mb -- 128mb/256mb    
 
 
 
