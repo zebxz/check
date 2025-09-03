@@ -84,6 +84,22 @@ therfore; we comment on the line, thereby changing the configuration such that o
 2) next we create tomcat users with access roles eg manager role, amdim role, etc: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
 
 
+ WAYS TO DEPLOY IN TOMCAT 
+1) already saved file/artifact in my computer
+so on my browser click on deploy then in mobaxterm(CLI)
+ls   /opt/tomcat9//webapps                                                                                  
+we see the file copied into the webapp dir 
+
+     option2)       DePLOYING FROM SERVER TO SERVER (Maven to tomcat)
+ 
+we want to copy the file from our build server maven to tomcatserver
+secure copy
+if my server is not password authentication enabled
+we run the scp command in maven                                  
+scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/
+if password authentication is enabled
+ we run this:   scp target/*war ec2-user@34.219.51.216:/opt/tomcat9/webapps/  
+
 
 
 Tomcat Home directory - THD = /opt/tomcat9
