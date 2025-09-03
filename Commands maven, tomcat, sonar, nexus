@@ -116,6 +116,18 @@ mvn - x package (BUILD in debugging mode) This will build in debugging mode
 
 
                                                      TOMCAT
+
+Verify if the tomcat service/process is running:
+   We can run the :
 if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
      curl -v public ip80:80 OR curl -v localhost:8080
+  ps -ef | grep tomcat  
+    telnet localhost 8080 
+    curl -v localhost:8080 
+    curl -v publicip:8080
+    curl -v 34.219.51.216:8080
+    curl -v 34.219.51.216:8177
+
+to install telnet: sudo yum install telnet -y
+ to install vim: sudo yum install vim -y
 
