@@ -378,6 +378,24 @@ To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/MET
 next we create tomcat user with access roles: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
 
 
+
+ HOW TO IMPROVE TOMCAT SERVER PERFORMNACE 
+
+1) multiple request on a single tomcat server will affect performance
+2)  Multiple deployments will reduce tomcat server performance.
+  therefore its recommended  tohave multiple tomcat server 
+3) The resource level or computing capacity OF your tomcat server   
+     8GB RAM,   480GB Hard drive HDD  is better than 64GB RAM,  4000GB Hard drive SSD   
+
+  2:39:10
+4) HDD hard drive  is/are of less performnace than SSD
+
+5) HEAPSIZE 
+  We can increase the heapsize of the server 
+Normally, tomcat by default allocates 64mb but we can increase to 128mb/256mb
+  heapsize = 64mb -- 128mb/256mb    
+
+
 IQ: CAN WE  RUN TOMCAT AND MAVEN IN ONE SERVER
 
 YEs you can but its  not recommended because it can lead to one single point of failure ie if maven server is down, tomcat also goes down , if tomcat has a problem, 
@@ -385,7 +403,7 @@ maven is also down
 
 
 
-
+CONTENT OF BIN DIR
 conf: 
 
 eg of files in conf:
