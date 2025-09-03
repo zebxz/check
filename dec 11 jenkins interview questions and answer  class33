@@ -3,14 +3,13 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 
 
 
-
 webserver expects traffic to come on http or 443,
 when the users are trying to access the appserver they are making some request on the port number either 80 or 443 
 
 
 
-
-***52.00 >>> we are deploying from tomcat to maven
+Tomcat port 8080
+***52.00 >>> we are deploying from maven to tomcat
 
 APACHE TOMCAT
 Tomcat or Apache Tomcat is a light weight, open source web container used to deploy & run java-based web application.
@@ -51,6 +50,9 @@ whatever information the users enter/generate while accessing the app is capture
 As path of our tomcat installation we are going to create a link to stop & start tomcat from our pwd, ie anywhere 
 sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     
 sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+
+ if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat is running by
+                                                  curl -v OR local host curl -v local host:8080 public ip 80:80 
 
 Tomcat Home directory - THD = /opt/tomcat9
 THD:  is where the tomcat software is extracted & unzipped
