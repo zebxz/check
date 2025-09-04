@@ -534,7 +534,7 @@ b<user username="simon" password="admin123" roles="admin-gui"/>
 
 ***1:45:59
                  WAYS TO DEPLOY IN TOMCAT 
-1) already saved file/artifact in my computer
+Option1) already saved file/artifact in my computer
 he already has war file on his computer,so on the browser he clicked on deploy then in mobaxterm(CLI)
 ls   /opt/tomcat9//webapps                                                                                  
 we see the file copied into the webapp dir 
@@ -548,23 +548,23 @@ ie this application has been deployed in tomcat, in the webapps dir
 
 
 1:49:15
-            DePLOYING FROM SERVER TO SERVER (Maven to tomcat)
-
+            DePLOYING FROM SERVER TO SERVER (Maven to tomcat)    **** i was not successful got error..   error in libcrypto
+                                                                  &  scp -i sea.pem target/tesla.war ec2-user@18.223.16.218:/opt/tomcat9/webapps/app.war
+                                                                     ec2-user@18.223.16.218: Permission denied (publickey,gssapi-keyex,gssapi-with-mic) scp: Connection closed
 option2)    which we ll use most of the time 
 we want to deploy the app from maven to tomcat 
 we want to copy the file from our build server to tomcatserver
 
   ****1;55;13  secure copy
-if my server is not password authentication enabled
+A)if my server is not password authentication enabled,   *** we have to configure to use the private/ssh key
 we run the scp command in maven                                  
 scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/
-if password authentication is enabled
+B)if password authentication is enabled                                   *******(PW authentication has to be configured in both tomcat & maven server)
  we run this:   scp target/*war ec2-user@18.223.16.218:/opt/tomcat9/webapps/  
 ie;  scp target/tesla.war ec2-user@18.223.16.218:/opt/tomcat9/webapps/app.war
 
- TO DEBUGG ISSUES
- scp -v target/tesla.war ec2-user@18.223.16.218:/opt/tomcat9/webapps/
-
+ 
+A)   .......... Enable PW authentication
 
    1st ... Clone the application codes in our maven server 
 to access my maven server 
@@ -586,12 +586,11 @@ sudo passwd username
 sudo passwd username 
 sudo passwd ec2-user =Sunnybaby123
 
- Tomcat is the receiving server, so it has to have password authenticated for it to work 
+Also; Tomcat is the receiving server, so it has to have password authenticated for it to work 
 because we are trying to access our tomcat using password so 
 we have to config paswd authentication in tomcat
 
-
-    CONFIGURE PASSWD AUTHENTICATION IN TOMCAT
+  CONFIGURE PASSWD AUTHENTICATION IN TOMCAT
 1) sudo vi /etc/ssh/sshd_config
     change password authentication no to yes
 2) sudo systemctl restart sshd
@@ -602,30 +601,30 @@ we have to config paswd authentication in tomcat
 
 **2:02:10
                     TO DEPLOY APPLICATION IN TOMCAT
-1) watch ls  /opt/tomcat9/webapps/
+1) in Tomcat; watch ls  /opt/tomcat9/webapps/
 2) we go back to maven server and run scp target/* war            **************  we were able to deploy in tomcat using the scp command 
 and it will now request for password : Admin123
 3) Now we go back to tomcat server and in our 'watch' we can see  tesla.war
 4) also, if we check our tomcat gui on my browser, i also see teslar.war in my list of applications 
 
 
-**************
+B)************** Enable SSH authentication
 
      To DEPLOY USING SSH KEY FOR AUTHENTICATION
 i) vi  keyname = vi key33.pem
 ii) chmod 400 key33.pem
-ii) scp -i key33.pem target/tesla.war ec2-user@3.90.51.187:/opt/tomcat/webappps/app.war
+ii) scp -i key33.pem target/tesla.war ec2-user@3.90.51.187:/opt/tomcat/webappps/app.war         *** i bliv this is the tomcat public ip
 when we check list of application on gui we can see app.war
 
 
 2:04:40
 ***** if no PW authentication & am only allowed to use private/ssh key
 1) search for private key file 
-2) inmaven server; vi in key33.pem , paste, save & quit
+2) in maven server; vi in key33.pem , paste, save & quit
 3) run the chmod 400 key33.pem
  scp -i maven.pem target/tesla.war ec2-user@18.223.16.218:/opt/tomcat/webapps/app.war     *** app.war means when we deploy the file will be/converted app.war
  
-***** 2:07:48 **** this command means 
+***** 2:07:48 **** this command means            *** i bliv we run this in the maven server
 i want to copy a file found in the target dir
 the file name is tesla.war
 i want to identify myself in the receiving server as ec2-user
@@ -634,6 +633,8 @@ the path to where the file will be deployed: /opt/tomcat9/webapps/app.war"      
   it is converting tesla.war to app.war
 
 
+TO DEBUGG ISSUES
+ scp -v target/tesla.war ec2-user@18.223.16.218:/opt/tomcat9/webapps/
 
 
   
@@ -682,16 +683,18 @@ the cloud permits u to leverage your customer base from around the world.
 ICT has mystify proximity interms of how you are able to have access to diff resources.
 
 
-                                   AWS/GCP/AZURE/ONPREM 
- Redhat  linux server   >>>      ec2 Redhat! address     !    }
-                                 instance  !  ports      !    }  this is the cloud environment
-Software   >>>>>>>>>>>>>>>       tomcat9   !   o-65536   !    }
-
+                                 
 
 example of cloud providers that can be launched 
 1)aws
 2) Gcp
 3) Azure
+
+  AWS/GCP/AZURE/ONPREM 
+ Redhat  linux server   >>>      ec2 Redhat! address     !    }
+                                 instance  !  ports      !    }  this is the cloud environment
+Software   >>>>>>>>>>>>>>>       tomcat9   !   o-65536   !    }
+
 
  i Can launch my server in any of the cloud providers OR i can own my on system and called it onprem system 
 eg launched in Aws
