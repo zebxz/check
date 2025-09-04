@@ -406,6 +406,28 @@ Enable external tomcat mgt access
 create tomcat user with access roles
 
 
+  TICKET 0014   nginx , Apache  http 
+   write a script  to deploy apache webserver 
+
+
+installing apache as the rootuser  = sudo - i 
+vi apache.sh  & create a script ( webserver installation) 
+
+
+  this script will start, enable & verify if apache is running or not 
+
+  #!/bin/sh
+# install apache as the admin/root user  
+sudo yum install httd -y 
+sudo systemctl start httpd
+sudo systemctl enable httpd 
+echo devops is good  >> /var/www/html/index.html                        ****** copy to a file called index.html
+if i want to write the above a an html code 
+17:50   echo <h1> and easy with landmark  </h1>   >> /var/www/html/index.html
+mkdir  /var/www/html/google 
+echo  <h1> landmark  google  </h1> >> / var/www/html/google/index.html            ***** save some web content in google dir 
+systemctl status httpd 
+ps -ef |  grep httpd 
 
 
 
