@@ -12,11 +12,18 @@ Tomcat port 8080
 we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file  ***** whenever we change anything in the config file we have to restart tomcat
 To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
 next we create tomcat user with access roles: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
+WE ASSIGN PASSWORD TO MAVEN & TOMCAT SERVER  ( bY COnfiguring password authentication)sudo vi /etc/ssh/sshd_config
+ 
 ***52.00 >>> we are deploying from maven to tomcat
 this is the absolute path starting the root directory
   sh /opt/tomcat9/bin/startup.sh
 this is the relative path starting the pwd
 sh startup.sh 
+
+ TO check if my server is listening and to get my ipaddress 
+curl ifconfig.io
+curl ifconfig.me
+
 
 
 
@@ -94,10 +101,10 @@ we see the file copied into the webapp dir
  
 we want to copy the file from our build server maven to tomcatserver
 secure copy
-if my server is not password authentication enabled
+A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key
 we run the scp command in maven                                  
-scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/
-if password authentication is enabled
+scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/     *war; means all war files
+B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server)
  we run this:   scp target/*war ec2-user@34.219.51.216:/opt/tomcat9/webapps/  
 
 
