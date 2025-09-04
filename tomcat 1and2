@@ -65,9 +65,9 @@ Tomcat or Apache Tomcat is a light weight, open source web container  used to de
 it is developed by Apache software foundation (ASF)
 
 
-WHAT IS WEBSERVER?
+WHAT IS WEBSERVER?    eg  nginx , apache 
 A webserver is a program that uses HTTP (Hypertext Transfer Protocol) protocol to serve web content (HTML and static content) to users.
-
+                                                                          static content & images 
 Examples;
 Apache HTTP server
 Nginx (pronounced engine X) 
@@ -611,13 +611,20 @@ and it will now request for password : Admin123
 
 **************
 
-2:04:00
-***** if no PW authentication & am only allowed to use private key
-1) search for private key file 
- 2:07:10   
+     To DEPLOY USING SSH KEY FOR AUTHENTICATION
+i) vi  keyname = vi key33.pem
+ii) chmod 400 key33.pem
+ii) scp -i key33.pem target/tesla.war ec2-user@3.90.51.187:/opt/tomcat/webappps/app.war
+when we check list of application on gui we can see app.war
 
-   scp -i' key33.pem
- scp -i key33.pem target/tesla.war ec2-user@3.90.51.187:/opt/tomcat/webappps/app.war
+
+2:04:40
+***** if no PW authentication & am only allowed to use private/ssh key
+1) search for private key file 
+2) inmaven server; vi in key33.pem , paste, save & quit
+3) run the chmod 400 key33.pem
+ scp -i maven.pem target/tesla.war ec2-user@18.223.16.218:/opt/tomcat/webapps/app.war     *** app.war means when we deploy the file will be/converted app.war
+ 
 ***** 2:07:48 **** this command means 
 i want to copy a file found in the target dir
 the file name is tesla.war
@@ -629,12 +636,7 @@ the path to where the file will be deployed: /opt/tomcat9/webapps/app.war"      
 
 
 
-   To DEPLOY USING SSH KEY FOR AUTHENTICATION
-i) vi key33.pem
-ii) chmod 400 key33.pem
-ii) scp -i key33.pem target/tesla.war ec2-user@3.90.51.187:/opt/tomcat/webappps/app.war
-when we check list of application on gui we can see app
-
+  
 
 
 2:22 
@@ -648,14 +650,13 @@ when we check list of application on gui we can see app
 
 cd opt
 
-
-
-                       HOT FIX
+***** 2:11:51         HOT FIX   (to change/correct the information we see in the deployment; ie once we deploy, in tomcat on our browser, click "list app" to see the deployed file ie tesla.war) 
+                                         ie vi into the dir (tesla/jsp)to do the hotfix
 ls /opt/tomcat9/webapps/
 ls /opt/tomcat9/webapps/tesla
 ls /opt/tomcat9/webapps/tesla/jsps/
 then vi /opt/tomcat9/webapps/tesla/jsps/
-scroll to the section where the caption needs connection and change it
+scroll to the section where the caption needs correction and change it
 
 on the list of application
 we can stop, reload, undeploy 
@@ -668,21 +669,32 @@ dir and when it gets there its a automatically extracted which means it is unpac
 when we deploy 
 ls /opt/tomcat9/webapps/
 app app.war does examples host-manager manager maven-web-app maven-web-app ROOT tesla  teslar.war
+ls /opt/tomcat9/webapps/tesla
+jsps imagesMETA-INF
 
 
 2:25 latency
-  
+WE ARE able to create instances anywhere in the world, the reaseon why  we use server resources in Aws is to give us that leverage
+because you can be in lagos & launch ur instances in N virginia, & if ur cutomers are in N vitgina/US theres no problem in terms of latency 
+Also if we are dealing with if we are using t2- micro instance & thers no t2 micro instance in Ohio/stocolm, u cant say there and say u want to use stolcom, in that way ur trying to 
+implementtraditional computing that was done many yrs ago b4 the advent & the evolution into cloud computing
+the cloud permits u to leverage your customer base from around the world.
+ICT has mystify proximity interms of how you are able to have access to diff resources.
+
+
                                    AWS/GCP/AZURE/ONPREM 
  Redhat  linux server   >>>      ec2 Redhat! address     !    }
                                  instance  !  ports      !    }  this is the cloud environment
 Software   >>>>>>>>>>>>>>>       tomcat9   !   o-65536   !    }
 
 
-1) example of cloud providers can be launched in : aws
+example of cloud providers that can be launched 
+1)aws
 2) Gcp
 3) Azure
 
-  OR i can own my on system and called it onprem system 
+ i Can launch my server in any of the cloud providers OR i can own my on system and called it onprem system 
+eg launched in Aws
 a) once i launch my server 
 ****** then i give myserver a name  1) the name of my server can be ec2Redhat instance                 ****redhat is a linux server
 3) i install a tomcat9 software 
@@ -723,7 +735,7 @@ maven is also down
 
 1) multiple request on a single tomcat server will affect performance
 2)  Multiple deployments will reduce tomcat server performance.
-  therefore its recommended  tohave multiple tomcat server 
+  therefore its recommended  to have multiple tomcat server 
 3) The resource level or computing capacity OF your tomcat server   
      8GB RAM,   480GB Hard drive HDD  is better than 64GB RAM,  4000GB Hard drive SSD   
 
