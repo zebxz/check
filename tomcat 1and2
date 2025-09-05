@@ -556,7 +556,7 @@ we want to deploy the app from maven to tomcat
 we want to copy the file from our build server to tomcatserver
 
   ****1;55;13  secure copy
-A)if my server is not password authentication enabled,   *** we have to configure to use the private/ssh key
+A)if my server is not password authentication enabled,   *** we have to configure to use the private/ssh key  *** see git4 1.22; for how to generate key)
 we run the scp command in maven                                  
 scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/
 B)if password authentication is enabled                                   *******(PW authentication has to be configured in both tomcat & maven server)
@@ -618,7 +618,7 @@ when we check list of application on gui we can see app.war
 
 
 2:04:40
-***** if no PW authentication & am only allowed to use private/ssh key
+***** if no PW authentication & am only allowed to use private/ssh key   *** see git4 1.22; for how to generate key)
 1) search for private key file 
 2) in maven server; vi in key33.pem , paste, save & quit
 3) run the chmod 400 key33.pem
