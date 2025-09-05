@@ -161,16 +161,53 @@ by using the ? web flag
 
 
 
-TOMCAT                   ****unresolved...
+TRANSFERRING FILES FROM MAVEN TO TOMCAT  (SOLVING PASSWD ISSUE & KEY FORMAT ISSUE) 
+
+1)USING PASSWD                 ****unresolved...
  DePLOYING FROM SERVER TO SERVER (Maven to tomcat)    **** i was not successful got error..   error in libcrypto
                                                                   &  scp -i sea.pem target/tesla.war ec2-user@18.223.16.218:/opt/tomcat9/webapps/app.war
                                                                      ec2-user@18.223.16.218: Permission denied (publickey,gssapi-keyex,gssapi-with-mic) scp: Connection closed
 
-
-
-TRYING TO TREANSFER FILE/PACKAGE from maven to tomcat using ssh key
-error in libcrypto 
+2)USING SSH KEY    *** Resolved
+got this error; "error in libcrypto" ....  *** this mean wrong key format" ie "openSSH, eg id_ed25519" private key format instead of "rsa, eg id_rsa"
 https://serverfault.com/questions/939909/ssh-keygen-does-not-create-rsa-private-key
+ Solution:
+1) download new rsa key =  ssh-keygen -m PEM -t rsa
+2)New keys with OpenSSH private key format can be converted using ssh-keygen utility to the old PEM format.
+ssh-keygen -p -m PEM -f ~/.ssh/id_rsa     **** I ran this but it only requested to change pass phrase
+OR
+cd ~/.ssh
+ssh-keygen -e -m PEM -f id_rsa > id_rsa.pub.pem      **** This said unsupported format
+
+** applying option1 above)
+[ec2-user@maven ~]$ ssh-keygen -m PEM -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa):
+Enter passphrase for "/home/ec2-user/.ssh/id_rsa" (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/ec2-user/.ssh/id_rsa
+Your public key has been saved in /home/ec2-user/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:VLwU3yUJmjzOK3Z31fdk76c+rTw4cFCOJVVzRXMjm+E ec2-user@maven
+The key's randomart image is:
++---[RSA 3072]----+
+|         .ooo=+=B|
+|         o+++.*=+|
+|        ..=B.E.  |
+|       . o+..   .|
+|        S o.    *|
+|          ...  ++|
+|        o oo....o|
+|       . o .ooo.o|
+|             o==o|
++----[SHA256]-----+
+[ec2-user@maven ~]$ cat /home/ec2-user/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBBzOi2Ntn7I5XAnj1vLA9pcDD2R3vP2zQqmICC5qndLPsJrfgqjrQc+cejldfIeAMHj0c8I2FUTNzB/NcXZFz8vWLQGPtippC6+Uc/2jLmoa57giBUSkxKnPeOtm4JncLF1blBJZSD+QdbfIeasFiTVvGos01bUpEUe/+CDGgMXPd6RANuuPPl045kDhZ0YJUEQJX56PR
+STQPuL1O48eZvF5jXgTS6vxnVfU/pNB/x0y++0YrV6DjE/OXE1ZqUmK97P5HyG25lEPMwQTtEoKjNqCw8D/GZvgIOG2QxQyEKyGUiiITXc/byZmQjXEkygdv0paq+y/aOD0XCyAfd9Kci82syk5HiJwdF6byiPTuSR58GBmdU3OGP5tpLQ3TSb4pxB4KRpM9xVXV/Or/2RKYQ/stB+jkr3JCHH2rYd5aP3reynIcW/CqIqK7YI
+V6PQhmMEFikurVV/iTadQmiYM/sZ79Q2TTa4DQUFiDFSu4eeJCf8+Po0lkVef05xC5ULk= ec2-user@maven
+
+
+
 
 
 
