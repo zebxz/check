@@ -1,6 +1,16 @@
 LINUX , scripting, git , maven, tomat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR TEST & BUILD creates the packages & artifacts, TOMCAT for deployment, 
 
+GIT
+Authentication/Verification is only required each time to run "git push " command (nt sure if it request for passwd to add a repo for the first time)
+***BUT; to automate the verification process there are 3 options but ssh url is the best; 1)generate a token classic in github(lasts >30days) OR 2)generate ssh key and use ssh url or 3) http url
+ this was the case when we were still in class but when in 2025 during my revision, the authenticatin wa sychronized by the system ie i was directed straight to github to be authenticated(i think with authentication app code)
+but tomcat;
+authentication is required to transfer files/package from maven to tomcat
+ WAYS TO DEPLOY IN TOMCAT 1) UPLOADING STRAIGHT TO TOMCAT DIRECTLY FROM MY COMPUTER; if i already saved file/artifact in my computer then in tomcat on my browser ie (tomcat gui)click on deploy 
+ option2)       DePLOYING FROM SERVER TO SERVER; A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key 
+B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config
+
 
 
 webserver expects traffic to come on http or 443,
@@ -92,8 +102,9 @@ therfore; we comment on the line, thereby changing the configuration such that o
 
 
  WAYS TO DEPLOY IN TOMCAT 
-1) already saved file/artifact in my computer
-so on my browser click on deploy then in mobaxterm(CLI)
+1) UPLOADING STRAIGHT TO TOMCAT DIRECTLY FROM MY COMPUTER 
+if i already saved file/artifact in my computer
+so on my browser ie (tomcat gui) click on deploy then in mobaxterm(CLI)
 ls   /opt/tomcat9//webapps                                                                                  
 we see the file copied into the webapp dir 
 
@@ -104,7 +115,7 @@ secure copy
 A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key
 we run the scp command in maven                                  
 scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/     *war; means all war files
-B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server)
+B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config
  we run this:   scp target/*war ec2-user@34.219.51.216:/opt/tomcat9/webapps/  
 
 
