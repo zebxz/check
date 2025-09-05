@@ -112,7 +112,7 @@ we see the file copied into the webapp dir
  
 we want to copy the file from our build server maven to tomcatserver
 secure copy
-A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key
+A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key  ***  ssh-keygen -m PEM -t rsa
 we run the scp command in maven                                  
 scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/     *war; means all war files
 B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config
