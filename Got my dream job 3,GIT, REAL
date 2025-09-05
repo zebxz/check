@@ -82,7 +82,7 @@ Tells us how many remote repository we are managing
 to add a repository  URL in our local environment 
  *****     git remote add paypal https://github.com/zebxz/paypal     ( ie this repository url is been replaced by paypal "the alias name i created in  in my local enveiroment )
 i had to use: git remote add pay https://github.com/bibiblee/pay    (Because zebxz/paypal refushed to accept the push 
-     i just realised that it sthe "pay" before https thats the aiiasname not the last pay
+  ***frm git4 1.21*    i just realised that it sthe "pay" before https thats the aiiasname not the last pay
 ************* at this point when we check in github, we cant see anything like the new version of the app in github/remote repository
 we want our developers to collab with each other so we have to push
 
@@ -409,7 +409,7 @@ CONNECTING TO SCM/GITHUB USING SSH KEY  *** meee*** bc a password is always requ
 
 This automates your authentication access to github ie no need for password PAT
 
-        CEATING SSH KEY, to automate your authentication access into github  ( and copy to your github account) *** **** 1:50:00, you can use the key with any of your rrepositories
+    ***1.21.26    CEATING SSH KEY, to automate your authentication access into github  ( and copy to your github account) *** **** 1:50:00, you can use the key with any of your rrepositories
 ls/home/ec2-user/.ssh      **** he said he has a file called .ssh
  to create ssh key:   ssh-keygen  
 the key has been created
@@ -418,9 +418,9 @@ then  ls/home/ec2-user/.ssh
 cat  /home/ec2-user/.ssh/id_rsa.pub
 *** 1:23:03 copy the key and paste in SSH tray in github then add the key 
 *** 1:24:37 copy ssh url in github (find it in "code" in github)
-****1:26;19 create an alias name for ssh url = Ada
+****1:26;19 create an alias name & add to the ssh url = my alias is; Ada
 ssh url = Ada git@github.com:zebxz/paypal.git
-git remote add Ada git@github.com:zebxz/paypal.git
+Add url in git; git remote add Ada git@github.com:zebxz/paypal.git
 to push = git push ada master ( Ada now replaces the repo aliasname which we used that requested for pw initially)
 
 
@@ -468,7 +468,7 @@ you slot the key in the lock & you have access
 
 
 ************************************************************************************************************************************************
-pplications are the output of softwares
+Applications are the output of softwares
 Applictaions are developed by developers
 ******* SOFTWARE Engineers and developers develop applications
 
@@ -491,6 +491,15 @@ so before we even submit the codes from our local env to scm, GIT  is already in
 
 
 GIT SUMMARIZED
+****i think because am using recovery codes to login, git didnt verify me by requesting a passwd when i ran the "git push" command but i did global configuration (nt sure if it request for passwd to add a repo for the first time)
+*** to automate the verification process there are 3 options but ssh url is the best; 1)generate a token classic in github(lasts >30days) OR 2)generate ssh key and use ssh url or http url
+we run git add to move files from the WORKING AREA (workshop) to >>> staging >> & to move from the STAGING AREA (show room) to >>the local repo, we run git commit & a good commit msg is recommended as well & finally we run the git push to move from the local repo >> 
+to the REMOTE REPO, and this enables collaboration between our developers
+for data intergrity,ie for tracking who did what you have to be authenticated with the command; global configuration to do first commit
+  global configuration  ==  git config -- global usre.email "your email address'
+                            git config  --- global user.name "yourname"
+
+
 *** start
 
   APPLICATIONS ARE THE OUTPUT FROM SOFTWARES
@@ -518,7 +527,7 @@ then share login details with Developers/Team [ userName/password ]
 NEXT with the Git already installed we create directories for dev, Initialise this directory to keep track of 
    any change or changes in the files/codes  ... by running git init, Git init creates a local repository and initializes the project directory
 create a directory for Development  and  inorder to To move files from our local repository  to >>>> the Remote repository we created in github, we run "git remote add and the remote repo url"
-   we run git add to move files from the WORKING AREA (workshop) to >>> staging >> & to move from the STAGING AREA (show room) to >>the local repo, we run git commit & a good commit msg is recommended as well & finally we run the git push to move from the local repo >> 
+ we run git add to move files from the WORKING AREA (workshop)to >>> staging >> & to move from the STAGING AREA (show room) to >>the local repo, we run git commit & a good commit msg is recommended as well & finally we run the git push to move from the local repo >> 
 to the REMOTE REPO, and this enables collaboration between our developers.& to do a push you must be authenticated so to avoid the continous prompt requesting for a PW, we automate the authentication by configuring an ssh key,so we CONNECTING TO SCM/GITHUB USING SSH KEY.
  Also for for data intergrity,ie for tracking who did what you have to be authenticated with the command; global configuration to do first commit.
   global configuration  ==  git config -- global usre.email "your email address'
