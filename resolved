@@ -169,6 +169,8 @@ TRANSFERRING FILES FROM MAVEN TO TOMCAT  (SOLVING PASSWD ISSUE & KEY FORMAT ISSU
                                                                      ec2-user@18.223.16.218: Permission denied (publickey,gssapi-keyex,gssapi-with-mic) scp: Connection closed
 
 2)USING SSH KEY    *** Resolved
+[ec2-user@maven ~]$ ssh-keygen
+generating public/private ed25519 key pair    ******** but later on i got error with the scp command to transfer the file bc this key is the wrong key format 
 got this error; "error in libcrypto" ....  *** this mean wrong key format" ie "openSSH, eg id_ed25519" private key format instead of "rsa, eg id_rsa"
 https://serverfault.com/questions/939909/ssh-keygen-does-not-create-rsa-private-key
  Solution:
