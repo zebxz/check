@@ -215,13 +215,23 @@ sudo  yum install java-21-openjdk-devel  -y
 java -version
 git --version
 
+**** finally 
+Set Environmental Variable - For Specific User eg ec2-user
+vi /home/ec2-user/.bash_profile
+OR 
+~ : represents the home of any user 
+vi ~/.bash_profile  # and add the lines below
+export M2_HOME=/opt/maven
+export PATH=$PATH:$M2_HOME/bin
+
+
 
 ** based on our linux file structure, the "opt directory is recommended for installing packages 
             cd/opt
 
 for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
 ***1.01.00
-why do w need git
+why do we need git
 we are trying to create our maven server bc we are using maven for test and build 
 so when developers push the code, we need maven ie our build server to clone the code 
 therfore the git plugging has to be installed for us to be able to run git commands 
@@ -747,6 +757,22 @@ we have established that when developers are writing code 3things are involved
 3) build scripts 
 TO AUTOMATE TESTING, WE ARE GOIN TO ADVICE DEVELOPERS 
 TO integrate (the tool)selenium in their environment such that these unit test cases can be easily written and run
+
+
+
+** based on our linux file structure, the "opt directory is recommended for installing packages 
+            cd/opt
+
+for our test and build, we are using maven which clone our codes and for maven to run codes the git clone has to be installed as well 
+***1.01.00
+why do we need git
+we are trying to create our maven server bc we are using maven for test and build 
+so when developers push the code, we need maven ie our build server to clone the code 
+therfore the git plugging has to be installed for us to be able to run git commands 
+Also, we are installing the prerequisite software; java
+java must be installed for maven to run
+
+
 
 
 
