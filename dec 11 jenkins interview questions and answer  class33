@@ -8,8 +8,8 @@ Authentication/Verification is only required each time to run "git push " comman
 but tomcat;
 authentication is required to transfer files/package from maven to tomcat
  WAYS TO DEPLOY IN TOMCAT 1) UPLOADING STRAIGHT TO TOMCAT DIRECTLY FROM MY COMPUTER; if i already saved file/artifact in my computer then in tomcat on my browser ie (tomcat gui)click on deploy 
- option2)       DePLOYING FROM SERVER TO SERVER; A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key 
-B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config
+ option2)       DePLOYING FROM SERVER TO SERVER; A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key (scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps)
+B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config ( the command to transfer ;ssh -i key 33.pem ec2-user@maven public ip)
 
 
 
