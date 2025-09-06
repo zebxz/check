@@ -236,6 +236,17 @@ scp: Connection closed
 #HostKey /etc/ssh/ssh_host_ecdsa_key
 #HostKey /etc/ssh/ssh_host_ed25519_key
 *****************************************************************************************************
+Resolving "Authentication Agent Not Found" Error
+https://www.bing.com/search?q=Could+not+open+a+connection+to+your+authentication+agent.&cvid
+
+[ec2-user@maven ~]$ ssh-add ~/.ssh/id_ed25519              ************ tried to add but error
+Could not open a connection to your authentication agent.
+[ec2-user@maven ~]$ Could not open a connection to your authentication agent.
+-bash: Could: command not found
+[ec2-user@maven ~]$ ssh-agent -s
+SSH_AUTH_SOCK=/tmp/ssh-XXXXXXIdAK0E/agent.104674; export SSH_AUTH_SOCK;
+SSH_AGENT_PID=104675; export SSH_AGENT_PID;
+echo Agent pid 104675;
 
 
 https://www.bing.com/search?q=what+does+the+ssh-copy-id+command+do&qs
