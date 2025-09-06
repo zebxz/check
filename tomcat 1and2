@@ -571,10 +571,13 @@ A)   .......... Enable PW authentication
 to access my maven server 
 1) in mobaxterm, i opened another tab and cd documents where my key is 
 2) ssh -i key 33.pem ec2-user@maven public ip
-3) git clone https://github.com/landmaktechnology/maven-web-application
-3) Rename : mv maven-web-application/ mwa
-4) cd mwa
-5) copy our tomcat server in maven 
+3)mkdir java-project
+4) git clone https://github.com/landmaktechnology/maven-web-application
+5) Rename : mv maven-web-application/ mwa
+6) cd java-project  & cd mwa
+7)mvn package
+8)ls  .. we see target dir
+9) copy our tomcat server in maven 
 scp target/*war ec2-user@publicip:/opt/tomcat9/webapps
 But we got permission denied  bc we are trying to copy with the command for a pw authenticated server but our server is not PW authenticated. buti tried the command for server thats nt PW authenticated but it didnt work as well.
 
@@ -586,7 +589,7 @@ and change paswd authentication fron no to yes
 3) then assign PW for ec2-user 
 sudo passwd username 
 sudo passwd username 
-sudo passwd ec2-user =Sunnybaby123
+sudo passwd ec2-user =brightday123
 
 Also; Tomcat is the receiving server, so it has to have password authenticated for it to work 
 because we are trying to access our tomcat using password so 
