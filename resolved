@@ -160,6 +160,10 @@ we build by choosing that particular profile
 by using the ? web flag
 
 
+                                                                     TOMCAT
+
+
+
 
 TRANSFERRING FILES FROM MAVEN TO TOMCAT  (SOLVING PASSWD ISSUE & KEY FORMAT ISSUE) 
 
@@ -219,8 +223,56 @@ scp: Connection closed
 Converting keys with opensll format
 https://phoenixnap.com/kb/ssh-permission-denied-publickey
 https://stackoverflow.com/questions/36300446/ssh-permission-denied-publickey-gssapi-with-mic
-ssh-copy-id -i ~/.ssh/id_rsa.pub ec2-user@maven
+The ssh-copy-id command transfers the public key to a remote server, enabling passwordless login. Syntax
+ssh-copy-id -i ~/.ssh/id_rsa.pub ec2-user@maven      ***** ran this but permission denied
+*** i dnt even think thats the issue bc each time i run the scp" command i get this ( as seen below): and it means that the key was added to my authorized keys as seen below as well from my "/sshd_config" files; i bliv its the format of my key   
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes                                                                                           my computer changes it once it saves it (i think the file shud be white not blue)
+Warning: Permanently added '3.150.123.124' (ED25519) to the list of known hosts.
+ec2-use@3.150.123.124: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+scp: Connection closed
 
+/sshd_config; file
+#HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_ecdsa_key
+#HostKey /etc/ssh/ssh_host_ed25519_key
+*****************************************************************************************************
+
+
+https://www.bing.com/search?q=what+does+the+ssh-copy-id+command+do&qs
+SSH ID refers to the SSH key pair used for secure authentication in SSH (Secure Shell) connections. It consists of a private key (kept secret) and a public key (shared with remote servers). These keys enable passwordless login by verifying
+the user's identity cryptographically.
+The ssh-copy-id command simplifies the process of setting up public key authentication by copying the public key to a remote server's ~/.ssh/authorized_keys file. This eliminates the need to manually edit files and ensures proper permissions.
+
+Generating SSH Keys
+
+To create an SSH key pair, use the ssh-keygen command:
+
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+-t rsa: Specifies the RSA algorithm.
+
+-b 4096: Sets the key size to 4096 bits for stronger encryption.
+
+-C: Adds a comment (e.g., your email) for identification.
+
+
+
+
+https://www.bing.com/search?q=what+is+ssh+add+command&cvid
+Using ssh-add in Linux
+The ssh-add command is used to add private key identities to the authentication agent, ssh-agent. This allows you to manage your SSH keys more efficiently by loading them into memory, so you don't have to enter the passphrase every time 
+you use the key.
+Common Options for ssh-add
+
+-l: Lists fingerprints of all identities currently represented by the agent. ssh-add -l
+
+-L: Lists public key parameters of all identities currently represented by the agent. ssh-add -L
+
+-d: Removes identities from the agent. If run without arguments, it removes the keys for the default identities. ssh-add -d
+
+-D: Deletes all identities from the agent. ssh-add -D
+
+-t life: Sets a maximum lifetime when adding identities to an agent. The lifetime may be specified in seconds or in a time format. ssh-add -t 3600 ~/.ssh/id_ed25519
+  
 
 
  From bootcamp Dec26 
