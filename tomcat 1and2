@@ -302,7 +302,7 @@ sudo chmod 777 -R /opt/tomcat9            1.05.58********** ( but we did 775)
 sudo chown ec2-user -R /opt/tomcat9                 right now its owned by root to avoid issues like not the the onwer we change it to ec2-user 
 change user to avoid access denied
 now when we ll, we can see  user has changed from root to ec2user
-### next start tomcat with symbolic link
+### next we can start tomcat with absolute/relative path BUT we will create a symbolic link to automate it from anywhere
 ls, 
 tomcat9
 cd tomcat9/, 
@@ -314,10 +314,12 @@ in the bin dir these are files we can use to start tomcat
 eg
 catalina.sh, startup.sh
 so to start tomcat = sh /opt/tomcat9/bin/startup.sh
-to start tomcat frm anywher :
+Now we create link to start tomcat frm anywher :
 sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     **(this can be any name at all)
 sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
 sudo su - ec2-user
+then starttomcat
+
 
 cd opt, cd tomcat9
 
