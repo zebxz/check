@@ -174,8 +174,8 @@ generating public/private ed25519 key pair    ******** but later on i got error 
 got this error; "error in libcrypto" ....  *** this mean wrong key format" ie "openSSH, eg id_ed25519" private key format instead of "rsa, eg id_rsa"
 https://serverfault.com/questions/939909/ssh-keygen-does-not-create-rsa-private-key
  Solution:
-1) download new rsa key =  ssh-keygen -m PEM -t rsa
-2)New keys with OpenSSH private key format can be converted using ssh-keygen utility to the old PEM format.
+1) download new rsa key =  ssh-keygen -m PEM (-t rsa)   **** i dnt think "-t rsa" is necescssary
+2)keys with OpenSSH private key format can be converted using ssh-keygen utility to the old PEM format.
 ssh-keygen -p -m PEM -f ~/.ssh/id_rsa     **** I ran this but it only requested to change pass phrase
 OR
 cd ~/.ssh
@@ -214,9 +214,10 @@ V6PQhmMEFikurVV/iTadQmiYM/sZ79Q2TTa4DQUFiDFSu4eeJCf8+Po0lkVef05xC5ULk= ec2-user@
 ec2-user@18.223.16.218: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
 scp: Connection closed
 
-
-
-
+Converting keys with opensll format
+https://phoenixnap.com/kb/ssh-permission-denied-publickey
+https://stackoverflow.com/questions/36300446/ssh-permission-denied-publickey-gssapi-with-mic
+ssh-copy-id -i ~/.ssh/id_rsa.pub ec2-user@maven
 
 
 
