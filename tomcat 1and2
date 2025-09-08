@@ -865,6 +865,197 @@ ps -ef |  grep httpd
    ######################################################## ################## 
 
 
+            SUMMARIZED FOR INTERVIEW
+
+
+
+LINUX , scripting, git , maven, tomat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
+In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR TEST & BUILD creates the packages & artifacts, TOMCAT for deployment, 
+
+
+
+
+GIT
+Authentication/Verification is only required each time to run "git push " command (nt sure if it request for passwd to add a repo for the first time)
+***BUT; to automate the verification process there are 3 options but ssh url is the best; 1)generate a token classic in github(lasts >30days) OR 2)generate ssh key and use ssh url or 3) http url
+ this was the case when we were still in class but when in 2025 during my revision, the authenticatin wa sychronized by the system ie i was directed straight to github to be authenticated(i think with authentication app code)
+but tomcat;
+authentication is required to transfer files/package from maven to tomcat
+ WAYS TO DEPLOY IN TOMCAT 1) UPLOADING STRAIGHT TO TOMCAT DIRECTLY FROM MY COMPUTER; if i already saved file/artifact in my computer then in tomcat on my browser ie (tomcat gui)click on deploy 
+ option2)       DePLOYING FROM SERVER TO SERVER; A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key (scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps)
+B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config ( the command to transfer ;ssh -i key 33.pem ec2-user@maven public ip)
+
+
+
+webserver expects traffic to come on http or 443,
+when the users are trying to access the appserver they are making some request on the port number either 80 or 443 
+
+
+
+Tomcat port 8080
+we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file;  vi /opt/tomcat9/conf/server.xml***** whenever we change anything in the config file we have to restart tomcat
+To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+next we create tomcat user with access roles: vi or vim  /opt/tomcat9/conf/tomcat-users.xml  
+WE ASSIGN PASSWORD TO MAVEN & TOMCAT SERVER  ( bY COnfiguring password authentication) sudo vi /etc/ssh/sshd_config   
+ 
+***52.00 >>> we are deploying from maven to tomcat
+
+to start/stop tomcat: this is the absolute path starting the root directory
+  sh /opt/tomcat9/bin/startup.sh
+this is the relative path starting the pwd
+sh startup.sh 
+
+ TO check if my server is listening and to get my ipaddress 
+curl ifconfig.io
+curl ifconfig.me
+
+
+
+
+   **** ************************* START
+Summary
+1)Install tomcat 2)verify if tomcat is running 3)if it can receive;curl ifconfig.me  |curlifconfig.io  4)RBAC - role based accesss control;tomcat-user.xml file 5)copy: scp/ scp: 6)performing hot fixes vi /opt/tomcat9/webapps/app/jsps/home.jsp
+7) enhancing/ turning up the performance of our tomcat servers by increase ing the heap size
+
+
+
+APACHE TOMCAT
+Tomcat or Apache Tomcat is a light weight, open source web container used to deploy & run java-based web application.
+it is developed by Apache software foundation (ASF)
+we are managing java based projects - projects that are developed in the java lanaguage
+ ***** ignore; prerequisite; Install java openJDK 1.8+
+tomcat can be installed on any system ... linux, windos
+
+when we do a build, the code will be packaged compiled and artifacts will be created, these packages can be jar/war/ear
+before that can happen we are going to pull the code with the command gitpull/clone and once the build is done w ecan deploy the application to the application sever 
+
+  WHAT IS AN APPLICATION SERVER?
+An application server is a container upon which you can build and expose business logic and processes to client applications through various protocols including HTTP in 
+a n-tier architect
+                       Examples of servers
+Apache Tomcat - Apache, Jboss/wildfly - Redhat, WEblogic - Oracle, websphere Application Server - IBM, Websphere liberty profile - IBM, Galssfish
+                        HOW SHOULD WE EXPOSE APPLICATION TO USERS
+The way we expose these applications to users is important
+
+
+                       MULTI TIER APPL
+ Our Appserver is Tomcat, we do not deploy to one appserver, we are deploying (the application) to multiple appservers all of the servers have tomcat installed & this process is automated with the help of a tool called ansible. 
+Also, The way we expose these applications to users is important
+now to expose this application to users who need to access this application. traffic from the the users is routed to the appserver but for us to manage how traffic is distributed to the appserver we will introduce a security tool which 
+is a webserver, our web server will ensure that the appserver doesnt get traffic directly.
+We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge which is highly risky.
+therfore; an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
+authenticate the user if its the right user. 
+the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
+when traffic comes from enduser, the webserver expects traffic to come on http or 443, so the webserver is listening for the request from users. when ths users are trying
+to access the appserver they are making some request on the port number either 80 or 443 while the webserver is listening for the request to determine if its from the right
+user. if its the right user, it will authenticate the user and route the traffic but if the user is not authenticated it wont route the traffic 
+Also; whatelse is the webserver doing?
+**ignore; lets assume that beyond the appserver, endusers are able to access this account & do diff transaction or create account when they do that they will enter their names, DOB,email. All d data generated in this process has to be captured
+whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
+
+TOMCAT INSTALLATION
+As path of our tomcat installation we are going to create a link to stop & start tomcat from our pwd, ie anywhere 
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat     
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+
+ if you want to access this server its going to be on port 80:80, so we check from our CLI if tomcat server/process is running by
+                                                 curl -v public ip80:80 OR curl -v localhost:8080 OR telnet localhost 8080 
+
+
+we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file 
+Absolute path is vim or vi /opt/tomcat9/conf/server.xml
+we go to section "connector port" make the change then stop and restart tomcat
+
+ TO ACCESS TOMCAT AS A USER  
+  (BY default you can only access and manage tomcat as a local host)
+1) To enable external tomcat mgt access vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
+this file is permitting tomcat to be managed as local host
+therfore; we comment on the line, thereby changing the configuration such that other traffic can be allowed into my tomcat server
+
+2) next we create tomcat users with access roles eg manager role, amdim role, etc: vi or vim  /opt/tomcat9/conf/tomcat-user.xml  
+
+
+ WAYS TO DEPLOY IN TOMCAT 
+1) UPLOADING STRAIGHT TO TOMCAT DIRECTLY FROM MY COMPUTER 
+if i already saved file/artifact in my computer
+so on my browser ie (tomcat gui) click on deploy then in mobaxterm(CLI)
+ls   /opt/tomcat9//webapps                                                                                  
+we see the file copied into the webapp dir 
+
+     option2)       DePLOYING FROM SERVER TO SERVER (Maven to tomcat)
+ 
+we want to copy the file from our build server maven to tomcatserver
+secure copy
+A)if my server is not password authentication enabled    ****** we have to configure to use the private/ssh key  ***  ssh-keygen -m PEM -t rsa
+we run the scp command in maven                                  
+scp -i c32.pem  target/*war ec2-user@tomcat public ip:/opt/tomcat9/webapps/     *war; means all war files
+B)if password authentication is enabled   *** (PW authentication has to be configured in both tomcat & maven server) sudo vi /etc/ssh/sshd_config
+ we run this:   scp target/*war ec2-user@34.219.51.216:/opt/tomcat9/webapps/  
+
+
+
+Tomcat Home directory - THD = /opt/tomcat9
+THD:  is where the tomcat software is extracted & unzipped
+
+        
+    EXPLAINING THE CONTENT OF THE THD
+
+when we ls, we see bin, conf, lib, logs, webapps, temp
+
+      bin :
+ls bin/ contains:
+    bin: --- binary files  (important files like )
+      startup.sh    --->  for LINUX SYSTEM
+
+ls conf/: 
+
+eg of files in conf:
+     server.xml          
+      tomcat-users.xml, users.xml for those that work in the bank
+               contains configuration information about tomcat server, any changes can be done here
+ eg; vi conf/server.xml
+
+lib :
+        contain all the jar files
+
+    logs :   contains log files
+      catalina.out
+      host-manager.log
+eg; vi logs/catalina.out
+
+webapps: The default deployment Directory in Tomcat 
+       its where deployment is taking place 
+       therfore all the war files
+      like maven-web-app.war created from # mvn package 
+       we have to copy to the webapps dir because thats where deployment takes places 
+        cp *.war /webapps
+        cp *war   /
+
+
+
+
+ HOW TO IMPROVE TOMCAT SERVER PERFORMNACE 
+
+1) multiple request on a single tomcat server will affect performance
+2)  Multiple deployments will reduce tomcat server performance.
+  therefore its recommended  tohave multiple tomcat server 
+3) The resource level or computing capacity OF your tomcat server   
+     8GB RAM,   480GB Hard drive HDD  is better than 64GB RAM,  4000GB Hard drive SSD   
+
+  2:39:10
+4) HDD hard drive  is/are of less performnace than SSD
+
+5) HEAPSIZE 
+  We can increase the heapsize of the server 
+Normally, tomcat by default allocates 64mb but we can increase to 128mb/256mb
+  heapsize = 64mb -- 128mb/256mb    
+
+
+
+
+
+
 
 
 
