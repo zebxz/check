@@ -40,7 +40,12 @@ we also access sonar qube, jenkins on the internet/browser because people need t
                START
 ***52.00 >>> we are deploying from tomcat to maven
 
+****the default port addresss for tomcat is 8080 but when we change it  in server.xml, then we hv to configure tomcat server in META-INF/context.xml
+1st enable external tomcat mgt access, bc by default u can only mg8 & access tomcat as local host 
+the file (context.xml) permits tomat to be manged as local host so when it comes to how acces is allowed in tomcat 
+'127' means that tomcat can only be access as local host so to change it we hv to comment 
 
+ 
 
 
 LSS                                                    code build with github                                                 Application
@@ -251,7 +256,9 @@ IQ: What is the d/f b/w JBoss/WildFly and Tomcat?
         Tomcat; web applications ONLY 
 ============================
 
- 
+
+
+
                                               TOMCAT INSTALLATION
 43:40
 
@@ -501,6 +508,13 @@ then stop and restart tomcat
        ***** whenever we change anything in the config file we have to restart tomcat
 
 
+
+****the default port addresss for tomcat is 8080 but when we change it  in server.xml, then we hv to configure tomcat server in META-INF/context.xml
+1st enable external tomcat mgt access, bc by default u can only mg8 & access tomcat as local host 
+the file (context.xml) permits tomat to be manged as local host so when it comes to how acces is allowed in tomcat 
+'127' means that tomcat can only be access as local host so to change it we hv to comment 
+
+ 
 
 1:33:13                          TO ACCESS TOMCAT AS A USER  
                          (BY default you can only access and manage tomcat as a local host)
@@ -966,6 +980,13 @@ sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
 we can change the DEFAULT PORT NUMBER OF TOMCAt in server.xml/configuration file 
 Absolute path is vim or vi /opt/tomcat9/conf/server.xml
 we go to section "connector port" make the change then stop and restart tomcat
+
+****the default port addresss for tomcat is 8080 but when we change it  in server.xml, then we hv to configure tomcat server in META-INF/context.xml
+1st enable external tomcat mgt access, bc by default u can only mg8 & access tomcat as local host 
+the file (context.xml) permits tomat to be manged as local host so when it comes to how acces is allowed in tomcat 
+'127' means that tomcat can only be access as local host so to change it we hv to comment 
+
+ 
 
  TO ACCESS TOMCAT AS A USER  
   (BY default you can only access and manage tomcat as a local host)
