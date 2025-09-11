@@ -62,23 +62,53 @@ It is used to transfer files from one server to another and vice -versa
 it is good for data migration, application & deployment etc
 scp transfer files & directory securely using the ssh protocol..
 
-TRANSFER/COPY FILES FROM MY WINDOWS TO LINUX SERVER 
-***1:47:03 ... let me open a local terminal, ie open a new tab and (ssh -i "yes.pem" ec2-user@ec2-18-223-16-218.us-east-2.compute.amazonaws.com)
+****1:41:20 ... remember we already cat  -7 /etc/passwd" To see how many users we have 
+then assign passwsd to "user cecilia" 
+sudo passwd cecilia
+then sudo su - cecilia
+
+**** 1:51: 19 ....... we are able to copy bc our server is already configured for password authentictaion but if not then we use the ssh key command
+
+TRANSFER/COPY FILES FROM MY WINDOWS TO LINUX SERVER (USING PASSWD OR SSH KEY)
+***1:47:03 ... in mobaxterm, let me open a local terminal, ie open a new tab and (ssh -i "yes.pem" ec2-user@ec2-18-223-16-218.us-east-2.compute.amazonaws.com)
 this is my computer , this is nt any linux server 
 this is my mobaxterm local terminal, so this is inside my computer, my windows system
 i want to computer a file frm my computer to my linux server
 
+1) COPYING USING PASSWORD 
+FILE :
 scp filename username@ip:/path/to/dir
-eg = scp app.yml cecilia@44.208.35.48:/home/cecilia     **** that is frm my computer to my linux server (inside my linux server home dir)
+eg = scp app.yml cecilia@44.208.35.48:/home/cecilia     **** that is frm my computer to my linux server (inside my linux server "cecilia home dir) where the fie will be saved in 
 am prompted to input the cecilia/linux server password & once i input that the file is copied.
+ DIR :
+HE also copied dir in gitbash to his linux server  ***** me  (gitbash is also nt a inux server bc we use it for versioning so we dnt need to create any linux server for gitbash)
+scp -r dirname simon@ip:/home/dir simon
+eg:   scp apps cecilia@44.208.35.48:/home/c
 
 
-TRANSFER DIRECTORY FROM YOUR WINDOWS SYSTEM TO YOUR LINUX SERVER     ****1:49:40
-  server configured for passwd:  scp -r dirname username@ip:/home/dir simon
-                             eg:   scp apps cecilia@44.208.35.48:/home/c
 
-server configured for ssh key:   scp -r -i key.pem dirname username@ip:/home/dir simon
+     ****1:49:40
+2) USING SSH KEY ( NOT PASSWORD AUTHENTICATED)
+ FILE: scp -i keyname filename username@ip:/path/to/dir
+        scp -i key.pem app.yml cecilia@44.208.35.48:/home/cecilia
+                             
+DIR:   scp -r -i key.pem dirname username@ip:/home/dir simon
                                   scp -r -i key.pem -r dirname username@ip:/home/dir simon
+                                    scp -r to copy a dir, -i to pass a key, 
+
+
+
+TOMCAT
+PASSWD: scp target/tesla.war ec2-user@18.223.16.218:/opt/tomcat9/webapps/app.war
+SSH KEY:   scp -i maven.pem target/tesla.war ec2-user@18.223.16.218:/opt/tomcat/webapps/app.war
+i want to copy a file found in the target dir
+the file name is tesla.war
+i want to identify myself in the receiving server as ec2-user ie the name of tomcat user, the ip address is 3.90.51.187; ie my public ip for tomcat server is 3.90.51.187                                       
+the path to where the file will be deployed: /opt/tomcat9/webapps/app.war"              ****** the file name is app.war  & *** the env we are deploying to webapps dir
+  it is converting tesla.war to app.war
+
+
+
 
 LINUX
 ****** administrator is called root user
@@ -107,6 +137,10 @@ https://the earth.li/-sgtatham/putty/latest/w64/putty-64-bit-0.74-installer.msi
 iii) Gitbash and powershell
 
 
+users : to know users connected to my server
+who:  to list users connected to my server, from where an since when.
+hostname : to check hostname 
+ssh : secure shell, its the protocol to use to connect to linux server  *** linux 1
 
 
                                                  LINUX 2
