@@ -1,4 +1,4 @@
-    CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, connecting to server with private key and password  and internally (su -)
+    CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION,  CONNECT EXTERNALLY USING PASSWORD, EXTERNALLY USING PRIVATE KEY, CONNECT INTERNALLY(su -)
 ******************    by default user's can ONLY connect to aws ec2 linux servers using ssh-private-Key
  
 QUESTION:
@@ -86,8 +86,8 @@ IQ: How can users access an ec2- Linux instance/server externally using password
 
 
 
-                                     CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, 
-                       this will enable me to connect to my server from an external source 
+  1:22:00                                   CONFIGURE/SETUP YOUR SERVER FOR PASSWORD AUTHENTICATION, 
+                      ( this will enable me to connect to my server from an external source )
 this is good in situation where 2 or more members at diff location need access to work on the same server 
 once i have created account for the user and assigned passwd, i then need to configure the server to accept password so the users can hv access
 
@@ -119,36 +119,42 @@ METHOD2:
 6. To connect externally:
  ssh username@ipaddress         OR
 ssh username@hostname
-
-                                          i bliv this is (CONNECT EXTERNALLY USING SSH)
-A)our external source we are using to connect:
-opening a local terminal on the same mobaxterm he : *********************  Go to terminal >>>>>   open new tab   >>>>>> detach 
+                                                       CONNECT EXTERNALLY USING PASSWORD
+                                          i bliv we also use the local terminal to (CONNECT EXTERNALLY USING SSH) eg; ssh -i "yes.pem" ec2-user@ec2-18-223-16-218.us-east-2.compute.amazonaws.com
+A) LOCAL TERMINAL
+opening a local terminal on the same mobaxterm Iie he : *********************  Go to terminal >>>>>   open new tab   >>>>>> detach 
 ssh landmark@52.10.100.198 
 
 ###  then passwd and connected
 
+1:26.00******************* THERFORE, bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server ( i bliv)in their local terminal) by RUNNING  :
+ssh landmark@52.10.100.198  (A above)  
 
-B)while            ( THE DEFAULT CONNECTION USING PRIVATE KEY )  EXTERNALLY 
+
+ ***1:27:00                                      
+                                 
+B)OPEN NEW SESSION
+**** ALSO, with server configured for passwd, any user can go straight to session ,SSH, fill in ip address and username can be (datti), no need to click
+advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLY to server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
+
+
+
+A)while               EXTERNALLY USING PRIVATE KEY ( THE DEFAULT CONNECTION USING PRIVATE KEY ie open new session, input remote host, username & key )  
 *******   1;26:10
 the 1st connection we have on mobaxterm:
 
 [ec2-user@demo~] $  whoami
-ec2-user                                 ********* i am connected externally as ec2-user USING THE private key , no i can internally switch to any user
+ec2-user                                 ********* i am connected externally as ec2-user USING THE private key , afterwhich i can internally switch to any user
 [ec2-user@demo~] $  su - landmark
-[landmark@demo~] $                   ***** i am connected internally as landmark
+[landmark@demo~] $                   ***** i am connected as landmark internally    ***I Dnt need to restart sshd  , 1,25:55
+                                                    then enter landmarks passwd
 
 
-
-******************* THERFORE, bc i hv configured my server for password authentication anybody with the correct paswd can EXTERNALLY connect to my server by RUNNING  :
-ssh landmark@52.10.100.198  (A above)
- 
-                                            
-                                 (CONNECT EXTERNALLY WITHOUT PRIVATE KEY)
-C)**** ALSO, with server configured for passwd, any user can go straight to session ,SSH, fill in ip address and username (datti), no need for 
-advanced ssh seeting jst click ok then it ask for passwd to connect EXTERNALLY to server OR EXTERNALLY connect to my server right in my pwd by RUNNING :ssh landmark@52.10.100.198 
- 
-
-
+               CONNECT INTERNALLY         i bliv this is ******connect to my server using shell or changing shell eg sudo su - ec2-user, when installing tomcat
+[ec2-user@demo~] $  su - landmark
+[landmark@demo~] $                   ***** i am connected as landmark internally
+                ***I Dnt need to restart sshd  , 1,25:55
+                          then enter landmarks passwd
 
 
   7. sudo passwd -l userName  
