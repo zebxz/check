@@ -55,12 +55,55 @@ performance testing : is it performing as desire
 penertration:    To test if anyone can break into  the system  using any username & password
 
 
+         CODE QUALITY TOOLS
+
+code quality  tools
+sonarqube, sonarcloud , resheper, codacy, checkmarks
+
+we have our java projects we are managing in git/github
+src codes : app.java
+JunitTests cases: appTEst.java         10,000 lines of code
+build scripts - pom.xml:                 4,000 unit test cases
+
+
+   maven   = mvn package 
+1) validate    2) compiles   [app.java >>> app.class]     3) testing (run unit testing) pass    4) pacakges will be created
+
+ therfore: there is a quality gate in maven 
+however, it runs unit testing on the number of testcase developers
+have written but most of the time developers will not write the code as desired thats why we need code quality tool to check, but maven doesnt check if
+developers have written the desired number of testcases
+
+
+Using code quality tool quality tool in the same example above 
+ src                  = 10,000l
+Junit -Test-Cases     = 4,000L
+CODE COVERAGE         = 4,000/10000 * 100 = 40%
+Developers have tested ONLY 40% of their job/softwares
+This could result to poor quality software developed
+
+
+
+             CODE QUALITY BENCHMARK
+
+CodeQuality Benchmarks:
+sonarqube/Benchmarking for CodeQuality:
+Standards for CodeQuality :
+  1. code covergae   = 80% plus                  **** eg, 1000lines of code 
+  2. code smells     = less than 5                             standard : 800 Junit -test-cases
+  3. bugs            = 0                                        Actual: 900 Junit-test-cases
+  4. vulnerabilities = 0  
+  5. portability     = high   
+  6. duplicate lines = less than 5%  [ functions ]  
+ 
 
 
 
 
+57:00
 
-
+eg OF code smell is not following the right syntax , writing bad codes with poor syntax, writing codes that are not dynamic , duplicate code or bad code, 
+duplication can be avoided by using function
 
 
 
