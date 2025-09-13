@@ -144,25 +144,6 @@ Standards for CodeQuality :
   6. duplicate lines = less than 5%  [ functions ]  
  
 
-54:50 example of cde smell, writing codes without following certain standards could result to cfe smell
-example of hardcoding: 
-name=paul 
-echo "my name is$name"   ... this code lacks portability bc if u execute this code/run this script u will get "paul"
-BUT
-using a dynamic script
-echo ' WHAT IS YOUR NAME'
- read name    .. *** this variable can take multiple values  (paul, joh, joe etc)
-echo "welcome $name"  
-
-**** so if u dnt make your code to be very dynamic it could result to code smell
-
-
-57:00
-
-eg OF code smell is not following the right syntax , writing bad codes with poor syntax, writing codes that are not dynamic , duplicate code or bad code, AVoid complex code0
-duplication can be avoided by using function
-
-
 
                               COMPARING ACTUAL RESULT AGAINST BENCHMARK
 
@@ -212,14 +193,25 @@ SonarQube comprises of:
        search engine - elasticsearch
        web-server : means we can access sonarqube information on the browser
 
+1:03
+from sonaqube scanner, the codes are sent to the sonarqube server, the server has 4 components, 
+1)compute engine, that calculates and gives us values
+2)search engine; which is elastic search
+3) data base; ie a h2 database
+4) webserver ; which means we can access sonarqube info on the browswer
+this is the architect of sonarqube
+
+ 
+
 1:005
 
-Databases:
+Databases: we have relational and non-relational databases
 1. mySQL = RDS   = Relational databases
   generally data is structured and stored in tables[rows and columns] format         ******* it uses rows and column
-  SQL is a langague use to qwery  RDS.   :
+ ie to say we have mySQL = RDS
+mySQL is a langague use to qwery  RDS.   :
   SQL = structured qwery langaguage  
-  oracle
+ 
 eg of structured databases
     oracle
     mySQL  - OS
@@ -230,11 +222,12 @@ eg of structured databases
     MySQL, Oracle, Microsoft SQL Server, PostgreSQL 
 
 
-    ***** it uses rows and column
-the data is organised, following a specific pattern , where we have serial no, name ID 
+   data is stored ***** using rows and column
 This type of structured is used to prepare report if we are collecting structured data from end users
 
-     USES ROWS AND columns :
+  structured databases   USES ROWS AND columns :
+the data is organised, following a specific pattern , where we have serial no, name,  ID numbers
+for eg; we want to get endusers informations like ; SN, NAME, ID number
 SN    NAME       ID-no
 1001  Paul       LT0147   user1
 1002  Amaka      LT0155   user2  
