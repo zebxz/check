@@ -167,7 +167,100 @@ Code Quality expectations:
 
                   SONARQUBE COMPRISES OF 
 
+SonarQube comprises of:
+  1. sonarqube Scanner: 
+  2. sonarqube server :   This comprises of 
+       Compute engine 
+       database - h2 database
+       search engine - elasticsearch
+       web-server : means we can access sonarqube information on the browser
 
+1:03
+from sonaqube scanner, the codes are sent to the sonarqube server, the server has 4 components, 
+1)compute engine, that calculates and gives us values
+2)search engine; which is elastic search
+3) data base; ie a h2 database
+4) webserver ; which means we can access sonarqube info on the browswer
+this is the architect of sonarqube
+
+ 
+
+1:005
+
+Databases: we have relational and non-relational databases
+1. mySQL = RDS   = Relational databases
+  generally data is structured and stored in tables[rows and columns] format         ******* it uses rows and column
+ ie to say we have mySQL = RDS
+mySQL is a langague use to qwery  RDS.   :
+  SQL = structured qwery langaguage  
+ 
+eg of structured databases
+    oracle
+    mySQL  - OS
+    PostgreSql  - OS
+    MSSQL (MicrosoftSQL)
+    DB2
+    Sybase
+    MySQL, Oracle, Microsoft SQL Server, PostgreSQL 
+
+
+   data is stored ***** using rows and column
+This type of structured is used to prepare report if we are collecting structured data from end users
+
+  structured databases   USES ROWS AND columns :
+the data is organised, following a specific pattern , where we have serial no, name,  ID numbers
+for eg; we want to get endusers informations like ; SN, NAME, ID number
+SN    NAME       ID-no
+1001  Paul       LT0147   user1
+1002  Amaka      LT0155   user2  
+1003  Simon      LT0163   user3  
+1004  Landmark   LT0171   user4 
+1005  Dominion   LT0179   user5
+1006  Isaac      LT0187   user6
+1007  James      LT0195   user7
+
+ 1:09:28 *** Structured data is easy to query
+
+2. noSQL = noRDS = non Relational databases, unstructured data and stopped in JSON format
+  user1 = name/tel/address  
+  user2 = name/ssn/date of birth  
+  user3 = place of birth / profession / tel
+   generally data is unstructured and stored in JSON format  
+
+1:12:20  Examples of databases (which we will be seeing later in the course) that are used to manage non Relational database:
+    MongoDB ---
+    Cassandra
+    CouchDB, 
+    CouchBase, 
+    HBase, 
+    Redis, 
+    Riak, 
+
+Neo4J are the popular NoSQL databases.
+
+***1:10:40  for eg; we have 10 users trying to accses our env and they enter informatipon like this, how can we get this information?
+eg UnStructured data:
+  user1:   FirstName=Simon 
+  user2:   ID=01245
+  user3:   dob=01/01/1980 
+  user4:   tel=12457861
+  user1:   LastName=Amaka 
+  user100: email=100@hotmail.com
+
+
+Using json format we can get the information like this:
+USING Json format to store the users information/data
+users{
+  user1{
+    FirstName: simon 
+  }
+  user2{
+    ID: 01245
+  }
+  user3{
+    dob: 01/01/1980 
+  }
+}
 
 
 
