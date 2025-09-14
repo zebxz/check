@@ -24,6 +24,10 @@ performance testing   is it performing as desire
 5)penertration To test if anyone can break into the system  using any username & password
    44.22  *** these are some of the categories that sonarqube is checking for.
 
+  *******CODE QUALITY
+Code Quality expectations:
+• Duplicated code  ---  avoided using Functions, • Coding standards, • Unit tests, • Complex code, • Comments, • Potential Bugs, • Architecture & Design
+Based on our code quality expactions;
 with sonarqube we can run some analysis ie comparing actual results against the benchmark/standards is analysis:
 1. How many unit test cases were run?
    How many test cases should have been run? 
@@ -52,18 +56,45 @@ Benchmark/standards for a quality Software/application:
 2. Dublicate lines should be less than 5% 
 3. There should be no vulnerabilities in the code [pw=1234] 
 4. Code smells should be less than 5  
+ KEY TERMS OF CODE QUALITY ANALYSIS TO NOTE 
 
-
-example of code smell, writing codes without following certain standards could result to code smell
+  *******ignore   ********* example of code smell, writing codes without following certain standards could result to code smell
 also hardcoding: ie writing scripts that are not dynamic
  code smell is not following the right syntax , writing bad codes with poor syntax, writing codes that are not dynamic , duplicate code or bad code, 
 duplication can be avoided by using function
 
-      
-CODE QUALITY
+     
 
-Code Quality expectations:
-• Duplicated code  ---  avoided using Functions, • Coding standards, • Unit tests, • Complex code, • Comments, • Potential Bugs, • Architecture & Design
+Our Sonar Report depends on:
+1) Rules 
+2) Quality profile 
+3)  Quality gates
+
+9.16
+Quality profiles are collections of rules to apply during an analyis
+for each language there is a default Quality profile.
+ Quality profiles are set of rules that we can use to achieve some specific quality threshold when it comes to quality software using sonar
+**** A meeting is held where the diff members of the team will decide and identify the diff rules that should be applied against our projects
+
+9.45
+Rules are setting desired expectations
+in sonarqube, we hv some rules that have been set by default
+
+
+                DIFF PROJECTS HAVE DIFF RULES
+Rules are codes that have been defined to identify specific issues 
+eg
+Rules can identify if theres a bug in the code or code smell or duplicate lines
+Rules are setting desired expectations , some rules are created by default and we can create customize rules by creating quality profiles and attach rules to them 
+QUALITY GATES
+with quality gates we can set conditions which means that for the software to be classified as a good software it must pass these condidtions
+eg
+if our coverage quality is 90% and there are 10written lines of codes, it means developer should test 9lines out of the 10lines
+Duplicated lines: if duplicates exceeds 5%, sonarqube will fail the check
+if the bug is greater than 2 then theres a problem
+unit test success: if the number of test that passes is more than 95% we are ok
+
+
 
 
 
@@ -115,40 +146,4 @@ THe sonarqube was downloaded with wget and unzipped to extract the software
 Bin dir: binary contains files like sonar.sh to start sonar
 conf dir : conf file like sonar properties where we can change anything 
 
-  KEY TERMS OF CODE QUALITY ANALYSIS TO NOTE 
-
-Sonar Report depends on:
-1) Rules 
-2) Quality profile 
-3)  Quality gates
-
-
-
-9.16
-Quality profiles are collections of rules to apply during an analyis
-for each language there is a default Quality profile.
- Quality profiles are set of rules that we can use to achieve some specific quality threshold when it comes to quality software using sonar
-**** A meeting is held where the diff members of the team will decide and identify the diff rules that should be applied against our projects
-
-9.45
-Rules are setting desired expectations
-in sonarqube, we hv some rules that have been set by default
-
-
-
-
-               DIFF PROJECTS HAVE DIFF RULES
-Rules are codes that have been defined to identify specific issues 
-eg
-Rules can identify if theres a bug in the code or code smell or duplicate lines
-Rules are setting desired expectations , some rules are created by default and we can create customize rules by creating quality profiles and attach rules to them 
-QUALITY GATES
-with quality gates we can set conditions which means that for the software to be classified as a good software it must pass these condidtions
-eg
-if our coverage quality is 90% and there are 10written lines of codes, it means developer should test 9lines out of the 10lines
-Duplicated lines: if duplicates exceeds 5%, sonarqube will fail the check
-if the bug is greater than 2 then theres a problem
-unit test success: if the number of test that passes is more than 95% we are ok
-
-
-
+  
