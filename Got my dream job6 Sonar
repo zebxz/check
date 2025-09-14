@@ -10,7 +10,8 @@ code quality with sonarqube & sonar cloud etc
  in our env we use Sonarqube, sonarqube has to do with software quality 
 we develop the application, we build the appl and it is deployed to the applictaion servers but before the app is deployed we have to perform software testing
 so we use sonarqube for code quality analysis
- there is a quality gate in maven 
+ 1) validate    2) compiles   [app.java >>> app.class]     3) testing (run unit testing) pass    4) pacakges will be created
+therefore; there is a quality gate in maven 
 however, it runs unit testing on the number of testcase developers have written but most of the time developers will not write the code as desired thats why we need code quality tool to check, 
 also for the software testin, maven doesnt check if developers have written the desired number of testcases and tahst why sonarqube is important as well
 
@@ -18,4 +19,42 @@ also for the software testin, maven doesnt check if developers have written the 
 Types of testing that can be performed 
 1)unit testing  [Junit )  : this is done to test individual components, units or lines of a code
 2)functional testing: we test how the code is functioning, how the application is working
+performance testing   is it performing as desire 
+5)penertration To test if anyone can break into the system  using any username & password
+   44.22  *** these are some of the categories that sonarqube is checking for.
+
+with sonarqube we can run some analysis ie comparing actual results against the benchmark/standards is analysis:
+1. How many unit test cases were run?
+   How many test cases should have been run? 
+ COMPARING ACTUAL RESULT AGAINST BENCHMARK
+
+comparing actual results against the benchmark/standards is analysis:
+1. How many unit test cases were run?
+   How many test cases should have been run? 
+
+2. Is our code readable with ease?   ........ AVoid complex code
+    ----> code smells 
+
+3. Is our code portable [ environment independent ]?
+portable code means the code is not environment indenpendent 
+we can run the code in diff environment like diff environment , port environment & test environment
+    -- if not code smells / hard coding 
+
+4. Are there vulnerabilities in the code ?
+    ---> if they are then --- 
+     eg  password is only 4 characters can result in security breach
+
+Therfore we can set our standard/expectation for our code
+
+Benchmark/standards for a quality Software/application:
+1. Code coverage should be greater than 85%  
+2. Dublicate lines should be less than 5% 
+3. There should be no vulnerabilities in the code [pw=1234] 
+4. Code smells should be less than 5  
+
+
+example of code smell, writing codes without following certain standards could result to code smell
+also hardcoding: ie writing scripts that are not dynamic
+ code smell is not following the right syntax , writing bad codes with poor syntax, writing codes that are not dynamic , duplicate code or bad code, 
+duplication can be avoided by using function
 
