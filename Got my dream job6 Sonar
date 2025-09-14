@@ -360,7 +360,7 @@ we must vi pom.xml in maven server and change sonar public again
 
 
 
-  Project for TESLA0045:                  we have an application we are managing for Telsa
+ Project for TESLA0045:                  we have an application we are managing for Telsa
 ======================
 https://github.com/LandmakTechnology/maven-web-application           **** this is the github repository
 
@@ -371,12 +371,15 @@ https://github.com/LandmakTechnology/maven-web-application           **** this i
 The first step
 1. Developers commit/push code to SCM = github   
 2. Test + Build using maven   
-    mvn package 
+        ...    therefore; i need my maven server  up and running then  ls and cd/web
+mvn clean package
 
-3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   :
-   Now my maven server needs to be ups and running then cd/web
-   Then mvn clean package to create artifacts                               ******** 1:37:30
-   Next is to execute code quality analysis therefore we need to integrate our sonarqube in maven using our project file pom.xml
+
+3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   : 
+ for us to execute code quality analysis we need to integrate jenkins....... incomplete statement
+comparing actual result against the benchmark:
+our project has a project file 
+   
      vi into pom.xml in the maven server and enter sonarqube server   
      credentials under the properties tag  
     connect to your sonarQube server from the browser: sonar public Ip : 9000
@@ -386,8 +389,8 @@ The first step
   1:38:52    To execute  COde quality analysis = mvn sonar : sonar           *** mvn sonar:sonar  this is done for maven to connect to the sonar
 comparing actual results against the benchnark/standards
     mvn sonar:sonar   
-         1. goal = Sonar  
-         2. plugin = sonar
+         1. goal = Sonar   ie the first sonar is the goal
+         2. plugin = sonar   **the second is the pluggin
 
 ***** sonar qube public ip and sonarqube portnumber = 9000
 
@@ -397,13 +400,25 @@ comparing actual results against the benchnark/standards
 then we go into maven server
 in maven, cd maven-web-application
 we integrate sonaqube for code quality analysis
-so we vi pom.xml and insert the public ip of sonar
+***1;40...  so we vi pom.xml, search for "property tag"and insert the public ip of sonar
                                 private ip
-then mvn sonar:sonar
+then also in maven  run; mvn sonar:sonar
+we see build is a success
+now in sonar we can refresh and see the project
+if there are issues in the code we can lick on issues and see the issues and how to get the issues fixed
+1;48;06 , when we check our project in sonaqube; the result is a pass
 
-nexus 1:54:00     mvn package , then restart sonar
-mvn sonar:sonar,
-mvn deploy 
+**1.45.15
+when your trying to execute code quality report ie code quality analysis, it could result in some error messages like 
+http error code 400 errors =client side
+400/401/402/403
+not authorized , when entering the wrong passwd
+please check the properties sonar.login and sonar.paaword.
+
+
+  *** end for now nad take questions 
+ in video2 we will see how to set our benchmark
+
 
 
 ******************   SONAR2 
