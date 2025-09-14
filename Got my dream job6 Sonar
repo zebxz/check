@@ -306,6 +306,34 @@ THe sonarqube was downloaded with wget and unzipped to extract the software
 Bin dir: binary contains files like sonar.sh to start sonar
 conf dir : conf file like sonar properties where we can change anything 
 
+/opt/sonarqube  
+SonarQube Home directory = :
+What is the sonarqube home directory?
+This is where the sonarqube Software is extracted = /opt/sonarqube
+wget and unzip 
+    /opt/sonarqube  
+   /opt/sonar
+   /app/sonar
+
+ls
+bin:
+  binary files / sonar.sh 
+  sh sonar.sh [start|status|stop|restart ]  
+  sh /opt/sonarqube/bin/linux-x86-64/sonar.sh [start|status|stop|restart] 
+  sh /opt/sonarqube/bin/linux-x86-64/sonar.sh status     
+
+conf:  
+  sonar.properties
+COPYING  
+data  
+elasticsearch  
+extensions  
+lib  
+logs  
+temp  
+web
+
+
 
 
 
@@ -314,12 +342,65 @@ conf dir : conf file like sonar properties where we can change anything
 #As a good security practice, SonarQuber Server is not advised to run sonar service as a root user, 
 # create a new user called sonar and grant sudo access to manage sonar services as follows
 
+Installation of sonarqube:
+  https://docs.sonarqube.org/latest/requirements/requirements/
+  https://www.sonarqube.org/downloads/
+https://github.com/LandmakTechnology/package-management/tree/master/soarQube-Installation
+
+
+
 must be (sonar sonar) to start and check sonar status
 sh/opt/sonarqube/bin/linux - x86-64/sonar.sh start/stop/status/restart
 when sonar is restarted in AWS, we must start sonar sonar in CLI and after that 
 we must vi pom.xml in maven server and change sonar public again 
 
 
+
+
+  Project for TESLA0045:                  we have an application we are managing for Telsa
+======================
+https://github.com/LandmakTechnology/maven-web-application           **** this is the github repository
+
+1:32:00
+(cd /opt/ , cd sonarqube , in sonar server in CLI , sudo yum install tree -y, when we ls we see the content of sonarqube home dir )
+
+
+The first step
+1. Developers commit/push code to SCM = github   
+2. Test + Build using maven   
+    mvn package 
+
+3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   :
+   Now my maven server needs to be ups and running then cd/web
+   Then mvn clean package to create artifacts                               ******** 1:37:30
+   Next is to execute code quality analysis therefore we need to integrate our sonarqube in maven using our project file pom.xml
+     vi into pom.xml in the maven server and enter sonarqube server   
+     credentials under the properties tag  
+    connect to your sonarQube server from the browser: sonar public Ip : 9000
+      login_username= admin 
+      login_password= admin
+
+  1:38:52    To execute  COde quality analysis = mvn sonar : sonar           *** mvn sonar:sonar  this is done for maven to connect to the sonar
+comparing actual results against the benchnark/standards
+    mvn sonar:sonar   
+         1. goal = Sonar  
+         2. plugin = sonar
+
+***** sonar qube public ip and sonarqube portnumber = 9000
+
+  First in sonar we install sonar and ensure its running
+
+***** 1:36:26 
+then we go into maven server
+in maven, cd maven-web-application
+we integrate sonaqube for code quality analysis
+so we vi pom.xml and insert the public ip of sonar
+                                private ip
+then mvn sonar:sonar
+
+nexus 1:54:00     mvn package , then restart sonar
+mvn sonar:sonar,
+mvn deploy 
 
 
 ******************   SONAR2 
