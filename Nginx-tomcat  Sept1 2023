@@ -1,3 +1,4 @@
+
 disable salinex but its not working
 tried to setup ngnix but it says not suported
 
@@ -29,15 +30,20 @@ so containers are light weight but virtual machines are heavy weight
                                     WHAT IS CONTAINERIZED SERVVER 
 3:13, now we hv this application, in the appl, we hv 3tomcat servers and in each one we hv their public ip address,
 4.40 now we hv this project ngnix
-
-                     
-
-                        Mv tesla.wa tisla.war
-In maven I renamed tesla to tisla
+n this project i have maven web app, hv cloned the application.
+cd maven web app
+ls
+mvn clean
+mvn package to create our packages
+now it has created the package maven web app.war
+so am going to becopying this war files into all my tomcat servers
+so am doing deployment in the webapp dir in tomcat
+8;50 ..... deployed to each of the tomcat server ( one 
 
 It is not  a good practice that when you want to access your application, you access them directly where endusers traffic goes directly to the application server.
 
-Sow we are going to create a proxy ngnix server, so its going to be acting a sour frontend proxy such that end users cannot talk directly, they must go through webserver
+Sow we are going to create a proxy ngnix server, so its going to be acting a sour frontend proxy such that end users cannot talk directly, they must go through the ngnix webserver
+12;45 ... now we go to the ngnix webserver we launched in aws
 
 Install ngnix
 1)	We want to install ngnix to act as a proxy which implies that enduser traffic will be routed by the ngnix webserver so ngnix is acting as a load balancer, he receives the traffic from clients/endusers and route it to our backend application and our application will talk to our data bases
