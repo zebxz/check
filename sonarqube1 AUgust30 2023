@@ -371,9 +371,23 @@ comparing actual results against the benchnark/standards
 then we go into maven server
 in maven, cd maven-web-application
 we integrate sonaqube for code quality analysis
-so we vi pom.xml and insert the public ip of sonar
+***1;40...  so we vi pom.xml, search for "property tag"and insert the public ip of sonar
                                 private ip
-then mvn sonar:sonar
+then also in maven  run; mvn sonar:sonar
+we see build is a success
+now in sonar we can refresh and see the project
+if there are issues in the code we can lick on issues and see the issues and how to get the issues fixed
+1;48;06 , when we check our project in sonaqube; the result is a pass
+
+**1.45.15
+when your trying to execute code quality report ie code quality analysis, it could result in some error messages like 
+http error code 400 errors =client side
+400/401/402/403
+not authorized , when entering the wrong passwd
+please check the properties sonar.login and sonar.paaword.
+
+
+  *** end for now nad take questions 
 
 nexus 1:54:00     mvn package , then restart sonar
 mvn sonar:sonar,
