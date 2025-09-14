@@ -342,12 +342,15 @@ https://github.com/LandmakTechnology/maven-web-application           **** this i
 The first step
 1. Developers commit/push code to SCM = github   
 2. Test + Build using maven   
-    mvn package 
+        ...    therefore; i need my maven server  up and running then  ls and cd/web
+mvn clean package
 
-3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   :
-   Now my maven server needs to be ups and running then cd/web
-   Then mvn clean package to create artifacts                               ******** 1:37:30
-   Next is to execute code quality analysis therefore we need to integrate our sonarqube in maven using our project file pom.xml
+
+3. CodeQuality analysis with SonarQube  = mvn sonar:sonar   : 
+ for us to execute code quality analysis we need to integrate jenkins....... incomplete statement
+comparing actual result against the benchmark:
+our project has a project file 
+   
      vi into pom.xml in the maven server and enter sonarqube server   
      credentials under the properties tag  
     connect to your sonarQube server from the browser: sonar public Ip : 9000
@@ -357,8 +360,8 @@ The first step
   1:38:52    To execute  COde quality analysis = mvn sonar : sonar           *** mvn sonar:sonar  this is done for maven to connect to the sonar
 comparing actual results against the benchnark/standards
     mvn sonar:sonar   
-         1. goal = Sonar  
-         2. plugin = sonar
+         1. goal = Sonar   ie the first sonar is the goal
+         2. plugin = sonar   **the second is the pluggin
 
 ***** sonar qube public ip and sonarqube portnumber = 9000
 
@@ -379,6 +382,8 @@ mvn deploy
 
 
 
+Then mvn clean package to create artifacts                               ******** 1:37:30
+   Next is to execute code quality analysis therefore we need to integrate our sonarqube in maven using our project file pom.xml
 
 
 Installation of sonarqube:
