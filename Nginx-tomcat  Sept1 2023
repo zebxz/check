@@ -121,21 +121,36 @@ if a server is down or undergoing maintenance/ upgrading it, vi the config file 
 nginx -t to ensure the configuration is valid  then
 nginx -s reload
 system ctl restart ngnix
+we reload the server and we see traffic is nt routed to it again bc it doesnt come up with the other ip address
+we can put aserver down when we are upgrading or patching
 
 Also for the server we want to allocate more traffic we will write "weight =4", 
 eg
 we have 5m requests/users, we can assign  1m to the other server with 8GB  and 4M to that server with 64GB, ie 4x the number of users
+then reloaad
 
+35.00, so in real time we will nt be exposing our application directly for endusers traffic, we are going to use a proxy 
+
+
+QUESTION
+i know we hv lB in AWS , THAT means if we are nt using nginx, we can use AWS LB
+yes
+and rhats what we will see when we get to k8 and AWS 
+but its ver imp that you get the picture first
+bc why do we need a webserver or Load balancer
 load balancers helps to 
-load balancers
+1)load balancers
                                                                     users >>> LB >>>> APP >>>> DB
-security: Acts like a layer of security ie if anyone is trying to hack into our app it can be stopped at this stage which is very important 
-
-health check: if its routing traffic/load balancing to about 30servers it ensures that it does not route traffic to a server that is not healthy, so it runs health check in 
+2)security: Acts like a layer of security ie if anyone is trying to hack into our app it can be stopped at this stage which is very important 
+3)health check: if its routing traffic/load balancing to about 30servers it ensures that it does not route traffic to a server that is not healthy, so it runs health check in 
 the backend 
+4)patching upgrading of our servers
 
-patching upgrading
 
+39.45 at this point we are not considering the type of lb , bt for you to explain in an interview that you hv experience in ngnic webserv is very imp
+bc we are going to be doing other managed loadbalancer like ELB
+
+40.50 
 
 52:00
 IQ       WHAT HAPPENS WHEN YOU TYPE  app.com or google.com    (domain name service)
