@@ -12,8 +12,8 @@ for you to explain in an interview that you have experience in ngnix webservers 
 
 
                  START
-
-i know we have seen a situation where our applications are deployed and endusers need to access the applicatio 
+ WHAT IS CONTAINERIZED SERVVER 
+i know we have seen a situation where our applications are deployed and endusers need to access the application
 so we will configure an ngnix webserver
 ***1.27so ill launch an ngnix webserver
 we will install it on a redhat
@@ -25,9 +25,7 @@ so containers are light weight but virtual machines are heavy weight
 ** so any company you take containerization to it’s a big deal
 
 
-
-
-                                    WHAT IS CONTAINERIZED SERVVER 
+                                
 3:13, now we hv this application, in the appl, we hv 3tomcat servers and in each one we hv their public ip address,
 4.40 now we hv this project ngnix
 n this project i have maven web app, hv cloned the application.
@@ -63,18 +61,28 @@ therefore  , inbetween the appservers & users we place the webservsrs/LB
 therefore, if u want to access these appservers, it is routed via the LB or webservers .. & this is very secured 
 60mUsers ------> webserver/LB ----->appServers 
 
-2)	We back up  the conf file by configuring the config file = sudo mv /etc/ngnix.conf  /etc/ngnix/ngnix
-Vi /etc/ngnix/ngnix.conf    and copy our tomcat private ip into it. Therefor I have this for my backend server
+*** 15:15  now enable and start ngnix
+  systemctl enable ngnix
+to acces it ip address:80
+on the server we can see the config file /etc/ngnix/ngnix.conf
+copy the file  
+and in maven we create a backup for the webserver
+2)	We back up  the conf file by configuring the config file
+move the file = sudo mv /etc/ngnix.conf  /etc/ngnix/ngnix
+we recreate the file with our own configuration   ** i bliv , its in package management but i cant find the link yet
+*** 17.55*** we copy our configuration iformation (includes our tomcat ip address) and paste it into our new config file 
+ we could have 100 tomcat servers but for now we hv only 3
+Vi /etc/ngnix/ngnix.conf   (which is now our new config file). Therefor I have this for my backend server
 19:45, in the backend, I have my ngnix server any traffic that comes it talks to the ngnix server and its route it to any of the tomcat servers
 
-3)	We ensure the configuration is valid by executing;ngnix –t 
+3)	We ensure the configuration is valid by executing;  ngnix –t 
 4)	Sudo ngnix –s reload but since I am already sudo ill run nginx –s 
 5)	Sudo system ctl restart ngnix
 6)	We check our browser if we can access ngnix server
 It says 502 bad gateway, its because thers a security in linux called selinux which is enforced at this stage 
-Setsebool  –P httpd
-Therefore we will disable the security by running: can_netwrk_connect true
-
+Therefore we will disable the security  by running:
+Setsebool  –P httpd can_netwrk_connect true,,, we run this command to allow the proxy server to route traffic
+ 22:10, now when we access the ngnix server we see it routing traffic to ecah of the tomcat servers simulteanously
 *********** we will be using other load balance like:
  ELSB: elastic load balancer
 
@@ -89,9 +97,10 @@ as a load balancer
 The Question is :
              HOW  DOES IT LOAD BAL OUR TRAFFIC 
 
-The default option: t uses to bal traffic is called:
+The default option: to uses to bal traffic is called:
 Round robin:  Request/traffic is distributed evenly accross the servers , with server weight taken into consideration, ngnix will be routing traffic to this backend servers 
 depending on the load traffic will be distributed equally.
+this method is used by default
 
 
 
@@ -108,6 +117,11 @@ destination should go to appserver one etc. thats is what is called ip hash.
                                         HOW WE SUSTAIN THE MAINTENANCE PERIOD
 26:59
 if a server is down or undergoing maintenance/ upgrading it, vi the config file and write : "down" beside the server ip address
+28.15.....   afterwhich we run   
+nginx -t to ensure the configuration is valid  then
+nginx -s reload
+system ctl restart ngnix
+
 Also for the server we want to allocate more traffic we will write "weight =4", 
 eg
 we have 5m requests/users, we can assign  1m to the other server with 8GB  and 4M to that server with 64GB, ie 4x the number of users
