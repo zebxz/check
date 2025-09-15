@@ -1109,13 +1109,83 @@ Normally, tomcat by default allocates 64mb but we can increase to 128mb/256mb
 
 
 
+   ******************************** NGINX
+INSTALLING NGINX,IMPORTANCE OF NGINX, METHODS OF LB, HOW WE SUSTAIN THE MAINTENANCE PERIOD (eg when we patching/upgrading) AND CONFIGURING DNS/ROUTE 53
+
+install then;
+ systemctl enable ngnix
+to acces it ip address:80
+	We back up  the conf file by configuring the config file
+move the file = sudo mv /etc/ngnix.conf  /etc/ngnix/ngnix
+We ensure the configuration is valid by executing;  ngnix –t 
+	Sudo ngnix –s reload 
+	Sudo system ctl restart ngnix
+
+ 502 bad gateway, its because thers a security in linux called selinux which is enforced at this stage 
+Therefore we will disable the security  by running:
+Setsebool  –P httpd can_netwrk_connect true,,, we run this command to allow the proxy server to route traffic
 
 
 
+we will install it on a redhat
+we are launching a virtual machine, you can now see the problem with vmware
+you can see how long it is taking a virtual machine to come up
+when we were creating a containerized machine it took like how long, ?
+containers take seconds but virtuals takes minutes
+so containers are light weight but virtual machines are heavy weight
+** so any company you take containerization to it’s a big deal
+
+It is not  a good practice that when you want to access your application, you access them directly where endusers traffic goes directly to the application server.
+Sow we are going to create a proxy ngnix server, so its going to be acting a sour frontend proxy such that end users cannot talk directly, they must go through the ngnix webserver
+	We want to install ngnix to act as a proxy which implies that enduser traffic will be routed by the ngnix webserver so ngnix is acting as a load balancer, he receives the traffic from clients/endusers and route it to our backend 
+application and our application will talk to our data bases  ***tomcat1&2* when users try to access their account they are entering their userName/ Password all these information needs to be stored in this database, very sensitive 
+information   *** meee*** our backend application refers to tomcat app..
+ *** tomcat1&2***    Backend tiers:
+comes with high security = this is running in militarized zone = MZ
+this includes application tier and database tier
+
+    frontend tier  : Medium security = D-Militarised zone = DMZ
+  Like the webservers, loadbalancers, jumpservers
+38:57
+eg we hv 60m users;
+We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge which is highly risky.
+therefore  , inbetween the appservers & users we place the webservsrs/LB
+therefore, if u want to access these appservers, it is routed via the LB or webservers .. & this is very secured 
+60mUsers ------> webserver/LB ----->appServers 
+
+
+load balancers helps to 
+1)load balancers
+                                                                    users >>> LB >>>> APP >>>> DB
+2)security: Acts like a layer of security ie if anyone is trying to hack into our app it can be stopped at this stage which is very important 
+3)health check: if its routing traffic/load balancing to about 30servers it ensures that it does not route traffic to a server that is not healthy, so it runs health check in 
+the backend 
+4)patching upgrading of our servers
 
 
 
- 
+ HOW  DOES IT LOAD BAL OUR TRAFFIC 
+The default option: to uses to bal traffic is called: Round robin:
+Request/traffic is distributed evenly accross the servers , with server weight taken into consideration, ngnix will be routing traffic to this backend servers depending on the load traffic will be distributed equally.
+Least connections:  A request is sent to the server with the least no of active connectors , also server weight is considered
+iP hash: eg, we can decide that Ip address from Africa let it go to appserver1, Ip address of America let it go to server2 etc
+the server to which a request is sent is determined from the client IP address
+
+
+HOW WE SUSTAIN THE MAINTENANCE PERIOD
+26:59
+if a server is down or undergoing maintenance/ upgrading it, vi the config file and write : "down" beside the server ip address
+28.15.....   afterwhich we run   
+nginx -t to ensure the configuration is valid  then
+nginx -s reload
+system ctl restart ngnix
+we reload the server and we see traffic is nt routed to it again bc it doesnt come up with the other ip address
+we can put aserver down when we are upgrading or patching
+
+Also for the server we want to allocate more traffic we will write "weight =4", 
+eg
+we have 5m requests/users, we can assign  1m to the other server with 8GB  and 4M to that server with 64GB, ie 4x the number of users
+then reloaad
 
 
 
