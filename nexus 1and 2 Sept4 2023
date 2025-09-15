@@ -129,7 +129,7 @@ store /upload artifacts. we are backing up the war files
 
 
 20:53
-in our environment, once the artifacts are created in maven, we upload the jar packages, war and ear 
+in our environment, once the artifacts are created in maven, we upload the jar packages, war and ear to the artifactory
 we didnt deploy to the client straight from MAVEN 
 even if we want to deploy from maven, we should have an artifcatory, a store 
 so we are going to create an artifactory and another name for it is repo
@@ -356,6 +356,11 @@ in our environment we talk about the master branch but some company deploy from 
    MGT tag in pom.xml
 2) configure nexus login credentials in settings.xml file in the conf dir in the maven server
 
+  ***1.46.43   Therefore in maven we vi pom.xml and replace the snapshot and relaese url with my own 
+  ie the link of my snapshot and release repo created in nexus
+
+
+  No .1 ... continued
    Therefore in maven we vi pom.xml and replace the snapshot and relaese url with my own 
   ie the link of my snapshot and release repo created in nexus
 
@@ -364,6 +369,8 @@ in our environment we talk about the master branch but some company deploy from 
 we change default configuration, we want to have our custom setting
 
 
+
+****No 2.. continued
 1:55:50
    maven needs to be authenticated to be able to upload to nexus 
 
@@ -384,17 +391,19 @@ to upload into releases we vi pom.xml and remove the - SNAPSHOT  but when we wan
 2:36:00
 
         WHY CAN WE ENABLE DISABLE REDEPLOY 
-Most times if we are going to deploy from there, we need to create a new version of the application bc we are ready for deployment. therefore not allowing to redeploy means
-that if already have version1 running then you need to create version2 so to send version2 to nexus we vi pom.xml change 001 to 002 nc now we are set for deployment but if
-there is a problem, we can rollback to version1, when you allow redeploy you only update the same version and cant rollback if thers a problem
-
+Most times if we are going to deploy from there, we need to create a new version of the application bc we are ready for deployment. therefore not allowing to
+redeploy means that if already have version1 running then you need to create version2 so to send version2 to nexus we vi pom.xml change 001 to 002 nc now we 
+are set for deployment but if there is a problem, we can rollback to version1, when you allow redeploy you only update the same version and cant rollback if 
+thers a problem
+   ****meeeee*** probably bc if it redeploys automatically, it doesnt change in pom.xml and ie it remains as 001, and bc of that when thers a problem you 
+cant roll back
 
 
 
 2:44   what is 400 error and 500 error  , 400 error, there was an error with my ip address, i didnt add  /engrcecilia for nexus server
 2:47 Developers write the pom.xml file, they include the dependencies, pluggin and everything needed, but once the developers have commited the pom.xml file, the source code
-and test cases . it is now the work of the devops engrs to take it from ther and start deploying and while deploying building pipelines, intergrity maven with jenkins, 
-sonaqube , nexus by just vi into the pom file and modify the required area.
+and test cases . it is now the work of the devops engrs to take it from ther and start deploying and while deploying building pipelines, integrating maven
+with jenkins, sonaqube , nexus by just vi into the pom file and modify the required area.
 
 
 2:35:00
