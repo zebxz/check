@@ -22,14 +22,19 @@ when it comes to artifacts, its very imp in the software development lifecycle a
 packages that  appl servers  can understand, can interpret , thats what artifacts are all about
 
 so in our env we use nexus to mg8 artifacts alongside our build servers which is jenkins on our pipeine 
-so when artifacts acre created those artifacts are uploaded into nexux
+so when artifacts acre created those artifacts are uploaded into nexus
 so as part of my task, hv been able to setup a nexus server 
-and in our env i was tasked to setup a nexus server on a redhat9 instance, i have done that before on REDhat8 and 7 instances , where ill donwload the software of nexus
-and ill extract the software , when that happen, i hv nexus running on my pipeline , one hv installed nexus i ensure that nexus has started, its running afterwhic i go to 
-the nexus url , nexus accounr and i create repositories/artifactories wherewher artifacts can be uploaded into and generally i create both snapshot repositories releases 
+and in our env i was tasked to setup a nexus server on a redhat9 instance, i have done that before on REDhat8 and 7 instances , where ill donwload the 
+software of nexus
+and ill extract the software , when that happen, i hv nexus running on my pipeline , one hv installed nexus i ensure that nexus has started, its running
+afterwhic i go to 
+the nexus url , nexus accounr and i create repositories/artifactories wherewher artifacts can be uploaded into and generally i create both snapshot 
+repositories releases 
 and releases repositories, the repositories is where il upload my artifacts into 
-again for the artifacts to be creaed, it rQuires dependencies, it requires pluggins , so hv equally used nexus as my maven proxy refactory where artifacts are not directly
-gotten frm the maven central repository , that is to say pluggins and depencies for us to be able to create artifacts can only be gotten into our build srver via the proxy
+again for the artifacts to be creaed, it rQuires dependencies, it requires pluggins , so hv equally used nexus as my maven proxy refactory where artifacts
+are not directly
+gotten frm the maven central repository ,that is to say pluggins and depencies for us to be able to create artifacts can only be gotten into our build server
+via the proxy
 server which runs in neuxs
 its also worth explaning that hv equally been able to upload diff classes of artifacts including:
 jar/war/ear , npm ie for node js applictaion, dockerimages 
@@ -67,17 +72,20 @@ SDLC
 WHy do  we add sonarqube in our software development life cycle
 
 
-We dont just develop, build and deploy, we need to first check the quality of work done by developers, we have to validate the code so the code goes to the code validation 
+We dont just develop, build and deploy, we need to first check the quality of work done by developers, we have to validate the code so the code goes to the
+code validation 
 or qualification, so we use sonarqube to ensure that the codes are written as expected.
 sonar qube comes with:
 soanrqube scanner and server
 The scanner scans through the code and moves it into the server which has a compute engine for computation and calculation theres also elastic search
 
 Database                                                                           server ip: port number
-web-server- so we can access sonarqube on the browser and to do this we need the server ip:port number 9000 & it will then request for the username &PW or token which is a 
+web-server- so we can access sonarqube on the browser and to do this we need the server ip:port number 9000 & it will then request for the username &PW or 
+token which is a 
 representation of username & PW
 
-We also determine our benchmark ie our standards for quality software: to define our standard we need to determine quality profiles and set rules, we can bring this rules
+We also determine our benchmark ie our standards for quality software: to define our standard we need to determine quality profiles and set rules, we can 
+bring this rules
 together create quality gates.
 quality gate is usually a combination of conditions 
 
@@ -117,7 +125,8 @@ because the build server is down?
 
 Disaster recovery:
 Disaster management:
-  We need to create backups for artifacts in artifactories to do this backup we can use other NEXUS or JFROG (the 2 common artifactories), Its like a epository where we 
+  We need to create backups for artifacts in artifactories to do this backup we can use other NEXUS or JFROG (the 2 common artifactories), Its like a 
+repository where we 
 store /upload artifacts. we are backing up the war files
 
   *******  which type of artifacts are stored here  ??
@@ -442,7 +451,8 @@ What’s the difference between code coverage and code quality
  we can decide that 25rules - have to be set for our quality profiles diff between code quality and code coverage
 2:37:40 
 code quality is the umbrella that code coverage comes under
-code quality means that developers should write good software, should take their time in writing their codes and ensure the SOftware meets all our quality expectations and
+code quality means that developers should write good software, should take their time in writing their codes and ensure the SOftware meets all our quality 
+expectations and
 code coverage is part of code quality and it means asking what is the proportion of unittestcases written by developers 
 eg
 10lines of code means they should write 10unit test cases.
