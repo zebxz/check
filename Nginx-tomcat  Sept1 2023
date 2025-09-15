@@ -44,9 +44,25 @@ It is not  a good practice that when you want to access your application, you ac
 
 Sow we are going to create a proxy ngnix server, so its going to be acting a sour frontend proxy such that end users cannot talk directly, they must go through the ngnix webserver
 12;45 ... now we go to the ngnix webserver we launched in aws
+mow we access it in mobaxterm
 
 Install ngnix
-1)	We want to install ngnix to act as a proxy which implies that enduser traffic will be routed by the ngnix webserver so ngnix is acting as a load balancer, he receives the traffic from clients/endusers and route it to our backend application and our application will talk to our data bases
+1)	We want to install ngnix to act as a proxy which implies that enduser traffic will be routed by the ngnix webserver so ngnix is acting as a load balancer, he receives the traffic from clients/endusers and route it to our backend 
+application and our application will talk to our data bases  ***tomcat1&2* when users try to access their account they are entering their userName/ Password all these information needs to be stored in this database, very sensitive 
+information   *** meee*** our backend application refers to tomcat app..
+ *** tomcat1&2***    Backend tiers:
+comes with high security = this is running in militarized zone = MZ
+this includes application tier and database tier
+
+    frontend tier  : Medium security = D-Militarised zone = DMZ
+  Like the webservers, loadbalancers, jumpservers
+38:57
+eg we hv 60m users;
+We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge which is highly risky.
+therefore  , inbetween the appservers & users we place the webservsrs/LB
+therefore, if u want to access these appservers, it is routed via the LB or webservers .. & this is very secured 
+60mUsers ------> webserver/LB ----->appServers 
+
 2)	We back up  the conf file by configuring the config file = sudo mv /etc/ngnix.conf  /etc/ngnix/ngnix
 Vi /etc/ngnix/ngnix.conf    and copy our tomcat private ip into it. Therefor I have this for my backend server
 19:45, in the backend, I have my ngnix server any traffic that comes it talks to the ngnix server and its route it to any of the tomcat servers
