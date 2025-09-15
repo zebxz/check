@@ -120,22 +120,30 @@ because the build server is down?
                                     DISASTER MGT/DISASTER RECOVERY
 
 Disaster recovery:
-Disaster management:
+23:02  ....  Disaster management:
   We need to create backups for artifacts in artifactories to do this backup we can use other NEXUS or JFROG (the 2 common artifactories), Its like a 
 repository where we 
 store /upload artifacts. we are backing up the war files
 
   *******  which type of artifacts are stored here  ??
 
+
+20:53
 in our environment, once the artifacts are created in maven, we upload the jar packages, war and ear 
 we didnt deploy to the client straight from MAVEN 
+even if we want to deploy from maven, we should have an artifcatory, a store 
+so we are going to create an artifactory and another name for it is repo
+nexus artifactory wil back up our build artifacts
+therfore if we are deploying from the maven server and the deployment fails, the maven server goes down in the deployment process is there any 
+other location where we can get our artifacts from ? yes we do.
+In a situation where the MAVEN server goes down in the deployment, we just discontinue the process and pull from our artifactories that's how we manage the 
+end to end process
 
-In a situation where the MAVEN server goes down in the deployment process we pull from our artifactories thatas how we manage the end to end process
+nexus and jfrog , these are our artifactories
 
 
 coding
 ****** what willl happen if a developer laptop environment breaks down   ??
-
 
 23:50   ANS:    
 developers commits changes in code in their local repository 
