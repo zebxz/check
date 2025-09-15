@@ -1,8 +1,9 @@
+INSTALLING NGINX AND CONFIGURING DNS/ROUTE 53
+
 
 disable salinex but its not working
 tried to setup ngnix but it says not suported
 
-patching upgrading 
 
 39:44
 for you to explain in an interview that you have experience in ngnix webservers is also important 
@@ -147,11 +148,62 @@ the backend
 4)patching upgrading of our servers
 
 
+ DO WE CONSIDER THE TYPE OF LOAD BALANCER OR IT DOESNT MATTER AT THIS TIME
 39.45 at this point we are not considering the type of lb , bt for you to explain in an interview that you hv experience in ngnic webserv is very imp
 bc we are going to be doing other managed loadbalancer like ELB
+once u understand this aspect of it that too will be easy for you to understand
 
-40.50 
 
+40.20you werw spekaing and said the nginx will be in the publuc subnet 
+my question is if there are 2 available zones, does that mean there wil be 2 nginx in the 2 availabilty zones??
+
+********* ANS 
+if you have a VPC : virtual private cloud ie your private netwrk, in this private network you can have about 6subnets depending on the region 
+lets assume you have 6subnets
+so now we have 3private subnets and 3public subnets
+take note this is smt we will stilll look at
+now in aws global resources you have:
+   global >>> Regions >>> Availability zone 
+inside AZ you ahve data centers                               ****** or 18 servers 3 in each Azs
+when you create a vpc where you want to launch your resources, assuming you want to create your VPC in US East1 ie us virginia, it has 6 diff AZs meaning that i can create
+my 6subnets/servers in all this availabity zones to ensure high availability
+if i have my ngnix webserver running in the public subnet, Take note that all these severs are in the same vpcs so they are in the same netwrk thefore nginx webserver can route traffic to all the servers/ec2s since all the servers are
+in the same vpc they are in the same netwrk,
+45:39  so my ngnix can laod bal traffic to all servers or ec2s running in both private and public subnet
+
+43:07 But if we have vpc1 and vpc2 , to ensure that connection happens we are goin to do vpc pairing so that even though they are in diff netwrk the pairing puts them  in the 
+same netwrk that way you can still use a webserver to load bal traffic accross all your servers and this is the adv of using aws
+
+
+45.43  SO WE BASICALLY DO THIS CONFIGURATION & CREATE A DOCKER IMAGE WHICH WE CAN USE AND DEPLOY AND LINK WITH TOMCAT IMAGE AS WELL
+ANS;
+Dnt worry you are going to see the amplified version of what have explained here in k8
+its just you may work in an org that is not yet implementing microservices as expected 
+bc the app we dploy, we deploy in virtual machines 
+so if you work in such coy or u hv task that relate to monolitic appl running in virtual machines , you shud understand how that traffic will can be routed
+understanding this wil help you easily understand ingress when wwe get to k8
+
+
+
+47:00 ... if a user wants to access any of those applications, are they going to be using their individual ips or virtual ip of the ngnix 
+
+ANS:
+Before when users want to access their application they have to access individual servers ip but now we have to put all of them under one ngnix webserver, so all the traffic 
+via the ngnix webserver .
+they dont have to type https://3.090.240/app/ but now, mylandmark/register
+
+
+48:20
+A service in aws we are going to do called DNS
+Route 53 = DNS  ( Domian Name Service )
+                                                                                                                                                               alias name
+if u have dns, we go to our route 53 &create hosted zone, in this zone we will be routing the traffic, instaed of users to type 3.40.21, they can type www.landmark.org/app
+traffic will be routed to to this backend application server bc we have configured Route53 with a public domain name or alias name for our ngnix address, so if you want to 
+access this application its either you type the ngnix ip address directly or the public domain name we created
+
+49.32  CONFIGURING ROUTE 53
+
+ 
 52:00
 IQ       WHAT HAPPENS WHEN YOU TYPE  app.com or google.com    (domain name service)
 54:30
@@ -188,50 +240,6 @@ ANS: its justbc i wnat you guys to understand both redhat and ubuntu, when we in
 so but its good for you to have both exposure Redhat and ubuntu
 
 
-********* i think this is form another video
-3)if there are 2 availability zone,  will there be 2 ngnix in the 2availabilty zones?
-if you have a VBC : virtual private cloud ie your private inetwrk, in this private network you can have about 6subnets depending on the region 
-so now we have 3private subnets and 3public subnets
 
-now in aws global resources you have:
-   global >>> Regions >>> Availability zone 
-inside AZ you ahve data centers                               ****** or 18 servers 3 in each Azs
-when you create a vpc where you want to launch your resources, assuming you want to create your VBC in US East1 ie us virginia, it has 6 diff AZs meaning that i can create
-my 6subnets/servers in all this availabity zones to ensure high availability
-if i have my ngnix webserver running in the public subnet, can route traffic to all the servers/ec2s since all the servers are in the same vpc they are in the same netwrk,
-45:39  so my ngnix can laod bal traffic to all servers or ec2s running in both private and public subnet
+                                      
 
-43:07 But if we have vpc1 and vpc2 , to ensure that connection happens we are goin to do vpc pairing so that even though they are in diff netwrk the pairing puts them  in the 
-same netwrk that way you can still use a webserver to load bal traffic accross all your servers and this is the adv of using aws
-
-
-
-                                                      QUESTION
-47:00 ... if a user wants to access any of those applications, are they going to be using their individual ips or virtual ip of the ngnix 
-
-ANS:
-Before when users want to access their application they have to access individual servers ip but now we have to put all of them under one ngnix webserver, so all the traffic 
-via the ngnix webserver .
-they dont have to type https://3.090.240/app/ but now, mylandmark/register
-
-
-48:20
-
-A service in aws we are going to do 
-Route 53 = DNS  ( Domian Name Service )
-                                                                                                                                                               alias name
-if u have dns, we go to our route 53 &create hosted zone, in this zone we will be routing the traffic, instaed of users to type 3.40.21, they can type www.landmark.org/app
-traffic will be routed to to this backend application server bc we have configured Route53 with a public domain name or alias name for our ngnix address, so if you want to 
-access this application its either you type the ngnix ip address directly or the public domain name we created
-
-
-
-
-46:00
-The application we deploy , we deploy them in virtual machines in vms
-
-
-
-
-39:44
-for you to explain in an interview that you have experience in ngnix webservers is also important 
