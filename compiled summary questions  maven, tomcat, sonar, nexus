@@ -555,7 +555,155 @@ bugs and roll backs
 
 
 
+NGINX TOMCAT
 
+
+load balancers helps to 
+1)load balancers
+                                                                    users >>> LB >>>> APP >>>> DB
+2)security: Acts like a layer of security ie if anyone is trying to hack into our app it can be stopped at this stage which is very important 
+3)health check: if its routing traffic/load balancing to about 30servers it ensures that it does not route traffic to a server that is not healthy, so it runs health check in 
+the backend 
+4)patching upgrading of our servers
+
+
+
+
+HOW  DOES IT LOAD BAL OUR TRAFFIC 
+The default option: to uses to bal traffic is called: Round robin:
+Request/traffic is distributed evenly accross the servers , with server weight taken into consideration, ngnix will be routing traffic to this backend servers depending on the load traffic will be distributed equally.
+Least connections:  A request is sent to the server with the least no of active connectors , also server weight is considered
+iP hash: eg, we can decide that Ip address from Africa let it go to appserver1, Ip address of America let it go to server2 etc
+the server to which a request is sent is determined from the client IP address
+
+
+    HOW WE SUSTAIN THE MAINTENANCE PERIOD
+26:59
+if a server is down or undergoing maintenance/ upgrading it, vi the config file and write : "down" beside the server ip address
+28.15.....   afterwhich we run   
+nginx -t to ensure the configuration is valid  then
+nginx -s reload
+system ctl restart ngnix
+we reload the server and we see traffic is nt routed to it again bc it doesnt come up with the other ip address
+we can put aserver down when we are upgrading or patching
+
+Also for the server we want to allocate more traffic we will write "weight =4", 
+eg
+we have 5m requests/users, we can assign  1m to the other server with 8GB  and 4M to that server with 64GB, ie 4x the number of users
+then reloaad
+
+35.00, so in real time we will nt be exposing our application directly for endusers traffic, we are going to use a proxy 
+
+
+QUESTION
+i know we hv lB in AWS , THAT means if we are nt using nginx, we can use AWS LB
+yes
+and rhats what we will see when we get to k8 and AWS 
+but its ver imp that you get the picture first
+bc why do we need a webserver or Load balancer
+load balancers helps to 
+1)load balancers
+                                                                    users >>> LB >>>> APP >>>> DB
+2)security: Acts like a layer of security ie if anyone is trying to hack into our app it can be stopped at this stage which is very important 
+3)health check: if its routing traffic/load balancing to about 30servers it ensures that it does not route traffic to a server that is not healthy, so it runs health check in 
+the backend 
+4)patching upgrading of our servers
+
+
+ DO WE CONSIDER THE TYPE OF LOAD BALANCER OR IT DOESNT MATTER AT THIS TIME
+39.45 at this point we are not considering the type of lb , bt for you to explain in an interview that you hv experience in ngnic webserv is very imp
+bc we are going to be doing other managed loadbalancer like ELB
+once u understand this aspect of it that too will be easy for you to understand
+
+
+40.20you werw spekaing and said the nginx will be in the publuc subnet 
+my question is if there are 2 available zones, does that mean there wil be 2 nginx in the 2 availabilty zones??
+
+********* ANS 
+if you have a VPC : virtual private cloud ie your private netwrk, in this private network you can have about 6subnets depending on the region 
+lets assume you have 6subnets
+so now we have 3private subnets and 3public subnets
+take note this is smt we will stilll look at
+now in aws global resources you have:
+   global >>> Regions >>> Availability zone 
+inside AZ you ahve data centers                               ****** or 18 servers 3 in each Azs
+when you create a vpc where you want to launch your resources, assuming you want to create your VPC in US East1 ie us virginia, it has 6 diff AZs meaning that i can create
+my 6subnets/servers in all this availabity zones to ensure high availability
+if i have my ngnix webserver running in the public subnet, Take note that all these severs are in the same vpcs so they are in the same netwrk thefore nginx webserver can route traffic to all the servers/ec2s since all the servers are
+in the same vpc they are in the same netwrk,
+45:39  so my ngnix can laod bal traffic to all servers or ec2s running in both private and public subnet
+
+43:07 But if we have vpc1 and vpc2 , to ensure that connection happens we are goin to do vpc pairing so that even though they are in diff netwrk the pairing puts them  in the 
+same netwrk that way you can still use a webserver to load bal traffic accross all your servers and this is the adv of using aws
+
+
+45.43  SO WE BASICALLY DO THIS CONFIGURATION & CREATE A DOCKER IMAGE WHICH WE CAN USE AND DEPLOY AND LINK WITH TOMCAT IMAGE AS WELL
+ANS;
+Dnt worry you are going to see the amplified version of what have explained here in k8
+its just you may work in an org that is not yet implementing microservices as expected 
+bc the app we dploy, we deploy in virtual machines 
+so if you work in such coy or u hv task that relate to monolitic appl running in virtual machines , you shud understand how that traffic will can be routed
+understanding this wil help you easily understand ingress when wwe get to k8
+
+
+
+47:00 ... if a user wants to access any of those applications, are they going to be using their individual ips or virtual ip of the ngnix 
+
+ANS:
+Before when users want to access their application they have to access individual servers ip but now we have to put all of them under one ngnix webserver, so all the traffic 
+via the ngnix webserver .
+they dont have to type https://3.090.240/app/ but now, mylandmark/register
+
+
+48:20
+A service in aws we are going to do called DNS
+Route 53 = DNS  ( Domian Name Service )
+                                                                                                                                                               alias name
+if u have dns, we go to our route 53 &create hosted zone, in this zone we will be routing the traffic, instaed of users to type 3.40.21, they can type www.landmark.org/app
+traffic will be routed to to this backend application server bc we have configured Route53 with a public domain name or alias name for our ngnix address, so if you want to 
+access this application its either you type the ngnix ip address directly or the public domain name we created
+
+49.32  CONFIGURING ROUTE 53
+
+ 
+52:00
+IQ       WHAT HAPPENS WHEN YOU TYPE  app.com or google.com    (domain name service)
+54:30
+  once you type google.com it going to query global DNS searching for the webservers that are associated to this hostname and once it locates the server, immediately traffic
+will be routed to that server
+
+
+for example, why you type www.landmark.org, what happens is that in the backend you are going to query global DNS(global Domain name service) and there is a command is the 
+backend called NS look up, it is going to be searching for the server.
+
+53:15
+eg    if i run nslookup www.landmark.org shows the address of our ngnix webserver
+
+                                                
+                                          WHAT CAN MAKE A SERVER UNHEALTHY/ TO FAIL
+56:00
+
+1) There could be a spike in the CPM, lets assume that a lot of processes are running in the server or the server is receiving a lot of traffic, it may not be haelthy to 
+recieve additional traffic . and thats one of the reason that can make a server to be unhealthy
+
+2)if for some reason the java process is not running in the tomact server, if java is not running, tomcat not to start, if you deploy appl you cant access it so if java 
+process fail, it can make a server to be unhealthy and as such the webserver will not route to  traffic to an unhealthy target n thats why  when it comes to loadbalancing 
+ its  very important with ngnix bc it has all this advantages
+
+
+   QUESTION
+1)the same way we installed ngnix on Redhat, can we do it on ubuntu
+
+ANS: YES we can
+
+2) why will you always prefer we install those app on Redhat, why nt using ubuntu
+
+ANS: its justbc i wnat you guys to understand both redhat and ubuntu, when we inastlled doecker, we installed it on ubuntu and tomorrow we ill configure k8 on ubuntu
+so but its good for you to have both exposure Redhat and ubuntu
+
+
+
+                                      
 
 
 
