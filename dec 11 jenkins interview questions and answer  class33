@@ -16,8 +16,51 @@ LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws,
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD
 
 
-TYPES OF TESTING, CODE QUALITY TOOLS, CODE QUALITY BENCHMARK, COMPARING ACTUAL RESULT AGAINST BENCHMARK, CODE QUALITY, SONARQUBE COMPRISES OF COMPUTE ENGINE, SEARCH ENGINE, DATABASES, WWEBSERVER, WHERE IS THE SONARQUBE HOME DIR
- VERSIONS OF SONARQUBE WE CAN INSTALL IN OUR ENVIRONMENT, 
+
+SDLC, WHAT DO WE CONSIDER WHEN IT COMES TO A QUQLITY SOFTWARE, NEXUS, DISASTER MGT/DISASTER RECOVERY,  MAVEN / NEXUS INTEGRATION,  NEXUS INSTALLATION, 
+Who decides on codeQuality:,   What’s the difference between code coverage and code quality.  
 
 
-  
+******  snapshot repositories and releases repositories, the repositories is where i will upload my artifacts into 
+
+
+START
+ In our environment we use nexus to create backups for artifacts in artifactories ie repository where we store/upload artifacts.we are backing up the war files
+ *****ignore****  also if we have  NodeJS project we are managing  (NodeJs Repository  [npm, node packages ]  
+Nexus acts as a Disaster recovery server for maven    
+that way, In a situation where the MAVEN server goes down in the deployment, we just discontinue the process and pull from our artifactories that's how we 
+manage the end to end process
+
+Nexus: Is an Open source Artifactory Repository, It is used to store and retrieve build artifacts, We can retrieve artifacts when needed
+
+
+Nexus Home directory:
+  /opt/nexus                                 *****it is where the nexus software is extracted
+
+
+ls /opt/nexus/etc 
+vim/opt/nexus/etc/nexus -default -properties
+to change nexus-content-path=/  to   /landmarktech
+then 
+
+
+*********** we create maven-remote-repo in nexus , where we will upload our artifacts
+
+we create snapshots and releases Repo in Nexus
+when a job is being done, artifacts from the dev branch area
+
+1:42  stored in the sbapshots Repo  while artifacts from the master branch are uploaded in the releases repo
+
+in our environment we talk about the master branch but some company deploy from release branch, we deploy directly from the master branch 
+
+
+
+maven, nexus integration: 
+  1. Create artifactories[maven-remote-repos] and add them in the  
+     distributionMGT tag in pom.xml 
+
+  2. Configure nexus login credentials in settings.xml file in the  
+     conf directory in the maven server  
+           userName = admin 
+           password= admin@123
+
