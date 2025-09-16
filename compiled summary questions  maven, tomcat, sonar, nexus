@@ -772,6 +772,10 @@ How will MAVEN connect with nexus?
 maven and nexus intergration:
 
 
+2.19.27  UPLOADING TO NEXUS DOES IT END THE CONTINOUS INTEGRATION PROCESS, IS IT WHERE IT ENDS?/
+    Yes thats where it ends 
+
+
 QUESTION  
 is there a situation that require/necessitate the nexus repo not to allow update???? 
 like when you had to changing the setting from disable to enable, why is that setting necessary even??? 
@@ -781,6 +785,21 @@ releases is when developerrs are done with the job, it has been tested and ready
 thefore not allowing update means that if ur trying to redeploy or its like you hvv version 1.1 runnin, then you should go and crEate version 1.2 bc now you are set to deploy to production and if thers a problem you can roll back to 
 version 1.1 but if you IF You dnt choose that option it means when you run mvn deploy, you upload and just update the same asset and in that case you cant rool back if thers a problem
 
+
+   WHY CAN WE ENABLE DISABLE REDEPLOY 
+Most times if we are going to deploy from there, we need to create a new version of the application bc we are ready for deployment. therefore not allowing to
+redeploy means that if already have version1 running then you need to create version2 so to send version2 to nexus we vi pom.xml change 001 to 002 nc now we 
+are set for deployment but if there is a problem, we can rollback to version1, when you allow redeploy you only update the same version and cant rollback if 
+thers a problem
+   ****meeeee*** probably bc if it redeploys automatically, it doesnt change in pom.xml and ie it remains as 001, and bc of that when thers a problem you 
+cant roll back
+
+
+
+2:44.25   what is 400 error and 500 error  , 400 error, there was an error with my ip address, i didnt add  /engrcecilia for nexus server
+2:47 Developers write the pom.xml file, they include the dependencies, pluggin and everything needed, but once the developers have commited the pom.xml file, the source code
+and test cases . it is now the work of the devops engrs to take it from ther and start deploying and while deploying building pipelines, integrating maven
+with jenkins, sonaqube , nexus by just vi into the pom file and modify the required area.
 
 
 
