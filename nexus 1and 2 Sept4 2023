@@ -412,9 +412,35 @@ we can place our nexus server in a diff AZ from where our maven server is runnin
 
 
 
-
 ** 1:05:40
 we want to create a service to run nexus ie we want to run nexus as a service 
+we want to create a symbolic link to start nexus inside /etc/unit.d/nexus  dir 
+this libk is created because our nexus is found in /opt/nexus/bin        the script to start nexus is called nexus
+sudo ln -s /opt/nexus/bin/nexus/etc/unit.d/nexus
+sudo systemctl enable nexus 
+sudo systemctl start nexus
+then start nexus 
+
+****1.06.30 ********* we can also execute a script for nexus to run but it should start when we switched users to become nexus 
+so once we switch user and we now opt user thats
+so yes we can install nexus as a script, so we should hv 2scripts actually 
+the first run as ec2user and the 2nd as nexus user
+1.08.05... the line that says  "echo, run _as_user=nexus ; bc we hv to mg8 nexus as a nexus user for security reasons
+it shows that nexus service is running as nexus user thats how we are manging nexus 
+so we hv installed nexus and nexus is running
+
+hOW DO WE ACCESS NEXUS
+pub ip/8081
+  1.12.40 default nexus login:   ... i will show u guys how to change it 
+  username = admin
+  password = admin123
+
+
+**1.10.10  someone is asking ;
+we redirect into the file, not append, redirect bc it can only run as one user
+echo, run _as_user=nexus > /opt/nexus/bin/nexus.rc
+
+
 
 
 *** why is the symbolic path we die in tomcat diff from that of nexus 
@@ -436,13 +462,16 @@ ls nexus/bin
 ls nexus/bin/nexus                     **********  file  to start/run nexus
 
 
-
-
-
-   bin  = binary files [nexus]   
+1.11.30       NEXUS DIR STRUCTURE 
+/opt/nexus
+   bin  = binary files [nexus]  we use thie "nexus" file to run nexus 
     lib  = 
     etc  = configuration files
              nexus-default.properties  
+   temps; for some temporary files 
+1.05.7 ..... there is no conf, but "etc" the "etc" dir contains configuration files 
+also no logs dir ; logs ; where if anthing that is happening we will see it in the logs
+
 
 
 Who decides on codeQuality:
