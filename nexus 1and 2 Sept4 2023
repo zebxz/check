@@ -52,7 +52,7 @@ jar/war/ear , npm ie for node js applictaion, docker images
 
 
 SDLC, WHAT DO WE CONSIDER WHEN IT COMES TO A QUQLITY SOFTWARE, NEXUS, DISASTER MGT/DISASTER RECOVERY,  MAVEN / NEXUS INTEGRATION,  NEXUS INSTALLATION, CONFIGURING THE NEXUS SERVER (change the context/access path and port number)
-  NEXUS DIR STRUCTURE, Who decides on codeQuality:,   What’s the difference between code coverage and code quality.  
+  NEXUS DIR STRUCTURE,  UPLOADING ARTIFACTS FROM NEXUS TO MAVEN (changing nexus passwd),CREATING REPOSITORY IN NEXUS, Who decides on codeQuality:,   What’s the difference between code coverage and code quality.  
 
 
 
@@ -105,6 +105,10 @@ quality gate is usually a combination of conditions
 
 
                                NEXUS
+we hv 2 scripts for it to work 
+next time run the 2script seperately to install nexus
+
+
 
 19:00
 ****************** 
@@ -201,7 +205,7 @@ artifacts to be created depends on the project's language:
 -----
 
 
-                                    HOW HAVE YOU APPLIED NEXUS IN YOUR ENVIRONMENT
+             **1.26..27                       HOW HAVE YOU APPLIED NEXUS IN YOUR ENVIRONMENT
 
 IQ: How have you applied Nexus in your environment?
 
@@ -286,6 +290,36 @@ maven and nexus intergration:
 1:07:59  we hv 2 scripts for it to work 
 next time run the 2script seperately to install nexus 
 
+** 1:05:40
+we want to create a service to run nexus ie we want to run nexus as a service 
+we want to create a symbolic link to start nexus inside /etc/unit.d/nexus  dir 
+this libk is created because our nexus is found in /opt/nexus/bin        the script to start nexus is called nexus
+sudo ln -s /opt/nexus/bin/nexus/etc/unit.d/nexus
+sudo systemctl enable nexus 
+sudo systemctl start nexus
+then start nexus 
+
+****1.06.30 ********* we can also execute a script for nexus to run but it should start when we switched users to become nexus 
+so once we switch user and we now opt user thats
+so yes we can install nexus as a script, so we should hv 2scripts actually 
+the first run as ec2user and the 2nd as nexus user
+1.08.05... the line that says  "echo, run _as_user=nexus ; bc we hv to mg8 nexus as a nexus user for security reasons
+it shows that nexus service is running as nexus user thats how we are manging nexus 
+so we hv installed nexus and nexus is running
+
+hOW DO WE ACCESS NEXUS
+pub ip/8081
+  1.12.40 default nexus login:   ... i will show u guys how to change it 
+  username = admin
+  password = admin123
+
+
+**1.10.10  someone is asking ;
+we redirect into the file, not append, redirect bc it can only run as one user
+echo, run _as_user=nexus > /opt/nexus/bin/nexus.rc
+
+
+
 etc replaces conf and it contains the configuration files
 
 
@@ -325,8 +359,14 @@ default nexus login:
   password=admin123
 
 
-1:18
-*** to change port
+
+
+CONFIGURING THE NEXUS SERVER (change the context/access path and port number)
+1.18.23 ..... nexus context path inside the nexus-default.properties (inside the nexus-default.properties w ecan chnage nexus port number)
+             we can change how we access nexus here by changing the the context path
+eg change context path to mylandmarktech
+   nexus-context-path=/mylandmarktech
+then restart nexus
 
 
 1:23:00
@@ -337,6 +377,16 @@ to change nexus-content-path=/  to   /landmarktech
 then 
 
 
+
+1.28.10   when we install nexus, it comes with default sttings like defaulf port, we can dcide to change it 
+***** we do some configurations based on our security needs eg changing default port to something that suit our environment based on our security policies
+because we are heavy on security so most of the time we change default configurations for appl, we want to have our custom setting like changing default context path
+
+****1.29.00 UPLOADING ARTIFACTS FROM NEXUS TO MAVEN 
+             maven nexus integrattion
+we can change the password 
+
+           CREATING REPOSITORY
 
 1:37
 *********** we create maven-remote-repo in nexus , where we will upload our artifacts
@@ -412,36 +462,6 @@ we can place our nexus server in a diff AZ from where our maven server is runnin
 
 
 
-** 1:05:40
-we want to create a service to run nexus ie we want to run nexus as a service 
-we want to create a symbolic link to start nexus inside /etc/unit.d/nexus  dir 
-this libk is created because our nexus is found in /opt/nexus/bin        the script to start nexus is called nexus
-sudo ln -s /opt/nexus/bin/nexus/etc/unit.d/nexus
-sudo systemctl enable nexus 
-sudo systemctl start nexus
-then start nexus 
-
-****1.06.30 ********* we can also execute a script for nexus to run but it should start when we switched users to become nexus 
-so once we switch user and we now opt user thats
-so yes we can install nexus as a script, so we should hv 2scripts actually 
-the first run as ec2user and the 2nd as nexus user
-1.08.05... the line that says  "echo, run _as_user=nexus ; bc we hv to mg8 nexus as a nexus user for security reasons
-it shows that nexus service is running as nexus user thats how we are manging nexus 
-so we hv installed nexus and nexus is running
-
-hOW DO WE ACCESS NEXUS
-pub ip/8081
-  1.12.40 default nexus login:   ... i will show u guys how to change it 
-  username = admin
-  password = admin123
-
-
-**1.10.10  someone is asking ;
-we redirect into the file, not append, redirect bc it can only run as one user
-echo, run _as_user=nexus > /opt/nexus/bin/nexus.rc
-
-
-
 
 *** why is the symbolic path we die in tomcat diff from that of nexus 
 
@@ -474,15 +494,9 @@ also no logs dir ; logs ; where if anthing that is happening we will see it in t
 
 
 
-     CONFIGURING THE NEXUS SERVER (change the context/access path and port number)
-1.18.23 ..... nexus context path inside the nexus-default.properties (inside the nexus-default.properties w ecan chnage nexus port number)
-             we can change how we access nexus here by changing the the context path
-eg change context path to mylandmarktech
-   nexus-context-path=/mylandmarktech
-then restart nexus
-          
+    
 
-1.25.00
+
 
 
 Who decides on codeQuality:
