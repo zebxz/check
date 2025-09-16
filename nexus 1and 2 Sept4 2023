@@ -110,6 +110,14 @@ we hv 2 scripts for it to work
 next time run the 2script seperately to install nexus
 
 
+ALWAYS START NEXUS
+sudo su - Nexus
+cd/opt
+nexus nexus: sudo systemctl enable nexus 
+then start nexus 
+
+
+
 
 19:00
 ****************** 
@@ -288,8 +296,33 @@ maven and nexus intergration:
 
 55:00    ******* therefore run the command one by one using package 
 
+
+  NEXUS INSTALLATION
+
+sudo hostnamectl set-hostname 
+nexus Installation:
+-------------
+ https://www.sonatype.com/download-oss-sonatype
+   PUBLIC-IP = 54.85.4.8
+   ssh-key   = class30key.pem  
+   userName  = ec2-user  
+   ssh -i class30key.pem  ec2-user@54.85.4.8                 = RP  
+   ssh -i /home/ec2-user/class30key.pem  ec2-user@54.85.4.8  = AP  
+   ssh -i /tmp/class30key.pem  ec2-user@54.85.4.8 
+
+ http://54.85.4.8:8081/
+
+ echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
+ echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
+
+
 1:07:59  we hv 2 scripts for it to work 
 next time run the 2script seperately to install nexus 
+
+
+
+
+*********
 
 ** 1:05:40
 we want to create a service to run nexus ie we want to run nexus as a service 
@@ -323,26 +356,6 @@ echo, run _as_user=nexus > /opt/nexus/bin/nexus.rc
 
 etc replaces conf and it contains the configuration files
 
-
-sudo hostnamectl set-hostname 
-nexus Installation:
--------------
- https://www.sonatype.com/download-oss-sonatype
-   PUBLIC-IP = 54.85.4.8
-   ssh-key   = class30key.pem  
-   userName  = ec2-user  
-   ssh -i class30key.pem  ec2-user@54.85.4.8                 = RP  
-   ssh -i /home/ec2-user/class30key.pem  ec2-user@54.85.4.8  = AP  
-   ssh -i /tmp/class30key.pem  ec2-user@54.85.4.8 
-
- http://54.85.4.8:8081/
-
- echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
- echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
-
-
-
-*********
 
 1:11
 Nexus Home directory:
@@ -500,7 +513,6 @@ we can place our nexus server in a diff AZ from where our maven server is runnin
 
 inside  /etc/init.d directory we are creating a link for nexus, which is the file to start/run nexus
 
-by default we are allowed to hv multiple snapshot
 
 
   **2.36.00
@@ -514,17 +526,17 @@ thefore not allowing update means that if ur trying to redeploy or its like you 
 version 1.1 but if you IF You dnt choose that option it means when you run mvn deploy, you upload and just update the same asset and in that case you cant rool back if thers a problem
 
 
-ALWAYS START NEXUS
-sudo su - Nexus
-cd/opt
-nexus nexus: sudo systemctl enable nexus 
-then start nexus 
+
+1.03.24 
+  FILE USED TO START NEXUS
 
 
 cd  /opt
 ls nexus/
 ls nexus/bin
 ls nexus/bin/nexus                     **********  file  to start/run nexus
+
+
 
 
 1.11.30       NEXUS DIR STRUCTURE 
@@ -553,7 +565,7 @@ Sprint planning meeting
    code coverage => 90%
 
 
-Is nexus built from a different env't  :
+2.34.oo  Is nexus built from a different env't  :
   We leverage aws cloud  servers = AZ  
   us-east-1  = NV [AZ1 , ... AZ6]  
 
