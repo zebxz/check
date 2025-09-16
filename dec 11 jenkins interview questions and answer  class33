@@ -88,6 +88,14 @@ eg change context path to mylandmarktech
 then restart nexus
 
 
+we want to create a service to run nexus ie we want to run nexus as a service 
+we want to create a symbolic link to start nexus inside /etc/unit.d/nexus  dir 
+this libk is created because our nexus is found in /opt/nexus/bin        the script to start nexus is called nexus
+sudo ln -s /opt/nexus/bin/nexus/etc/unit.d/nexus
+sudo systemctl enable nexus 
+sudo systemctl start nexus
+then start nexus 
+
 Nexus Home directory:
   /opt/nexus                                 *****it is where the nexus software is extracted
 
@@ -122,8 +130,6 @@ maven, nexus integration:
            password= admin@123
 
  
-**************in our environment we are heavy on security most of the time we change default port 
-we change default configuration, we want to have our custom setting
 
 
 2:14:00 to allow redeployment, we change the hosted setting in the repo in nexus ie we open the repository and in hosted we allow redeploy
