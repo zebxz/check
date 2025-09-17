@@ -6,6 +6,11 @@
 
 ***** he created one security group and leave all PCES open, so he can use it to create all server 
 
+Jenkins portNumber: 8080  
+
+jenkins was successfully installed with a script bc we did not have to give access to another user 
+
+
 
 1) Jenkins installation script  (jenkins-Redhat-install.sh)
 
@@ -13,9 +18,18 @@ sudo wget -O /etc/yum.repos.d/jenkins.repo \
     https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 
-Jenkins portNumber: 8080  
 
-jenkins was successfully installed with a script bc we did not have to give access to another user 
+After installation, to get password, to unloack jenkins :
+  initial password =  /var/lib/jenkins/secrets/initialAdminPassword
+ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+then install suggested pluggins
+
+====
+Installation of CloudBees Jenkins: ENTERPRISE  -EE
+
+1:22:35 Launch jenkins AWS Redhat9 medium
+
 
 
 
