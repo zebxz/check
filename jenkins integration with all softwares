@@ -11,12 +11,12 @@ Jenkins portNumber: 8080
 jenkins was successfully installed with a script bc we did not have to give access to another user 
 
 
-
+jenkin 1&2
+IQ: Explain you EXPERIENCE in applying Jenkins?? 
+Ticket001:
+Install Jenkins in redhat9 server (ec2 instance in aws)
+   https://github.com/LandmakTechnology/package-management
 1) Jenkins installation script  (jenkins-Redhat-install.sh)
-
-sudo wget -O /etc/yum.repos.d/jenkins.repo \
-    https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 
 
 After installation, to get password, to unloack jenkins :
@@ -30,6 +30,99 @@ Installation of CloudBees Jenkins: ENTERPRISE  -EE
 
 1:22:35 Launch jenkins AWS Redhat9 medium
 
+
+2:03:40
+click new item 
+enter new item name 
+click freestyle project, then ok 
+after which select project name 
+then configure 
+
+
+Tesla Client:
+   java web applications    
+1. We have created and shared the project GitHub repo  with developers 
+      https://github.com/LandmakTechnology/maven-web-application 
+
+Ticket002:
+  Create an automation ci/cd job using Jenkins and other associated tools for a FinTech  
+  Java based web application.    
+ project repo: https://github.com/LandmakTechnology/maven-web-application
+ private project repo: https://github.com/LandmakTechnology/maven-web-app
+
+
+1. Jenkins Git Integration -- 
+      Ensure that Git plugins/Software is installed in the Jenkins server   
+      sudo yum install git -y  
+
+
+***** 1:54:29,   unable to switch user to jenkins 
+his username is jenkins bc when he first ran the script , it broke 
+
+
+2:03:42
+first and foremost, we are creating the job  -Github                       ******* (and git pluggins in jenkins website)
+2. we need Jenkins Git Integration  ie, installing git in jenkins , we need this integration to be able to clone/pull the code/application from SCM - Github
+   jenkins  Github   - jenkins need to integrate with git 
+      configure github login credentials in the Jenkins server:  
+
+******** to access jenkins
+        userName: legah2045               ******* SCM management: selsct git , add repo link,select add , select jenkins then enter username and the token 
+        password: Admin@123  or token
+        PERSONAL Access token:  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    (generated in jenkins , classic)
+
+3)
+2:08
+b. Jenkins maven Integration               * to create packages form java based web application 
+      Jenkins-Dashboard--manage Jenkins ---Tools and configure --maven  
+
+ie       Jenkins-Dashboard--manage Jenkins ---Tools -- add maven :name version >maven  3.9.4--maven  & dashboard -maven
+dashboard 
+project -configure-buildstep-add build-targets
+version :maven 3.9.4 -invoke top- level maven -goal :clean package, then save and build . 2nd video 17:00
+
+
+
+2:09:32  after i build, check ***    , trget has been created and if i check my CLI i see tools 
+
+
+4)
+
+2:13               2nd video 37:00 to remove sonar integration
+c. Jenkins sonarQube Integration   mvn sonar:sonar :           ******To perform code quality analysis  
+----------------------------------------------  
+NB: Your SonarQube server must be running 
+    sudo su - sonar 
+      sh /opt/sonarqube/bin/linux-x86-64/sonar.sh status
+      sh /opt/sonarqube/bin/linux-x86-64/sonar.sh start 
+      curl -v 34.213.64.100:9000 
+
+
+    1. Edit pom.xml propertiesTAG with SonarQube server URL and login Credentials 
+       in the Property TAG  
+       http://34.213.64.100:9000/
+         username: admin 
+         password: admin 
+
+      <Property>          * then go to jenkins server,project configure, select build stseps and add build step, then invoke top level maven, maven version 3.9.4
+                                     goal :sonar :sonar,  then save and build now. then login to sonarqube server
+
+**** why cant we create a script and give it all necessary sudo power it needs regarding changing shell so the script can run once 
+
+
+******* frank used my private ip and changed the version    ( i think this was when he was helping me troubleshoot)
+
+ii. Open required ports in Jenkins server to allow traffic from jenkins server
+         port 9000 should be open in the firewall/security group
+  or Install and configure JaCoCo plugin in Jenkins UI:
+
+5)
+d) Jenkins Nexus Integration;  mvn deploy:
+Upload build artifacts:
+
+
+6)
+E) Jenkins tomcat Integration 
 
 
 
