@@ -64,7 +64,10 @@ if code quality analysis results to a pass, it means the application can be depl
 in our env,before we deploy we make sure it is backedup in artifacts 
 we need to create a backup for our artifacts so that if in the process of deploying,In a situation where the MAVEN server goes down in the deployment, we just discontinue the process and pull from our artifactories 
 and our backup system is called nexus or Jfrog and our artifacts will be bcakedup there, 
-there should be a monitoring system to monitor our system. 
+for our deployment;
+we do not recommend to deploy to one appserver/tomcat bc if the app goes down it will be a problem, therefore in our deployment we use ansible or universal code UCD deploY, to deploy to multiple servers for high availability
+for high availabilty we have multiple app servers eg app server 1, app server 2, app server3 with the help of another automation tool called ansible
+ALso,there should be a monitoring system to monitor our system. 
 therfore, jenkins will connect with a notifier so we are configuring a notification called newRelic . if there is a problem an alert will be triggerred that will send out 
 email notification so members of the team will be notified that something is going wrong 
  this is the pipeline process
