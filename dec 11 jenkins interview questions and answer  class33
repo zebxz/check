@@ -203,6 +203,46 @@ DevOps/JENKINS is all about automation
 
 
 JENKINS 3
+                             
+AUTOMATING BUILD IN JENKINS 
+
+Build Now:  is a limited measure of automation  
+
+Automate builds using build triggers.
+
+1:35:35
+if u are doing software builds where developers are creating new version of the application, they are changing stuff constantly, we can configure pull SCM 
+
+use cases:
+     Software builds 
+     application build and Deployment
+     Started by an SCM change
+   
+
+     Started by user: LandmarkTechnologies = BuildNow  
+     Started by timer: build periodically 
+     Changes in SCM  : pollSCM
+
+when we configure pull SCM , a build will be triggered but this only happens if theres a new version of the application
+
+******* so i have a job java base fintech project in jenkins and bc i hv configured pull SCM, every minute will make a REq IN GITHUB  searching for new version to do a 
+a build  ( its all about versiong) if theres no new version , it doesnt do a build .    **** scm changes ie changes in SCM
+
+1:45
+3. GitHub-webhook :
+   GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
+
+****** so in github, we will create a webhook, if thers any change inour application , software or code, github will notify jenkins so therfore no need for a
+timer 
+if thers a new version of the applictaion , if developers commit new version 
+we can also configure webhook for something else eg if we want to do code quality analysis with sonarcloud , we can configure github webhook so that if
+developers commit new version of the applictaion, code quality analysis will be executed in sonarcloud and report will be created
+
+1:48:00
+we will know thers a new version bc of new commits or pushes, the webhook will be triggered
+
+
+
 
 
 ********************  INTERVIEW****************
@@ -316,3 +356,19 @@ POS Machine =
    CS --> Continuous security
    CT --> Continuous Testing 
 
+
+AUTOMATING BUILD IN JENKINS 
+
+we can Automate builds using build triggers.
+if u are doing software builds where developers are creating new version of the application, they are changing stuff constantly, we can configure pull SCM 
+and every minute will make a REq IN GITHUB  searching for new version to do a 
+a build  ( its all about versiong) if theres no new version , it doesnt do a build .    **** scm changes ie changes in SCM
+ also we can configure  GitHub-webhook :
+   GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
+
+**** so in github, we will create a webhook, if thers any change inour application , software or code, github will notify jenkins so therfore no need for 
+a timer 
+if thers a new version of the applictaion , if developers commit new version 
+we can also configure webhook for something else eg if we want to do code quality analysis with sonarcloud , we can configure github webhook so that if
+developers commit new version of the applictaion, code quality analysis will be executed in sonarcloud and report will be created
+we will know thers a new version bc of new commits or pushes, the webhook will be triggered
