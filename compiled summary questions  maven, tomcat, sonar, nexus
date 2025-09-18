@@ -1060,6 +1060,87 @@ PROJECTS:
         vscode, pycharm, eclipes, atom 
 
 
+IQ: Explain your experience using Jenkins in your Environment??? 
+answers:
+ 1. I and my team have used Jenkins to automate tasks and run jobs/workloads:uing,
+   ---  freestyle projects --- 5mins
+   ---- maven projects     --- 2mins  
+   ---- Pipeline projects  
+   ---- multi-branch pipeline 
+ 2. With Jenkins i have managed projects such as:
+    --- software/application builds and testing and deployment  
+    --- systems  monitoring  
+    --- application monitoring  
+    --- database backup
+    --- Infrastructure provisioning - when jenkins/terraform are integrated.. jenkins/terraformintegration 
+    --- Infrastructure Configuration mgt - jenkins/ansible integration 
+ 3. I have installed, removed and updated plugins that extend Jenkins functionality:
+   installed deploy to container
+   update deploy to container 
+   remove deploy to container
+   Read The Release Notes [Documentation] for the Plugins 
+   most Jenkins Plugins are developed by the Community  
+
+ 4. Using Jenkins Plugins to achieve automation:such as ,
+  ssh, sshAgent, Publish-over-SSH, deploy to container, Slack notification,   
+  job import, jacoco,
+aside frm installing plugins, i hv also used plugins to achieve atomation and hv taken automation to the nxt level by 
+configuring build triggers
+ 5. Configuring Build triggers such as:[pollSCM, webhooks] for automation:
+i hv secured jenkins by ensuring :
+ 6. Configuring credentials for authentications:
+     GitHub credentials 
+     Tomcat-user 
+     Docker-hub/Nexus/SonarQube/SONARCLOUD 
+     username/temporal access /  
+
+  7. Configuring Jenkins (master)slave agents  using ssh plugins:
+
+
+8. Troubleshooting jenkins build related problems:
+     -- permissions issues, Unauthorized [4** error codes] , i manage the credentials such taht jenkins can be authenicated by github or nexus accordingly
+                     e.g jenkins trying to connect with nexus/sonarqube/github
+
+     -- Jenkins [GitHub/sonarqube/nexus/tomcat] 
+
+     -- Jenkins agent/slave failing to connect to the master
+        [java not install], wrong java version, AUTHENTICATION
+
+ 9. Installation and configuration of the Jenkins server in Linux/Windows systems:  
+
+ 10. Securing the Jenkins server  :
+   
+
+IQ: What problems have you faced using/applying Jenkins in your Environment??
+     1. builds failing
+     2. jenkins service failing start so we need the complier, check if [java-11-openjdk] is installed
+     3. slave/agent failing to connect to the master [bc of executables] mayb java is nt installed or trying to run multiple jobs at once
+jenkins master slave architecture
+to run multiple jobs at once,  we may have one jenkins master server connecting to to other jenkins slaves via executioners
+      4. integration isues, integration failing
+     3. firewall issues = ports [8080 / 8899] not open      
+
+
+QUESTIONS:
+why do DEvelopers need git in their environment since git will be installed in jenkins?
+developers are to develp the application and use git for versioning the application, 
+when they do a git commit, they creat a new version
+and to share the code they need the git push command and as a devops engr, we need git to clone the code.
+we no longer need maven standalone bc in jenkins we can install maven as a tool
+if we want to run a job in jenkins we can jenkins master slave architeture without havin to install maven in the set slave server, so long as i hv 
+the tool maven installed and running in jenkins and with the help of jenkins executors, jenkins will run the jobs with relative ease.
+
+is the low system/resource requirement/capacity of agent that were established a problem?.. e.g some are free tier servers
+bc our jenkins reqire a minimum of 4GB ram 
+not necessary, as a matter of fact , this is the first time an agent has failed on the grouns that it doesnt hv enough resources, but thi scan abe added as one of the problems
+encountered for TS using jenkins and hw did you solve them 
+
+ADVANTQAGES OF SLAVE MASTER ARCHITECTURE
+it helps in redundancy e.g if the job in the master fails, we stil hv the jobs in the slaves
+it enhances the master performance
+it helps with para builds,i.e running multiple jobs at once, inorder words, one job doesnt hv to run and end b4 another starts.. bc under normal circumstances, 
+when running multiple jobs in jenkins, depending on the number of executioners,one j
+
 
 
 
