@@ -300,11 +300,12 @@ sudo yum install java-21-openjdk-devel -y     ... now version 21
 to verify = java -version
 install tomcat: 
 sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.108/bin/apache-tomcat-9.0.108.zip     *** 404 error.. i bliv outdated
-sudo wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.44/bin/apache-tomcat-10.1.44.zip
-sudo unzip apache-tomcat-10.1.44.zip
-sudo rm -rf apache-tomcat-10.1.44.zip
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.44/bin/apache-tomcat-10.1.44.zip     **** 404 error*** 
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.11/bin/apache-tomcat-11.0.11.zip
+sudo unzip apache-tomcat-11.0.11.zip
+sudo rm -rf apache-tomcat-11.0.11.zip
 ### rename tomcat for good naming convention
-sudo mv apache-tomcat-9.0.108 tomcat9  
+sudo mv apache-tomcat-11.0.11 tomcat9  
 run ll; root user owns the file so;
 ### assign executable permissions to the tomcat home directory
 sudo chmod 777 -R /opt/tomcat9            1.05.58********** ( but we did 775)
@@ -547,6 +548,8 @@ vi or vim  /opt/tomcat9/webapps/manager/META-INF/context.xml
 this file is permitting tomcat to be managed as local host
 showing , allow = "127\.df, which only allows broadcast /traffic from local host
  therfore we comment the line above by inserting <!--
+                                                       valve
+                                                         allow=127
                                                   -->
 
 By commenting the line, it means that i am changing the configuration such that other traffic can be allowed into my tomcat server
@@ -561,10 +564,15 @@ vi or vim  /opt/tomcat9/conf/tomcat-users.xml             # to add user
 
 1:40
        ****** copy and paste to add 2users
+  *** the file should look like this 
+-->
 a) <user username="cecilia" password="admin123" roles="manager-gui,admin-gui,manager-script"/>
-  ceceilia has manger role ie he can manage from the gui(graphic user interface) he has admin while simon has admin gui
-b<user username="simon" password="admin123" roles="admin-gui"/>
+   <user username="simon" password="admin123" roles="admin-gui"/>
 
+</tomcat-users>
+
+
+ceceilia has manger role ie he can manage from the gui(graphic user interface) he has admin while simon has admin gui
 ****** imputing username :Cecilia and password admin123, i can log in
 
 
