@@ -76,13 +76,9 @@ repository that was expected.
 
 
 
-AWS1
-IQ: Explain your experience with Linux systems/Platforms?
-answer: Creating & login into Linux servers to perform various tasks.
-TASKS MGT: 
-    FileGMT: - touch/vi/cat/head/tail/cut/grep/pipe/sed/sort/mkdir/rm/rm -rf/chmod/chown 
-              cp/mv/ln/ln -s/ scp / ls   
-    userMGT: - useradd/userdel/usermod/groupadd/groupdel/passwd/chage/paswd -l  
+
+
+
 *******************************
 
 
@@ -162,6 +158,16 @@ GUI - console
 command - CLI
 scripts - 
 
+Redhat8 Linux server in AWS   
+i can execute:          - yum install java  git wget unzip tomcat  maven sonarqube nexus jenkins   
+this task means commission the server
+   also i can decommision the server :  decomissioning:
+by removing all what i nistalled          - yum remove java git22 wget unzip tomcat  maven sonarqube nexus jenkins       
+    recomissioning:
+         - yum update/upgrade/  
+  if i remove git22, i can recommission the server by installing git23   - yum install git23    
+
+
 
 EXamples of workoads/task executed
 
@@ -172,17 +178,141 @@ security mgt;  passwd, selinux, firwall (to secure our sever)
 package mgt ; wget, yum/apt, rpm, (redhat package manager)
 serveice mgt ;  systemctl, start/stop/enable/status
 system mgt ;
-monitoring = df -h, free -m
-
-
+  
 4)scheduling and automating task using cron tables
 a) backup all data bases every midnight
 b) deploying the latest version of the app every sunday at midnight
 C) optimize our appservers every month on the 20th  day at midnight (yum update -y & $ yum upgrade -y)
-d)monitor system responses and send alerts using the threshold everyminute if cpu/mem usage exceed 80% send email df - h = cpu
-
-
+d)monitor system responses and send alerts using the threshold everyminute if cpu/mem usage exceed 80% send email df - h = cpu,  df -h,free -m
+monitoring systems for high performance
 Archive/Data backup commands
+
+troubleshooting systems:
+
+#### also we covered running workloads using :
+  CLI  
+  GUI  
+  scripts 
+
+also we covered logical volume mgt
+hw is data stored in this server, we need to attach  a disk or harddrive attached to server where we can store data, all the task we run on the server like file mgt are
+consuming part of the system resources of the disk space, so we v to manage the disk bc if the disk is full, der will be a problem, all the process of managing  hw much 
+stoage we hv available is called volume mgt
+ 34:00 although since we'v been doing cloud computing has become heavily simplified bt in the past, there used to be people hired to to manage storage of servers as their only 
+job like linux administrator
+we can add more volume if the first is being exhausted e.g disk 1 .. then we can add disk2
+
+
+AWS1
+security of Linux systems:
+  firewall rules = open ONLY required ports/address 22, [0-65535] ,, all the addresses shudnt be open 
+                   open required ports/addresses only to authorise/known sources, traffic frm specificc known sources
+    Team = Paul / Simon / James / Chioma / Mercy 
+           Everybody
+
+
+
+maven: 
+maven is an open source java based build tool
+  1. commissioning/setting up / installing maven software in Redhat9  
+  2. configuring the maven server   
+  3. installing maven dependencies - openjdk 
+  4. Building/creating deployable java based packages [jar/war/ear]
+  5. Creating maven proxy repositories to ensure that project dependencies/plugins
+     are securely downloaded into maven by proxy server.
+  6. troubleshooting build failures, and extended builds.   
+
+tomcat is an open source java based container/application server
+  1. commissioning/setting up / installing tomcat software in Redhat9  
+  2. configuring the tomcat server   
+  3. installing tomcat dependencies - openjdk 
+  4. deploying the war files into the tomcat webapps directory
+  5. Creating tomcat users to permit required console access/mgt 
+  6. troubleshooting failures in our tomcat servers.   
+
+sonarqube is an open source java based code quality analysis tool.
+  1. commissioning/setting up / installing sonarqube software in Redhat9  
+  2. configuring the sonarqube server   
+  3. installing sonarqube dependencies - openjdk 
+  4. running code quality analysis in sonarqube
+  5. Creating rules, quality gates and quality profiles in sonarqube 
+  6. troubleshooting build failures from sonarqube reports. 
+  7. Creating a benchmarks/standards for code quality:
+       - code coverage  
+       - duplications  
+       - code smells  
+       - vulnerabilities 
+       - security hotspots
+       - maintains reliability,and secure codebases
+
+Nexus is an open source java based artifactory.
+  1. commissioning/setting-up / installing nexus software in Redhat9  
+  2. configuring the nexus server   
+  3. installing nexus dependencies - openjdk 
+  4. Creating sonapshots repositories to uploads artifacts built from the dev branch  
+  5. Creating releases repositories to uploads artifacts built from the master branch  
+  6. troubleshooting issues from nexus;
+       permission errors - HTTP401 
+  7. Creating MAVEN-PROXY-REPO in nexus
+
+
+Jenkins is an open source ci/cd automation tool.
+  1. commissioning/setting-up / installing the Jenkins software in Redhat9  
+  2. configuring the Jenkins server   
+  3. installing Jenkins dependencies - openjdk 
+  4. running CI/CD/CM/CT/ jobs in Jenkins  
+  5. installing and configuring plugins in jenkins to extend 
+     jenkins functionality and for automation
+  6. Writing and editing Jenkinsfiles to run pipeline and multi-branch pipeline jobs  
+  7. setting-up triggers[pollSCM, GitHub-webhook, etc.] for automated builds in jenkins
+  9. securing the Jenkins server/environment to allow only authorise users to perform tasks 
+  10. troubleshooting jobs and build failures  
+  11. Integrating jenkins with;
+        Git/GitHub/MAVEN/sonarqube/nexus/tomcat/docker/kubernetes/
+  12. using plugins to configure alerts and email notifications in jenkins  
+  13. using plugins in setting-up jenkins master-slave to run parrarel jobs via Jenkins executors
+
+
+
+ 
+
+
+AWS1
+
+Platforms:  Platform Engineer ( Linux )
+            Multi- Platform Engineer ( Linux / WINDOWS/Solaris/mcOS)
+
+
+IQ: Explain your experience with Linux systems/Platforms?
+answer: Creating & login into Linux servers to perform various tasks.
+TASKS MGT: 
+    FileGMT: - touch/vi/cat/head/tail/cut/grep/pipe/sed/sort/mkdir/rm/rm -rf/chmod/chown 
+              cp/mv/ln/ln -s/ scp / ls   
+    userMGT: - useradd/userdel/usermod/groupadd/groupdel/passwd/chage/paswd -l  
+
+which platform do you use in your environment/projects:
+in our environment, Our technology stack support muliple Platforms
+Our technology stack can be installed/setup in muliple Platforms like 
+   Linux/WINDOWS/Solaris/macOS
+However in our environment we are heavy on the Linux platforms/systems because:
+  Linux is open source / secured / community support to help resolve issues / 
+
+IQ: What is your experience in Open source technologies???
+
+    We develop, build, test, monitore, secure, backup and deploy 
+    applications using technologies including open source softwares, we mostly use open softwares like:   
+Linux os / java(openjdk) / maven / 
+    java / maven / tomcat/ sonarQube / nexus / jenkins / nginx/ git /  
+
+ 1. Linux OS /   
+      development - developers  
+        CODING      == IDEs [vscode, Eclipse], [Pycharm, is nt open source ]
+        versioning  === [git/github], [gitlab, bitBucket] 
+           IDEs = integrated development environment  
+      Testing === [Selenium,] 
+  
+
+
 
 
 *****************************************************************************************************************************************************
