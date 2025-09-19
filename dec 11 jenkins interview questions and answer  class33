@@ -30,10 +30,21 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 
 
 
+
    (includes jenkins1&2 and jenkins3, INTEGRATING ALL THE SOFTWARES)  while jenkins 4 is types of jenkins project/RUN JOBS( Using the diff jenkins options)
 HOW DO WE EXPOSE THE APPLICATION TO ENDUSERS, DEVOPS, WHAT IS JENKINS AUTOMATION, CI/CONTINOUS INTEGRATION, CD/CONTIONOUS DELIVERY, CD/CONTINOUS DEPLOYMENT, WHO IS DEVOPS ENGR,
  TYPES OF JENKINS PROJECTS,types of jenkins project/RUN JOBS (steps in Using the jenkins options) PLUGINS MANAGEMENT: How to use plugins to achieve 
-automation,JENKINS MASTER -SLAVE ARCHITECTURE:
+automation,JENKINS MASTER -SLAVE ARCHITECTURE:, JENKINS PIPELINE PROJECT/JENKINS SRIPT , 7&8 MULTI PIPELINE JOBS, SHARED LIB & JENKINS SECURITY
+
+JEN7&8
+the reason why devops engr are paid so much moni is bc they can write jenkins file and its dif frm writing codes by developers wich is very complex 
+writing code is more complex
+
+
+JEN6
+maven is running in jenkins so we 
+2:13:00   day1)start runinng, day2)keep runinn, day3)continue to run, 4)dnt stop running
+
 
 Jenkins portNumber: 8080  
 
@@ -242,7 +253,7 @@ developers commit new version of the applictaion, code quality analysis will be 
 we will know thers a new version bc of new commits or pushes, the webhook will be triggered
 
 
-jen4
+JEN4&5
  TYPES OF JENKINS PROJECTS,types of jenkins project/RUN JOBS (steps in Using the jenkins options) PLUGINS MANAGEMENT: How to use plugins to achieve 
 automation,JENKINS MASTER -SLAVE ARCHITECTURE:
 
@@ -254,6 +265,66 @@ application deployent
 server monitoring/application performance monitoring=APM
 
 ******** we can also build using graddle
+
+jenkins pipeline is just a file we want to create a file , everytin will run inside a node, jenkins server is a node
+
+
+
+
+ JEN6   PIPELINE JENKINS PROJECTS:    (comit id helps identify the diff versions)
+
+FREE-style
+maven
+we want to create a pipeline that can automate the test and build process  
+pipeline:  
+  Jenkins Pipeline scripts are generally written in groovy ,, what is a groovy language?
+  Jenkins Pipelines scripts are called Jenkinsfile   **(we hv pipeline script that u can write, we also hv pipeline script from scm)
+
+
+
+              JENKINS FILE
+Jenkinsfile is a file generally written in the groovy language:
+Jenkinsfile helps to better manage and automate jenkins jobs/tasks .Jenkinsfile introduces infrastructure as a code concept with all its benefits 
+
+         TYPES OF JENKINS SCRIPT
+  we have scripted and  declarative Pipeline scripts
+scripted file starts with a node while declarative starts with pipeline
+scripted file is restricted to a particular node e.g in pipeline we hv  "agent any
+
+**** BUILDING FROM PRIVATE REPO  wil be done 9 out of 10 in the coy
+
+JEN7
+multiBranch Pipeline job : we can build in multiple branches
+=========================
+Project private repo - https://github.com/LandmakTechnology/maven-web-app  
+   we are expected to see line of development
+               Git Branches - Are Lines of development 
+
+ someone is aking we hv nt deployed to tomcat ,, we are going to be deploying containerized app, tomcat was an introduction
+  1:12:18 all of these is nt happening in one agent , mvn package will tk place in maven build server, sonar,the code quality analysis will talk to a 3rd party server wich is sonarqube server
+
+our jenkins is running in linux
+
+=======================
+SHARED LIBRARIES    .. we execute jenkins shared lib to ease hw we write n manage jenkins file, so if i hv 24 jenkins files to write that are performing similar task 
+                           ill use shared lib to simplify my job
+
+Jenkins security: where we do the changes depends on where jenkins was installed 
+
+we need users to access  Sonarqube, nexus, jenkins, github, kubernetes. it will be too much manual work to create these users in all the servers so we can integrate
+jenkins with LDAP authentication server,, so we'll hv all the login credentials of users , username n passwd stored in the LDAP then connect LDAP to communicate withjenkins
+and each of the servers.then all the users are able to access jenkins automatically its called a single signup, where the signup credentials is configured in the LDAP server,
+once u connect to LDAP sucessfully, u can connect to any other resource in ur environment. this all securing our jenkins environment. 
+
+
+the reason why devops engr are paid so much moni is bc they can write jenkins file and its dif frm writing codes by developers wich is very complex 
+writing code is more complex
+
+
+
+
+
+
 
 
 
