@@ -3,6 +3,11 @@
 
 
 ===================================================================
+
+AWS Global Infrastructure, ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics, EC2 INSTANCE PUURCHASE OPTION, 
+INSTALLING WEBSERVER USING USERDATA ie script, INF ABOUT METADATA:  HOW ARE WE CHARGED FOR EC2.  TRANSFERRING FILES OVER THE INTERNET,vPC
+
+
 AWS  Global Infrastructure:
 https://aws.amazon.com/about-aws/global-infrastructure/
 AWS Global Infrastructure Map
@@ -212,6 +217,11 @@ When we stop a server the public-IP address will changed at restart ,,bc the ip 
 ########Ticket044 = Create a and install a webserver in aws...... webapp can be used to serve some web content
 with the help of ec2 intance we are able to create servers and connect to them
 
+
+   
+USING USERDATE TO INSTALL WEBSERVER
+
+
 userData - This is a script that can run while creating/launching the server  
 ========
  #!/bin/bash
@@ -233,7 +243,7 @@ for outbound we allow access from everwhere
 #### after configiration - advancd details:on user data ,inside the big box paste the bash shell script to b able to install apache webservr, so if i 
 access it on the webserver, i shud be able to see wlc to landmark
 
-11:57#####then launch the instanc
+11:57#####then launch the instance
 
 Metadata:  data abt data
   id:       i-0cda0b7ee5e8d9434
@@ -242,13 +252,15 @@ Metadata:  data abt data
             35.92.51.2:80  
             http://35.92.51.2:80  
 
-  TRANSFERRING FILES OVER THE INTERNET
-31.00 after installing webserver 
-HTTP = hyper text transfer protocol    = listens on port 80 
-HTTPS =  hyper text transfer protocol secured   = listens on port 443 
-i can transfer files over the internet in the webserver in CLI so long as the file is in   
 
-HTTP = hyper text transfer protocol      i can transfer files over the internet in the webserver in CLI so long as the file is in     
+
+
+  in answer someones' question as seen below **********   TRANSFERRING FILES OVER THE INTERNET      
+therfore i can transfer files over the internet that is found in a particlar server, when a file is found in my server it is diff for individuals to be ble to access the file 
+we hv http & https 
+ 31.00 after installing webserver were endusers able to acces my text  .. yes ( on the internet, using the ip address we could see "Devops is good )
+
+HTTP = hyper text transfer protocol      i can transfer files over the internet in the webserver in CLI so long as the file is in  ( i bliv my server)    
 34:00  i can transfer files over the internet in the webserver in CLI, E.G redirecting contents frm one file to another, or changing or adding to my web content
 HTTPS = hyper text transfer protocol Secured   = listens on port 443  
 
@@ -265,23 +277,31 @@ portNumber    80             443
 
 password:  admin123,     */cxx5%%$#@!fdytdcxsfdsyfdiuoiodofsdcp  but paswd can be easily hacked
 
-####21:00  in AWS we hv tesla vpc is a large netwrk with 2 small networks
+   
+
+**********************       20.36, very soon we will be doing virtual private cloud (vpc)
+
+lets assume we hv THIS VPC called tesla vpc 
+####21:00  in AWS we hv tesla vpc its a larger netwrk with 2 smaller networks (so we call this subnetworks)
 sutnet1 is public  (with a webserver1) and subnet2 is private with an (app server1).... both in the same ntwrk,, for both to communicate with each oda they can use the
 private ntwrk address
-we hv another engr chidi in a diff ntwrk, he can access the webserver wit the webser pub ip
+*26.00    ..... we hv another engr chidi in a diff ntwrk, he can access the webserver wit the webser pub ip
 also if we hv another webserver2 & appserver in another netwrk, for them to communicate with appser1 & appser2,, they wil use the public ntwrk address
 
 
-### key implication for web security & user privacy  when a webserver exclusively uses port 443 ,for all its traffic bc we aware that port 80  wil hv some unencrypted
-traffic but for sensitive info for data base &user inf is it adviceable to open port 80
+29.30           QUESTION
+whats the key implicTION FOR WEBSECURITY AND USER PRIVACY When a website Exclusively uses port 443 for all its traffic compared to a website that uses port 80 bc we are that port 80 wil hv some unencrypted traffics but if we are dealing
+with sensitive mayb data base  &user inf is it adviceable to open port 80
+ANS ; thats a very question and we will be looking at all those stuffs when it comes to ntwrk security as well as we progress with the programm  
+  but let me just state what makes http & http diff  (as seen above )
 
 
-if u launch a server in us east one A , it cant be moved to us east b bc the computer is hosted in us east A,, thats where the hardware is found. cos once u host a server 
+*40.11 if u launch a server in us east one A , it cant be moved to us east b bc the computer is hosted in us east A,, thats where the hardware is found. cos once u host a server 
 you are creating a virtual machine, u hv launced a virtual computer bt they ar running on a physical hardware system which ar located in a specific location
  and those locations ar in data centers,or availability zones, so we can uae data centers  and avail zone to an extent  interghangeable 
 you can only choose the aws zone while the instance is being made, bc once a server is hosted u are creating a virtual computer
 
-we wil see the diff classif of aws RES
+****35.00 we wil see the diff classif of aws RES
 we hv resources that ar availa zone specific ..ie their scope is within an availa zone 
 we also hv resources that their scope is regional and resources that their scope is global
 
@@ -289,3 +309,7 @@ we also hv resources that their scope is regional and resources that their scope
 ###41:00 the public ip address is optional i.e u can allow ur server be allocated an ip address or nt bt regardless, th eprivate ip adress must be assigned to servers
 when u stop the server the pulic ip address is released back to aws and the server is assigned a new pub ip but when we start worjing in coy, we wont hv to stop the server 
 bc the uptime of the server is important ie hw long the server has been running 
+
+43.05******you can only use your private ip to connect to your servers when your servers are in the same netwrk
+
+tomorrow we wil look at storage solution 
