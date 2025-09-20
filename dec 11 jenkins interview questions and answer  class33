@@ -43,13 +43,15 @@ AWS for
 
 
 cloud computing, Cloud Service Models/ CSP; CLOUD SERVICE PROVIDERS, ADVANTAGES OF USING THE CLOUD 1:55:00 REQUIREMENTS OF owning a data center
- ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics,  EC2 INSTANCE PUURCHASE OPTION, 
+ ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics,  EC2 INSTANCE PUURCHASE OPTION, INF ABOUT METADATA:  
 HOW ARE WE CHARGED FOR EC2.
 
 
 cloud computing is very imp bc COMPANIES ar migrating very quick &fast from on-prem to cloud we'l be looking at hw aws helps us to manage our infrastructure
 
 with CSP (Cloud Service Providers) like aws, GCP and azure we can pay only for used computing Services
+
+userData - This is a script that can run while creating/launching the server  
 
 
 , we'l be looking at hw aws helps us to manage our infrastructure
@@ -262,4 +264,69 @@ storage is called ebs volume, after security groups, we configure stored
 the speed for hdd is 10 times slowervthan ssd
 1:19:25  for volume type, magnetic is like a floppy disk wich use to be used many yrs ago, we dnt nid it,,, so we go for general purpose ssd .. gp3
 then launch the instance
-    
+
+
+INF ABOUT METADATA:  
+Metadata: Data about data/  data about the instance
+- id         = i-08b0ba39aca738105, privateIP  = 172.31.27.50, publicIP   = 54.187.238.209, DNS-private= ip-172-31-27-50.us-west-2.compute.internal
+
+
+
+When we stop a server the rivate-IP/DNS address cannot changed at restart 
+When we stop a server the public-IP address will changed at restart ,,bc the ip address is released once we stop the server
+  use an elasticIP to maintain a static public-IP even after restart 
+
+########Ticket044 = Create a and install a webserver in aws...... webapp can be used to serve some web content
+with the help of ec2 intance we are able to create servers and connect to them
+
+
+userData - This is a script that can run while creating/launching the server  
+
+
+                                     TRANSFERRING FILES OVER THE INTERNET
+31.00 after installing webserver 
+HTTP = hyper text transfer protocol    = listens on port 80 
+HTTPS =  hyper text transfer protocol secured   = listens on port 443 
+i can transfer files over the internet in the webserver in CLI so long as the file is in     
+34:00  i can transfer files over the internet in the webserver in CLI, E.G redirecting contents frm one file to another, or changing or adding to my web content
+HTTPS = hyper text transfer protocol Secured   = listens on port 443  
+
+
+35.23
+the diff btw the http & the htp secured protocol 
+the diff btw the http & the htp secured protocol 
+
+                             HTTP                  HTTPS 
+Data                     insecured                   secured
+transfer                 clear text               encrypted(when it gets t the user its decryted)
+certificate              not required              required (a cert is req to encrypt the data, when it gets t the user its decryted so thers an exchange of certificate)
+port                         80                           443 
+passwd                      admin123                     */cxgfhhi90976$%^&^^&*
+
+
+
+####21:00  in AWS we hv tesla vpc is a large netwrk with 2 small networks
+sutnet1 is public  (with a webserver1) and subnet2 is private with an (app server1).... both in the same ntwrk,, for both to communicate with each oda they can use the
+private ntwrk address
+we hv another engr chidi in a diff ntwrk, he can access the webserver wit the webser pub ip
+also if we hv another webserver2 & appserver in another netwrk, for them to communicate with appser1 & appser2,, they wil use the public ntwrk address
+
+
+### key implication for web security & user privacy  when a webserver exclusively uses port 443 ,for all its traffic bc we aware that port 80  wil hv some unencrypted
+traffic but for sensitive info for data base &user inf is it adviceable to open port 80
+
+
+if u launch a server in us east one A , it cant be moved to us east b bc the computer is hosted in us east A,, thats where the hardware is found. cos once u host a server 
+you are creating a virtual machine, u hv launced a virtual computer bt they ar running on a physical hardware system which ar located in a specific location
+ and those locations ar in data centers,or availability zones, so we can uae data centers  and avail zone to an extent  interghangeable 
+you can only choose the aws zone while the instance is being made, bc once a server is hosted u are creating a virtual computer
+
+we wil see the diff classif of aws RES
+we hv resources that ar availa zone specific ..ie their scope is within an availa zone 
+we also hv resources that their scope is regional and resources that their scope is global
+
+
+###41:00 the public ip address is optional i.e u can allow ur server be allocated an ip address or nt bt regardless, th eprivate ip adress must be assigned to servers
+when u stop the server the pulic ip address is released back to aws and the server is assigned a new pub ip but when we start worjing in coy, we wont hv to stop the server 
+bc the uptime of the server is important ie hw long the server has been running 
+  
