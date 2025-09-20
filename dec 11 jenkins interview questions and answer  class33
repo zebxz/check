@@ -42,7 +42,11 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 AWS for 
 
 
-cloud computing, Cloud Service Models/PROVIDERS, ADVANTAGES OF USING THE CLOUD 1:55:00
+cloud computing, Cloud Service Models/ CSP; CLOUD SERVICE PROVIDERS, ADVANTAGES OF USING THE CLOUD 1:55:00 REQUIREMENTS OF owning a data center
+ ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics,  EC2 INSTANCE PUURCHASE OPTION, 
+HOW ARE WE CHARGED FOR EC2.
+
+
 cloud computing is very imp bc COMPANIES ar migrating very quick &fast from on-prem to cloud we'l be looking at hw aws helps us to manage our infrastructure
 
 with CSP (Cloud Service Providers) like aws, GCP and azure we can pay only for used computing Services
@@ -70,6 +74,8 @@ storage b4 she can start running her application... this is a challenge so we hv
 with CSP (Cloud Service Providers) like aws, GCP and azure we can pay only for used computing Services.
 Cloud Service Providers    - CSP =e.g  AWS / GCP / AZURE / alibaba/ etc.    
 the main cloud service providers :AWS - Amazon Web Services , GCP - Google Cloud platform), AZURE Cloud
+ Cloud Service Providers - CSP = AWS / GCP / AZURE 
+they Provide computing services / resources like servers, network, storage, security, etc. over the internet from their Datacenters   
    pa
 
 with CSP, we can reduce cost by:
@@ -98,3 +104,162 @@ e.g ec2 instance  - ec2
 PaaS--  Platform  as a service  : aws container registry, aws kubernetes solution
   ECR / EKS / ECS / 
 
+AWS 2
+
+The AWS Cloud spans 102 Availability Zones within 32 geographic regions around the world, 
+with announced plans for 12 more Availability Zones and 4 more AWS Regions in Canada,
+Malaysia, New Zealand, and Thailand
+
+what is a region? .... Region  are Logical names  =   
+Availability ZONES - AZs   = Physical locations comprising of 
+                            one or more ISOLATED Datacenters  
+
+ Regions: us-east-1  = N-Virginia, us-east-2  = Ohio, us-west-1  = N. California , us-west-2  is  Oregon 
+
+
+Regions: us-east-1  = N-Virginia, us-east-2  = Ohio, us-west-1  = N. California,   us-west-2  is  Oregon 
+
+Regions covers: USA, Canada, Americas, Europe, Africa, Asia, Middle East, Australia, 
+
+Can a Lagos based company serve clients around the world with the help AWS ? yes  
+
+in each regon there are diff azs, the azs are engineered to be independent from each other , e.g us east1a is located independently from us east1b
+
+Regions: us-east-1  = N-Virginia, there are 6 azs in this region
+  Availability ZONES :  
+    us-east-1a --- Arlington
+        jenkins-master            9:20 place my jenkins servers in diff az
+
+    us-east-1b --- Fairfax      us-east-1c --- Loudoun 
+      jenkins-slave1               jenkins-slave2
+
+
+11:00 ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS
+1) Availability zones - AZs are engineered to be independent from each other
+2) A disaster in one cannot/shouldn't affect another AZ.  
+   Floods
+   earthquake 
+   Network failure  
+   wildfire
+
+
+                EXAMPLES OF AWS SERVICES
+ ec2 / efs elastic file sys / eks elastic kubernetics serv / ecs elastic container services / iam, identity & access mgt / route53 / elb  
+
+
+            WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS
+
+Regions covers: USA, Canada, Americas, Europe, Africa, Asia, Middle East,   
+                Australia, 
+
+Can a Lagos based company serve clients around the world with the help AWS ? yes  
+for this to happen, This company will need server resources/services [ec2] from AWS
+This company will need AWS container resources/services [eks, ecs, ecr, ] 
+NB: Not all aws services are found in all aws regions.
+
+
+1)Availability: elastic cloud compute [ec2]   Not all aws services are found in all aws regions, so we hv to mk sure its avail in the region b4 we launch it
+              elastic kubernetes service = EKS 
+
+2) High Availability:  having multiple servers for your applicaction to avoid application outage
+  DEPLOY AN Application server  
+   1 application Server  : architecture1  .... you can be a cloud architect, can advice the coy that we cannot hv one app server, so lets hv more than 1 app servers
+   4 application Servers : architecture2
+
+hIGH availability can be ACHIEVED BY:
+      1. Multiple instances of the servers -- 4 = us-east-1a  
+      2. Deploy using Multi AZs = us-east-1a, us-east-1b, us-east-1c, us-east-1f  
+      3. Deploy using Multi Regions  = us-east-1, VIRGINIA, us-east-2, OHIO, af-west-1,   
+      4. Multi-cloud -- AWS/GCP/AZURE
+
+ Cloud Service Providers = 
+
+3) Latency: -- TIME taken TO ACCESS A SERVER/application 
+   us-east-2 = Ohio     --- 200ms to access    1
+   us-west-2 = Oregon   --- 100ms to access    2   .. THE best
+   af-west-1 = CapeTown  -- 500ms to access    3  
+
+4) cost:                          latency              base on cost  
+   us-east-2 = Ohio     --- 200ms to access    1    $4/hr  THE BEST
+   us-west-2 = Oregon   --- 100ms to access    2    $8/hr 
+   af-west-1 = CapeTown  -- 500ms to access    3    $6/hr 
+
+5) customer Location: IF MY cx AR IN LOndon i will place resources to where the cx are
+   Ohio           = us-east-2 = Ohio  
+   London         = eu-west-2 = London 
+
+6)Complaince / Regulations []: this cud restrict a coy,, e.g in china , chinese based coys ar adv to only choose datacenters within AS/china,, so u cant choose a dif location
+when the govt regulations doesnt permit it
+
+7)Security:
+  Mosco /  
+     
+
+EC2-Basics
+==========
+  Basic Computer vs      aws-EC2 :
+  OS     ----            AMI (OS + Additional Softwares) 
+  Hard Drive             EBS (Elastic Block Store)\
+  RAM                    RAM
+  CPUs[1, 2, 16 core]    Instance type[t2.mirco, t2.medium]
+  Network CARD           IP Addressing 
+  Firewall               Security Groups
+
+AMI = amazon machine image 
+
+######                                              EC2 INSTANCE PUURCHASE OPTION, HOW ARE WE CHARGED FOR EC2.
+  on-demand instances   = most expensive and very flexible, servers can be created & deleted any time, u pay for services whrn servers ar running
+           this is gud for studies bc its d only option that supports for free tier bc u ar always expected to terminate ur instabce               studies 
+
+  Reserved instances    =  ,, #####read note, u reserve inatance & u dnt use it u stil pay 4 it, cx can ask for instances to be reserved
+this is gud for deploying to prodution    production 
+  
+spot instances - Bids =   AWS,, will provide based on avail instances so cx wil place a bid after AWS has placed the offer price
+this is gud for testing, like high voltage application
+
+AMI = amazon machine image 
+
+                                       
+                                                       HOW ARE WE CHARGED FOR EC2.
+53:00 instance type is the power of the instance, the specks
+
+e.g  Laptop1: 24 CORES / i9 / 4TB SSD / RAM 128GB  = $9,000 
+  Laptop2: 2 CORES / i3 / 1TB HDD   / 8GB       = $700 
+
+AMI = amazon machine image 
+      comprises of the OS and other softwares and settings  
+  Linux [redhat / centOS / ubuntu / amazonLinux2 / Debian 11 /etc
+          Amazon Linux 2 / ]  
+  WINDOWS
+
+58:00####things to consider b4 choosing an AMI, THERE ar 3option to choose from
+what is in the:
+1)Community AMIs: comprises mostly the OS only  
+                Generally free 
+
+2)Marketplace AMIs: comprises of the OS and other Licence Softwares 
+   splunk -- Amazon Linux 2 + splunk Softwares    
+   openvpn --- Ubuntu 22.04.1 LTS + 
+               Ubuntu 18 LTS
+
+10GB/S   = 10,000MB/S  
+
+3) my AMI = Golden AMIs  :
+         
+1:01:42 splunk enterprise is used to monitor our servers
+
+1:07:14 t3.2xlarge up to 5 gitabit per sec for band width i.e the internet speed
+   vCPUs          RAM      Bandwidth speed  
+  c5.metal  96     x86_64  192G  - - 25 Gigabit/sec  
+  t2.micro  1      x86_64  1G    - - Low to Moderate
+
+security group is firewALL in front of the server
+james an admin/engineer wil access/launch the server by ssh on port 22, while 
+paul nids to acces some web content on the server by using http on port 80
+for any of them to access this server on our firewall we hv to open http 80 and ssh22  
+
+storage is called ebs volume, after security groups, we configure stored
+the speed for hdd is 10 times slowervthan ssd
+1:19:25  for volume type, magnetic is like a floppy disk wich use to be used many yrs ago, we dnt nid it,,, so we go for general purpose ssd .. gp3
+then launch the instance
+    
