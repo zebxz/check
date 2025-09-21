@@ -42,9 +42,9 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 AWS for 
 
 
+
+
 cloud computing, Cloud Service Models/ CSP; CLOUD SERVICE PROVIDERS, ADVANTAGES OF USING THE CLOUD 1:55:00 REQUIREMENTS OF owning a data center
-AWS Global Infrastructure, ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics, EC2 INSTANCE PUURCHASE OPTION, 
-INSTALLING WEBSERVER USING USERDATA ie script, INSTALL WEBSERVER, INF ABOUT METADATA:  HOW ARE WE CHARGED FOR EC2.  TRANSFERRING FILES OVER THE INTERNET, VPC
 
 
 
@@ -107,7 +107,12 @@ e.g ec2 instance  - ec2
 PaaS--  Platform  as a service  : aws container registry, aws kubernetes solution
   ECR / EKS / ECS / 
 
+
+
 AWS 2
+AWS Global Infrastructure; ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics, EC2 INSTANCE PUURCHASE OPTION, 
+INSTALLING WEBSERVER USING USERDATA ie script, INSTALL WEBSERVER, INF ABOUT METADATA:  HOW ARE WE CHARGED FOR EC2.  TRANSFERRING FILES OVER THE INTERNET, VPC
+
 
 The AWS Cloud spans 102 Availability Zones within 32 geographic regions around the world, 
 with announced plans for 12 more Availability Zones and 4 more AWS Regions in Canada,
@@ -327,4 +332,92 @@ we hv resources that ar availa zone specific ..ie their scope is within an avail
 we also hv resources that their scope is regional and resources that their scope is global
 
 
-tomorrow we wil look at storage solution 
+
+
+
+AWS3
+
+AWS STORAGE SOLUTION (THE DIFF TYPES PROVIDED ebs/efs/S3), LIST BLOCK COMMAND(root file system) Create/attached & mount ebs, creating my AMI(amazon machine image) =GOLDEN AMIS, CREATING A LIFE CYCLE FOR MY INSTANCE,
+CREATE A lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE, EFS; file storage examples / SHARED Storage, LAMBA FUNCTIONS, DISASTER RECOVERY
+
+
+There are 3 diff storage solutions; 
+
+4.45  storage solutions:
+  ebs volume  = Elasticblock store
+       Required mounting    
+       
+  efs  volume =  Elastic file storage
+       Required mounting 
+       sudo yum install nfs-utils
+     
+  s3 bucket   = object storage 
+
+
+EBS
+When a server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n the only advantage is that the ebs is elastic, so we hv an elastic block store
+ therefore if you are launching webserver2 we need this bolck storage
+when we launched this webserver2 for eg, we hv a public ip address for eg , most likely its aredhat9 os, it means that this ebs is going to bbe mounted among others within a root file system., 
+7.20; heres a mount point on our server
+the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked/tied to each of the servers   
+
+11.13,   if need be this ebs1, root file system, now this is 14G, can i decide to create another mount point? mayb i want to create anoda mount point point /app , 
+yes i can create a mount mount, i can create anoda block storage here
+
+
+
+ Root [/] directory has other sub-directories  
+what are some of the sub directories we saw in the root dir when we did linux
+bc we are mounting on this root file system
+we have; /bin,  /home,  /etc/, /var,  /opt / ... this is a root file system
+so we are creating a mount point 
+for eg, i hv the ticket below 
+
+
+Ticket0048:
+  Create, attached & mount 5G to the /tesla directory    (assume we hv a project for tesla)
+20.40  CAan we decide to have  a seperate dir , lets assume this ticket has 2types
+  Create, attached & mount 7G to the /var/lib/jenkins directory   (/var/lib/jenkins is the home dir of jenkins and i can decide to create a mount point for myself)
+
+
+EFS
+efs : file storgae 
+Amazon Elastic File System (Amazon EFS) provides a simple,
+ scalable, elastic file system for general purpose 
+ workloads for use with AWS Cloud services and on-premises resources.
+  https://youtu.be/AvgAozsfCrY     ... to get some direct inform from aws talking abt efs
+
+efs  volume = file storage / SHARED Storage.. can be shared by one or more srvers or devices
+     Requires mounting & we can use a software like netwrk file system
+     sudo yum install nfs-utils 
+       sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0027f3e4b8f8187ee.efs.us-west-2.amazonaws.com:/ efs
+
+
+exmaples of file storage 
+google drive-has a file storage of 400G = legah@gmail.com  
+in the drive , i have files: documents, pictures, videos 
+mounted on: phones, tablets, computers  
+after it is mounted, so all i nid to do is login to my email then i can access the files.... therefore it can be called a shared storage
+we can snap pictures with our phone and acces the pictures on several devices due to shared directory& its possible due to elastic file system
+
+NFS = Network file system(traditionally)  = self managed   
+EFS = Elastic File system  = managed by AWS , therfore u hv more time to focus on ur applications
+so nowadays managed solutions is what is driving many companies
+
+  LAMBA FUNCTION
+but the interview question is what hv you done when it comes to AWS services, thers a service in aws called lamba
+Lambda functions:
+=================  
+  If we have upto  75% volume usage increase vol by 20%   
+  
+in my envi in one of my projects, i was able to use the lamba function, which was written to expand my project by 20% whenevr usage is 75% 
+### 1:54so if  df -h / 100G/75G  ie avail 100 and used 75, increase by 20% --  so we then hv 120G
+so we can write a lamba function to achieve this process
+
+DIASTER RECOVERY
+we can also  write a lamba function , lamba function has what is called diasaster recover
+if u work for landmark and we hv aws account1, & aws account2. in account1 we hv a database servers running ,  for account 2 (diaster recovery account, for our database servers backup)
+because diaster can occur , eg if someelse is able to access d email&paswd & log into aws wit root access, thers a possiblity of a disaster bc dats a serious issue bc they wil hv 
+access to all my servers bt wit account 1 & account 2, our disaster recovery is accont 2, wit our database serververs running in account 1, we back the databases in accout2
+by creating a snapshot lifecycle policy using Lambda
+
