@@ -422,13 +422,19 @@ If we have upto  75% volume usage increase vol by 20%
 in my envi in one of my projects, i was able to use the lamba function, which was written to expand my project by 20% whenevr usage is 75% 
 ### 1:54so if  df -h / 100G/75G  ie avail 100 and used 75, increase by 20% --  so we then hv 120G
 
-1:54:2  7we can also  write a lamba function , lamba function has what is called diasaster recover
-if u work for landmark and we hv aws account1, we hv a database server running , account 2 
-diaster dat can occur , if someelse is able to access d email&paswd & log into aws wit root access, thers a possiblity of a disaster bc dats a serious issue bc they wil hv 
+
+DISASTER RECOVERY
+ we can also  write a lamba function , lamba function has what is called diasaster recover
+if u work for landmark and we hv aws account1, & aws account2. in account1 we hv a database servers running ,  for account 2 (diaster recovery account, for our database servers backup)
+because diaster can occur , eg if someelse is able to access d email&paswd & log into aws wit root access, thers a possiblity of a disaster bc dats a serious issue bc they wil hv 
 access to all my servers bt wit account 1 & account 2, our disaster recovery is accont 2, wit our database serververs running in account 1, we back the databases in accout2
 by creating a snapshot lifecycle policy using Lambda  which
 create sonapshots, wich is a replica of account1 from our databases from account1 in account2 cross region , so we ar able to recover frm account2
-SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
-so am proud of that project
 
+1.58.00   So what we do is We created a snapshot lifecycle policy using Lambda  which
+creates sonapshots from our databases from account1 in account2
+snapshot is a replica of your database, its a backup
+therefore if account1 is hacked, we already hv everything in account2 so we are able to recover from account2 
+SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
+so am proud of this project
 
