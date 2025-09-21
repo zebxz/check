@@ -1,19 +1,12 @@
 ??? couldnt mount efs
+7:10 #####not clear its going to be mouning .
 
 
 
-  STORAGE SOLUTION
+  AWS STORAGE SOLUTION (THE DIFF TYPES PROVIDED)
+There are 3 diff storage solutions; 
 
-###IOS- INPUT OUTPUT per sec
-When a server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n its has an advantage ie it is elastic 
-7:10 #####not clear its going to be mouning among others within a root file system..
-
-the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked to the server   
-
-????? for vol settings whats the diff btw general purpose ssd2 and ssd3 
-??????  sudo mkdir -p /var/lib/jenkins ..... why the -p
-
-storage solutions:
+4.45  storage solutions:
   ebs volume  = block store
        Required mounting    
        
@@ -22,6 +15,20 @@ storage solutions:
        sudo yum install nfs-utils
      
   s3 bucket   = object storage 
+
+
+###IOS- INPUT OUTPUT per sec
+When a server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n the only advantage is that the ebs is elastic, so we hv an elastic block store
+ therefore if you are launching webserver2 we need this bolck storage
+when we launched this webserver2 for eg, we hv a public ip address for eg , most likely its aredhat9 os, it means that this ebs is going to bbe mounted among others within a root file system., 
+7.20; heres a mount point on our server
+the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked/tied to each of the servers   
+
+
+????? for vol settings whats the diff btw general purpose ssd2 and ssd3 
+??????  sudo mkdir -p /var/lib/jenkins ..... why the -p
+
+
 
 [ec2-user@web ~]$ lsblk  .... list block command to list the blocks,,, in the lsblk command, we hv our root file system... ie xvda1
 NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
@@ -32,7 +39,7 @@ xvda      202:0    0   8G  0 disk......... jst one disk & its a block store 21:5
 
 #######16:57 for my file sys i can also execute df -h, we can see xvda1 is mounted on our root file system ie /dev/xvda1
 
-Root [/] directory has other sub-directories
+Root [/] directory has other sub-directories   
   /bin /home /etc/ /var /opt / ... this is a root file system
 
 Ticket0048:
@@ -84,7 +91,7 @@ sudo mount /dev/xvdg /var/lib/jenkins/
 
 
 $$$$41:09 in aws-jenkins server- actions:image&template 
-elastic block:snapshot-crrate snapshot.. all the data in our jenkins server wil backup in the snapshot
+elastic block:snapshot-create snapshot.. all the data in our jenkins server wil backup in the snapshot
 after snapshot is crested, in action: we can creatse vol, change the availability zone &when we check in volumes we can see the newly created vol
 my original jenkins server was in US west2a bt d vol frm snapshot is in US west2c, & al the data avai in my jenkinsserver is capture in dis snapshot, wich is now in this vol
 wich meanas that if i use this vol my life wil b easy bc dis vol already has jenkins installed, so if am tryin to instal jenkins on a new server, if i use dis vol, wud d vol
