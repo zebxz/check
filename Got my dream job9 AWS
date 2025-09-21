@@ -9,11 +9,19 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 For our cloud solution, we have diff cloud providers like  Cloud Service Providers - CSP = AWS / GCP / AZURE 
 they Provide computing services / resources like servers, network, storage, security, etc. over the internet from their Datacenters 
   cloud computing is very imp and you can see a lot of COMPANIES ar migrating very quick &fast from on-prem to cloud to take advantage of cloud services
-Cloud Service Models:
+We have Cloud Service Models like :
 =====================
 IaaS -- Infrastructure as a service  : e.g ec2 instance  - ec2, SonarQube
 PaaS--  Plat
 the main cloud service providers :AWS - Amazon Web Services , GCP - Google Cloud platform), AZURE Cloud
 The AWS Cloud spans with over 102 Availability Zones within 32 geographic regions around the world,
-EXAMPLES OF AWS SERVICES
-ec2 / efs elastic file sys / eks elastic kubernetics serv / ecs elastic container services / iam, identity & access mgt / route53 / elb  
+EXAMPLES OF AWS SERVICES includes
+ec2 / eks elastic kubernetics serv / ecs elastic container services / iam, identity & access mgt / route53 / elb , AWS STORAGE SOLUTION like ebs elastic block storage, and using the root file system we can create mount point and attach 
+block storage to our servers to expand/increase our storage size as required (from my command line i can type "list block command" where we hv our root file system.), also; we hv /S3 bucket ie object storage/ efs ie elastic file storage
+/ SHARED Storage/ LAMBA FUNCTIONS, DISASTER RECOVERY of which we carried out a project as a diaster recovery measure , where we have our database servers running in account one but backedup in account 2 ( which is our diaster recovery 
+account, so our database servers are backedup incase thers a disaster.
+ So what we did is We created a snapshot lifecycle policy using Lambda  which creates sonapshots from our databases from account1 in account2
+snapshot is a replica of your database, its a backup therefore if account1 is hacked, we already hv everything in account2 so we are able to recover from account2 
+SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
+so am proud of this project
+
