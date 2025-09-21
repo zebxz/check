@@ -1,34 +1,54 @@
 ??? couldnt mount efs
 7:10 #####not clear its going to be mouning .
 
+###IOS- INPUT OUTPUT per sec
+
+2.40  ec2, means elastic cloud compute which is your computer in the cloud
 
 
-  AWS STORAGE SOLUTION (THE DIFF TYPES PROVIDED)
+
+AWS STORAGE SOLUTION (THE DIFF TYPES PROVIDED ebs/efs/S3), LIST BLOCK COMMAND(root file system) Create/attached & mount ebs, creating my AMI(amazon machine image) =GOLDEN AMIS, CREATING A LIFE CYCLE FOR MY INSTANCE,
+CREATE A lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE, EFS; file storage / SHARED Storage, LAMBA FUNCTIONS, DISASTER RECOVERY
+
+
 There are 3 diff storage solutions; 
 
 4.45  storage solutions:
-  ebs volume  = block store
+  ebs volume  = Elastic block store
        Required mounting    
        
-  efs  volume = file storage
+  efs  volume = Elastic file storage
        Required mounting 
        sudo yum install nfs-utils
      
   s3 bucket   = object storage 
 
 
-###IOS- INPUT OUTPUT per sec
+
+
+EBS
 When a server is created, ders a piece of storage attached to it, wich is mounted on the server n its called ebs , block store n the only advantage is that the ebs is elastic, so we hv an elastic block store
  therefore if you are launching webserver2 we need this bolck storage
 when we launched this webserver2 for eg, we hv a public ip address for eg , most likely its aredhat9 os, it means that this ebs is going to bbe mounted among others within a root file system., 
 7.20; heres a mount point on our server
 the block storage is unique, bc the ebs on webserver1 cannot be transferrd to webser2 bc they ar blocked/tied to each of the servers   
+2.29  Ebs is a block storage, it can only be attached to one ec2 instance at a time bc its a block storage, it has to be removed frm one server b4 u can attach it for another server
+it is block bc it is assigned
 
+11.13,   if need be this ebs1, root file system, now this is 14G, can i decide to create another mount point? mayb i want to create anoda mount point point /app , 
+yes i can create a mount mount, i can create anoda block storage here
 
 ????? for vol settings whats the diff btw general purpose ssd2 and ssd3 
 ??????  sudo mkdir -p /var/lib/jenkins ..... why the -p
 
 
+
+
+LIST BLOCK COMMAND 
+16.00 In this list blk command we have our root file system
+
+15.00 When we created this server, while creating it thers a step where you need to decide how many gigs you want to attach to your root file system & hw do i know that from my command line ?
+theres a command that says list block command 
 
 [ec2-user@web ~]$ lsblk  .... list block command to list the blocks,,, in the lsblk command, we hv our root file system... ie xvda1
 NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
@@ -39,14 +59,21 @@ xvda      202:0    0   8G  0 disk......... jst one disk & its a block store 21:5
 
 #######16:57 for my file sys i can also execute df -h, we can see xvda1 is mounted on our root file system ie /dev/xvda1
 
-Root [/] directory has other sub-directories   
-  /bin /home /etc/ /var /opt / ... this is a root file system
+
+17.20   ********* Root [/] directory has other sub-directories  
+what are some of the sub directories we saw in the root dir when we did linux
+bc we are mounting on this root file system
+we have; /bin,  /home,  /etc/, /var,  /opt / ... this is a root file system
+so we are creating a mount point 
+for eg, i hv the ticket below 
+
 
 Ticket0048:
-  Create, attached & mount 5G to the /tesla directory 
-  Create, attached & mount 7G to the /var/lib/jenkins directory 
+  Create, attached & mount 5G to the /tesla directory    (assume we hv a project for tesla)
+20.40  CAan we decide to have  a seperate dir , lets assume this ticket has 2types
+  Create, attached & mount 7G to the /var/lib/jenkins directory   (/var/lib/jenkins is the home dir of jenkins and i can decide to create a mount point for myself)
 
-files ar mounted frm d root dir bc /root is wher all oda dir starts bt can i create a specific storage for /teslas? yes
+but now at the moment all files ar mounted frm d root dir bc /root is wher all oda dir starts bt can i create a specific storage for /teslas or /var/lib/jenkins? yes
 
 the volume to be created can be as large as 16 terabyte
 #38:00 volume state says volume is available so i can attach d vol to an instance , then vol stae changes to in use. can also modify vol by inresing its size bt cant decrea
@@ -97,7 +124,11 @@ my original jenkins server was in US west2a bt d vol frm snapshot is in US west2
 wich meanas that if i use this vol my life wil b easy bc dis vol already has jenkins installed, so if am tryin to instal jenkins on a new server, if i use dis vol, wud d vol
 1:19:35 comes wit jenkins already installed? ... yes bc dis vol that has been created frm my jenkins backup, it has all d softwares.
 
+
+
+
 1:21:10 creating my AMI(amazon machine image) =GOLDEN AMIS
+
 click created snapshot-action-create image frm snapshot-vol cannot be reduced-create-i can go to ec2 instnace &launch a server using the image,&everytin dat was in the
 original server wil be in dis new one bc its a bkup, a mirrow of the original server   ....
 create instance-myAMIS-owned by me:select the image frm drop box- t2micro
@@ -110,14 +141,13 @@ TO create a lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE
 life cycle manager-nxt step-instance-target resoure tag:Name &choose tag name frm drop box then add/write tag name-descripption-default role- tag:Name & write tag name-policy
 enable-nxt-select time for every- retention max keep-tick copy tag frm source-review policy- create policy
 
-WE CAN equally automate HW the AMI images a re created via life cycle manager
+WE CAN equally automate HW the AMI images are created via life cycle manager
 
 
 EFS:
 ====
 
-Traditional volume mgt and LVM use to require SystemsAdmin  
-skills to perform. Today cloud computing skills are required to 
+Traditional volume mgt and LVM use to require SystemsAdmin skills to perform. Today cloud computing skills are required to 
 simplify and automate the process
 
 IQ: Explain your experience with AWS Storage services ?
@@ -129,25 +159,22 @@ Volume expansion - horizontal [v1=8g, v2=7g, v3=6g]
 traditionally in thsoe days,we needed a lot of systems admin,Traditional volume mgt and Logic VM use to require SystemsAdmin  to effects, u nid to b a system admin to 
 carry out this stuff, meaning we require systems admin skill to perform ,,  Today cloud computing skills are required to simplify and automate the process
 
-but the interview question is what hv you done when it comes to AWS services, thers a ervice in aws called lamba
+
+               LAMBA FUNCTION
+
+but the interview question is what hv you done when it comes to AWS services, thers a service in aws called lamba
 Lambda functions:
 =================  
   If we have upto  75% volume usage increase vol by 20%   
   
 in my envi in one of my projects, i was able to use the lamba function, which was written to expand my project by 20% whenevr usage is 75% 
 ### 1:54so if  df -h / 100G/75G  ie avail 100 and used 75, increase by 20% --  so we then hv 120G
-
-1:54:2  7we can also  write a lamba function , lamba function has what is called diasaster recover
-if u work for landmark and we hv aws account1, we hv a database server running , account 2 
-diaster dat can occur , if someelse is able to access d email&paswd & log into aws wit root access, thers a possiblity of a disaster bc dats a serious issue bc they wil hv 
-access to all my servers bt wit account 1 & account 2, our disaster recovery is accont 2, wit our database serververs running in account 1, we back the databases in accout2
-by creating a snapshot lifecycle policy using Lambda  which
-create sonapshots, wich is a replica of account1 from our databases from account1 in account2 cross region , so we ar able to recover frm account2
-SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
-so am proud of that project
+so we can write a lamba function to achieve this process
 
 
-Disaster Recovery:  
+
+
+                                DISASTER RECOVERY
  cross account 
     aws account1 = email/password [root access], we nid user name & paswd 
        database servers running   
@@ -155,9 +182,21 @@ Disaster Recovery:
     aws account2 = email/password [root access]  
       backup database servers in account2 
 
-We created a snapshot lifecycle policy using Lambda  which
-create sonapshots from our databases from account1 in account2
- cross region   
+
+1:54:2  we can also  write a lamba function , lamba function has what is called diasaster recover
+if u work for landmark and we hv aws account1, & aws account2. in account1 we hv a database servers running ,  for account 2 (diaster recovery account, for our database servers backup)
+because diaster can occur , eg if someelse is able to access d email&paswd & log into aws wit root access, thers a possiblity of a disaster bc dats a serious issue bc they wil hv 
+access to all my servers bt wit account 1 & account 2, our disaster recovery is accont 2, wit our database serververs running in account 1, we back the databases in accout2
+by creating a snapshot lifecycle policy using Lambda  which
+create sonapshots, wich is a replica of account1 from our databases from account1 in account2 cross region , so we ar able to recover frm account2
+
+1.58.00   So what we do is We created a snapshot lifecycle policy using Lambda  which
+creates sonapshots from our databases from account1 in account2
+snapshot is a replica of your database, its a backup
+therefore if account1 is hacked, we already hv everything in account2 so we are able to recover from account2 
+SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
+so am proud of this project
+   
 
 ### 2:00 efs : file storgae 
 
