@@ -547,3 +547,46 @@ Ticket0011:
 
 
 
+AWS6
+HOW TO ESTABLISH VPC PEERING
+
+
+HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE, SANDBOX 
+this can be achieved in the same region and across regions 
+23:25 
+
+CHECK tELEGRAM FOR steps in the handout ... aws vpc27 pdf
+Step 1)Create 2 VPCs - VPC-A and VPC-B with non-overlapping CIDR range
+e.g of overlapping, is when the 2diff vpcs both v severs with the same ip address as illustated below.. its nt gud when they overlap bc when i ping the ip adress, the 
+broadcast wont know if its searching for appserver1 or appserver2 
+VPC-1 - 10.0.0.0/16......... cIDR blocks 
+   appServer1 [ 10.0.0.66 ]...... ip address
+VPC-2 - 10.0.0.0/24  ...... CIDR block 
+   webServer1 [ 10.0.0.66 ]..... ip address
+
+##### e.g2, without overlapping
+vpc peering connection
+======================
+VPC-1 - 10.0.0.0/24
+   appServer1 [ 10.0.0.66 ]
+VPC-2 - 10.10.0.0/24  
+   webServer1 [ 10.10.0.66 ]
+
+
+
+####51:15 ... SANDBOX .. 
+A sandbox is a test server , the server can be used for testing...
+the envirn wher we perfom testing is called sandbox server, we first deploy in the sandbox if it wrks well then we deploy in the right environ
+.yes since we hv done the peer connection, we can connect to the sandbox from the jumpserver privately, we can est a private connecion.
+
+****** ONLINE ...A sandbox is a secure, isolated testing environment used in cybersecurity and software development
+to safely run and analyze untrusted or suspicious applications, files, or code without risking harm to the host system
+
+
+
+AWS 7/8
+
+
+
+
+
