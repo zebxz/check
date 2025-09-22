@@ -340,7 +340,22 @@ AWS3
 AWS STORAGE SOLUTION (THE DIFF TYPES PROVIDED ebs/efs/S3), LIST BLOCK COMMAND(root file system) Create/attached & mount ebs, creating my AMI(amazon machine image) =GOLDEN AMIS, CREATING A LIFE CYCLE FOR MY INSTANCE,
 CREATE A lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE, EFS; file storage examples / SHARED Storage, LAMBA FUNCTIONS, DISASTER RECOVERY
 
+AWS4
+3.20 Broad classification of Aws services
+********* he actually logged into aws & on the home page we saw all the aws services, even thode not listed here
 
+1) compute
+  in compute service we hv; server & serverless
+   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
+   serverless; Lambda(run code without servers) / Beanstack / farget profile
+                 Container( ECS ie elastic container service/EKS ie k8 service)
+  2) storage ; EBS/ EFS/ S3
+  3) databases 
+  4)networking 
+  5)data anylytics 
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+
+aws3
 There are 3 diff storage solutions; 
 
 4.45  storage solutions:
@@ -350,6 +365,9 @@ There are 3 diff storage solutions;
   efs  volume =  Elastic file storage
        Required mounting 
        sudo yum install nfs-utils
+AWS4; ********* #21:24 u nid to be authenticated/permited to write data , port 2049 must be open to write data, if port is nt open , we cant write data
+when efs is created we hv to make sure we modify the security grp to permit data to be written and in all the client server we hv to open nfs port 2049
+
      
   s3 bucket   = object storage 
 
@@ -393,6 +411,7 @@ efs  volume = file storage / SHARED Storage.. can be shared by one or more srver
        sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0027f3e4b8f8187ee.efs.us-west-2.amazonaws.com:/ efs
 
 
+
 exmaples of file storage 
 google drive-has a file storage of 400G = legah@gmail.com  
 in the drive , i have files: documents, pictures, videos 
@@ -403,6 +422,9 @@ we can snap pictures with our phone and acces the pictures on several devices du
 NFS = Network file system(traditionally)  = self managed   
 EFS = Elastic File system  = managed by AWS , therfore u hv more time to focus on ur applications
 so nowadays managed solutions is what is driving many companies
+
+AWS4... efs is nfs managed by aws, efs &nfs are performing the same task, efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws  
+
 
   LAMBA FUNCTION
 but the interview question is what hv you done when it comes to AWS services, thers a service in aws called lamba
@@ -421,3 +443,22 @@ because diaster can occur , eg if someelse is able to access d email&paswd & log
 access to all my servers bt wit account 1 & account 2, our disaster recovery is accont 2, wit our database serververs running in account 1, we back the databases in accout2
 by creating a snapshot lifecycle policy using Lambda
 
+
+
+AWS 4
+S3 BUCKET
+Glacier; this is used to store archival data e.g zip files, tag file, mayb data that is no longer accessed like non critical data e.g tax docs ,, we can store them under glacier/deep
+glacier
+
+
+ S3 (Simple Storage Service):
+*** 27.27... IF YOU CREATE FILES AND and store it in EFS/EBS, the files cannot just become accessible online  but with s3, i can store a file and its immediately accesible by anybody around the world
+so its a very serious solution that most companies are now using it to achieve a lot, and its very good for business
+meaning that by the end of this course you can use s3 to generate some income as well.
+
+
+  object storage 
+Highly Available, Redundant. 
+Basically data loss is not possible bc
+aws guarantess (99.999999999% durability, 99.9  uptime SLA)
+29.20 SLA = in Service Level Agreement , aws guarantees 99.99% availability  of your data.. for all aws services, ders 99.9 assurance in terms of availabilty & security 
