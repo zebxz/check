@@ -6,39 +6,39 @@
 ec2 ..... elastic cloud,, your computer in the cloud ,aws is providing server resorces
 
 
-efs is nfs managed by aws
+efs is also/can also be called "nfs" managed by aws called efs ***19.17
 efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws  
-efs &nfs are performing the same task 
+efs &nfs are performing the same task
+
 
 
 s3 buckets
-===========
+==========   
+ 
+3.20 Broad classification of Aws services
+********* he actually logged into aws & on the home page we saw all the aws services, even thode not listed here
 
-AWS Services classification:
-  aws services that ar gud for 
-security  
-  in compute servser we hv 
-compute = 
-     server - ec2 instances  
-     serverless - Lambda / Beanstack / farget profile  
-  Containers:
-     ECS/
-   EKS/  
-
+1) compute
+  in compute service we hv; server & serverless
+   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
+   serverless; Lambda(run code without servers) / Beanstack / farget profile
+                 Container( ECS ie elastic container service/EKS ie k8 service)
+  2) storage ; EBS/ EFS/ S3
+  3) databases 
+  4)networking 
+  5)data anylytics 
 we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
 
-types of aws services
-  databases 
-  networking 
-  data anylytics 
-
-12:56 if we wnt our data can to sychronizse in our 3 databases, if we wnt the data inputed by endusers to syn in oall our 3db server, we can instal another server called an nfs 
+THE only diff btw EFS & NFS is , now lets assume that we hv 3dbase servers
+  if we want data to persisst 
+12:56 if we wnt our data to sychronizse in our 3 databases, if we wnt the data inputed by endusers to syn in all our 3db server, we can instal another server called an  
 nfs server, inside it i wil instal nfs software, then in all 3databases il v nfs client installed. then ill create a mount point caled e.g/data, il mk the mount point to be 
 shared to mk data to syn.. ie ill create the same mount point/dir in all 3db servers.... once its done, its my responsibility to ensure that the nfs server is up&running. so 
 once data comes into any of the servers, it syn in the other servers as well. i am the one managing the nfs servers ,, bt if the nfs server goes down data wont syn any more 
 this is a limited solution and is used by most coy oovertime... also if the data storage size for our mount point is 20GB,its nt scalable bc the 20GB limits our data storage 
 size data,,, these are drawbacks of this system....this whole structure is self managed, it is can be called iaas , we hv see saas.,paas
 
+18:14  nfs managed by ourselves/self managed is not scalable
 
 18:58 but with nfs it provides paas... the structure is no longer managed by us,it is a manage platform the nfs is then replaced by efs & so we dnt need servers or masters
 we only nid to cretae our efs, we dnt bother abt the mount point for the efs, bc aws in the backend ar doing the mounting for us, we  also dnt nis to bother abt the storage 
