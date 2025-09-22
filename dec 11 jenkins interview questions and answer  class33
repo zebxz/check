@@ -109,6 +109,7 @@ PaaS--  Platform  as a service  : aws container registry, aws kubernetes solutio
 
 
 
+
 AWS 2
 AWS Global Infrastructure; ADVANTAGES OF PLACING MY SERVERS IN DIFF AZS, EXAMPLES OF AWS SERVICES, WHAT TO CONSIDER BEFORE CREATING/HOSTING RESOURCES IN AWS & BEFORE CHOOSING A REGION IN AWS, EC2-Basics, EC2 INSTANCE PUURCHASE OPTION, 
 INSTALLING WEBSERVER USING USERDATA ie script, INSTALL WEBSERVER, INF ABOUT METADATA:  HOW ARE WE CHARGED FOR EC2.  TRANSFERRING FILES OVER THE INTERNET, VPC
@@ -548,10 +549,10 @@ Ticket0011:
 
 
 AWS6
-HOW TO ESTABLISH VPC PEERING
-
-
 HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE, SANDBOX 
+
+
+HOW TO ESTABLISH VPC PEERING, 
 this can be achieved in the same region and across regions 
 23:25 
 
@@ -585,8 +586,67 @@ to safely run and analyze untrusted or suspicious applications, files, or code w
 
 
 AWS 7/8
+Elastic Load Balancers& AUTO SCALLING, (NLB)NETWRK LOAD BALANCER *** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER,GATEWAY LOADBANCER
+tomcat script didnt install the tomcat, engr francis helped me resolve it 
 
 
+*****from tomcat1&2
+WHAT IS WEBSERVER?    eg  nginx , apache 
+A webserver is a program that uses HTTP (Hypertext Transfer Protocol) protocol to serve web content (HTML and static content) to users.
+                                                                          static content & images 
+Examples;
+Apache HTTP server
+Nginx (pronounced engine X) 
+IBM HTTP server (IHS)
+Oracle iplanet web server
+Internet information Server (IIS)
+
+   
+WHAT IS AN APPLICATION SERVER?
+
+An application server is a container upon which you can build and expose business logic and processes to client applications through various protocols including HTTP in 
+a n-tier architect
+
+                        Examples of servers
+Apache Tomcat - Apache
+Jboss/wildfly - Redhat
+WEblogic - Oracle 
+websphere Application Server - IBM 
+Websphere liberty profile - IBM
+Galssfish
+EXAMPLE OF WEBSERVERS/LB SOFTWARE
+nginx
+httpd
+*********************************************************************************
+
+
+After installing, we v to configure & the configuration has certain parametrs
+webserver has listerners and backend 
+it has listeners to traffic using http 80 protocol or https  443,  from the app users and routes traffic to the  backend  app via their ip address 10.0.0.7 and the server
+port number e.g 8080 =10.0.0.7:8080but the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down
+but all the configuration constitute a very tidious job
+
+so we can go with a managed service ie paaS... AWS has provided us a manged srvice 
+WE JUST CREATE our elb ... then aws decides the kind of software to install .. whether ngnix, https, they are incharge of that,, 
+in the background, aws will create 2webservers in 2aZs for availability, so u dnt bother whether the server wil fail or not
+so ur tassk is jst to create/config ur listeners/target groups
+thats whAT elb IS ALL ABOUT
+
+23:37 ... 1)THERS ALSO NTWRK LOAD BALANCER
+it deals with source and destination, &when it comes to d target grp dey ar created using TCp id or protocol & a trget grp can v up..
+to 1000 targets and we will do all the config ..tcp= source &destination..video 8a (1:11.. d protocol here that it suport, the listener is tcp got to do wit source& destinatn 
+this falls under layer4support..... ntwrk lb is faster than ALB BC NTwrk is source to destination bt for ALB when it receives a trafic it has to filters the tarfic to knw the
+the right target to route the trafic to .... also it has multiple target grps wjile ntwrk has one target grp... ntwrk LB ia faster bc its routed on layer4 of the osi model &
+its the transport layer dedicated for transport so by default for transmissn data layer4 is super fast
+layer7 the application layer, route trafic base on content of the trafic.
+
+
+24:25.... 2)  thers also application load balancer(AIB)
+IT will use the http/https protocol,, in dis case , we can v multiple target groups/ diff target grps
+the applications are grouped with the help of a target grp
+the AIB falls under layer7 support.
+
+3) thers also gateway LB , a new option which AWS now hv
 
 
 
