@@ -12,7 +12,7 @@ efs &nfs are performing the same task
 
 
 
-s3 buckets
+s3 buckets, IMPORTANT TO TAKE NOTE OF IN S3 ;Permissions/POLICIES.
 ==========   
  
 3.20 Broad classification of Aws services
@@ -43,7 +43,9 @@ size data,,, these are drawbacks of this system....this whole structure is self 
 18:58 but with nfs it provides paas... the structure is no longer managed by us,it is a manage platform the nfs is then replaced by efs & so we dnt need servers or masters
 we only nid to cretae our efs, we dnt bother abt the mount point for the efs, bc aws in the backend ar doing the mounting for us, we  also dnt nis to bother abt the storage 
 size bc it can start from 0 and it is growing, it is higly scalable, if more data is needed it increases, it increases base on our nid to inifinity
-#21:24 u nid to be authenticated/permited to write data , port 2049 must be open to write data, if port is nt open , we cant write data
+
+********* #21:24 u nid to be authenticated/permited to write data , port 2049 must be open to write data, if port is nt open , we cant write data
+when efs is created we hv to make sure we modify the security grp to permit data to be written and in all the client server we hv to open nfs port 2049
 
   storage  solutions:
    1) - Elastic Block Store       ebs   = block storage   
@@ -57,18 +59,23 @@ when efs if created a security group is attached to it , we ar going to modify t
 
 
 3) S3 (Simple Storage Service):
+*** 27.27... IF YOU CREATE FILES AND and store it in EFS/EBS, the files cannot just become accessible online  but with s3, i can store a file and its immediately accesible by anybody around the world
+so its a very serious solution that most companies are now using it to achieve a lot, and its very good for business
+meaning that by the end of this course you can use s3 to generate some income as well.
+
+
   object storage 
 Highly Available, Redundant. 
 Basically data loss is not possible bc
 aws guarantess (99.999999999% durability, 99.9  uptime SLA)
-SLA = in Service Level Agreement , aws guarantees 99.99% availability .. for all aws services, ders 99.9 assurance in terms of availabilty & security 
+29.20 SLA = in Service Level Agreement , aws guarantees 99.99% availability  of your data.. for all aws services, ders 99.9 assurance in terms of availabilty & security 
 Tesla     --- s3=test    
 Landmark  --- s3=test
 
-  service 
+  service vendors 
        A    B      C    
 SLA   70%  80%   99.99%  
- 
+ ***31,25...  you will definitely go with coy C, bc their service level agreement is 99.9%
 
 Hands on:
 
