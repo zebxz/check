@@ -482,4 +482,68 @@ Load Balancers/webservers:
 
 
 aws5
+VPC, INSTALL HTTPD
+
+ngnix is a software for webserver, http is also a software for webserver
+###2:44:00 we had to open http port80 in jumpserver for ngnix to be accessible
+he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
+making anoda webserverSO he decided to install ngnix in the jumpserver which is in the publicSN
+
+Install ngnix
+
 VPC
+frm pg 80,    virtual private cloud
+
+vpc is my isolated ntwrk within aws that i can control
+subnets are created inside our vpc
+am able to create an instance e.g a web sever in my subnet 
+vpc is a regional service in aws
+i can create my subnet in us west-2a  avai zone 
+subnet is an avail zone resource
+vpc ar global reource
+its nt advisable to launch all my subnets in the same avail zones
+ i needed a vpc so it can enable me to create other subnets wher i can place my resources
+
+when i hv a vpc i hv to create a cyber block
+we wnt to det hw many subnets can a vpc hv
+when we created our resources wit aws it came wit a default vpc created by aws
+so we hv:
+aws default vpc created by aws .. its nt adviceable to launch my servers in the default
+17:20 aws custom vpcs created by the user.. this has more security and more contrl over my resources
+so far we hv been using default vpc, the vpc we are creating wil be a regional service
+
+
+in aws we have:
+1 global resources
+2 regional resource
+3 avail zones resource 
+subnets
+
+ AWS Regions: AZs  each region has avail zones
+
+AWS ACCOUNT:
+1. Global resources    
+2. Regional  resources
+     vpcs---
+        aws default vpcs created by AWS 
+          ec2 instances [jumpserver, appServer]
+        aws CUSTOM vpcs created by the user   
+          [secured and gives users more controls]  
+          ec2 instances [jumpserver, appServer]    
+
+3. Availability zones resources  
+      subnets  
+
+  AWS Regions: AZs 
+    us-east-1 =6 [ us-east-1a, us-east-1b, ... us-east-1f  ]  
+    us-east-2 =3, us-west-1 =3, us-west-2 =3
+
+
+29:47
+Ticket0011:
+  Create a VPC for paypal client with the 200 addresses   
+  cidr block: has a preface wich can range from  0 - 32 
+
+
+
+
