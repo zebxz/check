@@ -5,6 +5,13 @@ QUESTION: the vpc only you created, the private route table u didnt add iGW 0.0.
 2:38:10????nginx  didnt work when i tried to access it in google,i couldnt acces apache websver even after opening port80 in inbound rule of d jumpserver ngnix was instaled
 sudo yum install ngnix
 
+
+
+INSTALL WEBSERVER(nginx), VPC, S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
+LAUNCH WEBSERVER(I bliv thats wher he installed ngnix) 
+
+
+
 ngnix is a software for webserver, http is also a software for webserver
 ###2:44:00 we had to open http port80 in jumpserver for ngnix to be accessible
 he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
@@ -206,18 +213,28 @@ Ticket0012:
   subnet4  = 172.0.3.0/24    = 256  [ 0, 1, 2 ...,  255  ] :
      172.0.3.0, 172.0.3.1, 172.0.3.2, ... , 172.0.3.255
 
+
+S3 BUCKET CANT BE CREATED IN SUBNET (Because its a regional service, i can create it inside my VPC)
+
 1:00:10 my s3 bucket canot be be created in a subnet, e.ginside us east2a subnet ..bc its a regional service i can create it in the us region inside my vpc e.g us east,us west
 1:04:for e.g, if i v app server1 and app server2, to ensure comunication btw the servers, i can create a route table, wich detr hw service is routed from one subnet to d oda
  inside our vpc we nid internet gateway  it will allow internet to flow into the vpc & it wil allow exteral traffic so if we wnt to acess resourcs out of our vpc, out of our,
 netwrk , we nid to hv internet , using IGW , ders a kind of internet gateway, it is associated wit our vpc.
 
+
+
+ROUTE TABLES
 1:07:00 inside the vpc we'l create route tables, route table1 for the private subnet to support local traffic within my vpc, then route table2, i hv a public subnet 
 wich is wher i place resources wich can be acessed externaly & the route table2 is permitting traffic frm anywher . ie 0.0.0/0, both local& traffic frm the internet..
 
+
+NAT GATEWAY
 1:34:00 if my private app server is trying to access data online e.g ping google.com, il modify route table1, create a NAT gateway  to permit oneway internet traffic,therefore
 the app server can access internet externally, i decide that we can recieve traffic frm the internet but can only happen frm the nAT gateway.
  the NAT will be created in the public subnet wich hv internet access,, from der, the private subnet is permitted to access internet via the NAT gateway
 
+
+NACL 
 1:12:24 vpc has some firewall ,2 types of firewall, the first one stands infront of the subnet, like a gateman, netwk acess control list nACL... in naCL, we can create
 some rule e.g open port80 for inbound rules &for outbound open port80 aswell,, we open port 443 as well, wit dis ports open, trafic frm enduser can get to my subnet
 for  trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group, so i v to open port80 , 443 
@@ -227,6 +244,8 @@ the 2nd is the firewall wich has 2layers of security,, security at the subnet le
 
 QUESTION: the vpc only you created, the private route table u didnt add iGW 0.0.0/0 but when i created vpc and more, i can see that the private route table has IGW 0.0.0.0 
 1:20:40 ,, u cannot delete a vpc that has dependencies ie servers, u must delete the servers first
+
+
 
 1:26:00  to create vpc&  more
 search vps in aws- create vpc- vpc&more- auto generate:name -10.0.0/24- no ipv6-  tenancy:default,/dedicated u pay more- no of azs 2/ we can 
@@ -247,12 +266,19 @@ internt GW frmdrop box:indicating d particular gateway- save changes. so it now 
 5)to assocaite the route table to my subnet :click public route table-action:edit subnet association- tick the (public) subnet bc it has route to d internet-save ... 1:52:30  
 6) click private table-action:edit subnet association-tick private subnet-save
 
+
+
+LAUNCH JUMPSERVER
+
 1:55:00 launch jumpserver- create instance- name- linux-micro-create key-edit ntwrk settings: select the vpc created:select public sn, d server nids internet-
 auto assigng pub ip:enable-security grp to alow ssh frm my ip or anywher &ssh custom 10.o.o/24, alowing ssh trafic frm within my vpc
 so dat servers in my vpc can communic, instances can communi wit each oda via ssh- launch ... we opened http 80 for nginx
 
 1:58:50 the private ip  10.0.0.244 is deter by my cyber block which is 10.0.0.0/25 
 
+
+
+LAUNCH DBSERVER
 launch dbserver -name-t2 micro-ntwrk:select vpc created:privatesn-AUTO ASSign:diassble- SG - ssh tcp22, cutom:10.0.0/24 to alow ntwk witin my vpc-launch 
 to access dbserver i must connect to my jumpsevre before i can access the dbsever 
 
@@ -268,6 +294,8 @@ the jumpsever i nid the publicip of the jumpserver.
 2:11:50 we can also aces the jumpserver wit the private ip if we are inside the vpc,e.g i can ssh to the jumpsevre frm my app server if my firewall permits it&dat is local 
 access, bc they ar all resources witin my vpc
 
+
+
 2:14:00 to connect to my dbserver, inside the jumpserver in mobax, vi dbkey i.e create a file&paste the dbkey, if i ll ,can see the key has read&write access so i v 
 to chmod 400 dbkey to change it to read only .. then when i run ssh -i awskey33.pem ec2-user@10.0.0.54 ...v been able to ssh frm my jumpsevr to my dbserver
 2:16:10 frm d dbserver when i ping google.com, it doesnt allow but when i ssh into my jumpserver again in mobx i get a response when i ping google.com
@@ -277,6 +305,9 @@ we go back to the private route table -i wnt my private subnet to access interne
 the NATgateway that was just created- create
 so my private subnet now has internet traffic via the NATgateway & my dbserver is able to access internet via the NAT gateway.
 
+
+
+LAUNCH WEBSERVER
 2:25:00 
 OUR WEBSERVER is found the public subnet,we hv 2layers of security in front of the webserver, the 1st is NACl.. ntwk acess contl list wich wil control the whole ntwrk, 2nd 
 layer of security is the secrutity grp ,, when end user traffic gets to the webserver running in my public subnet, it means the req port has been open , so in my NACL
