@@ -482,13 +482,32 @@ Load Balancers/webservers:
   users ----> ELB/LB ---->appServers
 
 
-aws5
-VPC, INSTALL HTTPD
+
+
+AWS5
+to refresh my mind*****from tomcat1&2
+WHAT IS WEBSERVER?    eg  nginx , apache 
+A webserver is a program that uses HTTP (Hypertext Transfer Protocol) protocol to serve web content (HTML and static content) to users.
+                                                                          static content & images 
+Examples;
+Apache HTTP server
+Nginx (pronounced engine X) 
+IBM HTTP server (IHS)
+Oracle iplanet web server
+Internet information Server (IIS)
+*******************************************************
+
+
+VPC, INSTALL HTTPD 
+INSTALL WEBSERVER(nginx), VPC, S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
+LAUNCH WEBSERVER(I bliv thats wher he installed ngnix) 
+
 
 ngnix is a software for webserver, http is also a software for webserver
 ###2:44:00 we had to open http port80 in jumpserver for ngnix to be accessible
 he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
 making anoda webserverSO he decided to install ngnix in the jumpserver which is in the publicSN
+
 
 Install ngnix
 
@@ -545,6 +564,15 @@ Ticket0011:
   Create a VPC for paypal client with the 200 addresses   
   cidr block: has a preface wich can range from  0 - 32 
 
+Ticket0011:
+  Create a VPC for paypal client with 200 addresses in 2 subnets  
+
+
+Launch jumpserver
+Launch dbserver
+Launch webserver
+
+
 
 
 
@@ -590,18 +618,8 @@ Elastic Load Balancers& AUTO SCALLING, (NLB)NETWRK LOAD BALANCER *** Meee (LAYER
 tomcat script didnt install the tomcat, engr francis helped me resolve it 
 
 
-*****from tomcat1&2
-WHAT IS WEBSERVER?    eg  nginx , apache 
-A webserver is a program that uses HTTP (Hypertext Transfer Protocol) protocol to serve web content (HTML and static content) to users.
-                                                                          static content & images 
-Examples;
-Apache HTTP server
-Nginx (pronounced engine X) 
-IBM HTTP server (IHS)
-Oracle iplanet web server
-Internet information Server (IIS)
+to refresh my mind*****from tomcat1&2
 
-   
 WHAT IS AN APPLICATION SERVER?
 
 An application server is a container upon which you can build and expose business logic and processes to client applications through various protocols including HTTP in 
