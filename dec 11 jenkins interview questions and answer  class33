@@ -446,7 +446,7 @@ by creating a snapshot lifecycle policy using Lambda
 
 
 AWS 4
-S3 BUCKET
+s3 buckets, IMPORTANT TO TAKE NOTE OF IN S3 ;Permissions/POLICIES, AWS ACCOUNT:Global resources  
 Glacier; this is used to store archival data e.g zip files, tag file, mayb data that is no longer accessed like non critical data e.g tax docs ,, we can store them under glacier/deep
 glacier
 
@@ -462,3 +462,20 @@ Highly Available, Redundant.
 Basically data loss is not possible bc
 aws guarantess (99.999999999% durability, 99.9  uptime SLA)
 29.20 SLA = in Service Level Agreement , aws guarantees 99.99% availability  of your data.. for all aws services, ders 99.9 assurance in terms of availabilty & security 
+
+
+AWS ACCOUNT:
+Global resources    
+Regional  resources
+  vpcs---
+     aws default vpc 
+       ec2 instances [jumpserver, appServer]
+     aws custom vpcs [secured and gives users more controls]  
+        ec2 instances [jumpserver, appServer]    
+
+
+Load Balancers/webservers:
+  nginx  
+  haProxy 
+  http
+  users ----> ELB/LB ---->appServers
