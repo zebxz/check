@@ -28,6 +28,7 @@ depends on the fact that the port 8080 is open,its running ders smt ruuing on th
 the course to knw hw to manage the resources hosted by AWS ,, understanding the process of maanaging the computing services in the AWS environment
 aWS cloud architecture/ aws solution architect
 
+
 QUESTION:
 video 6 ... OUR sand box didnt hv a public ip.... so u said 
 1. By default, from the jumpserver we can ssh 
@@ -38,8 +39,25 @@ a target group can hv up to 1000 targets
 
 vpc is used to create isolated ntwrk
 
-VIDEO 7 .8:33 WE CAN PEER RESOURCES in 2 diff ntwrk providers like gcp & aws .. e.g aws can be our and gcp can be an on premp resource
-bc they ar nt in d same cloud provider platform ..... using diff options like vpm , aws direct and etc 
+can we pair across 2platforms ??? 
+VIDEO 7 .8:33 if u hv resources in gcp and aws & lets assume you wan to pair from AWS, therefore AWS can be your cloud & you can consider gcp as an onprem resource like any other onprem resource bc they are not 
+in the same cloud provider platform, so its like an onprem resource
+***student bt you said we cannot pair frm aws and onprem server
+e.g aws can be our and gcp can be an on premp resource
+..... you are going to be using diff options like vpm , aws direct and etc 
+
+
+
+
+*****************************************************************
+
+AWS 6
+
+
+
+HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established, SANDBOX/ FRM THE JUMPBOX EST PARING CONNECTION ie FOR THE SANDBOX WITH/VIA THE JUMPSERVER
+
+
 
 DIAGRAM:.....15:44
 WHEN U CREATE A VPC, it comes wit its own nTWKR and did is a private ntrk & as a private ntwrk, hw wil the resource communicate with each other e.g dbser commu wit appserve
@@ -48,13 +66,10 @@ WHEN U CREATE A VPC, it comes wit its own nTWKR and did is a private ntrk & as a
 
 
 
-
-HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE,SANDBOX 
-
-
-
 HOW TO ESTABLISH VPC PEERING
-this can be achieved in the same region and across regions 
+***18.30 .... this can be achieved in the same region and across regions 
+
+
 23:25 
 
 CHECK tELEGRAM FOR steps in the handout ... aws vpc27 pdf
@@ -113,7 +128,7 @@ to establish.
 A sandbox is a test server , the server can be used for testing...
 the envirn wher we perfom testing is called sandbox server, we first deploy in the sandbox if it wrks well then we deploy in the right environ
 .yes since we hv done the peer connection, we can connect to the sandbox from the jumpserver privately, we can est a private connecion.
-
+****1.1.35....... the sandbox doesnt hv a public ip so we need the key to connect in mobaxterm 
 
 Ticket0013
  ===========
@@ -124,12 +139,16 @@ e.g, i hv
 For best performance ensure that adequate testing is done  
   2. first, deploy in your sandbox/test server  
 
+
 ###55:20 to create a sandbox
 launch instance- linux-micro- pem key- select the created vpc-prvateSN- ip:disable-SG:ssh  custom 10.0.0.0/24, so dat resources in the vpc can comm wit me via ssh, i also
 wnt wnt an ssh connection est in this sandbox so:ssh custom 10.10.0.0/24, so frm both vpc am able to ssh privately- launch
 the sandbox doesnt hv any public ip, its running in the privateSN
+***meeee*** so we hv to est a peering connection using the jumpserver
 
-ssh jumpserver in mobaxterm
+
+
+ssh sandbox in mobaxterm
 1:1:18 to acces my sandbox in mobaxterm
 ssh -i "sand.pem" ec2-user@10.10.0.139
 
@@ -149,16 +168,26 @@ jumpserver is running in vpc1:
   ssh -i awskey33.pem ec2-user@18.191.89.63
   ssh -i awskey33.pem ec2-user@10.0.0.54
 
+
+PAIRING CONNECTION  (To est a private connection for the sandbox) 
+1.04.15 we establish a peering connection with the jump server, connecting through the jumpserver ie  *****meee***, inside the jumpserver we create the sandbox key, change the permission  & run 
+  ssh -i "aws33.pem" ec2-user@10.10.0.134
+the private connection will be established so long as you modified your routing table accordingly for you to connect to the sand box using the private ip
+
+
 1. By default, from the jumpserver we can ssh 
    into the sandbox using the publicIP    
 
-1. from the jumpserver we can ssh into the sandbox using the privateIP 
+2. To est a private connection   ***1.06.49
+from the jumpserver we can ssh into the sandbox using the privateIP 
    via vpc peering with route tables modified accordingly     
 
 
 
 
-vIDEO  7/8: Elastic Load Balancers& AUTO SCALLING, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
+
+
+vIDEO  7/8: Elastic Load Balancers& AUTO SCALLING,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
@@ -186,6 +215,11 @@ WEblogic - Oracle
 websphere Application Server - IBM 
 Websphere liberty profile - IBM
 Galssfish
+
+
+*Online***** JUMPSERVER
+A JumpServer is a computer or network device that acts as a secure gateway between two or more dissimilar security zones. It allows authorized users to access and manage devices in a separate security zone while maintaining a 
+controlled and monitored environment.This setup is particularly useful for managing access to sensitive systems, such as servers in a Demilitarized Zone (DMZ) from a trusted internal network. 
 ***************************************************************************************************
 
 
@@ -196,25 +230,54 @@ some aspect of the class he didnt cover bc nt running in his aws account ,, cons
 running note FOR ELB and ASG ,,, auto scaling group ... ..
 
 
-13:40 its nt a secured practice to allow direct traffic to app servers so we create a web server ..  webserver manages hw traffic is routed. it routes traffic to the backend application servers
-the websever has waht is called target,,, ther a target grp .. e.g target grp for my FB apps ..
-bt in a situation wher the webserver breaks down that will be a problem
+13:30
+
+Elastic Load Balancers = ELB:
+  rules   
+  Listeners 
+  target groups with targets   
+  health check on the targets  
+
+  LB & elb 
+Create your Load Balancers in an aws Region:
+  aws will create 2 instances in 2 AZs  
+  aws will install/configure a Load Balancing sotwares   
+
+lets assume you are managing a FB appl with 4B endusers
+FB have some app servers, meaning that traffic is coming frm the users and when traffic leaves the users it wants to access the FB application
+eg we hv FB app server 1, FB app server2, FB app server3
+
+13:40 its nt a secured practice to allow direct traffic to app servers so we create a web server 
+once you create a webserver, it can now mg8 hw traffic is routed, routing traffic to the backend app servers
+the webserver has what is called target, so there is a target grp, this target grp is my FB  app, so i hv a target grp for my fb app, so in total we hv 3target grps 
+bt in a situation wher the webserver breaks down that will be a problem 
+***20.04.... bc traffic will nt get to the backend server.
 
 EXAMPLE OF WEBSERVERS/LB SOFTWARE
 nginx
 httpd
 
+
+LISTENER
 16:00 After installing, we v to configure & the configuration has certain parametrs
-webserver has listerners and backend 
-it has listeners to traffic using http 80 protocol or https  443,  from the app users and routes traffic to the  backend  app via their ip address 10.0.0.7 and the server
-port number e.g 8080 =10.0.0.7:8080but the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down
+this webserver has to listen to traffic form this number of users thetfore we hv to talk about the listeners 
+it has listeners to traffic using http 80 protocol or https  443, 
+webserver has listerners and once it listens to traffic, it has backend servers, now you are configuring your webserserver & in the webserver we have some backends
+lets assume ( our target grp FB) this guy face bk is 10.0.0.7/anoda guy 10.0.08  & the app listens on port 8080, this is the configuration
+what happens is that your webserver is routing traffic so it reccives traffic; source(no. of users **me**8**ie the ip addresses stored in the backend) & destination (target grp) 
+bt in a situation wher the webserver breaks down that will be a problem 
+***20.04.... bc traffic will nt get to the backend server.
+the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down
 but all the configuration constitute a very tidious job
 
-so we can go with a managed service ie paaS... AWS has provided us a manged srvice 
+
+therfor; AWS has provided us a manged srvice
+so we can go with a managed service ie paaS...  
 WE JUST CREATE our elb ... then aws decides the kind of software to install .. whether ngnix, https, they are incharge of that,, 
 in the background, aws will create 2webservers in 2aZs for availability, so u dnt bother whether the server wil fail or not
 so ur tassk is jst to create/config ur listeners/target groups
 thats whAT elb IS ALL ABOUT
+
 
 
 
@@ -280,18 +343,6 @@ publicIP:8080
 
 
 
-13:30
-
-Elastic Load Balancers = ELB:
-  rules   
-  Listeners 
-  target groups with targets   
-  health check on the targets  
-
-  LB & elb 
-Create your Load Balancers in an aws Region:
-  aws will create 2 instances in 2 AZs  
-  aws will install/configure a Load Balancing sotwares   
 
 
 install tomcat:
@@ -467,6 +518,12 @@ az is down the other ones can sustain the az that is down
 MY TS EXPERIENCE: I tried installing tomcat with user script ie pasting installation script while launching an inatance but it wasnt working, and the target grp kept
 indicating unhealthy bc d https link to install tomcat wasnt the latest version, so i had to google tomcat download and tcopy the correct https link  
  https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.zip
+
+
+
+
+
+AWS9
 
 
 
