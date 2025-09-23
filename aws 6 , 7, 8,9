@@ -38,7 +38,7 @@ AWS6/video 6 ... OUR sand box didnt hv a public ip.... so u said
    into the sandbox using the publicIP  
 so does it mean, we then v to create our sand box server to hv a public ip address.. & if so that means the connection is not private 
 
-a target group can hv up to 1000 targets
+
 
 vpc is used to create isolated ntwrk
 
@@ -211,7 +211,10 @@ app/db server where we can install like tomcat software for deployment?
 
 
 vIDEO  7/8: 
-Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
+Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER,
+GATEWAY LOADBANCER,  USERDATA to install tomcat & docker for the APPSERVERS
+*****1.05.16.. our main target is to acces our application via the lb
+
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
@@ -247,6 +250,8 @@ controlled and monitored environment.This setup is particularly useful for manag
 ***************************************************************************************************
 
 
+
+START
 
 tomcat script didnt install the tomcat, engr francis helped me resolve it 
 
@@ -329,7 +334,13 @@ cos once we get into kubernetes, its going to be abt routing traffic to multiple
 
 
 
-38:00 APP SERVER - name -linux- micro-SELECT created vpc:pubSN-key-ENABLE AUTO- advance deatails:user data:paste d tomcat instalation script,to instal &start tomcat- launch
+STEPS FOR THE APPSERVER TO CONNECT TO THE LB *****1.05.16.. our main target is to acces our application via the lb
+
+
+         step1
+           USERDATA to install tomcat & docker
+38:00 APP SERVER - name -linux- micro-SELECT created vpc:pubSN-key-ENABLE AUTO- advance deatails:user data:paste d tomcat instalation script,
+to instal &start tomcat- launch
 SG: SSH TCP 22  0.0.0/0, HTTP TCP 80 0.0.0/0, SSH TCP22 from any
 
 create docker-app.. everytin is the same as aPP SERVER THEN PASTE the simple script for instaling docker .. they must be in the same VPC
@@ -338,8 +349,7 @@ SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
 ##### we can hv up to 1000 targets in a one target group ... 1:31:55
 
 
-
-
+step 2;
 CREATE LOAD BALANCERS 
 
 49:30 CREATE LOAD BALANCER- name-internat facing(means it cn receive trafic frm ext sours &route d trafic-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add 
@@ -348,7 +358,9 @@ server 3times &ders no response, it wont route traffic to the target-NEXT-select
 create target grp-go back to the load bALancer being created &select thetarget grp-create load balancer... we can also add up to 50 listeners
 
 
+step3:
 1:02:20
+TO ADD A TARGEt to an existing LBT (so that we can access our app via the LB )
 TO ADD A TARGEt to an existing LBT:CEATE LOAD BALANCER- name-internat facing-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add listener-create target grp:instances-
 name- TCP:80-IPV4-NEXT-select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create target- THEN CLICK Target groups-register
 
@@ -356,14 +368,20 @@ so if we are trying to access our application, we will access it via the LB,
 
 we can check online to see if our servers were installed 
 publicIP:8080
-56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
 
+1:04.32.. WE were able to access our application via the lb
+we copy the lb dns link and paste it in the browser
 1:03 we can now copy the dns name of our lB to access our app or doecker server and it is more secured accessing our application via the LB 
 
 
+56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
+bt its more secured to access the applications via the lb
+
+*****1.05.16.. our main target is to acces our application via the lb
 
 
-install tomcat:
+******user script wa sused to install tomcat 
+ install tomcat:
 ===============
 #!/bin/bash
 # RedHat Server
@@ -378,40 +396,23 @@ sudo rm -rf apache-tomcat-9.0.83.tar.gz
 sudo mv apache-tomcat-9.0.83 tomcat9
 sudo chmod 777 -R /opt/tomcat9
 sudo sh /opt/tomcat9/bin/startup.sh
-
-
-Then after connecting in mobaxterm  if hostname didnt set i will run sudo hostname tomcat
-video 8a, 1:44:32 then switch to ec2-user ie come out of the shell ... sudo su - ec2-user
-QUESTION.. why do we hv to change our shell?????????????????????????????????????????????????????????????????????
-   **** me, i bliv, coming out of shell means instead of it showing ur ip ie (3.90.51.187@tomcat) when u change shell you get this:(ec2-user@tomcat)
-============================
-#!/bin/bash
-sudo hostnamectl set-hostname docker
-sudo apt update -y
-sudo apt install docker.io -y
-sudo service docker start
-sudo docker info
-sudo usermod -aG docker ubuntu
-docker run --name myapp -d -p 8080:8080 mylandmarktech/spring-boot-mongo 
-docker run --name hello -d -p 80:80 mylandmarktech/hello 
-sudo su - ubuntu  
-
-http://18.117.152.63/
-paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com
-
-http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com/
+*****************************************************7/8 ends
 
 
 
-power point script
 
-
-
-VIDEO 8b ... 
+... 
 ############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
 cp target/*war / opt/tomcat9/webapps/ ..because tomcat was also installed in the jumpserver and the appserver ,, scp-i was used to copy from the jumpserver to the appser &
 to be able to deploy we had to copy  to  the webapp dir ie cp target opt/tomcat9/webapps/  of the jumpserver bc deployment takes place in the /webapp dir
 
+
+
+
+
+VIDEO 8B            ****1.31.51; A target group can hv up to 1000 targets in one target grp
+
+CREATING LOAD BALANCER;(HEALTH CHECK, LISTERNER/ TARGET GROUP)
 
 
 cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
@@ -448,18 +449,49 @@ servers listen on protocol and ports
 48:20  we v to mk sure the webservers and app servers are up/running and healthy
 
 
+power point script
 
 the OSI model 
 different layers   read power point script
 
+
+
 1:04:50 for us to hv content base routing, that wil tk us to application LB 
 1:24:00 CREATE LB
+
+******1.25.15
+This is my jumpserver instance this should nt be but let me include it in the target for now
+
+1:29.20 ... (using userdata) created 2tomcat instance in the tesla vpc
+
+Then after connecting in mobaxterm  if hostname didnt set i will run sudo hostname tomcat
+ 1:44:32 then switch to ec2-user ie come out of the shell ... sudo su - ec2-user
+QUESTION.. why do we hv to change our shell?????????????????????????????????????????????????????????????????????
+   **** me, i bliv, coming out of shell means instead of it showing ur ip ie (3.90.51.187@tomcat) when u change shell you get this:(ec2-user@tomcat)
+============================
+#!/bin/bash
+sudo hostnamectl set-hostname docker
+sudo apt update -y
+sudo apt install docker.io -y
+sudo service docker start
+sudo docker info
+sudo usermod -aG docker ubuntu
+docker run --name myapp -d -p 8080:8080 mylandmarktech/spring-boot-mongo 
+docker run --name hello -d -p 80:80 mylandmarktech/hello 
+sudo su - ubuntu  
+
+http://18.117.152.63/
+paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com
+
+http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.co
 1:44:40 assign hostanme & change shell
 1:46:30   we can use the curl command to knw if the target is healthy .. curl -v ip address:8080 , curl -v localhost:8080
 create a  redhat app server and paste the install script
 to know the ports that are open  ... netstat -utlpn ... sudo yum install net-tools
 
 
+
+***cont.1.33.20
 1:47:50 inside the jumpserver using curl -v public ip of the app server:8080  inside , he checked if the app server port number is healthy  but to check the heath of
 the jumpserver he curl -v localhost:8080 ..... so i bliv using the ip address, we can check the health of one server in another server 
 
