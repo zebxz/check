@@ -341,22 +341,7 @@ AWS3
 AWS STORAGE SOLUTION (THE DIFF TYPES PROVIDED ebs/efs/S3), LIST BLOCK COMMAND(root file system) Create/attached & mount ebs, creating my AMI(amazon machine image) =GOLDEN AMIS, CREATING A LIFE CYCLE FOR MY INSTANCE,
 CREATE A lifE cycle TO CREATE SNAPSHOTS FOR MY JENKINS INSTANCE, EFS; file storage examples / SHARED Storage, LAMBA FUNCTIONS, DISASTER RECOVERY
 
-AWS4
-3.20 Broad classification of Aws services
-********* he actually logged into aws & on the home page we saw all the aws services, even thode not listed here
 
-1) compute
-  in compute service we hv; server & serverless
-   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
-   serverless; Lambda(run code without servers) / Beanstack / farget profile
-                 Container( ECS ie elastic container service/EKS ie k8 service)
-  2) storage ; EBS/ EFS/ S3
-  3) databases 
-  4)networking 
-  5)data anylytics 
-we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
-
-aws3
 There are 3 diff storage solutions; 
 
 4.45  storage solutions:
@@ -424,7 +409,44 @@ NFS = Network file system(traditionally)  = self managed
 EFS = Elastic File system  = managed by AWS , therfore u hv more time to focus on ur applications
 so nowadays managed solutions is what is driving many companies
 
-AWS4... efs is nfs managed by aws, efs &nfs are performing the same task, efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws  
+
+*****************************
+AWS4.., efs is also/can also be called "nfs" managed by aws called efs ***19.17
+efs is a managed system bt if u dnt wnt to use efs we can also use another software system called nfs,, nfs is manged by aws  
+efs &nfs are performing the same task
+18:14  nfs managed by ourselves/self managed is not scalable
+    (when we create an nfs server by our selves thats self-managd but when aws manages it for us its efs)
+
+
+
+THE only diff btw EFS & NFS is , now lets assume that we hv 3dbase servers
+  if we want data to persisst 
+12:56 if we wnt our data to sychronizse in our 3 databases, if we wnt the data inputed by endusers to syn in all our 3db server, we can instal another server called an  
+nfs server, inside it i wil instal nfs software, then in all 3databases il v nfs client installed. then ill create a mount point caled e.g/data, il mk the mount point to be 
+shared to mk data to syn.. ie ill create the same mount point/dir in all 3db servers.... once its done, its my responsibility to ensure that the nfs server is up&running. so 
+once data comes into any of the servers, it syn in the other servers as well. i am the one managing the nfs servers ,, bt if the nfs server goes down data wont syn any more 
+this is a limited solution and is used by most coy oovertime... also if the data storage size for our mount point is 20GB,its nt scalable bc the 20GB limits our data storage 
+size data,,, these are drawbacks of this system....this whole structure is self managed, it is can be called iaas , we hv see saas.,paas
+
+18:14  nfs managed by ourselves/self managed is not scalable
+
+18:58 but with nfs it provides paas... the structure is no longer managed by us,it is a manage platform the nfs is then replaced by efs & so we dnt need servers or masters
+we only nid to cretae our efs, we dnt bother abt the mount point for the efs, bc aws in the backend ar doing the mounting for us, we  also dnt nis to bother abt the storage 
+size bc it can start from 0 and it is growing, it is higly scalable, if more data is needed it increases, it increases base on our nid to inifinity
+
+********* #21:24 u nid to be authenticated/permited to write data , port 2049 must be open to write data, if port is nt open , we cant write data
+when efs is created we hv to make sure we modify the security grp to permit data to be written and in all the client server we hv to open nfs port 2049
+
+  storage  solutions:
+   1) - Elastic Block Store       ebs   = block storage   
+  2)  - Elastic File system EFS / NFS= file storage
+    - nfs port = 2049  
+
+  ebs and efs required mounting   but s3 doesnt nid mounting, we use s3 for options e.g log files, images,videos
+##28:00 in ebs files cannot jst become accessible online bt wit s3 i store files and its immediately accseesible by anyone around the world
+
+when efs if created a security group is attached to it , we ar going to modify that secyrity to permit data to be written & in all the clients servers we v to open port 2049
+*************************
 
 
   LAMBA FUNCTION
@@ -446,16 +468,35 @@ by creating a snapshot lifecycle policy using Lambda
 
 
 
-AWS 4
-s3 buckets, IMPORTANT TO TAKE NOTE OF IN S3 ;Permissions/POLICIES, AWS ACCOUNT:Global resources  
+
+
+AWS4
+BROAD CLASSIFICATION OF AWS RESOURCES, s3 buckets/STEPS TO CREATE S3 BUCKET, IMPORTANT TO TAKE NOTE OF IN S3; Permissions/POLICIES,
+AWS ACCOUNT:Global resources  
 Glacier; this is used to store archival data e.g zip files, tag file, mayb data that is no longer accessed like non critical data e.g tax docs ,, we can store them under glacier/deep
 glacier
+
+
+1) compute
+  in compute service we hv; server & serverless
+   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
+   serverless; Lambda(run code without servers) / Beanstack / farget profile
+                 Container( ECS ie elastic container service/EKS ie k8 service)
+  2) storage ; EBS/ EFS/ S3
+  3) databases 
+  4)networking 
+  5)data anylytics 
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+
+
+*********meeeeeeeeee ****we continue with s3 from video3
 
 
  S3 (Simple Storage Service):
 *** 27.27... IF YOU CREATE FILES AND and store it in EFS/EBS, the files cannot just become accessible online  but with s3, i can store a file and its immediately accesible by anybody around the world
 so its a very serious solution that most companies are now using it to achieve a lot, and its very good for business
 meaning that by the end of this course you can use s3 to generate some income as well.
+
 
 
   object storage 
@@ -465,21 +506,6 @@ aws guarantess (99.999999999% durability, 99.9  uptime SLA)
 29.20 SLA = in Service Level Agreement , aws guarantees 99.99% availability  of your data.. for all aws services, ders 99.9 assurance in terms of availabilty & security 
 
 
-AWS ACCOUNT:
-Global resources    
-Regional  resources
-  vpcs---
-     aws default vpc 
-       ec2 instances [jumpserver, appServer]
-     aws custom vpcs [secured and gives users more controls]  
-        ec2 instances [jumpserver, appServer]    
-
-
-Load Balancers/webservers:
-  nginx  
-  haProxy 
-  http
-  users ----> ELB/LB ---->appServers
 
 
 
@@ -492,24 +518,18 @@ A webserver is a program that uses HTTP (Hypertext Transfer Protocol) protocol t
 Examples;
 Apache HTTP server
 Nginx (pronounced engine X) 
+haProxy
 IBM HTTP server (IHS)
 Oracle iplanet web server
 Internet information Server (IIS)
 *******************************************************
 
 
-VPC, INSTALL HTTPD 
-INSTALL WEBSERVER(nginx), VPC, S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
-LAUNCH WEBSERVER(I bliv thats wher he installed ngnix) 
+
+VPC,SUBNET/ CIDR BLOCK/ ADDRESSES , S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
+LAUNCH WEBSERVER(install ngnix) 
 
 
-ngnix is a software for webserver, http is also a software for webserver
-###2:44:00 we had to open http port80 in jumpserver for ngnix to be accessible
-he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
-making anoda webserverSO he decided to install ngnix in the jumpserver which is in the publicSN
-
-
-Install ngnix
 
 VPC
 frm pg 80,    virtual private cloud
@@ -559,6 +579,18 @@ AWS ACCOUNT:
     us-east-2 =3, us-west-1 =3, us-west-2 =3
 
 
+
+
+
+ SUBNET/ CIDR BLOCK/ ADDRESSES (I bliv thats like the private/public ip)
+
+###pg 80 Subnets -200 user-defined subnets up to /16, a vpc can hv up to 200 user define subnet
+the max no. of addresses a vpc is able to hv
+VPC -User-defined address space up to /16 (65,536 addresses)
+
+27:56 ###pg 83 what deters the no. of resources that can be placed within each vpc is the cidr block / the no. of addresses  a vpc can hold 
+
+
 29:47
 Ticket0011:
   Create a VPC for paypal client with the 200 addresses   
@@ -577,7 +609,7 @@ Launch webserver
 
 
 AWS6
-HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE, SANDBOX 
+HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE, CREATE & DEPLOY IN SANDBOX/TEST SERVER
 
 
 HOW TO ESTABLISH VPC PEERING, 
@@ -610,6 +642,30 @@ the envirn wher we perfom testing is called sandbox server, we first deploy in t
 
 ****** ONLINE ...A sandbox is a secure, isolated testing environment used in cybersecurity and software development
 to safely run and analyze untrusted or suspicious applications, files, or code without risking harm to the host system
+
+
+ CREATE & DEPLOY IN SANDBOX/TEST SERVER
+
+
+Ticket0013
+ ===========
+Deploy applications to production for paypal client.   
+e.g, i hv 
+  1. 8 production appServers with [ 192G RAM / 900GB SSD ] each
+
+For best performance ensure that adequate testing is done  
+  2. first, deploy in your sandbox/test server
+
+
+
+1. By default, from the jumpserver we can ssh 
+   into the sandbox using the publicIP    
+
+1. from the jumpserver we can ssh into the sandbox using the privateIP 
+   via vpc peering with route tables modified accordingly
+
+
+
 
 
 
