@@ -719,7 +719,8 @@ i dnt nid to chmod again when i ssh the webserver
 
 
 AWS6
-HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established, SANDBOX/ FRM THE JUMPBOX EST PARING CONNECTION ie FOR THE SANDBOX WITH/VIA THE JUMPSERVER
+HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established, SANDBOX/ FRM THE JUMPBOX EST PARING CONNECTION ie
+FOR THE SANDBOX WITH/VIA THE JUMPSERVER
 
 
 HOW TO ESTABLISH VPC PEERING, 
@@ -783,13 +784,19 @@ For best performance ensure that adequate testing is done
   2. first, deploy in your sandbox/test server
 
 
-
+step1
 ###55:20 to create a sandbox
 launch instance- linux-micro- pem key- select the created vpc-prvateSN- ip:disable-SG:ssh  custom 10.0.0.0/24, so dat resources in the vpc can comm wit me via ssh, i also
 wnt wnt an ssh connection est in this sandbox so:ssh custom 10.10.0.0/24, so frm both vpc am able to ssh privately- launch
 the sandbox doesnt hv any public ip, its running in the privateSN
 ***meeee*** so we hv to est a peering connection using the jumpserver
 
+
+step2
+PAIRING CONNECTION  (To est a private connection for the sandbox with the jumpserver) 
+1.04.15 we establish a peering connection with the jump server, connecting through the jumpserver ie  *****meee***, inside the jumpserver we create the sandbox key, change the permission  & run 
+  ssh -i "aws33.pem" ec2-user@10.10.0.134
+the private connection will be established so long as you modified your routing table accordingly for you to connect to the sand box using the private ip
 
 
 ssh sandbox in mobaxterm
@@ -812,11 +819,6 @@ jumpserver is running in vpc1:
   ssh -i awskey33.pem ec2-user@10.0.0.54
 
 
-PAIRING CONNECTION  (To est a private connection for the sandbox) 
-1.04.15 we establish a peering connection with the jump server, connecting through the jumpserver ie  *****meee***, inside the jumpserver we create the sandbox key, change the permission  & run 
-  ssh -i "aws33.pem" ec2-user@10.10.0.134
-the private connection will be established so long as you modified your routing table accordingly for you to connect to the sand box using the private ip
-
 
 1. By default, from the jumpserver we can ssh 
    into the sandbox using the publicIP    
@@ -827,12 +829,18 @@ from the jumpserver we can ssh into the sandbox using the privateIP
 
 
 
+*****everything ended here with the sandbox
+
+
 
 
 
 
 AWS 7/8
-Elastic Load Balancers& AUTO SCALLING,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
+Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
+ USERDATA to install tomcat & docker for the APPSERVERS TO ACCESS THE APPLICATION VIA THE LB
+*****1.05.16.. our main target is to acces our application via the lb
+
 tomcat script didnt install the tomcat, engr francis helped me resolve it 
 
 
@@ -855,6 +863,8 @@ nginx
 httpd
 *********************************************************************************
 
+
+START
 13:30
 
 Elastic Load Balancers = ELB:
@@ -931,6 +941,11 @@ cos once we get into kubernetes, its going to be abt routing traffic to multiple
 
 
 
+STEPS FOR THE APPSERVER TO CONNECT TO THE LB *****1.05.16.. our main target is to acces our application via the lb
+
+
+ step1
+           USERDATA to install tomcat & docker for the APPSERVERS
 38:00 APP SERVER - name -linux- micro-SELECT created vpc:pubSN-key-ENABLE AUTO- advance deatails:user data:paste d tomcat instalation script,to instal &start tomcat- launch
 SG: SSH TCP 22  0.0.0/0, HTTP TCP 80 0.0.0/0, SSH TCP22 from any
 
@@ -941,7 +956,7 @@ SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
 
 
 
-
+step2:
 CREATE LOAD BALANCERS 
 
 49:30 CREATE LOAD BALANCER- name-internat facing(means it cn receive trafic frm ext sours &route d trafic-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add 
@@ -950,6 +965,7 @@ server 3times &ders no response, it wont route traffic to the target-NEXT-select
 create target grp-go back to the load bALancer being created &select thetarget grp-create load balancer... we can also add up to 50 listeners
 
 
+step3:
 1:02:20
 TO ADD A TARGEt to an existing LBT:CEATE LOAD BALANCER- name-internat facing-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add listener-create target grp:instances-
 name- TCP:80-IPV4-NEXT-select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create target- THEN CLICK Target groups-register
@@ -961,6 +977,38 @@ publicIP:8080
 56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
 
 1:03 we can now copy the dns name of our lB to access our app or doecker server and it is more secured accessing our application via the LB 
+
+
+
+
+
+
+
+
+AWS 8B
+
+WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED 
+
+
+cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
+its all building infrastruture in the cloud and managing it, like EC2 and other required resources
+7:51 PROFF: for any org to operate they nid to manage their applications in a container, we call the containers computers  and the computers can be owned by the company 
+or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
+cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
+
+we hv application servers wher applications ar being deployed
+18:49for traffic to be routed appriopriately, we v to do load balancing, it can be a load bal or ELS
+WE require a software wich helps us achieve load balacing with relative ease e.g ngnix or h ah proxy
+the LB does 2 tins , it either accepts or rejects the REQ.. .. 
+*********meaning tht LB ARE impoertaNT BC IT ACTS As A security measure.. e.g someome trying to access the server wich
+we dnt want, it will reject the reQ.... SO if it accepts it will route tracffic to the app servers running in the backend.
+
+
+
+
+
+
+
 
 
 
