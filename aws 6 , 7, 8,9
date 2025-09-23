@@ -13,10 +13,7 @@ IAM
 
 vpc, vpc peering, route table, routing traffic, B ,auto scaling, launch template
 
-MY TS EXPERIENCE: I tried installing tomcat with user script ie pasting
-installation script while launching an inatance but it wasnt working, and the target grp keptindicating unhealthy bc d https link to install tomcat wasnt the
-latest version, so i had to google tomcat download and tcopy the correct https link  
- https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.zip
+
 
 its good to hv multiple lB so if one is down, the one that is running wil b  able to sustain the resources that are down  
 ###### i installed my docker server in private SN and it wasnt accesible on google bt when i installed anoda one in publicSN, it worked 
@@ -24,9 +21,6 @@ its good to hv multiple lB so if one is down, the one that is running wil b  abl
 ######prof power point script not complete 1>47>39 ... tomcat script and also create jumpserver and docker server
 Video8a, 1:46:20 .. the video is amnong the docker videos... . .....   ask what makes a port unhealthy? .... 1:46:45. he said what does d health of d server depend on,it
 depends on the fact that the port 8080 is open,its running ders smt ruuing on the port ,, we can use the curl command to check 
-
-the course to knw hw to manage the resources hosted by AWS ,, understanding the process of maanaging the computing services in the AWS environment
-aWS cloud architecture/ aws solution architect
 
 
 QUESTION:
@@ -49,13 +43,21 @@ e.g aws can be our and gcp can be an on premp resource
 
 
 
+
+
+
+
+the course to knw hw to manage the resources hosted by AWS ,, understanding the process of maanaging the computing services in the AWS environment
+aWS cloud architecture/ aws solution architect
+
 *****************************************************************
 
 AWS 6
 
 
 
-HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established, SANDBOX/ FRM THE JUMPBOX EST PARING CONNECTION ie FOR THE SANDBOX WITH/VIA THE JUMPSERVER
+HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established, SANDBOX/ FRM THE JUMPBOX EST PARING CONNECTION ie FOR
+THE SANDBOX WITH/VIA THE JUMPSERVER
 
 
 
@@ -124,6 +126,7 @@ for secure access by modifying the route tables so that we can v a private secur
 we attaching these to our publicSN 0.0.0 igw &privateSN 0.0.0.NAT.the access To the internet is oneway via the NAT  & we v a pairing connection, this is what we v been able 
 to establish.
 
+
 ####51:15 ... SANDBOX .. 
 A sandbox is a test server , the server can be used for testing...
 the envirn wher we perfom testing is called sandbox server, we first deploy in the sandbox if it wrks well then we deploy in the right environ
@@ -140,12 +143,19 @@ For best performance ensure that adequate testing is done
   2. first, deploy in your sandbox/test server  
 
 
+step1
 ###55:20 to create a sandbox
 launch instance- linux-micro- pem key- select the created vpc-prvateSN- ip:disable-SG:ssh  custom 10.0.0.0/24, so dat resources in the vpc can comm wit me via ssh, i also
 wnt wnt an ssh connection est in this sandbox so:ssh custom 10.10.0.0/24, so frm both vpc am able to ssh privately- launch
 the sandbox doesnt hv any public ip, its running in the privateSN
 ***meeee*** so we hv to est a peering connection using the jumpserver
 
+
+step2
+PAIRING CONNECTION  (To est a private connection for the sandbox) 
+1.04.15 we establish a peering connection with the jump server, connecting through the jumpserver ie  *****meee***, inside the jumpserver we create the sandbox key, change the permission  & run 
+  ssh -i "aws33.pem" ec2-user@10.10.0.134
+the private connection will be established so long as you modified your routing table accordingly for you to connect to the sand box using the private ip
 
 
 ssh sandbox in mobaxterm
@@ -169,12 +179,6 @@ jumpserver is running in vpc1:
   ssh -i awskey33.pem ec2-user@10.0.0.54
 
 
-PAIRING CONNECTION  (To est a private connection for the sandbox) 
-1.04.15 we establish a peering connection with the jump server, connecting through the jumpserver ie  *****meee***, inside the jumpserver we create the sandbox key, change the permission  & run 
-  ssh -i "aws33.pem" ec2-user@10.10.0.134
-the private connection will be established so long as you modified your routing table accordingly for you to connect to the sand box using the private ip
-
-
 1. By default, from the jumpserver we can ssh 
    into the sandbox using the publicIP    
 
@@ -187,7 +191,8 @@ from the jumpserver we can ssh into the sandbox using the privateIP
 
 
 
-vIDEO  7/8: Elastic Load Balancers& AUTO SCALLING,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
+vIDEO  7/8: 
+Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
 ====================================
 Running notes for ELB/ASG  starts
 ====================================
@@ -335,12 +340,6 @@ publicIP:8080
 56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
 
 1:03 we can now copy the dns name of our lB to access our app or doecker server and it is more secured accessing our application via the LB 
-
-
-
-
-
-
 
 
 
