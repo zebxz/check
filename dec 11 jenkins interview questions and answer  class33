@@ -526,8 +526,12 @@ Internet information Server (IIS)
 
 
 
-VPC,SUBNET/ CIDR BLOCK/ ADDRESSES , S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
+ VPC, SUBNET/ CIDR BLOCK/ ADDRESSES, S3 BUCKET CANT BE CREATED IN SUBNET, Internet Gateway (IGW),ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, FOR SECURITY CONNECT TO THE APP/DB SERVERS VIA THE JUMPSRVER,
 LAUNCH WEBSERVER(install ngnix) 
+ 
+
+when i practice ill hv to tk note of the connection btw the jumpserver & the webserver& the db/app servers (like why the diff subnets & which subnet has the IGW attached to it)
+*** 1.04.44, in the diagram i see the jumpserver & the webserver in "subnet public us west-2a &  the dbserver & appserver in  "subnet2 private us-west-2b
 
 
 
@@ -590,7 +594,7 @@ VPC -User-defined address space up to /16 (65,536 addresses)
 
 27:56 ###pg 83 what deters the no. of resources that can be placed within each vpc is the cidr block / the no. of addresses  a vpc can hold 
 
-
+Create a VPC for paypal client with the capacity of 200 resources
 29:47
 Ticket0011:
   Create a VPC for paypal client with the 200 addresses   
@@ -600,9 +604,115 @@ Ticket0011:
   Create a VPC for paypal client with 200 addresses in 2 subnets  
 
 
-Launch jumpserver
-Launch dbserver
-Launch webserver
+S3 BUCKET CANT BE CREATED IN SUBNET (Because its a regional service, i can create it inside my VPC)
+1:03:22 my s3 bucket cannot be be created in a subnet, e.ginside us east2a subnet ..bc its a regional service whose name must be globally unique
+i can create it in the us region inside my vpc e.g us east,us west   ***me***but not inside the subnet, remember subnets are created inside the vpc
+****meeee***** its like the s3 can be created inside the compound but not inside the house/rooms
+
+
+
+**online***   IGW & NAT GATEWAY
+In AWS, both Internet Gateway (IGW) and NAT Gateway (NGW) are used to enable communication between instances in a Virtual Private Cloud (VPC) and external networks,
+but they serve different purposes and have distinct functionalities
+
+An Internet Gateway is a horizontally scaled, redundant, and highly available VPC component that allows resources within a VPC to communicate with the internet. 
+It acts as a bridge between the VPC and the internet, enabling bidirectional communication. An IGW is essential for instances in a public subnet to access the internet and for the internet to access those instances.
+The IGW translates private IP addresses within the VPC to public IP addresses.
+
+INTERNET GATEWAY; to ensure communication btw my jumpserver & my webserver or webserver & appserver 
+1:04:for e.g, if i v app server1 and app server2, to ensure comunication btw the servers, i can create a route table, wich detr hw service is routed from one subnet to d oda
+ inside our vpc we nid internet gateway  it will allow internet to flow into the vpc & it wil allow exteral traffic so if we wnt to acess resourcs out of our vpc, out of our,
+netwrk , we nid to hv internet , using IGW , ders a kind of internet gateway, it is associated wit our vpc.
+
+
+ROUTE TABLES
+1:07:00 inside the vpc we'l create route tables, route table1 for the private subnet to support local traffic within my vpc, then route table2, i hv a public subnet 
+wich is wher i place resources wich can be acessed externaly & the route table2 is permitting traffic frm anywher . ie 0.0.0/0, both local& traffic frm the internet..
+
+
+NAT GATEWAY
+**Online**
+A NAT Gateway is a Network Address Translation (NAT) service that enables instances in a private subnet to connect to the internet or other AWS services while preventing the internet from initiating connections with those instances. 
+It translates the private IP addresses of instances within a private subnet to public IP addresses, allowing outbound communication
+1:34:00 if my private app server is trying to access data online e.g ping google.com, il modify route table1, create a NAT gateway  to permit oneway internet traffic,therefore
+the app server can access internet externally, i decide that we can recieve traffic frm the internet but can only happen frm the nAT gateway.
+ the NAT will be created in the public subnet wich hv internet access,, from der, the private subnet is permitted to access internet via the NAT gateway
+
+
+NACL 
+***online
+A Network Access Control List (NACL) is a security feature provided by Amazon Web Services (AWS) that acts as a virtual firewall for controlling inbound and outbound traffic at the subnet level within a Virtual Private Cloud (VPC). 
+NACLs provide an additional layer of security to your VPC by allowing or denying specific traffic based on defined rules.
+1:12:24 vpc has some firewall ,2 types of firewall, the first one is the firewall that stands infront of the subnet, like a gateman, called netwk acess control list nACL... 
+in naCL, we can create some rule e.g open port80 for inbound rules &for outbound open port80 aswell, on my NACL, trafic frm enduser can get to my subnet
+for  trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group (this is firewall), but lets say i also hv port 443 open in my NACL, traffic still cant get to the webserver 
+therfore i also have to open port80 , 443 in the webserver security grp
+****** in  all we hv 2 security parameter
+the 1st is the router for routing, wich permits traffic to be routed to the subnet bc if thers no route table permiting routing the traffic wont happen
+the 2nd is the firewall wich has 2layers of security,, security at the subnet level & security at the server level
+ *****mee** therfore; NACL has 2 security types or parameter ( routing table & firewall) & the firewall has 2layers (one for the subnet & one for the webserver)
+
+
+
+LAUNCH JUMPSERVER
+
+1:55:00 launch jumpserver- create instance- name- linux-micro-create key-edit ntwrk settings: select the vpc created:select public sn, d server nids internet-
+auto assigng pub ip:enable-security grp to alow ssh frm my ip or anywher &ssh custom 10.o.o/24, alowing ssh trafic frm within my vpc
+so dat servers in my vpc can communic, instances can communi wit each oda via ssh- launch ... we opened http 80 for nginx
+
+1:58:50 the private ip  10.0.0.244 is deter by my cyber block which is 10.0.0.0/25 
+
+
+
+LAUNCH DBSERVER
+launch dbserver -name-t2 micro-ntwrk:select vpc created:privatesn-AUTO ASSign:diassble- SG - ssh tcp22, cutom:10.0.0/24 to alow ntwk witin my vpc-launch 
+to access dbserver i must connect to my jumpsevre before i can access the dbsever 
+
+
+
+FOR SECURITY CONNECTING TO THE APP/DB SERVERS VIA THE JUMPSRVER
+ 2:00 security is inherent in our environment , WE DNT ALLOW DIRECT acces in our db server, if u wnt to acces it u v to go tru our 
+jump sevrer. traffic goes to the jummpsever bc it has a security grp dat is permitting the trafic, it allows trafic on port22 so  in d
+ SG 22 is open for members of the team & my vpc 10.0.0.0/24,i.e my ip. so my ip & port22 ar d two access  
+2:02:13 . security grp in frnt of the db server is only local so u can only access db server via the jumpsevr, the jumpserver acts as 
+the entry point when it comes to ssh access,  frm d jump server u can access the app/ db servers,so any server in the vpc can be accessed
+via the jump server. does d seceurity grp in my db sever permit trafic frm the jumpserver. if am outside the ntwrk of the vpc,to access
+the jumpsever i nid the publicip of the jumpserver.
+2;05:00 to access my jumpserver,ssh jumpservr in mobaxterm.
+2:11:50 we can also aces the jumpserver wit the private ip if we are inside the vpc,e.g i can ssh to the jumpsevre frm my app server if my firewall permits it&dat is local 
+access, bc they ar all resources witin my vpc
+
+
+
+2:14:00 to connect to my dbserver, inside the jumpserver in mobax, vi dbkey i.e create a file&paste the dbkey, if i ll ,can see the key has read&write access so i v 
+to chmod 400 dbkey to change it to read only .. then when i run ssh -i awskey33.pem ec2-user@10.0.0.54 ...v been able to ssh frm my jumpsevr to my dbserver
+2:16:10 frm d dbserver when i ping google.com, it doesnt allow but when i ssh into my jumpserver again in mobx i get a response when i ping google.com
+for my dbserver to be able to commu with google we hv to create a NAT gateway
+2:18:50 create NAT GATEway - vpc- NATgateway- name-publicSN-connectivity:public- click allocate elastic- create
+we go back to the private route table -i wnt my private subnet to access internet, so via the NAT one way internet traffic -edit routes-add route:0.0.0/0/NATgateway:select
+the NATgateway that was just created- create
+so my private subnet now has internet traffic via the NATgateway & my dbserver is able to access internet via the NAT gateway.
+
+
+
+LAUNCH WEBSERVER
+2:25:00 
+OUR WEBSERVER is found the public subnet,we hv 2layers of security in front of the webserver, the 1st is NACl.. ntwk acess contl list wich wil control the whole ntwrk, 2nd 
+layer of security is the secrutity grp ,, when end user traffic gets to the webserver running in my public subnet, it means the req port has been open , so in my NACL
+inbound rule il open: rule1 port80, port443 for http&https respectively, in my Sg il ALSO OPEN PORT80 &443. so traffic comes to my webserver bc webser is listenig on those
+port number, port80&443... frm here, my appserver runs in private subnet &also my dbserver
+2:28:42 also for my appsevr i hv 2layer of security, one in front linking frm the webservr & one behind linking the dbserver
+
+2:29:18 launch webserver - linux-micro- select VPC created- publicSN-auto:enable- SG:ssh tcp22/custom myip & ssh tcp22 custom 10.0.0.0/24 &ssh orhttp tcp 80 bc users can 
+cm frm anywher &https 443 frm anywher- launch  ......correction.... publicSN...... not privateSN
+since it is within my netwrk , i ssh with my private ip, i use my prive bc i wnt to ssh bt if i wanted endusers to access the webserver, il give them public..
+
+users access our webseevr via ---->http/80, https/443 webserver [13.59.100.138]    
+  admin ---->ssh/22 .. can use either of private or public.. he can use both 
+
+2:38:25 our webserver is running in the public subnet which has route to the internet via the internet gateway
+i think its bettr to use the same key for all the jump,db,&webserver so that  no nid to chmod 400 multiple times,, if i use the same key, once i chmod once for dbserver,
+i dnt nid to chmod again when i ssh the webserver
 
 
 
