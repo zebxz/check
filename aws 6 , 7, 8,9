@@ -23,8 +23,17 @@ Video8a, 1:46:20 .. the video is amnong the docker videos... . .....   ask what 
 depends on the fact that the port 8080 is open,its running ders smt ruuing on the port ,, we can use the curl command to check 
 
 
+
+MY QUESTION
+In AWS 6/video 6, we did a private connection with vpc peering,
+we ssh into our sandbox from the jumpserver, and that was how the video for the class ended 
+was that just to show us how to est a private connection OR in the real world can the sandbox serve as our 
+app/db server where we can install like tomcat software for deployment?
+
+
+
 QUESTION:
-video 6 ... OUR sand box didnt hv a public ip.... so u said 
+AWS6/video 6 ... OUR sand box didnt hv a public ip.... so u said 
 1. By default, from the jumpserver we can ssh 
    into the sandbox using the publicIP  
 so does it mean, we then v to create our sand box server to hv a public ip address.. & if so that means the connection is not private 
@@ -185,6 +194,16 @@ jumpserver is running in vpc1:
 2. To est a private connection   ***1.06.49
 from the jumpserver we can ssh into the sandbox using the privateIP 
    via vpc peering with route tables modified accordingly     
+
+
+
+
+*****everything ended here with the sandbox
+MY QUESTION
+In AWS 6, we did a private connection with vpc peering,
+we ssh into our sandbox from the jumpserver, and that was how the video for the class ended 
+was that just to show us how to est a private connection OR in the real world can the sandbox serve as our 
+app/db server where we can install like tomcat software for deployment?
 
 
 
@@ -411,8 +430,10 @@ ANS: if u v resources in aws &gcp, and  e.g u wnt to pair frm aws therefore, aws
 we hv application servers wher applications ar being deployed
 18:49for traffic to be routed appriopriately, we v to do load balancing, it can be a load bal or ELS
 WE require a software wich helps us achieve load balacing with relative ease e.g ngnix or h ah proxy
-the LB does 2 tins , it either accepts or rejects the REQ.. .. meaning tht LB ARE impoertaNT BC IT ACTS As A security measure.. e.g someome trying to access the server wich
+the LB does 2 tins , it either accepts or rejects the REQ.. .. 
+*********meaning tht LB ARE impoertaNT BC IT ACTS As A security measure.. e.g someome trying to access the server wich
 we dnt want, it will reject the reQ.... SO if it accepts it will route tracffic to the app servers running in the backend.
+
 
 WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED 
 inside the LB, WE DETERMINE How traffic will be routed .. we can create some rules, so if it accespts traffic it will route traffic based on the rules e.g if it has this 
@@ -426,6 +447,8 @@ the server, its an ha proxy LB
 servers listen on protocol and ports
 48:20  we v to mk sure the webservers and app servers are up/running and healthy
 
+
+
 the OSI model 
 different layers   read power point script
 
@@ -433,7 +456,7 @@ different layers   read power point script
 1:24:00 CREATE LB
 1:44:40 assign hostanme & change shell
 1:46:30   we can use the curl command to knw if the target is healthy .. curl -v ip address:8080 , curl -v localhost:8080
-creae a  redhat app server and paste the install script
+create a  redhat app server and paste the install script
 to know the ports that are open  ... netstat -utlpn ... sudo yum install net-tools
 
 
