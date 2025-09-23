@@ -532,7 +532,7 @@ LAUNCH WEBSERVER(install ngnix)
 
 when i practice ill hv to tk note of the connection btw the jumpserver & the webserver& the db/app servers (like why the diff subnets & which subnet has the IGW attached to it)
 *** 1.04.44, in the diagram i see the jumpserver & the webserver in "subnet public us west-2a &  the dbserver & appserver in  "subnet2 private us-west-2b
-
+am not sure there was a vpc peering bc thats was treated in the next videO "AWS6"
 
 
 VPC
@@ -719,7 +719,7 @@ i dnt nid to chmod again when i ssh the webserver
 
 
 AWS6
-HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE, CREATE & DEPLOY IN SANDBOX/TEST SERVER
+HOW TO ESTABLISH VPC PEERING, MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established, SANDBOX/ FRM THE JUMPBOX EST PARING CONNECTION ie FOR THE SANDBOX WITH/VIA THE JUMPSERVER
 
 
 HOW TO ESTABLISH VPC PEERING, 
@@ -742,6 +742,22 @@ VPC-1 - 10.0.0.0/24
    appServer1 [ 10.0.0.66 ]
 VPC-2 - 10.10.0.0/24  
    webServer1 [ 10.10.0.66 ]
+
+
+
+WE V TO MODIFY THE ROUTE TABLE SUCH THAT DER CAN B A PRIVate ntwrk established.. 
+
+in virginia, select peering conection- name- selectvpc to pair wit:project pair-..thers anoda option to pair vpc with- rgion:another-go into d other region, copy d vpc id 
+paste it-create- go into the other region in action:accept the connection, meaning we can peer vpcs in d same aws acct or in an anodaaws acct,.in this case we wnt to 
+do it in the same accoutn bt our 2nd vpc is in another region... the pairng vpc cud be in the same region or anoda region 
+
+41:15,, modify the route tables of VPC1 -selsct route tables-tick publicSN of the created vpc:-edit: add 10.10.0.0/24- peer connection-save ... do the same in the privateSN 
+ of the same vpc....TO est conection wit VPC2 via the pairing connection
+46:50 we also go to the other region, the receiving vpc and modify the route table for vPC2- add 10.0.0.0/24 for both the publicSN and privateSN .... so we hv created route
+for secure access by modifying the route tables so that we can v a private secure connection.. by default, the route table will permit local route frm 10.10.0.0/24 local
+& 0.0.0.0igw to permit access tru the igw,, we also v 10.0.0.0/24pc.. this is establshing a private connection uisng the vpc peering connection,by virtue of this modification
+we attaching these to our publicSN 0.0.0 igw &privateSN 0.0.0.NAT.the access To the internet is oneway via the NAT  & we v a pairing connection, this is what we v been able 
+to establish. 
 
 
 
@@ -768,11 +784,47 @@ For best performance ensure that adequate testing is done
 
 
 
+###55:20 to create a sandbox
+launch instance- linux-micro- pem key- select the created vpc-prvateSN- ip:disable-SG:ssh  custom 10.0.0.0/24, so dat resources in the vpc can comm wit me via ssh, i also
+wnt wnt an ssh connection est in this sandbox so:ssh custom 10.10.0.0/24, so frm both vpc am able to ssh privately- launch
+the sandbox doesnt hv any public ip, its running in the privateSN
+***meeee*** so we hv to est a peering connection using the jumpserver
+
+
+
+ssh sandbox in mobaxterm
+1:1:18 to acces my sandbox in mobaxterm
+ssh -i "sand.pem" ec2-user@10.10.0.139
+
+in mobaXT ,in my jumpser,creating a new key,-vi sand.pem :paste- bc my key is open, chmod 400 sand.pem, to change d key permission, then my key is secured- 
+ssh -i "sand.pem" ec2-user@10.10.0.139 ..
+
+
+sandbox is running in vpc2:
+  privateIP  =  10.10.0.134
+  chmod 400 aws33.pem
+  ssh -i "aws33.pem" ec2-user@10.10.0.134
+
+jumpserver is running in vpc1:
+  privateIP = 10.0.0.54  
+  publicIP  = 18.191.89.63
+  ssh -i awskey33.pem ec2-user@18.191.89.63
+  ssh -i awskey33.pem ec2-user@10.0.0.54
+
+
+PAIRING CONNECTION  (To est a private connection for the sandbox) 
+1.04.15 we establish a peering connection with the jump server, connecting through the jumpserver ie  *****meee***, inside the jumpserver we create the sandbox key, change the permission  & run 
+  ssh -i "aws33.pem" ec2-user@10.10.0.134
+the private connection will be established so long as you modified your routing table accordingly for you to connect to the sand box using the private ip
+
+
 1. By default, from the jumpserver we can ssh 
    into the sandbox using the publicIP    
 
-1. from the jumpserver we can ssh into the sandbox using the privateIP 
-   via vpc peering with route tables modified accordingly
+2. To est a private connection   ***1.06.49
+from the jumpserver we can ssh into the sandbox using the privateIP 
+   via vpc peering with route tables modified accordingly     
+
 
 
 
@@ -780,7 +832,7 @@ For best performance ensure that adequate testing is done
 
 
 AWS 7/8
-Elastic Load Balancers& AUTO SCALLING, (NLB)NETWRK LOAD BALANCER *** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER,GATEWAY LOADBANCER
+Elastic Load Balancers& AUTO SCALLING,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
 tomcat script didnt install the tomcat, engr francis helped me resolve it 
 
 
@@ -803,20 +855,59 @@ nginx
 httpd
 *********************************************************************************
 
+13:30
 
-After installing, we v to configure & the configuration has certain parametrs
-webserver has listerners and backend 
-it has listeners to traffic using http 80 protocol or https  443,  from the app users and routes traffic to the  backend  app via their ip address 10.0.0.7 and the server
-port number e.g 8080 =10.0.0.7:8080but the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down
+Elastic Load Balancers = ELB:
+  rules   
+  Listeners 
+  target groups with targets   
+  health check on the targets  
+
+  LB & elb 
+Create your Load Balancers in an aws Region:
+  aws will create 2 instances in 2 AZs  
+  aws will install/configure a Load Balancing sotwares   
+
+lets assume you are managing a FB appl with 4B endusers
+FB have some app servers, meaning that traffic is coming frm the users and when traffic leaves the users it wants to access the FB application
+eg we hv FB app server 1, FB app server2, FB app server3
+
+13:40 its nt a secured practice to allow direct traffic to app servers so we create a web server 
+once you create a webserver, it can now mg8 hw traffic is routed, routing traffic to the backend app servers
+the webserver has what is called target, so there is a target grp, this target grp is my FB  app, so i hv a target grp for my fb app, so in total we hv 3target grps 
+bt in a situation wher the webserver breaks down that will be a problem 
+***20.04.... bc traffic will nt get to the backend server.
+
+
+EXAMPLE OF WEBSERVERS/LB SOFTWARE
+nginx
+httpd
+
+
+LISTENER
+16:00 After installing, we v to configure & the configuration has certain parametrs
+this webserver has to listen to traffic form this number of users thetfore we hv to talk about the listeners 
+it has listeners to traffic using http 80 protocol or https  443, 
+webserver has listerners and once it listens to traffic, it has backend servers, now you are configuring your webserserver & in the webserver we have some backends
+lets assume ( our target grp FB) this guy face bk is 10.0.0.7/anoda guy 10.0.08  & the app listens on port 8080, this is the configuration
+what happens is that your webserver is routing traffic so it reccives traffic; source(no. of users **me**8**ie the ip addresses stored in the backend) & destination (target grp) 
+bt in a situation wher the webserver breaks down that will be a problem 
+***20.04.... bc traffic will nt get to the backend server.
+the webserver is a self managed solution & we can hv a situation where we hv backup webservers to cover up when webserver1 is down
 but all the configuration constitute a very tidious job
 
-so we can go with a managed service ie paaS... AWS has provided us a manged srvice 
+
+therfor; AWS has provided us a manged srvice
+so we can go with a managed service ie paaS...  
 WE JUST CREATE our elb ... then aws decides the kind of software to install .. whether ngnix, https, they are incharge of that,, 
 in the background, aws will create 2webservers in 2aZs for availability, so u dnt bother whether the server wil fail or not
 so ur tassk is jst to create/config ur listeners/target groups
 thats whAT elb IS ALL ABOUT
 
-23:37 ... 1)THERS ALSO NTWRK LOAD BALANCER
+
+
+
+23:37 ... 1)THERS ALSO NTWRK LOAD BALANCER /    *** Meee (LAYER 4 support)
 it deals with source and destination, &when it comes to d target grp dey ar created using TCp id or protocol & a trget grp can v up..
 to 1000 targets and we will do all the config ..tcp= source &destination..video 8a (1:11.. d protocol here that it suport, the listener is tcp got to do wit source& destinatn 
 this falls under layer4support..... ntwrk lb is faster than ALB BC NTwrk is source to destination bt for ALB when it receives a trafic it has to filters the tarfic to knw the
@@ -825,12 +916,53 @@ its the transport layer dedicated for transport so by default for transmissn dat
 layer7 the application layer, route trafic base on content of the trafic.
 
 
+ APPLICATION LOAD BALANCER
 24:25.... 2)  thers also application load balancer(AIB)
 IT will use the http/https protocol,, in dis case , we can v multiple target groups/ diff target grps
 the applications are grouped with the help of a target grp
 the AIB falls under layer7 support.
 
+
+GATEWAY LB
 3) thers also gateway LB , a new option which AWS now hv
+
+interview: do u v any experience with layer4 support, nterk load balancers 
+cos once we get into kubernetes, its going to be abt routing traffic to multiple backend application ... . 
+
+
+
+38:00 APP SERVER - name -linux- micro-SELECT created vpc:pubSN-key-ENABLE AUTO- advance deatails:user data:paste d tomcat instalation script,to instal &start tomcat- launch
+SG: SSH TCP 22  0.0.0/0, HTTP TCP 80 0.0.0/0, SSH TCP22 from any
+
+create docker-app.. everytin is the same as aPP SERVER THEN PASTE the simple script for instaling docker .. they must be in the same VPC
+SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
+
+##### we can hv up to 1000 targets in a one target group ... 1:31:55
+
+
+
+
+CREATE LOAD BALANCERS 
+
+49:30 CREATE LOAD BALANCER- name-internat facing(means it cn receive trafic frm ext sours &route d trafic-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add 
+listenr 80-create target grp:instances-name- TCP:8080 .(we chose tcp/UDP bc its a ntwrk LB)-IPV4-HEALTH:tcp: we can also click adv:3,3,10,10...ie if the LB Ping the target 
+server 3times &ders no response, it wont route traffic to the target-NEXT-select D required apps-portnmber it listens to e.g8080or 80 for deocker-tick include as pending-
+create target grp-go back to the load bALancer being created &select thetarget grp-create load balancer... we can also add up to 50 listeners
+
+
+1:02:20
+TO ADD A TARGEt to an existing LBT:CEATE LOAD BALANCER- name-internat facing-ipv4-the same vpc as docker&app-same vpc-pubSN- SG- add listener-create target grp:instances-
+name- TCP:80-IPV4-NEXT-select the required apps-portnmber it listens to e.g8080or 80 for deocker- tick include as pending-create target- THEN CLICK Target groups-register
+
+so if we are trying to access our application, we will access it via the LB,
+
+we can check online to see if our servers were installed 
+publicIP:8080
+56:50 we v to be able to access our app server & docker server directly or our LB wont be able to route traffic 
+
+1:03 we can now copy the dns name of our lB to access our app or doecker server and it is more secured accessing our application via the LB 
+
+
 
 
 
