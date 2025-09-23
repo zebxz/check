@@ -7,12 +7,10 @@ sudo yum install ngnix
 
 
 
-INSTALL WEBSERVER(nginx), VPC, S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
-LAUNCH WEBSERVER(I bliv thats wher he installed ngnix) 
 
 
 
-ngnix is a software for webserver, http is also a software for webserver
+ *********************ngnix is a software for webserver, http is also a software for webserver
 ###2:44:00 we had to open http port80 in jumpserver for ngnix to be accessible
 he was suppose to install ngnix in the webserver bt he couldnt acess it, then realised that he put the webserver in the privateSN inatead of the publicSN, so instaed of 
 making anoda webserverSO he decided to install ngnix in the jumpserver which is in the publicSN
@@ -23,6 +21,8 @@ sudo systemctl enable httpd
 sudo systemctl status httpd
 using the ip address access apache webserver on google ,, bt we were unable so we had to open the port in inbound rule and open port80 
 http, tcp 80 , frm anywer.. save
+*************
+
 
  AWS Regions: AZs  each region has avail zones
     us-east-1 =6 [ us-east-1a, us-east-1b, ... us-east-1f  ]  
@@ -89,7 +89,18 @@ Load Balancers/webservers:
     http://3.138.178.87:80
 ==============================================================================
 
-frm pg 80
+
+
+
+START
+
+ VPC, SUBNET/ CIDR BLOCK/ ADDRESSES, S3 BUCKET CANT BE CREATED IN SUBNET, ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, 
+LAUNCH WEBSERVER(install ngnix) 
+
+
+2.00....We are talking abt vpc today, how it works and how its able to help us in our env
+
+3.53.....  frm pdf note..  pg 80
 virtual private cloud
 vpc is my isolated ntwrk within aws that i can control
 subnets are created inside our vpc
@@ -142,6 +153,10 @@ AWS ACCOUNT:
   aws ec2 describe-regions
   aws ec2 describe-regions --all-regions
 https://gist.github.com/karstenmueller/98381c897178a260be8c08f98ffe2c3e
+
+
+
+SUBNET/ CIDR BLOCK/ ADDRESSES 
 
 ###pg 80 Subnets -200 user-defined subnets up to /16, a vpc can hv up to 200 user define subnet
 the max no. of addresses a vpc is able to hv
@@ -212,6 +227,7 @@ Ticket0012:
       172.0.2.0, 172.0.2.1, ...,  172.0.2.255  
   subnet4  = 172.0.3.0/24    = 256  [ 0, 1, 2 ...,  255  ] :
      172.0.3.0, 172.0.3.1, 172.0.3.2, ... , 172.0.3.255
+
 
 
 S3 BUCKET CANT BE CREATED IN SUBNET (Because its a regional service, i can create it inside my VPC)
