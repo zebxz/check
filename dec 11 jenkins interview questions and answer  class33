@@ -836,9 +836,12 @@ from the jumpserver we can ssh into the sandbox using the privateIP
 
 
 
-AWS 7/8
-Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER
- USERDATA to install tomcat & docker for the APPSERVERS TO ACCESS THE APPLICATION VIA THE LB
+AWS 7/8                                *****HOW TO  AUTO SCALING GRP & NLB, was treated in AWS9, i dnt think NLB was treated
+Elastic Load Balancers& AUTO SCALLING GRP, LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support),  DIFF BETWEEN NLB & ALB,
+(ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER, USERDATA to install tomcat & docker for the APPSERVERS TO ACCESS THE APPLICATION VIA THE LB
+
+   ******* AWS9*****  load balancers can be either netwrk layer4 or application load balancer layer6
+
 *****1.05.16.. our main target is to acces our application via the lb
 
 tomcat script didnt install the tomcat, engr francis helped me resolve it 
@@ -956,6 +959,11 @@ SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
 
 
 
+                         ****In this video, i bliv when he says 'LB' he was referring to  'ELB' 
+                  'LB' means we are creating how service is routed by ourselves but 'ELB' is the manged service by AWS
+               ******* AWS9*****  load balancers can be either netwrk layer4 or application load balancer layer6
+            based on the AWS9 info, when am practicing hw to create LB, i see if its the same steps in both AWS 7/8, 8 & 9 videos to knw if its Nlb or ALB
+
 step2:
 CREATE LOAD BALANCERS 
 
@@ -987,7 +995,9 @@ publicIP:8080
 
 AWS 8B
 
-WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED 
+WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED, CREATING LOAD BALANCER;(HEALTH CHECK, LISTERNER/ TARGET GROUP)
+CREATE MAVEN & TOMCAT SERVERS FOR DEPLOYMENT, HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION  ie the servers, USERS ACCESS OUR BACKEND
+APPLICATION, DNS RECORDS, CREATING DOMIAN  NAME, BENEFITS OF LB
 
 
 cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
@@ -995,6 +1005,15 @@ its all building infrastruture in the cloud and managing it, like EC2 and other 
 7:51 PROFF: for any org to operate they nid to manage their applications in a container, we call the containers computers  and the computers can be owned by the company 
 or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
 cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
+
+
+
+
+   ****In this video, i bliv when he says 'LB' he was referring to  'ELB' 
+                  'LB' means we are creating how service is routed by ourselves but 'ELB' is the manged service by AWS
+           ******* AWS9*****  load balancers can be either netwrk layer4 or application load balancer layer6
+            based on the AWS9 info, when am practicing hw to create LB, i see if its the same steps in both AWS 7/8, 8 & 9 videos to knw if its Nlb or ALB
+
 
 we hv application servers wher applications ar being deployed
 18:49for traffic to be routed appriopriately, we v to do load balancing, it can be a load bal or ELS
@@ -1004,9 +1023,88 @@ the LB does 2 tins , it either accepts or rejects the REQ.. ..
 we dnt want, it will reject the reQ.... SO if it accepts it will route tracffic to the app servers running in the backend.
 
 
+WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED 
+inside the LB, WE DETERMINE How traffic will be routed .. we can create some rules, so if it accespts traffic it will route traffic based on the rules e.g if it has this 
+options route it to this particular target.......  for the lb to knw the target grp to route to , :
+rules will be deinfed, e.g we can config our backend instructing the lb dat if someon types this ip addresss on our listenere port route the traffic to the backend target grps
+it will run health cheack on the tagerts
+target groups with target 
+REQ/traffic frm users goes tru the ELB, and for the it to receive the trafic it listens with its listeners  , it listens on some ports and protocols 
+34:45 lb is like a server with  some sofware installed in it e.g if u install an ngninx software in a software in a server its an ngnix webserver, ha proxy installed in the
+the server, its an ha proxy LB 
+servers listen on protocol and ports
+48:20  we v to mk sure the webservers and app servers are up/running and healthy
 
 
 
+
+the OSI model 
+different layers   read power point script
+
+
+
+1:04:50 for us to hv content base routing, that wil tk us to application LB 
+1:24:00 CREATE LB AND THE MAVEN/TOMCAT SERVERS FOR DEPLOYMENT
+
+
+         TO ACCESS THE APPLICATION
+2:05:30 now we can access the application via our application LB.. by clicking the LB dns ,, we ar no longer using the ip add of our appserver
+when we copy this information wit the context path (maven-web-app) am able to get a respnse ie 
+
+LB DNS:   nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+LB and the context path;   http://nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com/maven-web-app/
+
+
+2:07. one limitation of ntwrk LB is that it doesnt allow more than one traget grps to be added to a particular LB
+
+users trying to talk to ----> app-Servers
+it goes tru the lb
+   users ---> elb --- > app-Servers   
+
+
+
+one of the tins that happen is DNS lookup  .. domain name servise
+the traffic frm the access by the enduser is transmitted using the elb ie elb does a dns resolution, resolve the reQ and forwards it to the right appserver
+with the dick or nslookup command i can know that if i type the LB url i can knw what the LB wil be searching for 
+e.g nslookup realfinal-cc4b5a5307424ced.elb.us-east-2.amazonaws.com ... but it didnt wrk in mobxterm .. he ran it successfully in  windows ssh client ... 2:14:00
+
+but it is not good practice to use the dns long detail information,, so we have to create a hostname called dollarways.net
+create hostname =dollarways.net
+ceate dns records: 
+so such dat anyone trying to access our lb will type dollarways.net and it will route the traffic to the appserver
+
+
+
+DNS RECORDS; we have
+a records :hostname  matches to ip adresses
+e.g phone contact record : simon .... o7034729002
+PTR records : this is the reverse wher  id addresses matches hostname
+c-name records ( are aliases)
+e.g  landmark  and the alias name is mylandmarktech
+
+
+
+2:19:50  CREATING DOMIAN  NAME
+route53- reg a domian- click get started- it prompts to search for the name u want to create-select it- checkout-next-contact type:person-name, billing info- continue & pay
+
+2:25:40
+in nxt class .. HOW TO USE LB to route traffic to multiple regions bc LB is works very well in a single region but with the help of route53, we can route to multiple regions
+2:28:00, video8a LB are used to rote traffic, does load balancing , health check, security perimeter , accepts traffic or reject traffic and if it accespts it based on some
+software routing rules whic are made possible bc of the inherent webserver sofware wich ar configured either by me if am deploying a self mgd webserver/LB bt for if its ELB ,  
+am deploying a serbice that is partly controlled by aws & by myself and its a paas, bc we dnt worry abt the underlying infrastruture ,e.g whether it nids a window infras or
+ a linus infrast  and whatever sf it nids aws manages that ,,, so we can now focus on the type of backend target to be attached , listeners  ,, we  deter them
+
+      BENEFITS OF LB
+
+1) LB is gud bc it spans accross an entire region bc it spans across an entire region and that means high availability is achieved bc i can hv my target in diff azs , ie if on 
+az is down the other ones can sustain the az that is down 
+2) LB comes with addistional benefit like redundancy bc aws creates 2servrs in 2 az  so e.g if one server goes down its automatically replaced without ur knowledge
+
+
+
+
+
+AWS9
 
 
 
