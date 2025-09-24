@@ -420,9 +420,15 @@ sudo su - ubuntu
 
 
 VIDEO 8B 
-CREATING LOAD BALANCER;(HEALTH CHECK, LISTERNER/ TARGET GROUP)
+WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED, CREATING LOAD BALANCER;(HEALTH CHECK, LISTERNER/ TARGET GROUP)
+CREATE MAVEN & TOMCAT SERVERS FOR DEPLOYMENT, HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION  ie the servers, USERS ACCESS OUR BACKEND
+APPLICATION, DNS RECORDS, CREATING DOMIAN  NAME, BENEFITS OF LB
 
-****1.31.51; A target group can hv up to 1000 targets in one target grp
+
+the course to knw hw to manage the resources hosted by AWS ,, understanding the process of managing the computing services in the AWS environment
+aWS cloud architecture/ aws solution architect
+
+
 
 ... 
 ############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
@@ -446,7 +452,11 @@ quetsion is a jumpserver an instance without an installed applicationn like tomc
 
 
 
+
 START
+
+****1.31.51; A target group can hv up to 1000 targets in one target grp
+
 
 **** 1.46.33 .... we can use the curl command to know if the server is healthy 
 ***meee***  using the ip address of serverA, we can check the health of one serverA inside serverB(il check & see if it has to be a jumpserver ie no software installed) 
@@ -458,8 +468,6 @@ its all building infrastruture in the cloud and managing it, like EC2 and other 
 or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
 cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
 
-the course to knw hw to manage the resources hosted by AWS ,, understanding the process of managing the computing services in the AWS environment
-aWS cloud architecture/ aws solution architect
 
 ?????/  is it possible to pair across 2 platforms, like a vpc in aws and vcp in gcp,,,
 ANS: if u v resources in aws &gcp, and  e.g u wnt to pair frm aws therefore, aws can be ur cloud and gcp ur onprem resorce,like anyothr onprem resource bc they ar nt in the 
@@ -528,8 +536,8 @@ http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.co
 
 
 
-
-***cont.1.33.20  we used userdata to install 2 tomcat servers
+CREATE MAVEN & TOMCAT SERVERS FOR DEPLOYMENT  (TOMCAT & MAVEN WAS INSTALLED INSIDE THE JUMPSERVER, he was just showing us that d jumpserver was unhealthy bc
+ we used userdata to install 2 tomcat servers                                        no software was installed in it bt when he installed in it, it was ok
 So in mobaxterm checking if tomcat was installed
 curl -v 18.119.105.192
 if you dnt pass any port number its curls on port 80
@@ -557,7 +565,7 @@ back in AWS , bc the jumpserver is still indicating unhealthy bt we hv installed
 
 
 1.54.00
-WE WANT TO DEPLOY AN APPLICATION AND SEE HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION
+WE WANT TO DEPLOY AN APPLICATION AND SEE HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION (ie the tomcat servers we created|)
 route tables det hw traffic flows and in the route table we can v a local route
 
 
@@ -571,7 +579,7 @@ users traffic are routed to the application servers via the lb
 
 
 
-                         USING THE JUMPSERVER (TOMCAT & MAVEN WAS INSTALLED INSIDE IT)
+                     CLONE THE APPLICATION & DEPLOY   
 so lets clone & deploy to tomcat
 this is my jumpserver & inside it iwill clone the app,   ***1.59.25,... we already installed tomcat bt its still showing unhealthy bc the tomcat port was not open in the security grp so we hv to add a security grp & open port 8080
 normally i shud be using jenkins for this
@@ -586,7 +594,8 @@ ls
 ***1.59.25,...he goes to AWs but its showing unhealthy,  we already installed tomcat bt its still showing unhealthy bc the tomcat port was not open in the security grp so we hv to add a security grp & open port 8080
 create the appserver key  for uathentication
 
-2.02.40     TO COPY TO TOMCAT SERVERS
+
+2.02.40     TO COPY/DEPLOY TO TOMCAT SERVERS
 1)to copy to the tomcat appserver; scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
 2)cp target/*war / opt/tomcat9/webapps/   
 both commands was run because
@@ -605,6 +614,8 @@ scp  -i (key name.pem )target/*war ec2-user@publicip of d app servr:/opt/tomcat9
 using scp -i, we wnt to copy the app code ie *war or file "maven web app.war in the target dir that was created when we did mvn package to the tomcat server and i am ec2user 
 bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
 then we also want to copy the *war file that was created to the webapp dir of the jumpserver ie cp target/*war /opt/tomcat9/webapps/, when i ls target/ i see d file i copied
+*******************************************
+
 
 
          TO ACCESS THE APPLICATION
@@ -634,6 +645,7 @@ ceate dns records:
 so such dat anyone trying to access our lb will type dollarways.net and it will route the traffic to the appserver
 
 
+
 DNS RECORDS; we have
 a records :hostname  matches to ip adresses
 e.g phone contact record : simon .... o7034729002
@@ -643,7 +655,7 @@ e.g  landmark  and the alias name is mylandmarktech
 
 
 
-2:19:50 CREATING DOMIAN  NAME
+2:19:50  CREATING DOMIAN  NAME
 route53- reg a domian- click get started- it prompts to search for the name u want to create-select it- checkout-next-contact type:person-name, billing info- continue & pay
 
 2:25:40
@@ -653,7 +665,7 @@ software routing rules whic are made possible bc of the inherent webserver sofwa
 am deploying a serbice that is partly controlled by aws & by myself and its a paas, bc we dnt worry abt the underlying infrastruture ,e.g whether it nids a window infras or
  a linus infrast  and whatever sf it nids aws manages that ,,, so we can now focus on the type of backend target to be attached , listeners  ,, we  deter them
 
-BENEFITS OF LB
+      BENEFITS OF LB
 
 1) LB is gud bc it spans accross an entire region bc it spans across an entire region and that means high availability is achieved bc i can hv my target in diff azs , ie if on 
 az is down the other ones can sustain the az that is down 
