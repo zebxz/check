@@ -396,26 +396,63 @@ sudo rm -rf apache-tomcat-9.0.83.tar.gz
 sudo mv apache-tomcat-9.0.83 tomcat9
 sudo chmod 777 -R /opt/tomcat9
 sudo sh /opt/tomcat9/bin/startup.sh
+
+
+docker 
+#!/bin/bash
+sudo hostnamectl set-hostname docker
+sudo apt update -y
+sudo apt install docker.io -y
+sudo service docker start
+sudo docker info
+sudo usermod -aG docker ubuntu
+docker run --name myapp -d -p 8080:8080 mylandmarktech/spring-boot-mongo 
+docker run --name hello -d -p 80:80 mylandmarktech/hello 
+sudo su - ubuntu  
 *****************************************************7/8 ends
 
 
 
 
-... 
-############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
-cp target/*war / opt/tomcat9/webapps/ ..because tomcat was also installed in the jumpserver and the appserver ,, scp-i was used to copy from the jumpserver to the appser &
-to be able to deploy we had to copy  to  the webapp dir ie cp target opt/tomcat9/webapps/  of the jumpserver bc deployment takes place in the /webapp dir
 
 
 
 
 
-VIDEO 8B            ****1.31.51; A target group can hv up to 1000 targets in one target grp
-
+VIDEO 8B 
 CREATING LOAD BALANCER;(HEALTH CHECK, LISTERNER/ TARGET GROUP)
 
+****1.31.51; A target group can hv up to 1000 targets in one target grp
 
-cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
+... 
+############ QUESTION   ...after running this , scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
+cp target/*war / opt/tomcat9/webapps/
+ANS: ***Mmeee***
+because tomcat & maven was installed in the jumpserver but we also hv another appserver where tomcat was also installed  
+so to deploy to the tomcat appserver,, scp-i was used to copy from the maven in the jumpserver to the tomcat appserver
+also inside the jumpserver we hv tomcat installed therfore to copy from the jumpserver to the tomcat in the jumpserver the cp cmmand was used ;  cp target opt/tomcat9/webapps/
+deployment takes place in the /webapp dir
+
+2.03.45
+scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/
+this command means that i want to copy my appl code in the target dir to this server as ec2user bc the key am am using is ec2user key & am copying the appl in the target dir, we can automate this with jenkins
+
+
+1:44:32 then switch to ec2-user ie come out of the shell ... sudo su - ec2-user
+QUESTION.. why do we hv to change our shell?????????????????????????????????????????????????????????????????????
+   **** me, i bliv, coming out of shell means instead of it showing ur ip ie (3.90.51.187@tomcat) when u change shell you get this:(ec2-user@tomcat)
+
+quetsion is a jumpserver an instance without an installed applicationn like tomcat, jenkins etc
+
+
+
+START
+
+**** 1.46.33 .... we can use the curl command to know if the server is healthy 
+***meee***  using the ip address of serverA, we can check the health of one serverA inside serverB(il check & see if it has to be a jumpserver ie no software installed) 
+
+
+cloud computing engr takes care of the infastructure in the cloud, establishing the right security for you vpc
 its all building infrastruture in the cloud and managing it, like EC2 and other required resources
 7:51 PROFF: for any org to operate they nid to manage their applications in a container, we call the containers computers  and the computers can be owned by the company 
 or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
@@ -465,53 +502,97 @@ This is my jumpserver instance this should nt be but let me include it in the ta
 1:29.20 ... (using userdata) created 2tomcat instance in the tesla vpc
 
 Then after connecting in mobaxterm  if hostname didnt set i will run sudo hostname tomcat
- 1:44:32 then switch to ec2-user ie come out of the shell ... sudo su - ec2-user
-QUESTION.. why do we hv to change our shell?????????????????????????????????????????????????????????????????????
-   **** me, i bliv, coming out of shell means instead of it showing ur ip ie (3.90.51.187@tomcat) when u change shell you get this:(ec2-user@tomcat)
+
 ============================
+
+create a  redhat app server and paste the install script
+
 #!/bin/bash
-sudo hostnamectl set-hostname docker
-sudo apt update -y
-sudo apt install docker.io -y
-sudo service docker start
-sudo docker info
-sudo usermod -aG docker ubuntu
-docker run --name myapp -d -p 8080:8080 mylandmarktech/spring-boot-mongo 
-docker run --name hello -d -p 80:80 mylandmarktech/hello 
-sudo su - ubuntu  
+# RedHat Server
+# Tomcat installation
+cd /opt 
+sudo hostname tomcat3
+sudo yum install java-1.8.0-openjdk-devel -y
+sudo yum install git wget -y
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz
+sudo tar -xvf apache-tomcat-9.0.83.tar.gz
+sudo rm -rf apache-tomcat-9.0.83.tar.gz
+sudo mv apache-tomcat-9.0.83 tomcat9
+sudo chmod 777 -R /opt/tomcat9
+sudo sh /opt/tomcat9/bin/startup.sh
 
 http://18.117.152.63/
-paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com
+Load balancer dns; paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.com
 
 http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.co
-1:44:40 assign hostanme & change shell
-1:46:30   we can use the curl command to knw if the target is healthy .. curl -v ip address:8080 , curl -v localhost:8080
-create a  redhat app server and paste the install script
+
+
+
+
+***cont.1.33.20  we used userdata to install tomcat
+So in mobaxterm checking if tomcat was installed
+curl -v 18.119.105.192
+if you dnt pass any port number its curls on port 80
+also he used 8080 but no response ; curl -v 18.119.105.192:8080 
+****meeee i call it using shell until i know what its call ****** so he decided to connect using shell    ssh -i key ec2-user
+ *******1.37.25.... he said he couldnt make an ssh call to the server  ..... is that what its called?
+****1.43.38 .... now inside the jumpserver
+he changed shell and when back to aws to check the target grp location of the jumpserver
+we saw the jumpserver indicated "unhealthy"
+and he said its not healthy bc we do not have anything installed in it yet like the appsrver that has tomcat installed in it
+the LB will not route traffic to an unhealthy target
+**** 1.46.33 .... we can use the curl command to know if the server is healthy 
+you can ping the server & its healthy but the health of the server depends on the fact that the port "8080" is open, so thers smt working on the port
+
+1:47:50 inside the jumpserver using curl -v public ip of the app server:8080 , he checked if the app server port number is healthy  
+**** to check the health of the jumpserver i just need to run localhost & its will also work  ***meee** using the curl-v &ip address of serverA, we can check the health of one serverA inside serverB
+curl -v localhost:8080 .....  but connection refused                                                                                         (il check & see if it has to be a jumpserver ie no software installed) 
+so he decided to install tomcat in the jumpserver   
 to know the ports that are open  ... netstat -utlpn ... sudo yum install net-tools
+back in AWS , bc the jumpserver is still indicating unhealthy bt we hv installed tomcat in it, we can now delete the jumpserver & re add it to the target grp so it can show as helathy  
 
 
 
-***cont.1.33.20
-1:47:50 inside the jumpserver using curl -v public ip of the app server:8080  inside , he checked if the app server port number is healthy  but to check the heath of
-the jumpserver he curl -v localhost:8080 ..... so i bliv using the ip address, we can check the health of one server in another server 
 
-
-
-route tables det hw traffic flows and in the route table we can v a local route
+1.54.00
 WE WANT TO DEPLOY AN APPLICATION AND SEE HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION
+route tables det hw traffic flows and in the route table we can v a local route
 
-1:49:20 install tomcat ,, to check if tomcat has started netstat -utlpn
+
+TO ACCESS OUR BACKEND APPLICATION; this is what happens
  users --->talk to --- elb --- > route traffic to --- app-Servers
-users traffic are routed to the app serers via the LB 
 
-quetsion is a jumpserver an instance without an installed applicationn like tomcat, jenkins etc
-###### 1:55:09 DEPLOY AN APP & see how LB wil route traffic to the application
-git clone https://github.com/LandmakTechnology/maven-web-application
 
-clone the app : ls we hv d application- mvn package to create the packages (inside webapp dir) :ls we v target ie d packages we creatd n we can deploy to opt/tomcat9/webapps 
+1.54.35   HOW WILL THE LB be able to identify the appservers its routing to?  remember we hv done the routing rules by the rules we hv defined
+users traffic are routed to the application servers via the lb
+*so lets deploy an application & see how lb will route traffic to the application
 
+
+                         USING THE JUMPSERVER (TOMCAT & MAVEN WAS INSTALLED INSIDE IT)
+so lets clone & deploy to tomcat
+this is my jumpserver & inside it iwill clone the app,   ***1.59.25,... we already installed tomcat bt its still showing unhealthy bc the tomcat port was not open in the security grp so we hv to add a security grp & open port 8080
+normally i shud be using jenkins for this
+in real time we will use jenkins to automate this process
+
+clone the app: git clone https://github.com/LandmakTechnology/maven-web-application
+mv maven-web-application/ mwa
+cd mwa
+ls
+1.57.00  he installed maven * all its dependencies 
+ : ls we hv d application- mvn package to create the packages (inside webapp dir) :ls we v target ie d packages we creatd n we can deploy to opt/tomcat9/webapps 
+***1.59.25,...he goes to AWs but its showing unhealthy,  we already installed tomcat bt its still showing unhealthy bc the tomcat port was not open in the security grp so we hv to add a security grp & open port 8080
+create the appserver key  for uathentication
+
+2.02.40     TO COPY TO TOMCAT SERVERS
+1)to copy to the tomcat appserver; scp-i key name.pem target/*war ec2-user@publicip of d app servr:/opt/tomcat9/webapps/ .. why do we still nid to run 
+2)cp target/*war / opt/tomcat9/webapps/   
+both commands was run because
+because tomcat & maven was installed in the jumpserver but we also hv another appserver where tomcat was also installed  
+so to deploy to the tomcat appserver,, scp-i was used to copy from the maven in the jumpserver to the tomcat appserver
+also inside the jumpserver we hv tomcat installed therfore to copy from the jumpserver to the tomcat in the jumpserver the cp cmmand was used ;  cp target opt/tomcat9/webapps/
+
+******************************************************************************
 deployment takes place in the webapp dir /opt/tomcat9/webapps/ 
-1:55:29 in real time wil use maven to automate the process......... tomcat was installed in the jumpserver
 deploy maven web app to tomcat- inside the jumpserver clone the application...in real time...  -gitclone:clone the repo-ls , we v the maven web app- rename the repo- 
 mv maven-web-application/ nwa-ls- then cd mwa- . i bliv mvn package was done to create target dir wich contains the web-app we cloned, so we can deploy
 inside maven web app dir ie nwa , we wnt to create packages we can be able to deploy - mvn pakage :to create package (sudo yum install maven -y (it installs maven & all
@@ -533,7 +614,9 @@ t
 users trying to talk to ----> app-Servers
 it goes tru the lb
    users ---> elb --- > app-Servers   
-HOW WILL THE LB be able to identify the appservers? by the rules we hv defined
+
+
+
 one of the tins that happen is DNS lookup  .. domain name servise
 the traffic frm the access by the enduser is transmitted using the elb ie elb does a dns resolution, resolve the reQ and forwards it to the right appserver
 with the dick or nslookup command i can know that if i type the LB url i can knw what the LB wil be searching for 
@@ -544,12 +627,15 @@ create hostname =dollarways.net
 ceate dns records: 
 so such dat anyone trying to access our lb will type dollarways.net and it will route the traffic to the appserver
 
+
 DNS RECORDS; we have
 a records :hostname  matches to ip adresses
 e.g phone contact record : simon .... o7034729002
 PTR records : this is the reverse wher  id addresses matches hostname
 c-name records ( are aliases)
 e.g  landmark  and the alias name is mylandmarktech
+
+
 
 2:19:50 CREATING DOMIAN  NAME
 route53- reg a domian- click get started- it prompts to search for the name u want to create-select it- checkout-next-contact type:person-name, billing info- continue & pay
@@ -572,6 +658,7 @@ az is down the other ones can sustain the az that is down
 MY TS EXPERIENCE: I tried installing tomcat with user script ie pasting installation script while launching an inatance but it wasnt working, and the target grp kept
 indicating unhealthy bc d https link to install tomcat wasnt the latest version, so i had to google tomcat download and tcopy the correct https link  
  https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.zip
+
 
 
 
