@@ -529,13 +529,15 @@ http://paypal-nlb-e6f6ecdfc53d90c0.elb.us-east-2.amazonaws.co
 
 
 
-***cont.1.33.20  we used userdata to install tomcat
+***cont.1.33.20  we used userdata to install 2 tomcat servers
 So in mobaxterm checking if tomcat was installed
 curl -v 18.119.105.192
 if you dnt pass any port number its curls on port 80
 also he used 8080 but no response ; curl -v 18.119.105.192:8080 
 ****meeee i call it using shell until i know what its call ****** so he decided to connect using shell    ssh -i key ec2-user
  *******1.37.25.... he said he couldnt make an ssh call to the server  ..... is that what its called?
+1.38.49.... lets hv a break, ill try to check on this
+we came bk he clsed the server that was nt responding & went to the jumpserver
 ****1.43.38 .... now inside the jumpserver
 he changed shell and when back to aws to check the target grp location of the jumpserver
 we saw the jumpserver indicated "unhealthy"
@@ -566,6 +568,7 @@ TO ACCESS OUR BACKEND APPLICATION; this is what happens
 1.54.35   HOW WILL THE LB be able to identify the appservers its routing to?  remember we hv done the routing rules by the rules we hv defined
 users traffic are routed to the application servers via the lb
 *so lets deploy an application & see how lb will route traffic to the application
+
 
 
                          USING THE JUMPSERVER (TOMCAT & MAVEN WAS INSTALLED INSIDE IT)
@@ -603,13 +606,16 @@ using scp -i, we wnt to copy the app code ie *war or file "maven web app.war in 
 bc d key am using is ec2user key and in tomcat we deploy in /opt/tomcat9/webapps/ dir
 then we also want to copy the *war file that was created to the webapp dir of the jumpserver ie cp target/*war /opt/tomcat9/webapps/, when i ls target/ i see d file i copied
 
+
+         TO ACCESS THE APPLICATION
 2:05:30 now we can access the application via our application LB.. by clicking the LB dns ,, we ar no longer using the ip add of our appserver
 when we copy this information wit the context path (maven-web-app) am able to get a respnse ie 
 
-   nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
-   http://nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com/maven-web-app/
-t
-2:0>7 one limitation of ntwrk LB is that it doesnt allow more than one traget grps to be added to a particular LB
+LB DNS:   nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com
+LB and the context path;   http://nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com/maven-web-app/
+
+
+2:07. one limitation of ntwrk LB is that it doesnt allow more than one traget grps to be added to a particular LB
 
 users trying to talk to ----> app-Servers
 it goes tru the lb
