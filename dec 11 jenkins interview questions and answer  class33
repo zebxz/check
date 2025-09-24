@@ -832,11 +832,12 @@ from the jumpserver we can ssh into the sandbox using the privateIP
 *****everything ended here with the sandbox
 
 
+i think NLB was treated in video 7/8 & 8
 
 
 
 
-AWS 7/8                                *****HOW TO  AUTO SCALING GRP & NLB, was treated in AWS9, i dnt think NLB was treated
+AWS 7/8                                *****HOW TO  AUTO SCALING GRP & NLB, was treated in AWS9,i think NLB was treated in video 7/8 & 8
 Elastic Load Balancers& AUTO SCALLING GRP, LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support),  DIFF BETWEEN NLB & ALB,
 (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER, USERDATA to install tomcat & docker for the APPSERVERS TO ACCESS THE APPLICATION VIA THE LB
 
@@ -963,6 +964,7 @@ SG: SSH TCP 22, HTTP TCP 80, ALL TCP , TCP from anywher 0.0.0/0
                   'LB' means we are creating how service is routed by ourselves but 'ELB' is the manged service by AWS
                ******* AWS9*****  load balancers can be either netwrk layer4 or application load balancer layer6
             based on the AWS9 info, when am practicing hw to create LB, i see if its the same steps in both AWS 7/8, 8 & 9 videos to knw if its Nlb or ALB
+                  *****HOW TO  AUTO SCALING GRP & NLB, was treated in AWS9,i think NLB was treated in video 7/8 & 8
 
 step2:
 CREATE LOAD BALANCERS 
@@ -994,10 +996,18 @@ publicIP:8080
 
 
 AWS 8B
-
+                                             i think NLB was treated in video 7/8 & 8 & ALB was in video 9
 WHAT DETERMINES HOW TRAFFIC ARE ROUTED AND WHEN SHUD TRAFFIC BE ROUTED, CREATING LOAD BALANCER;(HEALTH CHECK, LISTERNER/ TARGET GROUP)
 CREATE MAVEN & TOMCAT SERVERS FOR DEPLOYMENT, HOW THE LB WILL BE ROUTING TRAFFIC TO THE BACKEND APPLICATION  ie the servers, USERS ACCESS OUR BACKEND
 APPLICATION, DNS RECORDS, CREATING DOMIAN  NAME, BENEFITS OF LB
+
+
+the course to knw hw to manage the resources hosted by AWS ,, understanding the process of managing the computing services in the AWS environment
+aWS cloud architecture/ aws solution architect
+
+2:25:40
+in nxt class .. HOW TO USE LB to route traffic to multiple regions bc LB is works very well in a single region but with the help of route53
+
 
 
 cloud computring engr takes care of the infrastrure in the cloud, establishing the right security for you vpc
@@ -1006,13 +1016,6 @@ its all building infrastruture in the cloud and managing it, like EC2 and other 
 or 3rd party, if its owned by the cop ,its called on prem infrastruture bt if  they choose to rent servers, an entire networking envi , data bases etc then that is what 
 cloud computing  is all about, so if the cop decides to rent, u nid to v an indept understanding of hw all that is able to work 
 
-
-
-
-   ****In this video, i bliv when he says 'LB' he was referring to  'ELB' 
-                  'LB' means we are creating how service is routed by ourselves but 'ELB' is the manged service by AWS
-           ******* AWS9*****  load balancers can be either netwrk layer4 or application load balancer layer6
-            based on the AWS9 info, when am practicing hw to create LB, i see if its the same steps in both AWS 7/8, 8 & 9 videos to knw if its Nlb or ALB
 
 
 we hv application servers wher applications ar being deployed
@@ -1041,6 +1044,13 @@ servers listen on protocol and ports
 the OSI model 
 different layers   read power point script
 
+
+
+****In this video, i bliv when he says 'LB' he was referring to  'ELB' 
+                  'LB' means we are creating how service is routed by ourselves but 'ELB' is the manged service by AWS
+           ******* AWS9*****  load balancers can be either netwrk layer4 or application load balancer layer6
+            based on the AWS9 info, when am practicing hw to create LB, i see if its the same steps in both AWS 7/8, 8 & 9 videos to knw if its Nlb or ALB
+                                          i think NLB was treated in video 7/8 & 8 WHILE ALB was in video 9
 
 
 1:04:50 for us to hv content base routing, that wil tk us to application LB 
@@ -1103,12 +1113,260 @@ az is down the other ones can sustain the az that is down
 
 
 
-
 AWS9
+CREATE REOCORDSET/HOSTED NAME USING DNS, TO ACCESS THE APPLICATION, CREATING APPLICATION LOAD BALANCER, CREATING ALB,HOW TO ACCESS OUR MULTIPLE APPLICATIONS 
+ CREATE A RECORDS & DEFINE RULES, HOW TO ENCRYPT DATA, REQ CERT FRM AWS/TO VALIDATE THE CERT, SSL REDIRECT, STICKY SESSIONS, CONFIGURING SESSION TIME, 
+HW CAN WE AUTO SCALE TO ACHIEVE FULL AUTOMATION, TO MK A SERVER HIGHLY AVAILABLE, CREATING A LAUNCH TEMPLATE FROM THE SCRATCH WITHOUT AN AMI, 
+SECURITY OF VPC/ROUTE TABLE ACTS AS A SECURITY MEASURE 
+
+
+video9,,  READ UP ADV OF LB,HEALTH CHECK , SECURITY
+####1:54:56 by default, LB route traffic to a single region, so for it to route traffic to multiple regions we v to INTEGRATE ROUTE53
+
+
+
+ELS is better than LB because we dnt bother abt the conf, avil,,, someone manages that for u 
+ELS falls under Paas,,, routing trafic to backend application servers, we dnt v to worry abt installing softwares, load balancing softwares etc
+load balancers can be either netwrk layer4 or application load balancer layer6
+with the help of the target grps we ar able to route traffic to the applica
+the loasd bal runs /performs health check
+LB makes use of listener,, LB is all about ports,, it listens on ports/protocols
+users makeS rEQ like http get reQ, post reQ, delete  REQ
 
 
 
 
+CREATE RECORD SET/HOSTED NAME  USING DNS
+16:20   dominionapps.net --- myALB-178479865.us-east-2.elb.amazonaws.com/
+this is creating  record set using DNS, wich means that  .. webapps.dominionapps.net equals  --- dominionapps.net = nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+NLB:  nlb1-7f9e896ea7e69c2b.elb.us-east-2.amazonaws.com 
+sub domian : webapps
+this is domain name ---    dominionapps.net
+
+************** steps- create domain name - create hosted zones- then access it on the browser
+
+
+we search for the dns name in the region it ws created
+******17:57 TO CREATE RECORD SET/hosted name
+Hosted route -create record-recordname:to create a sub domain if u like e.g if u chooose a sub name as pay then uLL v,:pay.dominion.net-alias:select alias to 
+netwk-select NLB region- select dns- create.
+
+
+TO ACCESS THE APPLICATION 
+the application we cloned is /maven-web-app  so , ==http://webapp.dominionapps.net/maven-web-app/ 
+
+22:17 CAN WE USE ONE NLB FOR MULTIPLE APPLICATION ? ... NO
+NLB goes with tcp protocol and its layer4 support also it  has one/single target grp
 
 
 
+                               
+**** 27:17 CREATING APP LOAD BALANCER .. protocol is http or https
+ 
+
+        CREATING ALB
+****** With the step below indicating 'select ALB,  Bliv he's creating ALB
+
+he used only / ,, bc it wasnt accepting /maven-web-app
+32:12 all our applications are running in virtual private cloud ,, just a free comment
+**select ALB- name-internt facing- ipv4-select vpc: az- SG:443,80, ie the ports users can access our appserver frm,outbound:all traffic- listeners 80- create target grp:name-
+protocl:http or https 80-select vpc-version:http1- health check :http- heath path : /maven-web-app - tick targets-8080- inclue-create-back to creating NLB: select target-grp
+41:39 we can add anoda listener e.g 8080 & create anoda target grp for the listener- create 
+ ie /, makes,  ..webapp.dominionapps.net/ .. the root path to access d application and we can run health check on the root path also webapp.dominionapps.net/maven-web-app, 
+37:00 so we can run health check like dis " /maven-web-app, checking if the application is running 
+further explanation, when we run curl -v localhost:8080 , this is d root path bt we can stil do dis curl -v localhost:8080/maven-web-app,so we can do/add dis /maven-web-app
+when configuring the health check and it will check it when we run it .... he used only / ,, bc it wasnt accepting /maven-web-app
+
+**** 42:53 create more target grps- now we hv multiple target grps, 1st  port80, targets: app1/jump, 2nd port80, app2,  but 3rd was 8080 all 3targets, 
+the target grps
+webappTG]
+ tdapp              
+ myApp              
+
+
+***45:13 back to Alb. copy dns we can add /maven-web-app ,,when we paste it in D browser, we can see it routing traffic& when we refresh d browser we can see dif ip adreSes
+
+we cant give cx the NLB dns so to use d domian name created go to 
+*******route53-hosted names- recordname or leave it blank- select alias to appl & classic-region-select Alb dns-
+createthen with the name created we add the pathh to the application ie /maven-web-app and when we paste in the browser, we can access the application
+
+
+53:45  HOW TO ACCESS OUR MULTIPLE APPLICATIONS 
+
+OUR APPLICATIONs & target grps 
+applicationS        TargetGroupS
+ maven-web-app      [webappTG]
+ tdapp              [TDappTG]
+ myApp               PayPalappTG
+
+
+CREATE A RECORDS & DEFINE RULES
+so we can create a-Records and define rules 
+e.g if someone types dominionapps.net ,, then ...
+Rule: .. bc ALB gives us this option  AND WE can route traffic based on  host and path  but we are using host here 
+ HOST
+dominionapps.net          ---Forward TO: webappTG
+  td.dominionapps.net       ---Forward TO: TDappTG
+  pay.dominionapps.net      ---Forward TO: PayappTG
+
+we are using the same ALB to route traffic to all the domain
+**** CREATE 2recrd setsthey are ALB plus the NLB we created earlier so dats 3 in total - region the same 
+WE CAN ALSO EDIT Record set e.g for the NLB  record set where we selected "alias to netwk, we can change it to alias application by ticting the record set n edit it
+*****TO decide how traffic shud be route
+
+leave this,, (go bk to LB- SCROL DOWN & click view/edit - (GROup level stickyness is off) we can up click edit - also we can add a rule 
+click on + -ADD conditios-drop box:hostheader and paste :td.dominionapps.net -tHEN:select D target gr :TDAPPTG & save ,now if trafic comes to td.dominionapps.net it
+wil route d trafic to TDAPPTG we do the same for all 3 
+(#### we were getting 502 bad gateway when we paste the domain hosted name in the browser: if its not working, confirn that the targets created in the target grps are healthy
+
+continue here .. #### he went back to the ALB, deleted the listerner and click add listerner-http 80-add action:forward- select all the target grps- add 
+*****go bk to LB- SCROL DOWN & click view/edit,,, 
+1:18:00 here we can insert 2 types of rules : either the host header or the path 
+e.g if we v multiple application, using path option :td.dominionapps.net/pay  or td.dominionapps.net/td or td.dominionapps.net/maven-web-app
+########the rules didnt work,when he typed the rule in the browser it was 502 bad gateway - only the routing done by adding all the targets grps in the  listeners worked.. 
+when we typed the domain hosted name in google 
+
+
+MAN IN THE MIDDLE ATTACK someone was asked in an interview... the protocol we use to access information is very  imp
+1:19:12 when tryig to route traffic, in the browseer, it says ur connection to this site is nt secure...  we ere using http protocol
+he typed td.com and we could see the lock bc it is https ich is secured
+1:20:4 when e type https, it gives us option for what is called ssl, secured layer, or tls ,ssl& tls termination 
+for secured protcol, port 443 is used for https, cop dnt use http to transmit their content bc its nt secured n ALB supports ssl & tls termination.
+data/inf from endusers wil go tru encryption process, it wil b encrypted or coded
+
+
+
+HOW TO ENCRYPT DATA
+by using some sf  called certificates, it hides the data, so if someone trys to hacked the account he wil only get garbage.. 
+issued by certified certificate authorities, certificates are used for ssl termination
+when users type info its encrypted bt when it gets to the coy its decrpted.... just free talk .. lb is part of our internal infrastruture
+traffic frm users to the LB is encrypted therefore, so we nid to configure ssl termination for secured trafic using certificate.. we nid ssl/tls certificate
+der sr some many certificate issuing coy we can use, we can use multiple csertifictae isung coy
+e.g aws certificate manger to create certificate
+when the info gets to our LB its decrypted by the LB, so we nid to ensure that the by users access our website via a secured protocol using certificate mangers
+1:27:0 in aws, we hv AWS certificate manger
+certificates from other coy can be imported and used in aws
+
+***********1:27:3 REQ CERT FRM AWS.......... it will reQ for a domain name, it has to be ur coy domain name that u hv access to 
+seach- certmanger-req cert- req pub-next- domain name: we can list the domain name,or \the sub domain names e.g  dominionappas.net,pay.dominionapps.net, or*dominionapps.net
+and * represents all the sub names we v- dns validtaion-req. 
+
+********* TO VALIDATE THE CERT  if ur the owner create(cname record set)
+tick the cert domain name n click on it - creatre record in route 53-create
+
+**** add listener- https:443-default cation:we can select redirect or forward, we selected forward- select target grp-we can add action bt he didnt -default ssl/tsl: 
+we can import, or select ACM,iam,, we select ACM- selsct the certificate we just created in AWS-add- view listeners
+now we can see the certificate routing traffic to our webapp
+now we can move  http://dominionapps.net/ to https://dominionapps.net/..... this is now a secured way of transmitting our data ,, this is ssl termination
+*******is asked in INTERVIEW TO ,,, EXPLAIN UR XPERIENCE WITH SSL/TLS CERTIFICATE
+BY USING AWS MANGER, WE ENSURE THE TRAFFIC WE TRANSMIT IS HIGHLY SECURED 
+
+
+********* SSL REDIRECT
+IF ENDusers are try to access application from an unsecured protocol ie http
+we can do ssl redirect ie http to https by adding condition/rule
+1:40:55 ******** (go bk to LB- SCROL DOWN & click on http:80 rules -view edit rules- edit, it the pencil upthen edith one of the rules  -ADD conditions-drop box:hostheader
+and paste dominonapp.net -action:redirect:443...convertin an unsecured traffic to a secured traffic, so if u type http://dominonapp.net , it will automatically redirect d 
+traffic 
+
+PLACING LB in the frontend gives more security to the backend & we also mk use of managed LB services in AWS like ELS which gives us more options to integrate in our process
+of application deployment 
+
+ASG, auto scaling grp /LC, LAUNCH CONF/LT, launch template
+
+
+STICKY SESSIONS
+48:12 TO ENSURE A CX FINISHES HIS TASK ON THE SAME SAME BACKEND SERver
+1:45:25 ensuring that cx are only logged out in idling time and not at all times, we can use sticky session/stickyness to prevent that 
+when hes asked for his login details again bc he has been redirected to anoda server , it means stickyness is off
+
+******CONFIGURING SESSION TIME ,, when a user connects 
+click target group-attribute:edit-tick stickness:we can select 5min,meaning if u ar on dat server u cant be moved to anoda server during dat time,bc u ar actively connected.
+to that backend server, save changes - it refused to save , so he - go bk to LB- SCROL DOWN & click on http:80 rules -view edit rules- edit, it the pencil upthen edith d rule 
+assocated with the target group we are enabling stickness for - delete d previously created rule- add action:forward to- grp stickness:5miden-update ..we do the same for all 
+the rules associated with the target grp e.g if we created hhtp:80 or https:443 rule for the target grp we ar enabling stickines on..
+
+####1:54:56 by default, LB route traffic to a single region, so for it to route traffic to multiple regions we v to INTEGRATE ROUTE53
+
+
+
+####1:56:18  HW CAN WE AUTO SCALE TO ACHIEVE FULL AUTOMATION
+ALL ALONG WE V BEEN creating our target grps manually, for e.g if ders a spike in one of the target grps and the targets can no longer carry d load and we nid nid to add 
+more targets , we can add manually but we can also automate the process,, equally, if der is downtime,we can also deregistr some targets .
+**** we can automate using autoscaling
+2types.. horizontal & vertical scaling
+******e.g of horizontal ,,we v a t2 large server dat has 8GB & WE convert/change it to T2XLARGE ,,, now d T2large disappears completely &we ar left with T2X ,
+ALSO, if u had 2 t2large servers 200GB each, then u add another 2t2large servers with 500GB ,, it is also horizontal scaling 
+ e.g of vertical scaling .. from T2 large with 200gB to T2large with 500GB.. MOVING TO LARGE CAPACITY SERVER, its tha same sever bt increased in size
+SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
+
+2:03:53 READ THE SCRipt on telegram ... EC2 autoscaling 
+benefits... cost mgt etc
+when u manually provison ur infrastructure withot any autoscaler, the tendency is dat u wil spend more..... read it up
+
+********HW auto scaling works ...... was able to see the auto scaler creating instances when we deleted some instances, its using the launch template
+in ths appservers u creat saling policy , u ar saying u nid a minimun of a appservers,max100
+appServers:
+Scaling Policy
+  Minimun  = 2
+  Desired  = 2
+  Maximum  = 100
+
+we can increasr our server base on either CPU usage or men usage e.g 
+ add instances if:
+  cpu usage > 75% or    
+  mem usage > 80%
+
+**********1. Create a Launch configuration  ..............  readup all the script
+   Create a Launch Template , dis is  anew generation of launch configuration 
+2. Use your Launch Template to create your Auto Scaling Group  [ASG]
+3. The auto Scaling group will create the Desired/required number of servers 
+   using Scaling Policy and the Launch Template 
+##### this policy wil create the minimum number of severs ie 2
+
+
+2:17:00  TO MK A SERVER HIGHLY AVAILABLE
+*****instances- select server- OPEN IT;ACTION:IMAGE& TEMplate:create template- nameversion:1- tick providing guidance, he unticked it,he wil do d autoscaling later-broese
+more amis-tick the machine image used to ccreate our server-confirm changes.-manually select instance type-(d key,SG, everytin has prepopulated)-tag-create launch template.
+2:18:33 in action of the template we jst created, i can select create auto scaling grp, 
+also i can go to auto scaling grps-create auto scaling grp- name-launch template:select the template we created/want-nxt- the same vpc-select all d AZ, ie d autoscaler can
+launch server in any of the AZnxt- we can attach to LB- it can also perform health check-nxtgrp size 2,2,200 - scaling policy:target tracking:70 ie if d avg cpu utilization 
+exceed 70% it shud either ad more inatances or reduce instances- nxt- we can do sms notification -nxt add tag-nxt-create- 
+2:23:21 the launch template has been created
+now the auto scaler is updating capacity,and when we shut down the instances we already created, we can see that the autoscaler hv created instances to replace the one we 
+shut down.
+
+*****2:27:32  CREATING A LAUNCH TEMPLATE FROM THE SCRATCH WITHOUT AN AMI... (we wnt to use it to create and launch tomcat)
+I nid a launch template bc when d autoscaler is been trigger the launch tem conatains default confi, the way i wnt d instances cofigevrytin is defined in the launch template
+
+********LAUNCH TEMPLATE-name- vers:1- can use or nt use source template-machine - browse:redhat linux8-iam freetier-t2 micro-key-ntwrk can be included or nt-SG-
+Advance:paste script-create- auto scaling grp- name :tomcat app ASG-launch temp-
+select temp- vers:1- select vpc- all AZ-NXT- we can attach LB & if we do, we v to choose Targt grp n he did- nxt- 
+1,1,1- policy:appl load targ REQ, IF the target value is 5000 ie if our target is receiving an avg of 5000 req add more instances-scaling policy:none-nxt- creat autoscaler.
+so when we check, we can see the autoscaler creating the tomcat server
+*******2:34:37  when coy ar creating their autoscaling grp they mk use of golden amazon machine image  ... AMI
+WE USE AMI to launch inastances and it comes with operating system like ubuntu,redhat,windows but
+AMI conatins the default AMI plus other configurations like e.g the configured  
+
+
+
+security of VPC........ ROUTE TABLE ACTS AS A SECURITY MEASURE 
+2:46:30 route tables det hw traffic flows and in the route table we can v a local route e.g our vpc  10.0.0/24 SUBNET1has 10.0.0.0/25 , & Subnet2 has 10.0.0.28/25 , in the 
+route table i want to define hw traffic will flow in sub1 so i v a rout tbale that wil route local & internt traffic and anoda table dat route only local traffic.. sub1 
+WHER we v ELB/webser is permited to receive trafic so it has local traficfic 10.0.0./24 ^ internet traffic 0.0.0.0/0 ,, sub2 with app serv is nt permited to receive intent
+trafic dat means the route table hasonly 10.0.0/24 .. therefor the ROUTE TABLE ACTS AS A SECURITY MEASURE ,,.. BC since this subnet is assocaite with the route table without
+internet, thers no way it can receve internt traffic .... now for internet to get into sub1, we v to create igw and attached to the vpc,, also we creat the NAT gateway in the
+public sub. ie sub wit route to d internt,, with d NAT, resources in the private subnetcan v internt access.. bt since we ar mostlt launching servers we nid ELB, Auto scaling
+grps, launch template even targets and we provison our resources inside our vpc/netwrk 
+also a coy can v more than one vpc so to est a private connection btw 2vpcs, we can use vpc peering 
+for multiple vpc and unprem/insiteinfrasture, to ensure 
+unprem servers ar able to taklk with our servers in the cloud, we can use vpn, or aws direct
+
+??????#### some said he was aske din the interview hw he (d interviewer) gave e.g of xray hw do ur private subnet to d outside , hw do u configure that& he told him vpn bt
+at the end he asked theinterviwer what he wud do and he told him endpoint 
+*** prof wil xplain hw to use vpn endpoint and relational endpoint e.g when a database is crsated ina  private subnt and u wnt ot access it in a dif envir like a kubenetes
+cluster then u nid the endpoint of the database
+
+????if i create an account in a server n der are many servers and nxt time am in another server, is der a way to replicate all the data that is on the first server to this 
+present server, ie concerning LB.... prof yes ders a replication process , once an application ar captured,once u access an applica u v d option to write data into the
+application n ders  genearallyy a data base stuff we look at once we get into docker , hw to use databases n mk our life a little more easy.
