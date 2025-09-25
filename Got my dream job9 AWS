@@ -49,7 +49,6 @@ snapshot is a replica of your database, its a backup therefore if account1 is ha
 SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
 so am proud of this project
 
-
 AWS 8B
 we hv application servers wher applications ar being deployed
 18:49for traffic to be routed appriopriately, we v to do load balancing, it can be a load bal or ELS
@@ -69,3 +68,26 @@ to end exercise is been achieved seemlessly wit relative ease.
 
 
 
+in my env, AWS is our Cloud Service Provider we use aws services based on the needs of the company 
+diff coy wil use asw services based on task they ar trying to accomplish
+For our cloud solution which is Based on the need of our company , we thank advantage of the diff computing service/resources provided by AWS including; 
+ec2 / eks elastic kubernetics serv / ecs elastic container services / IAM, identity & access mgt / route53 / elb , AWS STORAGE SOLUTION like ebs elastic block storage, and using the root file system we can create mount point and attach 
+block storage to our servers to expand/increase our storage size as required (from my command line i can type "list block command" where we hv our root file system.), also; we hv / efs ie elastic file storage,
+/S3 bucket ie object storage,data can be stored in buckets
+IF YOU CREATE FILES AND and store it in EFS/EBS, the files cannot just become accessible online  but with s3, i can store a file and its immediately accesible by anybody around the world. Also we have /SHARED Storage/ LAMBA FUNCTIONS/
+DISASTER RECOVERY; of which we carried out a project as a diaster recovery measure , where we have our database servers running in account one but backedup in account 2 ( which is our diaster recovery 
+account, so our database servers are backedup incase thers a disaster.
+ So what we did is We created a snapshot lifecycle policy using Lambda  which creates sonapshots from our databases from account1 in account2
+snapshot is a replica of your database, its a backup therefore if account1 is hacked, we already hv everything in account2 so we are able to recover from account2 
+SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
+so am proud of this project
+Also for our application servers wher applications ar been deployed we ensure that traffic is routed appriopriately, we v to do load balancing, with ELB/NLB/ALB
+WE require a software wich helps us achieve load balacing with relative like ngnix
+LB is gud bc it does health check, security perimeter, accepts traffic or reject traffic & it spans accross an entire region cos with the help of route53, we can route to multiple regions & that means high availability is achieved.
+Furthermore, security is inherent in our environment , WE DNT ALLOW DIRECT acces in our db server, if u wnt to acces it u v to go tru our 
+jump sevrer. traffic goes to the jummpsever bc it has a security grp dat is permitting the trafic, it allows trafic on port22 so  in d
+ SG 22 is open for members of the team & my vpc 10.0.0.0/24,i.e my ip. so my ip & port22 ar d two access  
+the jumpserver acts as the entry point when it comes to ssh access,  frm d jump server u can access the app/ db servers,so any server in the vpc can be accessed
+via the jump server
+
+ 
