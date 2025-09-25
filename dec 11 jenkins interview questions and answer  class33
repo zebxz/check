@@ -1389,47 +1389,30 @@ application n ders  genearallyy a data base stuff we look at once we get into do
 
 
 
+
+
+
 AWS 10 & 11
 
 didnt practice this video
 
-IAM USERS , POLICIES , etc
+IAM USERS , POLICIES , MANAGING INFRASTRUCTURE, HW CAN THESE RESOURCES BE MANAGED, CREATING A VPC USING Terraform, Access management, CREATE IAM USER,  RUN TASK IN CLI, GRANT & RESTRICT ACCESS, 
+I MANAGE MY AWS RESOURCES DIRECTLY WITHOUT CONNECTING TO ANY SERVER THAT HV CREATED IN AWS, USE CLI TO LIST CONTENT OF S3
+
+
 
 UDEMY VIDEO
 
 
+video 10&11
+if u are to xpalin cloud computing and ervytin dt is involved to it , wev bin able to realisee der ar certain elemrnts to that effet wich we can discuss wit relative ease when
+cloud computing is involved...also talking abt cloud and their terms of org or levaraging their resources by a 3rd party ie using a 3rd party infrastructure and those 3rd parties
+in computing languages we call dem  called cloud computing providers and dey can provide ntwrking sevrvices, database services,server services,compute serv... & dis ser ar imp
+to tk note of when it comes to the diff element of cloud computing  our converstion v genral tailored towards that direction n all wev delibrated on is to ensure that end
+to end exercise is been achieved seemlessly wit relative ease. 
 
 
 "###############the diff aspect we hv been able to cover.......... read up cloudcomputing script
-1. aws cloud computing
-
-What is Cloud Computing ?
-Cloud computing is the delivery of computing services—including 
-  - servers,
-  - storage,  
-  - databases, 
-  - networking, 
-  - software, 
-  - analytics, 
-  - and more
- over the Internet (“the cloud”)  hosted at a remote data center managed
- by a cloud services provider (CSP).
-   CSP = aws, GCP, Azure, alibaba, vmware, salesforce, oracle, ibm, 
-
- aws cloud = 
-  - servers,  e.g    = ec2 instances  
-  - severless, e.g   = Lambda functions,
-  - storage,         = ebs, efs,elastic file system, s3, 
-  - databases,  when we get into conatiner     = rds,relational databases e.g [ mySQL, mariaBD, posgressSQL, arura,  ], nonRDS[ dynamoDB,  ]
-  - networking,  = vpc, creating private ntwrk in aws
-  - software,   to create ec2 instance we nid a sfware to create the server resources = ami, SDLC, hw to automate task in aws
-  - analytics,  hw to analyze waht is happening in aws = CloudWatch, 
-  - and more  
-  - security     =aws security services 
-
-  Netflix = entirely run on S3  bucket, jst one service of aws is makn the coy a multi time billion coy
-wit the help of cloud computing u can easily become a millionaire frm the comfort of ur room if u understand a few of these services
-
 
 21:19  ...IAM = identity and access mgt
 =====================
@@ -1466,7 +1449,300 @@ also using Commands = CLI  = aws s3 ls :
    it can't be version controlled  
 
 
+ ########## THE BEST OPTION .....we can also use IaC and we r going to see d dif level of automation it brings to d table  = codes    = files  = IaC / Terraform  :
+   IAC wil cover terraform, we can use a tool called terraform, wit terform i can create a file,, e.g i can wrote  asimple teraform code to create vpc
+   It is not Prune to errors 
+   saves time  
+   Visibility is very easly  
+   great automation - 99%  
+   It can be easily replayed [dev/stage/prod]
+   it can be version controlled   
+****** IN OUR ENviron, we use all GUI, CLI and IAC, BUT WE  mostly manage infrasture using infrastructure as a code 
 
+34:25 #########CREATING A VPC USING Terraform but he didnt really go deep 
+
+resource "aws_vpc" e.g i want to create a vpc for tesla  "tesla-dev" {
+  cidr_block = "10.10.0.0/24", i wnt to crate a vpc wit 200ip addreses
+  instance_tenancy = "default"
+  tags{               ie creating a tag name e.g tesla-fe
+    Name = "tesla-be"
+    Environment = "dev"
+  }
+}
+  
+
+THE QUESTION IS 
+if u have a terafform like dis , can i use the same file to create vpcs in other environments ?????
+i can easily use dis same file in d stage environment, it can be easily replayed or reployed in the dev,stage &prod, i can version control the file using git wit dif branches
+ie in the script ill change the environ from dev to stage or prod
+
+resource "aws_vpc" "tesla-stage" {
+  cidr_block = "10.10.0.0/24"
+  instance_tenancy = "default"  ... hw do we wnt the tenancy to look like , it can be default or dedicated bt if u dnt put default, its going to still choose default
+  tags{                    
+    Name = "tesla-fe"
+    Environment = "stage"
+  }
+}
+=========================================
+
+
+Team members can manage resources using the console, cli or IaC.
+However for that to happen  there must be authenticated and authorise    
+
+IAM: in AWS , This is a key security service in aws used for  
+     authentication  and 
+     authorisation for Engineers and other team members to run different tasks. 
+ aws-account: U CAN ACCess aws account as a :
+   root-User =   
+   IAM-USER  = 
+changing from vpc to the IAM  dashboard it changes frm ohio to global
+
+vpc= regional and IAM is global 
+
+
+ACCESS MGT
+Access management: can be accessed to 
+  IAM User groups = we can hv a grop for and assign policies to grps
+    managers [AdminAccess] , ie managers can do evrytin
+    developers, [VPCREADACCESS, S3FULLACCESS, EC2READACCESS ] therfore e.g he can launch ec2 instances ,so d developer must conact the manger or james bc they hv full access
+    Engineers [VPCFULLACCESS, S3FULLACCESS, EC2FULLACCESS]   
+  IAM Users       = simon [VPCREADACCESS] , class33, James[VPCFULLACCESS]   
+  IAM Roles
+ policy is an object in aws that define permission
+  IAM Policies - are Permissions that can be assigned to users/groups/IAM-Roles
+               e.g of policy can be : 1. VPCREADACCESS / 2. VPCFULLACCESS  
+
+Ticket00133:
+  Create iam user account access for; Class33, Simon and James  
+  Create user-group access for; managers and developers & Engineers
+  Assign admin access to the managers group    
+  assign VPCFULLACCESS, S3FULLACCESS, EC2FULLACCESS to the Engineers group
+  Add Simon to the manager's group  
+  add james to the developers group  
+  Assign EC2READACCESS to class33 user   
+
+*******59:000 CREATE IAM USER
+****IAM create user-name -provide access:if i dnt tick it d user cant come to aws axccount, he can only access aws resources tru the console or cli ,iaC- USER TYPE:IAM -
+CUSTOM pass-user must neww pss:untick-nxt-add uyser to grp- CREATE
+when we logged the user in he it indicated u are nt authorixed to....
+
+***** name:class33-tick provide acess-pass-nxt-add user grp-create
+
+********for anoda user james .. name - unctick provideb console accss-add user grp- we can also attach policy directly-nxt-create
+*******user grps-name:managers-,add usr:tick simon- tick admin aces- creat
+now simon is authorized bc he has been added to the managers grp wich has adim acess but he still doesnt hv acess to billing even as  an administrator
+create new grp:develop- add james-ec2 read only aces- creat
+create grp of egineers- no uswrs for now- ecc2 full-s3 aces-vpc acess create
+
+3 INFORMATION needed
+IAM-USER  = 
+   https://287784533479.signin.aws.amazon.com/console
+    userName = simon  
+    password = Admin@123 
+    accountID= 287784533479
+
+aws-account: 
+   root-User = 
+      root-email =  landmark@gmail.com 
+      root-password = admin123@001  
+ 
+
+  AdministorAccess  -- ec2, s3, vpc, route53  
+  EC2FullAccess     -- 
+  EC2ReadOnlyAccess -- 
+Security is inherent in our environment 
+we use the principle of least priviledges 
+
+IQ: Which tasks is an IAM user with admin access unable to do? Billing  
+
+********1:15:19.. it is imp to knw that Users can have either:
+  console access [userName and password and accountID]  or 
+  programatic access using [accessKey and secretAccessKey]
+  to aws resources    
+
+*******prOGRAMMATIC ACCESS ... the keys gives us programmatic access, we can mk API calls 
+******IN MOBAXT- JUmpserver sudo hostname js , sudo su - esc-user- aws s3 l3 : it says unable to locate credentials, by running aws configure. 
+**** in aws: global- iam or security credentials of simon- create aces key- command- i undersand -nxt-create - copy
+1;19;18 
+
+   accessKey      =  AKIAUGAPXTS7AGZNQ600
+   secretAccessKey=  0OeifliOM4J0lUbOLPvDFDP/Vb4QNwN6haIxyI24
+
+
+
+*****1:24 RUN TASK IN CLI.. MOBAX 
+in windows system ,when u run aws s3 l3 it says command nt found so ...install aws cli in windows system (in google seaRCH aws cli install and download n install).. 
+then run aws s3 ls & now we can run aws configure, it wil ask for the keys then paste acess key id and secret acces key id -defaullt region :ohio-default output:
+we can choose table or jason-, run aws s3 ls and we can see/list the  s3 bucket ,, wwe can also try the same in the jumpserver and get the same result 
+
+##### the keys gives us programmatic access, we can mk API calls .,, with d keys u can acess n mange resources in my account  
+ if we say ...sudo yum remove awscli and run aws s3 ls , it says no such file
+sudo yum install awscli ... aws  --version   .. 
+
+
+  GRANT & RESTRICT ACCESS
+*****we can grant and restrict access.... if we remove simon frm the mangers grp if he run aws s3 ls, he  cant get a response bc d acess keys are his n hes removed 
+## we can go to iam,-users- simons- permission: we can add him to a grp , or we can attach policies directly :amazons3readonly-add 
+now if he run thwe command again , he gets a response
+**** ** aws s3 mb s3://class33 ... name is class33....he trys to create bucket bt he cant bc he can list but not create 
+to grant his accress to craete : add permison: attach: s3 full access- add ..... (the action for s3 is *) and now hes able to craete
+when we are creating a bucket, we start wit the url ..s3://
+to list aws s3 mb s3://class33
+
+1:40:30 we cant list the content of a bucket we dnt own 
+we can use permision to ensure that users can be able to perform specific tasks
+
+
+1:42,, 
+*****yes ,,,,   CAN I MANAGE MY AWS RESOURCES DIRECTLY WITHOUT CONNECTING TO ANY SERVER THAT HV CREATED IN AWS  
+
+google, aws ec2 command line list instances, ,, all the commands are availble online, i dnt v to cram dem,, 
+https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html
+
+still using simon credential who doesnt v ecs instance permisison
+i  bliv dis comman is to describe a particular instance
+1:45:50 ******aws ec2 describe-instances --filters "Name=tag:Name,Values=MyInstance" now we can replace my instance with 
+aws ec2 describe-instances --filters "Name=tag:Name,Values=webserver" ,, we can decribe inrances like dis
+now paste in mobaxterm ,,unknown output type: jason ... then he typed aws configure and  json for default output format   
+then paste... : aws ec2 describe-instances --filters "Name=tag:Name,Values=appserver" ,, so all d instances wit d name appserver is what ill want to see
+but we got unauthorized creditials, so 
+i have to go bk to add permisison and grant him ec2 full ec2 intsance permission and also add him to managers grp
+so nnow in mobaxterm we can see all d instances wit d name appserver, all their details, parameters 
+
+##### we can also terminate instances from the command line ,
+jst copy n pate this command with the ipadresses attached  
+aws ec2 terminate-instances --instance-ids i-5203422c
+
+
+
+aws ec2 describe-vpcs | jq -r '.Vpcs[]|.VpcId+" "+(.Tags[]|select(.Key=="Name").Value)+" "+.CidrBlock'
+to describe vpc ...aws ec2 describe-vpcs
+
+we can also search... show aws vpc commands,, we can also create Ebs volume
+https://www.bluematador.com/learn/aws-cli-cheatsheet
+
+we can from the command line n with the iac
+
+2:00 aws eks get-clustters
+aws eks list-clusters
+
+**8***88  I DNT understand ,,  then below i understood
+2:06:00 I CAN PERFORM MY TASK DIRECXTLY ON MY WINDOWS SYSTEM WITHOUT CONNECTING TO MY EC2 INSTANCE
+
+WHEN am working frm gitbash am working directly on my windows system,, am using my windows system to manage aws resources
+with an ssh either mobx or gitbash install in my computer i can connect/acess my server wich is in aws cloud, to manage my task in aws account i can use commands or 
+console ... to use commands i can connect to my aws instance n use commands or i can jst run directly using gitbash or mobaterm
+..my understanding,,i bliv to use commands, i dnt v to ssh into my server, i jst v to run aws configure and authenticate with my keys 
+
+apart from simon being authentictae with the keys he is also authorized via these policies
+2:06:37 if i ssh into my server (using mobaxterm) then am manging my aws resources frm d ec2 instance (i bliv dats the console option)
+at work dis 2scenerios wil playout, wher ucan either shh into my server to perform task or i can perform it directly on my windows or
+mac system
+
+USING jumpserver for dis illustration
+**** when i run aws configure, it creates an account, it creats  afile called : .aws
+ll .aws/to see who owns the file
+cat .aws/config to see the configure file inside it 
+cat .aws/credentials
+we can delet rm -rf .aws/
+ls -a to check the list of files that starts wit a ,,,, now ders no .aws
+if we run aws s3 ls .... itv says no credentials 
+
+*********but is der anytin i can do to b able to acess these resource.... ie attaching Iam roles
+yes i can use IAM roles, these are policies/permissions that can be attcahed to another aws resource..[ec2 Instances, eks, ecs,etc.] 
+to permit the resource manage other resources based on the Policies attached to the role
+iamRoles are Policies/Permissions like [ VPCFULLACCESS, EC2FULLACCESS ] 
+
+******* 2:12:50 TO ATTACH IAM ROLES TO MY JUMP SERVER
+select the server-action:secrity:modify iam role-create IAM role-aws service-ec2-nxt-tick any permission- nxt-name of role- create
+we can add more permissions if we wnt- create anoda role   .. roles-create role-aws-use case: select e.g eks-nxt-nxt-rolename-create
+back to the server -select role frm drop box-update 
+
+******** back to my jumpserver, when i run aws s3 ls ,, now we are authenticated
+
+to install aws cli software
+https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-help.html
+https://aws.amazon.com/cli/
+
+Identity providers ... ther arev other identity providers we can use wit aws to mange more access 
+Account settings
+
+ASSIGNMENT
+Ticket00148 - create a vpc in us-east-1 using:
+  1. console  - netflix-1c
+  2. cli      - netflix-2c
+  3. IaC - Terraform   - netflix-3c 
+terraform codes are written in HCL - HASHICORP configuration lanaguage   
+terraform codes has .tf extentions  
+   .sh[shell script] / 
+   .java[java codes] / 
+   .py [python codes]
+   .tf [terraform codes]
+
+
+QUESTION
+diff btw s3 bucket and ebs ,,, check the storgae part of the power point 
+check frm pg 34...s3 buckect is na object storage n it doesnt require creating any mount point,, while ebs volume is a block storgae requiring a mount point
+if i share a mnovie in my s3 bucket the whole class/ a thousand plus can can watch it at the same time,, dats why it has multiple gigabyte per sec
+
+ebs is block 
+efs is  file
+s3 is object storage
+
+
+25:34:00 i v a server hosted in aws, inside the aws account at the global level i v some users, all iam users ,,, in the same account i v created my ntw so now i 
+v my vpc in the vpc i aslo created subnetwrks, in aws we can create resource and to be able to create resources, u v to be authorized like creating an instance.. that
+way not evryone can ,, creating the infastruture itself, u v to be authorized to crate or provisoin the server,, anoda person can be assigned permission to carry 
+out task on the server , now he can try to ssh  in to the server so to get access theres firewall so i hv to open port22,, b4 it is routed , inside my vpc v been able
+to create route tables attached to my subnet which allows routing to take palce inside my vpc within the subnet bt my firewall has to permit the trafifc  to get to 
+wher its going to , bc if the route tabe is nt created n my ports ar open i stil wont b able to route traffic...its like a virtual touter permiting trafic to be 
+routed...then we v another fire wall infront of the server called security grp and once port 22 is open then traffic will be routed to the person to carry out the
+task assigned.
+
+
+USE CLI TO LIST CONTENT OF S3
+
+2:24:15 ???? yes...... can we use the cli to list the content of s3 bucket
+aws s3 ls class 33 willl list the content
+to upload content to my s3 bucket 
+aws s3 cp aws33.pem s3://class33b
+to download  aws s3 cp s3://class30 /Dockerfile .  ( the dot means am copying to my pwd),, so we v copied the docker file frm the s3 bucket to the pwd
+we can also run.. aws s3 cp aws33.pem s3://class33b/jenkinsfile /home/ec2-user/
+to copy frm one s3 bucket to another s3 bucket
+aws s3 cp aws33.pem s3://class33b/jenkinsfile s3://class33a
+
+
+
+s3 bucket commands 
+ 32  aws s3 cp aws33.pem class30b
+   33  aws s3 cp aws33.pem s3://class30b
+   35  aws s3 cp  class30b/Dockerfile .
+   36  aws s3 cp  s3://class30b/Dockerfile .
+   37  ls
+   38  pwd
+   39  aws s3 cp  s3://class30b/Jenkinsfile /home/ec2-user/
+   40  ls
+   41  aws s3 cp  s3://class30b/Jenkinsfile  s3://class33aa
+   42  aws s3 ls class33aa
+
+
+
+to tk my aws study to the nxt level
+===================================
+Terraform and other IaC tools to manage aws resources
+=====================================================
+Terraform
+CloudFormation 
+Ansible  
+Terraform:
+=========
+- support Multiple clouds [aws, GCP, Azure]
+- codes/files are used   
+
+
+
+18hours to cover terraform:  
 
 
 
