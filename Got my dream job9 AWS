@@ -24,48 +24,7 @@ so apart frm using console we can use files
 
 
 
-****************************    SUMMARIZED FOR INTERVIEW*********************************
-
-
-we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
-For our cloud solution, we have diff cloud providers like  Cloud Service Providers - CSP = AWS / GCP / AZURE 
-they Provide computing services / resources like servers, network, storage, security, etc. over the internet from their Datacenters 
-  cloud computing is very imp and you can see a lot of COMPANIES ar migrating very quick &fast from on-prem to cloud to take advantage of cloud services
-We have Cloud Service Models like :
-=====================
-IaaS -- Infrastructure as a service  : e.g ec2 instance  - ec2, SonarQube
-PaaS--  Plat 
-the main cloud service providers :AWS - Amazon Web Services , GCP - Google Cloud platform), AZURE Cloud
-The AWS Cloud spans with over 102 Availability Zones within 32 geographic regions around the world,
-EXAMPLES OF AWS SERVICES includes
-ec2 / eks elastic kubernetics serv / ecs elastic container services / iam, identity & access mgt / route53 / elb , AWS STORAGE SOLUTION like ebs elastic block storage, and using the root file system we can create mount point and attach 
-block storage to our servers to expand/increase our storage size as required (from my command line i can type "list block command" where we hv our root file system.), also; we hv / efs ie elastic file storage,
-/S3 bucket ie object storage,data can be stored in buckets
-IF YOU CREATE FILES AND and store it in EFS/EBS, the files cannot just become accessible online  but with s3, i can store a file and its immediately accesible by anybody around the world. Also we have /SHARED Storage/ LAMBA FUNCTIONS/
-DISASTER RECOVERY; of which we carried out a project as a diaster recovery measure , where we have our database servers running in account one but backedup in account 2 ( which is our diaster recovery 
-account, so our database servers are backedup incase thers a disaster.
- So what we did is We created a snapshot lifecycle policy using Lambda  which creates sonapshots from our databases from account1 in account2
-snapshot is a replica of your database, its a backup therefore if account1 is hacked, we already hv everything in account2 so we are able to recover from account2 
-SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
-so am proud of this project
-
-AWS 8B
-we hv application servers wher applications ar being deployed
-18:49for traffic to be routed appriopriately, we v to do load balancing, it can be a load bal or ELS
-WE require a software wich helps us achieve load balacing with relative ease e.g ngnix or h ah proxy
-the LB does 2 tins , it either accepts or rejects the REQ.. .. 
-*********meaning tht LB ARE impoertaNT BC IT ACTS As A security measure
-
-
-AWS10
-
-if u are to xpalin cloud computing and ervytin dt is involved to it , wev bin able to realisee der ar certain elemrnts to that effet wich we can discuss wit relative ease when
-cloud computing is involved...also talking abt cloud and their terms of org or levaraging their resources by a 3rd party ie using a 3rd party infrastructure and those 3rd parties
-in computing languages we call dem  called cloud computing providers and dey can provide ntwrking sevrvices, database services,server services,compute serv... & dis ser ar imp
-to tk note of when it comes to the diff element of cloud computing  our converstion v genral tailored towards that direction n all wev delibrated on is to ensure that end
-to end exercise is been achieved seemlessly wit relative ease. 
-
-
+****************************    SUMMARIZED FOR INTERVIEW********************************
 
 
 in my env, AWS is our Cloud Service Provider we use aws services based on the needs of the company 
@@ -99,7 +58,7 @@ the app server can access internet externally, & this is bc i decide that we can
 the route table2 is permitting traffic frm anywher(ie 0.0.0/0), both local& traffic frm the internet..
 Also with the help of internet gateway, i can ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
  inside our vpc.  it will allow internet to flow into the vpc & it wil allow exteral traffic so if we wnt to acess resourcs out of our vpc, out of our,
-netwrk , we nid to hv internet , using IGW.
+netwrk , we nid to hv internet , using IGW... Its all about modifying the route tables accordingly.
 the 2nd firewall on our vpc is the one that stands infront of the subnet, like a gateman,called netwk acess control list nACL... 
 in naCL, we can create some rule e.g open port80 for inbound rules &for outbound open port80 aswell, on my NACL, trafic frm enduser can get to my subnet.
 for  trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group (this is also a firewall)therfore i 
@@ -107,14 +66,36 @@ also have to open (port80 , 443 )in the webserver security grp
 ****** in  all we hv 2 security parameter
 the 1st is the router for routing, wich permits traffic to be routed to the subnet bc if thers no route table permiting routing the traffic wont happen
 the 2nd is the firewall wich has 2layers of security,, security at the subnet level & security at the server level
+Finally, as an additional layer of security, we use the IAM = identity and access mgt, for authentication & authorization.
+also we can grant & restrict permission based on the based on the role of each member, i can use IAM roles, these are policies/permissions that can be 
+attcahed to another aws resource..[ec2 Instances, eks, ecs,etc.]  
 
 
 
 
- to ensure communication btw my jumpserver & my webserver or webserver & appserver 
-1:04:for e.g, if i v app server1 and app server2, to ensure comunication btw the servers, i can create a route table, wich detr hw service is routed from one subnet to d oda
- inside our vpc we nid internet gateway  it will allow internet to flow into the vpc & it wil allow exteral traffic so if we wnt to acess resourcs out of our vpc, out of our,
-netwrk , we nid to hv internet , using IGW , ders a kind of internet gateway, it is associated wit our vpc.
+************************** DNT PRINT
 
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+For our cloud solution, we have diff cloud providers like  Cloud Service Providers - CSP = AWS / GCP / AZURE 
+they Provide computing services / resources like servers, network, storage, security, etc. over the internet from their Datacenters 
+  cloud computing is very imp and you can see a lot of COMPANIES ar migrating very quick &fast from on-prem to cloud to take advantage of cloud services
+We have Cloud Service Models like :
+=====================
+IaaS -- Infrastructure as a service  : e.g ec2 instance  - ec2, SonarQube
+PaaS--  Plat 
+the main cloud service providers :AWS - Amazon Web Services , GCP - Google Cloud platform), AZURE Cloud
+The AWS Cloud spans with over 102 Availability Zones within 32 geographic regions around the world,
+EXAMPLES OF AWS SERVICES includes
+ec2 / eks elastic kubernetics serv / ecs elastic container services / iam, identity & access mgt / route53 / elb , AWS STORAGE SOLUTION like ebs elastic block storage, and using the root file system we can create mount point and attach 
+block storage to our servers to expand/increase our storage size as required (from my command line i can type "list block command" where we hv our root file system.), also; we hv / efs ie elastic file storage,
+/S3 bucket ie object storage,data can be stored in buckets
+IF YOU CREATE FILES AND and store it in EFS/EBS, the files cannot just become accessible online  but with s3, i can store a file and its immediately accesible by anybody around the world. Also we have /SHARED Storage/ LAMBA FUNCTIONS/
+DISASTER RECOVERY; of which we carried out a project as a diaster recovery measure , where we have our database servers running in account one but backedup in account 2 ( which is our diaster recovery 
+account, so our database servers are backedup incase thers a disaster.
+ So what we did is We created a snapshot lifecycle policy using Lambda  which creates sonapshots from our databases from account1 in account2
+snapshot is a replica of your database, its a backup therefore if account1 is hacked, we already hv everything in account2 so we are able to recover from account2 
+SO WIT THE HELP OF LAMBDA & snapshot lifecycle policy, this entire process was automated
+so am proud of this project
 
+ 
 
