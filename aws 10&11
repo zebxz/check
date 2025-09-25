@@ -62,7 +62,8 @@ Cloud computing is the delivery of computing services—including
 wit the help of cloud computing u can easily become a millionaire frm the comfort of ur room if u understand a few of these services
 
 
-21:19  ...IAM = identity and access mgt
+
+  21:19  ...IAM = identity and access mgt
 =====================
 e.g if u wrk for netflix
 Netflix ---   
@@ -75,6 +76,9 @@ Cloud Engineering
 Infrastructure Engineering
 so when we ar managing this resources thses ar all the infrat that nids to be managed:servers,
   - storage,  - databases, - networking,- software,- analytics, - and more
+
+
+MANAGING INFRASTRUCTURE
 in managing infrastruture, we can :Infrastructure MGT [ create, view, update, delete, modify, grant access ] 
 and dis can be done using GUI ... E.g chnaging the name of my server , vpc .. we ar managing dis frm the console n u realise when u do dis thers high possiblity of error
 so apart frm using console we can use files 
@@ -116,7 +120,9 @@ resource "aws_vpc" e.g i want to create a vpc for tesla  "tesla-dev" {
     Environment = "dev"
   }
 }
-  THE QUESTION IS 
+  
+
+THE QUESTION IS 
 if u have a terafform like dis , can i use the same file to create vpcs in other environments ?????
 i can easily use dis same file in d stage environment, it can be easily replayed or reployed in the dev,stage &prod, i can version control the file using git wit dif branches
 ie in the script ill change the environ from dev to stage or prod
@@ -130,6 +136,8 @@ resource "aws_vpc" "tesla-stage" {
   }
 }
 =========================================
+
+
 Team members can manage resources using the console, cli or IaC.
 However for that to happen  there must be authenticated and authorise    
 
@@ -143,10 +151,7 @@ changing from vpc to the IAM  dashboard it changes frm ohio to global
 
 vpc= regional and IAM is global 
 
-Assignement:
-Ticket-AS110:
-  Group aws services covered so far based on Global, Regional and Availability Zones
-  vpc = 
+
 
 Access management: can be accessed to 
   IAM User groups = we can hv a grop for and assign policies to grps
@@ -215,6 +220,8 @@ IQ: Which tasks is an IAM user with admin access unable to do? Billing
    accessKey      =  AKIAUGAPXTS7AGZNQ600
    secretAccessKey=  0OeifliOM4J0lUbOLPvDFDP/Vb4QNwN6haIxyI24
 
+
+
 *****1:24 RUN TASK IN CLI.. MOBAX 
 in windows system ,when u run aws s3 l3 it says command nt found so ...install aws cli in windows system (in google seaRCH aws cli install and download n install).. 
 then run aws s3 ls & now we can run aws configure, it wil ask for the keys then paste acess key id and secret acces key id -defaullt region :ohio-default output:
@@ -224,6 +231,8 @@ we can choose table or jason-, run aws s3 ls and we can see/list the  s3 bucket 
  if we say ...sudo yum remove awscli and run aws s3 ls , it says no such file
 sudo yum install awscli ... aws  --version   .. 
 
+
+GRANT & RESTRICT ACCESS
 *****we can grant and restrict access.... if we remove simon frm the mangers grp if he run aws s3 ls, he  cant get a response bc d acess keys are his n hes removed 
 ## we can go to iam,-users- simons- permission: we can add him to a grp , or we can attach policies directly :amazons3readonly-add 
 now if he run thwe command again , he gets a response
@@ -397,6 +406,9 @@ Next week = starting
 4PM GMT / LAGOS / DOUALA
 
    
+
+
+
 
 
 
