@@ -11,10 +11,22 @@ python,nodejs, tomcat, docker can containerize any form of apllication
 
 
 
-DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL, CONTAINERS, OPTIONS TO USE FOR DEPLYMENT, 
+ OPTIONS TO USE FOR DEPLYMENT, DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL, CONTAINERS, VIRTUAL MACHINES vs CONTAINER, DOCKER, APPL RUN AS CONTAINERS,
+        CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES, CONTAINERIZATION SOFTWARE RUNTIME
+
+
 
 START
 
+START
+
+
+OPTIONS TO USE FOR DEPLYMENT
+
+ 1) Traditional/Physical Deployment                                                                        ie virtual box
+ 2) Virtualized Deployment (Hardware level Isolation) **me** requires a structure ie an entire guest op system-->each virtual machine includes the app, the 
+necessary binaries & libraries
+ 3) Containerized Deployment(OS/Process level Isolation) **me** not tied to a specific structure, containers run on any computer, infrastructure & cloud.
 
 
 to deploy application, we nid systems to mange the deployment, so either i geta  physical system, it comes wit harddrive/RAM, then on this physical/hardware system we
@@ -24,7 +36,8 @@ e.g of Op system :windowns, linux,,, for the instalation we nid we ill nid some 
   the op comes with the bin dir wher d commands ar found,opt,sbin etc dir bt what is very imp is the bin dir.. on the op sys we v our application deployed n running like 
   dbase appl etc n this is called traditional deployment of application and with dis traditional approach we ar heavily depending on a physical sys, physical sys ar used
   from dis we move to virtualization
-  
+
+
   7:59 DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL ... XEN IS an hypervisosr e.g is EC2 INSTANCE VM 
 ON THE PHYSICAL sys we already hv, we ar able to create a virtual sys and we ll nid a hypervisor, on the op we install the hpervisor e.g virtual box,hyperV/xen/vmware 
   this are sofwares that can permit to host a virtual sys on a phy sys like laptop, servers, or even in the cloud
@@ -41,27 +54,36 @@ in one appl it is possible to affect the others bt with virtualized approach we 
   thers a more powerful approach called containers,
  CONTAINERS its very common today
 CONtainers ar  dynamic bc it is nt tied to any infrastructure , can run on any computer, infrastructure n cloud 
-it mean dercan b an aplica tht can only be deployed on a particualar op sys b4 it can run bt containers can run on any op sys bt containers does nt req an entire guest sys
+it mean there can b an aplication tht can only be deployed on a particular op sys before it can run bt containers can run on any op sys bt containers
+does nt req an entire guest system.
 
   so again we hv an op sys that comes wit bin files n lib, running on a phy sys ,, before deploying any appl we install a containerization software and genrally its docker
 18:00  ders ar others as well,, we ar now able to deploy our appl as containers ,, appl are nt deployed in virtual machines bt as containers, light weight conatiners  
 e.g  we hv 90 containers deployed and are running, the appl does nt req an entire guest sys.. e.g d appl size can be for appl 1 ;cpu 400mb n memory of 32mb n its light 
   weight compared to virtualized
 
-  d virtualized nid an entire guest op sys wich comes wit its own file n lib bt for containerisation, al d containers share d kernel e.g lib n binary file, so virtualzation
-  doesnt require a guest sys
-  therfore ths virtualized system has a faster start time to install, it starts up very fast like a cheetah n the integration is very easy than virtualization
+  when it comes to virtualization, we are using virtual boxes
+The virtualized nid an entire guest op sys wich comes wit its own file n lib bt for containerisation, all d containers share d kernel e.g lib n binary file, so virtualzation
+  doesnt require a guest system
+ 23.45 therfore the containerized system/infrastructure has a faster start time to install, it starts up very fast like a cheetah n the integration is very 
+easy than virtualization
 
-*********8READ UP POWER POINT SCRIPT
-
-OPTIONS TO USE FOR DEPLYMENT
-
- 1) Traditional/Physical Deployment
- 2) Virtualized Deployment (Hardware level Isolation) 
- 3) Containerized Deployment(OS/Process level Isolation)
+25.16 VIRTUAL MACHINES: each virtual machine includes the app, the necessary binaries & libraries & an entire guest op system
+while
+CONTAINERS  :include the app & all its dependencies but share the kernel with other containers
+run as an isolated process in userspace on the host OS
+not tied to any specific infrastructure; containers run on any computer, infrastructure & cloud.
 
 
-  
+VIRTUAL MACHINES vs CONTAINER
+27.16*********8READ UP POWER POINT SCRIPT
+
+
+
+
+
+                   DOCKER
+
 Docker 
 ======
 7 years Experience in IT and DevOps:
@@ -82,6 +104,10 @@ IQ: How many environment are you supporting in your CURRENT role??
          Development environment    
          Testing/QA environment    
          Production environment 
+
+
+                                            APPLICATIONS RUN AS CONTAINERS 
+
 In docker applications run as containers   
 ******33:07 .. e.g we v repos in git hub we wnt to deploy tonthe dev env using our vm/ec2 instances, on the instance, if i wnt to instal tomcat i v to first install all its
 dependencies java then once the tomcat is installed i v my appl running
@@ -110,8 +136,11 @@ for a ear app, we nid
 app code     = app.jar + 
    dependencies = java1.8+    
 
- *****now the quetsion is whta can be done to be able to package d appl plus its dependencies n kip such dat if i wnt to deploy d appl all i hv to do is ship the app to 
-the deployment enev and it come swit the dependencies alreday packgedmening ders nid going to the dev enev n carry out conf, test n run , wecan easily ship dis appli
+
+
+             CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES 
+ *****now the quetsion is what can be done to be able to package d appl plus its dependencies n kip such dat if i wnt to deploy d appl all i hv to do is ship the app to 
+the deployment env and it comes wit the dependencies already packged meaning ders no nid going to the dev enev n carry out conf, test n run , we can easily ship dis appli
 how can we mk this process simplified?
 therefore we will be usisng :
 Containerization Software/Runtime --> : with this we can package an appl code plus its dependencies
@@ -122,6 +151,7 @@ Docker, = over 80% usage , in the industry, it has the most level of trust
   CRI-O, 
   Core-OS,
   Container-D. 
+
 
 Docker:  
   Is a containerization multi-platform software use to;    
