@@ -12,7 +12,8 @@ python,nodejs, tomcat, docker can containerize any form of apllication
 
 
  OPTIONS TO USE FOR DEPLYMENT, DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL, CONTAINERS, VIRTUAL MACHINES vs CONTAINER, DOCKER, APPL RUN AS CONTAINERS,
-        CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES, CONTAINERIZATION SOFTWARE RUNTIME,  ADVANTAGES OF DOCKER
+        CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES,  DOCKER, CONTAINERIZATION SOFTWARE RUNTIME,   ADVANTAGES OF DOCKER, INSTALL DOCKER 
+
 
 
 
@@ -82,8 +83,6 @@ VIRTUAL MACHINES vs CONTAINER
 
 
 
-                   DOCKER
-
 Docker 
 ======
 7 years Experience in IT and DevOps:
@@ -152,6 +151,7 @@ Docker, = over 80% usage , in the industry, it has the most level of trust
   Core-OS,
   Container-D. 
 
+                                     DOCKER
 
 Docker:  
   Is a containerization multi-platform software use to;    
@@ -200,10 +200,10 @@ Linux Flavors :there are diff linux flavors ie Linux distributors we can install
 
 
 
-
+50.07                                            INSTALL DOCKER 
 
 TICKET
-Install Docker on  Ubuntu
+49.30 Script to Install Docker on  Ubuntu    ***46.57... ubuntu supports docker installation, we select it as the AMI/OS for the instance in AWS
 ###########################
 #!/bin/bash
 sudo apt update -y
@@ -218,6 +218,7 @@ sudo su - ubuntu
 #yum and dnf are package managers for redhat systems
  
 
+49.30  script for amazon linux
  # Amazon Linux
 ###########################
 sudo yum update -y    
@@ -235,17 +236,22 @@ sudo usermod -aG docker ec2-user
 sudo usermod -aG docker ubuntu   
 sudo usermod -aG docker simon   
 
-during installation, bc he commented ..#sudo usermod -aG docker ubuntu.. ie to add ubuntu user to the docker grp 
+59.35  during installation, bc he commented ..#sudo usermod -aG docker ubuntu.. ie to add ubuntu user to the docker grp 
 after docker installation, he ran.. docker ps ..without sudo bt permision denied 
  then we run this command as root user ..sudo docker ps: to check containers that are running, and we got a response
-bt for automation, we add ubuntu to the docker grp... sudo usermod -aG docker ubuntu and change the shell
+bt for automation, we add ubuntu to the docker grp... sudo usermod -aG docker ubuntu  in the instalation script 
+but if its the line is commented during installation then after installation you change the shell ie sudo su - ubuntu
 if we check id ubuntu, can see its in the the docker grp 
 and when we run docker ps we get a response
 
 QUESTION 2:26:00
 the recommended option is nt to run chmod bt to add the user to the manager grp
-if u wnt anyuser  to run docker commands then the user should hv sudo access bt its a vulunerability to grant sudo access to anyone just to run docker commands so in our
+if u wnt any user  to run docker commands then the user should hv sudo access bt its a vulunerability to grant sudo access to anyone just to run docker commands so in our
 env we add the user to the docker grp with dat the user doesnt nid sudo access to run docker command 
+
+
+                            
+                                                           CONTAINERIZE APPLICATION
 Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
@@ -257,12 +263,17 @@ Content:.. of the application
   Dockerfile :
 we can also v jenkins and other files
 
+                                                      DOCKER FILE
+
 ******the docker file contains 2key words FROM and COPY
     FROM tomcat:8.0.20-jre8
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 what the from & copy means is that this docker file is goin to b  copying some war files in the target dir n t wil deploy it as app.war
 with thw help of the docker file, we can create a docker image
 
+
+
+                                                                  DOCKER IMAGE
 Docker Image: --> It's a package which contains
                  everything (+Application Code + Libraries, Softwares+ENV)
                  needed to run your application.
