@@ -1,28 +1,46 @@
 containerization, docker ... virtualization  ... read powerpoint script
 script for build and deployment process
 
-40 :00 Ticket012:
-  Create and share a docker image 
+
+Docker 
+======
+7 years Experience in IT and DevOps:
+How applications were deployed in the past and today:
+1.  1990S --- 10 years 
+2.  2000S ---   CAN claim 7yrs working xperience
+3.  TODAY  
+
 
 QUESTIO .. 2:27:00
 is docker a replacement for tomcat
 no its nt , its a newer version to deploy appl by containerizing the appl including the appl code n all its components ,, with docker u can deploy any type of appl including
 python,nodejs, tomcat, docker can containerize any form of apllication
 
-
-
- OPTIONS TO USE FOR DEPLYMENT, DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL, CONTAINERS, VIRTUAL MACHINES vs CONTAINER, DOCKER, APPL RUN AS CONTAINERS,
-        CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES,  DOCKER, CONTAINERIZATION SOFTWARE RUNTIME,   ADVANTAGES OF DOCKER, INSTALL DOCKER 
-
-
-
+*********************************************************************************************************************************************
 
 
 
 START
 
+ OPTIONS TO USE FOR DEPLYMENT, DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL, CONTAINERS, VIRTUAL MACHINES vs CONTAINER, APPL RUN AS CONTAINERS,CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES,  DOCKER, ADVANTAGES OF DOCKER,
+CONTAINERIZATION SOFTWARE RUNTIME,  INSTALL DOCKER ,CONTAINERIZE APPLICATION, DOCKER FILE, DOCKER IMAGE, STEPS FOR CONTAINERIZATION, DOCKER RUN,
+2 CONTAINERS FROM THE SAME IMAGE CANT HV THE SAME HOST PORT NUMBER& NAME BT CAN HV THE SAME CONTAINER NAME, CAN I DEPLOY A CONTAINER FRM AN IMAGE I DID NOT CREATE, ACCESS MY APPLICATION, DOCKER REGISTRY,  DOCKERHUB.io,  
+CREATE & SHARE DOCKER IMAGE, DOCKER ARCHITECTURE,  RUN CONTAINER WITH PULLED IMAGE,
 
-OPTIONS TO USE FOR DEPLYMENT
+
+
+developers commit their code in github , while in docker they mostly use docker hub
+
+******1.38.00, dockerhub.io  ... docker is the worlds easiest way to create mange and deliver your teams conatiner applications 
+you can Create an account and a repository or jst cm here to explore 
+
+**********ENTRY POINT**** DOCKER 5&6 interview
+
+
+
+
+
+OPTIONS TO USE FOR DEPLOYMENT
 
  1) Traditional/Physical Deployment                                                                        ie virtual box
  2) Virtualized Deployment (Hardware level Isolation) **me** requires a structure ie an entire guest op system-->each virtual machine includes the app, the 
@@ -81,30 +99,6 @@ VIRTUAL MACHINES vs CONTAINER
 
 
 
-
-
-Docker 
-======
-7 years Experience in IT and DevOps:
-How applications were deployed in the past and today:
-1.  1990S --- 10 years 
-2.  2000S ---   CAN claim 7yrs working xperience
-3.  TODAY  
-
- 
-====================================
-Docker -- Is a containerization software use to create, build
-          ship and deploy applications as containers
-            Build applications  
-            ship applications  
-            deploy applications  
-
-IQ: How many environment are you supporting in your CURRENT role??
-         Development environment    
-         Testing/QA environment    
-         Production environment 
-
-
                                             APPLICATIONS RUN AS CONTAINERS 
 
 In docker applications run as containers   
@@ -121,7 +115,6 @@ Containers --> contains everything required for an application to run create or 
               which is required for a piece of application/process to run.
           app.war   -----> can be deployed in a  Virtual Machine  n in the vm 
                            java and Tomcat installed and configured  
-
 
    app code     = app.war + 
 for a java web app to be deployed
@@ -194,6 +187,7 @@ Linux Flavors :there are diff linux flavors ie Linux distributors we can install
                              OS      |  AMI (OS + Additional Softwares)
 
 
+
 44.06                                                              ADVANTAGES OF DOCKER
 **** go tru the power point note,,, advantgaes of docker
 
@@ -251,7 +245,7 @@ env we add the user to the docker grp with dat the user doesnt nid sudo access t
 
 
                             
-                                                           CONTAINERIZE APPLICATION
+1.05.00                                                           CONTAINERIZE APPLICATION
 Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
@@ -273,15 +267,19 @@ with thw help of the docker file, we can create a docker image
 
 
 
-                                                                  DOCKER IMAGE
+                                                                 DOCKER IMAGE
 Docker Image: --> It's a package which contains
                  everything (+Application Code + Libraries, Softwares+ENV)
                  needed to run your application.
 
+
+ 
+                                          STEPS FOR CONTAINERIZATION
 Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
 
+STEP1 ; CLONE THE REPO
 **************1:09:00 ***** to containerise this appliction
 1) we clone the repository
 git clone https://github.com/LandmakTechnology/maven-web-application
@@ -300,6 +298,10 @@ my base image is tomcat:8.0.20-jre8 ,, so i nid tomcat for my appl to run ,, so 
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 ***** so we hv tomcat 8.0.20 and java runtime 8
 
+
+
+STEP2; BUILD
+1.12.17                                   BUILD
 so we wnat to build our image and the command is  
   docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
   docker build -t teslaimage:1 -f Dockerfile-tesla .  
@@ -309,7 +311,7 @@ am building frm a file , the file is called docker fileand its found in /home/ub
 
 
 
-
+                                         
 Docker containers: Run time instance of a docker image. 
      If you execute: docker run, 
      a container is created from the image 
@@ -335,6 +337,9 @@ docker build -t teslaimage:1 .
 when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the target dir that ends wit .war...
  COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 the target dir means we v created the packages
+
+
+   STEP3; INSTALL MAVEN
 3)mvn package , sudo apt instal maven .. if it says mvn not found
 ls target and now our artifact has been created ... teslar.war
 cat Dockerfile and see ,, a very simple  file ,, this file has 2lines .. it wants to get (FROM tomcat:8.0.20-jre8) which is the base image 
@@ -364,6 +369,9 @@ Docker containers: Run time instance of a docker image.
      a container is created from the image 
 
 
+
+
+STEP4; DOCKER RUN
 *****1:20:26  lets do docker run...  ie to create containers
 4)docker run -d -p 80:8080 --name webapp teslaimage:1
 
@@ -390,6 +398,9 @@ docker run --name containerName -d -p hostPort:containerPort image:tag
   -p = port Forwarding
 
 
+
+DOCKER RUN, 2 CONTAINERS FROM THE SAME IMAGE CANT HV THE SAME HOST PORT NUMBER& NAME BT CAN HV THE SAME CONTAINER NAME
+
   ****** 1:25:00 to deploy a 2nd conatiner using the d same image 
 docker run --name app -d -p 8080:8080 --name webapp teslaimage:1  .. 2 containers cannot v the same host port number& name  , bt can v the same conatainer num
 host port 80 and container port: 8080 and it doesnt change
@@ -406,7 +417,11 @@ observing this deployment, we didnt change the container port 80:8080
   docker run --name nginx  -d -p 9000:80    nginx:latest    
 
 
-**** I CANT DEPLOY A CONTAINER FRM AN IMAGE I DID NOT CREATE
+
+                   **** CAN I DEPLOY A CONTAINER FRM AN IMAGE I DID NOT CREATE  *** ME, yes... it will pull it from the appropriate repo/lib
+****** if we dnt write the tag of the image as we didnt, it wil choose a default tag and that will be latest  ,, so it will go to d ngnix repository n check for what is 
+called latest 
+
 i want to deploy a web application frm my image ,,, the name is nginx, -d -p , am deploying nginx on port 9000 frm my host port n the container port for webserver like
 nginx is port 80 and the image is nginx 
 
@@ -414,11 +429,14 @@ docker run --name nginx  -d -p 9000:80    nginx
 
 now , docker images to knw if we v nginx in our env bt we dnt 
 ####we wnt to deploy nginx container and we nid the image  .. docker run --name nginx  -d -p 9000:80 nginx   
-if we dnt write the tag of the imgae as we didnt, it wil choose a default tag and that will be latest  ,, so it will go to d ngnix repository n check for what is 
+1.28.25 if we dnt write the tag of the image as we didnt, it wil choose a default tag and that will be latest  ,, so it will go to d ngnix repository n check for what is 
 called latest 
 now its saying unable to find ngnix locally, so its pulling it frm the ngnix lib in docker hub 
 ##### now if i run docker ps  ,,, ngninx is running 
 
+
+
+       ACCESS MY APPLICATION
 to access my aplications online 
 http://3.22.217.29:80/tesla/
    http://3.22.217.29:8080/tesla/
@@ -427,6 +445,8 @@ http://3.22.217.29:80/tesla/
 
 also i v to open the the specific ports on my SG to be able to acceess the appl onl
 
+
+1.47.00           DOCKER REGISTRY
 with the use docker Registry : how do we deploy ngnix when we dnt v the docker image ,, the nginx image was pulled frm the docker registry
 Docker Registry: this is where we can ship docker images.. examples:
 1. DockerHub public [80% usage]
@@ -435,7 +455,12 @@ Docker Registry: this is where we can ship docker images.. examples:
 4. Nexus/
 5. JFrog
 
-developers committheir code in github , while in docker they mostly use docker hub
+
+
+ 1.39.00                      DOCKERHUB.io 
+TO CREATE REPOSITORY & PUSH IMAGES
+                              
+developers commit their code in github , while in docker they mostly use docker hub
 
 dockerhub.io  ... docker is the worlds easiest way to create mange and deliver your teams conatiner applications 
 you can Create an account and a repository or jst cm here to explore 
@@ -450,10 +475,21 @@ can distribute these images , we can use dockerhub or nexus ,or amazon ecr or jf
 the registery a lot can be made to happen ,, we can pull the images and deploy appls in any enev, therfore ,we can pull the images for deployment, docker pull to pull
 d image n docker run to deploy the application, in the deployment server we v the pull n run and dats where deployment is taking place and this can take place in
 multiple env like dev, stage and prod,, the same image ,, we can deploy in any number of env... once they ar built these images are shared/distributed
- 
-40 :00 Ticket012:
+
+
+
+
+                                        CREATE & SHARE DOCKER IMAGE
+
+1.48:10 Ticket012:
   Create and share a docker image   
 
+ANS; We can distribute the images we created earlier
+when we run docker images, we see the images we already created
+ *i bliv, we then run docker push; to push the particular image we want to share
+
+
+1.49.20                                         DOCKER ARCHITECTURE
 hw does the docker architec works
 docker architechture:
   - docker client - is the  docker cli = The command line utility for docker   
@@ -464,9 +500,11 @@ docker architechture:
       docker run    
   - docker Registry - Where docker images are stored and distributed    
   - docker engine==- - Use by the docker service to execute tasks  e.g when u run docker build, u ar inform the daocker engine, tk dis instruction n build a docker image
-the emgnine tks the instructions n assihn a tag to an image 
+the emgnine tks the instructions n assigns tag to an image 
 
- Create and share a docker image  
+
+1.53.20             RUN CONTAINER WITH PULLED IMAGE
+
 1) docker pull mylandmarktech/tesla:1
 now we v an image  called , mylandmarktech/tesla:1
 2) wit the image we v pulled in our deployment evnv, we can run a container wit the image ,,to delete previous containers .... docker rm -f (container name)
