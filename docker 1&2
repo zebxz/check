@@ -276,7 +276,7 @@ with thw help of the docker file, we can create a docker image
                                                                  DOCKER IMAGE
 Docker Image: --> It's a package which contains
                  everything (+Application Code + Libraries, Softwares+ENV)
-                 needed to run your application.
+                 needed to run your application...  ... it is shippable
 
 
  
@@ -365,18 +365,6 @@ tomcat       8.0.20-jre8   e88a065848be   8 years ago      493MB ... this the ba
 
 
 
-
-Docker Image: --> It's a package which contains
-                 everything (+Application Code + Libraries, Softwares+ENV)
-                 needed to run your application. ... it is shippable
-
-Docker containers: Run time instance of a docker image. 
-     If you execute: docker run, 
-     a container is created from the image 
-
-
-
-
 STEP4; DOCKER RUN/DEPLOY
 *****1:20:26  lets do docker run...  ie to create containers
 4)docker run -d -p 80:8080 --name webapp teslaimage:1
@@ -396,8 +384,7 @@ i wnt to deploy anoda application
 
 1:23:40 when u execute docker run dis is what happens 
 
-docker run --name app -d -p 8000:8080 --name webapp teslaimage:1  ,, frm dis same image we can deploy billon of containers $ it can b deployed by diff persons if 
-you mk the image became distributable 
+docker run --name app -d -p 8000:8080 --name webapp teslaimage:1  ,, frm dis same image we can deploy billon of containers $ it can b deployed by diff persons if you mk the image became distributable 
 
 docker run --name containerName -d -p hostPort:containerPort image:tag
   -d = detachable mode  
