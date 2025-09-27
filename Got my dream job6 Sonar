@@ -548,9 +548,43 @@ sonarcloud is an example of a software as service, all you have to do is create 
 
 
 
+*************************************************************************************************************
+                                                                     SUMMARIZED FOR INTERVIEW*********************
 
 
-  ********************* SUMMARIZED FOR INTERVIEW  ************************
+
+For code quality we have the option of either sonarqube or sonar cloud etc
+ in my env we integrate Sonarqube, for our software quality 
+we develop the application, we build the appl and it is deployed to the applictaion servers but before the app is deployed we have to perform software testing
+so we use sonarqube for code quality analysis
+Mvn package 1) validate    2) compiles   [app.java >>> app.class]     3) testing (run unit testing) pass    4) pacakges will be created
+therefore; there is a quality gate in maven 
+however, it runs unit testing on the number of testcase developers have written but most of the time developers will not write the code as desired thats why we need code quality tool to check, 
+also for the software testin, maven doesnt check if developers have written the desired number of testcases and thats why sonarqube is important as well bc with sonar we can run run some analysis &ask questions like 
+. How many unit test cases were run? How many test cases should have been run? 
+ COMPARING ACTUAL RESULT AGAINST BENCHMARK
+for that to happen it Therfore implies that we already set our standard/expectation for our code
+Benchmark/standards for a quality Software/application: such as ;
+1. Code coverage should be greater than 85%  
+2. Dublicate lines should be less than 5% 
+3. There should be no vulnerabilities in the code [pw=1234] 
+4. Code smells should be less than 5 
+ Is our code portable [ environment independent ]?  portable code means the code is not environment indenpendent 
+Our Sonar Report depends on:
+1) Rules 
+2) Quality profile 
+3)  Quality gates
+
+thefore; We dont just develop, build and deploy, we need to first check the quality of work done by developers, we have to validate the code so the code goes to the
+code validation or qualification, so we use sonarqube to ensure that the codes are written as expected.
+***ignore**  sonar qube comes with:soanrqube scanner and server
+***ignore***  The scanner scans through the code and moves it into the server which has a compute engine for computation and calculation theres also elastic search
+
+
+***********************************************************************************************************************************************
+
+
+  ********************* SUMMARIZED  ************************
 integrate sonarqube for code quality analysis
 in the maven server; vi into pom.xml (credentials under the properties tag ) and enter sonarqube server   
       mvn sonar:sonar
@@ -561,8 +595,6 @@ in the maven server; vi into pom.xml (credentials under the properties tag ) and
 webhook doesnt work with sonarqube
 webhook is the fastes of the triggers it happens in seconds, once thers a new version 
 
-
-
 ****from nexus ******  
 We dont just develop, build and deploy, we need to first check the quality of work done by developers, we have to validate the code so the code goes to the
 code validation 
@@ -570,6 +602,7 @@ or qualification, so we use sonarqube to ensure that the codes are written as ex
 sonar qube comes with:
 soanrqube scanner and server
 The scanner scans through the code and moves it into the server which has a compute engine for computation and calculation theres also elastic search
+
 
 Database                                                                           server ip: port number
 web-server- so we can access sonarqube on the browser and to do this we need the server ip:port number 9000 & it will then request for the username &PW or 
@@ -598,14 +631,13 @@ quality gate is usually a combination of conditions
 
 
 ****meeeeeeeeeeee
-code quality with sonarqube & sonar cloud etc
- in our env we use Sonarqube, sonarqube has to do with software quality 
+For code quality we have the option of either sonarqube or sonar cloud etc
+ in my env we integrate Sonarqube, for our software quality 
 we develop the application, we build the appl and it is deployed to the applictaion servers but before the app is deployed we have to perform software testing
 so we use sonarqube for code quality analysis
- 1) validate    2) compiles   [app.java >>> app.class]     3) testing (run unit testing) pass    4) pacakges will be created
+Mvn package 1) validate    2) compiles   [app.java >>> app.class]     3) testing (run unit testing) pass    4) pacakges will be created
 therefore; there is a quality gate in maven 
-however, it runs unit testing on the number of testcase developers have written but most of the time developers will not write the code as desired thats why we need code quality tool to check, 
-also for the software testin, maven doesnt check if developers have written the desired number of testcases and tahst why sonarqube is important as well
+however, it runs unit testing on the number of testcase developers have written but most of the time developers will not write the code as desired thats why we need code quality tool to check,
 
 
 Types of testing that can be performed 
