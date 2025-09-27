@@ -932,6 +932,31 @@ In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSI
 
 
 
+*** honestly dnt know what to summarize for tomcat INTERVIEW ***********
+
+
+In my env, we are managing java based projects and we use tomcat for deployment
+ Our Appserver is Tomcat, we do not deploy to one appserver, we are deploying (the application) to multiple appservers all of the servers have tomcat installed & this process is automated with the help of a tool called ansible. 
+Also, The way we expose these applications to users is important
+now to expose this application to users who need to access this application. traffic from the the users is routed to the appserver but for us to manage how traffic is distributed to the appserver we will introduce a security tool which 
+is a webserver, our web server will ensure that the appserver doesnt get traffic directly.
+We dont allow traffic from app users to get to the app servers directly because if it does, it will be a security bridge which is highly risky.
+therfore; an apache webserver ie httpd is installed . the webserver does load balancing. once it receives traffic from endusers, it will listen to the request and 
+authenticate the user if its the right user. 
+the webserver distributes the traffic evenly by balancing the traffic load it distributes to the appserver
+when traffic comes from enduser, the webserver expects traffic to come on http or 443, so the webserver is listening for the request from users. when ths users are trying
+to access the appserver they are making some request on the port number either 80 or 443 while the webserver is listening for the request to determine if its from the right
+user. if its the right user, it will authenticate the user and route the traffic but if the user is not authenticated it wont route the traffic 
+Also; whatelse is the webserver doing?
+**ignore; lets assume that beyond the appserver, endusers are able to access this account & do diff transaction or create account when they do that they will enter their names, DOB,email. All d data generated in this process has to be captured
+whatever information the users enter/generate while accessing the app is captured in a database we access the information with the help of a database
+  ** but again all of this can this process can be automated with the help of a tool called ansible & i will expand more with ansible..
+
+
+************************************************************************************************************************************************
+
+
+
 GIT
 Authentication/Verification is only required each time to run "git push " command (nt sure if it request for passwd to add a repo for the first time)
 ***BUT; to automate the verification process there are 3 options but ssh url is the best; 1)generate a token classic in github(lasts >30days) OR 2)generate ssh key and use ssh url or 3) http url
