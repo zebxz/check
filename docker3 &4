@@ -1,4 +1,4 @@
-DOCKER FLOW
+DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, 
 ##########steps TO MK image distributable
 clone the repo , 2)build the image, 1)mvn package so that the build is possible, 5)Docker tag , 5)then push
 
@@ -22,17 +22,19 @@ host port must change ie we hv to choose a port nmuber for each contaoiner but c
 
 
 *****************************************************
-DOCKER FLOW
-we build the image from the file n the process of building the image is called containerization IE PACKAGING THE APPL with all its DEPENCIEDS IN AN IMAGE N FRM DER WE AR
+THIS IS A DOCKER FLOW
+we have a docker file from the file we build an image from the file n the process of building the image is called containerization IE PACKAGING THE APPL with all its DEPENCIEDS IN AN IMAGE N FRM DER WE AR
 ABle to run containers/ deploy applications
 6:00 when an image is built, we push it to an image registry , either nexus, ecr,dockerhub, jfrog,, then we can pull the images in diff envri n do a deployment
 
-1:42 we v a build server,with the ssrver we executing mvn package, creating package , we ar also building images  using docker file, docker build n once dat is done we
+1:42 we v a build server,with the server we executing mvn package, creating package , we ar also building images  using docker file, docker build n once dat is done we
 can distribute these images , we can use dockerhub or nexus ,or amazon ecr or jfrog to distribute the images .. these images are push into the image registry and frm
 the registery a lot can be made to happen ,, we can pull the images and deploy appls in any enev, therfore ,we can pull the images for deployment, docker pull to pull
 d image n docker run to deploy the application, in the deployment server we v the pull n run and dats where deployment is taking place and this can take place in
 multiple env like dev, stage and prod,, the same image ,, we can deploy in any number of env... once they ar built these images are shared/distributed
  
+
+
 40 :00 Ticket012: DOCKER 1 VIDEO
   Create and share a docker image   
 
@@ -49,6 +51,18 @@ docker architechture:
 the emgnine tks the instructions n assihn a tag to an image 
 
 
+
+
+KEY CONCEPTS
+Docker images :
+Docker containers  
+Dockerfile 
+Docker Networks 
+Docker volumes  
+Docker compose  
+Docker swarm 
+
+
 7:00 DOCKER IMAGES RELATED COMMANDS
 
 Docker images commands:
@@ -57,17 +71,25 @@ Docker images commands:
   docker images
   docker pull  
   docker push  
-Docker containers commands:
-  docker run  
-  docker ps   
-  docker rm  
-Docker images :
-Docker containers  
-Dockerfile 
-Docker Networks 
-Docker volumes  
-Docker compose  
-Docker swarm 
+
+
+8.48  Docker containers related commands:
+  docker run  cretea the cointainers ie it will deploy the appl
+  docker ps   list the container that are running
+  docker rm   delete a container
+
+
+
+9.19********We are starting today with docker images related commands.
+
+Ticket013:
+  1. prepare a jenkins ci job for maven-web-application 
+lets assume you are goin to deploy an application using docker.
+we can use a jenkins file to achieve this jenkins job
+
+
+11.04 We can write a jenkins file for this ci job
+lets assume we want to write a jenkins pipeline for for a maven web abb
 
 Ticket013:
   1. prepare a jenkins ci job for maven-web-application 
@@ -79,6 +101,8 @@ node{
     stage('4.UploadArtifacts'){}
 }
 
+              ********  then this wil b the upstream job
+TICKET
   2. prepare a jenkins cd job for maven-web-application  
 
 //Jenkisfile for maven-web-app cd job
@@ -92,8 +116,11 @@ node{
     stage('8.Deploy2Prod'){}
 }
 
-then this wil b the upstream ..: Jenkisfile for maven-web-app ci job
+.17.05.********while this wil b the downstream job....   and we wll be looking at all of this ie both the upstream & the downstream 
 
+
+
+***** or we could just have a single job that does the following
 Ticket014:
 Prepare a jenkins ci/cd job for maven-web-application 
 
@@ -112,14 +139,12 @@ Prepare a jenkins ci/cd job for maven-web-application
 9. email/slack notification  if ders a problem , to inform us smt is going wrong
 
 
-Docker images commands:
-  docker build  
-  docker tag 
-  docker images
-  docker pull  
-  docker push  
 
-docker build vs  docker image build,docker image history, docker image imort 
+
+21.20    in mobaxterm, he ran "docker image" and we saw all the below commands
+
+22.36  we can run "docker build" or "docker image build, but docker build is shorter
+ also thers docker image history, docker image imort 
 Commands:
   build       Build an image from a Dockerfile
   history     Show the history of an image
@@ -133,6 +158,13 @@ Commands:
   rm          Remove one or more images
   save        Save one or more images to a tar archive (streamed to STDOUT by default)
   tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+DELETE ALL IMAGES = ubuntu@docker:~$ docker rmi -f $(docker images -q)
+ FORCE DELETE AN IMAGE = docker rmi -f mylandmarktech/hello:latest = FORCE DELETE AN IMAGE  
+DELETE SELECTED IMAGES USING THEIR ID :  docker rmi -f 61395b4c586d e88a065848be
+
+
+24.44   docker ps we see containers that are running like myapp,stop & app
+to stop them; docker stop myapp app hello
 
 
 Docker images commands:
@@ -142,6 +174,7 @@ Docker images commands:
   docker image ls = list images
   docker images -q = list image ids ONLY 
 
+
 ubuntu@docker:~$ docker images
 REPOSITORY             TAG           IMAGE ID       CREATED        SIZE
 teslaimage             1             13e31c5e87ff   5 days ago     498MB
@@ -150,24 +183,31 @@ mylandmarktech/tesla   1             6da8acdc7fc9   2 months ago   498MB
 mylandmarktech/hello   latest        31e17b0746e4   7 years ago    17.8MB
 tomcat                 8.0.20-jre8   e88a065848be   8 years ago    493MB
 
-  docker images -q  
 
+
+
+DElETING IMAGES
   docker rmi imageName/imageID /imagetag      = DELETE AN IMAGE   
    FORCE DELETE AN IMAGE = docker rmi -f mylandmarktech/hello:latest = FORCE DELETE AN IMAGE  
                             docker rmi -f mylandmarktech/hello:latest 
-                            docker rmi -f  
+                            docker rmi -f 
+
   to list image ids only = ubuntu@docker:~$ docker images -q  
-61395b4c586d
-e88a065848be
+61395b4c586d e88a065848be
+
 33:26  DELETE ALL IMAGES = ubuntu@docker:~$ docker rmi -f $(docker images -q)
                  
    deletes selected images = docker rmi -f  13e31c5e87ff 6da8acdc7fc9 e88a065848be
-        
 
+
+        
+32.26  BC  we deleted all our images in he docker build server
+so cd into web , where we hv our application frm previous class
 we git cloned the repository maven-web-application that contains the docker file n other files in previous class frm github and we rename it to web 
 cd web/  .. this is the repository containtaing imp files , can alson see target dir if packages hv been created before, bt we stil hv to do mvn package to create the image 
 if we get an error when we run the create image command ie  docker build -t teslaimage:1 
 mk dir tesla : mkdir tesla
+we want to copy docker file into tesla
 to copy src dir to tesla dir  : cp -r src/ tesla/
 copy pom.xml to tesla dir : cp pom.xml tesla/
 copy dockerfile: cp DOckwerfile tesla/
@@ -180,6 +220,8 @@ we can build an image  with the help of the docker file
 ubuntu@docker:~/web/tesla$ cat Dockerfile
 FROM tomcat:8.0.20-jre8
 COPY target/*.war /usr/local/tomcat/webapps/tesla.war
+
+
 
 ##########steps TO MK image distributable
 clone the repo , 2)build the image, 1)mvn package so that the build is possible, 5)Docker tag , 5)then push
@@ -200,8 +242,7 @@ docker file is in the pwd
 47:43
 when we uploadd war files into nexus we can download, when we upload artifacts into nexus if we ar using docker, while containerizing i can pull the articfacts directly frm 
 nexus for docker to build an image, we can get d image frm is d maven build server n if its done locally in jenkins we can aslo get it frm jenkins or directly frm nexus 
-### we cannot get the image frm tomcat,, we deploy using tomcat or docker
-the images are either found in the build server or the artifactory ,wich is eithr maven, jenkins or the artcifaory wich is nexus or jfrog
+ the images are either found in the build server or the artifactory ,wich is eithr maven, jenkins or the artcifaory wich is nexus or jfrog
 
 
          WE use ADD if u want to download some softwares or add some files, files ar found in http location
@@ -263,6 +304,9 @@ so i wnt to mk my image distributable so i must first create a tag
 push commnad : docker push mylandmarktech/maven-web-app:tagname
 the tag name made is jb1
 
+
+                           TAGGING
+
 #### 5)TAGGING/MAKING THE IMAGE DISTRIBUTABLE 
 1:00:18 ******** docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1 
 after we run the above command 
@@ -303,6 +347,8 @@ we dnt own ngnix .. it says maintained by the NGINX Docker maintenance
 e.g docker pull nginx:stable-perl
 
 ****  docker pull httpd   this is my webserver image
+
+
 
 ****1:12:14, CREATE A DOCKER FILE USING httpd image we pulled 
 we can use the httpd to run a conatiner (  wihout creating a customized image )
@@ -369,6 +415,7 @@ docker login -u admin -p admin123  .. authenticate to the nexus repository befor
  docker push 8.200.55.9:8081/tesla/tesla-web-app:1     ,, then push
 
 ******* yes, we can push images to nexus registry bt must first tag the image accordingly, docker tag
+
 
 
 ############# TO PUSH IMAGES TO AWS AMAZON ECR
