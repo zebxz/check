@@ -344,8 +344,20 @@ when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the 
 the target dir means we v created the packages
 
 
-   STEP3; INSTALL MAVEN
-3)mvn package , sudo apt instal maven .. if it says mvn not found
+1.15.20  ran; docker build -t teslaimage:1  ... but failed
+COPY Failed: no source files were specified
+he, said it cannot find the file 
+ls 
+but no target dir
+target dir means we hv created the packages
+there we run; mvn package
+mvn not found so we install maven
+
+
+1.16.40
+ STEP3; INSTALL MAVEN   .........  **** meeee**** does this mean we need to insatll maven when we install doecker ???
+sudo apt instal maven  ,,,  .. if it says mvn not found
+3)mvn package , 
 ls target and now our artifact has been created ... teslar.war
 cat Dockerfile and see ,, a very simple  file ,, this file has 2lines .. it wants to get (FROM tomcat:8.0.20-jre8) which is the base image 
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war    
