@@ -53,7 +53,7 @@ the emgnine tks the instructions n assihn a tag to an image
 
 
 
-KEY CONCEPTS
+                    KEY CONCEPTS
 Docker images :
 Docker containers  
 Dockerfile 
@@ -200,7 +200,9 @@ DElETING IMAGES
    deletes selected images = docker rmi -f  13e31c5e87ff 6da8acdc7fc9 e88a065848be
 
 
-        
+
+
+STEPS TO DEPLOY CI/CD JOB
 32.26  BC  we deleted all our images in he docker build server
 so cd into web , where we hv our application frm previous class
 we git cloned the repository maven-web-application that contains the docker file n other files in previous class frm github and we rename it to web 
@@ -229,6 +231,9 @@ clone the repo , 2)build the image, 1)mvn package so that the build is possible,
 ######but if am not cloning the file frm the repo,, then follow step number:
 3) create the docker file 4) build the image 5) docker tag and push
 
+44.00 ... we got a failed
+COPY Failed; no source file were specified
+so he installed maven & ran mvn package & directed it to log ( mvn package > log)
 1) mvn package
 2) BUILD THE IMAGE, (we CALLED it teslaimage) from d DOCKER file we got when we cloned the maven-web-appl: docker build -t teslaimage:1 ., we run this n d dot shows that our
 docker file is in the pwd
@@ -275,7 +280,7 @@ but ADD can also be used to copy files from other remote locations
     FROM tomcat:8.0.20-jre8
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 
-      ###### FOR NO. 4, WE DIDNT nid to run mvn package again
+      ###### FOR NO. 4, WE DIDNT nid to run mvn package again   ***i bliv bc we already have maven installed so when he run "maven build" it was successful with no fail
 *******4) we WNT TO BUILD THE IMAGE  for the 2nd Docker file we created in no.3 above .. .... (tHIS IS A 2ND IMAGE WE AR creating)
 53:30 *******when we run , we can see it pulling frm JBOSS ,,,, its copying the war file into the deployment dir
  docker build -t teslaimage:jb2 -f Dockerfile_JBOSS .  ( HERE the name of the file is Dockerfile_JBOSS, so we pass -f and the dot. is bc the file is in the pwd)
@@ -304,8 +309,9 @@ so i wnt to mk my image distributable so i must first create a tag
 push commnad : docker push mylandmarktech/maven-web-app:tagname
 the tag name made is jb1
 
+                                 
 
-                           TAGGING
+                                     TAGGING
 
 #### 5)TAGGING/MAKING THE IMAGE DISTRIBUTABLE 
 1:00:18 ******** docker tag teslaimage:jb2 mylandmarktech/maven-web-app:jb1 
@@ -406,7 +412,8 @@ push images to private registry [dockerhub] :
       Authentication is required   
       docker login -u username -p password 
 
-Nexus private docker registry:
+Nexus private docker registry;
+
 ==============================
 https://8.200.55.9:8081/tesla/  ,, nexus repo
  docker tag mylandmarktech/tesla:1 8.200.55.9:8081/tesla/tesla-web-app:1 
@@ -517,6 +524,8 @@ docker system prune
 
 docker build/ps/images     
 
+                                                               DOCKER CONTAINER COMMANDS
+
 VIDEO 4
 
 docker container commands:
@@ -582,6 +591,9 @@ docker rm -f $(docker ps -aq )
 Delete all excited/stopped Containers
 ================================
 docker rm $(docker ps -aq --filter  status="exited")
+
+
+
 
 #######Ticket014:.... we can create containers wit these 3 approaches
   Deploy an application from the mylandmarktech/java-web-app image.
