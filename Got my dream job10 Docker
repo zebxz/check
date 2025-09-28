@@ -9,12 +9,6 @@ AWS for cloud computing services/resources, DOCKER for containerization, KUBERNE
 
 
 
-
-
-
-
-
-
 In docker applications run as containers   
 QUESTIO .. 2:27:00
 is docker a replacement for tomcat
@@ -25,18 +19,21 @@ python,nodejs, tomcat, docker can containerize any form of apllication
 
 ***********   SUMMARIZED FOR INTRVIEW**********************
 
-In my environment we use docker to run applications as containers
+In my environment we use docker to containerize applications ie applications run as containers
 Docker: Is a containerization multi-platform software use to;create, build, ship, share and deploy containerize applications 
 Compared to the Traditional/Physical Deployment & Virtualized Deployment options, containers are light weight,containers starts up very fast like a cheetah n the integration is very 
-easy. containers also resolved the isse of repetitive task associated with the virtualized system, eg(having to install in the dev en & also testing env ) & thats because 
-containers contains everything required for an application to run create or evry tin req for appl/process to run  (App Files (code), Dependencies, (Softwares +Libraries), ENV vars & Other Configuration files) 
-Once we clone our application from our SCM, it contains the source code, Junittestcases, build script & docker file & with thw help of the docker file, we can create a docker image. & build, create containers & deploy.
-*****ignore*** Docker Image; It's a package which contains everything (+Application Code + Libraries, Softwares+ENV)needed to run your application.
+easy. containers also resolved the issue of repetitive task associated with the virtualized system, eg(having to install in the dev en & also testing env ) & thats because 
+Docker containers: Is a Run time instance of a docker image docker image contains everything required for an application to run create or evry tin req for appl/process to run 
+(App Files (code), Dependencies, (Softwares +Libraries), ENV vars & Other Configuration files) & we are able to build images from a docker file
+we have a docker file from the file we build an image from the file n the process of building the image is called containerization IE PACKAGING THE APPL with all its DEPENCIEDS IN AN IMAGE N FRM DER WE AR
+ABle to run containers/ deploy applications
+1:42 we v a build server,with the server we executing mvn package, creating package , we ar also building images  using docker file, for docker build n once dat is done we
+can distribute these images , we can use dockerhub or nexus ,or amazon ecr or jfrog to distribute the images .. these images are push into the image registry and frm
+the registery a lot can be made to happen ,, we can pull the images and deploy appls in any enev, therfore ,we can pull the images for deployment, docker pull to pull
+d image n docker run to deploy the application, in the deployment server we v the pull n run and dats where deployment is taking place and this can take place in
+multiple env like dev, stage and prod,, the same image ,, we can deploy in any number of env... once they ar built these images are shared/distributed
 
 
-therfore i hv distributed my images, the images are now found in dockerhub so now my life is easy bc i can use the images to deploy appl in any envr
- ## now that i v created my images n pushed them to a remote repository, then thers no nid to kip them locally inorder nt to consume my resources so i can delte my images
-if i dnt nid them 
 
 *************** END**********************
 
