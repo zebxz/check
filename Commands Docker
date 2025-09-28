@@ -1,3 +1,14 @@
+KEY CONCEPTS
+Docker images :
+Docker containers  
+Dockerfile 
+Docker Networks 
+Docker volumes  
+Docker compose  
+Docker swarm 
+
+
+
 Docker containers: Run time instance of a docker image. 
      If you execute: docker run, 
      a container is created from the image
@@ -17,7 +28,7 @@ we wnt to build our image, the command is docker build, + so i give a name to my
 am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
 
 
-2)lets do docker run...  ie to create containers
+2)lets do docker run...  ie to create & deploy containers
 docker run -d -p 80:8080 --name webapp teslaimage:1
 
 we wn to deploy this application.. docker run , -d for detachable conatiner ,-p for port forwarding , port 80: marked to port 8080,wich is the port for tomcat
@@ -35,3 +46,151 @@ docker run --name containerName -d -p hostPort:containerPort image:tag
 share images
 with the help of the repository u can push images to therepository
 docker push markwellams/tesla-web-app:tagname
+
+
+
+Docker images commands:
+  docker build    = create a docker image from a Dockerfile  
+  docker tag      = assigns repository name to images 
+  docker tag  ,, we can tag an image
+  docker images   = list images
+  docker image ls = list images
+  docker images -q = list image ids ONLY
+ docker images  .,,, list images
+- docker Registry - Where docker images are stored and distributed    
+  - docker engine==- - Use by the docker service to execute tasks  e.g when u run docker build, u ar inform the daocker engine, tk dis instruction n build a docker image
+the emgnine tks the instructions n assihn a tag to an image 
+
+
+
+we can run "docker build" or "docker image build, but docker build is shorter
+ also thers docker image history, docker image imort 
+Commands:
+  build       Build an image from a Dockerfile
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Display detailed information on one or more images
+  load        Load an image from a tar archive or STDIN
+  ls          List images
+  prune       Remove unused images
+  pull        Download an image from a registry  eg  Docker pull nginx
+  push        Upload an image to a registry
+  rm          Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+DELETE ALL IMAGES = ubuntu@docker:~$ docker rmi -f $(docker images -q)
+ FORCE DELETE AN IMAGE = docker rmi -f mylandmarktech/hello:latest = FORCE DELETE AN IMAGE  
+DELETE SELECTED IMAGES USING THEIR ID :  docker rmi -f 61395b4c586d e88a065848be
+
+
+
+  docker ps we see containers that are running like myapp,stop & app
+to stop them; docker stop myapp app hello
+
+
+
+
+DElETING IMAGES
+  docker rmi imageName/imageID /imagetag      = DELETE AN IMAGE   
+   FORCE DELETE AN IMAGE = docker rmi -f mylandmarktech/hello:latest = FORCE DELETE AN IMAGE  
+                            docker rmi -f mylandmarktech/hello:latest 
+                            docker rmi -f 
+
+  to list image ids only = ubuntu@docker:~$ docker images -q  
+61395b4c586d e88a065848be
+
+
+Pull images from Public registry [dockerhub] : 
+    No athentication is required
+
+Pull images from private registry [ecr/dockerhub/nexus/JFrog] :
+    Authentication is required   
+    docker login -u username -p password 
+
+push images to Public registry [dockerhub] :
+      Authentication is required   
+      docker login -u username -p password 
+
+push images to private registry [dockerhub] :
+      Authentication is required   
+      docker login -u username -p password 
+
+
+VIDEO 4
+
+docker container commands:
+============================
+docker ps    = List running containers  
+docker ps -a = List all containers [running and stopped/excited] 
+docker ps -q   = List running containers IDs
+docker ps -aq  = List all containers IDs 
+docker stop containerName/ID  
+docker stop
+
+List Running Containers
+=======================
+docker ps -a --filter  status="running" 
+docker ps 
+docker container ls
+
+List All Containers
+==================
+docker ps -a
+docker container ls -a
+
+List ONLY stopped Containers
+=================================
+docker ps -aq --filter  status="exited" 
+docker ps -a --filter  status="exited" 
+
+List only running container ids
+==============================
+docker ps -q
+docker container ls -q
+
+
+List all container ids
+==============================
+docker ps -aq
+docker container ls -aq
+
+
+deletes stopped containers 
+===========================zs
+docker rm containerName/ID  
+docker rm $(docker ps -aq --filter status='exited' ) 
+
+zForce Delete a running container  
+===============-----------------
+docker rm -f containerName/ID 
+ docker rm -f $(docker ps -aq --filter  status="running") 
+
+Delete an exited/stopped container  
+===============-----------------
+docker rm containerName/ID  
+
+Delete all exited/stopped container
+====================================  
+docker rm $(docker ps -aq --filter status='exited' )
+
+Delete all  container
+====================================  
+docker rm -f $(docker ps -aq )
+
+
+Delete all excited/stopped Containers
+================================
+docker rm $(docker ps -aq --filter  status="exited")
+
+
+
+
+
+
+
+
+
+
+
+
+
