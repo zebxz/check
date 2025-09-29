@@ -639,12 +639,12 @@ https://github.com/LandmakTechnology/python-flask-app
 like the examples above, we had to go tru that process 
  
 
-#####the docker file
-FROM python:3.7
+#####the docker file           *****docker5*** with d help of a dockerfile we were able to containerize the appl, so we created an image frm this appl
+FROM python:3.7             docker5 ***from the key word, our base image is python 3.7
 WORKDIR /opt/app
-COPY . .
-RUN pip install --no-cache-dir -r requirements-prod.txt
-EXPOSE 5000
+COPY . .        copy.. means that it wil copy al d files frm the current working dir of my home server to the current working dir of the image we ar creatin 
+RUN pip install --no-cache-dir -r requirements-prod.txt      ***this is similar to doing mvn package, wher d artifact is created, bc dis is a python appl 
+EXPOSE 5000                                                                    so when creating d image it runs this for us & starts d application
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
 
 
