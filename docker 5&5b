@@ -271,16 +271,17 @@ ssh=22/32
 
 
 
-                                         TROUBLESHOOTING CONTAINERS
+                                         TROUBLESHOOTING CONTAINERS USING INTERACTIVE OR DETACHABLE MODE
 
 ****online *** docker exec provides an option to run commands in a running container either in detached mode by using the -d option or in interactive
 mode by using the -it flag
-
-
-               *** docker exec app pwd***  i think this is in detachable mode
+           i think *** docker exec app pwd***  i think this is in detachable mode
              WHILE 
-             ***
-1.25.00
+             ***docker exec -it webapp bash*** is interactive mode
+
+
+
+ 1.25.00            DETACHABE MODE
 6. docker exec  = run commands inside the container , to troubleshoot a container we can run commands inside the container
   docker exec , the container name /iD and the command u wnt to execute
   now let me deploy 2 containers
@@ -293,12 +294,15 @@ e.g docker exec webapp ls logs         *** ie the command i want to run is ls lo
 e.g docker exec app pwd           ***  the comand i wnat to run is pwd
 
 
-                              TROUBLESHOOTING ISSUES IN INTERACTIVE MODE
+                            
+                         TROUBLESHOOTING ISSUES IN INTERACTIVE MODE
   1.27.50      
 7. access in interactive mode ,, ie to interact with the container
     docker exec -it containerNAME/ID bash   
 
   eg docker exec -it webapp bash ,,  you hv to enter the shell like bash ,,, once i run this, i am inside the container 
+  i can see it changed me to 
+root@a56bc88daeec:/usr/local/tomcat#
 ########i:30:06    i can ls webapps/
 ls webapps /tesla
 ls webapps /tesla/jsps
@@ -306,28 +310,9 @@ vi webapps /tesla/jsps/home.jsp
 vi command not found
 bt we cudnt vi into a file
 
-1.31.30 
-to access the container:  curl 3.22.217.29:8080/maven-web-app 
-                        http://3.22.217.29:8080/maven-web-app   *** not sucessful  , bc its not the right context path to our appl
-     ***************but we got hhtp status 404 error 
- 
-but curl 3.22.217.29:8080/tesla     ***successful
-bc when we run docker exec webapp ls webapps ,, we can see the name of the application is tesla so the war file is tesla.war, so we cant use /maven-web-app
-so we wer successfull using  :  curl 3.22.217.29:8080/tesla1
-                        http://3.22.217.29:8080/tesla
 
-
-1.38.20                                           COPY FROM A CONTAINER
-##########copy from a container:  
-****************#copy from a container:
-docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
-docker cp webapp:/usr/local/tomcat/webapps .
-*********** didnt work***  bc am using the relative path
-
-so lets use the absolute path
-docker exec webapp pwd 
-now executing this command inside my container,  
-   docker exec -it webapp bash , i can see it changed me to 
+1.29.19 now executing this command am inside my container,  I can interact with the container, its running
+   docker exec -it webapp bash , again i can see it changed me to 
 root@a56bc88daeec:/usr/local/tomcat#
 ls , i can see
 bin, conf, lib, logs, temp, webapps , work
@@ -343,61 +328,107 @@ jsps
 dont do ######vi webapps/tesla/jsps/home.jsp
 command nt found
 exit ,,,,,,  ****************************************************************  he EXITED bc COMMAND NOT FOUND
-dont do ##### docker exec webapp vi webapps/tesla/jsps/home.jsp  ************Hes interacting with the container like this 
-                                   (container name is webapps)
+dont do ##### docker exec webapp vi webapps/tesla/jsps/home.jsp  *** error, path to file not found
+ ************Hes interacting with the container like this 
+                                   (container name is webapp)
 ***** failed
 bt i can copy the file 
-######## 1:31:50  docker exec webapp ls webapps .. **** interacting with the container 
+######## 1:31:50  docker exec webapp ls webapps .. **** interacting with the webapp container 
 ROOT
 docs
 manager
 tesla
 tesla.war
-****** tried to acess the applicaton curl 3.22.217.29:8080/maven-web-app
+
+
+1.31.30 
+  ****** tried to acess the applicaton curl 3.22.217.29:8080/maven-web-app
 but 404 ERROR bc its nt the ryt path to our application context path
 ########application are deployed in the webapps 
 ***** and ls webapps ie wher applications are deployed in tomcat shows us the name of the application is tesla, so the war file is tesla.war
+to access the container:  curl 3.22.217.29:8080/maven-web-app 
+                        http://3.22.217.29:8080/maven-web-app   *** not sucessful  , bc its not the right context path to our appl
+     ***************but we got hhtp status 404 error 
+ 
+but curl 3.22.217.29:8080/tesla     ***successful
+bc when we run docker exec webapp ls webapps ,, we can see the name of the application is tesla so the war file is tesla.war, so we cant use /maven-web-app
+so we wer successfull using  :  curl 3.22.217.29:8080/tesla1
+                        http://3.22.217.29:8080/tesla
+
 using this ... ****** tried to acess the applicaton curl 3.22.217.29:8080/tesla
 its successful and i can see the context 
 WELCOME TO TESLAS WEB APPLICATION PROJECT
 
 ******** BUT  if i want to modify the context displayed
 
-**************** this is wher he now applied this command 
-##########copy from a container:  
-copy from a container:
-docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
-docker cp webapp:/usr/local/tomcat/webapps .
 
-docker exec webapp ls webapps/tesla/jsps
-home.jsp
-i wnt to copy this file called home.jsp n modify smt 
-docker exce webapp ls webapps/tesla/jsps/home.jsp
-now ders a command called docker cp
-we wnt to copy the filw called home.jsp to the container called webapp
-this relative path didnt wrk :.   docker cp webapp webapps/tesla/jsps/home.jsp .   ,, i bliv webapps is wher deployment takes place in tomcat
- WE run decker exec webapp pwd ,, we can see,  /usr/local/tomcat   ,   wich is the absolute path
 
-1:40;34 **** so we use the absolute path ,, here we copied the webapps dir to the container webapp
-docker cp webapp:/usr/local/tomcat/webapps .
-and it says successfully copied to /home/ubuntu/.   ,, we wre unable to copy bc we wre using the relative path
-ls n we can see /webapps  ...... i bliv this was copied to the pwd ,, i understand bt i can still ask ??????????????????????????????????????????????????????
-now if i wnt to copy that exact file that is inside webapps (/tesla/jsps/home.jsp)
-  docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
-successfully copied , we can see /home.jsp ,,,, i bliv this was copied to the pwd ,, i understand bt i can still ask ??????????????????????????????????????????????????????
-COPIED TO  /home/ubuntu/ .
-#######  vi /home.jsp    , to change one line
-we change the line but when we check on the browser , we stil cant seee the change
-we wnt the change to b part of the container so i v to copy file to my container 
 
-*******1:45:28 copy file to a container:
-docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
-now we v successfully copied it to the webapp conatiner 
-it shows :COPIED TO webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
-and when we check in the browser we can see the line that we changed
 
+
+
+1.38.20                                           COPY FROM A CONTAINER & TO A CONTAINER
+
+1.46.00
 docker cp = copy files from a container and to a container
   docker cp 
+
+
+    A)  copy from a container ; docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp
+    B) Copy to a container ; docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
+
+
+1)##########copy from a container:      (TO MY HOME/HOST SERVER)
+meeee*** we want to copy the 'jsp' file thats inside the tesla appl, thats inside the webapps tomcat deployment dir into our home/host server
+the relative path to the file is; /usr/local/tomcat/webapps/tesla/jsps, but to copy the file we cant use the relative path, it wil say file nt found
+1)therefore we have to first use the absolute path to the file & first copy the webapps dir where we hv the file ;  /usr/local/tomcat/webapps
+so we run: docker cp webapp:/usr/local/tomcat/webapps ; this means we wnt to copy the 'webapps' tomcat deployment dir, thats where we hv the jsp file 
+2)then we can use the absolute path to copy the jsp file: /usr/local/tomcat/webapps/tesla/jsps
+
+ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp .  
+*********** didnt work***  bc am using the relative path  to the file we are trying to copy
+docker exec webapp ls
+lib conf logs temps  webapps       *** inside webapps we hv tesla, jsp & home.jsp
+so lets use the absolute path
+docker exec webapp pwd 
+/usr/local/tomcat              *** this is the absolute path
+
+***therefore we first run;
+ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps
+copy successful
+ls 
+node js application,  pfa, web, webapps          *****meee***  inside webapps conatiner we hv tesla app,  & inside tesla we hv jsp & home.jsp file
+****** 1.14.15.   earlier we were not able to copy bc we were using the relative path
+
+*** then we run; 
+docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp 
+successful
+ls
+node js application,  pfa, web, webapps, home.jsp   
+                    ****SUCCESSFULLY copied to my home server
+vi home.jsp
+then he edited it and when we checked the application on the browswer, but we cant see the editing/changes he did inside the 'jsp file
+   that means the changes is not yet part of the container 
+
+
+1.43.50  docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp  ** i copied this file frm my container to my host server
+                     now i want to copy this file 'home.jsp' its in my home server, **i bliv bc its in my host server its also in my home server.
+                     therefore we can now copy frm our home server to the webapp container.
+
+
+COPY FROM HOME SERVER TO A CONTAINER ****meee***
+          ******** to make the changes part of the container 
+
+1.44.51
+docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
+now we are copying the file'hom.jsp' into the webapps path we copied earlier our container called webapp; 'webapp:/usr/local/tomcat/webapps/tesla/jsps/'
+copy was sucessful
+**** now when we access the application on the browser we see the changes he did when he vi into the jsp file 
+1.45.20  having done this modification, what can i enforce, to ensure that these changes are captured in my image 
+because my original image i pulled from dockerhub does not have the changes yet.
+
+  we use docker commit...
+
 
 ********** 1:46:23      docker run --name webapp -d -p 8080:8080 mylandmarktech/maven-web-app 
 but the image i pulled in no.6 above doesnt v this change that was done when i vi home/jsp
