@@ -1,3 +1,7 @@
+DEPLOY NODEJS APPL, 
+
+
+
 modify docker file- build image- push- pull - deploy 
 hw to knw what port is in use
 restful APIs
@@ -9,7 +13,15 @@ QUESTIONS n ANswers ... VIDOE 5B
 
 #### 23:16 even after authenticating we couldnt push to a private repo bc he nids to upgrade his account,its a payment issue , so we used anoda public repo
 
+36:24 ## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding,so frm my docker engine, its forwarding the port to this
+container, the port is forwarded internally b172.170.2:9981
+
 host port changes but :container port doesnt
+
+
+
+START
+
 
 image contain software, os, appl code
 DOCKER FILE
@@ -22,9 +34,11 @@ EXPOSE 5000
 pwd gave us /home/ubuntu/pfa (we renamed the repository file we cloned to  pfa)
 so thta means we ar in home/ubuntu/pfa
 COPY . . means to copy every tin frm my pwd of my home server to the pwd of my image am creating
-COPY . . is similar to mvn package wher d artifcars ar been created, bc this is a python application so when creatingb the image it runs this for us: 
+ is similar to mvn package wher d artifcars ar been created, bc this is a python application so when creatingb the image it runs this for us: 
 RUN pip install --no-cache-dir -r requirements-prod.txt
 and when you run/create a container it starts the applica
+
+
 
 7:35 TICKET0016
 Ticket0016
@@ -69,6 +83,7 @@ docker run --name nodeapp -d -p 7777:9981 nodeapp:1
 bt this : nodeapp:1 is nolonger in our local servrer bt we v shared it in our register when we created d tag above bt we didnt push it, so we dnt v nodeapp:1 anywhere
 
 
+
 docker ps -q to list containers id
 to stop the containers:   docker stop container ids
 to remove stopped container : docker rm container ids
@@ -79,11 +94,14 @@ so we v to use the image that is found in my registry the version2
 docker run --name nodeapp -d -p 7777:9981 nodeapp:2  ,, i dnt hv hv nodeapp:2 in my local server bt i have it in my registry, in my image remote registry
 29:58 so when i execute docker run,this will pull/use the image to create n start the container
 
+
 36:24 ## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding,so frm my docker engine, its forwarding the port to this
 container, the port is forwarded internally b172.170.2:9981
-
 host port changes but port address :container port doesnt
-###### TO KNW WHAT PORT NUMBER TO USE AS THE HOST PORT 
+
+
+
+###### USE "netstat" TO KNW WHAT PORT NUMBER TO USE AS THE HOST PORT 
       
 to check the ports in use, we can run netstat -tulpn , n i can see the all the ports in use
 to install netstat : sudo apt install net-tools
@@ -93,7 +111,9 @@ A servers has 2^16=65536 ports/addresses [0,1,2,3...,65635]
 
     netstat -tulpn 
 
-43:38
+
+
+43:38     RESTFUL API's
 to acccess the restful APIs,  we go to the application file in github , w can see a file called app.js
 in it there are some restful APIs 
 se are some get req ie when developers develop the appl, its developed such that users are able to access diff restful APIs, 
