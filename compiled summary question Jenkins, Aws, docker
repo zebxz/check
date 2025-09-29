@@ -506,6 +506,33 @@ TAGGING/MAKING THE IMAGE DISTRIBUTABLE
 so i long into docker hub n copy the push commnad : docker push mylandmarktech/maven-web-app:tagname
 
 
+DOCKER 5&5B
+
+36:24 ## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port for port forwarding,so frm my docker engine, its forwarding the port to this
+container, the port is forwarded internally b172.170.2:9981
+
+
+ docker run --name containerName -d -p hostPort:containerPort image:tag
+  -d = detachable mode  
+  -p = port Forwarding
+**docker5**in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding,so frm my docker engine, its forwarding the port to this
+container, the port is forwarded internally b172.170.2:9981
+
+
+  ****** 1:25:00 to deploy a 2nd conatiner using the d same image,  2 containers cannot v the same host port number& name  , bt can v the same conatainer number
+host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
+eg
+container1 host port 80:80  ...  docker run --name app -d -p 8080:8080 --name webapp teslaimage:1  
+container2 host port 80  ,,, host port 80 and container port: 8080 and it doesnt change
+ to deploy a 3rd conatiner docker run --name app -d -p 8000:8080 --name webapp teslaimage:1 ... here d host port was changed to 8000
+
+
+**** pulled an image from docker hub n used it to create my own image 
+ the image we pulled is http, its the base image bc it contains my dependencies
+
+*** 36:59 we didnt do any mvn package for this python bc python web appl is nt java, we only build using maven for java appli ,, python is diff, so with java appl
+like the examples above, we had to install maven & run mvn package 
+ 
 
 ANSIBLE
 ***** not all software can be installed on all platform eg Ansible 
