@@ -1,29 +1,36 @@
-DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB,  steps TO MK image distributable/TAGGING, CREATE A DOCKER FILE USING httpd image we pulled,
-Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS, DEPLOY PYTHON IMAGE
+DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB,  steps TO MK image distributable/TAGGING,
+ PULLING httpd IMAGE, RUN CONTAINER WITHOUT USING THE httpd image we pulled, CREATE A DOCKER FILE USING httpd image we pulled,
+ AUTHENTICATION/PULLING FRM REGISTRY, Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS,we can create containers wit these 3 approaches 
+DEPLOY PYTHON IMAGE
 
 
-
+***mee*** for java application we hv to install maven bc we wil run mvn package to build but for python apply we dnt need maven bc its not java
+36:59 we didnt do any mvn package for this python bc python web appl is nt java, we only build using maven for java appli ,, python is diff, so with java appl
+like the examples above, we had to install maven & run mvn package
 
 ##########steps TO MK image distributable
 clone the repo , 2)build the image, 1)mvn package so that the build is possible, 5)Docker tag , 5)then push
 
+**** docker run --name app -d -p 8000:8080 --name webapp teslaimage:1  ,, frm dis same image we can deploy billon of containers $ it can b deployed by diff 
+persons if you mk the image become distributable ***** by creating a tag & push the image to the repo eg in dockerhub
 
-1:23:40 when u execute docker run dis is what happens 
-
-docker run --name app -d -p 8000:8080 --name webapp teslaimage:1  ,, frm dis same image we can deploy billon of containers $ it can b deployed by diff persons if 
-you mk the image became distributable 
-
-docker run --name containerName -d -p hostPort:containerPort image:tag
+******* docker run --name containerName -d -p hostPort:containerPort image:tag
   -d = detachable mode  
   -p = port Forwarding
+**docker5**in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding,so frm my docker engine, its forwarding the port to this
+container, the port is forwarded internally b172.170.2:9981
 
 
-  ****** 1:25:00 to deploy a 2nd conatiner using the d same image 
-docker run --name app -d -p 8080:8080 --name webapp teslaimage:1  .. 2 containers cannot v the same host port number& name  , bt can v the same conatainer num
-host port 80 and container port: 8080 and it doesnt change
+  ****** 1:25:00 to deploy a 2nd conatiner using the d same image,  2 containers cannot v the same host port number& name  , bt can v the same conatainer number
 host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
+eg
+container1 host port 80:80  ...  docker run --name app -d -p 8080:8080 --name webapp teslaimage:1  
+container2 host port 80  ,,, host port 80 and container port: 8080 and it doesnt change
+ to deploy a 3rd conatiner docker run --name app -d -p 8000:8080 --name webapp teslaimage:1 ... here d host port was changed to 8000
 
-*** to deploy a 3rd conatiner docker run --name app -d -p 8000:8080 --name webapp teslaimage:1 ... here d host port was changed to 8000
+
+**** pulled an image from docker hub n used it to create my own image 
+ the image we pulled is http, its the base image bc it contains my dependencies
 
 
 *****************************************************
@@ -342,6 +349,9 @@ therfore i hv distributed my images, the images are now found in dockerhub so no
  ## now that i v created my images n pushed them to a remote repository, then thers no nid to kip them locally inorder nt to consume my resources so i can delte my images
 if i dnt nid them 
 
+
+
+                  PULLING httpd IMAGE
 1:08:15
 to pull e.g
 *** Docker pull alpine
@@ -361,7 +371,7 @@ e.g docker pull nginx:stable-perl
 
 
 
-****1:12:14, CREATE A DOCKER FILE USING httpd image we pulled 
+****1:12:14,    RUN CONTAINER WITHOUT USING THE httpd image we pulled 
 we can use the httpd to run a conatiner (  wihout creating a customized image )
 
 docker run -d -p 80:8080 --name webapp teslaimage:1
@@ -370,37 +380,48 @@ docker run  --name web -d -p 5000:80 httpd
 the container has been created 
 to access the application
 *** curl -v publicip of the docker server:5000 *******ie the port of the httpd
-******* this was done wihout creating a customized image 
+******* this was done wihout creating a customized image  **** i bliv this is bc we didnt run the "docker build" command which creates/build an image
 ############################
 
+
+                         CREATE A DOCKER FILE USING httpd image we pulled
+1.13.42  now i want to create a customized image
+now lets create a file
 follow the steps below to create the file
+index.html is the name of the file am creating
 1:13:51 ... CREATE THE FILE , the file will echo Devops is good and its redirected into /var/www/html/index.html  
 
-*********THE  file is called : index.html  , the file wil
+*********THE  file is called : index.html , *** i guess bc he was rediredirecting into the file, he didnt need to follow the right html syntax
 echo "DevOps is good" >> /var/www/html/index.html   
 echo "With Landmak Technologies" >> /var/www/html/index.html 
 
-#### for html code it will be diff ..echo "<h1> Welcome to Landmak Technologies <h1/>" 
+now he decided to create an html file therfpre he will us ethe right syntax as seen below
+#### if i want to write this as html code, it will be diff. 
+*vi index.html 
+echo "<h1> Welcome to Landmak Technologies <h1/>" 
 
-***vi index.html  , then copy  (frm echo) n  paste the file, then
 **** vi Dockerfile_WEB .... Ie am creating a docker file call WEB , and the file has 2lines
 in the file my keyword is FROM 
 
 1:18:28 *** FROM httpd  ...  ... dis is the base image 
 
 COPY  idex.html /var/www/html/index.html
+  Docker file created
 ******* next , create the image 
 docker build -t http:landmark1 -f Dockerfile_WEB .
-it was successful
+the file (Dockerfile_WEB)is found in our current working dir
+it was successful,
 #####so we hv created our custom image 
 so i v pulled an image from docker hub n used it to create my own image 
-### the image we pulled is http, its the base image bc it contains my depencies
+### the image we pulled is http, its the base image bc it contains my dependencies
 
 ###########################################this didnt work, HE SAID mayb the script wasnt written well $$$$ ################## now we can deploy the application
 ******docker run  --name webS -d -p 5500:80 http:landmark1
 
 1:27:00 
 
+
+                            AUTHENTICATION/PULLING FRM REGISTRY
 
 Pull images from Public registry [dockerhub] : 
     No athentication is required
@@ -600,7 +621,8 @@ docker rm $(docker ps -aq --filter  status="exited")
 
 
 
-#######Ticket014:.... we can create containers wit these 3 approaches
+#######Ticket014:.... we can create containers wit these 3 approaches 
+        ********Mee** when we clone we can edit the docker file & when we pull we can create customized image from the "base image" we pulled *** 1.13.00**
   Deploy an application from the mylandmarktech/java-web-app image.
 Method1:  
 1. docker pull mylandmarktech/java-web-app
