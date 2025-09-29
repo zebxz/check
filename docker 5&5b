@@ -1,15 +1,15 @@
-DEPLOY NODEJS APPL, 
+DEPLOY NODEJS APPL, NETSTAT, API/RESTFUL API, TYPES OF ERROR, RESOLVING ISSUES IN A DOCKER CONTAINER,
 
 
+ ** 1.17.15** so when we run container inspect containerID/Name, 
+we can see the right container port number,so we can compare if its d ryt port we were suppose to use 
 
-modify docker file- build image- push- pull - deploy 
-hw to knw what port is in use
-restful APIs
-types of ERROR
-#######How to resolves issues occuring in a docker container??
-Monitoring dashboards
-copy files to container
+OOMKilled": false,  the container cud be running bt has a problem called 'out of memory',this container needs memory for/frm the host server to run 
+            "                                                                          if thers no memory the container could be killed
+
 QUESTIONS n ANswers ... VIDOE 5B
+
+
 
 #### 23:16 even after authenticating we couldnt push to a private repo bc he nids to upgrade his account,its a payment issue , so we used anoda public repo
 
@@ -112,6 +112,28 @@ A servers has 2^16=65536 ports/addresses [0,1,2,3...,65635]
     netstat -tulpn 
 
 
+*** api/restfull api are http get request
+eg when u type bank of america/login (boa/login), you are requesting & getting some login information
+also we hv  diff get request. so  when developers develop the appl, its developed such that users are able to access diff restful APIs, 
+51.32 so it could be a request for login, it could be an http post request like edit/modify request eg delete account details
+it is post bc you were able to provide the login info & now you logged in.
+so developers are developing the appl such that you can perform diff task so they create restful API
+so you can get login information, account details, modify information etc 
+
+***ONLINE*** An API (Application Programming Interface) is a set of rules and protocols that allows different software programs to communicate and
+exchange data with each other. Think of it as a standardized "menu" that defines how one application can access the functions and data of another, 
+enabling developers to integrate existing services into their applications rather than building everything from scratch. This process uses a request-response
+model, where one application sends a request to the API, which then processes it and returns the data or functionality requested.  
+
+RESTful APIs, also known as REST APIs,
+are a specific type of Application Programming Interface (API) that adheres to the architectural style of Representational State Transfer (REST). 
+This style defines a set of constraints and principles for designing networked applications, particularly web services.
+Key characteristics of RESTful APIs:
+Client-Server Architecture: There's a clear separation between the client (e.g., a web browser, mobile app) and the server (where the data and logic reside). 
+They can evolve independently.
+Statelessness: Each request from the client to the server contains all the necessary information to understand the request. The server does not store any 
+client context between requests.
+
 
 45:00     RESTFUL API's
 to acccess the restful APIs,  we go to the application file in github , w can see a file called app.js
@@ -158,6 +180,8 @@ Bank of America  : ....these ar all inf for users to access it
 ####if ders a problem we ar able to understand it , in the backend  we will create monitoring dashboard  to mk sure the links ar up n running 
 Monitoring dashboards :
 
+
+                                   TYPES OF 40/500 ERRORS
 if they are unable to access these links if ders  u'll get this 
 https Errors and httpsError codes:
   httpStatus codes:
@@ -183,6 +207,8 @@ that uses HTTP requests to GET, PUT, POST, and DELETE data
  httpDeleteRequests:resultin frm permission 
  httpPutRequests:
 
+                                             MONITORING DASHBOARD
+
 Monitoring dashboards :  if ders a problem , u dnt wnt ur cx to cm complaining,, u wnt to b aware b4 ur cx ar aware 
 so we reate a monitoring dashboard dat ,monitors and report if der are issues
 
@@ -201,6 +227,8 @@ EnterpriseApp
 1:02:35 but light weight containers are easy to manage compared to heavy weight virtual machines
 thats why containerization technology is very important as ad evops engr
 
+
+                                      RESOLVING ISSUES
 #######How to resolves issues occuring in a docker container??
 first run :
 1. docker ps -a 
@@ -212,15 +240,15 @@ first run :
 2. docker inspect containerNAME/or ID                  host:containerPort
    docker run --name nodeapp1 -d -p 7000:9000 mylandmarktech/nodejs-app:2  ,,,container port is suppose to be 9981 thats why we ar unable to access the contAiner bc when it
    forwards d trafic to port 9000 the application does nt listen on port9000 in d container
-                    so when we run container inspect, we can see the wrong container port number,so we can compare if its d ryt port we were suppose to use 
+      *** 1.17.15*** so when we run container inspect, we can see the right container port number,so we can compare if its d ryt port we were suppose to use 
    3.22.217.29:7000/landmarktechnologies 
    "State": {
             "Status": "running", ,, although we can see d container is running, we cant access d conatiner bc it has an problem called out of memory, if ders no memory d  
             "Running": true,                                         container can be killed
             "Paused": false,
             "Restarting": false,
-            "OOMKilled": false,
-            "Dead": false,
+  1.18.12  "OOMKilled": false,  the container cud be running bt has a problem called 'out of memory',this container needs memory for/frm the host server to run 
+            "Dead": false,                                                                           if thers no memory the container could be killed.
             "Pid": 54586,   ,, the process id of the container running
             "ExitCode": 0,
             "Error": "",
@@ -235,37 +263,69 @@ ssh=22/32
   Node JS app is running at http://localhost:9981/landmarktechnologies
 
 4. docker top containerNAME/ID = check resources/processes  
+          How processes are running.     1.21.00*** a container can be killed bc of resources issues
 
+1.22.12    we can also check the statistics
 5. docker stats containerNAME/ID = = check resources 
       "OOMKilled": false,  (out of memeory)
 
+
+
+                                         TROUBLESHOOTING CONTAINERS
+
+****online *** docker exec provides an option to run commands in a running container either in detached mode by using the -d option or in interactive
+mode by using the -it flag
+
+
+               *** docker exec app pwd***  i think this is in detachable mode
+             WHILE 
+             ***
+1.25.00
 6. docker exec  = run commands inside the container , to troubleshoot a container we can run commands inside the container
   docker exec , the container name /iD and the command u wnt to execute
-   e.g docker exec webapp ls logs 
-e.g docker exec app pwd
-   docker run --name app -d -p 6000:8080 mylandmarktech/java-web-app 
+  now let me deploy 2 containers
+ docker run --name app -d -p 6000:8080 mylandmarktech/java-web-app 
    docker run --name webapp -d -p 8080:8080 mylandmarktech/maven-web-app 
-  DockeR logs container name/id to Check if ders a problem
+ 
+DockeR logs container name/id to Check if ders a problem
+docker exec  = run commands inside the container 
+e.g docker exec webapp ls logs         *** ie the command i want to run is ls logs , i want to list the logs to check the log files.
+e.g docker exec app pwd           ***  the comand i wnat to run is pwd
 
+
+                              TROUBLESHOOTING ISSUES IN INTERACTIVE MODE
+  1.27.50      
 7. access in interactive mode ,, ie to interact with the container
-   docker exec -it containerNAME/ID bash    
-   docker exec -it webapp bash ,, enter the shell like bash ,,, once i run this, i am inside the container 
+    docker exec -it containerNAME/ID bash   
+
+  eg docker exec -it webapp bash ,,  you hv to enter the shell like bash ,,, once i run this, i am inside the container 
 ########i:30:06    i can ls webapps/
+ls webapps /tesla
+ls webapps /tesla/jsps
+vi webapps /tesla/jsps/home.jsp
+vi command not found
 bt we cudnt vi into a file
 
-to access the container:  curl 3.22.217.29:8080/maven-web-app    
-                        http://3.22.217.29:8080/maven-web-app
-***************but we got 404 error 
+1.31.30 
+to access the container:  curl 3.22.217.29:8080/maven-web-app 
+                        http://3.22.217.29:8080/maven-web-app   *** not sucessful  , bc its not the right context path to our appl
+     ***************but we got hhtp status 404 error 
+ 
+but curl 3.22.217.29:8080/tesla     ***successful
 bc when we run docker exec webapp ls webapps ,, we can see the name of the application is tesla so the war file is tesla.war, so we cant use /maven-web-app
-so we wer successfull using  :  curl 3.22.217.29:8080/tesla
+so we wer successfull using  :  curl 3.22.217.29:8080/tesla1
                         http://3.22.217.29:8080/tesla
 
+
+1.38.20                                           COPY FROM A CONTAINER
 ##########copy from a container:  
 ****************#copy from a container:
 docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp . 
 docker cp webapp:/usr/local/tomcat/webapps .
+*********** didnt work***  bc am using the relative path
 
-STILL PRACTICALISING DOCKER COMMANDS
+so lets use the absolute path
+docker exec webapp pwd 
 now executing this command inside my container,  
    docker exec -it webapp bash , i can see it changed me to 
 root@a56bc88daeec:/usr/local/tomcat#
@@ -343,6 +403,9 @@ docker cp = copy files from a container and to a container
 but the image i pulled in no.6 above doesnt v this change that was done when i vi home/jsp
 so i v to run docker commit ie create a  new image
 
+
+
+                                             DOCKER COMMIT
 ******What is docker commit?
 Using docker commit we can create image from a continer.
 docker commit <containerId/Name> <imageName>
