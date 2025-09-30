@@ -7,16 +7,18 @@ we can see the right container port number,so we can compare if its d ryt port w
 OOMKilled": false,  the container cud be running bt has a problem called 'out of memory',this container needs memory for/frm the host server to run 
             "                                                                          if thers no memory the container could be killed
 
-QUESTIONS n ANswers ... VIDOE 5B
-
-
 
 #### 23:16 even after authenticating we couldnt push to a private repo bc he nids to upgrade his account,its a payment issue , so we used anoda public repo
 
 36:24 ## 24:18 in the ticket above we v a keyword EXPOSE 9981 , its our container port  for port forwarding,so frm my docker engine, its forwarding the port to this
 container, the port is forwarded internally b172.170.2:9981
 
-host port changes but :container port doesnt
+*****  host port changes but :container port doesnt
+
+QUESTIONS n ANswers ... VIDOE 5B
+in this docker file the KEYWORD Expose is used to  indicate the container port number
+that the application is listening on
+
 
 
 
@@ -228,6 +230,15 @@ EnterpriseApp
 thats why containerization technology is very important as ad evops engr
 
 
+
+DOCKER 5B 
+about pausing the process   
+i can pause to TS
+if u deploy an appli n its running , n now thers an info u wnt to update on the container
+so u can pause the container process so that users cant access it until u v fixed it
+### WE pause and hv to unpause when we are done updating
+
+
                                       RESOLVING ISSUES
 #######How to resolves issues occuring in a docker container??
 first run :
@@ -300,7 +311,7 @@ e.g docker exec app pwd           ***  the comand i wnat to run is pwd
 7. access in interactive mode ,, ie to interact with the container
     docker exec -it containerNAME/ID bash   
 
-  eg docker exec -it webapp bash ,,  you hv to enter the shell like bash ,,, once i run this, i am inside the container 
+ eg docker exec -it webapp bash ,,  you hv to enter the shell like bash ,,, once i run this, i am inside the container 
   i can see it changed me to 
 root@a56bc88daeec:/usr/local/tomcat#
 ########i:30:06    i can ls webapps/
@@ -311,9 +322,10 @@ vi command not found
 bt we cudnt vi into a file
 
 
-1.29.19 now executing this command am inside my container,  I can interact with the container, its running
+1.29.19 now executing this command am inside my container, 
    docker exec -it webapp bash , again i can see it changed me to 
 root@a56bc88daeec:/usr/local/tomcat#
+I can interact with the container, its running
 ls , i can see
 bin, conf, lib, logs, temp, webapps , work
 where am i now? ,, i am inside dis container i jst created above so i can interact with the container, i can even ls logs , lemme ls the webapps n see what is der
@@ -365,8 +377,6 @@ WELCOME TO TESLAS WEB APPLICATION PROJECT
 
 
 
-
-
 1.38.20                                           COPY FROM A CONTAINER & TO A CONTAINER
 
 1.46.00
@@ -379,11 +389,12 @@ docker cp = copy files from a container and to a container
 
 
 1)##########copy from a container:      (TO MY HOME/HOST SERVER)
-meeee*** we want to copy the 'jsp' file thats inside the tesla appl, thats inside the webapps tomcat deployment dir into our home/host server
-the relative path to the file is; /usr/local/tomcat/webapps/tesla/jsps, but to copy the file we cant use the relative path, it wil say file nt found
+(as seen above 1.29.19) inside our container we hv this 'webapps dir' tomcat deployment dir & inside the dir we hv a home.jsp file thats inside d tesla aplication.
+meeee*** we want to copy the 'home.jsp' file into our home/host server
+the relative path to the file is; /usr/local/tomcat/webapps/tesla/jsps/home.jsp, but to copy the file we cant use the relative path, it wil say file nt found
 1)therefore we have to first use the absolute path to the file & first copy the webapps dir where we hv the file ;  /usr/local/tomcat/webapps
 so we run: docker cp webapp:/usr/local/tomcat/webapps ; this means we wnt to copy the 'webapps' tomcat deployment dir, thats where we hv the jsp file 
-2)then we can use the absolute path to copy the jsp file: /usr/local/tomcat/webapps/tesla/jsps
+2)then we can use the absolute path to copy the jsp file:  webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp
 
 ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp .  
 *********** didnt work***  bc am using the relative path  to the file we are trying to copy
@@ -445,21 +456,26 @@ docker commit webapp newimage:1
 ***** docker commit webapp mylandmarktech/maven-web-app:class34  
 then when i run docker image, i can see the new image with tag class34
 **** then push to my docker hub account so members of my team can understand/see the change
-docker push mylandmarktech/maven-web-app:class34  ,, now if u go to my docker repo u wil find thi simage 
+docker push mylandmarktech/maven-web-app:class34  ,, now if u go to my docker repo u wil find this image 
 **** create a container wit the imge 
 docker run -d --name app -p 8088:8080 mylandmarktech/maven-web-app
 when i check in my browser with the publici:8088
 i can see the new change
 i wasnt asked to authenticate bc i am already authenticated the first time n the token is already saved in my server
-the first time u try to push, it will ask fro ayhentication bt subsequently it wil use the token u v used before
+the first time u try to push, it will ask you for authentication bt subsequently it wil use the token u v used before
 
 
-Can we set CPU,RAM limit for the containers while creating?
-Yes We set using options while creating a container.
-docker run -d --name app -p 8000:8080 mylandmarktech/maven-web-app
+***** didnt use these commands****
 docker diff contianerName/ID   
-
 docker commit app image2  
+******************************************
+
+
+1.51.50 IQ
+Can we set CPU,RAM limit for the containers while creating?
+Yes We set using options while creating a container
+so while creating your container we can decide how much cpu the container will contain.
+
 
 
 docker container commands:
@@ -478,6 +494,10 @@ docker containers --help
 
 
 VIDEO 5B
+
+DOCKER FILES, DIFF APPLICATIONS & THEIR BASE IMAGE,
+
+
 QUESTION
 How do you know the container port number for a certain image and frm a tomcat server hw do u create the images and place them in a docker file 
 3:41 PROF: when u go thru the docker file video for tomcat, every u asked will be auto answered
@@ -489,6 +509,9 @@ Dockerfiles:
 ============ 
 FROM  base image containing dependencies & Softwares  
   the applications will hv diff base images
+
+
+                          DIFF APPLICATIONS & THEIR BASE IMAGE, CONTAINER KILLED BY ADMIN OR A PROCESS
 
 if am working in a python application, IF U WNT TO DETRT the base image for a python application , u will nid python so the base image shud be frm python
 python web applications 
@@ -523,18 +546,19 @@ java standalone application , this needs image frm
 ***** if ur deployin a java stanalone application, it needs java to run 
 
   
-###### what can make an image be in a pause state
-
+###### what can make an image be in a pause state??
 when u create an image and push to dockerhub n in that state the image is nt running, so u nid to pull the image, create and start d container b4 the application is running
 and all of that can happen with docker run
 docker run = pull/create/start   
 
+
+                       CONTAINER KILLED BY ADMIN OR A PROCESS
 to stop the container u can execute 
    docker kill/stop  
 and once the containeer is stopped, you can start the container
-BUT DPCKER Stop is recommemnded bc it will give a warning b4 stopping whie docker kill doesnt give a warning
-   
-but the ocntainer can be killed by the admin by running docker kill or by a process
+BUT DOCKER Stop is recommemnded bc it will give a warning b4 stopping whie docker kill doesnt give a warning
+
+but the container can be killed by the admin by running docker kill or by a process
 docker kill/stop  = admin / process 
 OR by the docker process bc it is out of memory :OOMKilled  
 due to insufficent memory to support the container n it has kiled the container
