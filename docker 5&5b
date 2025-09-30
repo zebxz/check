@@ -383,15 +383,28 @@ WELCOME TO TESLAS WEB APPLICATION PROJECT
 
 
 
-1.38.20                                           COPY FROM A CONTAINER & TO A CONTAINER
+1.38.20                                     COPY FROM A CONTAINER & TO A CONTAINER  *** i bliv to the same container.
+                                    ****online,
+                         No, the docker cp command does not directly support copying files between two containers.
+                       You cannot use a command like docker cp container1:/path/to/file container2:/path/to/destination.
+                          To transfer a file from one container to another using docker cp, you must perform a two-step process:
+
 
 1.46.00
 docker cp = copy files from a container and to a container
-  docker cp 
+  ***online**  The docker cp command facilitates copying files and directories between a Docker container and the local filesystem of the Docker host. 
+This command is useful for transferring data, configuration files, or logs without needing to restart or rebuild containers. 
 
 
     A)  copy from a container ; docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp
-    B) Copy to a container ; docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
+                                 ***online
+                             docker cp my_container:/app/source_directory/container_file.log ./local_destination/
+                                       
+    B) Copy to a/(same) container ;  docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
+                                    ** online
+                             Copying a file from the host to a container:
+    docker cp ./local_file.txt my_container:/app/destination_directory/
+
 
 
 1)##########copy from a container:      (TO MY HOME/HOST SERVER)
@@ -405,12 +418,12 @@ b)then we can use the absolute path to copy the jsp file:  webapp:/usr/local/tom
 
 start;
 ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp .  
-*********** didnt work***  bc am using the relative path  to the file we are trying to copy
+*********** didnt work***  bc am using the relative path to the file we are trying to copy
 docker exec webapp ls
 lib conf logs temps  webapps       *** inside webapps we hv tesla, jsp & home.jsp
 so lets use the absolute path
 docker exec webapp pwd 
-/usr/local/tomcat              *** this is the absolute path
+/usr/local/tomcat              *** this is the absolute path to the file
 
 a)therefore we first run;
 ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps
