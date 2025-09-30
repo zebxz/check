@@ -218,6 +218,72 @@ docker containers --help
 
 
 
+netstat" TO KNW WHAT PORT NUMBER TO USE AS THE HOST PORT 
+to check the ports in use, we can run netstat -tulpn , n i can see the all the ports in use
+to install netstat : sudo apt install net-tools
+
+
+How to troubleshoot issues or debug applications running as docker containers?
+1. docker ps -a =
+= will check if the container is running, paused or exited
+ docker start/unpause
+then docker ps -a ,to check if it stopped
+if its in stop state , u strt the container
+but if it not stopped but the process is stopped u hv to unpause it
+﻿﻿﻿2) docker top = check resources, to check the process running inside a container 
+﻿﻿﻿3) docker stats containerNAME/ID
+﻿﻿﻿4) docker logs containerNAME/ID      docker 5&6 ********* also if der ar issues in the container, we can track them frm the log files
+5) ﻿﻿﻿docker exec = run command inside the container
+docker exec app 1s 
+***meee*** interactive mode****  docker exec -it app/bin/bash
+7)﻿﻿﻿docker inspect containerNAME/ID   
+ docker inspect  ... "will show us network ie is the container in a ntwrk" does it v ip adress, a container thats running we shud see the ip address in networks
+and we can see the state as shown below that the container is nt running based on my inspeection, so we can start d container to solve the problem bc d container is exited
+e.g
+***  most of the time when we look at networking after we kill a container n start a container, we ll see the ipadresss will change
+8)99﻿﻿﻿docker attach containerNAME/ID
+﻿﻿﻿netstat -tulpn
+5) docker update container name/id
+ docker diff
+
+docker 5&6 ********* also if der ar issues in the container, we can track them frm the log files
+ How processes are running.     1.21.00*** a container can be killed bc of resources issues
+
+we can also check the statistics
+docker stats containerNAME/ID = = check resources 
+      "OOMKilled": false,  (out of memeory)
+
+INSIDE CONTAINER
+to run command inside a container
+﻿﻿﻿docker exec app pwd 
+﻿﻿﻿docker exec app ls   .. to see the files
+
+INTERCATIVE MODE
+we can actually get into the container to execute command by accessing the container in intercative mode
+docker exec -it app   .. for interactive mode
+to interact with the container we nid a shell
+so we can use a bash shell  .. : docker exec -it app bash
+or bond shell sh
+
+
+                              COPY FROM & TO A CONTAINER
+ A)  copy from a container ; docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp
+                                 ***online
+                             docker cp my_container:/app/source_directory/container_file.log ./local_destination/
+                                       
+    B) Copy to a/(same) container ;  docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
+                                    ** online
+                             Copying a file from the host to a container:
+    docker cp ./local_file.txt my_container:/app/destination_directory/
+
+
+DOCKER 5B 
+about pausing the process   
+i can pause to TS
+if u deploy an appli n its running , n now thers an info u wnt to update on the container
+so u can pause the container process so that users cant access it until u v fixed it
+### WE pause and hv to unpause when we are done updating
+
 
 
 
