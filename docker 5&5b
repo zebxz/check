@@ -254,6 +254,10 @@ first run :
      if paused you should unpause to resolve the issue  
      docker unpause; docker start 
 
+docker inspect  ... "will show us network ie is the container in a ntwrk" does it v ip adress, a container thats running we shud see the ip address in networks
+and we can see the state as shown below that the container is nt running based on my inspeection, so we can start d container to solve the problem bc d container is exited
+e.g
+***  most of the time when we look at networking after we kill a container n start a container, we ll see the ipadresss will change
 2. docker inspect containerNAME/or ID                  host:containerPort
    docker run --name nodeapp1 -d -p 7000:9000 mylandmarktech/nodejs-app:2  ,,,container port is suppose to be 9981 thats why we ar unable to access the contAiner bc when it
    forwards d trafic to port 9000 the application does nt listen on port9000 in d container
@@ -279,7 +283,7 @@ ssh=22/32
   Node JS app is running at http://localhost:9981/landmarktechnologies
   Node JS app is running at http://localhost:9981/landmarktechnologies
 
-4. docker top containerNAME/ID = check resources/processes  
+4. docker top containerNAME/ID = check resources/processes, to check the process running inside a container 
           How processes are running.     1.21.00*** a container can be killed bc of resources issues
 
 1.22.12    we can also check the statistics
@@ -329,6 +333,8 @@ bt we cudnt vi into a file
 
 
 1.29.19 now executing this command am inside my container, 
+***DOCKER 5&6so we can use a bash shell  .. : docker exec -it app bash
+or bond shell sh
    docker exec -it webapp bash , again i can see it changed me to 
 root@a56bc88daeec:/usr/local/tomcat#
 I can interact with the container, its running
@@ -472,6 +478,18 @@ but the image i pulled in no.6 above doesnt v this change that was done when i v
 so i v to run docker commit ie create a  new image
 
 
+*************************** docker 5&6********
+when the process in a container is running der ar obviously some changes
+when u deploy a container, der wil b some changes btw the container n the image wich was used to create the cointainer e.g we v copied some files into the container
+
+**** TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER
+docker diff container name/id
+its the diff btw the image used to create the container n the changes tahe v occurred in the container
+ 
+###### to maintain the changes in future application , we can commiit the changes
+docker commit 
+enables us to extract an image frm a running container
+*********************************************************************
 
                                              DOCKER COMMIT
 ******What is docker commit?
