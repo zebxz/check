@@ -38,13 +38,18 @@ can distribute these images , we can use dockerhub or nexus ,or amazon ecr or jf
 the registery a lot can be made to happen ,, we can pull the images and deploy appls in any enev, therfore ,we can pull the images for deployment, docker pull to pull
 d image n docker run to deploy the application, in the deployment server we v the pull n run and dats where deployment is taking place and this can take place in
 multiple env like dev, stage and prod,, the same image ,, we can deploy in any number of env... once they ar built these images are shared/distributed 
-
 meaning it can be easily reused as many times as possible.
 with the docker exec command we can interact with containers, get into containers troubleshoot issues and do a lot of other stuffs as well.
-with docker cp command we can copy from a container,  make modifictaions where necessary, and copy the changes to another container  
- copying files and directories between a Docker container and the local filesystem of the Docker host without needing to restart or rebuild the container
+with docker cp command we can copy copying files and directories between a Docker container and the local filesystem of the Docker host without needing to 
+restart or rebuild the container 
 ** mee*** and this is very useful bc the uptime of we appl is very important. we dnt hv to keep restarting our appl everytime we nid to mk changes so thats a 
-plus with docker however k8 is a more powerful tool that knocks docker out the water & i'd be glad to expand more on that.
+plus with docker
+when the process in a container is running der ar obviously some changes
+when u deploy a container, der wil b some changes btw the container n the image wich was used to create the cointainer e.g we v copied some files into the 
+container, and to know the changes that have occured in the container we use the 'docker diff command' docker diff container name/id
+its the diff btw the image used to create the container n the changes tahe hv occurred in the container and inorder to maintain
+the changes in future application , we can commiit the changes using the 'docker commit command' which enables us to extract an image frm a running container
+***meee*** however k8 is a more powerful tool that knocks docker out the water & i'd be glad to expand more on that.
 
 
 
