@@ -310,6 +310,12 @@ but java Enterprise application ie .ear, can only be used with jboss/wildfly ima
 ******the docker file contains 2key words FROM and COPY
 **docker5&6**FROM   ,, this defines the dependencies , this is the most imp key work 
 FROM:   The FROM instruction initializes a new build stage and sets the Base Image for subsequent instructions
+FROM indicates the  base image(Layers) such as OS(Libraries)
+ like centos,alpine,ubuntu or any programatic language(java,python,node,go) 
+ or some other sofwares like tomcat,nginx,mysql..etc. Using base image 
+ we can create our own image. All sub subsequent instructions(Layers) 
+ will be executed/created on top of base image
+
     FROM tomcat:8.0.20-jre8      **docker5&6*** the this docker file is tryng to containerize this application using FROM tomcat:8.0.20-jre8, as the base image
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 what the from & copy means is that this docker file is goin to b  copying some war files in the target dir n t wil deploy it as app.war
