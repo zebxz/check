@@ -1,7 +1,7 @@
 CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, to run command inside a
 container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER COMMIT, 
 TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE N THE RYT DEPENDENCY, CREATING A DOCKER FILE FOR RUN INSTRUCTIONS    
-DOCKERFILE keyword, 2ways to pass RUN, CMD , entrypoint command, multi Stage Docker files:
+DOCKERFILE keyword, 2ways to pass RUN, CMD , MAINTAINER, .IGNOREFILE, DOCKER ADD, 2ways to pass RUN, CMD ,entrypoint command, multi Stage Docker files:
 ****************** MUST be able to explain WHATS THE DIFF BTW SHELL FORM AND Executable form
 ########################## ## ####### for u to explain in the interview that ur job includes writing and modifying docker files as as gud as thats what u do ############
                                           ******************   i can practice 3:11:25        *************************************
@@ -10,6 +10,9 @@ QUESTION
 WHAT problem have you encountered in ur project before
 when i joined my team, they had particularly entry point and CMD instructions that were written uisng shell form for that reason they were nt running as the parent process
 so they were killed unnoticed
+
+******** bt very soon i wont need to check stuffs externally bc am now a DEVOPS engr.
+#### if i wnt to knw if my appl is running or nt i can run commands inside my docker container
 ************************************************************************************************************** START
 
 docker ps  to list the running containers
@@ -236,7 +239,7 @@ docker images
 now we can seee the image was successsfully downloaded
 ### to check how to better use the image
 we run docker inspect docker image id  
-****** THINGS TO LOOK OUT FOR IN THE IMAGE, when we run docker inspect  *******************************   SCREEEN SHOT COPy n paste
+****** THINGS TO LOOK OUT FOR IN THE IMAGE, when we run docker inspect  ****mee**contains lot of info, i can tk a SCREEEN SHOT COPy n paste & memorize
 58:25 
 1) we can see java is installed
 jbooss depends on java 
@@ -443,6 +446,9 @@ SYTNAX:
 COPY <source>                <destination> 
       ServerFile/FolderPath   PathInsideImage
 
+
+                   DOCKER ADD
+
 Docker ADD does the same tin as docker COPY but it has some advantages bc it can be used to copy files from external sources e.g to download files
 ADD -->
      ADD also can copy files to the image while creating image. 
@@ -479,6 +485,7 @@ docker build -t imageone:2 -f Dockerfile_ADD
 when i run :docker run imageone:2 ls /opt
 i can see the files were copied to /opt
         1:49:46
+
 
                  READUP POWERPOINT
 RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
