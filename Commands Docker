@@ -290,6 +290,38 @@ so u can pause the container process so that users cant access it until u v fixe
 ### WE pause and hv to unpause when we are done updating
 
 
+DOCKER 5&6
 
+
+Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
+===================
+FROM   ,, this defines the dependencies , this is the most imp key work 
+FROM:   The FROM instruction initializes a new build stage and sets the Base Image for subsequent instructions
+MAINTAINER/COPY/ADD/RUN/CMD/ENTRYPOINT/WORKDIR/ENV
+EXPOSE/USER/VOLUME/LABEL/ARG
+*****  Docker ADD does the same tin as docker COPY but it has some advantages bc it can be used to copy files from external sources e.g to download files
+ from remote https location
+
+
+FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
+ like centos,alpine,ubuntu or any programatic language(java,python,node,go) 
+ or some other sofwares like tomcat,nginx,mysql..etc. Using base image 
+ we can create our own image. All sub subsequent instructions(Layers) 
+ will be executed/created on top of base image
+layers.
+
+Syntax: 
+FROM  <ImageName>
+Ex:
+FROM tomcat:8.0.20-jre8
+FROM openjdk:8-alpine
+FROM nginx
+FROM node
+FROM python
+
+MAINTAINER --> It's will be used as comments to describe 
+author/owner who is maintaning the docker file.
+This instruction allows you to set the Author/Owner of the Image.
+so if ders a problem 
 
 
