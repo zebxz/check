@@ -321,6 +321,17 @@ FROM indicates the  base image(Layers) such as OS(Libraries)
 what the from & copy means is that this docker file is goin to b  copying some war files in the target dir n t wil deploy it as app.war
 with thw help of the docker file, we can create a docker image
 
+********************DOCKER 5&6
+using COPY, Files/Folders will be copied to the image while building an image.
+Using COPY instruction we can COPY local(build context) files or directories(folders) to the image while building image.
+
+e.g
+to copy a file in the target dir to /usr/local/tomcat/ 
+COPY target/tesla.war /usr/local/tomcat/ 
+i can aslo do : COPY . .  (this means it wil copy all the files in my pwd into the working dir of the container) 
+***************************************************
+
+
 
 
                                                                  DOCKER IMAGE
