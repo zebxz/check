@@ -283,13 +283,28 @@ Content:.. of the application
   Dockerfile :
 we can also v jenkins and other files
 
+
+
+****************
+APPLICATION DEPLOYMENT   ***tomcat1&2**
+which kind of projects are we managing?
+we are managing java based projects - projects that are developed in the java lanaguage
+*****mee***  jboss/wildfly supports/used for enterprise application while tomcat supports jar/standalone & war/web applications
+*********************************************************
+
+
+
                                                       DOCKER FILE
 ***DOCKER 5&6*** Dockerfiles are input use to build docker images    
 Docker images are input needed/used to create containerised applications  
+java base aplication will need image from either tomcat or jboss
+but java Enterprise application ie .ear, can only be used with jboss/wildfly image **tom1&2*  these applications can be deployed into  JBoss/WildFly
+*****mee***  jboss/wildfly supports/used for enterprise application while tomcat supports jar/standalone & war/web applications
+
 
 
 ******the docker file contains 2key words FROM and COPY
-    FROM tomcat:8.0.20-jre8
+    FROM tomcat:8.0.20-jre8      **docker5&6*** the this docker file is tryng to containerize this application using FROM tomcat:8.0.20-jre8, as the base image
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 what the from & copy means is that this docker file is goin to b  copying some war files in the target dir n t wil deploy it as app.war
 with thw help of the docker file, we can create a docker image
