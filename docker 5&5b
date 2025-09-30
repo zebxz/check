@@ -1,4 +1,7 @@
-DEPLOY NODEJS APPL, NETSTAT, API/RESTFUL API, TYPES OF ERROR, RESOLVING ISSUES IN A DOCKER CONTAINER,
+DEPLOY NODEJS APPL, NETSTAT, API/RESTFUL API, TYPES OF ERROR, MONITORING DASHBOARD, RESOLVING ISSUES IN A DOCKER CONTAINER,
+TROUBLESHOOTING CONTAINERS USING INTERACTIVE OR DETACHABLE MODE, COPY FROM A CONTAINER & TO A CONTAINER, DOCKER COMMIT, CONTAINER CPU, 
+DOCKER FILES, DIFF APPLICATIONS & THEIR BASE IMAGE, DIFF APPLICATIONS & THEIR BASE IMAGE, CONTAINER KILLED BY ADMIN OR A PROCESS
+
 
 
  ** 1.17.15** so when we run container inspect containerID/Name, 
@@ -103,6 +106,7 @@ host port changes but port address :container port doesnt
 
 
 
+
 ###### USE "netstat" TO KNW WHAT PORT NUMBER TO USE AS THE HOST PORT 
       
 to check the ports in use, we can run netstat -tulpn , n i can see the all the ports in use
@@ -114,6 +118,8 @@ A servers has 2^16=65536 ports/addresses [0,1,2,3...,65635]
     netstat -tulpn 
 
 
+
+                                        API
 *** api/restfull api are http get request
 eg when u type bank of america/login (boa/login), you are requesting & getting some login information
 also we hv  diff get request. so  when developers develop the appl, its developed such that users are able to access diff restful APIs, 
@@ -282,7 +288,7 @@ ssh=22/32
 
 
 
-                                         TROUBLESHOOTING CONTAINERS USING INTERACTIVE OR DETACHABLE MODE
+                                         TROUBLESHOOTING CONTAINERS USING INTERACTIVE OR DETACHABLE MODE **mee**
 
 ****online *** docker exec provides an option to run commands in a running container either in detached mode by using the -d option or in interactive
 mode by using the -it flag
@@ -392,10 +398,12 @@ docker cp = copy files from a container and to a container
 (as seen above 1.29.19) inside our container we hv this 'webapps dir' tomcat deployment dir & inside the dir we hv a home.jsp file thats inside d tesla aplication.
 meeee*** we want to copy the 'home.jsp' file into our home/host server
 the relative path to the file is; /usr/local/tomcat/webapps/tesla/jsps/home.jsp, but to copy the file we cant use the relative path, it wil say file nt found
-1)therefore we have to first use the absolute path to the file & first copy the webapps dir where we hv the file ;  /usr/local/tomcat/webapps
+a))therefore we have to first use the absolute path to the file & first copy the webapps dir where we hv the file ;  /usr/local/tomcat/webapps
 so we run: docker cp webapp:/usr/local/tomcat/webapps ; this means we wnt to copy the 'webapps' tomcat deployment dir, thats where we hv the jsp file 
-2)then we can use the absolute path to copy the jsp file:  webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp
+b)then we can use the absolute path to copy the jsp file:  webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp
 
+
+start;
 ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp .  
 *********** didnt work***  bc am using the relative path  to the file we are trying to copy
 docker exec webapp ls
@@ -404,14 +412,14 @@ so lets use the absolute path
 docker exec webapp pwd 
 /usr/local/tomcat              *** this is the absolute path
 
-***therefore we first run;
+a)therefore we first run;
 ubuntu@docker;~ docker cp webapp:/usr/local/tomcat/webapps
 copy successful
 ls 
 node js application,  pfa, web, webapps          *****meee***  inside webapps conatiner we hv tesla app,  & inside tesla we hv jsp & home.jsp file
 ****** 1.14.15.   earlier we were not able to copy bc we were using the relative path
 
-*** then we run; 
+b)then we run; 
 docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp 
 successful
 ls
@@ -421,13 +429,18 @@ vi home.jsp
 then he edited it and when we checked the application on the browswer, but we cant see the editing/changes he did inside the 'jsp file
    that means the changes is not yet part of the container 
 
+( The above illustrated that we copied from the webapps tomcat deployment dir which is in our webapp container to our home/host server, we could not see the change
+done in the home.jsp file on the browser yet bc we hvae not copied the change into the container but once we copy d change into the container we will see the change
+(when am practising, ill see if i can directly vi into the webapp container then vi into the home.jsp file, mk the changes & see if it shows on the browser.)
+
 
 1.43.50  docker cp webapp:/usr/local/tomcat/webapps/tesla/jsps/home.jsp  ** i copied this file frm my container to my host server
                      now i want to copy this file 'home.jsp' its in my home server, **i bliv bc its in my host server its also in my home server.
                      therefore we can now copy frm our home server to the webapp container.
 
 
-COPY FROM HOME SERVER TO A CONTAINER ****meee***
+
+2)COPY FROM HOME SERVER TO A CONTAINER ****meee***
           ******** to make the changes part of the container 
 
 1.44.51
@@ -471,7 +484,7 @@ docker commit app image2
 ******************************************
 
 
-1.51.50 IQ
+1.51.50 IQ                       CONTAINER CPU
 Can we set CPU,RAM limit for the containers while creating?
 Yes We set using options while creating a container
 so while creating your container we can decide how much cpu the container will contain.
@@ -495,7 +508,7 @@ docker containers --help
 
 VIDEO 5B
 
-DOCKER FILES, DIFF APPLICATIONS & THEIR BASE IMAGE,
+    DOCKER FILES, DIFF APPLICATIONS & THEIR BASE IMAGE, DIFF APPLICATIONS & THEIR BASE IMAGE, CONTAINER KILLED BY ADMIN OR A PROCESS
 
 
 QUESTION
