@@ -585,6 +585,22 @@ e.g u cant decide to deploy 10 replicas of webapp with docker but with kubernete
 bc docker cannot scale, it can only deploy one replica of an appliaction and that is a problem
 
 
+      CONTAINER KILLED BY ADMIN OR A PROCESS
+but the container can be killed by the admin by running docker kill or by a process
+docker kill/stop  = admin / process 
+OR by the docker process bc it is out of memory :OOMKilled  
+due to insufficent memory to support the container n it has kiled the container
+this can be resolved by adding memory to the docker host 
+e.g in aws u can jst change the instance type
+e.g u had 
+the container can be 
+    t2-micro  =  running with 1GB  
+  so u can change to   T2-MEDIUM = 4GB  
+
+u can also alocate memmory and cpu to containers
+
+
+
 ANSIBLE
 ***** not all software can be installed on all platform eg Ansible 
 ansible  can be installed in Linux Platforms ONLY  :
