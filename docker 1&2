@@ -293,6 +293,7 @@ we are managing java based projects (jar/war/ear)- projects that are developed i
 *********************************************************
 
 
+**docker 5&6*** THE INTENTIONN OF ANY DOCKER FILE that we ar trying to create is to be able to package the application plus all its dependencies
 
                                                       DOCKER FILE
 ***DOCKER 5&6*** Dockerfiles are input use to build docker images    
@@ -307,6 +308,8 @@ but java Enterprise application ie .ear, can only be used with jboss/wildfly ima
 
 
 ******the docker file contains 2key words FROM and COPY
+**docker5&6**FROM   ,, this defines the dependencies , this is the most imp key work 
+FROM:   The FROM instruction initializes a new build stage and sets the Base Image for subsequent instructions
     FROM tomcat:8.0.20-jre8      **docker5&6*** the this docker file is tryng to containerize this application using FROM tomcat:8.0.20-jre8, as the base image
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war   
 what the from & copy means is that this docker file is goin to b  copying some war files in the target dir n t wil deploy it as app.war
