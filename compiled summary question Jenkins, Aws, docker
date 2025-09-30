@@ -478,6 +478,13 @@ no its nt , its a newer version to deploy appl by containerizing the appl includ
 python,nodejs, tomcat, docker can containerize any form of apllication
 
 
+DOCKER5B
+jenkins file is written in grovy language
+terraform is written in hcl
+what language is docker file written in very simple language almost like a bash shell script,, its a very simple file
+go language is used to write docker file
+**********
+
 IQ: How many environment are you supporting in your CURRENT role??
          Development environment    
          Testing/QA environment    
@@ -506,7 +513,7 @@ TAGGING/MAKING THE IMAGE DISTRIBUTABLE
 so i long into docker hub n copy the push commnad : docker push mylandmarktech/maven-web-app:tagname
 
 
-DOCKER 5&5B
+DOCKER 5
 
 ***mee*** for java application we hv to install maven bc we wil run mvn package to build but for python apply we dnt need maven bc its not java
 36:59 we didnt do any mvn package for this python bc python web appl is nt java, we only build using maven for java appli ,, python is diff, so with java appl
@@ -543,6 +550,40 @@ https Errors and httpsError codes:
     501 / 502 / 503 =  mayb the server is down
   200 = in the 200 family means its ok  
   300 = redirect 
+
+
+IQ
+Can we set CPU,RAM limit for the containers while creating?
+Yes We set using options while creating a container
+so while creating your container we can decide how much cpu the container will contain.
+
+
+DOCKER 5B
+IQ; in this docker file the KEYWORD Expose is used to  indicate the container port number
+that the application is listening on
+
+
+IQ what can make an image be in a pause state?? 
+when u create an image and push to dockerhub n in that state the image is nt running, so u nid to pull the image, create and start d container b4 the application is running
+and all of that can happen with docker run
+docker run = pull/create/start   
+
+
+IQ; jenkins file is written in grovy language
+terraform is written in hcl
+what language is docker file written in very simple language almost like a bash shell script,, its a very simple file
+go language is used to write docker file
+
+
+QUESTION
+with regards to out of memory issues, is der a way we can use autoscaling 
+EVEN THOUGH WE Spoke abt out of memory, it rarely happens bc containeriztion itself has a lot of options that we ;ll look at when we get to kubertnets
+### ull cm to realise that docker basically is going to ends with docker files
+the rest we ar going to be using docker to create images, push the images and then use kubernetes to deploy the application
+**** when it comes to deployment,we wont use docker to deploy bc docker cannot scale 
+e.g u cant decide to deploy 10 replicas of webapp with docker but with kubernetes u can deploy as many replica as u want
+bc docker cannot scale, it can only deploy one replica of an appliaction and that is a problem
+
 
 ANSIBLE
 ***** not all software can be installed on all platform eg Ansible 
