@@ -77,7 +77,14 @@ Commands:
   inspect     Display detailed information on one or more images
   load        Load an image from a tar archive or STDIN
   ls          List images
-  prune       Remove unused images
+  prune       Remove unused images ..  docker5&6.. IMAGES without a name or tag are called dangling images
+ubuntu@docker:~/web/laps$ docker system prune      **************** it deleted all the dangling images
+WARNING! This will remove:
+  - all stopped containers
+  - all networks not used by at least one container
+  - all dangling images
+  - all dangling build cache  ........**************** it deleted all the dangling images
+
   pull        Download an image from a registry  eg  Docker pull nginx
   push        Upload an image to a registry
   rm          Remove one or more images
@@ -249,7 +256,12 @@ e.g
 8)99﻿﻿﻿docker attach containerNAME/ID
 ﻿﻿﻿netstat -tulpn
 5) docker update container name/id
- docker diff 
+can be used to change some settings and parametsr on  running conatiners e.g we can change d memory limit of a container,bc a container can be killed bc of out of memeory 
+so we shud be able to modify such parameter so that we can keep our container running
+
+6)docker rename : to rename an application
+
+ 7)docker diff 
  RUN commands or instructions will be executed while creating an image on top of the previous layers(Image)
 Docker history (image name OR image ID) : this will define all the layers on/of the image e.g files that were added on the image 
 
