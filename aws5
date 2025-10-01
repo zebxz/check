@@ -214,10 +214,37 @@ Ticket0012:
 
 
 
+2:38:25 our webserver is running in the public subnet which has route to the internet via the internet gateway
+i think its bettr to use the same key for all the jump,db,&webserver so that  no nid to chmod 400 multiple times,, if i use the same key, once i chmod once for dbserver,
+i dnt nid to chmod again when i ssh the webserver
+
+
 S3 BUCKET CANT BE CREATED IN SUBNET (Because its a regional service, i can create it inside my VPC)
 1:03:22 my s3 bucket cannot be be created in a subnet, e.ginside us east2a subnet ..bc its a regional service whose name must be globally unique
 i can create it in the us region inside my vpc e.g us east,us west   ***me***but not inside the subnet, remember subnets are created inside the vpc
 ****meeee***** its like the s3 can be created inside the compound but not inside the house/rooms
+
+
+***Online** PRIVATE SUBNET
+our appservers are positioned in the private subnet
+ Since private subnets lack direct internet connectivity, 
+these instances typically use a Network Address Translation (NAT) gateway or a NAT instance located in a public subnet to route their outbound traffic.  
+Instances in a private subnet need to access the internet primarily to download software updates, 
+fetch external data (like API calls to third-party services), resolve domain names (DNS lookups), or for system health checks
+
+******Instances in a private subnet may need to communicate with instances in a public subnet for various reasons, such as accessing services hosted in
+the public subnet or using the public subnet's NAT gateway for outbound internet access
+
+
+
+*** NACL.. controls inbount and outbound traffic into the vpc
+**NAT GATEWAY, its attached to the public subnet,allows the private subnet to get access to the internet but does nt allow traffic into the private subnet
+         in the private subnet we place the appservers.
+**IGW...   To ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
+IGW is attached to the vpc & then to the pub route table (so the pub route table ahs access to the internet) then the pub route table is attached to
+the pub subnet. .. IGW is not attached to the private subnet 
+in the public subnet we place the webservers, jumperservers & lb & for traffic to get to our appservers it has to go tru the jumpserver.
+*****************************************************************
 
 
 
@@ -251,12 +278,24 @@ the app server can access internet externally, i decide that we can recieve traf
 
 NACL 
 ***online
-A Network Access Control List (NACL) is a security feature provided by Amazon Web Services (AWS) that acts as a virtual firewall for controlling inbound and outbound traffic at the subnet level within a Virtual Private Cloud (VPC). 
+A Network Access Control List (NACL) is a security feature provided by Amazon Web Services (AWS) that acts as a virtual firewall for controlling inbound and 
+outbound traffic at the subnet level within a Virtual Private Cloud (VPC). 
 NACLs provide an additional layer of security to your VPC by allowing or denying specific traffic based on defined rules.
+
+
+
+                                           NALC HAS 2LAYERS OF SECURITY
+NACL has 2 security types or parameter ( routing table & firewall) & the firewall has 2layers (one for the subnet & one for the webserver)
+
+              
+                      NACL HAS 2TYPES OF SECURITY ( ROUTE TABLE &FIREWALL), the firewall has 2layers
+
+1) ROUTE TABLES
+2) FIREWALL
 1:12:24 vpc has some firewall ,2 types of firewall, the first one is the firewall that stands infront of the subnet, like a gateman, called netwk acess control list nACL... 
 in naCL, we can create some rule e.g open port80 for inbound rules &for outbound open port80 aswell, on my NACL, trafic frm enduser can get to my subnet
-for  trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group (this is firewall), but lets say i also hv port 443 open in my NACL, traffic still cant get to the webserver 
-therfore i also have to open port80 , 443 in the webserver security grp
+THEsecond firwall:for  trafic to get to the webserver ,in front of my webserver thers another layer of security ie security group (this is firewall),
+but lets say i also hv port 443 open in my NACL, traffic stil cant get to the webserver therfore i also have to open port80 ,443 in the webserver security grp
 ****** in  all we hv 2 security parameter
 the 1st is the router for routing, wich permits traffic to be routed to the subnet bc if thers no route table permiting routing the traffic wont happen
 the 2nd is the firewall wich has 2layers of security,, security at the subnet level & security at the server level
