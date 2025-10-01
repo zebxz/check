@@ -2,7 +2,9 @@ CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How
 to run command inside a container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED 
 IN THE CONTAINER, DOCKER COMMIT, DOCKER FILE N THE RYT DEPENDENCY, DOCKERFILE INSTRUCTIONS/KEYWORD, MAINTAINER, .IGNOREFILE, DOCKER ADD, 2WAYS WE CAN PASS THE
 RUN/CMD/ENTRYPOINT INSTRUCTIONS, SHELL FORM OR EXECUTABLE FORM, WHATS THE DIFF BTW SHELL FORM AND Executable form (parent/child process),
-CREATING A DOCKER FILE FOR RUN INSTRUCTIONS, What is difference b/w RUN & CMD, MY PROJECT, DEPLOY NODE JS APPLICATION, multi Stage Docker files.
+CREATING A DOCKER FILE FOR RUN INSTRUCTIONS, What is difference b/w RUN & CMD, multi Stage Docker files, EXECUTE THE MULTI STAGE DOCKER FILE MY PROJECT,
+DEPLOY NODE JS APPLICATION,
+
 ****************** MUST be able to explain WHATS THE DIFF BTW SHELL FORM AND Executable form
 ########################## ## ####### for u to explain in the interview that ur job includes writing and modifying docker files as as gud as thats what u do ############
                                           ******************   i can practice 3:11:25        *************************************
@@ -875,7 +877,7 @@ https://github.com/LandmakTechnology/Dockerfiles
 10. Keywords should be in uppercase to distinguish it from arguments 
 
 
-
+2.55.00
                                               MULTI STAGE DOCKER FILE
 
 multi Stage Docker files: 
@@ -885,30 +887,40 @@ in this file our target is that we want to :
 3. DeployAsContainer 
 ****************************** for us to mk this application light weight, we ar going to use a multi Stage Docker files,bt if i dnt want to use multi Stage
 Docker files
-then ill hv to : 
+then ill hv to do smt like this: 
 FROM ubuntu:git   (in this ubuntu server, for me clone my code i nid git, so i can download an ubuntu server that has git installed, we can go to ubuntu n 
-search d ubuntu that has gitwith any desired version , i can also search for tomcat that comes with java,jdk with any version 
+search d ubuntu that has git with any desired version , remember that we saw that u cud go to dockerhub & search for tomcat that comes with java,jdk with 
+any version you want. 
+similarly, we can search for ubuntu with our desired git version
+after that we need to clone the code 
+so we run clone 
 WORDIR /home/ubuntu/
 ******* may also nid to run some command to be able to install maven for e.g git ....bc git is prerequisite for maven to run
-RUN clone https://git/repo/webapps \ 
+RUN clone https://git/repo/webapps \   ( we are running the instruction)
     && cd  webapps
-    && mvn install 
+    && mvn install     2.58.15***  if maven is not installed, it means that we shud hv run some command to be able to install maven
+
+ MULTI STAGE DOCKER FILE
+ multi stage docker file  :  it has multiple FROM keyword
 ******************************thistype of docker file wil be very complicated, so we wil use the multi stage docker file for this task 
 ********************** advicable to use a multi Stage Docker files wherver necessary
 e.g for tomcat
 FROM tomcat:71-jdk8-corretto-al2   
 
+
+                                  MULTI STAGE DOCKER FILE
  multi stage docker file  :  it has multiple FROM keyword
 FROM alpine/git as repo, stage1 cloning the code, so frm alpine as repo , stage2 from maven as build; we ar copying wotever is in repo (maven-web-application)
 into /app then mvn instal and the final stage we ar deploying the application from tomcat ..........  from build, it will copy the war file in the target dir 
 
-#git
+#git             ** this is stage1
 FROM alpine/git as repo  (frm alpine we assigning  a name here as repo)
 MAINTAINER mylandmarktech@gmail.com
 WORKDIR /app
 RUN git clone https://github.com/LandmakTechnology/maven-web-application
+  **3.00.5, so we are saying clone this 
 
-#Maven
+#Maven    **stage2, frm maven as build
 FROM maven:3.5-jdk-8-alpine as build
 WORKDIR /app
 COPY --from=repo /app/maven-web-application  /app
@@ -919,9 +931,13 @@ FROM tomcat:8.0.20-jre8
 #COPY  /app/target/*war /usr/local/tomcat/webapps/maven-web-app.war
 COPY --from=build /app/target/*war /usr/local/tomcat/webapps/
 
-ubuntu@docker:~/web/laps$ vi multi-stageDF                              3:01:00 
-docker build -t image4 -f multi-stageDF .   ,, the image was created successfully bt the size was larger 493mb
 
+                   EXECUTE THE MULTI STAGE DOCKER FILE 
+ubuntu@docker:~/web/laps$ vi multi-stageDF                              3:01:00 
+docker build -t image4 -f multi-stageDF .   ,, the image was created successfully 
+we see the size, i think the size was larger 493mb but he said we gives us a light weight image ... how??
+docker images
+we see we hv a lot of images that are untagged 
 ***********************IMAGES without a name or tag are called dangling images
 
 ubuntu@docker:~/web/laps$ docker system prune      **************** it deleted all the dangling images
@@ -930,6 +946,8 @@ WARNING! This will remove:
   - all networks not used by at least one container
   - all dangling images
   - all dangling build cache  ........**************** it deleted all the dangling images
+
+
 
 3.05.40
 #### working on docker files is going to be part of your job, so for u to explain in the interview that ur job includes writing and modifying docker files 
@@ -946,7 +964,7 @@ Docker compose
 docker swarm
 
 
-                              MY PROJECT
+                              NEEDED FOR MY PROJECT
 3.09.20
 *** the purpose of all these is for you to understand how to use docker in your project, we hv a lot of docker files which w ehave used in our project
 he wnt to project package in github
