@@ -478,6 +478,17 @@ if i share a mnovie in my s3 bucket the whole class/ a thousand plus can can wat
 
 DOCKER 1&2
 
+Dockerfiles are input use to build docker images, docker file is a simple text file that consists of instructions to build/assemble a docker image
+Docker can build images by reading the instructions from a docker file
+
+DOCKER5B
+jenkins file is written in grovy language
+terraform is written in hcl
+what language is docker file written in very simple language almost like a bash shell script,, its a very simple file
+go language is used to write docker file
+**********
+
+
 if we dnt write the tag of the image as we didnt, it wil choose a default tag and that will be latest  ,, so it will go to d ngnix repository n check for what is 
 called latest 
 
@@ -497,12 +508,6 @@ no its nt , its a newer version to deploy appl by containerizing the appl includ
 python,nodejs, tomcat, docker can containerize any form of apllication
 
 
-DOCKER5B
-jenkins file is written in grovy language
-terraform is written in hcl
-what language is docker file written in very simple language almost like a bash shell script,, its a very simple file
-go language is used to write docker file
-**********
 
 IQ: How many environment are you supporting in your CURRENT role??
          Development environment    
@@ -617,6 +622,53 @@ the container can be
   so u can change to   T2-MEDIUM = 4GB  
 
 u can also alocate memmory and cpu to containers
+
+
+DOCKER 5&6
+ RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image)
+ Next to run you can mention any command based on base os of image.... (he didnt xplain this)
+        We can have number of RUN instructions in a docker file 
+        all the RUN instructions will be exectued one after the other from top to bottom.
+
+FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
+ like centos,alpine,ubuntu or any programatic language(java,python,node,go) 
+ or some other sofwares like tomcat,nginx,mysql..etc. Using base image 
+ we can create our own image. All sub subsequent instructions(Layers) 
+ will be executed/created on top of base image
+layers.
+
+Syntax: 
+FROM  <ImageName>
+Ex:
+FROM tomcat:8.0.20-jre8
+FROM openjdk:8-alpine
+FROM nginx
+FROM node
+FROM python
+
+MAINTAINER --> It's will be used as comments to describe 
+author/owner who is maintaning the docker file.
+This instruction allows you to set the Author/Owner of the Image.
+so if ders a problem 
+
+
+ RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image)
+ Next to run you can mention any command based on base os of image.... (he didnt xplain this)
+        We can have number of RUN instructions in a docker file 
+        all the RUN instructions will be exectued one after the other from top to bottom.
+
+
+
+WHATS THE DIFF BTW SHELL FORM AND Executable form  (executable is preferred)
+the main difference is :
+when u run a command using the shell form (/bin/bash), the principal process is the shell
+***me ie, eg; ubuntu@docker:¬/web$ echo $SHELL, or ubuntu@docker:¬/web$ ls; when u execute command like this, a shell is been used to excute the command 
+while for executable; the command ( CMD or RUN instruction wil run as a parent process ) 
+e.g to start a command in tomcat: CMD ["commond/executable" , "arg1","arg2"] ["catalina" , "run"
+when we open a docker file in docker hub (search tomcat), we see how the application is starting : the command in executable form "catalina.sh run" 
+and it cant be killed bc tomcat is the main process and i am containerising my application
 
 
 
