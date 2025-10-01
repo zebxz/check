@@ -1,7 +1,8 @@
-CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, to run command inside a
-container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER COMMIT, 
-TO KNOW THE CHANGES THAT V OCCURED IN THE CONTAINER, DOCKER FILE N THE RYT DEPENDENCY, CREATING A DOCKER FILE FOR RUN INSTRUCTIONS    
-DOCKERFILE keyword, 2ways to pass RUN, CMD , MAINTAINER, .IGNOREFILE, DOCKER ADD, 2ways to pass RUN, CMD ,entrypoint command, multi Stage Docker files:
+CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, 
+to run command inside a container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED 
+IN THE CONTAINER, DOCKER COMMIT, DOCKER FILE N THE RYT DEPENDENCY, DOCKERFILE INSTRUCTIONS/KEYWORD, MAINTAINER, .IGNOREFILE, DOCKER ADD, 2WAYS WE CAN PASS THE
+RUN/CMD/ENTRYPOINT INSTRUCTIONS, SHELL FORM OR EXECUTABLE FORM, WHATS THE DIFF BTW SHELL FORM AND Executable form, CREATING A DOCKER FILE FOR RUN INSTRUCTIONS,
+What is difference b/w RUN & CMD, multi Stage Docker files.
 ****************** MUST be able to explain WHATS THE DIFF BTW SHELL FORM AND Executable form
 ########################## ## ####### for u to explain in the interview that ur job includes writing and modifying docker files as as gud as thats what u do ############
                                           ******************   i can practice 3:11:25        *************************************
@@ -184,7 +185,8 @@ We shall start with docker networks and Micro-services on Saturday.
 
 Dockerfiles:
 ============ 
-Dockerfiles are input use to build docker images    
+Dockerfiles are input use to build docker images, docker file is a simple text file that consists of instructions to build/assemble a docker image
+Docker can build images by reading the instructions from a docker file
 Docker images are input needed/used to create containerised applications  
 
 
@@ -326,9 +328,10 @@ landmark.war
 1:16:30 ... READ UP POWER POINT SCRIPT
 
 
-
-Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
-===================
+                              DOCKER FILE INSTRUCTIONS/KEYWORDS
+Dockerfile instructions/keywords:   instructions can be used to execute commands/scripts
+       in writing a docker file these ar the keywords we shud tk specific note of 
+===================    
 FROM   ,, this defines the dependencies , this is the most imp key work 
 FROM:   The FROM instruction initializes a new build stage and sets the Base Image for subsequent instructions
 MAINTAINER
@@ -424,6 +427,8 @@ COPY . .          this is hw simple docker files are
 ********** COPY .. means it will copy all the files and folder in my pwd to my container and in this case, i am building an ubuntu container 
 so if i execute this Dockerfile_copy  to build my image , it wil copy all the files above but if i dnt want to copy a particular file, to ensure that all the files ar copied
 exceppt a particular file e.g src
+
+                                     .DOCKERIGNORE
 e.g i dnt want to copy: src then i wil create a new file called .Dockerignore , then any file i dnt wnt to copy, i can move it into this file 
 ubuntu@docker:¬/web$  touch .Dockerignore 
 ubuntu@docker:¬/web$  vi .Dockerignore
@@ -487,7 +492,7 @@ i can see the files were copied to /opt
         1:49:46
 
 
-                 READUP POWERPOINT
+                 READUP POWERPOINT...   HOW CAN WE PASS THE RUN/CMD/ENTRYPOINT INSTRUCTIONS
 RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
 These RUN,CMD,ENTRYPOINT can be defined in 2 forms. we can pass them in 2forms  either we use the shell form or the executable form 
 ****** he then continued later 1:59:50 
@@ -498,6 +503,7 @@ RUN --> RUN instruction will  execute commands/scripts.
         Next to run you can mention any command based on base os of image.... (he didnt xplain this)
         We can have number of RUN instructions in a docker file 
         all the RUN instructions will be exectued one after the other from top to bottom.
+  if a file needs multile 'run' instruction, writing the run command several times is not necessary, we can reduce them with the && operator(copied frm below)
 
 *****layers means: when you create a docker image, it is created on multiple layers depending on the instruction that have been passed
 ***************** LAYERS EXPLAINED   ***************************************************
@@ -513,6 +519,8 @@ jblandmark                   1
 Ubuntu                       latest
 mylandmarktech/sping-boot-    latest
 
+
+
 CREATING A DOCKER FILE FOR RUN INSTRUCTIONS    1:53:35
 vi Docker_RUN 
 FROM imageone
@@ -522,7 +530,7 @@ ADD . /opt/class30             ie add all the files in my pwd and add them in my
 RUN apt install tree wget unzip -y    ( we use apt bc imageone is running on ubuntu ie we created imageone from ubuntu as seen above )
 exit
 then run docker build -t imageone:3 -f Dockerfile_RUN
-***** build wasnt successful bc some RUN command failed e.g apt install failed: WARNING apt does nt have a stable CLI interface. Use with caution in scripts, dis i bc the
+***** build wasnt successful bc some RUN command failed e.g apt install failed: WARNING apt does nt have a stable CLI interface. Use with caution in scripts, dis is bc the
 base image is minimal, it contains just relevant libraries
 ********* now we vi into  Docker_RUN again and remove the apt command then our build was successful
 now when we run docker history imageone:3 , we can see the 3 new layers that were added as well as the previous layers (ie imageone layers)
@@ -535,8 +543,31 @@ thats why we say: RUN instruction will  execute commands/scripts.
         We can have number of RUN instructions in a docker file 
         all the RUN instructions will be exectued one after the other from top to bottom.
 
-1:59:40 *************HOW CAN WE PASS THESE INSTRUCTIONS
-RUN, CMD, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
+
+CMD: cmd instruction is executed while starting the container, it Specifies the command to run when an container is launched/started
+there can only be one CMD instruction in a docker file, if there are more than one then only the last one will take effect
+CMD instructions are nt executed when ur creating ur image ( i copied  this frm below)
+
+
+ENTRYPOINT; Allows to configure a container that will run as an executable, its executed while starting a container
+its similar to CMD, the diff is entrypoint command & parameters are not ignored(cant override) 
+if we hv CMD & entry oint in a docker file then CMD parameters will be used as default parameters or entry point
+if there are more than one entrypoint, then only the last one will take effect
+
+**online*** 
+The ENTRYPOINT command in a Dockerfile is used to define the main process or executable that will always run when a container starts.
+It is particularly useful when you want to create a container that behaves like a standalone application or service.
+
+Key Features of ENTRYPOINT
+Primary Command: It sets the container's main process, ensuring that the container always runs this command.
+Non-Overridable by Default: Unlike CMD, the ENTRYPOINT command cannot be overridden when starting a container unless the --entrypoint flag is explicitly used.
+Flexibility with CMD: You can combine ENTRYPOINT with CMD to provide default arguments or flags for the main process.
+
+
+
+
+1:59:40 *************HOW CAN WE PASS THE RUN/CMD/ENTRYPOINT INSTRUCTIONS
+RUN, CMD**online command prompt, ENTRYPOINT:  instructions can be used to execute commands/scripts. 
 we can either use shell form or executable form 
 e.g 
 ubuntu@docker:¬/web$ ls
@@ -572,10 +603,12 @@ CMD ["commond/executable" , "arg1","arg2"]
 ENTRYPOINT ["commond/executable" , "arg1","arg2"]
            ["catalina" , "run"] 
 
-WHATS THE DIFF BTW SHELL FORM AND Executable form 
+
+WHATS THE DIFF BTW SHELL FORM AND Executable form  (executable is preferred)
 the main difference is :
 when u run a command using the shell form (/bin/bash), the principal process is the shell
-e.g
+***me ie, eg; ubuntu@docker:¬/web$ echo $SHELL, or ubuntu@docker:¬/web$ ls; when u execute command like this, a shell is been used to excute the command 
+
 ubuntu@docker:¬/web$ ps 
 PID TTY        TIME CMD
 12752 pts/0   00:00:00 bash    **** ( this bash is the principal  OR the parent process) 
@@ -593,8 +626,9 @@ CMD ["commond/executable" , "arg1","arg2"]
 
 QUESTION
 WHAT problem have you encountered in ur project before
-when i joined my team, they had particularly entry point and CMD instructions that were written uisng shell form for taht reason they were nt running as the parent process
-so they were killed unnoticed
+when i joined my team, they had particularly entry point and CMD instructions that were written uisng shell form for that reason the instructions were nt
+running as the parent process so they were killed unnoticed
+eg  ues this; CMD [" catalina.sh run]  NOT this; CMD sh catalina.sh run
 
 e.g 
 when we run 
@@ -605,25 +639,24 @@ a6df14f48a8e      idfdac3b467f                          "catalina.sh run"       
  
 2:07:27 *********************** "catalina.sh run"  is the command starting this application  .... this is in the executable form , so it cant be killed
                                                                                                                                   Expose: 8080
-ALSO, when we open a docker file in docker hub (search tomcat), we see how the application is starting : the command in executable form "catalina.sh run" and it cant b
-killed bc tomcat is the main process and i am containerising my application
+ALSO, when we open a docker file in docker hub (search tomcat), we see how the application is starting : the command in executable form "catalina.sh run" and 
+it cant be killed bc tomcat is the main process and i am containerising my application
 and my docker file is very important, in the docker file i want to deploy my application:
 Dockerfile_RUN:  
   FROM tomcat:9.0.71-jdk8-corretto-al2   (he copied this tag from  when u log into docker hub (search tomcat)
   ADD target/tesla.war  /usr/local/tomcat/   ( being copied to /usr/local/tomcat)
   CMD [" catalina.sh run]
-  CMD sh catalina.sh run    ******************************  using this shell form is still going to work, but the danger is that, the reaason for containerization is
-to b able to deploy application seamleasly so if u wnt to deploy dis application ontop of a tomcat image n it has been containerixed, it doesnt mk sense to run the 
-application process as a child processs
-**** so if u join an coy and they are rn their application process using shell form as seen below, thats a big issue n i v to advice them that we cannt be runing our
-application as a child process,s o we shudnt us shell form bt executable form
+  CMD sh catalina.sh run    **********************  using this shell form is still going to work, but the danger is that, the reaason for containerization is
+to b able to deploy application seamleasly so if u wnt to deploy dis application ontop of a tomcat image n it has been containerixed, it doesnt mk sense to run 
+the application process as a child processs
+**** so if u join a coy and they are rn their application process using shell form as seen below, thats a big issue n i v to advice them that we cannt be runing
+our application as a child process,so we shudnt us shell form bt executable form
 Dockerfile_RUN:  
   FROM tomcat:9.0.71-jdk8-corretto-al2   
   ADD target/tesla.war  /usr/local/tomcat/
 sh catalina.sh run
 
-???????????????????????????????????????????????????????????????QUESTION:???????????????????????????????????????????????????????????????????????????????????????
-is this catalina.sh run and this catalina.sh run both shell forms ??????????????????
+
 
 2:13:50
 
@@ -634,11 +667,11 @@ ADD . /opt/class30
 CMD pwd  
 CMD ["echo", "I am rich"]
 
-docker build -t image2 -f Dockerfile_CMD . 
-*********** BUild was successful bt the CMD is nt excuted bc CMD instructions are nt executed when ur creating ur image bt run instruction ar executed when creatin d image
-*********if u want to create ur container, the run command , the CMD instruction wil be executed bt only the last CMD will be executed while when creatin an image all the run
-command wil be executed
-####################################################i see i can create my image severally ie i can run docker build -t image2 -f Dockerfile_CMD . severally , especially if i
+docker build -t image2 -f Dockerfile_CMD . **** BUild was successful bt the CMD is nt excuted bc CMD instructions are nt executed when ur creating ur image bt
+run instruction ar executed when creatin d image
+*********if u want to create ur container, the run command ,the CMD instruction wil be executed bt only the last CMD will be executed while when creatin an image 
+all the run command wil be executed
+###############################i see i can create my image severally ie i can run docker build -t image2 -f Dockerfile_CMD . severally , especially if i
 change or add /smt in the docker file
 
 
@@ -676,8 +709,8 @@ How is ENTRYPOINT different from CMD? .. WHAT IS THE diff btw entrypoint and CMD
 the use cases:wher u hv an application and u wnat it to be DynAmic  then use CMD (Ie while running the application u wnat the result to be dynamic, choose CMD)
 
 ################# (docker file for image2 has the CMD command while Dockerfile for image3 has the ENTRYPOINT command ) 
-so when we run docker run image3, we can see the last command in the docker file bt when we run anoda command docker run image3 pwd , we see its nt executed bc EntryPOINT 
-cant be overriden bt when we run ocker run image2 pwd, we see it is executed bc CMD can be overidden
+so when we run docker run image3, we can see the last command in the docker file bt when we run anoda command docker run image3 pwd , we see its nt executed bc 
+EntryPOINT cant be overriden bt when we run ocker run image2 pwd, we see it is executed bc CMD can be overidden
 
 docker@docker:~/web/Laps$ docker run image3
 am rich from ENTRYPOINT 
