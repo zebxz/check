@@ -1,8 +1,8 @@
 CREATING DODCKER FILES , LAYERS EXPLAINED , HW TO TRACK ISSUES IN CONTAINER/ How to troubleshoot or debug applications running as docker containers, 
 to run command inside a container, docker cp = used to copy files into the container from the dockerhost and vice versa, TO KNOW THE CHANGES THAT V OCCURED 
 IN THE CONTAINER, DOCKER COMMIT, DOCKER FILE N THE RYT DEPENDENCY, DOCKERFILE INSTRUCTIONS/KEYWORD, MAINTAINER, .IGNOREFILE, DOCKER ADD, 2WAYS WE CAN PASS THE
-RUN/CMD/ENTRYPOINT INSTRUCTIONS, SHELL FORM OR EXECUTABLE FORM, WHATS THE DIFF BTW SHELL FORM AND Executable form, CREATING A DOCKER FILE FOR RUN INSTRUCTIONS,
-What is difference b/w RUN & CMD, multi Stage Docker files.
+RUN/CMD/ENTRYPOINT INSTRUCTIONS, SHELL FORM OR EXECUTABLE FORM, WHATS THE DIFF BTW SHELL FORM AND Executable form (parent/child process),
+CREATING A DOCKER FILE FOR RUN INSTRUCTIONS, What is difference b/w RUN & CMD, MY PROJECT, DEPLOY NODE JS APPLICATION, multi Stage Docker files.
 ****************** MUST be able to explain WHATS THE DIFF BTW SHELL FORM AND Executable form
 ########################## ## ####### for u to explain in the interview that ur job includes writing and modifying docker files as as gud as thats what u do ############
                                           ******************   i can practice 3:11:25        *************************************
@@ -562,6 +562,7 @@ Key Features of ENTRYPOINT
 Primary Command: It sets the container's main process, ensuring that the container always runs this command.
 Non-Overridable by Default: Unlike CMD, the ENTRYPOINT command cannot be overridden when starting a container unless the --entrypoint flag is explicitly used.
 Flexibility with CMD: You can combine ENTRYPOINT with CMD to provide default arguments or flags for the main process.
+By combining both entrypoint& CMD, you can create flexible and reusable containers. For example:ENTRYPOINT ["python"] an CMD ["app.py"]
 
 
 
@@ -581,7 +582,7 @@ ubuntu@docker:¬/web$ /bin/sh -c pwd     (using the bond shell to see our pwd, w
 /home/ubuntu/web 
 **************************** so when u execute a command when creating images or container,  u can pass ur instruction using shell form or executable form
 
-
+                               
 1) -#Shell Form
 and for shell form, we can have command and argument
 RUN <command> <arg1> <arg2>
@@ -604,7 +605,7 @@ ENTRYPOINT ["commond/executable" , "arg1","arg2"]
            ["catalina" , "run"] 
 
 
-WHATS THE DIFF BTW SHELL FORM AND Executable form  (executable is preferred)
+WHATS THE DIFF BTW SHELL FORM AND Executable form....  CHILD/PARENT PROCESS (executable is preferred)
 the main difference is :
 when u run a command using the shell form (/bin/bash), the principal process is the shell
 ***me ie, eg; ubuntu@docker:¬/web$ echo $SHELL, or ubuntu@docker:¬/web$ ls; when u execute command like this, a shell is been used to excute the command 
@@ -873,18 +874,20 @@ https://github.com/LandmakTechnology/Dockerfiles
 
 10. Keywords should be in uppercase to distinguish it from arguments 
 
- 
+
+
                                               MULTI STAGE DOCKER FILE
 
 multi Stage Docker files: 
-in this file our target is that we wnat to :
+in this file our target is that we want to :
 1. Clone  
 2. Build  
 3. DeployAsContainer 
-****************************** for us to mk this application light weight, we ar going to use a multi Stage Docker files,bt if i dnt want to use multi Stage Docker files
+****************************** for us to mk this application light weight, we ar going to use a multi Stage Docker files,bt if i dnt want to use multi Stage
+Docker files
 then ill hv to : 
-FROM ubuntu:git   (in this ubuntu server, for me clone my code i nid git, so i can download an ubuntu server that has git installed, we can go to ubuntu n search d ubuntu
-that has gitwith any desired version , i can also search for tomcat that comes with java,jdk with any version 
+FROM ubuntu:git   (in this ubuntu server, for me clone my code i nid git, so i can download an ubuntu server that has git installed, we can go to ubuntu n 
+search d ubuntu that has gitwith any desired version , i can also search for tomcat that comes with java,jdk with any version 
 WORDIR /home/ubuntu/
 ******* may also nid to run some command to be able to install maven for e.g git ....bc git is prerequisite for maven to run
 RUN clone https://git/repo/webapps \ 
@@ -896,8 +899,8 @@ e.g for tomcat
 FROM tomcat:71-jdk8-corretto-al2   
 
  multi stage docker file  :  it has multiple FROM keyword
-FROM alpine/git as repo, stage1 cloning the code, so frm alpine as repo , stage2 from maven as build; we ar copying wotever is in repo (maven-web-application) into /app 
-then mvn instal and the final stage we ar deploying the application from tomcat ..........  from build, it will copy the war file in the target dir 
+FROM alpine/git as repo, stage1 cloning the code, so frm alpine as repo , stage2 from maven as build; we ar copying wotever is in repo (maven-web-application)
+into /app then mvn instal and the final stage we ar deploying the application from tomcat ..........  from build, it will copy the war file in the target dir 
 
 #git
 FROM alpine/git as repo  (frm alpine we assigning  a name here as repo)
@@ -928,55 +931,66 @@ WARNING! This will remove:
   - all dangling images
   - all dangling build cache  ........**************** it deleted all the dangling images
 
+3.05.40
+#### working on docker files is going to be part of your job, so for u to explain in the interview that ur job includes writing and modifying docker files 
+is as gud as thats what u do 
+and you making use of these keywords
+FROM /COPY/ADD /RUN /CMD /ENTRYPOINT /WORKDIR ENV /LABEL/ARG/USER /EXPOSE /VOLUME/MAINTAINER  
+and docker best practices
 
-########################## ## ####### for u to explain in the interview that ur job includes writing and modifying docker files as as gud as thats what u do ############
-Dockerfile keywords/instructions:
-=================================
-FROM  
-COPY  
-ADD 
-RUN 
-CMD 
-ENTRYPOINT 
-WORKDIR ENV  
-LABEL  
-ARG 
-USER 
-EXPOSE   
-VOLUME  
-MAINTAINER  
 
-Micro-services and 
-Docker networks   
+next class;
+Micro-services and Docker networks   
 volumes and 
 Docker compose  
 docker swarm
 
-       its a public repository ....: https://github.com/LandmakTechnology/nodejs-application
-3:11:25  he has a nodejs applcation and has already  done a build on the application ie he has built the application n pushed it to dockerhub and in the application, ders a 
-docker file as well
-they hv a few folks that are already working and atimes them want them to work on nodejs application , now once u understand the principle, any application will not be a 
-big deal for me 
 
-he built it again
+                              MY PROJECT
+3.09.20
+*** the purpose of all these is for you to understand how to use docker in your project, we hv a lot of docker files which w ehave used in our project
+he wnt to project package in github
+for eg, this is spring boot docker, this a key project we are going to be looking it 
+this project has a docker file 
+
+
+
+                              DEPLOY NODE JS APPLICATION
+3:11:25  i hv this nodejs applcation,  this is a public repository ....: https://github.com/LandmakTechnology/nodejs-application
+and i hv already  done a build on the application, in this nodjs appl there is a docker file here as well, i have already done a build on this appl
+i hv built the application n pushed it to dockerhub 
+we hv a few folks that are already working and atimes they want them to work on nodejs application , now once u understand the principle, any application will
+not be a big deal for you, like this is a node js appl, i hv this image already on docker hub, but if i needed to build this appl here
+let me clone it
 gitclone https://github.com/LandmakTechnology/nodejs-application
 cd nodejs-application/
 ls  ... can see the dockerfile  and other files too
 vi docker file .......to see the content
-docker build -t nodeapp .           successful
+what will this dockerfile do
+we have 
+FROM node 10
+work dir is defined ; WORKDIR /usr/app
+COPY.. it will copy all the code & create the package
+RUN npm install 
+EXPOSE 9981
+CMD ["node", "app.js"]   and once you start the appl, the container is running
+
+docker build -t nodeapp .       (i called the image nodeapp)     image built successfully
+when i run doxker images, i see the nodeapp 
 docker images      nodeapp   TAG: latest
 docker run --name wed30 -d -p 3000:9981 nodeapp    .... deployed sucessfully 
+we can also access the appl on the browser:3000 
 
-************************ he already has the image in docker hub, so he can jst run docker pull and do the same tin
+********this is a nodejs appl, it can be containerized, i already have the image in docker hub, so i can jst pull the image frm dockerhub and do the same tin
 
 so to access the application we just built: still in the nodejs-application file in github, we v the app.js file, the application has some context path like 
 /landmarktechnologies , thers multiple rest API's wich can be used to access particular end point for the application : thers /html , /jsonData, /landmarktechnologies
 this application has been developed by our team of developers and once the application was developed they created some resT API's
-
 http://44.211.75.85:3000/landmarktechnologies
 we can also  curl : curl -v 44.211.75.85:3000/html  
-
-in in docker hub he has a repository for his nodejs appliaction, so if he wants to deploy his application, he can equally deploy from the image that already exists in ther 
+3.18.50
+if u go to our dockerhub repository, i have a repository for my nodejs appliaction, so if i want to deploy this application, i can equally deploy from the image
+that already exists in ther 
 docker push mylandmarktech/nodejs-fe-app:tagname
 docker run -d -p 30000:9981  mylandmarktech/nodejs-fe-app     ... port 30000 is in the range , if i run that, it will deploy the application but it will pull the image frm
 docker hub
@@ -986,14 +1000,17 @@ although we didnt assign a name, when he run docker ps, we can see docker demon 
 3:21:05   #########  all applications can be deployed using docker ###########################
 docker rename : to rename an application
 
+on saturday we will look at micro services & hw we can use netwrk for those appl to communicate with each other
+
+
 QUESTION
 do you summarize evrything u nid to define in the dockerfile, inside the application file already, is that why u v only 2lines in the docker file; FROM & COPY ?
 ANS:  3:23:45
-FOR e.g in doockerhub, this tomcat base image is running on an OS,, Click on the tomcat n select tag, we can search for apline,ubuntu,centos , e.g we search alpine, we can
-see a number of alpine images and for each we can see the tomcat is running on an alpine base image and this means that this wil cm only wit the lib that are sufficient for
-the said tomcat aplication to run althoug a normal OS  wil cm wit all lib and all thats needed
-secondly:  if u go tru all our docker files, u wil see docker files with diff number of lines as well, u will see docker files wit more oda configuration also in dockerhub
-in overview of tomcat, click on any of the files n we see the content like FROM, env variables
+FOR e.g in doockerhub, this tomcat base image is running on an OS,, Click on the tomcat n select tag, we can search for apline,ubuntu,centos , e.g we search 
+alpine, we can see a number of alpine images and for each we can see the tomcat is running on an alpine base image and this means that this wil cm only wit 
+the lib that are sufficient for the said tomcat aplication to run althoug a normal OS  wil cm wit all lib and all thats needed
+secondly:  if u go tru all our docker files, u wil see docker files with diff number of lines as well, u will see docker files wit more oda configuration also
+in dockerhub in overview of tomcat, click on any of the files n we see the content like FROM, env variables
 
 FROM amazoncorretto:8-al2-jdk
 
@@ -1002,10 +1019,13 @@ ENV PATH $CATALINA_HOME/bin:$PATH   ... path to start tomcat, in d tomcat home d
 RUN mkdir -p "$CATALINA_HOME"     .... then this home dir is been created "$CATALINA_HOME" wich means  /usr/local/tomcat is being created
 WORKDIR $CATALINA_HOME    .....   and the workdir is tomcat
 
-######### so ders no problem here, the main stuff is to undertsnd the principle, one i understnad them, i can apply them to multiple environments wil be no big deal
+######### so ders no problem here, the main stuff is to undertsnd the principle, onCe i understnad them, i can apply them to multiple environments wil be no 
+big deal
 
 3:28:00
-######### someone said sonarqube image has a good explanation abt it 3:28 he said u ar going to choose the OS u wnt to choose bt this sonarsoftware is running on a base image OS 
+######### like someone is saying sonarqube image has a good explanation abt it, so he went to sonaqure page .. 3.27.33
+ he said there are going to be diff OS,u ar going to choose the OS u wnt to 
+choose bt this sonarsoftware is running on a base image OS 
 
 CAN WE USE VSCODE TO WRITE DOCKERFILE
 Yes, and it wil make ur job easy 
@@ -1032,27 +1052,30 @@ can be used to change some settings and parametsr on  running conatiners e.g we 
 so we shud be able to modify such parameter so that we can keep our container running
 
 #####u guys dnt nid to freakout, the big issue of docker u can explain it in less than 2minutes in an interview
-my experience inclues writing docker files, maintaining docker files, to containerize our applications, we generally have java base application in our envr, we run those
-application on a CI/CD platform and before we run the application , we nid a odcker file to containerize it as part of the CI/CD process , so i am task to write and modify 
-docker files and when i do so, i mk use of key Docker words like: FROM for my base image , COPY to copy files from the host to the container,RUN to execute commands ,CMD and
-ENTRYPOINT instruction to execute command while creating d container and it is important for me to make mention tht in writing my docker file in our env we mk use of docker
- file  best practices and these practices that we implement in our env include ensuring that our images are light weight and for that to happen, we are adviced nt to 
-download unnecessary packages, nt to copy unnessary files into our containers, nt to use multiple run instructios, so we use the && instructor as much as possible and that
-reduces the number of layers and by so doing we are going to be creating light weight portaBLE images.
-also we only make use of official images as our base images, so docker official images those are the ones that we choose. in an attempt to keep our images as light weight as 
-possible, in our env we use alpine images as much as possible bc linux alpine is the lightest OS for linux that u can get bc docker is intended to be light weight
-In Passing our CMD and ENTRYPOINT Instructions, we are using executable form over shell form this will be enable our application process to run as a parent process and as 
-such, it cannot be killed unnoticed
+my experience inclues writing docker files, maintaining docker files, to containerize our applications, we generally have java base application in our envr, 
+we run those application on a CI/CD platform and before we run the application , we nid a odcker file to containerize it as part of the CI/CD process , so i am 
+task to write and modify docker files and when i do so, i mk use of key Docker words like: FROM for my base image , COPY to copy files from the host to the 
+container,RUN to execute commands ,CMD and ENTRYPOINT instruction to execute command while creating d container and it is important for me to make mention tht 
+in writing my docker file in our env we mk use of docker file  best practices and these practices that we implement in our env include ensuring that our images 
+are light weight and for that to happen, we are adviced nt to download unnecessary packages, nt to copy unnessary files into our containers, nt to use multiple
+run instructios, so we use the && instructor as much as possible and that reduces the number of layers and by so doing we are going to be creating light weight
+portaBLE images.also we only make use of official images as our base images, so docker official images those are the ones that we choose. in an attempt to keep
+our images as light weight as possible, in our env we use alpine images as much as possible bc linux alpine is the lightest OS for linux that u can get bc docker
+is intended to be light weight
+In Passing our CMD and ENTRYPOINT Instructions, we are using executable form over shell form this will be enable our application process to run as a parent 
+process and as such, it cannot be killed unnoticed
 We also enabled scanning in our env, such that everytin is autoscanned and if thers any issue, pull REQ are been deployed for us to take remedial action 
 *************docker is intended to be light weight bt then u nid to do smt to mk it light weight by making the right choices
 
 WHAT IS SOME OF THE PROBLEMS U HAVE FCAED IN UR ENVR RECENTLY AS A DEVOPS ENGR.
-we hv some of our docker files which we hv used to build and deploy applications and we had issues wher  applications were failing, endusers were complaining, so i had
-to TS , ha sto check hw the docker files were written and i realized that our CMD were been passed in shell form and as a result, the applications process were been killed
-unnoticed and i quickly modify the dockerfile, changed it from shell form to executable form such that the application will run as a parent process. 
+we hv some of our docker files which we hv used to build and deploy applications and we had issues wher  applications were failing, endusers were complaining,
+so i had to TS , ha sto check hw the docker files were written and i realized that our CMD were been passed in shell form and as a result, the applications 
+process were been killed unnoticed and i quickly modify the dockerfile, changed it from shell form to executable form such that the application will run as a
+parent process. 
 
 there are some things u are going to explain, that will be the end of the interview , they wil knw that u knw, bc ther are some intricacies that somebody who is at work
-whose hands are dirty like yours, u ar going to be making mention of them n they will knw this guy his hand is really dirty when it come sto containerization with docker
+whose hands are dirty like yours, u ar going to be making mention of them n they will knw this guy his hand is really dirty when it come sto containerization 
+with docker
 
 
 
