@@ -474,5 +474,33 @@ process were been killed unnoticed and i quickly modify the dockerfile, changed 
 parent process. 
 
 
+QUESTION
+do you summarize evrything u nid to define in the dockerfile, inside the application file already, is that why u v only 2lines in the docker file; FROM & COPY ?
+ANS:  3:23:45
+FOR e.g in doockerhub, this tomcat base image is running on an OS,, Click on the tomcat n select tag, we can search for apline,ubuntu,centos , e.g we search 
+alpine, we can see a number of alpine images and for each we can see the tomcat is running on an alpine base image and this means that this wil cm only wit 
+the lib that are sufficient for the said tomcat aplication to run althoug a normal OS  wil cm wit all lib and all thats needed
+secondly:  if u go tru all our docker files, u wil see docker files with diff number of lines as well, u will see docker files wit more oda configuration also
+in dockerhub in overview of tomcat, click on any of the files n we see the content like FROM, env variables
+
+FROM amazoncorretto:8-al2-jdk
+
+ENV CATALINA_HOME /usr/local/tomcat     .. tomcat home dir  defined as : usr/local/tomcat  
+ENV PATH $CATALINA_HOME/bin:$PATH   ... path to start tomcat, in d tomcat home dir the command to start tomcat is found in bin, so $CATALINA_HOME/bin ie d path to d commands 
+RUN mkdir -p "$CATALINA_HOME"     .... then this home dir is been created "$CATALINA_HOME" wich means  /usr/local/tomcat is being created
+WORKDIR $CATALINA_HOME    .....   and the workdir is tomcat
+
+######### so ders no problem here, the main stuff is to undertsnd the principle, onCe i understnad them, i can apply them to multiple environments wil be no 
+big deal
+
+3:28:00
+######### like someone is saying sonarqube image has a good explanation abt it, so he went to sonaqure page .. 3.27.33
+ he said there are going to be diff OS,u ar going to choose the OS u wnt to 
+choose bt this sonarsoftware is running on a base image OS 
+
+
+
+
+
 
 
