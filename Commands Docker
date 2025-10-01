@@ -250,6 +250,9 @@ e.g
 ﻿﻿﻿netstat -tulpn
 5) docker update container name/id
  docker diff 
+ RUN commands or instructions will be executed while creating an image on top of the previous layers(Image)
+Docker history (image name OR image ID) : this will define all the layers on/of the image e.g files that were added on the image 
+
 
 docker 5&6 ********* also if der ar issues in the container, we can track them frm the log files
  How processes are running.     1.21.00*** a container can be killed bc of resources issues
@@ -293,14 +296,18 @@ so u can pause the container process so that users cant access it until u v fixe
 DOCKER 5&6
 
 
-Dockerfile keywords: in writing a docker file these ar the keywords we shud tk specific note of 
+Dockerfile instructions/keywords:  instructions can be used to execute commands/scripts
+        in writing a docker file these ar the keywords we shud tk specific note of 
 ===================
 FROM   ,, this defines the dependencies , this is the most imp key work 
 FROM:   The FROM instruction initializes a new build stage and sets the Base Image for subsequent instructions
-MAINTAINER/COPY/ADD/RUN/CMD/ENTRYPOINT/WORKDIR/ENV
-EXPOSE/USER/VOLUME/LABEL/ARG
+MAINTAINER/COPY/ADD/RUN/CMD/ENTRYPOINT
+WORKDIR/ENV/EXPOSE/
+USER/VOLUME/LABEL/ARG
 *****  Docker ADD does the same tin as docker COPY but it has some advantages bc it can be used to copy files from external sources e.g to download files
  from remote https location
+ RUN commands or instructions will be executed while creating an image on top of the previous layers(Image)
+Docker history (image name OR image ID) : this will define all the layers on/of the image e.g files that were added on the image 
 
 
 FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
@@ -310,18 +317,14 @@ FROM --> FROM indicates the  base image(Layers) such as OS(Libraries)
  will be executed/created on top of base image
 layers.
 
-Syntax: 
-FROM  <ImageName>
-Ex:
-FROM tomcat:8.0.20-jre8
-FROM openjdk:8-alpine
-FROM nginx
-FROM node
-FROM python
 
-MAINTAINER --> It's will be used as comments to describe 
-author/owner who is maintaning the docker file.
-This instruction allows you to set the Author/Owner of the Image.
-so if ders a problem 
+
+ RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image)
+ Next to run you can mention any command based on base os of image.... (he didnt xplain this)
+        We can have number of RUN instructions in a docker file 
+        all the RUN instructions will be exectued one after the other from top to bottom.
+
+
 
 
