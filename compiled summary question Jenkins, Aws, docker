@@ -669,6 +669,52 @@ while for executable; the command ( CMD or RUN instruction wil run as a parent p
 e.g to start a command in tomcat: CMD ["commond/executable" , "arg1","arg2"] ["catalina" , "run"
 when we open a docker file in docker hub (search tomcat), we see how the application is starting : the command in executable form "catalina.sh run" 
 and it cant be killed bc tomcat is the main process and i am containerising my application
+**mee** using; sh catalina.sh run, this is shell & its wrong
+
+
+RUN --> RUN instruction will  execute commands/scripts.
+        RUN commands or instructions will be executed while creating an image on top 
+        of the previous layers(Image). 
+        Next to run you can mention any command based on base os of image.... (he didnt xplain this)
+        We can have number of RUN instructions in a docker file, all the RUN instructions will be exectued one after the other from top to bottom.
+  if a file needs multile 'run' instruction, writing the run command several times is not necessary, we can reduce them with the && operator(copied frm below)
+
+
+What is difference b/w RUN & CMD?
+
+RUN instructions will be executed while creating a image. 
+CMD Instructions will be executed while creating a container.
+We can have more than one RUN keyword in a docker file.
+All the RUN keywords will be processed while creating an image in the defined order(top to bottom).
+
+Can we have more than one CMD in dockerfile?
+Yes you can have. But only the last one/recent one in the order will be proccessed 
+while creating a container.
+
+
+
+The ENTRYPOINT command in a Dockerfile is used to define the main process or executable that will always run when a container starts.
+It is particularly useful when you want to create a container that behaves like a standalone application or service.
+
+Key Features of ENTRYPOINT
+Primary Command: It sets the container's main process, ensuring that the container always runs this command.
+Non-Overridable by Default: Unlike CMD, the ENTRYPOINT command cannot be overridden when starting a container unless the --entrypoint flag is explicitly used.
+Flexibility with CMD: You can combine ENTRYPOINT with CMD to provide default arguments or flags for the main process.
+
+
+
+Difference Between ENTRYPOINT and CMD
+Both are command instructions executed while creating a container 
+ENTRYPOINT: Defines the main process that always runs.
+ ENTRYPOINT can't be over riden while we can over ride CMD
+CMD: Provides default arguments or commands, which can be overridden when starting the container.
+the use cases:wher u hv an application and u wnat it to be DynAmic  then use CMD (Ie while running the application u wnat the result to be dynamic, choose CMD)
+By combining both, you can create flexible and reusable containers. For example:
+
+
+
+
+
 
 
 
