@@ -476,7 +476,7 @@ if i share a mnovie in my s3 bucket the whole class/ a thousand plus can can wat
 
 
 
-DOCKER 1&2
+DOCKER 1&2    **meee**  (in interview, i can containerize diff applications as practical for them & open some docker files & explain it)
 
 Dockerfiles are input use to build docker images, docker file is a simple text file that consists of instructions to build/assemble a docker image
 Docker can build images by reading the instructions from a docker file
@@ -625,6 +625,91 @@ u can also alocate memmory and cpu to containers
 
 
 DOCKER 5&6
+
+CAN WE USE VSCODE TO WRITE DOCKERFILE
+Yes, and it wil make ur job easy 
+
+ working on docker files is going to be part of your job, so for u to explain in the interview that ur job includes writing and modifying docker files 
+is as gud as thats what u do 
+and you making use of these keywords
+FROM /COPY/ADD /RUN /CMD /ENTRYPOINT /WORKDIR ENV /LABEL/ARG/USER /EXPOSE /VOLUME/MAINTAINER  
+and docker best practices
+
+IS WRITING OF DOCKERFILES PRIMARILY PART OF MY JOB
+yes , docker file is nt coding .... u shud write and be able to modify docker file ,, if  ar given a docker file to work on in an interview, that shud be among the easiest 
+interview u can think of
+
+
+Dockerfile Best practices: 2:32:40
+==========================
+1. We should use executable over shell form for CMDs and ENTRYPOINTs instructions (so our process will be running as parent process n cant be killed unnoticed)
+2. Reduce the number of RUN instructions as much as possible. bc the more the number of layers the lager the image size
+   This will reduce the number Layers and keep our images light weight.  bc we expect our images to be light weight
+*************play around with this**********************************
+https://github.com/landmakTechnology/Dockerfiles
+
+2:37:15:   ALL the run instruction here is not necessary, we can reduce them with the && operator
+FROM ubuntu:latest
+RUN apt-get -y update && apt-get -y upgrade \
+RUN apt-get -y install openjak-8-jak wget
+RUN mkdir /usr/local/tomcat
+RUN wet http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar•gz -0 /tmp/
+RUN cd / tmp && tar xvfz tomcat. tar•gz \
+    && cp - Rv /tmp/apache-tomcat-8.5.46/* /usr/local/tomcat/
+EXPOSE 8080
+CMD /us/local/tomcat/bin/catalina. sh run
+
+********************************************************* we can reduce them like this : this wil mk the image to be light weight
+FROM ubuntu:latest
+RUN apt-get -y update && apt-get -y upgrade \
+   && apt-get -y install openjak-8-jak wget \
+   &&  mkdir /usr/local/tomcat \
+   &&  wget http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar•gz -0 /tmp/
+   &&  cd / tmp && tar xvfz tomcat. tar•gz \
+   &&  cp - Rv /tmp/apache-tomcat-8.5.46/* /usr/local/tomcat/
+EXPOSE 8080
+CMD /us/local/tomcat/bin/catalina. sh run
+
+3. Use Official/Trusted docker base images in your Dockerfile 
+    FROM ubuntu/tomcat  bt mk sure  it is official (can search in dockerhub tomcat , then tag then copy, i can also search for the jboss, ubuntu, alpine etc )
+
+4. Use light weight alpine linux where ever possible  ...its light weight
+   https://hub.docker.com/_/alpine
+   ubuntu/centos/alpine   (linux distributors)
+
+5. scan images before usage 
+     docker scan imageID/Name  
+also, in dockerhub, i can enable scanning (in my docker hub repository, in his repository we can see, scanning enabled , to enable go to settings, i cann also enable
+webhook : vulnerability reporting so that if ders any vulnerability i wil be alerted
+e.g 2;48:50
+docker scan image3 .......********************** bt it didnt work 
+he pulled nginx in his other system wher he said he already downloaded scanner and it workd 
+irrevent ##################i guess we can use or not use the tag ,, therfore, it wil pull the latest  (he just did docker pull nginx and it worked )
+then : Docker scan nginx    ...........it worked 
+
+********so i can scan my image using docker scan command n der are some software i can use to enbale scanning in my image registry
+
+(6) Don't install/have unnecassary packages(Softwares) & Don't
+   copy unnecassary files & Folders . .. bc that wil create heavy weight images n that wil challenge the purpose of docker 
+
+7) Don't run container process as root user. Start container
+   process(Application) as non root user. THen u can always change the user in the docker file
+
+8) Try to Scan images for fulnerabilites(Clair ,Anchor or Trivy or Inbuilt Scaning in amazon ECR: elastic container/GCR: google container/ACR:asure conatiner registry). all
+have inbuilt scanning
+even dockerhub has inbuilt scanning if ur paying for it, thats why his inbuilt scanning is enabled
+
+????????????????WILL U B charged if u use amazon  ECR
+dnt forget that in interview u wont be answering these qiestions like someone who is a student bt one who is working in landmark and 
+in landmark project we dnt car eif we ar going to be charged or nt bc the charges cannot b compared to the benefit 
+
+9) Try to use multi Stage Docker files to reduce size of the image where ever it's applicable 
+https://github.com/LandmakTechnology/Dockerfiles
+
+10. Keywords should be in uppercase to distinguish it from arguments 
+
+
+***
  RUN commands or instructions will be executed while creating an image on top 
         of the previous layers(Image)
  Next to run you can mention any command based on base os of image.... (he didnt xplain this)
@@ -709,12 +794,66 @@ ENTRYPOINT: Defines the main process that always runs.
  ENTRYPOINT can't be over riden while we can over ride CMD
 CMD: Provides default arguments or commands, which can be overridden when starting the container.
 the use cases:wher u hv an application and u wnat it to be DynAmic  then use CMD (Ie while running the application u wnat the result to be dynamic, choose CMD)
-By combining both, you can create flexible and reusable containers. For example:
+By combining both, you can create flexible and reusable containers. For example:ENTRYPOINT ["python"] an CMD ["app.py"]
 
 
 
 
+ENV --> ENV instruction sets the environment variable and this sets the environment for the subsequent build instructions.
+It takes two forms: one with a single variableENV <key> <value> and another with multiple variables ENV <key> =<avlue> <key> = <value>.
 
+*****************we are passing environmental variable
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH      ***** this is the path to the executables
+RUN mkdir -p "$CATALINA_HOME"    ******* a run instruction is been pass here
+WORKDIR $CATALINA_HOME
+
+
+
+ARG -> ARG Instruction defines a variable that can be passed at build time. Once it is defined in the Dockerfile you can pass with this flag --build-arg while building the 
+image. We can have multiple ARG instruction in the Dockerfile. ARG is the only instruction that can precede the FROM instruction in the Dockerfile.
+ARG values are not available after the image is built. A running container won’t have access to an ARG variable value00
+ARG : we can also pass some arguments while tryin to create our containers as well
+
+
+
+                         WE Can see the the wORKDIR: IN docker hub (tomcat overview) in the docker file
+WORKDIR --> WORKDIR  is used to define the working directory of a Docker container at any given time. The command is specified in the Dockerfile.It is optional 
+(default is / , but base image might have set it), but considered a good practice. Subsequent instructions in the Dockerfile, such as RUN , CMD and ENTRYPOINT will operate
+in this dir.
+WORKDIR-----   this is used to der wher task will be executed
+Ex:WORKDIR /app
+
+
+LABEL
+The LABEL instruction adds metadata to an image. A LABEL is a key-value pair. To include spaces within a LABEL value, use quotes and backslashes as you would in
+command-line parsing. A few usage examples:
+e.g to set our branch name
+LABEL branch=develop
+LABEL description="This text illustrates"
+An image can have more than one label. You can specify multiple labels on a single line.
+LABEL label1="value1" label2="value2" other="value3"
+
+VOLUME: we wil look at Docker Volume when we get to volume
+
+USER 
+The USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that 
+follow it in the Dockerfile
+ubuntu@docker:~/web/laps$ docker run image2 whoami
+root ******************************** by default, it wil run the container as root user but we can stil change the user with d keyword user as well  2:31:22
+
+  
+  EXPOSE: used to der the port the process wil listen on OR the application is going to be running on 
+The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime.
+The EXPOSE instruction does not actually publish the port. It functions as a type of documentation between the person who builds the image and the person who runs the 
+container, about which ports are intended to be published. To actually publish the port when running the container, use the -p flag on docker run to publish and map one or
+more ports.
+EXPOSE 8080  
+
+
+WILL U B charged if u use amazon  ECR
+dnt forget that in interview u wont be answering these qiestions like someone who is a student bt one who is working in landmark and 
+in landmark project we dnt car eif we ar going to be charged or nt bc the charges cannot b compared to the benefit 
 
 
 
