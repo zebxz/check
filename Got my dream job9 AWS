@@ -28,6 +28,18 @@ so apart frm using console we can use files
 ****************************    SUMMARIZED FOR INTERVIEW********************************
 
 
+*** NACL.. controls inbount and outbound traffic into the vpc
+**NAT GATEWAY, its attached to the public subnet,allows the private subnet to get access to the internet but does nt allow traffic into the private subnet
+         in the private subnet we place the appservers.
+**IGW...   To ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
+IGW is attached to the vpc & then to the pub route table (so the pub route table ahs access to the internet) then the pub route table is attached to
+the pub subnet. .. IGW is not attached to the private subnet 
+in the public subnet we place the webservers, jumperservers & lb & for traffic to get to our appservers it has to go tru the jumpserver.
+*****************************************************************
+
+
+
+
 in my env, AWS is our Cloud Service Provider we use aws services based on the needs of the company 
 diff coy wil use asw services based on task they ar trying to accomplish
 For our cloud solution which is Based on the need of our company , we thank advantage of the diff computing service/resources provided by AWS including; 
@@ -54,9 +66,11 @@ via the jump server
 for more security, our vpc has some firewall ,2 types of firewall,
 the 1st is the router for routing, wich permits traffic to be routed to the subnet bc if thers no route table permiting routing, the traffic wont happen
 SO inside the vpc l create route tables, route table1 for the private subnet to support local traffic within my vpc, then route table2, i hv a public subnet 
-wich is wher i place resources wich can be acessed externaly & wher i also created the NAT gateway to permit oneway internet traffic,therefore
-the app server can access internet externally, & this is bc i decide that we can recieve traffic frm the internet but it can only happen frm the nAT gateway.
-the route table2 is permitting traffic frm anywher(ie 0.0.0/0), both local& traffic frm the internet..
+wich is wher i place resources wich can be acessed externaly like the webserver,jumpsersers,lb & in the public subnet i also created the NAT gateway to
+permit oneway internet traffic ie traffic can only go out but not into(the private subnet),therefore the app server can access internet externally, & this
+is bc i decide that we can recieve traffic frm the internet but it can only happen frm/using the nAT gateway. 
+the route table2 is permitting traffic frm anywher(ie 0.0.0/0), both local& traffic frm the internet..(I bliv that way endusers can access the resources in 
+the public subnet)
 Also with the help of internet gateway, i can ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
  inside our vpc.  it will allow internet to flow into the vpc & it wil allow exteral traffic so if we wnt to acess resourcs out of our vpc, out of our,
 netwrk , we nid to hv internet , using IGW... Its all about modifying the route tables accordingly.
