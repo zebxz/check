@@ -368,7 +368,21 @@ so am proud of this project
 
 AWS5
 
-27:56 ###pg 83 what deters the no. of resources that can be placed within each vpc is the cidr block / the no. of addresses  a vpc can hold 
+27:56 ###pg 83 what deters the no. of resources that can be placed within each vpc is the cidr block / the no. of addresses  a vpc can hold; 10.0.0.0/16  =  65,536    
+
+**online**
+A Virtual Private Cloud (VPC) can hold a variable number of IP addresses, from 16 (/28) to over 65,000 (/16), depending on the CIDR block size you assign when creating it. The total number of addresses also
+depends on the number of CIDR blocks you add to the VPC, with a default limit of five, and the Network Address Usage (NAU) quotas set by your cloud provider. 
+
+
+*** NACL.. controls inbount and outbound traffic into the vpc
+**NAT GATEWAY, its attached to the public subnet,allows the private subnet to get access to the internet but does nt allow traffic into the private subnet
+         in the private subnet we place the appservers.
+**IGW...   To ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
+IGW is attached to the vpc & then to the pub route table (so the pub route table ahs access to the internet) then the pub route table is attached to
+the pub subnet. .. IGW is not attached to the private subnet 
+in the public subnet we place the webservers, jumperservers & lb & for traffic to get to our appservers it has to go tru the jumpserver.
+*****************************************************************
 
 
 FOR SECURITY CONNECTING TO THE APP/DB SERVERS VIA THE JUMPSRVER
