@@ -1,7 +1,7 @@
 DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB,  steps TO MK image distributable/TAGGING,
- PULLING httpd IMAGE, RUN CONTAINER WITHOUT USING THE httpd image we pulled, CREATE A DOCKER FILE USING httpd image we pulled,
- AUTHENTICATION/PULLING FRM REGISTRY, Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS,we can create containers wit these 3 approaches 
-DEPLOY PYTHON IMAGE
+ CREATE DOCKER FILE WITHOUT CLONING, PULLING httpd IMAGE, RUN CONTAINER WITHOUT USING THE httpd image we pulled, 
+CREATE A DOCKER FILE USING httpd image we pulled, AUTHENTICATION/PULLING FRM REGISTRY, Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, 
+DOCKER CONTAINER COMMANDS,we can create containers wit these 3 approaches, DEPLOY PYTHON IMAGE
 
 
 ***mee*** for java application we hv to install maven bc we wil run mvn package to build but for python apply we dnt need maven bc its not java
@@ -215,13 +215,15 @@ DElETING IMAGES
 
 
 STEPS TO DEPLOY CI/CD JOB
+
 32.26  BC  we deleted all our images in he docker build server
 so cd into web , where we hv our application frm previous class
-we git cloned the repository maven-web-application that contains the docker file n other files in previous class frm github and we rename it to web 
+1) we git cloned the repository maven-web-application that contains the docker file n other files in previous class frm github and
+2)we rename it to web 
 cd web/  .. this is the repository containtaing imp files , can alson see target dir if packages hv been created before, bt we stil hv to do mvn package to create the image 
 if we get an error when we run the create image command ie  docker build -t teslaimage:1 
-mk dir tesla : mkdir tesla
-we want to copy docker file into tesla
+3)mk dir tesla : mkdir tesla
+we want to copy the src, tesla, docker file into tesla dir
 to copy src dir to tesla dir  : cp -r src/ tesla/
 copy pom.xml to tesla dir : cp pom.xml tesla/
 copy dockerfile: cp DOckwerfile tesla/
@@ -236,18 +238,23 @@ FROM tomcat:8.0.20-jre8
 COPY target/*.war /usr/local/tomcat/webapps/tesla.war
 
 
-
+**************************************************************************
 ##########steps TO MK image distributable
-clone the repo , 2)build the image, 1)mvn package so that the build is possible, 5)Docker tag , 5)then push
+1)clone the repo , 2)rename the app  3) mk a dir for the project 4) copy the files int the project dir
+ 5)mvn package so that the build is possible, 6)build the image, 7)Docker tag , 8)then push
+
+     ******* the steps should be to create the project dir first b4 cloning that way you dont hv to copy ie no need for step 4)
 
 ######but if am not cloning the file frm the repo,, then follow step number:
 3) create the docker file 4) build the image 5) docker tag and push
+****************************************************************************************
+
 
 44.00 ... we got a failed
 COPY Failed; no source file were specified
 so he installed maven & ran mvn package & directed it to log ( mvn package > log)
-1) mvn package
-2) BUILD THE IMAGE, (we CALLED it teslaimage) from d DOCKER file we got when we cloned the maven-web-appl: docker build -t teslaimage:1 ., we run this n d dot shows that our
+3) mvn package
+4) BUILD THE IMAGE, (we CALLED it teslaimage) from d DOCKER file we got when we cloned the maven-web-appl: docker build -t teslaimage:1 ., we run this n d dot shows that our
 docker file is in the pwd
        where "." = pwd
        build is from the default Dockerfile name = Dockerfile 
@@ -264,14 +271,17 @@ nexus for docker to build an image, we can get d image frm is d maven build serv
 
          WE use ADD if u want to download some softwares or add some files, files ar found in http location
 *********  #ADD https/3.25.41.98:8081/mylandmarktech/landmark.war /opt/jboss/wildfly/standalone/deployments/landmark.war
-we v a key word called ADD, we v a war file in nexus server https, the ip address/port num , mylandmarktech/landmark.war, this is d file i wnat to copy bt i wnt to downlod
-the war file frm my nexus server
+we v a key word called ADD, we v a war file in nexus server https, the ip address/port num , mylandmarktech/landmark.war, 
+this is d file i wnat to copy bt i wnt to downlod the war file frm my nexus server
 this is goin to b found in the target dir, also we ar copying evrytin that ends wit *war to  ..  /opt/jboss/wildfly/standalone/deployments/
 # in jboss deployment takes place in the deployments dir 
 our base image is JBOSS
 
 ########## ADD and COPY are kEYWORDS IN the dockerfile
 *************the keyword here is ***** FROM
+
+
+                             CREATE DOCKER FILE WITHOUT CLONING
 
 *******3) WE WANT TO create another Docker file
 vi JBOSS .....             when we create an image ONLY line one &line 2 wil be executed ie from and ADD,
