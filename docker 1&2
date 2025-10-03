@@ -401,8 +401,9 @@ so we wnt to create an image and wit the docker file an image can be created
 
 ****docker build -t, i wnt to attach a tag to my image :teslaimage: version 1 and my docker file is found in my current working dir 
 docker build -t teslaimage:1 .
-####using the docker file we created, the 'FROM' worked bc it downloaded  it cant find the war file to 'COPY' to, so the copying failed, bc target dir hv 
-not been created
+####using the docker file we created, the 'FROM' worked bc it downloaded the base image but it cant find the target dir to 'COPY'frm bc we have not done a
+maven build ie run 'mvn package', which creates the target dir & the war packages.
+
 when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the target dir that ends wit .war...
  COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 the target dir means we v created the packages
