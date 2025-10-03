@@ -29,6 +29,7 @@ types of netwrk
 3) none network
 
 PROBLEMS WITH DEFAULT BRIDGE NTWRK
+containers communicate with only the containerID
 e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
 will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
 
@@ -41,7 +42,6 @@ eg if thers a spike  eg if 10million people are registering but only 1million is
 e.g if ur dealing wit a monolitic appl and ur code is in github we hv a single repository wich is for ebay only
 if ur using just ebay, ebay could hv 
 monolithic = ebay / 20,000 lines of code 
-
 
 
 **************28:30     CUSTOM BRIDGE NTWRK
@@ -62,6 +62,33 @@ order 2,000 lines of code, return 8,000 lines of code
 4)****************versioning is easier to manage with microservices (bc we hv to modify some codes)
 also if thers a new version of the appl that relates with only the login e.g we ar changing the login interface, then we dnt nid to modify the the entire 20,000 line of 
 codes as with monolithic but only the 2,000lines of code for login for microservices
+
+
+We support Java based applications:
+===================================
+We support nodeJS and .net based applications: (also some python base appl, like we saw when we were doing container, we deployed a python base application)
+
+ For our micro service applications, in our environment, we hv legacy appl that are running as monolectic which as a devops engr we are now decoupling 
+monoletic appl into micro services
+
+
+ Deploy a microservice application for tesla.  
+we are using an application developed using the spring boot framework
+ while deploying this appl, it need a database
+we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
+  ie developers are  recommending the mongo database           
+########copied frm the file in github:      ****** this application is developed using the spring boot framework
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME} .. this is dynamic bc no values were given
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+server:
+  port: 8080
 
 
       
