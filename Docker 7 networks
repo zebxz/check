@@ -1,4 +1,5 @@
 ******** refer to boothcamp dec26,  for summary migrating mono to micro
+**** some information in the summary i got from the boothcamp dec26
 
 
 
@@ -203,10 +204,11 @@ so once i pull this 2images am able to deploy my application
 **********************************************************************************************************************
 we need to deploy the springapp and the database - mongo 
 ###########i wnt to deploy my application, first i v to pull pull the 2 imgae ( so create a file to achieve this)
+1.16.37
 1) vi spring.sh  (and paste number2 to number 5)....... we wnt to create a file for this deployment
 2)  docker pull mylandmarktech/sping-boot-mongo
-3)  docker pull mongo
- ################ after pulling, we wnt to create a ntwrk for tesla: 
+2b)  docker pull mongo
+3) after pulling, we wnt to create a ntwrk for tesla: 
  docker network create tesla (DIS is hw to create a ntwrk in tesla, custom brideg ntwrk bc i wnt d containers to comm wit both name n IDS ) &docker netwrk ls to list ntwrks
   docker run --name springapp -d -p 8080:8080
   docker run --name mongodb   
@@ -269,7 +271,7 @@ database:  HOSTNAME      USERNAME       PASSWORD   network  ENV
 1;26:20
 springapp.sh didnt work when deployed so he ran the command manually 
 now we shud be able to access the application n write data in the database 
-############### the containers are able to communicate with each other bc the name we gvae the container mongodb, THERFORE, the name of our database HOSTNME IS mongodb
+############### the containers are able to communicate with each other bc the name we gave the container mongodb, THERFORE, the name of our database HOSTNME IS mongodb
 
 
 .. 1:40;10, bt even wit manually it was giving us an infinite LOOP bc it wasnt deployed in -d detachable
