@@ -358,45 +358,41 @@ ls
 rename .... mv maven-web-application/ web
 ls
 cd web/
-vi docker file and delete all except the 2lines ofcode FROM&COPY and change maven-web-application to tesla.war (i bliv dats d name of d image we clone)
+vi into the docker file (we got when we cloned the app)and delete all except the 2lines of code FROM&COPY
+and change maven-web-application to tesla.war (i bliv dats d name of d aaplication we clone)
 THE KEYWORD *FROM IS used to get the base image and the base image comes from some softwaers smoe depencies that are req forthe appl to run .. nomrlaly, we deploy web app
 in the web apps dir
 my base image is tomcat:8.0.20-jre8 ,, so i nid tomcat for my appl to run ,, so my teslar web app depends on this base image
 
 
-create the  Dockerfile :   ***meeee***  this is the file we are refferring to when we run 'docker build' command.
-vi dockerfile            ie docker file is the name of our docker file(we can give it any name at all)
-    FROM tomcat:8.0.20-jre8    ......so tomcat:8.0.20-jre8 ... this is the tag
-    COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
-***** so we hv tomcat 8.0.20 and java runtime 8
+                   ***  this is the docker file we got when we cloned the app & its the file we are refferring to when we run 'docker build' command in step2
+vi into dockerfile            
+    FROM tomcat:8.0.20-jre8    ......so tomcat:8.0.20-jre8 ... this is tomcat & java run time 8/jre  & 8 is the tag
+1.11.00, 'FROM' is used to get the base image & it comes with some softwares, dependencies that are required for the maven-web-application we cloned to run
+our base image is tomcat so we need tomcat for the application to be able to run.therfore the tesla.war app depends on the base image
+    COPY target/*.war /usr/local/tomcat/webapps/tesla.war      ***we changed maven-web-application to tesla.war
+1.14.16 ... the 'COPY, means copy the war file in the target dir & move it to the webapps
+           ***meee*** but we will get an error when we try to build bc we hv not run  mvn package to create the packages.
 
 
 
 STEP2; BUILD
 1.12.17                                   BUILD IMAGE
-so we wnat to build our image and the command is  
-  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
-  docker build -t teslaimage:1 -f Dockerfile-tesla .  
-
-ie we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
-am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
-
-
-
-                                         
-Docker containers: Run time instance of a docker image. 
-     If you execute: docker run, 
-     a container is created from the image 
-
- 1:14:00  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
-  docker build -t teslaimage:1 -f Dockerfile-tesla . 
- docker build -t teslaimage:1 -f Dockerfile . (since am located in the web dir i could jst do a .,ie my docker file is found in my pwd
- docker build -t teslaimage:1 . (the . means its building frm d docker file bc d defaut name for doecker file is docker file bt if am using a dif name e.g 
+so we wnat to build our image and we can use either 1,2, or 3 
+1)  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/   *** the docker file we got when we cloned the app, is found in this repo: /home/ubuntu/web/
+  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/     *** the image we are building is called teslaimage & the docker file is from step1
+2)  docker build -t teslaimage:1 -f Dockerfile.    **** i can also run this command***since am already in the web dir, *** when we ran the 'cd web/' above.
+1.14.00*** docker build -t teslaimage:1 -f Dockerfile . (since am located in the web dir i could jst do a .,ie my docker file is found in my pwd
+3) docker build -t teslaimage:1 . (the . means its building frm d docker file bc d defaut name for doecker file is docker file bt if am using a dif name e.g 
 docker build -t teslaimage:1 -fdockerfile-tesla then i must pas the -f option bt if am using docker file wich is d default name i cna decisde nt to pass the -f option
+4)  docker build -t teslaimage:1 -f Dockerfile-tesla .  ** if my docker file name is 'dockerfile-tesla' then i have to pass the -f, option.
 
+ie we wnt to build our image, the command is docker build +, so i give a name to my image called telsa image, what version:version 1,
+am building from a file, the file is called docker file and its found in /home/ubuntu/web,,...wher/what am i building, docker build image 1
 
+ 
 so my file is docker file so i can execute this command like this: docker build -t teslaimage:1 
-we wnt to build an image ,, bt lookingat this image,my docker file says copy  the war file frm the target dir and move it to web...
+we wnt to build an image ,, bt lookin gat this image,my docker file says copy  the war file frm the target dir and move it to web...
 so we wnt to create an image and wit the docker file an image can be created
 
 
@@ -405,7 +401,7 @@ so we wnt to create an image and wit the docker file an image can be created
 
 ****docker build -t, i wnt to attach a tag to my image :teslaimage: version 1 and my docker file is found in my current working dir 
 docker build -t teslaimage:1 .
-####using the docker file we created, the 'FROM' worked bc it downloaded tombt it cant find the war file to 'COPY' to, so the copying failed, bc target dir hv 
+####using the docker file we created, the 'FROM' worked bc it downloaded  it cant find the war file to 'COPY' to, so the copying failed, bc target dir hv 
 not been created
 when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the target dir that ends wit .war...
  COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
