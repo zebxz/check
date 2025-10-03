@@ -271,6 +271,8 @@ env we add the user to the docker grp with dat the user doesnt nid sudo access t
 
                             
 1.05.00                                                           CONTAINERIZE APPLICATION
+the challenge for this ticket is to realise that the docker script used doesnt have the stage for 'maven build' inside it that requires maven installation & 
+bc of that when we run 'docker build' it will fail.
 Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
@@ -288,7 +290,8 @@ we can also v jenkins and other files
 APPLICATION DEPLOYMENT   ***tomcat1&2**
 which kind of projects are we managing?
 we are managing java based projects (jar/war/ear)- projects that are developed in the java lanaguage
-*****mee***  jboss/wildfly supports/used for enterprise application while tomcat supports jar/standalone & war/web applications
+*****docker5&5b***  jboss/wildfly supports/used for enterprise application and war/web application while tomcat supports jar/standalone & war/web applications
+java/standalone this needs image frm FROM openjdk11      
 *********************************************************
 
 
@@ -343,9 +346,10 @@ Docker Image: --> It's a package which contains
 
 1.10 
                                           STEPS FOR CONTAINERIZATION
-for this ticket the challenge is to realise that the docker script used doesnt have the maven build part inside it that requires maven installation & bc of that
-when we run 'docker build' it will fail.
+the challenge for this ticket is to realise that the docker script used doesnt have the stage for 'maven build' inside it that requires maven installation & 
+bc of that when we run 'docker build' it will fail.
 therefore we will have to manually install maven so that when we run 'docker build' it willl be sucessful.
+
 Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
