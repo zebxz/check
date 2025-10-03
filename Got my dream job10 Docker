@@ -28,8 +28,43 @@ types of netwrk
 2) host network
 3) none network
 
+PROBLEMS WITH DEFAULT BRIDGE NTWRK
+e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
+will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
+
+PROBLEMS OF MONOLETHIC ....................... 20;11
+1)DIFFIcult to scale
+eg if thers a spike  eg if 10million people are registering but only 1million is making payment, we will hv to scale up both the entire appl even though only 
+1m is making payment,so thers a lot of waste with resource usage in monolethic design 
+2)also micro service appli are light weight but monelethic are larger and thats a problem
+3)lots of lines of code not easy to mange 
+e.g if ur dealing wit a monolitic appl and ur code is in github we hv a single repository wich is for ebay only
+if ur using just ebay, ebay could hv 
+monolithic = ebay / 20,000 lines of code 
 
 
+
+**************28:30     CUSTOM BRIDGE NTWRK
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
+each other.
+
+WHY IS IT IMP TO DECOUPLE
+1)A Micor service architecture is easy to manage, 
+2)its also easy to scale
+microservices architecture wich ebay has been decoupled: login 2,000 lines of code, registration 4,000 lines of code, cart 2,000 lines of code, pay 6,000 lines of code 
+order 2,000 lines of code, return 8,000 lines of code   
+******* therfore micro services is easier to manage:
+
+3)better/efficient resource usage : 
+********e.g in a case wher the login increases frm 20m to 28m then i nid to scale login only, i dnt v to scale/modify the entire appl
+    so micro services leads to better use of resource bc when u scale jst a component, it means the overall resources to be used wil be smaller 
+
+4)****************versioning is easier to manage with microservices (bc we hv to modify some codes)
+also if thers a new version of the appl that relates with only the login e.g we ar changing the login interface, then we dnt nid to modify the the entire 20,000 line of 
+codes as with monolithic but only the 2,000lines of code for login for microservices
+
+
+      
 
 
 
@@ -40,7 +75,9 @@ a monothelic appl, we decouple it and then we have a micro service appl with sta
 cart, a repo for returns,these ar the diff repo we hv created when it comes to this projeect, so when we pull this image we ar creating multiple packages e.g
 login.jar up to retruns.jar, etc.
 Next step is the netwrk, ie a group of servers communicating with each other using a specific netwrk, we make sure communication is established btw the
-servers
+servers using the container name.  with the images of these stanalone entities built into containers we deploy our containers in these deployment server using
+a custom bridge ntwrk so that the login container can communicate with registaration container ,cart container needs to communicate with pay container, 
+we also v a db container etc and all of this is captured in the dabase container
 
 
 
