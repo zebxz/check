@@ -11,6 +11,9 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 MICRO SERVICES, MONOLITHIC, CUSTOM NTWRK , BRIDGE NTWRK , ISOLATING CONTAINERS, Docker Host Network ,Docker none/null network
 DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, USING  Both the container name and IP address
 
+NETWRK, TYPES OF NETWORK, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, CREATE NETWK
+
+
 Docker networks & Micro-services:
 ===================================
 What is a network ?
@@ -90,7 +93,7 @@ so we hv docker ntwrk concept
 first the 2ntwrks must be in the same ntwrk 
 
 we hv default bridge ntwrk 
-in this ntwrk containers wil commuincate with each other using containerIPS , SO WITH THE HELP OF CONTAinerips  thye can communicate with ecah oda
+in this ntwrk containers wil commuincate with each other using containerIPS , SO WITH THE HELP OF CONTAinerips  theY can communicate with ecah oda
 
 PROBLEMS WITH DEFAULT BRIDGE NTWRK
 e.g a if containers was dead and it comes bk to life  e.g smt goes wrong n its recreated, it come sbk to life with a new IP address and as such communication will be broken
@@ -183,7 +186,7 @@ server:
 spring:
   data:
     mongodb:               if developers hv developeed this application where the values are already given then its no longer dynamic
-      host: dbserver  ********** these values(dbserver,devdb,devdb123) are add coded bc add values hv already been given, its nolonger dynamic
+      host: dbserver  ********** these values(dbserver,devdb,pw:devdb123) are add coded bc add values hv already been given, its nolonger dynamic
       port: 27017
       username: devdb
       password: devdb123
@@ -205,7 +208,8 @@ so once i pull this 2images am able to deploy my application
 we need to deploy the springapp and the database - mongo 
 ###########i wnt to deploy my application, first i v to pull pull the 2 imgae ( so create a file to achieve this)
 1.16.37
-1) vi spring.sh  (and paste number2 to number 5)....... we wnt to create a file for this deployment
+STEPS 
+1) vi spring.sh  (and paste number2 to number 5 as seen below)....... we wnt to create a file for this deployment
 2)  docker pull mylandmarktech/sping-boot-mongo
 2b)  docker pull mongo
 3) after pulling, we wnt to create a ntwrk for tesla: 
@@ -218,7 +222,7 @@ we need to deploy the springapp and the database - mongo
 ******************he answered it in the nxt video , the application passes the variable, ie the input used for the application shud b d same used for the bd e.g password
 but the hostname comes from the db
 
-1:06:40 *******************************THIs is OUR ENVIRONMENTAL VARIABLES for for our application (spring)***************************(gotten frm the image info in docker)
+1:06:40 *******************************THIs is OUR ENVIRONMENTAL VARIABLES for for our application (spring)***********(gotten frm the image info in docker)
 spring:
   data:
     mongodb:
@@ -249,7 +253,8 @@ vi sp.sh
 
 ########### DEPLOYING THE APPLICATION
                                           
-                                  *******HOSTNAME is the name of the data base that is being deployed                                      ********** THIS IS THE IMAGE 
+   (applying d env var for springapp ie the hostname is the name of the db, the username of the db & pw of the db)            
+                     *******HOSTNAME is the name of the data base that is being deployed                                                ********** THIS IS THE IMAGE 
 5) docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
 ####################we didnt pass any tag for the dockerrun, so the latest image will be downloaded for us 
