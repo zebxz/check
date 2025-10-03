@@ -18,6 +18,8 @@ python,nodejs, tomcat, docker can containerize any form of apllication
 
 ************************************************
 
+
+
 DOCKER7
 ### so when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
 If Containers are in two different networks. They can't communicate/access each other.
@@ -26,17 +28,19 @@ types of netwrk
 2) host network
 3) none network
 
-NEXT STEP AFTER THE CLONING THE DOCKER FILE REPO 
-we decide to decouple application into it into microservices and when that happens 
-we hv a situtaion wer dev ar writn code n committing to github &when it comes to github it wil no longer be ebay(repo), this appl is being broken doewn into login, so we hv 
-a repo for login, a repo registrtaion, a repo to cretae a cart, a repo for returns , these ar the diff repo we hv created when it comes to this projeect, so when we pull this
-image we ar creating multiple packages e.g login.jar up to retruns.jar, these ar packages, artifcats hv been created n frm here we building images, diff versions like 
-login:1, reg:1 , returns:1  .. we can push this image to the registry and frm der we ar able to deploy the application , we ar albe to deploy appl in the deployment server.
 
 
-The next step is to clone & build, the appl is cloned as a micro application, ie instead of deploying the appl as a monothelic appl, we decouple it and then we
-have a micro service appl, a repo for login, a repo registrtaion, a repo to cretae a cart, a repo for returns , these ar the diff repo we hv created when it comes to this projeect, so when we pull this
-image we ar creating multiple packages e.g login.jar up to retruns.jar,
+
+
+
+
+CONNECTING HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
+Once developers commit the code to github The next step is to clone & build, the appl is cloned as a micro application, ie instead of deploying the appl as
+a monothelic appl, we decouple it and then we have a micro service appl, a repo for login, a repo registrtaion, a repo to cretae a cart, a repo for returns,
+these ar the diff repo we hv created when it comes to this projeect, so when we pull this image we ar creating multiple packages e.g login.jar up to retruns.
+jar, etc.
+Next step is the netwrk, ie a group of servers communicating with each other using a specific netwrk, we make sure communication is established btw the
+servers
 
 
 
@@ -82,6 +86,9 @@ its the diff btw the image used to create the container n the changes tahe hv oc
 the changes in future application , we can commiit the changes using the 'docker commit command' which enables us to extract an image frm a running container
 ***meee*** however k8 is a more powerful tool that knocks docker out the water & i'd be glad to expand more on that.
 
+
+
+PROFF
 #####u guys dnt nid to freakout, the big issue of docker u can explain it in less than 2minutes in an interview
 my experience inclues writing docker files, maintaining docker files, to containerize our applications, we generally have java base application in our envr, 
 we run those application on a CI/CD platform and before we run the application , we nid a odcker file to containerize it as part of the CI/CD process , so i am 
@@ -97,6 +104,8 @@ In Passing our CMD and ENTRYPOINT Instructions, we are using executable form ove
 process and as such, it cannot be killed unnoticed
 We also enabled scanning in our env, such that everytin is autoscanned and if thers any issue, pull REQ are been deployed for us to take remedial action 
 *************docker is intended to be light weight bt then u nid to do smt to mk it light weight by making the right choices
+
+
 
 WHAT IS SOME OF THE PROBLEMS U HAVE FCAED IN UR ENVR RECENTLY AS A DEVOPS ENGR.
 we hv some of our docker files which we hv used to build and deploy applications and we had issues wher  applications were failing, endusers were complaining,
