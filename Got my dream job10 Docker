@@ -19,7 +19,6 @@ python,nodejs, tomcat, docker can containerize any form of apllication
 ************************************************
 
 
-
 DOCKER7
 ### so when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
 If Containers are in two different networks. They can't communicate/access each other.
@@ -72,7 +71,7 @@ We support nodeJS and .net based applications: (also some python base appl, like
 monoletic appl into micro services
 
 
- Deploy a microservice application for tesla.  
+ Deploy a microservice application for tesla.     *** WE need the spring appl & a database 
 we are using an application developed using the spring boot framework
  while deploying this appl, it need a database
 we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
@@ -90,7 +89,15 @@ spring:
 server:
   port: 8080
 
+bt we want to write images that dynamic, images that can run in any environment, so we can jst use diff envr variables 
+this is an application that is being deployed and some inf needs to be captured so a database is needed.
 
+                                          THIS APPLICATION NEEDS 2THINGS
+we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
+  ie developers are  recommending the mongo database                                                                                     mongodb:
+
+For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image for db (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
+so once i pull this 2images am able to deploy my application
       
 
 
@@ -111,6 +118,32 @@ we also v a db container etc and all of this is captured in the dabase container
 
 
 
+
+
+
+
+
+docker1&2    create docker file , this is the file we are refferring to when we run 'docker build' command.
+
+1)  Dockerfile :
+    FROM tomcat:8.0.20-jre8    ......so tomcat:8.0.20-jre8 ... this is the tag
+    COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
+***** so we hv tomcat 8.0.20 and java runtime 8
+
+1.12.17                                   BUILD IMAGE
+2)we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
+am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
+
+so we wnat to build our image and the command is  
+  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
+  docker build -t teslaimage:1 -f Dockerfile-tesla .  
+
+
+
+3)mvn package for java appl
+4) STEP4; DOCKER RUN/DEPLOY
+*****1:20:26  lets do docker run...  ie to create containers
+4)docker run -d -p 80:8080 --name webapp teslaimage:1
 
 
 
