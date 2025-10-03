@@ -83,6 +83,9 @@ IBM HTTP server (IHS)
 Oracle iplanet web server
 Internet information Server (IIS)
 
+
+
+
                                  APPLICATION DEPLOYMENT
 which kind of projects are we managing?
 we are managing java based projects - projects that are developed in the java lanaguage
@@ -93,6 +96,16 @@ we are managing java based projects - projects that are developed in the java la
 If you have a maven-standalone-application 
 you want to deploy the application? what we need is java
 
+***online** A "Maven standalone application" typically refers to a Java application packaged in a way that allows it to be executed directly, 
+without requiring an external application server or a complex deployment environment. 
+Maven, as a build automation tool, facilitates the creation of such applications.
+A JAR ("Java archive") file is a package file format typically used to aggregate many Java class files and
+associated metadata and resources (text, images, etc.) into one file for distribution
+***online, stack overflow;A JAR file is actually just a ZIP file. It can contain anything - usually it contains compiled Java code (*.class), but sometimes 
+also Java sourcecode (*.java).
+However, Java can be decompiled - in case the developer obfuscated his code you won't get any useful class/function/variable names though.
+
+**class**
    java -jar appName.jar 
 eg we have :    java -jar packageName.jar
     java -jar user-banking.jar 
@@ -102,11 +115,18 @@ we need java installed before the application can run
 
 19:20
 
+**online.. A "Maven web app" refers to a web application project that is built and managed using Apache Maven. Maven is a powerful build automation
+tool primarily used for Java projects, which simplifies the build process, dependency management, and project reporting
+Here's a breakdown of what constitutes a Maven web app:
+Maven as the Build Tool: Maven handles the entire lifecycle of the web application, including compiling source code, running tests, packaging the application
+(typically into a WAR file), and deploying it to a web server or application server.
+
+***class**
   To deploy maven-web-application  :
 its actually java based web-application  : app.war / *.war / paypal.war          **** anyname at all but it must end with .war 
     the application must be deployed either to Tomcat server or 
      server running with JBoss/WildFly
-
+43.34****** tomcat is used to deploy only web appl
 
   For maven-enterprise-application
 if we are deploy a java based enterprise application  : then the application 
@@ -114,6 +134,26 @@ if we are deploy a java based enterprise application  : then the application
   these applications can be deployed into  JBoss/WildFly
 
 *****mee*** that mean jboss/wildfly supports/used for enterprise application while tomcat supports jar/standalone & war/web applications
+
+
+*********************************************************meee*****************************
+1)how can we deploy a .jar application, like i need an explanation like for a layman.
+i saw online **** 
+In summary:
+If your JAR is a standalone application or a web application with an embedded server, you do not need a separate Tomcat installation.
+If your application is a traditional web application requiring a servlet container, you need to package it as a WAR file and deploy it to a Tomcat server.
+
+********* Whether or not you need Tomcat to deploy a Java application packaged as a JAR file depends on the nature of the application
+For a standard Java application (not a web application): You do not need Tomcat. A standard JAR file, containing a main method, can be executed directly
+using the java -jar command. This type of application does not require a web server or servlet container like Tomcat.
+*** For a web application packaged as a JAR (e.g., Spring Boot application with embedded server): You typically do not need a separate Tomcat installation. 
+Frameworks like Spring Boot can package your web application into an executable JAR that includes an embedded server (often Tomcat or Jetty). 
+When you run this JAR using java -jar,the embedded server starts automatically, making the application accessible
+****** For a traditional Java web application (requiring a servlet container): You cannot directly deploy a JAR file to a standalone Tomcat server. 
+Traditional web applications are typically packaged as WAR (Web Application Archive) files. These WAR files are then deployed to a servlet container like T
+omcat, which provides the necessary environment to run the web application (handling HTTP requests, managing servlets, JSPs, etc.).
+If your application is designed as a traditional web application, you would need to package it as a WAR and deploy it to a Tomcat instance
+***********************************************meeeeeeee*******************************
 
 
 
@@ -226,13 +266,6 @@ whatever information the users enter/generate while accessing the app is capture
 
 
 
-
-
-
-
-
-
-
    APPlication SErver:   
 
 Application Server: 
@@ -252,14 +285,14 @@ WebLogic --> Oracle  :
 43:20
 
 IQ: What is the d/f b/w JBoss/WildFly and Tomcat? 
-    
+    the diff starts with their vendors
 1)vendors: Tomcat==Apache  
              JBoss=Redhat  
     
  2) Applications:          
-        JBoss; Web applications .WAR 
+        JBoss is used to deploy; Web applications .WAR 
                enterprise applications .ear 
-        Tomcat; web applications ONLY 
+        Tomcat is used to deploy ; web applications ONLY 
 ============================
 
 
