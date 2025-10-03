@@ -19,7 +19,8 @@ python,nodejs, tomcat, docker can containerize any form of apllication
 ************************************************
 
 
-DOCKER7
+
+DOCKER7                   SUMMARIZED
 ### so when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
 If Containers are in two different networks. They can't communicate/access each other.
 types of netwrk
@@ -103,6 +104,9 @@ so once i pull this 2images am able to deploy my application
 
 
 
+
+*************************************************************************
+
 CONNECTING HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
 for tomcat deployment takes place in the opt/webapps dir target dir and the packages are created in the the target dir of our project & also uploading the artifacts into the maven local/default
@@ -121,27 +125,35 @@ we also v a db container etc and all of this is captured in the dabase container
 
 
 
+*******************************************************************************
 
 
 
 
 
+docker1&2    
+****mee****             THE BUILD & DEPLOY COMMAND EXPLANATION
+1)command to build an image
+docker build -t teslaimage:1 -f Dockerfile;  **this means that teslaimage:1 is the name of the image we are creating, its version '1' of the image & 
+docker file is the name of d 'dockerfile.
+2)command to deploy/run the container
+docker run -d -p 80:8080 --name webapp teslaimage:1   *** this means that webapp is the name of the container we are deploying & we are using teslaimage:1
+3)
 
-docker1&2    create docker file , this is the file we are refferring to when we run 'docker build' command.
-
-1)  Dockerfile :
+                           STEPS TO BUILD & DEPLOY AN IMAGE
+1) vi into the Dockerfile: **this is the docker file we got when we cloned the app & its d file we are refering to when we run 'docker build' command in step2
     FROM tomcat:8.0.20-jre8    ......so tomcat:8.0.20-jre8 ... this is the tag
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 ***** so we hv tomcat 8.0.20 and java runtime 8
 
-1.12.17                                   BUILD IMAGE
-2)we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
-am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
+step2                                  BUILD IMAGE
 
-so we wnat to build our image and the command is  
-  docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
-  docker build -t teslaimage:1 -f Dockerfile-tesla .  
-
+so we wnat to build our image and the command is, i can use any of this commands 
+  1)docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/     *** the image we are building is called teslaimage & the docker file is from step1
+ docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/   *** the docker file we got when we cloned the app, is found in this repo: /home/ubuntu/web/
+ 2) docker build -t teslaimage:1 -f Dockerfile.    **** i can run this command***since am already in the web dir, *** when we ran the 'cd web/' above.
+ docker build -t teslaimage:1 -f Dockerfile . (since am located in the web dir i could jst do a .,ie my docker file is found in my pwd
+ 3)docker build -t teslaimage:1 . (the . means its building frm d docker file bc d defaut name for doecker file is docker file bt if am using a dif name e.g
 
 
 3)mvn package for java appl
