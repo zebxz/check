@@ -341,8 +341,11 @@ Docker Image: --> It's a package which contains
                  needed to run your application...  ... it is shippable
 
 
- 
+1.10 
                                           STEPS FOR CONTAINERIZATION
+for this ticket the challenge is to realise that the docker script used doesnt have the maven build part inside it that requires maven installation & bc of that
+when we run 'docker build' it will fail.
+therefore we will have to manually install maven so that when we run 'docker build' it willl be sucessful.
 Ticket011:
   Containerise the java based application in the SCM repository below;  
   https://github.com/LandmakTechnology/maven-web-application
@@ -361,7 +364,8 @@ in the web apps dir
 my base image is tomcat:8.0.20-jre8 ,, so i nid tomcat for my appl to run ,, so my teslar web app depends on this base image
 
 
-  Dockerfile :
+create the  Dockerfile :   ***meeee***  this is the file we are refferring to when we run 'docker build' command.
+vi dockerfile            ie docker file is the name of our docker file(we can give it any name at all)
     FROM tomcat:8.0.20-jre8    ......so tomcat:8.0.20-jre8 ... this is the tag
     COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 ***** so we hv tomcat 8.0.20 and java runtime 8
@@ -374,7 +378,7 @@ so we wnat to build our image and the command is
   docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/  
   docker build -t teslaimage:1 -f Dockerfile-tesla .  
 
-we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
+ie we wnt to build our image, the command is docker build, + so i give a name to my image called telsa image, what version:version 1
 am building frm a file , the file is called docker fileand its found in /home/ubuntu/web,,...wher am i building, docker build image 1
 
 
@@ -396,12 +400,13 @@ we wnt to build an image ,, bt lookingat this image,my docker file says copy  th
 so we wnt to create an image and wit the docker file an image can be created
 
 
-1:14:44 continuing frm the steps above
+1:14:44 continuing frm step1 above
 2) to build the image:     docker build -t teslaimage:1 . 
 
-docker build -t, i wnt to attach a tag to my image :teslaimage: version 1 and my docker file is found in my current working dir 
+****docker build -t, i wnt to attach a tag to my image :teslaimage: version 1 and my docker file is found in my current working dir 
 docker build -t teslaimage:1 .
-####it downloaded bt it cant find the file so the copying failed, 
+####using the docker file we created, the 'FROM' worked bc it downloaded tombt it cant find the war file to 'COPY' to, so the copying failed, bc target dir hv 
+not been created
 when we ...  ls ,, we cant see the target dir and we nid to copy a file frm the target dir that ends wit .war...
  COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
 the target dir means we v created the packages
