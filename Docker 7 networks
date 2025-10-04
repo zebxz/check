@@ -11,8 +11,9 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 
 NETWRK, TYPES OF NETWORK, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER
 DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE  A NETWK, WE ARE GOING TO SEE HOW TO 
-DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT, INSPECTING CONTAINER, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO 
-MORE THAN ONE NTWRK.
+DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT, INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION US
+ING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK,  DOCKER NONE/NULL NETWRK
+
 
 
 Docker networks & Micro-services:
@@ -356,6 +357,8 @@ docker inspect bridge              (172.17.02/16
 can also docker inspect tesla | grep 172
 can also docker inspect bridge | grep 172    
 
+
+                     CONNECTING CONTAINER TO A DIFF NETWRK
 ***************************1:56:00 
 docker exec app ping webapp 
 ping : unknown host because  the 2 containers (app) and (webapp) cannot communicate with each other bc they are in 2 different ntwrks
@@ -369,15 +372,23 @@ root@3e143cbcde73:/usr/local/tomcat# ping springapp ................. was succes
 
 ############ now we deleted the app cointainer and created it now in the bridge ntwrk 
 docker run --name app -d -p 8000:8080  mylandmarktech/java-web-app 
+docker exec -it webapp ping webapp bash
 root@3e143cbcde73:/usr/local/tomcat# ping app   ............ we ping app now bt its nt successful bc containers that are  nt in the same ntwrk cant communicate wit each oda
 ping : unknown host
+docker network connect tesla app .. to connet it bk to the tesla ntwrk
 
 QUESTION, Why is it not able to ping , thought thats one of the adv of custom ntwrk, if a container is recreated it can stil be in the same ntwrk bc it can connect with either 
 IP addresss or container name and in this case, the cointainer was recreated with the same name. 
 mY ANS: the app dat was deleted was recreated with the same name bt the netwrk wasnt stated, so that means it was recreated in the bridge netwrk nt the intial custom ntwrk
 
+
+
 2:00:22     HOW TO ISOLATE APPLICATION USING DOCKER
 BY placing the applications in diff ntwrks 
+****null netwrkk**
+If we create container in none/null network. Container will not have IP Address.
+We can't access  containers in this network  Internal or external 
+****************** we can use this ntwrk to isolate containers
 
 
 
@@ -386,7 +397,8 @@ BY placing the applications in diff ntwrks
 YES....
 Docker netwrk create ebay 
 docker network connect ebay app
-docker inspect app | grep 172 ......................  now, we can see the diff Gateways and IPAddress ie the dif ntwrks connected to  it8****************
+docker inspect app | grep 172 ......................  now, we can see the several Gateways and IPAddress ie the dif ntwrks connected to  app container**************
+                                 now app container has 3netwrks ie the default netwrk, the tesla ntwrk & the ebay ntwrk
 therfore, docker exec -it webapp bash  ............................ SUCCESSFUL BT  before it wasnt succesful
 root@3e143cbcde73:/usr/local/tomcat#
 root@3e143cbcde73:/usr/local/tomcat# ping app  ....... SUCCESSFUL 
@@ -422,10 +434,13 @@ docker network prune
 docker network rm <networkNameOrId>
 
 
-
                               host port: container name mh /'
  2 containers cannot v the same host port number& name  , bt can v the same conatainer num
 **************************************2:07:33 
+
+
+                                   CREATING DOCKER HOST NETWRK
+
 
 2) Docker Host Network.:
 If we create containers in host network. 
@@ -464,6 +479,8 @@ if we hv containers like this , they cannot be deployed in the host ntwrk , they
    java-web-app      = containerPort,  EXPOSE=8080  
    maven-web-app     = containerPort,  EXPOSE=8080  
 
+
+                                 DOCKER NONE/NULL NETWRK
 
 
 3) Docker none/null network
