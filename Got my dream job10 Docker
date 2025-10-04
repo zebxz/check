@@ -107,20 +107,23 @@ so once i pull this 2images am able to deploy my application
 
 *************************************************************************
 
-CONNECTING HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
-the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
+STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
+1)the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
 for tomcat deployment takes place in the opt/webapps dir target dir and the packages are created in the the target dir of our project & also uploading the artifacts into the maven local/default
 repo OR custom repo
-But in our evn we use docker for deplyment therefore;
+2)But in our evn we use docker for deplyment therefore;
 Once developers commit the code to github The next step is to clone & build, the appl is cloned as a micro application, ie instead of deploying the appl as
 a monothelic appl, we decouple it and then we have a micro service appl with stanalone entities, a repo for login, a repo registrtaion, a repo to cretae a
 cart, a repo for returns,these ar the diff repo we hv created when it comes to this projeect, so when we pull this image we ar creating multiple packages e.g
 login.jar up to retruns.jar, etc.
-Next step is the netwrk, ie a group of servers communicating with each other using a specific netwrk, therfore we create a netwrk to make sure communication 
+3)Next step is the netwrk, ie a group of servers communicating with each other using a specific netwrk, therfore we create a netwrk to make sure communication 
 is established btw the servers using the container name. so with the images of these stanalone entities built into containers we deploy our containers in 
 these deployment server using a custom bridge ntwrk so that the login container can communicate with registaration container ,cart container needs to 
 communicate with pay container, we also v a db container etc and all of this is captured in the dabase container (i bliv the inf needed frm endusers to access
 the other containers will be captured in the db)
+4)the container deployed can be statless or stateful. and this takes us to the volume concept in docker; bind mount
+our app container which is a STATELESS APP is ok, bt d database is STATEFUL n needs to maintain its state, to prevent data loss,therefore it needs 
+a piece of storage to capture data, so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
 
 
 
