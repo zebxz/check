@@ -81,15 +81,32 @@ also have to open (port80 , 443 )in the webserver security grp
 ****** in  all we hv 2 security parameter
 the 1st is the router for routing, wich permits traffic to be routed to the subnet bc if thers no route table permiting routing the traffic wont happen
 the 2nd is the firewall wich has 2layers of security,, security at the subnet level & security at the server level
-Finally, as an additional layer of security, we use the IAM = identity and access mgt, for authentication & authorization.
+As an additional layer of security, we use the IAM = identity and access mgt, for authentication & authorization.
 also we can grant & restrict permission based on the based on the role of each member, i can use IAM roles, these are policies/permissions that can be 
 attcahed to another aws resource..[ec2 Instances, eks, ecs,etc.]  
+ Finally; SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
+So rather than manually adding some number of servers when there is a spike & removing severs when there is a down time. we automate the process, using amazon
+Ec2 Auto Scaling, which ensures that for high availability,we always have the right number of healthy instances at all times & dynamically increase & decrease 
+capacity as needed.our appl always has the right amount of capacity to handle the current traffic demand,  & this is cost effective because you only pay for
+the instances you use & can terminated them when nt needed
 
 ****** so these are some of the ways we ultilize AWS resources based on the needs of our company.
 
+*** showing us using the Udemy video***** 3.00.00 *****
+let me show u guys what is included in the Awssolution architect course that you guys already have but we may nt hv gone deep into it bc this is not a full Aws 
+course but if you look at intro to Aws solution architect, getting atarted with aws, IAM, EKS etc. we will also go tru EKS in k8
+ you  can buy the video & go tru the services as well just to expand your understnading AWS services
+
+****3.03.25 **** i agree with you guys that the information is much, there is more that you need to know, do i need to know all of these at this time? ofcourse
+just make sure that as you are progressing, th ethings that we have highlighted you are able to add them periodically in your tool set.
+but the Aws service sthat we hv covered, if i wewre u what i will do is go the Aws  sloution course, go can jsut go tru some of the services course again ie
+what we have done already b cthose services is what we are going ot be using &what we use in our project
+*****there are multiple aws services that we have seen no company uses all of them, bc you are not goin out there to interview as somebody who is writing 
+an AWs certication exam & thats why what i will tell you guys is that you dnt need to ak any exam to get hired bc you deployed as someone who has been
+working & those working dont have time to write exams. if you are are a student you should hav ebeen writing exams, most of the engr working out der if ther
+is somt new the company invites expert from AWs to cm indicate & elborate on the new updates. 
+
 ****************************************************** ENDS***************************************************************
-
-
 
 
 
@@ -1365,17 +1382,28 @@ the rules associated with the target grp e.g if we created hhtp:80 or https:443 
 
 ####1:56:18  HW CAN WE AUTO SCALE TO ACHIEVE FULL AUTOMATION
 ALL ALONG WE V BEEN creating our target grps manually, for e.g if ders a spike in one of the target grps and the targets can no longer carry d load and we nid nid to add 
-more targets , we can add manually but we can also automate the process,, equally, if der is downtime,we can also deregistr some targets .
+more targets , we can add manually but we can also automate the process,, equally, if der is downtime, we can also deregister some targets .
 **** we can automate using autoscaling
 2types.. horizontal & vertical scaling
 ******e.g of horizontal ,,we v a t2 large server dat has 8GB & WE convert/change it to T2XLARGE ,,, now d T2large disappears completely &we ar left with T2X ,
 ALSO, if u had 2 t2large servers 200GB each, then u add another 2t2large servers with 500GB ,, it is also horizontal scaling 
- e.g of vertical scaling .. from T2 large with 200gB to T2large with 500GB.. MOVING TO LARGE CAPACITY SERVER, its tha same sever bt increased in size
-SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
+ e.g of vertical scaling .. from T2 large with 200gB to T2large with 500GB.. MOVING TO LARGE CAPACITY SERVER, its the same sever bt increased in size
+2.03.30...  SCALING IS VERY IMP BC BIZ NIDS CHANGES CONSTANTLY
+So rather than manually adding some number of servers when there is a spike & removing severs when there is a down time, we should automate the process, because
+the reason you are a devops engr is bc you can automate. If you cant automate theres no need hiring you as a devops engr.
 
-2:03:53 READ THE SCRipt on telegram ... EC2 autoscaling 
-benefits... cost mgt etc
-when u manually provison ur infrastructure withot any autoscaler, the tendency is dat u wil spend more..... read it up
+when u manually provison ur infrastructure without any autoscaler, the tendency is dat u wil spend more..... read it up
+
+2:03:53 BENEFITS OF AMAZON EC2 AUTO SCALING 
+1) Better fault tolerance; 
+Amazon Ec2 auto scaling can detect when an instance is unhealthy, terminate it & launch an instance to replace it.
+you can configure amazon ec2 auto scaling to use multiple availabilty zones. if one avail zone becomes unavailable, amazon ec2 auto scaling can launch instances
+in another one to compensate.
+2) Better avialbility
+amazon ec2 auto sclsing csn help ensure that your appl always has the right amount of capacity to handle the current traffic demand.
+3) Better cost mgt
+amazon ec2 auto scaling can dynamically increase & decrease capacity as needed. because you only pay for the instances you use & can terminated them when 
+nt needed
 
 ********HW auto scaling works ...... was able to see the auto scaler creating instances when we deleted some instances, its using the launch template
 in ths appservers u creat saling policy , u ar saying u nid a minimun of a appservers,max100
