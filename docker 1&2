@@ -47,7 +47,12 @@ you can Create an account and a repository or jst cm here to explore
 
 
 1.16.40
- STEP3; INSTALL MAVEN   .........  **** meeee**** does this mean we need to insatll maven when we install doecker ???
+ STEP3; INSTALL MAVEN  **** meeee**** given that the build failed bc we didnt hv mavnen installed,does this mean we need to insatll maven when we install 
+doecker ???
+It was bc of the challenge for the ticket'he designed the ticket to mk us realise that the docker script used doesnt have the stage for 'maven build' 
+inside it that requires maven installation & bc of that when we run 'docker build' it will fail.
+In docker5&6, we treated multi stage file ie a file with multiple 'FROM' keyword, that contains several stages *eg stage for repo to clone, stage for maven to 
+build) etc, required for the complete deployment of an appl, 
 
 STEP4; DOCKER RUN/DEPLOY
 *****1:20:26  lets do docker run...  ie to create containers
@@ -151,7 +156,7 @@ for a ear app, we nid
    for standalone app , we nid 
 app code     = app.jar + 
    dependencies = java1.8+    
-
+ 
 
 
              CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES 
