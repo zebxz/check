@@ -342,9 +342,21 @@ docker network connect tesla webapp       to connect a container to a netwrk, ie
   rm          Remove one or more networks
 cant delete a ntwrk that has containers connected to it, must first disconnect the container from the netwrk 
 
-
-
-
-DOCKER7
 docker network ls    To list the netwrks
+
+CUSTOM BRIDGE NETWRK
+ docker network create tesla        ***to create the tesla netwrk
+
+HOST NETWRK
+docker run --name javaapp -d --network host mylandmarktech/java-web-app   
+   ContainerPort: 8080  
+
+NONE/NULL NETWRK
+If we create container in none/null network. Container will not have IP Address.
+We can't access  containers in this network  Internal or external 
+
+docker run --name hello -d --network none mylandmarktech/hello   
+
+
+DOCKER8&9
 
