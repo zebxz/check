@@ -164,7 +164,6 @@ so once i pull this 2images am able to deploy my application
       
 
 
-
    DIFF BTW THE TYPES OF NETWORKS
 
  ********docker 3&4 .... 1:25:00 to deploy a 2nd conatiner using the d same image, 
@@ -214,6 +213,9 @@ cant be accessed Internal or external
 *************************************************************************
 
 
+
+
+
 **meee****
 STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 1)the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
@@ -256,8 +258,9 @@ ONCE THE applications are containerized, we ar able to run containers
  and we need  networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
 external] 
 And finally volumes;volumes = storage/mounts for the containers, the storage can be stateless (does not store data), or stateful needs to maintain its state,
-data nids to be stored.this include data bases , applications like jenkins
-    databases / jenkins, we sue jenkis to be able to deploy a lot of works, so we hv jobs in jenkins
+to prevent data loss,therefore it needs a piece of storage to capture data, data nids to be stored.this include data bases , applications like jenkins
+   databases / jenkins, we use jenkis to be able to deploy a lot of works, so we hv jobs in jenkins.
+so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
 
 
 In my environment we use docker to containerize applications ie applications run as containers
