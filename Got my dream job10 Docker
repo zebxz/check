@@ -28,6 +28,9 @@ docker 3&4
 
 ************************************************
 
+
+
+
 DOCKER1&2
   CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES 
  *****now the quetsion is what can be done to be able to package d appl plus its dependencies n kip such dat if i wnt to deploy d appl all i hv to do is ship the app to 
@@ -47,6 +50,8 @@ Dockerfiles are input use to build docker images, docker file is a simple text f
 Docker can build images by reading the instructions from a docker file
 
 Docker images are input needed/used to create containerised applications  
+
+
 
 
 
@@ -124,6 +129,10 @@ bt we want to write images that dynamic, images that can run in any environment,
 this is an application that is being deployed and some inf needs to be captured so a database is needed.
 
                                           THIS APPLICATION NEEDS 2THINGS
+*****meee****
+1) the applictaion image , in this case its; springapp
+2) the database image, in this case its; mongo
+
 we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
   ie developers are  recommending the mongo database                                                                                     mongodb:
 
@@ -133,10 +142,55 @@ so once i pull this 2images am able to deploy my application
 
 
 
+   DIFF BTW THE TYPES OF NETWORKS
+
+ ********docker 3&4 .... 1:25:00 to deploy a 2nd conatiner using the d same image, 
+2 containers cannot v the same host port number& name  , bt can v the same conatainer number
+host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
+**** docker7; networks:  
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+
+
+
+1)DEFAULT BRIDE NETWRK
+containers communicate with only the containerID
+e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
+will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
+****mee*** in the default bridge netwrk, We can create more than one container with d same container port , bt we hv to do port publishing
+
+
+2)CUSTOM BRIDGE NETWRK
+ docker network create tesla        ***to create the tesla netwrk
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
+each other.
+
+
+3)HOST NETWRK  
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+         2.21.20   docker logs apps .. we see binding exception
+
+Docker Host Network.:
+If we create containers in host network. 
+Container will not have IP Address. and we cant do port forwarding -p
+ Container will be created in a system network.
+
+docker run --name javaapp -d --network host mylandmarktech/java-web-app   
+   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
+*********i can deploy the application & access this first application/container but if icreate .
+
+
+
+4)NONE/NULL NETWRK
+If we create container in none/null network. Container will not have IP Address.
+We can't access  containers in this network  Internal or external 
+****************** we can use this ntwrk to isolate containers
+
 
 
 *************************************************************************
 
+
+**meee****
 STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 1)the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
 for tomcat deployment takes place in the opt/webapps dir target dir and the packages are created in the the target dir of our project & also uploading the artifacts into the maven local/default
@@ -164,44 +218,8 @@ a piece of storage to capture data, so we can create a mountpoint and mount it w
 
 
 
-
-docker1&2    
-****mee****             THE BUILD & DEPLOY COMMAND EXPLANATION
-1)command to build an image
-docker build -t teslaimage:1 -f Dockerfile;  **this means that teslaimage:1 is the name of the image we are creating, its version '1' of the image & 
-docker file is the name of d 'dockerfile.
-2)command to deploy/run the container
-docker run -d -p 80:8080 --name webapp teslaimage:1   *** this means that webapp is the name of the container we are deploying & we are using teslaimage:1
-3)
-
-                           STEPS TO BUILD & DEPLOY AN IMAGE
-1) vi into the Dockerfile: **this is the docker file we got when we cloned the app & its d file we are refering to when we run 'docker build' command in step2
-    FROM tomcat:8.0.20-jre8    ......so tomcat:8.0.20-jre8 ... this is the tag
-    COPY target/*.war /usr/local/tomcat/webapps/tesla.war  
-***** so we hv tomcat 8.0.20 and java runtime 8
-
-step2                                  BUILD IMAGE
-
-so we wnat to build our image and the command is, i can use any of this commands 
-  1)docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/     *** the image we are building is called teslaimage & the docker file is from step1
- docker build -t teslaimage:1 -f Dockerfile /home/ubuntu/web/   *** the docker file we got when we cloned the app, is found in this repo: /home/ubuntu/web/
- 2) docker build -t teslaimage:1 -f Dockerfile.    **** i can run this command***since am already in the web dir, *** when we ran the 'cd web/' above.
- docker build -t teslaimage:1 -f Dockerfile . (since am located in the web dir i could jst do a .,ie my docker file is found in my pwd
- 3)docker build -t teslaimage:1 . (the . means its building frm d docker file bc d defaut name for doecker file is docker file bt if am using a dif name e.g
-
-
-3)mvn package for java appl
-4) STEP4; DOCKER RUN/DEPLOY
-*****1:20:26  lets do docker run...  ie to create containers
-4)docker run -d -p 80:8080 --name webapp teslaimage:1
-
-
-
-
-
-
 ***********   SUMMARIZED FOR INTRVIEW**********************
-Am good with docker 1&2, 5&5b & some of 3&4 videos
+Am good with docker 1&2, 5&5b, docker7 & some of 3&4 videos
 
 In tomcat applications are deployed in heavy weight virtual machines VMs:
 In docker applications are deployed in lightweight containers:
@@ -269,46 +287,12 @@ with docker
 
 
 
-DOCKER5B
-UESTION
-with regards to out of memory issues, is der a way we can use autoscaling 
-EVEN THOUGH WE Spoke abt out of memory, it rarely happens bc containeriztion itself has a lot of options that we ;ll look at when we get to kubertnets
-### ull cm to realise that docker basically is going to ends with docker files
-the rest we ar going to be using docker to create images, push the images and then use kubernetes to deploy the application
-**** when it comes to deployment,we wont use docker to deploy bc docker cannot scale 
-e.g u cant decide to deploy 10 replicas of webapp with docker but with kubernetes u can deploy as many replica as u want
-bc docker cannot scale, it can only deploy one replica of an appliaction and that is a problem
-
-
 *************** END**********************
 
 
-  Is a containerization multi-platform software use to; create, build, ship, share and deploy containerize applications  
-Docker is developed in Go Lang/Go Language.
 
-O.S --> Cross Platform (Docker can be installed in any O.S)
-        Docker Can Be Installed on Linux, Windows OS, macOS  
-        Desktops as well as servers.
-
-Docker is available in 2 Editions:
-
- 1) Docker CE: --> Community Edition (Free to use)
- 2) Docker EE: --> Enterprise Edition (Commercial/Licensed)
-     EE is the docker CE+ is
-
-Linux Flavors :there are diff linux flavors ie Linux distributors we can install docker on particularly the docker Community Edition 
- CentOS
- Amazon Linux
- Red Hat   : nt for docker CE 
- Ubuntu
- Debian
- Fedora
- SUSE Linux …etc
-
-
-
-
- DoKCER 5&5B
+ 
+DoKCER 5&5B      **** lol**** THIS is a wrong interpretation i did in 2024
 
 
 **************** this is wher he now applied this command 
