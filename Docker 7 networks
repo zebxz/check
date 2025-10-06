@@ -9,12 +9,12 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 *************************************************************************************************************************************************
 
 
-NETWRK, TYPES OF NETWORK, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER
-DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS,TROUBLESHOOTING, MANAGING THE DOCKER NETWORK/STEPS TO DEPLOY THE MICRO
-SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO
-CHANGE MOUNT POINT,INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE 
-THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER
-NONE/NULL NETWRK, 
+TYPES OF NETWORK, DIFF BTW THE TYPES OF NETWORKS, APPLICATION ARCHITECTURE, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN 
+PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS,TROUBLESHOOTING, 
+MANAGING THE DOCKER NETWORK/STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE 
+HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT,INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE 
+APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS
+BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
 *** inside got my dream job docker; DIFF BTW THE TYPES OF NETWORKS,STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 
 
@@ -40,7 +40,7 @@ They can't communicate/access each other.
  
 How to list networks in docker?
 
-
+                                                TYPES OF NETWORKS
 difff ntwrks to tk note of 
 3kinds of ntwrks were listed
 ubuntu@docker:~$ docker network ls
@@ -53,15 +53,70 @@ f9f9a99c2c85   host      host      local
 2) host network 
 3) none network
 
+
+
+DIFF BTW THE TYPES OF NETWORKS       ****i complied the diff from the note*************************
+
+ ********docker 3&4 .... 1:25:00 to deploy a 2nd conatiner using the d same image, 
+2 containers cannot v the same host port number& name  , bt can v the same conatainer number
+host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
+**** docker7; networks:  
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+
+
+
+1)DEFAULT BRIDE NETWRK
+containers communicate with only the containerID
+e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
+will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
+****mee*** in the default bridge netwrk, We can create more than one container with d same container port , bt we hv to do port publishing
+
+
+2)CUSTOM BRIDGE NETWRK
+ docker network create tesla        ***to create the tesla netwrk
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
+each other.
+
+
+3)HOST NETWRK  
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+         2.21.20   docker logs apps .. we see binding exception
+
+Docker Host Network.:
+If we create containers in host network. 
+Container will not have IP Address. and we cant do port forwarding -p
+ Container will be created in a system network.
+
+docker run --name javaapp -d --network host mylandmarktech/java-web-app   
+   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
+*********i can deploy the application & access this first application/container but if icreate .
+
+
+
+4)NONE/NULL NETWRK
+If we create container in none/null network. Container will not have IP Address.
+We can't access  containers in this network  Internal or external 
+****************** we can use this ntwrk to isolate containers
+
+docker run --name hello -d --network none mylandmarktech/hello   
+cant be accessed Internal or external 
+
+*************************************************************************
+
+
 1) Default bridge network 
 in the default bridge netwrk, if i hv 2 containers in this ntwrk, hw do they communicate with each other
 e.g if am managing a micro service application, these app can either be deployed under .. incomplete  **i bliv he wanted to say, custom bridge ntwrk or host ntwrk
 e.g we hv an ebay webapplication
 
-ebay webapp: monolithic architecture 
+
+                                  APPLICATION ARCHITECTURE
+1)  MONOLITHIC ARCHITECTURE: ebay webapp
    if u wnt to acces thhis appl, it has cm with diff component : so when u acces this appl, u can login/registration/cart/pay/order/ and if ders a problem you can return  
 this type of appl wher everytin is coupled together we call it monolithic architecture, so it is developed using monolithic architecture 
 
+
+2) MICRO SERVICES
 12:52 bt now we can decide to use microservices , with microservices, this ebay application is decoupled
 microservices architecture: for it to be a microservices , we hv each of theses appl  components decoupled
  ebay.war  = decoupled  , they are now stanalone entities
@@ -92,10 +147,12 @@ login:1, reg:1 , returns:1  .. we can push this image to the registry and frm de
 
 #### 25:19 my docker host server, on it we v containers e. a webaapp deployed, i hv a data base container thas suppose to wrk wit the web app 
 so the idea is if u v 2 containers like this, hw do we ensure they  commnunicate wit each oda. so hw can they first commu icta wit ecah oda
-for them to bale able to comnunicate in docker, thenetwrk concept is important. 
+for them to bale able to comnunicate in docker, the netwrk concept is important. 
 so we hv docker ntwrk concept
 first the 2ntwrks must be in the same ntwrk 
 
+
+NETWORKS contd.
 we hv default bridge ntwrk 
 in this ntwrk containers wil commuincate with each other using containerIPS , SO WITH THE HELP OF CONTAinerips  theY can communicate with ecah oda
 
@@ -108,6 +165,8 @@ containers communicate with IPS and the container name, so even if a container i
 each other.
 *****in the custom bridge ntwrk we can create a ntwrk called e.g EBAY NETWRK
 
+
+ ARCHITECTURE contd...
 AGAIN, we ar talking abt a situation were der are multiple micro services
 e.g in the above case were a couple of images hv been created 
 so the imaegs hv been pushed to the image registry e.g docker hub
@@ -118,7 +177,8 @@ so we deploy the containers in a custom bridge ntwrk
 BUT this entirely is called microservices, its called microservice deployent. 
 we wn tto deploy our app uisng micro services , so we hv decoupled frm monlitic to microservices
 
-34:09 WHY IS IT IMP TO DECOUPLE
+
+34:09                      WHY IS IT IMP TO DECOUPLE
 A Micor service architecture is easy to manage, 
 its also easy to scale
 
