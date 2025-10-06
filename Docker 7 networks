@@ -10,10 +10,11 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 
 
 NETWRK, TYPES OF NETWORK, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER
-DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS, STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM 
-NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT, INSPECTING CONTAINER, 
-CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, 
-DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
+DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS,TROUBLESHOOTING, MANAGING THE DOCKER NETWORK/STEPS TO DEPLOY THE MICRO
+SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO
+CHANGE MOUNT POINT,INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE 
+THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER
+NONE/NULL NETWRK, 
 *** inside got my dream job docker; DIFF BTW THE TYPES OF NETWORKS,STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 
 
@@ -161,7 +162,7 @@ codes as with monolithic but only the 2,000lines of code for login for microserv
 
 
 
-DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK
+                           DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK
 46:20 ************************************************** We support Java based applications:
 ===================================
 We support nodeJS and .net based applications: (also some python base appl, like we saw when we were doing container, we deployed a python base application)
@@ -219,22 +220,38 @@ For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo imag
 so once i pull this 2images am able to deploy my application
 **********************************************************************************************************************
 we need to deploy the springapp and the database - mongo 
-###########i wnt to deploy my application, first i v to pull pull the 2 imgae ( so create a file to achieve this)
+###########i wnt to deploy my application, first i v to pull pull the 2 image ( so create a file to achieve this)
 1.16.37
 
 
+                                     TROUBLESHOOTING THE spring app.sh script
+1.18.33                                      
+to deploy the script as seen below;   sh spring app.sh  
+*1.18.47, .... it will pull & create the containers
+..  error when he deployed the script
 
-          STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA   (INCLUDES creating the cutsom netwrk)
-1) vi spring.sh  (and paste number2 to number 5 as seen below)....... we wnt to create a file for this deployment
-2)  docker pull mylandmarktech/sping-boot-mongo
-2b)  docker pull mongo
-3) after pulling, we wnt to create a ntwrk for tesla: 
+1.23.30   *** he deployed it manually ie he ran deployed the springapp & the mongo db, individually.
+the container application was deployed but the mongo database did not
+1.25.00 , finally it worked & the mongo database is running & we are able to write data in the spring application
+and this is how we manage docker network
+
+
+                                   MANAGING THE DOCKER NETWORK
+1.17.00                 
+                 STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA   (INCLUDES creating the cutsom netwrk)
+1)docker network create tesla  ...when am doing mine, i wont create it first, i will create it inside the script
+
+                   CREATING THE DEPLOYMENT SCRIPT FOR THE APPL & THE DATABASE
+2) vi spring.sh 
+
+(and paste number2 to number 5 as seen below)....... we wnt to create a file for this deployment
+3)  docker pull mylandmarktech/sping-boot-mongo   
+3b)  docker pull mongo
+4) after pulling, we wnt to create a ntwrk for tesla: 
+#docker network create tesla  .. commented on this line bc we already created the netwrk in step1 above
  docker network create tesla (DIS is hw to create a ntwrk in tesla, custom brideg ntwrk bc i wnt d containers to comm wit both name n IDS ) 
         &docker netwrk ls to list ntwrks
   
-****next docker run:
-docker run --name springapp -d -p 8080:8080
-  docker run --name mongodb   
 
 ###########QUESTION, HW DO WE KNOW WHICH ENV VARIABLE VALUE TO USE ,, BC here both the applictaion(spring) has its env var & the database has its own env ???????
  ########## i bliv it doesnt matter bc u will v to choose the values yourself
@@ -256,32 +273,27 @@ spring:
      MONGO_INITDB_ROOT_USERNAME: root
      MONGO_INITDB_ROOT_PASSWORD: example
 
-********************************************
-
-vi sp.sh    
-  docker pull mylandmarktech/sping-boot-mongo
-  docker pull mongo
-  docker network create tesla
 
 
 
 ********************************************APPLYING THE ENV VARIABLES************************************
 ****************************I ALSO HV TO PUT BOTH OF THEM IN THE SAME NTWRK(network tesla) bc i wnat them to comunicate with each oda ********
 
-   **** can replace step4 with step6 that has the volume command attached. 
+
+   **** can replace step5 with step5 that has the volume command attached. 
 #########DEPLOYING THE DATABASE                                                                     ****image name is mongo
-4) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
+5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
                                                   
 
 ########### DEPLOYING THE APPLICATION
                                           
    (applying d env var for springapp ie the hostname is the name of the db, the username of the db & pw of the db)            
                      *******HOSTNAME is the name of the data base that is being deployed                                                ********** THIS IS THE IMAGE 
-5) docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+5b) docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongodb -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
 ####################we didnt pass any tag for the dockerrun, so the latest image will be downloaded for us 
 
-6) sh spring app.sh  to deploy *************************1:18:32
+6) sh spring app.sh  to deploy *************************1:18:32 , but it didnt work
 *************************************************************************************************************************************************
 
 1:18:00*************THE USERNAME MUST BE THE SAME:
@@ -327,8 +339,8 @@ it will give me the mount point(where data is stored ) and it syas /data/db, so 
 (its under volume concept in docker) which we will look at.
 having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
 
-This is the command from step4 above; DEPLOYING THE DATABASE                                                                    
-4) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to /data/db mongo
+This is the command from step5 above; DEPLOYING THE DATABASE                                                                    
+5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to /data/db mongo
    therefore                               
 this is the mount point for my container: /data/db   and 
 this is the mount point for my docker host server: /tmp/mydata
