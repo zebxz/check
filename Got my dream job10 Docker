@@ -56,6 +56,27 @@ Docker containers : Run time instance of a docker image
 
 
 
+DOCKER 8&9
+In tomcat applications are deployed in heavy weight virtual machines VMs:
+In docker applications are deployed in lightweight containers:
+****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
+ so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
+
+we use the docker client / wich is the cli, command line interface that permits u to run docker commands   
+ = docker build/push/pull/run  (and this docker client generally starts with
+   docker 
+
+WE also have docker daemon
+docker daemon/service =  this enforces the command that is run, e.g when u run docker build, the docker deamon knowns he has to create an image etc                                                                                   
+  docker registry  , wher we ship images to and make them distributable0      = ship/share[dockerhub/ecr(elastic container registry) /nexus]    
+
+
+Application architecture: .. we also saw we can use docker to containerize both monolithic and microservices application
+  Monolithic architecture '
+  Micro-services architecture ' ... bt docker will shine more when it comes to micro services bc they ar very light weight & docker containers are light weight
+
+
+
 
 DOCKER7                   SUMMARIZED
 ### so when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
@@ -227,6 +248,17 @@ Am good with docker 1&2, 5&5b, docker7 & some of 3&4 videos
 In tomcat applications are deployed in heavy weight virtual machines VMs:
 In docker applications are deployed in lightweight containers:
 ****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
+ so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
+
+Docker is all about 
+Docker files for creating docker images, Images for creating containers, containers are the run time of a docker image.
+ONCE THE applications are containerized, we ar able to run containers
+ and we need  networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
+external] 
+And finally volumes;volumes = storage/mounts for the containers, the storage can be stateless (does not store data), or stateful needs to maintain its state,
+data nids to be stored.this include data bases , applications like jenkins
+    databases / jenkins, we sue jenkis to be able to deploy a lot of works, so we hv jobs in jenkins
+
 
 In my environment we use docker to containerize applications ie applications run as containers
 Docker: Is a containerization multi-platform software use to;create, build, ship, share and deploy containerize applications 
