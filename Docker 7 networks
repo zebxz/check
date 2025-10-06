@@ -10,9 +10,10 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 
 
 NETWRK, TYPES OF NETWORK, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER
-DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE  A NETWK, WE ARE GOING TO SEE HOW TO 
+DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, WE ARE GOING TO SEE HOW TO 
 DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT, INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION US
-ING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK,  DOCKER NONE/NULL NETWRK
+ING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/
+BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
 
 
 
@@ -53,7 +54,7 @@ f9f9a99c2c85   host      host      local
 
 1) Default bridge network 
 in the default bridge netwrk, if i hv 2 containers in this ntwrk, hw do they communicate with each other
-e.g if am managing a micro service application, these app can either be deployed under ... incomplete
+e.g if am managing a micro service application, these app can either be deployed under .. incomplete  **i bliv he wanted to say, custom bridge ntwrk or host ntwrk
 e.g we hv an ebay webapplication
 
 ebay webapp: monolithic architecture 
@@ -214,13 +215,18 @@ we need to deploy the springapp and the database - mongo
 ###########i wnt to deploy my application, first i v to pull pull the 2 imgae ( so create a file to achieve this)
 1.16.37
 
-          STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA
+
+
+          STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA   (INCLUDES creating the cutsom netwrk)
 1) vi spring.sh  (and paste number2 to number 5 as seen below)....... we wnt to create a file for this deployment
 2)  docker pull mylandmarktech/sping-boot-mongo
 2b)  docker pull mongo
 3) after pulling, we wnt to create a ntwrk for tesla: 
- docker network create tesla (DIS is hw to create a ntwrk in tesla, custom brideg ntwrk bc i wnt d containers to comm wit both name n IDS ) &docker netwrk ls to list ntwrks
-  docker run --name springapp -d -p 8080:8080
+ docker network create tesla (DIS is hw to create a ntwrk in tesla, custom brideg ntwrk bc i wnt d containers to comm wit both name n IDS ) 
+        &docker netwrk ls to list ntwrks
+  
+****next docker run:
+docker run --name springapp -d -p 8080:8080
   docker run --name mongodb   
 
 ###########QUESTION, HW DO WE KNOW WHICH ENV VARIABLE VALUE TO USE ,, BC here both the applictaion(spring) has its env var & the database has its own env ???????
@@ -405,41 +411,14 @@ root@3e143cbcde73:/usr/local/tomcat# ping app  ....... SUCCESSFUL
 
 
 
-ubuntu@docker:~$ docker network
-
-Usage:  docker network COMMAND
-
-Manage networks
-
-Commands:
-  connect     Connect a container to a network
-  create      Create a network
-  disconnect  Disconnect a container from a network
-  inspect     Display detailed information on one or more networks
-  ls          List networks
-  prune       Remove all unused networks
-  rm          Remove one or more networks
-cant delete a ntwrk that has containers connected to it, must first disconnect the container from the netwrk 
-
-
-docker run --name app -d -p 8000:8080 mylandmarktech/java-web-app 
-
-docker network create/inspect/ls/disconnect/connect/rm/prune:
-============================================================
-
--# Remove unused networks
-docker network prune 
-
--# Remove Network
-docker network rm <networkNameOrId>
-
-
-                              host port: container name mh /'
- 2 containers cannot v the same host port number& name  , bt can v the same conatainer num
 **************************************2:07:33 
 
 
-                                   CREATING DOCKER HOST NETWRK
+                    2.09.00               CREATING DOCKER HOST NETWRK
+***docker3&4***** 2 containers CANNOT v the same host port number& name  , bt can v the same conatainer number
+docker run --name containerName -d -p hostPort:containerPort image:tag
+  -d = detachable mode  
+  -p = port Forwarding
 
 
 2) Docker Host Network.:
@@ -449,35 +428,87 @@ Container will not have IP Address. and we cant do port forwarding -p
 
 docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
 
-*********************************************CREATING HOST NTWRK*********************************************
-docker run --name javaapp -d --network host mylandmarktech/java-web-app    ***** when using host ntwrk, no need for -p , therfor no port forwardn bc it is in the host ntwrk
-   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080     
-                                                           2:12:00
-docker run --name apps -d --network host mylandmarktech/java-web-app    ************ THIS WIL NT RUN BC this image mylandmarktech/java-web-app, has a container port of 8080
-   ContainerPort: 8080                                               &WHATEVA PORT the container is having dats what wil be assigned to the host 
-                                        can run the netstat -tulpn command to see the ports already in use.. when endusers ar tryin to acess this java-web-app, now the 
-host ntwrk is in use, we ar nt defining any port publishing bt when endusers traffic gets here,the container is running on the host ntwrk, therfor, it inherits the same port
-its using the host ntwrk, so trafic wil b routed to the first container (javaapp) 
-*************when we run :docker inspect javaapp | grep 172.1    ..... ders no IP address bc the container makes use of the host IP n dats why i cant deploy another container
-with the same port
+ *****CREATING HOST NTWRK*********************************************
 
-************* tryin to deploy anoda container with the same contiazner port  bt when we run docker ps , we cant see the container bc of binding exception bc we cannot do 
-port forwarding in the host ntwrk
-
-docker run --name hello -d --network host mylandmarktech/hello  ************ this got a diff container port number thats why its working, i think dis is a diff application 
-ContainerPort: 80                                                                                                                                mylandmarktech/hello
+Number1 is the normal docker run command but  ***** when using host ntwrk, no need for -p , therfore no port forwardn bc it is in the host ntwrk as seen no.2
+1)docker run --name webapp -d -p 7000:8080  mylandmarktech/maven-web-app
 
 
 
-ContainerPort: 8080    
+                                   DEPLOYING USING THE HOST NETWORK
+   2.18.55   We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+         2.21.20   docker logs apps .. we see binding exception
 
-We can't create more than one container with same container port in host network.
-we nid to do port publish to access containers..............generally           2:19 :15
+2)docker run --name javaapp -d --network host mylandmarktech/java-web-app   
+   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
+*********i can deploy the application & access it.
+
+
+ 2:12:00******now lets deploy another container called 'apps' with the same image
+it has a containerport/number of 8080
+                             
+3)docker run --name apps -d --network host mylandmarktech/java-web-app    
+ ContainerPort: 8080  
+**if i deploy dis contianer with this same image,in the same host ntwrk, THIS WIL NT RUN 
+It will not run because BC this image mylandmarktech/java-web-app, has a container port of 8080
+   & when i used the image to deploy the first container 'javaapp' 8080 is in use
+& bc this is host netwrk, WHATEVA PORT the container is having dats what wil be assigned to the host 
+  
+2.12.14                         
+we can run the netstat -tulpn command to see the ports already in use.. when endusers ar tryin to acess this java-web-app, ie javaapps
+now the host ntwrk is in use, we ar nt defining any port publishing bt when endusers traffic gets here,the container is running on the host ntwrk, therfore, 
+it inherits the same port, its using the host ntwrk, so trafic wil b routed to the first container (javaapp) 
+
+                                            
+                                            PORT BINDING/ADDRESS BINDING
+                             2.17.13  2containers with the same port cant run in the host netwrk
+                            2.21.20   docker logs apps .. we see binding exception
+
+2.15.00************ we run docker ps 
+we see only the first container deployed in number2 above.
+we run :docker inspect javaapp | grep 172.1    ..
+we see the ip adresses
+* to check the second container deployed in number3 above
+ we run :docker inspect javaapp | grep 172.1    .....
+but ders no IP address bc the container makes use of the host IP n dats why i cant deploy another container with the same port
+
+       
+2.16.22**********tryin to deploy anoda container with the same container port 
+docker run --name hello-d --network host mylandmarktech/hello   ***** bt when we run docker ps , we cant see the container bc of port binding/address binding 
+bc we cannot do port forwarding in the host ntwrk
+******2.17.13., if it was in the custom bridge ntwrk we can do port forwarding  7000:8080, ie we are forwardng from the host port 7000 to port 80:80
+when it in the host netwrk, we can do port forwarding & secondly the container does not have an ip address
+therfore 2containers with the same port cant run in the host netwrk, it wont run
+
+
+ ***** now we deploy another container with a diff container port & it works                                         
+docker run --name hello -d --network host mylandmarktech/hello  *** this got a diff container port number thats why its working, 
+ContainerPort: 80                                                                                                                       
+
+
+                                         
+                                         BRIDGE NETWORK
+2.18.17 
+we need to do port publishing when you deploy in the default bridge netwrk
+2.19.12 we nid to do port publish to access containers generally 
 
 if we hv containers like this , they cannot be deployed in the host ntwrk , they can only be deployed in the bridge ntwrk
    landmark-web-app  = containerPort,  EXPOSE=8080  
    java-web-app      = containerPort,  EXPOSE=8080  
    maven-web-app     = containerPort,  EXPOSE=8080  
+
+
+****online
+Port publishing is the process of mapping a network port from a Docker container to a port on the Docker host (your computer), making a service inside
+the container accessible to the host and the external network. It uses port forwarding or a proxy to redirect incoming traffic from the host's port to the 
+container's internal port, allowing you to access containerized applications from your web browser or other tools. 
+***mee**
+Is port publishing & port forwarding the same?
+No, "port publishing" and "port forwarding" are not always the same; port publishing is a type of port forwarding, specifically used to make a network service
+inside a Docker container accessible from the host machine and potentially the external network. Port forwarding is a broader networking concept, 
+also known as port mapping, that redirects network requests from an external IP address and port to an internal host's IP address and port.  
+
+
 
 
                                  DOCKER NONE/NULL NETWRK
