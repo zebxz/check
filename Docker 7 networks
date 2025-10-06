@@ -10,11 +10,11 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 
 
 NETWRK, TYPES OF NETWORK, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER
-DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, WE ARE GOING TO SEE HOW TO 
-DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT, INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION US
-ING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/
-BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
-
+DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS, STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM 
+NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT, INSPECTING CONTAINER, 
+CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, 
+DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
+*** inside got my dream job docker; DIFF BTW THE TYPES OF NETWORKS,STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 
 
 Docker networks & Micro-services:
@@ -160,6 +160,8 @@ codes as with monolithic but only the 2,000lines of code for login for microserv
 
 
 
+
+DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK
 46:20 ************************************************** We support Java based applications:
 ===================================
 We support nodeJS and .net based applications: (also some python base appl, like we saw when we were doing container, we deployed a python base application)
@@ -204,6 +206,11 @@ spring:
 *************** bt we want to write images that dynamic, images that can run in any environment, so we can jst use diff envr variables 
 this an an application that is being deployed and some inf needs to be captured so a database is needed.
 58:0000            #################so this application needs 2things 
+
+                                          THIS APPLICATION NEEDS 2THINGS
+*****meee****
+1) the applictaion image , in this case its; springapp
+2) the database image, in this case its; mongo
 
 we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
   ie developers are  recommending the mongo database                                                                                     mongodb:
@@ -255,6 +262,8 @@ vi sp.sh
   docker pull mylandmarktech/sping-boot-mongo
   docker pull mongo
   docker network create tesla
+
+
 
 ********************************************APPLYING THE ENV VARIABLES************************************
 ****************************I ALSO HV TO PUT BOTH OF THEM IN THE SAME NTWRK(network tesla) bc i wnat them to comunicate with each oda ********
@@ -415,7 +424,7 @@ root@3e143cbcde73:/usr/local/tomcat# ping app  ....... SUCCESSFUL
 
 
                     2.09.00               CREATING DOCKER HOST NETWRK
-***docker3&4***** 2 containers CANNOT v the same host port number& name  , bt can v the same conatainer number
+***from docker3&4***** 2 containers CANNOT v the same host port number& name  , bt can v the same conatainer number
 docker run --name containerName -d -p hostPort:containerPort image:tag
   -d = detachable mode  
   -p = port Forwarding
@@ -425,6 +434,7 @@ docker run --name containerName -d -p hostPort:containerPort image:tag
 If we create containers in host network. 
 Container will not have IP Address. and we cant do port forwarding -p
  Container will be created in a system network.
+
 
 docker run --name webapp -d -p 7000:8080 mylandmarktech/maven-web-app 
 
@@ -488,6 +498,8 @@ ContainerPort: 80
 
                                          
                                          BRIDGE NETWORK
+****mee*** in the default bridge netwrk, We can create more than one container with d same container port , bt we hv to do port publishing
+
 2.18.17 
 we need to do port publishing when you deploy in the default bridge netwrk
 2.19.12 we nid to do port publish to access containers generally 
