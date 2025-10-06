@@ -21,12 +21,16 @@ persons if you mk the image become distributable ***** by creating a tag & push 
 container, the port is forwarded internally b172.170.2:9981
 
 
-  ****** 1:25:00 to deploy a 2nd conatiner using the d same image,  2 containers cannot v the same host port number& name  , bt can v the same conatainer number
+  ****** 1:25:00 to deploy a 2nd conatiner using the d same image, 
+2 containers cannot v the same host port number& name  , bt can v the same conatainer number
 host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
 eg
 container1 host port 80:80  ...  docker run --name app -d -p 8080:8080 --name webapp teslaimage:1  
 container2 host port 80  ,,, host port 80 and container port: 8080 and it doesnt change
  to deploy a 3rd conatiner docker run --name app -d -p 8000:8080 --name webapp teslaimage:1 ... here d host port was changed to 8000
+
+**** docker7; networks: 
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
 
 
 **** pulled an image from docker hub n used it to create my own image 
