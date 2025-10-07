@@ -229,22 +229,24 @@ Docker home dir :  DHD = /var/lib/docker
 
 DIFF
 1)BIND POINT Not persistent. BUT can store your data anywherE
-2)for the BIND mount, we nid to create a mount point for the host server /tmp/mongo
-we have to create a mount point  /tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db
-/tmp/mydata: paired to /data/db
+2)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
+we have to create a mount point; 
+/tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
+  Storage name is 'tmp, while 'mydata' is the customized mount point  
+
 
 FOR DOCKER VOL   
 1) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
-2)dnt need to create a mount point, what i need to do,just the vol name: mongodata                                                  i bliv dats what it means
+2)dnt need to create a mount point, what i need to do,just the vol name: eg mongodata  ,data33                                                i bliv dats what it means
 create volume: 
-docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
-docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
+eg docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
+eg docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
 docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
 so when u DNT CHOOSE driver it is going to crate under the local driver 
 
 create the database (i bliv data33)
 docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
-
+need to create a mount point, just the volume name  data33 & pair it data/db from the official document.
 
 
 
