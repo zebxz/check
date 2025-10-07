@@ -188,17 +188,21 @@ docker daemon/service =  this enforces the command that is run, e.g when u run d
 
 
 
-DOCKER7                   SUMMARIZED
+DOCKER7                  
 
                               APPLICATION ARCHITECTURE
 
-we also saw we can use docker to containerize both monolithic and microservices application
+DOCEKR8&9 we can use docker to containerize both monolithic and microservices application
 ' ... bt docker will shine more when it comes to micro services bc they ar very light weight & docker containers are light weight
 
 
-            MONOLETHIC APPLICATION
+ 1)           MONOLETHIC APPLICATION
+MONOLITHIC ARCHITECTURE: ebay webapp
+this type of appl wher everytin is coupled together is called monolithic architecture, so it is developed using monolithic architecture
+   if u wnt to acces thhis appl, it has cm with diff component : so when u acces this appl, u can login/registration/cart/pay/order/ 
 
-PROBLEMS OF MONOLETHIC ....................... 20;11
+ 
+PROBLEMS OF MONOLETHIC ....................... 
 1)DIFFIcult to scale
 eg if thers a spike  eg if 10million people are registering but only 1million is making payment, we will hv to scale up both the entire appl even though only 
 1m is making payment,so thers a lot of waste with resource usage in monolethic design 
@@ -209,7 +213,15 @@ if ur using just ebay, ebay could hv
 monolithic = ebay / 20,000 lines of code 
 
 
-                                MICROSERVICE APPLICATON
+2)  MICROSERVICE APPLICATON
+bt now we can decide to use microservices , with microservices, the monolethic application is decoupled, we hv each of theses appl  components decoupled
+ ebay.war  = decoupled  , they are now stanalone entities
+   login.jar/registration.jar/cart.jar/pay.jar/order.jar  return.jar  
+************** so we hv decouples these appl from a monolithic to a micorservice appli
+**meee*** Therfore beacuse the monlethic application has been decoupled into diff stanalone applications, when we deploy these seperate entities as
+containers, we use network to ensure comunnication between them as well as our data base. we will be deploying these application with a data base 
+
+
 WHY IS IT IMP TO DECOUPLE
 1)A Micor service architecture is easy to manage, 
 2)its also easy to scale
