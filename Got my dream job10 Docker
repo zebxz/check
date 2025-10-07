@@ -192,8 +192,6 @@ docker daemon/service =  this enforces the command that is run, e.g when u run d
 
 
 
-
-
 DOCKER7                  
 
                               APPLICATION ARCHITECTURE
@@ -276,18 +274,25 @@ host port must change ie we hv to choose a port nmuber for each contaoiner but c
 **** docker7; networks:  
 We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
 
+
 1)DEFAULT BRIDE NETWRK
 containers communicate with only the containerID
 e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
 will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
 ****mee*** in the default bridge netwrk, We can create more than one container with d same container port , bt we hv to do port publishing
 
+Depploying in the bridge ntwrk: we dnt need to create a netwrk like we do for custom bridge netwrk
+the normal way we  create & run containers, it now in the bridge ntwrk 
+docker run --name app -d -p 8000:8080  mylandmarktech/java-web-app
+
 
 2)CUSTOM BRIDGE NETWRK
  docker network create tesla        ***to create the tesla netwrk
 containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
 each other.
-
+  ***Deploying in the custom bridge ntwrk: we have to create a netwrk 
+   create a ntwrk for tesla :  docker network create tesla
+docker run --name app -d -p 8000:8080 --network tesla mylandmarktech/java-web-app
 
 3)HOST NETWRK  
 We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
@@ -298,6 +303,7 @@ If we create containers in host network.
 Container will not have IP Address. and we cant do port forwarding -p
  Container will be created in a system network.
 
+Deploying in the host netwrk
 docker run --name javaapp -d --network host mylandmarktech/java-web-app   
    ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
 *********i can deploy the application & access this first application/container but if icreate .
@@ -309,6 +315,7 @@ If we create container in none/null network. Container will not have IP Address.
 We can't access  containers in this network  Internal or external 
 ****************** we can use this ntwrk to isolate containers
 
+Deplying in the Null/None network
 docker run --name hello -d --network none mylandmarktech/hello   
 cant be accessed Internal or external 
 
