@@ -344,7 +344,7 @@ eg the correct hostname of the db;mongodb, the correct db username we assigned &
 ****************************I ALSO HV TO PUT BOTH OF THEM IN THE SAME NTWRK(network tesla) bc i wnat them to comunicate with each oda ********
 
 
-   **** can replace step5 with step5 that has the volume command attached from below. 
+   **** can replace step5 with step5 that has the volume/bind mount command attached from below. 
 #########DEPLOYING THE DATABASE                                                                     ****image we creating is mongo
 5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
                                                   
@@ -398,7 +398,8 @@ he is the guy hosting all our containers.
 i call the storage temp/db, bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
 it will give me the mount point(where data is stored ) and it syas /data/db, so on the image i cannot change it bt i can change it in the host server 
 (dockerhost)if i want to e.g,
-                                  HOW TO CHANGE MOUNT POINT
+                                 
+                                BIND MOUNT/ HOW TO CHANGE MOUNT POINT
 1:37:00 i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called bind mount
 (its under volume concept in docker) which we will look at.
 having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
