@@ -219,7 +219,7 @@ unnoticed
 
 
 
-    PERSISTENT VOLUME
+ 2)   PERSISTENT VOLUME
 Non-Docker processes on the Docker host can modify Bind Mounts volumes at any time unnoticed, so we nid to introduce persistence vol 
 NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
 Docker Volumes
@@ -227,17 +227,18 @@ Volumes stored data in a part of the host filesystem managed by docker
 Docker home dir :  DHD = /var/lib/docker
 
 
-DIFF
-1)BIND POINT Not persistent. BUT can store your data anywherE
-2)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
+DIFF BETWEEN BIND POINT & DOCKER VOL & External volume
+1)BIND POINT
+a)Not persistent. BUT can store your data anywherE
+b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
 we have to create a mount point; 
 /tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
   Storage name is 'tmp, while 'mydata' is the customized mount point  
 
 
-FOR DOCKER VOL   
-1) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
-2)dnt need to create a mount point, what i need to do,just the vol name: eg mongodata  ,data33                                                i bliv dats what it means
+2)FOR DOCKER VOL   
+a) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
+b)dnt need to create a mount point, what i need to do,just the vol name: eg mongodata  ,data33                                                i bliv dats what it means
 create volume: 
 eg docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
 eg docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
@@ -248,6 +249,56 @@ create the database (i bliv data33)
 docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
 need to create a mount point, just the volume name  data33 & pair it data/db from the official document.
 
+3)FOR external vol
+a)dnt need to create a mount point, what i need to do,just the vol name: eg ebs33
+b) -d is for driver, the driver is rexray/ebs 
+
+
+
+3) EXTERNAL VOLUMES          ===== Network Volumes Using AWS EBS ==========
+ther are external vol pluggin ,that can be installed in docker
+we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 simple storage system, google persistent disk, also sdsure disk,
+rexray plugin for docker storage etc 
+https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/  , here we also see d docker plugins installatin command, if u dnt choose d version it wil
+so when i hv my container mount point : /data/db/, i can mount it with an external vol 
+ we can create a mount point , frm this point, we could have external mounting , we can mount it externally
+ we can also hv multiple mount points
+
+STEP1)
+now we deploy this pluging :
+docker plugin install rexray/ebs \
+  EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
+  EBS_SECRETKEY=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
+
+
+STEP2)    
+ Authentication & authorization    ;#this process cannot happen if u dnt hv the right IAM authorization
+EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
+  EBS_SECRETKEY=/1
+
+step3)
+am creatin a vol called ebs33
+docker volume create -d rexray/ebs ebs33 .. ...........d is for driver, the driver is rexray/ebs 
+if u dnt pass driver, it wil create it under local driver 
+docker volume ls
+   ******he tried to run multiple volume mount point but it didnt work 
+******************* he said it seems the vol property does nt permit multiple mount point
+
+****Also he tried to deploy the container with the vol but didnt work, we couldnt access the data 
+
+3) ############# so he used the file app.sh  and paste the below command 
+docker volume craete ebs3 -d rexray/ebs
+docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
+then  deploy: sh app.sh
+
+************* successful,  he checked in aws and we can see the  volume we see both ebs3 and ebs33 that we created n we can access the application n write data
+docker volume ls and we see ebs33 n ebs3
+
+
+DOCKER COMPOSE
+==============
+Docker Compose is a tool for defining/declaring and running multiple 
+   containerised micro-services applications.
 
 
 
