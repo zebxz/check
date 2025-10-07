@@ -194,6 +194,59 @@ DOCKER 8&9
 docker run --name mongo --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
 1.08.05    ****Mongo, is the host database hostname...  .... i didnt knw thats hostname, thought it was application name, or mayb its application hostname.
 
+TYPES OF VOLUME
+1)BIND POINT:   Not persistent. BUT BindMount: can store your data anywherE;  /tmp/mongo:/data/db ,  /home/ubuntu/data:/data/db
+
+Bind mounts may stored data anywhere on the host system. They may even be important system files or directories. 
+In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo
+if we ls /tmp , we can see the mount point mongo that we created
+this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the
+process is not managed by docker and as such it could be accidentally deleted. so what happens if its deleted by a non docker process??
+
+eg lets assume that our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker 
+start mongo we ar now able to access the data
+now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
+now lets redeploy the database, then we can still see the the previous data..this is because of bind mount 
+******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is 
+destroyed completely
+if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
+BUT DERS A PROBLEM HERE 
+if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
+at the moment our vol is nt managed by the docker process ,
+lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
+if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted 
+unnoticed
+
+
+
+    PERSISTENT VOLUME
+Non-Docker processes on the Docker host can modify Bind Mounts volumes at any time unnoticed, so we nid to introduce persistence vol 
+NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
+Docker home dir :  DHD = /var/lib/docker
+
+
+DIFF
+1)BIND POINT Not persistent. BUT can store your data anywherE
+2)for the BIND mount, we nid to create a mount point for the host server /tmp/mongo
+we have to create a mount point  /tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db
+/tmp/mydata: paired to /data/db
+
+FOR DOCKER VOL   
+1) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
+2)dnt need to create a mount point, what i need to do,just the vol name: mongodata                                                  i bliv dats what it means
+create volume: 
+docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
+docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
+docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
+so when u DNT CHOOSE driver it is going to crate under the local driver 
+
+create the database (i bliv data33)
+docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+
+
+
 
 
 
@@ -201,7 +254,7 @@ DOCKER7
 
                               APPLICATION ARCHITECTURE
 
-DOCEKR8&9 we can use docker to containerize both monolithic and microservices application
+********DOCEKR8&9 we can use docker to containerize both monolithic and microservices application
 ' ... bt docker will shine more when it comes to micro services bc they ar very light weight & docker containers are light weight
 
 
