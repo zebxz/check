@@ -12,7 +12,7 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 TYPES OF NETWORK, DIFF BTW THE TYPES OF NETWORKS, APPLICATION ARCHITECTURE, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN 
 PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS,TROUBLESHOOTING, 
 MANAGING THE DOCKER NETWORK/STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE 
-HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT,INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE 
+HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS, BIND MOUNT/HOW TO CHANGE MOUNT POINT,INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE 
 APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS
 BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
 *** inside got my dream job docker; DIFF BTW THE TYPES OF NETWORKS,STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
@@ -388,27 +388,32 @@ docker run --name mongodb -d --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb
 we can redeploy the database bt th eoriginal data is gone.. ie e.g users info or history 
 
 
-
+                                                          BIND MOUNT
 1:34:10
 *****************************   WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT
 haven passed the ENV variables correctly,and deployed the application bt thers a data loss problem
 now we hv 2 containers that hv been deployed, the mongo container for database and the springapp container which is a STATELESS APP, bt d database is STATEFUL n needs to 
-maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the dockerhost server,
-he is the guy hosting all our containers.
-i call the storage temp/db, bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
-it will give me the mount point(where data is stored ) and it syas /data/db, so on the image i cannot change it bt i can change it in the host server 
+maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the
+dockerhost server, he is the guy hosting all our containers.
+
+                                STEPS TO CREATE THE STORAGE
+1) i call the storage temp/db, ie I bliv the storage is called 'temp' while 'db' is the mount point from the official document.
+bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
+it will give me the mount point(where data is stored ) and it says /data/db, so on the image i cannot change it bt i can change it in the host server 
 (dockerhost)if i want to e.g,
                                  
-                                BIND MOUNT/ HOW TO CHANGE MOUNT POINT
-1:37:00 i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called bind mount
+                             i bliv this is optional;  HOW TO CHANGE MOUNT POINT 
+1:37:00 i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called 'BIND MOUNT'
 (its under volume concept in docker) which we will look at.
 having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
 
-This is the command from step5 above; DEPLOYING THE DATABASE                                                                    
-5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to /data/db mongo
+
+2)  This is the command from step5 above; DEPLOYING THE DATABASE                                                                    
+     5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to 
+                  /data/db mongo
    therefore                               
-this is the mount point for my container: /data/db   and 
-this is the mount point for my docker host server: /tmp/mydata
+this is the mount point for my container: /data/db   and            i bliv   'data' is the name of the storage while 'db' is the name of the mount point
+this is the mount point for my docker host server: /tmp/mydata       ie  temp is the name of the storage while my data is the name of the mountpoint
 
 
 ******************************2:33:04************************************************************************
