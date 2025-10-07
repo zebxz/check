@@ -297,7 +297,7 @@ and this is how we manage docker network
 
 
                                    MANAGING THE DOCKER NETWORK
-1.17.00                 
+1.03.00                 
                  STEPS  TO DEPLOY THE MICRO SERVICE APPL FOR TESLA   (INCLUDES creating the cutsom netwrk)
 1)docker network create tesla  ...when am doing mine, i wont create it first, i will create it inside the script
 
@@ -315,8 +315,8 @@ and this is how we manage docker network
 
 ###########QUESTION, HW DO WE KNOW WHICH ENV VARIABLE VALUE TO USE ,, BC here both the applictaion(spring) has its env var & the database has its own env ???????
  ########## i bliv it doesnt matter bc u will v to choose the values yourself
-******************he answered it in the nxt video , the application passes the variable, ie the input used for the application shud b d same used for the bd e.g password
-but the hostname comes from the db
+******************he answered it in the nxt video , the application passes the variable, ie the input used for the application shud b d same used for the db
+e.g password but the hostname comes from the db
 
 1:06:40 *******************************THIs is OUR ENVIRONMENTAL VARIABLES for for our application (spring)***********(gotten frm the image info in docker)
 spring:
@@ -329,19 +329,23 @@ spring:
       database: users
       authentication-database: admin
 
-*******************ENV VARIABLE FOR MONGO**************************************** (gotten frm the image info in docker)
+*******************ENV VARIABLE FOR MONGO  which has been developed with the image******************************* (gotten frm the image info in docker)
      MONGO_INITDB_ROOT_USERNAME: root
      MONGO_INITDB_ROOT_PASSWORD: example
 
 
+1.07.40 ..he assigned the username; devdb & PW= devdb@123, after defining all the variables, ie adding the specified env variables for the appl 
+{MONGO_DB_USERNAME} then added the PW we assigned  & that of the database [ MONGO_INITDB_ROOT_USERNAME] to the run command to deploy each of them. 
 
-
+1.11.44..  The appl;springapp needs to connect to the database
+am deploying an appl called spring app & for spirng app to connect to the db then spring app needs to enter the right info
+eg the correct hostname of the db;mongodb, the correct db username we assigned & the PW that we assigned.
 ********************************************APPLYING THE ENV VARIABLES************************************
 ****************************I ALSO HV TO PUT BOTH OF THEM IN THE SAME NTWRK(network tesla) bc i wnat them to comunicate with each oda ********
 
 
-   **** can replace step5 with step5 that has the volume command attached. 
-#########DEPLOYING THE DATABASE                                                                     ****image name is mongo
+   **** can replace step5 with step5 that has the volume command attached from below. 
+#########DEPLOYING THE DATABASE                                                                     ****image we creating is mongo
 5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
                                                   
 
