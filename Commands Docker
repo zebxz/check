@@ -360,3 +360,21 @@ docker run --name hello -d --network none mylandmarktech/hello
 
 DOCKER8&9
 
+Docker Peristent Volumes(Docker Named Volumes)
+=============================================
+docker volume create mongodata  ... we hv to create our own vol; mongodata .... this is now using persistent vol which is being manged by docker
+docker volume create mongodata -d local   ... ..  here am passing a driver 
+docker volume create mongo33   ............ here am nt 
+docker volume create -d local data 
+docker volume ls  
+
+
+ubuntu@docker:~$ docker-compose
+Command 'docker-compose' not found, but can be installed with:
+sudo snap install docker          # version 20.10.24, or
+sudo snap install docker          # version 20.10.24
+sudo apt  install docker-compose  # version 1.29.2-1
+See 'snap info <snapname>' for additional versions.
+
+ubuntu@docker:~$ sudo apt  install docker-compose -y      ... successful
+docker compose -version to see the version of docker compose that we v created  ... version 1.29.2 build unknown
