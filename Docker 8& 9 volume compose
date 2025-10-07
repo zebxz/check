@@ -78,17 +78,21 @@ docker Volumes .................................10:44
  stateful applications ........ needs to maintain its state, data nids to be stored.this include data bases , applications like jenkins
     databases / jenkins, we sue jenkis to be able to deploy a lot of works, so we hv jobs in jenkins
 
+
+
+             TYPES OF VOLUME
+
+
+                               BIND MOUNT
 the first volume we ar discusiing about is :
 Bind Mounts:
-Bind mounts may stored data anywhere on the host system. 
-They may even be important system files or directories. 
+Bind mounts may stored data anywhere on the host system. They may even be important system files or directories. 
 
 docker run --name mongo -d --network tesla -v /tmp/mongo:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
 
 docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
-18:50     *****************springapp is passing the env variable so the inf must be valid, e.g the hostnmae on for the database is mongo bt the hostname on the springapp was
-showing momgodb ie (frm previous class) so we changed it to mongo ...then springapp passwd is showing devdb@123 bt database is showing dev123, so we changed it to devdb@123
+
 
 
 vi app.sh 
@@ -105,32 +109,35 @@ he checked on his browser and we can access the application , the application ca
 ubuntu@docker:¬ $  ls /tmp/mongo/
 inside this dir, the data that is captured is frm the inf entered, inf entered by e.g enusers is captured here 
 
-################# bt this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the process is not
-managed by docker and as such it could be accidentally deleted
+################# bt this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the
+process is notmanaged by docker and as such it could be accidentally deleted
 ***************if we ls /tmp , we can see the mount point mongo that we created .... so what happens if its deleted by a non docker process
 
-**************** lets assume thats our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker start mongo we ar
-now able to access the data
+**************** lets assume thats our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker 
+start mongo we ar now able to access the data
 now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
 now lets redeploy the database, then we can still see the the previous data.. 
 this is because of bind mount 
-******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is destroyed completely
+******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is 
+destroyed completely
 if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
 BUT DERS A PROBLEM HERE 
 if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
 at the moment our vol is nt managed by the docker process ,
 lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
-if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted unnoticed
+if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted 
+unnoticed
 
 
-30:23  ************** HOW TO DEPLOY USING THE DOCKER PROCESS**********
 
-
-Non-Docker processes on the Docker host can modify 
+       30:23  ************** Non-Docker processes on the Docker host can modify 
 Bind Mounts volumes at any time unnoticed.
 ######### so we nid to introduce persistence vol 
 
 NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
+
+
+    NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
 
 Docker Volumes
 Volumes stored data in a part of the host filesystem managed by docker
@@ -143,12 +150,15 @@ BindMount: can store your data anywher                                          
 
 Docker Peristent Volumes(Docker Named Volumes)
 =============================================
+
+Illustration to apply below;
 docker volume create mongodata  ... we hv to create our own vol; mongodata .... this is now using persistent vol which is being manged by docker
 docker volume create mongodata -d local   ... ..  here am passing a driver 
 docker volume create mongo33   ............ here am nt 
 docker volume create -d local data 
 docker volume ls  
 
+BUT FOR BIND MOUNT
 ************* for this bind mount, we nid to create a mount point for the host server /tmp/mongo
 docker run --name mongo -d --network tesla \
   -v /tmp/mongo:/data/db \
@@ -156,20 +166,21 @@ docker run --name mongo -d --network tesla \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 **************************************************************************************************
 
- ###########################this is what i need to do,just the vol name:mongodata , am not creating any mount point  /tmp/mongo:/ like we did for bind mount 
+ ###############this is what i need to do,just the vol name:mongodata , am not creating any mount point  /tmp/mongo:/ like we did for bind mount
 docker run --name mongo -d --network tesla \
   -v mongodata:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 OR
 docker run --name mongo -d --network tesla \
+            or the vol name:data:33
   -v data33:/data/db \     *********** BT if i execute this command when i v nt created docker vol create data33 , will it be executed????? lets check d vol we v already
   -e MONGO_INITDB_ROOT_PASSWORD=dev@123 \                                                                                                 docker volume ls
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 
 ***************************************************************************************
 35;00
-1) create volume: 
+STEP1) create volume: 
 docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
 docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
 docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
@@ -182,8 +193,8 @@ ubuntu@docker:~$ docker volume prune
 WARNING! This will remove anonymous local volumes not used by at least one container.
 Are you sure you want to continue? [y/N] y
 
-'################# WEredeploy the database
-2) create the database 
+'################# WEredeploy the database      *** i guess we didnt need to run 'docker volume create data33' first for the volume to be created.
+STEP2) create the database 
 vi app.sh  and paste the run command 
 docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
 then deploy sh app.sh   ... SUCCESSFUL , WE CAN access the data
@@ -193,7 +204,7 @@ docker inspect data33      and we can see the mount point: /var/lib/docker     .
 Mountpoint": "/var/lib/docker/volumes/data33/_data  
 ubuntu@docker: ¬ $ sudo ls /var/lib/docker/volumes/data33/_data  
 
-41:21
+41:21      Does this mean we cant store data anywher like for bind point??
 Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume 
 and whatever is stored in this dir is managed by docker n it leads to what is called pesistent  volume , bc it i smanged by tah docker process
 
@@ -202,6 +213,7 @@ docker volume rm volumeName
 docker volume rm data33  
 
 ******************************Volumes are the best way to persist data in Docker.:    
+
 
 
       EXTERNAL VOLUMES
@@ -299,6 +311,7 @@ then  deploy: sh app.sh
 docker volume ls and we see ebs33 n ebs3
 ************** can delete with docker volume prune OR docker rm volume name 
 ****************************************************************************************************************************************
+
 
 
 
