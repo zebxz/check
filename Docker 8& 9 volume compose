@@ -181,7 +181,9 @@ docker run --name mongo -d --network tesla \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
 
 ***************************************************************************************
-35;00
+
+
+35;00                               STEPS TO CREATE DOCKER VOLUME
 STEP1) create volume: 
 docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
 docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
@@ -244,12 +246,13 @@ docker plugin install rexray/ebs \
 
                        USING EXTERNAL VOLUME TO DEPLOY OUR APPLICATION
 48:50
-####in this case we nid an aws acces key and an aws sacred access key, this access key shud be authenticated ie it sud hv the right authorization to  create vol in docker
+####in this case we nid an aws acces key and an aws sacred access key, this access key shud be authenticated ie it sud hv the right authorization to  
+create vol in docker
 so we go to our aws account .. hes in his root account , it have the req acces 
 click on the top right corner n frm the drop box, click on security credentials ................49:20 
 scrol down to access key and create access key  then copy, both access n sacred key
 
-docker plugin install rexray/ebs \
+ docker plugin install rexray/ebs \
   EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
   EBS_SECRETKEY=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
 
@@ -263,7 +266,7 @@ if u execute this command, it wil go to ur aws account under volumes and create 
 ################this process cannot happen if u dnt hv the right IAM authorization
 bc we are using IAM = Authorisation  to autorize this rexray to be able to create and manage volumes in our aws account,, for this to happen IAM Is reQUired
 
-1) now we deploy this pluging :
+step1) now we deploy this pluging :
 docker plugin install rexray/ebs \
   EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
   EBS_SECRETKEY=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
@@ -302,7 +305,7 @@ docker run --name mongo -d --network tesla \
   -v ebs33:/data/db \
   -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \
   -e MONGO_INITDB_ROOT_USERNAME=devdb mongo 
-************************************************** didnt work, we couldnt access the data 
+**************************************************above he tried to deploy the container with the vol but didnt work, we couldnt access the data 
 
 3) ############# so he used the file app.sh  and paste the below command 
 docker volume craete ebs3 -d rexray/ebs
@@ -333,7 +336,8 @@ ebay-web-application:
     Payment
     Order
     mysql db  
-****** ****************if u hv an aplication like dis n u nid to deploy it, hw many run command will u execute are we going to execute , very long command, we ar going to v 
+****** ****************if u hv an aplication like dis n u nid to deploy it, hw many run command will u execute are we going to execute , very long command,
+we ar going to v 
 multiple run command:
 
 docker run --name login -d -p 80:8080 --network ebay login            ,,, to create login container
@@ -354,7 +358,8 @@ docker run --name mysql -d -p 80:8080 --network ebay mysql ,,.............  imag
 Configuration without a cnf file
 $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-**************** WE CAN DO SMT LIKE THIS 
+
+**************** To use the root pw to access the database; WE CAN DO SMT LIKE THIS:
 $ docker run --name some-mysql \     .. ENV VARIABLE -e  , lets assume the root pw is admin123, then image name mysql , so we ar passing the root PW to access dis database
 -e MYSQL_ROOT_PASSWORD=my-admin -d mysql
 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -394,6 +399,10 @@ See 'snap info <snapname>' for additional versions.
 
 ubuntu@docker:~$ sudo apt  install docker-compose -y      ... successful
 docker compose -version to see the version of docker compose that we v created  ... version 1.29.2 build unknown
+
+
+
+                                 HOW THE DOCKER COMPOSE VERSION HAS AN IMPACT
  ********************** lets see hw the version has an impact
 1:23:50
 docker --version 
