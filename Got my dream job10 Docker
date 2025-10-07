@@ -23,223 +23,8 @@ docker5&6
  MULTI STAGE DOCKER FILE
  multi stage docker file  :  it has multiple 'FROM' keyword
 
-docker 3&4
- 2 containers cannot v the same host port number& name  , bt can v the same conatainer number
 
 ************************************************
-
-
-
-
-DOCKER1&2
-  CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES 
- *****now the quetsion is what can be done to be able to package d appl plus its dependencies n kip such dat if i wnt to deploy d appl all i hv to do is ship the app to 
-the deployment env and it comes wit the dependencies already packged meaning ders no nid going to the dev enev n carry out conf, test n run , we can easily ship dis appli
-how can we mk this process simplified?
-therefore we will be usisng :
-Containerization Software/Runtime --> : with this we can package an appl code plus its dependencies
- these ar the dif dockerization software
-Docker, = over 80% usage , in the industry, it has the most level of trust
-
-Docker:  
-  Is a containerization multi-platform software use to;    
-  create, build, ship, share and deploy containerize applications  
-
-
-Dockerfiles are input use to build docker images, docker file is a simple text file that consists of instructions to build/assemble a docker image
-Docker can build images by reading the instructions from a docker file
-
-Docker images are input needed/used to create containerised applications  
-
-Docker containers : Run time instance of a docker image 
-                  if you execute: Docker run, a container is created from the image
-
-
-
-DOCKER 8&9
-In tomcat applications are deployed in heavy weight virtual machines VMs:
-In docker applications are deployed in lightweight containers:
-****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
- so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
-
-we use the docker client / wich is the cli, command line interface that permits u to run docker commands   
- = docker build/push/pull/run  (and this docker client generally starts with
-   docker 
-
-WE also have docker daemon
-docker daemon/service =  this enforces the command that is run, e.g when u run docker build, the docker deamon knowns he has to create an image etc                                                                                   
-  docker registry  , wher we ship images to and make them distributable0      = ship/share[dockerhub/ecr(elastic container registry) /nexus]    
-
-
-Application architecture: .. we also saw we can use docker to containerize both monolithic and microservices application
-  Monolithic architecture '
-  Micro-services architecture ' ... bt docker will shine more when it comes to micro services bc they ar very light weight & docker containers are light weight
-
-
-
-
-DOCKER7                   SUMMARIZED
-### so when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
-If Containers are in two different networks. They can't communicate/access each other.
-types of netwrk
-1) Default bridge network 
-2) host network
-3) none network
-
-PROBLEMS WITH DEFAULT BRIDGE NTWRK
-containers communicate with only the containerID
-e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
-will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
-
-PROBLEMS OF MONOLETHIC ....................... 20;11
-1)DIFFIcult to scale
-eg if thers a spike  eg if 10million people are registering but only 1million is making payment, we will hv to scale up both the entire appl even though only 
-1m is making payment,so thers a lot of waste with resource usage in monolethic design 
-2)also micro service appli are light weight but monelethic are larger and thats a problem
-3)lots of lines of code not easy to mange 
-e.g if ur dealing wit a monolitic appl and ur code is in github we hv a single repository wich is for ebay only
-if ur using just ebay, ebay could hv 
-monolithic = ebay / 20,000 lines of code 
-
-
-**************28:30     CUSTOM BRIDGE NTWRK
-containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
-each other.
-
-WHY IS IT IMP TO DECOUPLE
-1)A Micor service architecture is easy to manage, 
-2)its also easy to scale
-microservices architecture wich ebay has been decoupled: login 2,000 lines of code, registration 4,000 lines of code, cart 2,000 lines of code, pay 6,000 lines of code 
-order 2,000 lines of code, return 8,000 lines of code   
-******* therfore micro services is easier to manage:
-
-3)better/efficient resource usage : 
-********e.g in a case wher the login increases frm 20m to 28m then i nid to scale login only, i dnt v to scale/modify the entire appl
-    so micro services leads to better use of resource bc when u scale jst a component, it means the overall resources to be used wil be smaller 
-
-4)****************versioning is easier to manage with microservices (bc we hv to modify some codes)
-also if thers a new version of the appl that relates with only the login e.g we ar changing the login interface, then we dnt nid to modify the the entire 20,000 line of 
-codes as with monolithic but only the 2,000lines of code for login for microservices
-
-
-We support Java based applications:
-===================================
-We support nodeJS and .net based applications: (also some python base appl, like we saw when we were doing container, we deployed a python base application)
-
- For our micro service applications, in our environment, we hv legacy appl that are running as monolectic which as a devops engr we are now decoupling 
-monoletic appl into micro services
-
-
- Deploy a microservice application for tesla.     *** WE need the spring appl & a database 
-we are using an application developed using the spring boot framework
- while deploying this appl, it need a database
-we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
-  ie developers are  recommending the mongo database           
-########copied frm the file in github:      ****** this application is developed using the spring boot framework
-spring:
-  data:
-    mongodb:
-      host: ${MONGO_DB_HOSTNAME} .. this is dynamic bc no values were given
-      port: 27017
-      username: ${MONGO_DB_USERNAME}
-      password: ${MONGO_DB_PASSWORD}
-      database: users
-      authentication-database: admin
-server:
-  port: 8080
-
-bt we want to write images that dynamic, images that can run in any environment, so we can jst use diff envr variables 
-this is an application that is being deployed and some inf needs to be captured so a database is needed.
-
-                                          THIS APPLICATION NEEDS 2THINGS
-*****meee****
-1) the applictaion image , in this case its; springapp
-2) the database image, in this case its; mongo
-
-we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
-  ie developers are  recommending the mongo database                                                                                     mongodb:
-
-For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image for db (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
-so once i pull this 2images am able to deploy my application
-      
-
-
-   DIFF BTW THE TYPES OF NETWORKS
-
- ********docker 3&4 .... 1:25:00 to deploy a 2nd conatiner using the d same image, 
-2 containers cannot v the same host port number& name  , bt can v the same conatainer number
-host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
-**** docker7; networks:  
-We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
-
-
-
-1)DEFAULT BRIDE NETWRK
-containers communicate with only the containerID
-e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
-will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
-****mee*** in the default bridge netwrk, We can create more than one container with d same container port , bt we hv to do port publishing
-
-
-2)CUSTOM BRIDGE NETWRK
- docker network create tesla        ***to create the tesla netwrk
-containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
-each other.
-
-
-3)HOST NETWRK  
-We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
-         2.21.20   docker logs apps .. we see binding exception
-
-Docker Host Network.:
-If we create containers in host network. 
-Container will not have IP Address. and we cant do port forwarding -p
- Container will be created in a system network.
-
-docker run --name javaapp -d --network host mylandmarktech/java-web-app   
-   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
-*********i can deploy the application & access this first application/container but if icreate .
-
-
-
-4)NONE/NULL NETWRK
-If we create container in none/null network. Container will not have IP Address.
-We can't access  containers in this network  Internal or external 
-****************** we can use this ntwrk to isolate containers
-
-docker run --name hello -d --network none mylandmarktech/hello   
-cant be accessed Internal or external 
-
-*************************************************************************
-
-
-
-
-
-**meee****
-STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
-1)the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
-for tomcat deployment takes place in the opt/webapps dir target dir and the packages are created in the the target dir of our project & also uploading the artifacts into the maven local/default
-repo OR custom repo
-2)But in our evn we use docker for deplyment therefore;
-Once developers commit the code to github The next step is to clone & build, the appl is cloned as a micro application, ie instead of deploying the appl as
-a monothelic appl, we decouple it and then we have a micro service appl with stanalone entities, a repo for login, a repo registrtaion, a repo to cretae a
-cart, a repo for returns,these ar the diff repo we hv created when it comes to this projeect, so when we pull this image we ar creating multiple packages e.g
-login.jar up to retruns.jar, etc.
-3)Next step is the netwrk, ie a group of servers communicating with each other using a specific netwrk, therfore we create a netwrk to make sure communication 
-is established btw the servers using the container name. so with the images of these stanalone entities built into containers we deploy our containers in 
-these deployment server using a custom bridge ntwrk so that the login container can communicate with registaration container ,cart container needs to 
-communicate with pay container, we also v a db container etc and all of this is captured in the dabase container (i bliv the inf needed frm endusers to access
-the other containers will be captured in the db)
-4)the container deployed can be statless or stateful. and this takes us to the volume concept in docker; bind mount
-our app container which is a STATELESS APP is ok, bt d database is STATEFUL n needs to maintain its state, to prevent data loss,therefore it needs 
-a piece of storage to capture data, so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
-
-
-
-
-
-*******************************************************************************
 
 
 
@@ -324,11 +109,29 @@ whose hands are dirty like yours, u ar going to be making mention of them n they
 with docker
 
 
-Monitoring dashboards :  if ders a problem , u dnt wnt ur cx to cm complaining,, u wnt to b aware b4 ur cx ar aware 
-so we reate a monitoring dashboard dat ,monitors and report if der are issues
 
-In tomcat applications are deployed in heavy weight virtual machines VMs:
-In docker applications are deployed in lightweight containers:
+
+
+**meee****
+STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
+1)the first step is developers commiting codes to scm , then we use mave to build the application and deploy either in the tomacat or docker
+for tomcat deployment takes place in the opt/webapps dir target dir and the packages are created in the the target dir of our project & also uploading the artifacts into the maven local/default
+repo OR custom repo
+2)But in our evn we use docker for deplyment therefore;
+Once developers commit the code to github The next step is to clone & build, the appl is cloned as a micro application, ie instead of deploying the appl as
+a monothelic appl, we decouple it and then we have a micro service appl with stanalone entities, a repo for login, a repo registrtaion, a repo to cretae a
+cart, a repo for returns,these ar the diff repo we hv created when it comes to this projeect, so when we pull this image we ar creating multiple packages e.g
+login.jar up to retruns.jar, etc.
+3)Next step is the netwrk, ie a group of servers communicating with each other using a specific netwrk, therfore we create a netwrk to make sure communication 
+is established btw the servers using the container name. so with the images of these stanalone entities built into containers we deploy our containers in 
+these deployment server using a custom bridge ntwrk so that the login container can communicate with registaration container ,cart container needs to 
+communicate with pay container, we also v a db container etc and all of this is captured in the dabase container (i bliv the inf needed frm endusers to access
+the other containers will be captured in the db)
+4)Next is volume, ie attaching a piece of storage to the container. it can be statless or stateful. and this takes us to the volume concept in docker;
+bind mount our app container which is a STATELESS APP is ok, bt d database is STATEFUL n needs to maintain its state, to prevent data loss,therefore it 
+needs a piece of storage to capture data, so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
+
+
 
 
 
@@ -338,6 +141,212 @@ In docker applications are deployed in lightweight containers:
 
 
  
+
+
+
+DOCKER1&2
+  CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES 
+ *****now the quetsion is what can be done to be able to package d appl plus its dependencies n kip such dat if i wnt to deploy d appl all i hv to do is ship the app to 
+the deployment env and it comes wit the dependencies already packged meaning ders no nid going to the dev enev n carry out conf, test n run , we can easily ship dis appli
+how can we mk this process simplified?
+therefore we will be usisng :
+Containerization Software/Runtime --> : with this we can package an appl code plus its dependencies
+ these ar the dif dockerization software
+Docker, = over 80% usage , in the industry, it has the most level of trust
+
+Docker:  
+  Is a containerization multi-platform software use to;    
+  create, build, ship, share and deploy containerize applications  
+
+
+Dockerfiles are input use to build docker images, docker file is a simple text file that consists of instructions to build/assemble a docker image
+Docker can build images by reading the instructions from a docker file
+
+Docker images are input needed/used to create containerised applications  
+
+Docker containers : Run time instance of a docker image 
+                  if you execute: Docker run, a container is created from the image
+
+
+
+DOCKER 8&9
+In tomcat applications are deployed in heavy weight virtual machines VMs:
+In docker applications are deployed in lightweight containers:
+****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
+ so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
+
+we use the docker client / wich is the cli, command line interface that permits u to run docker commands   
+ = docker build/push/pull/run  (and this docker client generally starts with
+   docker 
+
+WE also have docker daemon
+docker daemon/service =  this enforces the command that is run, e.g when u run docker build, the docker deamon knowns he has to create an image etc                                                                                   
+  docker registry  , wher we ship images to and make them distributable0      = ship/share[dockerhub/ecr(elastic container registry) /nexus]    
+
+
+
+
+
+
+DOCKER7                   SUMMARIZED
+
+                              APPLICATION ARCHITECTURE
+
+we also saw we can use docker to containerize both monolithic and microservices application
+' ... bt docker will shine more when it comes to micro services bc they ar very light weight & docker containers are light weight
+
+
+            MONOLETHIC APPLICATION
+
+PROBLEMS OF MONOLETHIC ....................... 20;11
+1)DIFFIcult to scale
+eg if thers a spike  eg if 10million people are registering but only 1million is making payment, we will hv to scale up both the entire appl even though only 
+1m is making payment,so thers a lot of waste with resource usage in monolethic design 
+2)also micro service appli are light weight but monelethic are larger and thats a problem
+3)lots of lines of code not easy to mange 
+e.g if ur dealing wit a monolitic appl and ur code is in github we hv a single repository wich is for ebay only
+if ur using just ebay, ebay could hv 
+monolithic = ebay / 20,000 lines of code 
+
+
+                                MICROSERVICE APPLICATON
+WHY IS IT IMP TO DECOUPLE
+1)A Micor service architecture is easy to manage, 
+2)its also easy to scale
+microservices architecture wich ebay has been decoupled: login 2,000 lines of code, registration 4,000 lines of code, cart 2,000 lines of code, pay 6,000 lines of code 
+order 2,000 lines of code, return 8,000 lines of code   
+******* therfore micro services is easier to manage:
+
+3)better/efficient resource usage : 
+********e.g in a case wher the login increases frm 20m to 28m then i nid to scale login only, i dnt v to scale/modify the entire appl
+    so micro services leads to better use of resource bc when u scale jst a component, it means the overall resources to be used wil be smaller 
+
+4)****************versioning is easier to manage with microservices (bc we hv to modify some codes)
+also if thers a new version of the appl that relates with only the login e.g we ar changing the login interface, then we dnt nid to modify the the entire 20,000 line of 
+codes as with monolithic but only the 2,000lines of code for login for microservices
+
+
+
+
+
+
+               NETWORKS
+### when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
+If Containers are in two different networks. They can't communicate/access each other.
+types of netwrk
+1) Default bridge network 
+2) host network
+3) none network
+
+PROBLEMS WITH DEFAULT BRIDGE NTWRK
+containers communicate with only the containerID
+e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
+will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
+
+
+
+**************28:30     CUSTOM BRIDGE NTWRK
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
+each other.
+
+
+  DIFF BTW THE TYPES OF NETWORKS
+
+ ********docker 3&4 .... 1:25:00 to deploy a 2nd conatiner using the d same image, 
+2 containers cannot v the same host port number& name  , bt can v the same conatainer number
+host port must change ie we hv to choose a port nmuber for each contaoiner but container port is nt changing
+**** docker7; networks:  
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+
+1)DEFAULT BRIDE NETWRK
+containers communicate with only the containerID
+e.g  if a container was dead and it comes bk to life  e.g smt goes wrong n its recreated, it comes bk to life with a new IP address and as such communication
+will be broken bc containers communicate with the ip adress in the default bridge ntwrk so for that reason, we use what is called custom bridge ntwrk. 
+****mee*** in the default bridge netwrk, We can create more than one container with d same container port , bt we hv to do port publishing
+
+
+2)CUSTOM BRIDGE NETWRK
+ docker network create tesla        ***to create the tesla netwrk
+containers communicate with IPS and the container name, so even if a container is recreated, it will be recreated with the same container name so it can stil communicate wit
+each other.
+
+
+3)HOST NETWRK  
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+         2.21.20   docker logs apps .. we see binding exception
+
+Docker Host Network.:
+If we create containers in host network. 
+Container will not have IP Address. and we cant do port forwarding -p
+ Container will be created in a system network.
+
+docker run --name javaapp -d --network host mylandmarktech/java-web-app   
+   ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
+*********i can deploy the application & access this first application/container but if icreate .
+
+
+
+4)NONE/NULL NETWRK
+If we create container in none/null network. Container will not have IP Address.
+We can't access  containers in this network  Internal or external 
+****************** we can use this ntwrk to isolate containers
+
+docker run --name hello -d --network none mylandmarktech/hello   
+cant be accessed Internal or external 
+
+
+
+We support Java based applications:
+===================================
+We support nodeJS and .net based applications: (also some python base appl, like we saw when we were doing container, we deployed a python base application)
+
+ For our micro service applications, in our environment, we hv legacy appl that are running as monolectic which as a devops engr we are now decoupling 
+monoletic appl into micro services
+
+
+ Deploy a microservice application for tesla.     *** WE need the spring appl & a database 
+we are using an application developed using the spring boot framework
+ while deploying this appl, it need a database
+we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
+  ie developers are  recommending the mongo database           
+########copied frm the file in github:      ****** this application is developed using the spring boot framework
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME} .. this is dynamic bc no values were given
+      port: 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+server:
+  port: 8080
+
+bt we want to write images that dynamic, images that can run in any environment, so we can jst use diff envr variables 
+this is an application that is being deployed and some inf needs to be captured so a database is needed.
+
+                                          THIS APPLICATION NEEDS 2THINGS
+*****meee****
+1) the applictaion image , in this case its; springapp
+2) the database image, in this case its; mongo
+
+we need to deploy the springapp and the database - mongo   ... (the database in this case is mongo) as we can see it defined in github: data: 
+  ie developers are  recommending the mongo database                                                                                     mongodb:
+
+For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image for db (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
+so once i pull this 2images am able to deploy my application
+      
+
+
+
+ 
+
+*******************************************************************************
+
+
+DNT PRINT
+
+
 DoKCER 5&5B      **** lol**** THIS is a wrong interpretation i did in 2024
 
 
@@ -373,4 +382,8 @@ docker cp home.jsp webapp:/usr/local/tomcat/webapps/tesla/jsps/
 now we v successfully copied it to the webapp conatiner 
 it shows :COPIED TO webapp:/usr/local/tomcat/webapps/tesla/jsps/ 
 and when we check in the browser we can see the line that we changed
+
+
+
+
 
