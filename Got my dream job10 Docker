@@ -173,7 +173,7 @@ Docker images are input needed/used to create containerised applications
 
 Docker containers : Run time instance of a docker image 
                   if you execute: Docker run, a container is created from the image
-DOCKER8&9
+******DOCKER8&9
 In tomcat applications are deployed in heavy weight virtual machines VMs:
 In docker applications are deployed in lightweight containers:
 ****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
@@ -186,120 +186,6 @@ we use the docker client / wich is the cli, command line interface that permits 
 WE also have docker daemon
 docker daemon/service =  this enforces the command that is run, e.g when u run docker build, the docker deamon knowns he has to create an image etc                                                                                   
   docker registry  , wher we ship images to and make them distributable0      = ship/share[dockerhub/ecr(elastic container registry) /nexus]    
-
-
-
-
-DOCKER 8&9
-docker run --name mongo --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
-1.08.05    ****Mongo, is the host database hostname...  .... i didnt knw thats hostname, thought it was application name, or mayb its application hostname.
-
-TYPES OF VOLUME
-1)BIND POINT:   Not persistent. BUT BindMount: can store your data anywherE;  /tmp/mongo:/data/db ,  /home/ubuntu/data:/data/db
-
-Bind mounts may stored data anywhere on the host system. They may even be important system files or directories. 
-In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo
-if we ls /tmp , we can see the mount point mongo that we created
-this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the
-process is not managed by docker and as such it could be accidentally deleted. so what happens if its deleted by a non docker process??
-
-eg lets assume that our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker 
-start mongo we ar now able to access the data
-now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
-now lets redeploy the database, then we can still see the the previous data..this is because of bind mount 
-******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is 
-destroyed completely
-if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
-BUT DERS A PROBLEM HERE 
-if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
-at the moment our vol is nt managed by the docker process ,
-lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
-if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted 
-unnoticed
-
-
-
- 2)   PERSISTENT VOLUME
-Non-Docker processes on the Docker host can modify Bind Mounts volumes at any time unnoticed, so we nid to introduce persistence vol 
-NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
-Docker Volumes
-Volumes stored data in a part of the host filesystem managed by docker
-Docker home dir :  DHD = /var/lib/docker
-
-
-DIFF BETWEEN BIND POINT & DOCKER VOL & External volume
-1)BIND POINT
-a)Not persistent. BUT can store your data anywherE
-b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
-we have to create a mount point; 
-/tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
-  Storage name is 'tmp, while 'mydata' is the customized mount point  
-
-
-2)FOR DOCKER VOL   
-a) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
-b)dnt need to create a mount point, what i need to do,just the vol name: eg mongodata  ,data33                                                i bliv dats what it means
-create volume: 
-eg docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
-eg docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
-docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
-so when u DNT CHOOSE driver it is going to crate under the local driver 
-
-create the database (i bliv data33)
-docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
-need to create a mount point, just the volume name  data33 & pair it data/db from the official document.
-
-3)FOR external vol
-a)dnt need to create a mount point, what i need to do,just the vol name: eg ebs33
-b) -d is for driver, the driver is rexray/ebs 
-
-
-
-3) EXTERNAL VOLUMES          ===== Network Volumes Using AWS EBS ==========
-ther are external vol pluggin ,that can be installed in docker
-we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 simple storage system, google persistent disk, also sdsure disk,
-rexray plugin for docker storage etc 
-https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/  , here we also see d docker plugins installatin command, if u dnt choose d version it wil
-so when i hv my container mount point : /data/db/, i can mount it with an external vol 
- we can create a mount point , frm this point, we could have external mounting , we can mount it externally
- we can also hv multiple mount points
-
-STEP1)
-now we deploy this pluging :
-docker plugin install rexray/ebs \
-  EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
-  EBS_SECRETKEY=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
-
-
-STEP2)    
- Authentication & authorization    ;#this process cannot happen if u dnt hv the right IAM authorization
-EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
-  EBS_SECRETKEY=/1
-
-step3)
-am creatin a vol called ebs33
-docker volume create -d rexray/ebs ebs33 .. ...........d is for driver, the driver is rexray/ebs 
-if u dnt pass driver, it wil create it under local driver 
-docker volume ls
-   ******he tried to run multiple volume mount point but it didnt work 
-******************* he said it seems the vol property does nt permit multiple mount point
-
-****Also he tried to deploy the container with the vol but didnt work, we couldnt access the data 
-
-3) ############# so he used the file app.sh  and paste the below command 
-docker volume craete ebs3 -d rexray/ebs
-docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
-then  deploy: sh app.sh
-
-************* successful,  he checked in aws and we can see the  volume we see both ebs3 and ebs33 that we created n we can access the application n write data
-docker volume ls and we see ebs33 n ebs3
-
-
-DOCKER COMPOSE
-==============
-Docker Compose is a tool for defining/declaring and running multiple 
-   containerised micro-services applications.
-
 
 
 
@@ -471,7 +357,131 @@ we need to deploy the springapp and the database - mongo   ... (the database in 
 
 For thIS APPLICATION, we hv our images so we can pull bt i also nid a mongo image for db (he doesnt hv any mongo image in his repository) bt ders a mongo image in dockerhub
 so once i pull this 2images am able to deploy my application
-      
+
+
+#####meeee**QUESTION, HW DO WE KNOW WHICH ENV VARIABLE VALUE TO USE ,, BC here both the applictaion(spring) has its env var & the database has its own env ???????
+i bliv the the devolopers indicate the 'env var' in the code/document they commit in the repo
+
+        ****i bliv this is like a key (the variable) & padlock (env variable)situation...
+******he said this in the nxt video , the application passes the variable,ie its like having to be authorized to access the db, thefore the 
+input used for the application shud b d same used for the db
+e.g  the password we assigned/decide to use should be the same for both the appl & the db but the hostname comes from the db 
+     *** i got to realise that what i used to think is the application name is called the hostname, or mayb its called 'applictaion host name.
+  *** eg, (hostname 'mongodb')  docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo 
+
+
+
+
+DOCKER 8&9
+docker run --name mongo --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
+1.08.05    ****Mongo, is the host database hostname...  .... i didnt knw thats hostname, thought it was application name, or mayb its application hostname.
+
+TYPES OF VOLUME
+1)BIND POINT:   Not persistent. BUT BindMount: can store your data anywherE;  /tmp/mongo:/data/db ,  /home/ubuntu/data:/data/db
+
+Bind mounts may stored data anywhere on the host system. They may even be important system files or directories. 
+In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo
+if we ls /tmp , we can see the mount point mongo that we created
+this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the
+process is not managed by docker and as such it could be accidentally deleted. so what happens if its deleted by a non docker process??
+
+eg lets assume that our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker 
+start mongo we ar now able to access the data
+now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
+now lets redeploy the database, then we can still see the the previous data..this is because of bind mount 
+******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is 
+destroyed completely
+if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
+BUT DERS A PROBLEM HERE 
+if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
+at the moment our vol is nt managed by the docker process ,
+lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
+if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted 
+unnoticed
+
+
+ 2)   PERSISTENT VOLUME
+Non-Docker processes on the Docker host can modify Bind Mounts volumes at any time unnoticed, so we nid to introduce persistence vol 
+NOW LETS SEE THE DOCKER VOLUME CONCEPT THAT IS being mMANGED BY DOCKER, we want to talk abt persistence vol 
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
+Docker home dir :  DHD = /var/lib/docker
+
+
+DIFF BETWEEN BIND POINT & DOCKER VOL & External volume
+1)BIND POINT
+a)Not persistent. BUT can store your data anywherE
+b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
+we have to create a mount point; 
+/tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
+  Storage name is 'tmp, while 'mydata' is the customized mount point  
+
+
+2)FOR DOCKER VOL   
+a) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
+b)dnt need to create a mount point, what i need to do,just the vol name: eg mongodata  ,data33                                                i bliv dats what it means
+create volume: 
+eg docker volume create mongodata -d local  ..... ( -d for driver)  ... here am passing a driver 
+eg docker volume create mongo33   ............ here am nt, when u dnt pass ur driver, it will create under local
+docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
+so when u DNT CHOOSE driver it is going to crate under the local driver 
+
+create the database (i bliv data33)
+docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+need to create a mount point, just the volume name  data33 & pair it data/db from the official document.
+
+3)FOR external vol
+a)dnt need to create a mount point, what i need to do,just the vol name: eg ebs33
+b) -d is for driver, the driver is rexray/ebs 
+
+
+
+3) EXTERNAL VOLUMES          ===== Network Volumes Using AWS EBS ==========
+ther are external vol pluggin ,that can be installed in docker
+we can craete external vol using sometin like AWS ebs , also efs: elastic file system, s3 simple storage system, google persistent disk, also sdsure disk,
+rexray plugin for docker storage etc 
+https://rexray.readthedocs.io/en/v0.8.2/user-guide/docker-plugins/  , here we also see d docker plugins installatin command, if u dnt choose d version it wil
+so when i hv my container mount point : /data/db/, i can mount it with an external vol 
+ we can create a mount point , frm this point, we could have external mounting , we can mount it externally
+ we can also hv multiple mount points
+
+STEP1)
+now we deploy this pluging :
+docker plugin install rexray/ebs \
+  EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
+  EBS_SECRETKEY=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
+
+
+STEP2)    
+ Authentication & authorization    ;#this process cannot happen if u dnt hv the right IAM authorization
+EBS_ACCESSKEY=AKIAUGAKLPXTXI23EAXH \
+  EBS_SECRETKEY=/1
+
+step3)
+am creatin a vol called ebs33
+docker volume create -d rexray/ebs ebs33 .. ...........d is for driver, the driver is rexray/ebs 
+if u dnt pass driver, it wil create it under local driver 
+docker volume ls
+   ******he tried to run multiple volume mount point but it didnt work 
+******************* he said it seems the vol property does nt permit multiple mount point
+
+****Also he tried to deploy the container with the vol but didnt work, we couldnt access the data 
+
+3) ############# so he used the file app.sh  and paste the below command 
+docker volume craete ebs3 -d rexray/ebs
+docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
+then  deploy: sh app.sh
+
+************* successful,  he checked in aws and we can see the  volume we see both ebs3 and ebs33 that we created n we can access the application n write data
+docker volume ls and we see ebs33 n ebs3
+
+
+DOCKER COMPOSE
+==============
+Docker Compose is a tool for defining/declaring and running multiple 
+   containerised micro-services applications.
+
+
 
 
 
