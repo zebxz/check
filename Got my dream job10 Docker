@@ -75,10 +75,10 @@ the changes in future application , we can commiit the changes using the 'docker
 ONCE THE applications are containerized, we ar able to run containers
  and we need  networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
 external] 
-And then we have volumes;volumes = storage/mounts for the containers because our data base can either be stateless (does not store data)or stateful needs to
-maintain its state,to prevent data loss,therefore it needs a piece of storage to capture data, data nids to be stored.
-so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.so we can create a mountpoint & mount it with
-the dockerhost server,he is the guy hosting all our containers.
+And then we have volumes;volumes = like bind mounts ie we can attach a piece of storage to the containers mount point because our data base can either be 
+stateless (does not store data)or stateful needs to maintain its state,to prevent data loss,therefore it needs a piece of storage to capture data, data nids
+to be stored.so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.so we can create a mountpoint &
+mount it with the dockerhost server,he is the guy hosting all our containers.
 FInally, in our env we create Monitoring dashboards, that monitors and report if there are issues, so if there is a problem, we are aware before the customers
 starts complaining 
 
@@ -100,7 +100,7 @@ our images as light weight as possible, in our env we use alpine images as much 
 is intended to be light weight
 In Passing our CMD and ENTRYPOINT Instructions, we are using executable form over shell form this will be enable our application process to run as a parent 
 process and as such, it cannot be killed unnoticed
-We also enabled scanning in our env, such that everytin is autoscanned and if thers any issue, pull REQ are been deployed for us to take remedial action 
+We also enabled scanning in our env, such that everytin is auto scanned and if thers any issue, pull REQ are been deployed for us to take remedial action 
 *************docker is intended to be light weight bt then u nid to do smt to mk it light weight by making the right choices
 
 
