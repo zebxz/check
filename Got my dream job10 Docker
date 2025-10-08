@@ -189,6 +189,35 @@ docker daemon/service =  this enforces the command that is run, e.g when u run d
 
 
 
+
+DOCKER 5&6
+******Online
+Multi-stage Dockerfile:
+A multi-stage Dockerfile is a single Dockerfile that uses multiple FROM instructions to define different build stages. Each FROM instruction starts a new 
+stage,potentially with a different base image. The key benefit is the ability to selectively copy artifacts from one stage to another, leaving behind 
+unnecessary build tools and dependencies in the final image. This results in smaller, more secure, and more efficient production images.
+Docker Compose File:
+A Docker Compose file (typically docker-compose.yml) is a YAML file used to define and run multi-container Docker applications. It allows you to configure
+multiple services (containers), networks, and volumes in a single file. Docker Compose simplifies the management of complex applications by enabling you to
+start, stop, and manage all your services with a single command (docker compose up).
+Key Differences:
+Purpose:
+Multi-stage Dockerfile: Primarily focused on optimizing the build process of a single Docker image, making it smaller and more efficient.
+Docker Compose File: Primarily focused on orchestrating and managing multiple interconnected Docker containers that form an application.
+Scope:
+Multi-stage Dockerfile: Operates within the context of building a single Docker image.
+Docker Compose File: Operates at the application level, defining and linking multiple services (containers).
+Content:
+Multi-stage Dockerfile: Contains Dockerfile instructions (e.g., FROM, RUN, COPY, CMD) organized into stages.
+Docker Compose File: Contains YAML definitions for services, networks, volumes, and other configuration options for a multi-container application.
+Relationship: A Docker Compose file can reference a multi-stage Dockerfile to build an image for a specific service. For example, a build section in a 
+Compose service definition can point to a Dockerfile and even specify a target stage within that Dockerfile.
+In essence, multi-stage builds help you create optimized individual container images, while Docker Compose helps you manage and run those images as a 
+cohesive application.
+
+
+
+
 DOCKER7                  
 
                               APPLICATION ARCHITECTURE
