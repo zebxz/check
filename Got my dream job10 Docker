@@ -478,14 +478,229 @@ docker volume ls and we see ebs33 n ebs3
 
 DOCKER COMPOSE
 ==============
-Docker Compose is a tool for defining/declaring and running multiple 
-   containerised micro-services applications.
+Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
+
+                               TWO WAYS TO DEPLOY IN DOCKER
+1) We can deploy the database and the aplication either using command ...... OR 
+docker run --name mongo -d --network tesla \        
+-v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
+-e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+
+docker run --name springapp -d -p 8080:8080 --network tesla \
+-e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
+-e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+2) using Decompose' ie using 'a file' ..1:31:18
+docker-compose.yml 
+version: '3.1'             
+services: 
+  springapp:
+    image: mylandmarktech/sping-boot-mongo   
+    restart: always
+
+
+
+In real time one application can have more than 7 micro-services:
+E.G ebay.com: 
+An e-commerce java based web application for ebay or ebay-web-application:
+docker run --name login -d -p 80:8080 --network ebay login          
+docker run --name reg -d -p 80:8080 --network ebay registration 
+docker run --name cart -d -p 80:8080 --network ebay cart
+docker run --name checkout -d -p 80:8080 --network ebay checkout
+docker run --name pay -d -p 80:8080 --network ebay payment 
+docker run --name order -d -p 80:8080 --network ebay order 
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-admin -d --network ebay mysql  
+
+******so we ar deploying this database: Mysql,  bt we hv to put it in the same ntwrk 'ebay',
+if u hv an aplication like dis n u nid to deploy it, hw many run command are we going to execute , very long command,we ar going to v 
+multiple run command:   **i bliv therfore we use a 'docker compose file'
+
+******* in trying to deploy this application what are the objects that ar ivolved ? 
+
+docker objects:
+  - u must use the right images   , each of the micro services must be deployed with the right image 
+  - it must be in the right networks ,  so if we nid this containers to comm with each oda they must be in the same ntwrk
+  - must assign volumes accordingly ,  if any of the containers nids to maintain its state we must introduce docker volume
+  - environmental variables   ,   for us to deploy it in any env , we must use env variable 
+
+
+                               INSTALL DOCKER COMPOSE
+ubuntu@docker:~$ docker-compose
+Command 'docker-compose' not found, but can be installed with:
+sudo snap install docker          # version 20.10.24, or
+sudo snap install docker          # version 20.10.24
+sudo apt  install docker-compose  # version 1.29.2-1
+See 'snap info <snapname>' for additional versions.
+
+ ubuntu@docker:~$ sudo apt  install docker-compose -y      ... successful
+
+
+since we are using docker compose, we can deploy in multiple env, like dev, uat, prod using diff env variables
+
+             dev     uat      prod   
+USERNAME   devdb     uatdb    proddb   
+hostname   mongo     mymongo  mongodb  
+password   dev@123   uat@123  admib@#123  
+
+
+                                        HOW THE DOCKER COMPOSE VERSION HAS AN IMPACT
+
+click on the menu box , select doc, click on references , compose cli, compose file references and legacy versions then version 3
+when we look at docker compose, u want to look at the  docker compose like version3 references and hw it relates to the docker engine with the docker software
+
+
+Docker version 20.10.12  .. this is my docker version
+docker-compose.yml  
+
+we can use version 3.1 for docker engine  1.                                   ..... 1:26:44
+what dis means is that  ...       Docker version 20.10.12  .. this is my docker version and this is the docker compose version 1.29.2
+ so if i wnat to write a docker compose file, this is hw it goes 
+------------------      ####################### if ur trying to deploy ur application using docker compose it cud fall under stuff like dis 1:27:40
+
+
+
+                                       CREATING DOCKER COMPOSE FILE
+1) Creating the docker compose file
+   .....the rule says when u wnat to write a docker compose file, that file starts with version
+                 the default name for docker compose file is, ie docker compose.yml
+
+
+  THIS IA A .yml file                                                                       1:33:00
+so in deployn dis spring app, i nid d image, smt like restart,if d container stops wot hapens, i nid ports, its a list i pair port 6000 to 8080, ntwrks too is a lis, env var
+                             for d db service , i nid the image, retsrt if it stops, ntwrks, vol, env.
+                                WE AR CREATING OUR VOLUMes, netwrks and services
 
 
 
 
+version: '3.1'             
+services: 
+  springapp:
+    image: mylandmarktech/sping-boot-mongo   
+    restart: always    
+    ports:
+    - 6000:8080     
+    networks:
+    - fintech     
+    environment:
+    - MONGO_DB_HOSTNAME=mongodb
+    - MONGO_DB_USERNAME=proddb
+    - MONGO_DB_PASSWORD=proddb@123         
+  mongodb:
+    image: mongo     
+    restart: always     
+                       (no space here, i jst did it like that) under port, we wnt be allocating any port for our db bc we wont be accessing it externally so i tk it out 
+    networks:       ...... ..... ..... you cud hv multiple nterk cos a container cud be multiple ntwrk
+    - fintech  k9                     ***** d 2application shud b in the same ntwrk bt i can place database in anoda ntwrk bc one container can b in more than one ntwrk)
+    - tesla   
+    volumes:
+    - data11:/data/db:rw         *********** what is rw 1:40:43
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=proddb
+    - MONGO_INITDB_ROOT_PASSWORD=proddb@123       
+volumes:                                           i want the vol created, it doesnt exist, i want it craeted extrnally
+  data11:
+    driver: rexray/ebs     c
+networks:
+  tesla: 
+    external: true    ...    true means the ntwrk is already available
+  fintech:
+    driver: bridge  
+
+2)docker volume create -d rexray/ebs data11      ********************** we hv to also create dis volume and ntwrk fintech b4 we can start deploying the apl
+3)docker network create fintech  
+  ****************************  he didnt run 2&3 .... .. he deployed everytin with the file
+1:38:20 ################################  you can use a file like this its easy bc this transaction can be easily repeated , now the docker compose.yml file is done
+                                                                    we can deploy the containers ie springapp and mongo using dockr compose  .. 1:41;19
+4) next
+vi docker-compose.yml  and paste the file 
+
+
+**************** nxt
+5) check if the syntax are ok
+docker-compose config      ................if ders an errror, it will tell you
+
+6) create the containers/DEPLOY THE APPLICATION
+docker-compose up -d 
+       docker ps .... the containers are running
+  
+....... application deploy bt we cudnt acces it in goolge bt when we curl on the comandline it responds, he asaid ders no path to the appl, its suppose to
+                                                              respond accordingly .......1:45:30 .... he even checked aws security groups, said all d ports are open
+
+
+
+
+                 ***************************CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION  ***********************1:42:08
+
+TO create the containers/DEPLOY THE APPLICATION
+
+first: check if the syntax are ok
+docker-compose config      ................if ders an errror, it will tell you
+
+1) for docker compose file with default name [docker-compose.yml ]. 
+  # Create Services/Contianers
+   docker-compose up -d          ****** used when deploying an application using the default name, ie docker compose.yml
 
  
+2) #docker compose file with custom name.  
+docker-compose -f <CustomeComposeFileName>.yml <command>
+Ex:
+docker-compose -f docker-compose-springapp.yml config
+docker-compose -f docker-compose-springapp.yml up -d
+docker-compose -f docker-compose-springapp.yml down
+
+
+# Remove Services/Contianers  .................  to destroy the containers
+    docker-compose down
+
+
+
+so we can create a docker compose file and call it: docker-compose-springapp.yml
+i can also rename my docker compose file ie the file we deployed already  .... mv  docker compose.yml docker-compose-springapp.yml
+
+then:  he changed port to 8080:8080 and dreiver:local
+                              
+version: '3.1'             
+services: 
+  springapp:
+    image: mylandmarktech/sping-boot-mongo   
+    restart: always    
+    ports:
+    - 8080:8080     
+    networks:
+    - fintech     
+    environment:
+    - MONGO_DB_HOSTNAME=mongodb
+    - MONGO_DB_USERNAME=proddb
+    - MONGO_DB_PASSWORD=proddb@123         
+  mongodb:
+    image: mongo     
+    restart: always     
+    networks:       
+    - fintech                  
+    volumes:
+    - data11:/data/db
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=proddb
+    - MONGO_INITDB_ROOT_PASSWORD=proddb@123       
+volumes:                                           
+  data11
+    driver: local
+networks:
+  tesla: 
+    external: true    ...    true means the ntwrk is already available
+  fintech:
+    driver: bridge  
+
+then 
+docker-compose -f docker-compose-springapp.yml config
+with dis new file name to deploy will be  ........................... 1:53:20
+docker-compose -f docker-compose-springapp.yml up -d
+
+########################## now we were able to access the application online
+
+
+
 
 *******************************************************************************
 
