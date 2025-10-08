@@ -411,7 +411,10 @@ Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1
 3.1                         1.13.1+          
 3.1                         20.10.12
 
+
 1:24:25  .....the rule says when u wnat to write a docker compose file, that file starts with version
+the default name for docker compose file is, ie docker compose.yml
+
 
 1:25:29  ####### the rule says when u want to write a docker compose file .. went on break, didnt continue that ... 
 
@@ -426,6 +429,10 @@ we can use version 3.1 for docker engine  1.                                   .
 what dis means is that  ...       Docker version 20.10.12  .. this is my docker version and this is the docker compose version 1.29.2
  so if i wnat to write a docker compose file, this is hw it goes 
 ------------------      ####################### if ur trying to deploy ur application using docker compose it cud fall under stuff like dis 1:27:40
+
+
+
+                                               CREATING DOCKER COMPOSE FILE
 
 1) Creating the docker compose file
                                               THIS IA A .yml file                                                                       1:33:00
@@ -497,40 +504,54 @@ password   dev@123   uat@123  admib@#123
 
 
 
-docker run --name mongo -d --network tesla \      *************************** this is depolying the database and the aplication using command while the decompose is 
--v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        deploying using a file ..1:31:18
+
+..1:31:18                 TWO WAYS TO DEPLOY IN DOCKER
+1) We can deploy the database and the aplication either using command ...... OR 
+docker run --name mongo -d --network tesla \        
+-v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
 
 docker run --name springapp -d -p 8080:8080 --network tesla \
 -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
 -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
+2) using Decompose' ie using 'a file' ..1:31:18
+
 
 
     ***************************CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION  ***********************1:42:08
 
-docker compose file with default name [docker-compose.yml ]. 
+TO create the containers/DEPLOY THE APPLICATION
+
+first: check if the syntax are ok
+docker-compose config      ................if ders an errror, it will tell you
+
+1) for docker compose file with default name [docker-compose.yml ]. 
   # Create Services/Contianers
    docker-compose up -d          ****** used when deploying an application using the default name, ie docker compose.yml
 
- Ex:
-docker-compose default file: docker-compose.yml
-docker-compose -f docker-compose.yml up -d 
-docker-compose up -d 
-docker-compose up -d
-docker-compose config 
+ 
+2) #docker compose file with custom name.  
+docker-compose -f <CustomeComposeFileName>.yml <command>
+Ex:
+docker-compose -f docker-compose-springapp.yml config
+docker-compose -f docker-compose-springapp.yml up -d
+docker-compose -f docker-compose-springapp.yml down
 
 
 # Remove Services/Contianers  .................  to destroy the containers
     docker-compose down
 
-#docker compose file with custom name.  
-docker-compose -f <CustomeComposeFileName>.yml <command>
-
+*******************************************************
 Ex:
-docker-compose -f docker-compose-springapp.yml config
-docker-compose -f docker-compose-springapp.yml up -d
-docker-compose -f docker-compose-springapp.yml down
+docker-compose default file: docker-compose.yml
+docker-compose -f docker-compose.yml up -d 
+docker-compose up -d 
+docker-compose up -d
+docker-compose config 
+********************************************
+
+
 
 so we can create a docker compose file and call it: docker-compose-springapp.yml
 i can also rename my docker compose file ie the file we deployed already  .... mv  docker compose.yml docker-compose-springapp.yml
@@ -618,8 +639,8 @@ QUESTIONS:
 1)u hv been redeploying on a new port but
 cant a container be deployed on the same port for e.g u nid to update what was already deployed
 
-2) bc for the web app u did build u used maven as abuild tool, i understand that for pythonthey also hv build tool bt i didnt see us doing a build, does it mean that we actually
-depend totally on the docker file bc for the web app we did see that we were copying the .war files n deploying it into the tomcat 
+2) bc for the web app u did build u used maven as abuild tool, i understand that for python they also hv build tool bt i didnt see us doing a build, does it
+mean that we actually depend totally on the docker file bc for the web app we did see that we were copying the .war files n deploying it into the tomcat 
 not all applications are deployed in the same manner like d way we deployed python appli was diff frm d way we deployed oda appl like java based app
 1:02:00  .. LET ME SHOW U SMT ... when u install dis docker file, it does a build while running the docke file
 
@@ -643,7 +664,7 @@ ADD target/maven-web-app.war /opt/jboss/wildfly/standalon/deployments/
 this base image , for jboss to function, it rEQ java bt the base image already v java embedded in it
 
 ***************** also , look at this base image what do u see here:
-FROM tomcat:8.0.20-jre8  ..    tomcat, it syas 8.0.20 java run time env 8 ,, so the  tag here is tomcat wit java8  , this base image has tomcat and java, they ar both embeded 
+FROM tomcat:8.0.20-jre8  ..    tomcat, it says 8.0.20 java run time env 8 ,, so the  tag here is tomcat wit java8  , this base image has tomcat and java, they ar both embeded 
                                                                                        together bc dats hw base images are     
 
 RUN     sed -i user usrname= "admin" password" roles , manger -script"/> /usr/local/tomcat/conf/tomcat-user                                                                   
@@ -699,6 +720,9 @@ stage('7.Deploy2UAT'){}
 stage('8. approval'){}
 stage '8.Deploy2Prod'){}
 
+
+     **** I bliv for this ci/cd job, we can use either of 2 methods; 1) the upstream & downstream option OR 'a single job' option
+                                                         then use either multi stage file OR a docker compose file.
 
 Ticket014:     
 ﻿﻿﻿﻿Prepare a jenkins ci/cd job for maven-web-application
