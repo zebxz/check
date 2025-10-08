@@ -26,6 +26,21 @@ nexus, you are a build and release engr or CI, continous integration which falls
 LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, jenkins automates the end to end process, 
 
+
+
+having done Jenkins:
+  1. Build + Release Engineer  
+  2. AWS cloud    = Cloud Engineer 
+         
+  3. Docker       = is all abt containrizing application
+  4. Kubernetes   = Application Engineer  / kubernete Engineer 
+  5. Ansible      = System Automation Engineer  bc u can configure system n do a lot of things
+  6. Terraform    = Infrastructure Engineer [ IaC ] terraform is all about infrastructure as a code
+  7. DevSecOps    = dev sec ops engrbc we are heavy on security
+  8. SRE          = site reliablty engr bc u are able to monitor ur environment and take actions with relative ease
+  9. Sr. DevOps Engineer = and all this means u are a senior devops engr bc most of our engrs are having the senior role 
+  10. Platform Engineer - Linux  .. focusing on linux bc so far we hv based our analysis on linux
+
 ************************************************************************************
 
 
@@ -422,7 +437,12 @@ jenkins pipeline is just a file we want to create a file , everytin will run ins
 
 
 
- JEN6   PIPELINE JENKINS PROJECTS:    (comit id helps identify the diff versions)
+ JEN6  
+PIPELINE JENKINS PROJECT,TYPES OF PIPELINE SCRIPTS, JENKINS FILE, CREATE A TESLA-WEBAPP JENKINS SCRIPTED PIPELINE JOB, CREATE A TESLA-WEBAPP JENKINS 
+DECLARATIVE PIPELINE JOB
+
+
+PIPELINE JENKINS PROJECTS:    (comit id helps identify the diff versions)
 
 FREE-style
 maven
@@ -430,7 +450,6 @@ we want to create a pipeline that can automate the test and build process
 pipeline:  
   Jenkins Pipeline scripts are generally written in groovy ,, what is a groovy language?
   Jenkins Pipelines scripts are called Jenkinsfile   **(we hv pipeline script that u can write, we also hv pipeline script from scm)
-
 
 
               JENKINS FILE
@@ -443,6 +462,7 @@ scripted file starts with a node while declarative starts with pipeline
 scripted file is restricted to a particular node e.g in pipeline we hv  "agent any
 
 **** BUILDING FROM PRIVATE REPO  wil be done 9 out of 10 in the coy
+
 
 
 JEN7&8
@@ -461,8 +481,88 @@ our jenkins is running in linux
 SHARED LIBRARIES    .. we execute jenkins shared lib to ease hw we write n manage jenkins file, so if i hv 24 jenkins files to write that are performing similar task 
                            ill use shared lib to simplify my job
 
+apps: tesla-be (backend, tesla-myapp,  tesla-fe (frontend, tesla-wepapp
+branches: master, dev. testing, uat, pre-prod, prod  
+no of jobs = 24 jobs requiring 24 Jenkinsfiles ..dis a problem, means we hv to be writing the same jenkins file that is doing similar task like test n build
+we hv what is called common stages, since they are all java projects, we are going to do a stage to do mvn test,clean package, these are all unique stages e.g
+stage1 will be for mvn tesst , stage2 .... etc , most of the stages are common so we can prepare a shared library, which will bring 2geda all the common stages such 
+that we can jst refer to them e.g we can create a shared lib that wil hv in it a common script
+
+i can call this file ..; common stages: common.groovy 
+so hv created a shared lib called common.groovy ,,
+  unittesting:
+  stage('1RunUnitTests'){ 
+    sh  "mvn test" }
+  packaging:
+  stage('2Build'){ 
+    sh "mvn package" }
+  codequality:
+  stage('3CodeQuality'){ 
+    sh "mvn sonar:sonar" }
+  artifactUpload:
+  stage('4Upload'){ 
+    sh "mvn deploy" }
+  stage('14'){}
+so if am trying to create my pipeline for each of this jobs, my pipeline wil b very simple, si if i wnat to crete a jenkins file 
+illl jst be referring to common. so in all my jenkins file am not repeating code, i hv a shared lib common. groovy wil search for unittesting
+each file will hv their unique git url 
+Jenkinsfile:
+node{
+    stage ('1clone'){
+        git 'gitURL'
+    }
+    stage('unittesting'){  (i.e the stage here is refering to common.grovy and it want to search for unittesting,it wil be done with relative ease
+        common{
+            stage 'unittesting'
+        } 
+    }
+   stage('2mavenBuid'){    (i.e the stage here is refering to common.grovy and it want to search for packaging,it wil be done with relative ease
+     common{
+        stage 'packaging'
+     }
+   } 
+   stage('3CodeQuality'){
+     common{
+        stage 'codequality'
+     }
+   } 
+   stage('4Upload'){} 
+
+}
+we are managing 4 applications for tesla
+  tesla-myapp :  
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+  tesla-be   :  
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+  tesla-fe  : 
+    dev  
+    testing  
+    uat  
+    pre-prod  
+    Production  
+  tesla-wepapp :    
+    dev  
+
+
+    testing  
+    uat  
+    pre-prod  
+    Production  
+
+
+JENKINS SECURITY
 Jenkins security: where we do the changes depends on where jenkins was installed 
 
+
+JENKINS WITH LDAP AUTHENTICATION SERVER
 we need users to access  Sonarqube, nexus, jenkins, github, kubernetes. it will be too much manual work to create these users in all the servers so we can integrate
 jenkins with LDAP authentication server,, so we'll hv all the login credentials of users , username n passwd stored in the LDAP then connect LDAP to communicate withjenkins
 and each of the servers.then all the users are able to access jenkins automatically its called a single signup, where the signup credentials is configured in the LDAP server,
