@@ -1,7 +1,7 @@
-DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB,  steps TO MK image distributable/TAGGING,
- CREATE DOCKER FILE WITHOUT CLONING, PULLING httpd IMAGE, RUN CONTAINER WITHOUT USING THE httpd image we pulled, 
-CREATE A DOCKER FILE USING httpd image we pulled, AUTHENTICATION/PULLING FRM REGISTRY, Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, 
-DOCKER CONTAINER COMMANDS,we can create containers wit these 3 approaches, DEPLOY PYTHON IMAGE
+DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, DEPLOYING USING EITHER A SINGLE JOB  METHOD OR 'UPSTREAM & DOWNSTREAM' METHOD,
+CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB,  steps TO MK image distributable/TAGGING, CREATE DOCKER FILE WITHOUT CLONING, PULLING httpd IMAGE, 
+RUN CONTAINER WITHOUT USING THE httpd image we pulled, CREATE A DOCKER FILE USING httpd image we pulled, AUTHENTICATION/PULLING FRM REGISTRY, Nexus private 
+docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS,we can create containers wit these 3 approaches, DEPLOY PYTHON IMAGE
 
 
 ***mee*** for java application we hv to install maven bc we wil run mvn package to build but for python apply we dnt need maven bc its not java
@@ -98,6 +98,8 @@ Docker images commands:
 
 9.19********We are starting today with docker images related commands.
 
+
+                            DEPLOYING USING EITHER A SINGLE JOB  METHOD OR 'UPSTREAM & DOWNSTREAM' METHOD
 Ticket013:
   1. prepare a jenkins ci job for maven-web-application 
 lets assume you are goin to deploy an application using docker.
@@ -107,6 +109,11 @@ we can use a jenkins file to achieve this jenkins job
 11.04 We can write a jenkins file for this ci job
 lets assume we want to write a jenkins pipeline for for a maven web abb
 
+        
+ **** I bliv for this ci/cd job, we can use either of 2 methods; 1) the upstream & downstream option OR 'a single job' option
+                                                         then use either multi stage file OR a docker compose file.
+
+                                     ****METHOD1:
 Ticket013:
   1. prepare a jenkins ci job for maven-web-application 
   //Jenkisfile for maven-web-app ci job
@@ -135,6 +142,7 @@ node{
 .17.05.********while this wil b the downstream job....   and we wll be looking at all of this ie both the upstream & the downstream 
 
 
+                ****METHOD2;
 
 ***** or we could just have a single job that does the following
 Ticket014:
