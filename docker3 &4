@@ -1,7 +1,8 @@
 DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, DEPLOYING USING EITHER A SINGLE JOB  METHOD OR 'UPSTREAM & DOWNSTREAM' METHOD,
-CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB,  steps TO MK image distributable/TAGGING, CREATE DOCKER FILE WITHOUT CLONING, PULLING httpd IMAGE, 
-RUN CONTAINER WITHOUT USING THE httpd image we pulled, CREATE A DOCKER FILE USING httpd image we pulled, AUTHENTICATION/PULLING FRM REGISTRY, Nexus private 
-docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS,we can create containers wit these 3 approaches, DEPLOY PYTHON IMAGE
+CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB, steps TO BUILD IMAGE & RUN CONTAINER CLONING A REPO, steps TO BUILD IMAGE & RUN CONTAINER FROM SCRATCH,
+TO MK image distributable, PULLING httpd IMAGE, RUN CONTAINER WITHOUT USING THE httpd image we pulled, CREATE A DOCKER FILE USING httpd image we pulled, 
+AUTHENTICATION/PULLING FRM REGISTRY, Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS,we can create containers wit
+these 3 approaches, DEPLOY PYTHON IMAGE
 
 
 ***mee*** for java application we hv to install maven bc we wil run mvn package to build but for python apply we dnt need maven bc its not java
@@ -251,14 +252,18 @@ COPY target/*.war /usr/local/tomcat/webapps/tesla.war
 
 
 **************************************************************************
-##########steps TO MK image distributable
+##########steps TO BUILD IMAGE & RUN CONTAINER CLONING A REPO
 1)clone the repo , 2)rename the app  3) mk a dir for the project 4) copy the files int the project dir
- 5)mvn package so that the build is possible, 6)build the image, /docker run to deploy 7)Docker tag , 8)then push
+ 5)mvn package so that the build is possible, if its a java project 6)build the image, /docker run to deploy 
 
      ******* the steps should be to create the project dir first b4 cloning that way you dont hv to copy ie no need for step 4)
 
-######but if am not cloning the file frm the repo,, then follow step number:
-3) create the docker file 4) build the image/ docker run to deploy 5) docker tag and push
+###### steps TO BUILD IMAGE & RUN CONTAINER CLONING A REPO, steps TO BUILD IMAGE & RUN CONTAINER FROM SCRATCH,TO MK image distributable
+1)mk a dir for the project 2)create the docker file  3)mvn package so that the build is possible, if its a java project 4)build the image/docker run to deploy 
+
+TO MK image distributable
+1)clone the repo , 2)rename the app  3) mk a dir for the project 4) copy the files int the project dir
+ 5)mvn package so that the build is possible, 6)build the image, /docker run to deploy 7)Docker tag , 8)then push
 ****************************************************************************************
 
 
@@ -293,7 +298,7 @@ our base image is JBOSS
 *************the keyword here is ***** FROM
 
 
-                             CREATE DOCKER FILE WITHOUT CLONING
+                             CREATE DOCKER FILE FROM SCRATCH/WITHOUT CLONING
 
 *******3) WE WANT TO create another Docker file
 vi JBOSS .....             when we create an image ONLY line one &line 2 wil be executed ie from and ADD,
