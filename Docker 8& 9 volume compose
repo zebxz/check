@@ -68,7 +68,8 @@ docker:
 
 ************************************************************************************************
 TYPES OF VOLUME, BIND MOUNT,DOCKER VOLUME; Docker Peristent Volumes(Docker Named Volumes), STEPS TO DEPLOY DOCKER VOL, external volumes, USING EXTERNAL (EBS)
-VOLUME TO DEPLOY OUR APPLICATION , DOCKER COMPOSE 
+VOLUME TO DEPLOY OUR APPLICATION , ACCESS KEY & SACRED KEY,  DOCKER COMPOSE,HOW THE DOCKER COMPOSE VERSION HAS AN IMPACT, CREATING DOCKER COMPOSE FILE,
+TWO WAYS TO DEPLOY IN DOCKER, CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION
 
 
 
@@ -259,6 +260,8 @@ scrol down to access key and create access key  then copy, both access n sacred 
 before we execute this commnad let us execute another command: 
 docker plugin ls  ..... we can seee no plugin has intially been installed
 
+
+                                      ACCESS KEY & SACRED KEY
 51:13 ********************************* whY ARE WE USING ACCESS KEY AND SECRED  ACCES KEY
 this is a plugin called rexray/ebs , THis plugin is intendd to help us create external volumes, this means that we can create an external vol,
 docker volume create -d rexray/ebs ebs33 .. ...........d is for driver, the driver is rexray/ebs .... am creatin a vol called ebs33
@@ -432,7 +435,7 @@ what dis means is that  ...       Docker version 20.10.12  .. this is my docker 
 
 
 
-                                               CREATING DOCKER COMPOSE FILE
+                                              CREATING DOCKER COMPOSE FILE
 
 1) Creating the docker compose file
                                               THIS IA A .yml file                                                                       1:33:00
@@ -505,7 +508,7 @@ password   dev@123   uat@123  admib@#123
 
 
 
-..1:31:18                 TWO WAYS TO DEPLOY IN DOCKER
+..1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
 1) We can deploy the database and the aplication either using command ...... OR 
 docker run --name mongo -d --network tesla \        
 -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
