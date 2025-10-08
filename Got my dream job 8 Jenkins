@@ -17,37 +17,171 @@ email notification so members of the team will be notified that something is goi
 jenins acts as a distributor.
 
 
+  *********you are a build and release enggr if you are able to deploy to tomact 
+if you are able to carry out the automation where everything is configured to be able to deploy to tomcat. not even to deploy to tomcat, if you are able to upload artifacts to 
+nexus, you are a build and release engr or CI, continous integration which falls under build and release engr which means you are a build and release engr
+
 
 
 LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, jenkins automates the end to end process, 
 
+************************************************************************************
 
 
 
+********************  INTERVIEW
+***** from sonarqube2*********8 
+developers write and comit codes to github, we will use jenkins for automation, with jenkins you are sure to automate these processes. 
+Thefore, we  integrate jenkins with sonarqube for code quality analysis, with nexus for our artifact repository, with maven for build, tomcat for deployment & with git to clone our codes from SCM,
+once code is committed to github, a new commit/version of the application for eg, jenkins will pull, bc we configured an automation between jenkins and github 
+*****IGNORE **********that automation can be configured using pull SCM or github webhook.
+**********ignore**********  we need Jenkins Git Integration  ie, installing git in jenkins , we need this integration to be able to clone/pull the code/application from SCM - Github
+once jnekins clone the version, it will communicate with another tool called maven and the use of maven is to create packages before the packages are deployed jenkins is 
+comunicating with sonarqube/ sonarcloud for code quality to check if the software written by developers is good enough for deployment .
+if code quality analysis results to a pass, it means the application can be deployed to an app server which can be running on tomcat or JBOSS ie our client environment.
 
-   (includes jenkins1&2 and jenkins3, INTEGRATING ALL THE SOFTWARES)  while jenkins 4 is types of jenkins project/RUN JOBS( Using the diff jenkins options)
+in our env,before we deploy we make sure it is backedup in artifacts 
+we need to create a backup for our artifacts so that if in the process of deploying,In a situation where the MAVEN server goes down in the deployment, we just discontinue the process and pull from our artifactories 
+and our backup system is called nexus or Jfrog and our artifacts will be bcakedup there, 
+for our deployment;
+we do not recommend to deploy to one appserver/tomcat bc if the app goes down it will be a problem, therefore in our deployment we use ansible or universal code UCD deploY, to deploy to multiple servers for high availability
+for high availabilty we have multiple app servers eg app server 1, app server 2, app server3 with the help of another automation tool called ansible
+ALso,there should be a monitoring system to monitor our system. 
+therfore, jenkins will connect with a notifier so we are configuring a notification called newRelic . if there is a problem an alert will be triggerred that will send out 
+email notification so members of the team will be notified that something is going wrong 
+ this is the pipeline process, JENKINS is all about automation and jenkins can help to automates the end to end process 
+ so for automation; we integrate Jenkins with: Git/Github ,maven, Sonarqube, nexus ,tomcat, nginx webserver, all of these ensures continous deployment.
+ we automate using build triggers in jenkins, we can schedule/programe our jenkins job to do a build whenever developers commit a code/diff versions, developers nid git for versioning
+we can shedule when deployment is taking place by using build triggers
+using  IDEs = Integrated Development Environment simplifies the deployment process  and pluggins; which extends the functionality of jenkins, maven, etc.   
+ 
+
+******************************************************************
+
+  (includes jenkins1&2 and jenkins3, INTEGRATING ALL THE SOFTWARES)  while jenkins 4 is types of jenkins project/RUN JOBS( Using the diff jenkins options)
 HOW DO WE EXPOSE THE APPLICATION TO ENDUSERS, DEVOPS, WHAT IS JENKINS AUTOMATION, CI/CONTINOUS INTEGRATION, CD/CONTIONOUS DELIVERY, CD/CONTINOUS DEPLOYMENT, WHO IS DEVOPS ENGR,
  TYPES OF JENKINS PROJECTS,types of jenkins project/RUN JOBS (steps in Using the jenkins options) PLUGINS MANAGEMENT: How to use plugins to achieve 
 automation,JENKINS MASTER -SLAVE ARCHITECTURE:, JENKINS PIPELINE PROJECT/JENKINS SRIPT , 7&8 MULTI PIPELINE JOBS, SHARED LIB & JENKINS SECURITY
 
-JEN7&8
+****** inside JEN7&8, he said;
 the reason why devops engr are paid so much moni is bc they can write jenkins file and its dif frm writing codes by developers wich is very complex 
 writing code is more complex
 
 
-JEN6
+******inside JEN6, he said;
 maven is running in jenkins so we 
 2:13:00   day1)start runinng, day2)keep runinn, day3)continue to run, 4)dnt stop running
 
 
+
+
+
+START 
+
+DevOps/JENKINS is all about automation   
 Jenkins portNumber: 8080  
 
 
+ JENKINS IS An automation tool
+its an open source continous integration (CI) Tool within in java
 
-  youa re a build and release enggr if you are able to deploy to tomact 
-if you are able to carry out the automation where everything is configured to be able to deploy to tomcat. not even to deploy to tomcat, if you are able to upload artifacts to 
-nexus, you are a build and release engr or CI, continous integration which falls under build and release engr which means you are a build and release engr
+
+DEVOPS
+  Its not (just) tools      eg maven is not equal to devops
+ git is not equals to devops
+ thefore, devops is the never ending process of continous improvement 
+for eg it includes continous integration, continous development, continous testing, continous deployment and continous monitoring
+thats what devops is all about 
+one can ask why continous integration?
+continous integration helps in the early detection of bugs, helps in determining code-break, enables continous deployment, enables automated testing, reduce risk of longer time consuming project, increases the quality of software via 
+continous code quality 
+
+  (we are able to automate the task OF our CI pipline
+when developers comit their code thers a build, unit testing is done, integration testing is done  , once that is performed we can now deploy the appl into production, been continous deployment bc we automated the process.
+
+ Ci pipeline
+
+       CONTIONOUS DELIVERY
+52:27 when ther is namual approval it falls under continous delivery
+
+    CD = Continous Delivery
+
+       code            build        staging          MANUAL
+     gitgithub     >>>>  test  >>>>> QA/UAT   >>>>   APPROVAL   >>>>>> PRODUCTION
+
+
+CONTIONUS DEPLOYMENT
+ when it is automated
+
+ CD = Continous Deployment
+
+        code            build        staging          
+     gitgithub     >>>>  test  >>>>> QA/UAT   >>>>   AUTO  >>>>>> PRODUCTION
+ 
+
+ CONTINOUS INTGRATION
+the process of deploying this to the staging environment is continous integration
+
+   Developers commit code using git& github once thers a commit we want to build, after build its testing then we deploy to a test environment, eithr to the staging env or 
+QA or user acceptance testing from there we deploy to production bt before deployment we need to perform additional testing, the process of additional testing can be manual 
+or automated, it its manual it could include integration testing and so on.
+mauual testing implies thers a manual approval, maual gate somebpdy need to maullay approve and say the job done, its good, take it to the market and mauual approval is 
+called continous delivery but when its automated its continous deployment and the process of deploying this to the staging environment is continous integration 
+
+
+Nature of application:
+  We support critical applications for a FinTech/e-commerce CLIENTS 
+
+ FinTech = Financial Technology can be use by any company.  
+POS Machine =   
+  Banks     = TD / RBC / BOA / CHASE / Barclays / UBA / Ecobank / BICEC
+  Insurance = STATEFARM, belair, Alstate/BeneficialLife 
+
+  Payment Gateways = paypal, visa, master, interac, 
+                     pushpay, cashapp, zelle, mobileMoney  
+
+  E-commerce = amazon, ebay, alibaba, jumia, facebook MarketPlace / Telecoms  = MTN, Vadofone, Glo, verizon, tmobile, at&t/  Health care = NIS, NIH, 
+
+
+7Cs:  to take note of
+   CD,t---> Continuous Development [Git/GitHub/IDEs /GitBranch/gitTag
+   
+   CI --> Continuous Integration [Git/GitHub/Jenkins/maven/sonarqube/nexus] 
+              [Build and Release Engineering]
+   
+   CD --> Continuous Delivery [build=packages/artifacts-->testing/UAT--manualApproval--- prod]   but wahen it goes to auto from UAT/testing = continous deployment
+   
+   CD --> Continuous Deployment [build=packages/artifacts-->testing/UAT--auto--- prod]
+   
+   CM --> Continuous Monitoring
+            https://www.tesla.com/en_ca/powerwall  
+            https://www.tesla.com/en_ca/modelx
+
+   CS --> Continuous security
+   CT --> Continuous Testing 
+
+
+AUTOMATING BUILD IN JENKINS 
+
+we can Automate builds using build triggers.
+if u are doing software builds where developers are creating new version of the application, they are changing stuff constantly, we can configure pull SCM 
+and every minute will make a REq IN GITHUB  searching for new version to do a 
+a build  ( its all about versiong) if theres no new version , it doesnt do a build .    **** scm changes ie changes in SCM
+ also we can configure  GitHub-webhook :
+   GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
+
+**** so in github, we will create a webhook, if thers any change inour application , software or code, github will notify jenkins so therfore no need for 
+a timer 
+if thers a new version of the applictaion , if developers commit new version 
+we can also configure webhook for something else eg if we want to do code quality analysis with sonarcloud , we can configure github webhook so that if
+developers commit new version of the applictaion, code quality analysis will be executed in sonarcloud and report will be created
+we will know thers a new version bc of new commits or pushes, the webhook will be triggered
+
+
+
+***********************************************************
+
 
 
 
@@ -248,6 +382,8 @@ developers commit new version of the applictaion, code quality analysis will be 
 we will know thers a new version bc of new commits or pushes, the webhook will be triggered
 
 
+
+
 JEN4&5
  TYPES OF JENKINS PROJECTS,types of jenkins project/RUN JOBS (steps in Using the jenkins options) PLUGINS MANAGEMENT: How to use plugins to achieve 
 automation,JENKINS MASTER -SLAVE ARCHITECTURE:
@@ -288,6 +424,7 @@ scripted file is restricted to a particular node e.g in pipeline we hv  "agent a
 
 **** BUILDING FROM PRIVATE REPO  wil be done 9 out of 10 in the coy
 
+
 JEN7&8
 multiBranch Pipeline job : we can build in multiple branches
 =========================
@@ -315,6 +452,7 @@ once u connect to LDAP sucessfully, u can connect to any other resource in ur en
 the reason why devops engr are paid so much moni is bc they can write jenkins file and its dif frm writing codes by developers wich is very complex 
 writing code is more complex
 
+**********************************************************END
 
 
 
@@ -334,8 +472,7 @@ having done Jenkins:
 
 
 
-AWS 10 &11
-
+************AWS 10 &11
 AWS COVERS 2 THINGS: .. so u can finish this course and work as any of this 
 Cloud Engineering  
 Infrastructure Engineering
@@ -347,141 +484,6 @@ so apart frm using console we can use files
 
 
 
-
-
-
-********************  INTERVIEW****************
-***** from sonarqube2*********8 
-developers write and comit codes to github, we will use jenkins for automation, with jenkins you are sure to automate these processes. 
-Thefore, we  integrate jenkins with sonarqube for code quality analysis, with nexus for our artifact repository, with maven for build, tomcat for deployment & with git to clone our codes from SCM,
-once code is committed to github, a new commit/version of the application for eg, jenkins will pull, bc we configured an automation between jenkins and github 
-*****IGNORE **********that automation can be configured using pull SCM or github webhook.
-**********ignore**********  we need Jenkins Git Integration  ie, installing git in jenkins , we need this integration to be able to clone/pull the code/application from SCM - Github
-once jnekins clone the version, it will communicate with another tool called maven and the use of maven is to create packages before the packages are deployed jenkins is 
-comunicating with sonarqube/ sonarcloud for code quality to check if the software written by developers is good enough for deployment .
-if code quality analysis results to a pass, it means the application can be deployed to an app server which can be running on tomcat or JBOSS ie our client environment.
-
-in our env,before we deploy we make sure it is backedup in artifacts 
-we need to create a backup for our artifacts so that if in the process of deploying,In a situation where the MAVEN server goes down in the deployment, we just discontinue the process and pull from our artifactories 
-and our backup system is called nexus or Jfrog and our artifacts will be bcakedup there, 
-for our deployment;
-we do not recommend to deploy to one appserver/tomcat bc if the app goes down it will be a problem, therefore in our deployment we use ansible or universal code UCD deploY, to deploy to multiple servers for high availability
-for high availabilty we have multiple app servers eg app server 1, app server 2, app server3 with the help of another automation tool called ansible
-ALso,there should be a monitoring system to monitor our system. 
-therfore, jenkins will connect with a notifier so we are configuring a notification called newRelic . if there is a problem an alert will be triggerred that will send out 
-email notification so members of the team will be notified that something is going wrong 
- this is the pipeline process, JENKINS is all about automation and jenkins can help to automates the end to end process 
- so for automation; we integrate Jenkins with: Git/Github ,maven, Sonarqube, nexus ,tomcat, nginx webserver, all of these ensures continous deployment.
- we automate using build triggers in jenkins, we can schedule/programe our jenkins job to do a build whenever developers commit a code/diff versions, developers nid git for versioning
-we can shedule when deployment is taking place by using build triggers
-using  IDEs = Integrated Development Environment simplifies the deployment process  and pluggins; which extends the functionality of jenkins, maven, etc.   
- 
-
-
-
-
-
-START 
-
-DevOps/JENKINS is all about automation   
-Jenkins portNumber: 8080  
-
-
- JENKINS IS An automation tool
-its an open source continous integration (CI) Tool within in java
-
-
-DEVOPS
-  Its not (just) tools      eg maven is not equal to devops
- git is not equals to devops
- thefore, devops is the never ending process of continous improvement 
-for eg it includes continous integration, continous development, continous testing, continous deployment and continous monitoring
-thats what devops is all about 
-one can ask why continous integration?
-continous integration helps in the early detection of bugs, helps in determining code-break, enables continous deployment, enables automated testing, reduce risk of longer time consuming project, increases the quality of software via 
-continous code quality 
-
-  (we are able to automate the task OF our CI pipline
-when developers comit their code thers a build, unit testing is done, integration testing is done  , once that is performed we can now deploy the appl into production, been continous deployment bc we automated the process.
-
- Ci pipeline
-
-
-49:00                                   CD = Continous Delivery
-
-       code            build        staging          MANUAL
-     gitgithub     >>>>  test  >>>>> QA/UAT   >>>>   APPROVAL   >>>>>> PRODUCTION
-
-
-                                   CD = Continous Deployment
-
-        code            build        staging          
-     gitgithub     >>>>  test  >>>>> QA/UAT   >>>>   AUTO  >>>>>> PRODUCTION
- 
-
-       CONTIONOUS DELIVERY
-52:27 when ther is namual approval it falls under continous delivery
-
-CONTIONUS DEPLOYMENT
- when it is automated
-
- CONTINOUS INTGRATION
-the process of deploying this to the staging environment is continous integration
-
-   Developers commit code using git& github once thers a commit we want to build, after build its testing then we deploy to a test environment, eithr to the staging env or 
-QA or user acceptance testing from there we deploy to production bt before deployment we need to perform additional testing, the process of additional testing can be manual 
-or automated, it its manual it could include integration testing and so on.
-mauual testing implies thers a manual approval, maual gate somebpdy need to maullay approve and say the job done, its good, take it to the market and mauual approval is 
-called continous delivery but when its automated its continous deployment and the process of deploying this to the staging environment is continous integration 
-
-
-Nature of application:
-  We support critical applications for a FinTech/e-commerce CLIENTS 
-
- FinTech = Financial Technology can be use by any company.  
-POS Machine =   
-  Banks     = TD / RBC / BOA / CHASE / Barclays / UBA / Ecobank / BICEC
-  Insurance = STATEFARM, belair, Alstate/BeneficialLife 
-
-  Payment Gateways = paypal, visa, master, interac, 
-                     pushpay, cashapp, zelle, mobileMoney  
-
-  E-commerce = amazon, ebay, alibaba, jumia, facebook MarketPlace / Telecoms  = MTN, Vadofone, Glo, verizon, tmobile, at&t/  Health care = NIS, NIH, 
-
-
-7Cs:  to take note of
-   CD,t---> Continuous Development [Git/GitHub/IDEs /GitBranch/gitTag
-   
-   CI --> Continuous Integration [Git/GitHub/Jenkins/maven/sonarqube/nexus] 
-              [Build and Release Engineering]
-   
-   CD --> Continuous Delivery [build=packages/artifacts-->testing/UAT--manualApproval--- prod]   but wahen it goes to auto from UAT/testing = continous deployment
-   
-   CD --> Continuous Deployment [build=packages/artifacts-->testing/UAT--auto--- prod]
-   
-   CM --> Continuous Monitoring
-            https://www.tesla.com/en_ca/powerwall  
-            https://www.tesla.com/en_ca/modelx
-
-   CS --> Continuous security
-   CT --> Continuous Testing 
-
-
-AUTOMATING BUILD IN JENKINS 
-
-we can Automate builds using build triggers.
-if u are doing software builds where developers are creating new version of the application, they are changing stuff constantly, we can configure pull SCM 
-and every minute will make a REq IN GITHUB  searching for new version to do a 
-a build  ( its all about versiong) if theres no new version , it doesnt do a build .    **** scm changes ie changes in SCM
- also we can configure  GitHub-webhook :
-   GitHub will notify Jenkins to trigger a build once there is a change in the scm [src]  
-
-**** so in github, we will create a webhook, if thers any change inour application , software or code, github will notify jenkins so therfore no need for 
-a timer 
-if thers a new version of the applictaion , if developers commit new version 
-we can also configure webhook for something else eg if we want to do code quality analysis with sonarcloud , we can configure github webhook so that if
-developers commit new version of the applictaion, code quality analysis will be executed in sonarcloud and report will be created
-we will know thers a new version bc of new commits or pushes, the webhook will be triggered
 
 
 
