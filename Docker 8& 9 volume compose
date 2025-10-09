@@ -198,7 +198,7 @@ ubuntu@docker:~$ docker volume prune
 WARNING! This will remove anonymous local volumes not used by at least one container.
 Are you sure you want to continue? [y/N] y
 
-'################# WEredeploy the database      *** i guess we didnt need to run 'docker volume create data33' first for the volume to be created.
+'################# WEredeploy the database      ***40.00, we didnt need to run 'docker volume create data33' first for the volume to be created.
 STEP2) create the database 
 vi app.sh  and paste the run command 
 docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
@@ -209,9 +209,10 @@ docker inspect data33      and we can see the mount point: /var/lib/docker     .
 Mountpoint": "/var/lib/docker/volumes/data33/_data  
 ubuntu@docker: ¬ $ sudo ls /var/lib/docker/volumes/data33/_data  
 
-41:21      Does this mean we cant store data anywher like for bind point??
+41:21     meee***this is the reason we cant we cant store data anywher like for bind point?? bc for bind point we create the dir 'tmp/mongo' bc for docker
+vol the dir is given
 Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume 
-and whatever is stored in this dir is managed by docker n it leads to what is called pesistent  volume , bc it i smanged by tah docker process
+and whatever is stored in this dir is managed by docker n it leads to what is called pesistent  volume , bc it is manged by the docker process
 
 *********************************** THE ONLY TO REMOVE THIS VOLUME is to execute : it must be deleted by a docker process
 docker volume rm volumeName  
