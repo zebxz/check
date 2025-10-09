@@ -30,16 +30,17 @@ multiple micro services on top of it  we v a database and the image is mtsql
 6) docker run --name checkout --network ecommerce -d mylandmarktech/checkout
 7) docker run --name payment  --network ecommerce -d mylandmarktech/payment 
 8) docker run --name order  --network ecommerce -d mylandmarktech/order 
-9) docker run --name -mysql - network ecommerce -v datas:/var/lib/mysql mysql       for mysql
+9) docker run --name -mysql - network ecommerce -v datas:/data/db/mysql        for mysql **i bliv database
  docker run --name  mongo --network ecommerce -v datas:/ data/db mongo -         then we nid to pas some env var
 
 someone jst reminded me , we also nid to pass env var   -e
 
 ***********16:33  
-17:22*********************
+17:22*********************      CHECKING FOR THE MOUNT POINT FOR mysql in github
 lets check in dockerhub and find out if we ar going to use mysql , what is going to be the env variable to be defined, remember, we v seen mongodb , dis time around
 when u start working what is used in ur env is nt mongodb bt mqsl ..
-in docker hub, we can see the command, hw to deploy it, the paswd, env var, wher data is stored , if i wnat to create a mount point /var/lib/mysql , so we ar pasin env var
+in docker hub, we can see the command, hw to deploy it, the paswd, env var, wher data is stored , if i wnat to create a mount point /var/lib/mysql ,
+so we ar pasin env var ... this is where data is going to be stored;/var/lib/mysql 
 
 so for us to be able to manage all of this we wil use a docker compose file and the we'll see hw wit the use of my docker compose file can create my ntwrk for me, create my
 volume and create all this containers and will call all the containers services
