@@ -247,6 +247,24 @@ Linux Flavors :there are diff linux flavors ie Linux distributors we can install
 6) simplified maintenance
 
 
+**********docker8&9
+.1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
+1) We can deploy the database and the aplication either using command ...... OR 
+docker run --name mongo -d --network tesla \        
+-v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
+-e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+
+docker run --name springapp -d -p 8080:8080 --network tesla \
+-e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
+-e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+2) using Decompose' ie using 'a file' ..1:31:18
+   ******Docker 5&6, we saw multi-stage file
+
+****************************************************************
+
+
+
 50.07                                            INSTALL DOCKER 
 
 TICKET
@@ -324,6 +342,8 @@ java/standalone this needs image frm FROM openjdk11
 
 
 **docker 5&6*** THE INTENTIONN OF ANY DOCKER FILE that we ar trying to create is to be able to package the application plus all its dependencies
+
+
 
                                                       DOCKER FILE
 Dockerfiles are input use to build docker images, docker file is a simple text file that consists of instructions to build/assemble a docker image
