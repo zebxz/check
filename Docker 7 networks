@@ -90,8 +90,8 @@ Container will not have IP Address. and we cant do port forwarding -p
 
 docker run --name javaapp -d --network host mylandmarktech/java-web-app   
    ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
-*********i can deploy the application & access this first application/container but if i create another container with container port 8080, it wll nt run
- the first container 'javaapp' 8080 is in use & bc this is host netwrk, WHATEVA PORT the container is having dats what wil be assigned to the host 
+*********i can deploy the application & access this first application/container but if i create another container with the same container port 8080, it will
+nt run the first container 'javaapp' 8080 is in use & bc this is host netwrk, WHATEVA PORT the container is having dats what wil be assigned to the host 
 We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
 .
 
@@ -426,7 +426,14 @@ this is the mount point for my container: /data/db   and       i bliv  'data' is
 this is the mount point for my docker host server: /tmp/mydata     ie  temp is the name of the storage while my data is the name of the customized mountpoint
 
 
+*****from docker8&9***** 
+we did another eg with bind mount
+we created anoda vol called mongo & i realised that /tmp/ is the name of the vol, /mongo, is the customized mount point, while /tmp/mongo, the dir we created
+In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
+ubuntu@docker:¬ $  ls /tmp/mongo/
 ******************************2:33:04************************************************************************
+
+
 QUESTION
 in trying to acces the application, when u input ur information in the app, u can see it in the database,, ...hw does this relate to API???????????? bc API is suppose to be 
 used for communications btw programmes ,, so is it the same thing or they ar diff
