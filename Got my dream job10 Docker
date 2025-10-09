@@ -329,8 +329,9 @@ Container will not have IP Address. and we cant do port forwarding -p
 Deploying in the host netwrk
 docker run --name javaapp -d --network host mylandmarktech/java-web-app   
    ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
-*********i can deploy the application & access this first application/container but if icreate .
-
+*********i can deploy the application & access this first application/container but if i create another container with the same container port 8080, it will 
+nt run the first container 'javaapp' 8080 is in use & bc this is host netwrk, WHATEVA PORT the container is having dats what wil be assigned to the host 
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
 
 
 4)NONE/NULL NETWRK
@@ -441,13 +442,20 @@ also we need access & sacred key for extenal vol BUT for bind mount & docker vol
 
 1)BIND POINT
 a)Not persistent. BUT can store your data anywherE
-b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mongo
+b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
 we have to create a mount point; 
 /tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
   Storage name is 'tmp, while 'mydata' is the customized mount point  
 *****
 create the database with the vol
 docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to/data/db mongo
+
+****docker10****
+we did another eg with bind mount
+we created anoda vol called mongo & i realised that /tmp/ is the name of the vol, /mongo, is the customized mount point, while /tmp/mongo, the dir we created
+In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
+ubuntu@docker:¬ $  ls /tmp/mongo/
+
 
 
 2)FOR DOCKER VOL   
@@ -474,16 +482,6 @@ docker volume craete ebs3 -d rexray/ebs
 docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
 then  deploy: sh app.sh
 
-
-docker 8&9
-data33 is the docker vol we created. 
-Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume 
-docker inspect data33      and we can see the mount point: /var/lib/docker     .********* the docker home dir is var/lib/docker
-BUT FOR BIND MOUNT
-************* for this bind mount, we nid to create a mount point for the host server /tmp/mongo
-22**************** In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
-ubuntu@docker:¬ $  ls /tmp/mongo/
-**********************************************
 
 
 
