@@ -269,9 +269,6 @@ codes as with monolithic but only the 2,000lines of code for login for microserv
 
 
 
-
-
-
                NETWORKS
 ### when we talk abt a ntwrk its ensuring the devices are able to communicate with each other using containerIPS,under same docker network.
 If Containers are in two different networks. They can't communicate/access each other.
@@ -438,12 +435,19 @@ Docker home dir :  DHD = /var/lib/docker
 
 
 DIFF BETWEEN BIND POINT & DOCKER VOL & External volume
+****** i realised that for external vol we had to run; docker volume craete ebs3 -d rexray/ebs before deploying the database BUT for bind mount & docker vol
+we dont, we only need to deployed the command to deploy the database with the volume
+also we need access & sacred key for extenal vol BUT for bind mount & docker vol, we dont.
+
 1)BIND POINT
 a)Not persistent. BUT can store your data anywherE
-b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
+b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mongo
 we have to create a mount point; 
 /tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
   Storage name is 'tmp, while 'mydata' is the customized mount point  
+*****
+create the database with the vol
+docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to/data/db mongo
 
 
 2)FOR DOCKER VOL   
@@ -455,13 +459,31 @@ eg docker volume create mongo33   ............ here am nt, when u dnt pass ur dr
 docker volume ls to see the diff drivers  ... ryt now we can see local, so both drivers are local even though when i created mongo33 i didnt indicte for d driver to be local
 so when u DNT CHOOSE driver it is going to crate under the local driver 
 
-create the database (i bliv data33)
+create the database with the vol (i bliv data33);
 docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
 need to create a mount point, just the volume name  data33 & pair it data/db from the official document.
 
 3)FOR external vol
 a)dnt need to create a mount point, what i need to do,just the vol name: eg ebs33
 b) -d is for driver, the driver is rexray/ebs 
+c) docker volume craete ebs3 -d rexray/ebs;   to create the vol
+d) Access & sacred key
+create the database with the vol;
+so he used the file app.sh  and paste the below command 
+docker volume craete ebs3 -d rexray/ebs
+docker run --name mongo -d --network tesla -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
+then  deploy: sh app.sh
+
+
+docker 8&9
+data33 is the docker vol we created. 
+Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume 
+docker inspect data33      and we can see the mount point: /var/lib/docker     .********* the docker home dir is var/lib/docker
+BUT FOR BIND MOUNT
+************* for this bind mount, we nid to create a mount point for the host server /tmp/mongo
+22**************** In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
+ubuntu@docker:¬ $  ls /tmp/mongo/
+**********************************************
 
 
 
