@@ -11,10 +11,12 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 TYPES OF NETWORK, DIFF BTW THE TYPES OF NETWORKS, APPLICATION ARCHITECTURE, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN 
 PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS,TROUBLESHOOTING, 
 MANAGING THE DOCKER NETWORK/STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE 
-HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS,  TROUBLESHOOTING (Infinite loop), CREATE VOL USING BIND MOUNT/HOW TO CHANGE MOUNT POINT,INSPECTING CONTAINER,
+HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS,  TROUBLESHOOTING (Infinite loop), CREATE VOL USING BIND MOUNT, STEPS TO CREATE THE STORAGE, , CHECK GITHUB FOR
+'mongodb' MOUNT POINT,HOW TO CHANGE MOUNT POINT, DEPLOY THE DATABASE WITH the vol, INSPECTING CONTAINER,
 CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK,
 DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
 *** inside got my dream job docker; DIFF BTW THE TYPES OF NETWORKS,STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
+
 
 
 Docker networks & Micro-services:
@@ -88,7 +90,10 @@ Container will not have IP Address. and we cant do port forwarding -p
 
 docker run --name javaapp -d --network host mylandmarktech/java-web-app   
    ContainerPort: 8080                                                        ************ IT HAS ITS CONTAINER PORT 8080  
-*********i can deploy the application & access this first application/container but if icreate .
+*********i can deploy the application & access this first application/container but if i create another container with container port 8080, it wll nt run
+ the first container 'javaapp' 8080 is in use & bc this is host netwrk, WHATEVA PORT the container is having dats what wil be assigned to the host 
+We can't create more than one container with d same container port in host network, except in the default bridge netwrk, bt we hv to do port publishing
+.
 
 
 
@@ -401,7 +406,7 @@ now we hv 2 containers that hv been deployed, the mongo container for database a
 maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the
 dockerhost server, he is the guy hosting all our containers.
 
-                                STEPS TO CREATE THE STORAGE/ CHECK GITHUB FOR 'mongodb' MOUNT POINT
+                                STEPS TO CREATE THE vol/ CHECK GITHUB FOR 'mongodb' MOUNT POINT
 1) i call the storage temp/db, ie I bliv the storage is called 'temp' while 'db' is the mount point from the official document.
 bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
 it will give me the mount point(where data is stored ) and it says /data/db,  (***DOCKER 9&10, MSQL MOUNT POINT IS VAR/LIB/MSQL)
@@ -413,7 +418,7 @@ i can change it to /tmp/mydb,so mydb is the customised name for my mount point, 
 having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
 
 
-2)  This is the command from step5 above; DEPLOYING THE DATABASE                                                                    
+2)  This is the command from step5 above; DEPLOYING THE DATABASE with the vol                                                              
      5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to 
                   /data/db mongo
    therefore                               
