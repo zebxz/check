@@ -91,6 +91,7 @@ the first volume we ar discusiing about is :
 Bind Mounts:
 Bind mounts may stored data anywhere on the host system. They may even be important system files or directories. 
 
+                                            ***mee** customize mount point is: mongo
 docker run --name mongo -d --network tesla -v /tmp/mongo:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo   (mongo is image name )
 
 docker run --name springapp -d -p 8080:8080 --network tesla -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
