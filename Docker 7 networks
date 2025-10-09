@@ -11,9 +11,9 @@ IP addresss or container name and in this case, the cointainer was recreated wit
 TYPES OF NETWORK, DIFF BTW THE TYPES OF NETWORKS, APPLICATION ARCHITECTURE, DISADVANTAGES/ADVANTAGES OF DEFAULT & CUSTOM BRIDGE NETWRK, DOCKER NTWRK CAN 
 PERMIT CONTAINERS TO COMMUNICATE WITH ECAH OTHER, DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK, THIS APPLICATION NEEDS 2THINGS,TROUBLESHOOTING, 
 MANAGING THE DOCKER NETWORK/STEPS TO DEPLOY THE MICRO SERVICE APPL FOR TESLA includes CREATE A CUSTOM NETWK, APPLYING THE ENV VARIABLE, WE ARE GOING TO SEE 
-HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS, CREATE VOL USING BIND MOUNT/HOW TO CHANGE MOUNT POINT,INSPECTING CONTAINER, CONNECTING CONTAINER TO A DIFF
-NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK, DEPLOYING USING THE HOST
-NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
+HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS,  TROUBLESHOOTING (Infinite loop), CREATE VOL USING BIND MOUNT/HOW TO CHANGE MOUNT POINT,INSPECTING CONTAINER,
+CONNECTING CONTAINER TO A DIFF NETWRK, HOW TO ISOLATE APPLICATION USING DOCKER, CAN A CONTAINEER BELONG TO MORE THAN ONE NTWRK, CREATING DOCKER HOST NETWRK,
+DEPLOYING USING THE HOST NETWORK, PORT BINDING/ADDRESS BINDING/BINDING EXCEPTION, DOCKER BRIDGE NETWORK, DOCKER NONE/NULL NETWRK, 
 *** inside got my dream job docker; DIFF BTW THE TYPES OF NETWORKS,STEPS FOR HOW APP IS DEPLOYED USING DOCKER AFTER CODE IS COMMITTED
 
 
@@ -381,6 +381,7 @@ now we shud be able to access the application n write data in the database
 ############### the containers are able to communicate with each other bc the name we gave the container mongodb, THERFORE, the name of our database HOSTNME IS mongodb
 
 
+                       TROUBLESHOOTING (Infinite loop)
 .. 1:40;10, bt even wit manually it was giving us an infinite LOOP bc it wasnt deployed in -d detachable
 mode bc wasnt deploying it in detachable mode , 
 docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
@@ -400,14 +401,14 @@ now we hv 2 containers that hv been deployed, the mongo container for database a
 maintain its state and when it is STATEFUL, it means that it needs a piece of storage to capture data, so w ecan create a mountpoint and mount it wit the
 dockerhost server, he is the guy hosting all our containers.
 
-                                STEPS TO CREATE THE STORAGE
+                                STEPS TO CREATE THE STORAGE/ CHECK GITHUB FOR 'mongodb' MOUNT POINT
 1) i call the storage temp/db, ie I bliv the storage is called 'temp' while 'db' is the mount point from the official document.
 bt wot is the container mount point,i must check the hw the container mount point is in the image, so i go to the official document for mongo
-it will give me the mount point(where data is stored ) and it says /data/db, so on the image i cannot change it bt i can change it in the host server 
-(dockerhost)if i want to e.g,
+it will give me the mount point(where data is stored ) and it says /data/db,  (***DOCKER 9&10, MSQL MOUNT POINT IS VAR/LIB/MSQL)
                                  
                              i bliv this is optional;  HOW TO CHANGE MOUNT POINT 
-1:37:00 i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called 'BIND MOUNT'
+1:37:00 so on the image i cannot change it bt i can change it in the host server (dockerhost)if i want to e.g, 
+i can change it to /tmp/mydb,so mydb is the customised name for my mount point,  this type of data storage is called 'BIND MOUNT'
 (its under volume concept in docker) which we will look at.
 having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
 
