@@ -68,10 +68,9 @@ docker:
       
 ************************************************************************************************    
 TYPES OF VOLUME, CREATING VOL USING BIND MOUNT,DOCKER VOLUME; Docker Peristent Volumes(Docker Named Volumes), STEPS TO DEPLOY DOCKER VOL, external volumes,
-USING EXTERNAL (EBS)VOLUME TO DEPLOY OUR APPLICATION , ACCESS KEY & SACRED KEY,  DOCKER COMPOSE, INSTALL DOCKER COMPOSE, HOW THE DOCKER COMPOSE VERSION HAS
-AN IMPACT, CREATING DOCKER COMPOSE FILE, TWO WAYS TO DEPLOY IN DOCKER, CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION
-
-
+USING EXTERNAL (EBS)VOLUME TO DEPLOY OUR APPLICATION , ACCESS KEY & SACRED KEY, DOCKER COMPOSE, INSTALL DOCKER COMPOSE, HOW THE DOCKER COMPOSE VERSION HAS
+AN IMPACT, CREATING DOCKER COMPOSE FILE WITH DEFAULT NAME FOR DEPLOYMENT, STEPS TO DEPLOY THE DOCKER COMPOSE FILE, SAMPLE OF DOCKER COMPOSE FILE WITH CUSTOM
+NAME, TWO WAYS TO DEPLOY IN DOCKER.
 
 START
 
@@ -444,7 +443,7 @@ what dis means is that  ...       Docker version 20.10.12  .. this is my docker 
 
 
 
-                                              CREATING DOCKER COMPOSE FILE
+                                              CREATING DOCKER COMPOSE FILE WITH DEFAULT NAME FOR DEPLOYMENT
 ***docker10*** and docekr compose file is a .yml file; docker-compose .yml
 
 1) Creating the docker compose file
@@ -522,6 +521,33 @@ password   dev@123   uat@123  admib@#123
 
 
 
+    ***************************STEPS TO DEPLOY THE DOCKER COMPOSE FILE  ***********************1:42:08
+
+TO create the containers/DEPLOY THE APPLICATION
+
+1)first: check if the syntax are ok
+docker-compose config      ................if ders an errror, it will tell you
+
+2) for docker compose file with default name [docker-compose.yml ]. 
+  # Create Services/Contianers
+   docker-compose up -d          ****** used when deploying an application using the default name, ie docker compose.yml
+
+ 
+2b) #docker compose file with custom name.  
+docker-compose -f <CustomeComposeFileName>.yml <command>
+Ex:
+docker-compose -f docker-compose-springapp.yml config
+docker-compose -f docker-compose-springapp.yml up -d
+docker-compose -f docker-compose-springapp.yml down
+
+
+# Remove Services/Contianers  .................  to destroy the containers
+    docker-compose down
+
+*******************************************************
+
+
+
 ..1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
 1) We can deploy the database and the aplication either using command ...... OR 
 docker run --name mongo -d --network tesla \        
@@ -538,39 +564,7 @@ docker run --name springapp -d -p 8080:8080 --network tesla \
 
 
 
-    ***************************CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION  ***********************1:42:08
-
-TO create the containers/DEPLOY THE APPLICATION
-
-first: check if the syntax are ok
-docker-compose config      ................if ders an errror, it will tell you
-
-1) for docker compose file with default name [docker-compose.yml ]. 
-  # Create Services/Contianers
-   docker-compose up -d          ****** used when deploying an application using the default name, ie docker compose.yml
-
- 
-2) #docker compose file with custom name.  
-docker-compose -f <CustomeComposeFileName>.yml <command>
-Ex:
-docker-compose -f docker-compose-springapp.yml config
-docker-compose -f docker-compose-springapp.yml up -d
-docker-compose -f docker-compose-springapp.yml down
-
-
-# Remove Services/Contianers  .................  to destroy the containers
-    docker-compose down
-
-*******************************************************
-Ex:
-docker-compose default file: docker-compose.yml
-docker-compose -f docker-compose.yml up -d 
-docker-compose up -d 
-docker-compose up -d
-docker-compose config 
-********************************************
-
-
+   ****SAMPLE OF DOCKER COMPOSE FILE WITH CUSTOM NAME
 
 so we can create a docker compose file and call it: docker-compose-springapp.yml
 i can also rename my docker compose file ie the file we deployed already  .... mv  docker compose.yml docker-compose-springapp.yml
