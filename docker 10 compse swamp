@@ -283,6 +283,9 @@ this is bc docker does nt support  multi hosting , a multi host netwrk architect
 situation were we can hv severs in a cluster n for us to that we will look at docker swamp 
 """"""""#####################################################:::' READUP POWERPOINT""""""""""\|||||#########################################
 
+
+
+                               DOCKER SWAMP
 1:19:52 ... hw does swamp work 
 THE TRADITIONAL MODEL;
 traditional docker is running with independent servers n each of the independent docker machine v their docker cli where we run d diff docker commands Bt if u v a docker
@@ -534,7 +537,8 @@ docker service ps javawebapp  ..... we can see its in the master node
 now
 when we create a service, we can achieve scaling, i can scale up and scale down my service
 
-################### HOW TO SCALE UP AND SCALE DOWN########################################
+
+################### HOW TO SCALE UP AND SCALE DOWN##
 now we v this service that is running on the master node, we can run:
 ubuntu@dockerbuild:~/app26$ docker service scale javawebapp =3
 now we v scaled to 3
@@ -568,6 +572,8 @@ we re going to be deploying a stack
 docker stack deploy --compose-file docker-compose.yml <stackName>
 
 note: open REQ ports in AWS Security Groups ####################y
+
+
 
 ###################### HOW TO DEPLOY APPLICATION IN DOCKER SWARM
 
@@ -615,7 +621,9 @@ how can that be done:   ... to deploy ur log mgt container
 we are goin to use the global mode bc we wnt the container to be running in all the nodes n telling us hw the containers ar behaving 
 with global mode, this conatainer is deployed in all the nodes 
 
-QUESTION##########################################################################################################################################
+
+
+                                QUESTIONS
 1) WHAT WILL YOU DO , IF U WANT TO DO DEPLOYMENT IN DOCKER and u want to deploy a monitoring service that should be running in all the nodes
 which deplyment mode wil you use,?
 i wil use global mode bc docker wil mk surethat the service  has one replica runnin in all the nodes.
@@ -642,6 +650,7 @@ stack is nothing but a collection of one or more service
             03 master nodes =
                 $200, 000
 
+
 e.g  2:42:29
 ubuntu@dockerbuild:~/app26$    free -m
           total      used        free     shared     buff/cache        available
@@ -658,7 +667,7 @@ QUESTION:
 what do you use in production, this is the type of servers that we use that come with 32GB
 ************  my docker servers comeS with 31GB 
 
-##############################################################################################################################################.
+######################################################.
 
 47:00
 
@@ -810,6 +819,8 @@ jjdh7667hhshjnfnn        master                          ready                  
 ******************* now master is the leader bt w ev some node/containers running on master , if i dnt want ot place any containers in master am goin to drain d master
 when u drain a node, docker can longer schedule containers on that node ..
 
+
+                        WHEN TO DRAIN A NODE
 when to drain a node ,,why  do i nid to drian a node .......  READ UP MYSELF , GOOgle, browse
 i dnt knw what is wrong with him in the video he said we wil get the note bt he will work on it first so we get al we nid , bt when i asked him he
 said thers no note 
@@ -832,13 +843,13 @@ ubuntu@dockerbuild:~/dc$ docker service ps javawebapp
 w ecan see it shutting down services that were running on node2, all the services wil be shut down bc w ev drained node2
 
 
-QUESTIONN:   2:55:02
+QUESTION:   2:55:02
 Why do we need to drain a node???
 we can drain a node if mayb we trying to do some patching
 want to update the software
 want to install some packages   ....... in that case u wil v  to drain the node 
 
-
+QUESTION
 2:57:00   is docker compose the advance version of docker file ,, can we run containers and basic process and use docker jst by uisng docker compose n not the file???
 
 ANS:
@@ -946,6 +957,7 @@ compose file before the jenkinks file
 
 ########################this is jenkins docker swarm intergration 
 
+QUESTION
 and someon also said we can also do docker service create 
 it means we deploying using just what ? .. 
 we will not use a file 
