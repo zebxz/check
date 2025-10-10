@@ -1,6 +1,6 @@
 DOCKER FLOW , DOCKER IMAGES RELATED COMMAND/KEY CONCEPTS, DEPLOYING USING EITHER A SINGLE JOB  METHOD OR 'UPSTREAM & DOWNSTREAM' METHOD,
 CREATE/DEPLOY A CI/CD JOB, STEPS TO DEPLOY CI/CD JOB, steps TO BUILD IMAGE & RUN CONTAINER CLONING A REPO, steps TO BUILD IMAGE & RUN CONTAINER FROM SCRATCH,
-TO MK image distributable, PULLING httpd IMAGE, RUN CONTAINER WITHOUT USING THE httpd image we pulled, CREATE A DOCKER FILE USING httpd image we pulled, 
+TO MK image distributable, PULLING httpd IMAGE, RUN CONTAINER USING THE httpd image we pulled;no docker buid, CREATE A DOCKER FILE USING httpd image we pulled,
 AUTHENTICATION/PULLING FRM REGISTRY, Nexus private docker registry, TO PUSH IMAGES TO AWS AMAZON ECR, DOCKER CONTAINER COMMANDS,we can create containers wit
 these 3 approaches, DEPLOY PYTHON IMAGE
 
@@ -231,8 +231,9 @@ DElETING IMAGES
 
 
 
+       *** resolving the above ticket
 
-STEPS TO DEPLOY CI/CD JOB
+STEPS TO DEPLOY CI/CD JOB       ** i bliv he only resolved no.5 in the ticket above.
 
 32.26  BC  we deleted all our images in he docker build server
 so cd into web , where we hv our application frm previous class
@@ -263,12 +264,12 @@ COPY target/*.war /usr/local/tomcat/webapps/tesla.war
 
      ******* the steps should be to create the project dir first b4 cloning that way you dont hv to copy ie no need for step 4)
 
-###### steps TO BUILD IMAGE & RUN CONTAINER CLONING A REPO, steps TO BUILD IMAGE & RUN CONTAINER FROM SCRATCH,TO MK image distributable
+###### steps TO BUILD IMAGE & RUN CONTAINER FROM SCRATCH
 1)mk a dir for the project 2)create the docker file  3)mvn package so that the build is possible, if its a java project 4)build the image/docker run to deploy 
 
 TO MK image distributable
-1)clone the repo , 2)rename the app  3) mk a dir for the project 4) copy the files int the project dir
- 5)mvn package so that the build is possible, 6)build the image, /docker run to deploy 7)Docker tag , 8)then push
+1) mk a dir for the project 2) clone the repo  3) rename the app
+ 4)mvn package so that the build is possible, 5)build the image, /docker run to deploy 6)Docker tag , 7)then push
 ****************************************************************************************
 
 
@@ -403,8 +404,8 @@ e.g docker pull nginx:stable-perl
 
 
 
-****1:12:14,    RUN CONTAINER WITHOUT USING THE httpd image we pulled 
-we can use the httpd to run a conatiner (  wihout creating a customized image )
+****1:12:14,    RUN CONTAINER USING THE httpd image we pulled 
+we can use the httpd to run a conatiner (  without creating a customized image )
 
 docker run -d -p 80:8080 --name webapp teslaimage:1
 
