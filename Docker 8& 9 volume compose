@@ -65,11 +65,11 @@ docker:
   networks   = communication
   volumes    = storage/mounts for the containers
 
-
-************************************************************************************************
-TYPES OF VOLUME, BIND MOUNT,DOCKER VOLUME; Docker Peristent Volumes(Docker Named Volumes), STEPS TO DEPLOY DOCKER VOL, external volumes, USING EXTERNAL (EBS)
-VOLUME TO DEPLOY OUR APPLICATION , ACCESS KEY & SACRED KEY,  DOCKER COMPOSE,HOW THE DOCKER COMPOSE VERSION HAS AN IMPACT, CREATING DOCKER COMPOSE FILE,
-TWO WAYS TO DEPLOY IN DOCKER, CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION
+      
+************************************************************************************************    
+TYPES OF VOLUME, CREATING VOL USING BIND MOUNT,DOCKER VOLUME; Docker Peristent Volumes(Docker Named Volumes), STEPS TO DEPLOY DOCKER VOL, external volumes,
+USING EXTERNAL (EBS)VOLUME TO DEPLOY OUR APPLICATION , ACCESS KEY & SACRED KEY,  DOCKER COMPOSE, INSTALL DOCKER COMPOSE, HOW THE DOCKER COMPOSE VERSION HAS
+AN IMPACT, CREATING DOCKER COMPOSE FILE, TWO WAYS TO DEPLOY IN DOCKER, CREATING CONTAINERS USING DOCKER COMPOSE/ to DEPLOY THE APPLICATION
 
 
 
@@ -325,6 +325,8 @@ docker volume ls and we see ebs33 n ebs3
 
 
 
+                          DOCKER COMPOSE
+
 
 Docker Compose **********************************************************
 ==============
@@ -396,6 +398,10 @@ docker objects:
   - environmental variables   ,   for us to deploy it in any env , we must use env variable 
 
 ****************************************** 1:21:10 
+
+
+
+                                      INSTALL DOCKER COMPOSE
 ubuntu@docker:~$ docker-compose
 Command 'docker-compose' not found, but can be installed with:
 sudo snap install docker          # version 20.10.24, or
@@ -446,6 +452,10 @@ what dis means is that  ...       Docker version 20.10.12  .. this is my docker 
 so in deployn dis spring app, i nid d image, smt like restart,if d container stops wot hapens, i nid ports, its a list i pair port 6000 to 8080, ntwrks too is a lis, env var
                              for d db service , i nid the image, retsrt if it stops, ntwrks, vol, env.
                                 WE AR CREATING OUR VOLUMes, netwrks and services
+
+    ****Docker10** Before u create this file, the first tin is the diff version w ecan use , u nid to knw the version of docker to decide the version
+                  of docker compose that u nid
+
 version: '3.1'             
 services: 
   springapp:
