@@ -48,6 +48,36 @@ to prevent data loss,therefore it needs a piece of storage to capture data, data
 so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
 
 
+..1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
+1) We can deploy the database and the aplication either using command ...... OR 
+docker run --name mongo -d --network tesla \        
+-v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
+-e MONGO_INITDB_ROOT_USERNAME=devdb mongo
+ 
+docker run --name springapp -d -p 8080:8080 --network tesla \
+-e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
+-e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
+
+2) using Decompose' ie using 'a file' ..1:31:18
+Docker Compose is a tool for defining/declaring and running multiple  containerised micro-services applications.
+
+   ALSO******Docker 5&6, we saw multi-stage file
+ALSO****docker10***  Docker swamp is simply a container oschestrator, good for scaling
+so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
+Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
+***i realised that inside 'docker compose, we dnt put docker commands like 'docker run, docker build' to deploy the container.
+i bliv  its bc of the docker client, its docker the build and run command.
+ *** docker 8&9.. 
+ when you check the docker file in github, this is when u install dis docker file, it does a build while running the docker file
+we get the docker file when we clone the appl & inside the file;  we see the 'pip command.; we hv docker file for wildfly for e.g
+RUN pip install --no cache dir -r requirements-prod.txt      2.00  .... this is the command that wil do a build , its doing a build wit pip installed 
+                                                              whil creatin the image, pip instal is like deploying the application
+
+
+
+
+START
+
 In my environment we use docker to containerize applications ie applications run as containers
 Docker: Is a containerization multi-platform software use to;create, build, ship, share and deploy containerize applications 
 Compared to the Traditional/Physical Deployment & Virtualized Deployment options, containers are light weight,containers starts up very fast like a cheetah n the integration is very 
