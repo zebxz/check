@@ -11,6 +11,8 @@ checkout
 payment
 order
 
+
+          ****Meee***  NUMBER OF OBJECTS IN THE MICRO SERVICE DEPLOYMENT
  we ar passing an ecommerce ntwrk, we wnt the appl to all tlak to each other, so we v to deploy them in the same ntwrk 
 the container can only talk to ecah other if they ar in the same ntwrk, using their hostname if they ar in d same ntwrk
 we ar deploying in detachable mode -d 
@@ -30,10 +32,12 @@ multiple micro services on top of it  we v a database and the image is mtsql
 6) docker run --name checkout --network ecommerce -d mylandmarktech/checkout
 7) docker run --name payment  --network ecommerce -d mylandmarktech/payment 
 8) docker run --name order  --network ecommerce -d mylandmarktech/order 
-9) docker run --name -mysql - network ecommerce -v datas:/data/db/mysql        for mysql **i bliv database
+9) docker run --name -mysql - network ecommerce -v datas:/data/db/mysql        **i bliv to use 'msql' as the database while the one below is to use 'mongo'
  docker run --name  mongo --network ecommerce -v datas:/ data/db mongo -         then we nid to pas some env var
 
 someone jst reminded me , we also nid to pass env var   -e
+
+
 
 ***********16:33  
 17:22*********************      CHECKING FOR THE MOUNT POINT FOR mysql in github
@@ -50,7 +54,7 @@ and if u nid  a docker compose file, we can hv smaples of  a docker compose file
 ***************** and docekr compose file is a .yml file
 docker-compose .yml
 we'll start studying a new language called yml and its the simplest language ucan study in programing
- the firts tin to start in this file is version
+ the first tin to start in this file is version
 generally for any programming language 
 
 23:17  ***********languages
@@ -81,8 +85,11 @@ lets ASSUME THAT I WNT TO ENTA SOME PARAMETERS LIKE , SERVER ID
 <servers>tomcat</servers>      
 </servers>   
 
-
+                                         yml LANGUAGE
 *******29:27 
+we'll start studying a new language called yml and its the simplest language ucan study in programing
+ the first tin to start in this file is version
+generally for any programming language 
 the simplest laguage u can think of is the yml language
 generally in any programming lanugae, we v the diff kind of data u can eneter, what we call:
 data types
@@ -108,7 +115,9 @@ class
 34:00  ******************* we wnt to create a docker compose.yml
 Before u create this file, the first tin is the diff version w ecan use , u nid to knw the version of docker to decide the version of docker compose that u nid
 
-#######################################################################    HOW TO GET UR DOCKER VERESION TAHT IS RUNNING
+
+
+####################  HOW TO GET UR DOCKER VERSION THAT IS RUNNING
 
 docker info , will give the verssion that is running OR 
 docker --version
@@ -127,8 +136,11 @@ cart
 ****************************************************************************************************************
 
 
+                             CREATING DOCKER COMPOSE FILE WITH DEFAULT NAME FOR DEPLOYMENT
+
+
 version : '3.1'    the nxt tin we v is ,,, bc yml wil nid spacing a lot
-services:       **************** i can create any numbe rof micro services under this version of docker compose e.g mongo and springapp
+services:       **************** i can create any number of micro services under this version of docker compose e.g mongo and springapp
   mongodb        in deployin d database, i wnt to use the image             *************38:58                            maintain 2spacing
     image: mongo
     networks:            in deployin the appl we nid ntwrk ,, we can v multiple ntwrks
@@ -167,7 +179,10 @@ networks:
 
 NEXT:
 
-54:22 ###### we copy this docker compose file ..we want to deploy using a 'file' a file is imp bc a file gets to do wit infrastructure as a code wich is very imp
+                         STEPS TO DEPLOY THE DOCKER COMPOSE FILE
+
+54:22 ###### we copy this docker compose file ..we want to deploy using a 'file' a file is imp bc a file gets to do wit infrastructure as a code wich is very
+imp
 
 1) i want to create a dir               1200 1 bed  ,, 1400 2bed
 mkdir app26 ; cd app26
@@ -187,7 +202,10 @@ now we ar told that its going to create ntwork called ecommers then it wil use n
 next 
 we deploy the appliaction
 5) docker-compose up -d    .... its going to create app26_ebs-data" with/using the  rexray driver" in  our aws account
-                              ERROR:  it says NONEXISTENT DRIVER REXRAY 
+                              
+
+                                    TROUBLESHOOTING
+                 ERROR:  it says NONEXISTENT DRIVER REXRAY 
 *****************  so docker plug in ls    ... to check why w ev the error                                           i didnt go bk to d file to correct it
 so its telling us thta this particular driver dis particuale driver does nt exist bc we v defined rexray instead of rexray/ebs & i can also pass the version  59:59
 
@@ -207,12 +225,14 @@ shows my containers are up
 to access tha application , it shows the application  container ip address ... 1:05:00
 ubuntu@dockerbuild:~/app26$ curl if config.co   ... 
 3.93.218.173
+
+                                        TROUBLESHOOTING
 curl -v localhost:6000          ,we were able to connect to the application 
 **********************bt we couldnt connect online,, someone said smt and he said i think this  #file 7= does nt v any application path
 someone said bc port 6000 has been used previous bt he said dats nt a problem bc if u create a container n delete it the port becomes available
 bt lets find out : netstat -tlunp    ie tcp , upd port number
 
-*********** howevre his main point is for us to see ew ecan usea docker compos efile and der ar multiple commands that we can run 
+*********** howevre his main point is for us to see we can use a docker compose file and der ar multiple commands that we can run 
 thers a scenerio were if u were trying to deploy dis application , like let me assume that , am goin to copy this file, he copied a docker file frm  his repo in github n 
 vi into a file then paste the copied file
 
@@ -287,7 +307,7 @@ b able to scheduel containers to be created in the nodes, it wil act a s amanger
 container running, it is goin to place the conatiners in d nodes that are avilabe ,, this is what a swamp does..  
 
 
-2) it has a decentralixed design
+2) it has a decentralized design
 3) declarative service model:( docker-compose file) when  u cretae a file(likw we did above) wher u can declare everytin u wnt to deploy , its a declaratibe approach to do
 deployment bt when u
 run command thats d imperative approach , so we can declare everytin we wnt to deploy in a single file
