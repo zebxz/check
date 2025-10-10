@@ -559,9 +559,11 @@ docker run --name springapp -d -p 8080:8080 --network tesla \
 -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
 2) using Decompose' ie using 'a file' ..1:31:18
+Docker Compose is a tool for defining/declaring and running multiple  containerised micro-services applications.
+
    
-******Docker 5&6, we saw multi-stage file
-****docker10***  Docker swamp is simply a container oschestrator, good for scaling
+ALSO******Docker 5&6, we saw multi-stage file
+ALSO****docker10***  Docker swamp is simply a container oschestrator, good for scaling
 so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
 
 
@@ -653,24 +655,29 @@ QUESTIONS:
 
 1)u hv been redeploying on a new port but
 cant a container be deployed on the same port for e.g u nid to update what was already deployed
+Also ..2) bc for the web app u did build u used maven as abuild tool, i understand that for python they also hv build tool bt i didnt see us doing a build,
+does it mean that we actually depend totally on the docker file bc for the web app we did see that we were copying the .war files n deploying it into the tomcat
+also when we talk abt base image , does it mean that we nid to install java? bc i dint see u install java but it was just ok.
+3) 2.01.36... whats the integration btw the tomcat and the docker file bc we just deploy at one 
 
-2) bc for the web app u did build u used maven as abuild tool, i understand that for python they also hv build tool bt i didnt see us doing a build, does it
-mean that we actually depend totally on the docker file bc for the web app we did see that we were copying the .war files n deploying it into the tomcat 
+ANS:
 not all applications are deployed in the same manner like d way we deployed python appli was diff frm d way we deployed oda appl like java based app
-1:02:00  .. LET ME SHOW U SMT ... when u install dis docker file, it does a build while running the docke file
+2:03:0 .. LET ME SHOW U SMT in docker files.. we hv docker file for wildfly for e.g  ...contd below
+this is when u install dis docker file, it does a build while running the docke file
 
 FROM python:3.7
 WORKDIR /opt/app
 
 COPY . .
 
-RUN pip install --no cache dir -r requirements-prod.txt       .... this is the command that wil do a build , its doing a build wit pip installed 
-                                                              whil creatin the image, pip instal is like deploying the applic
+RUN pip install --no cache dir -r requirements-prod.txt      2.00  .... this is the command that wil do a build , its doing a build wit pip installed 
+                                                              whil creatin the image, pip instal is like deploying the application
 EXPOSE 5000
 
 CMD { "python, -m, flask / run  --host=0.0.0.0"]        ,,,,   to start the container
 
-**********************let me show u smt in docker files 
+
+contd *****2.03***********let me show u smt in docker files 
 we hv docker file for wildfly for e.g
 
 FROM jboss/wildfly
@@ -682,13 +689,18 @@ this base image , for jboss to function, it rEQ java bt the base image already v
 FROM tomcat:8.0.20-jre8  ..    tomcat, it says 8.0.20 java run time env 8 ,, so the  tag here is tomcat wit java8  , this base image has tomcat and java, they ar both embeded 
                                                                                        together bc dats hw base images are     
 
-RUN     sed -i user usrname= "admin" password" roles , manger -script"/> /usr/local/tomcat/conf/tomcat-user                                                                   
+******* RUN   
+sed -i user usrname= "admin" password" roles , manger -script"/> /usr/local/tomcat/conf/tomcat-user                                                                   
 and this has a run instruction which is assigning pw, roles , and it is redirecting it io the /usr/local/tomcat/conf/tomcat-user
 so while deploying ur app u can use the run instruction to assign a user name 
 COPY java-web-app.war /usr/local/tomact/webapps/graddle-web-app.war    ].... and now we ar  copying the war files
 
-******************** for the multistage  docker file
+2.05.15 ******************** for the multistage  docker file' seen below;
+inside here we are running 'mvn package'
+also thers is mvn install', which means that while creating the image, the application code is been created as well.
 
+
+                MULTI STAGE FILE
 WORKDIR /app
 RUN git clone https://github.com/LandmakTechnology/maven-web-application.git
 
@@ -715,11 +727,9 @@ EXPOSE 9981
 CMD   "node" , app.js     the command to start the app
 
 
-3) whats the integration btw the tomcat and the docker file bc we just deploy at one 
 
 
-
-4) when we were using the plugin to create the eps is der a way to create and encrpt the eps at the same time while we ar doingthat?
+4) when we were using the plugin 'REYRAY' to create the eps is der a way to create and encrpt the eBs at the same time while we are doingthat?
 ANS : i thinkits possible , i share the link jst go tru it
 
 we previously integrated jenkins with tomcat, maven, where does docker come in that process
