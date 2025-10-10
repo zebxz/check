@@ -528,6 +528,7 @@ docker volume ls and we see ebs33 n ebs3
 DOCKER COMPOSE
 ==============
 Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
+***docker10*** and docekr compose file is a .yml file; docker-compose .yml
 
                                TWO WAYS TO DEPLOY IN DOCKER
 1) We can deploy the database and the aplication either using command ...... OR 
@@ -540,6 +541,7 @@ docker run --name springapp -d -p 8080:8080 --network tesla \
 -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
 2) using Decompose' ie using 'a file' ..1:31:18
+***docker10*** and docekr compose file is a .yml file; docker-compose .yml
 docker-compose.yml 
 version: '3.1'             
 services: 
@@ -750,8 +752,53 @@ docker-compose -f docker-compose-springapp.yml up -d
 
 
 
+DOCKER 10
+dnt freak out bc this code is part of our project already, if u go to the project that we v for this stuff we already v d code ther
+                  is oin our github repository, this docker compose file is already ther, most of the time it wil b part of ur source code bt u nid to understand if u nid 
+               to change anytin like the image version and so on 
+
+so docker compose is very imp, its easily manageable to use in deploying ur application and commands ############
+e.g if u go to our github account we still v dis file, eveytin is der as it was originally defined, if u want to change smt u jsut go and change the version
+
+*** in real time we ar going to be using dodcker compose file to do our deplyment 
+
+******* 1:15:08  .....******************** u can deploy anytin using docker compose
+
+
+EVEN THough we v been able to deploy our application in docker using vol, netwrk, env var n deploying multiple containers, we v realised that it is very easy fro us 
+to put all of those containers in a particular file called docker compose file BUT the question is can i scale my application when i use docker? ,, w ecannot do that n
+this is bc docker does nt support  multi hosting , a multi host netwrk architecture, n so we nid to see hw we can use the option that support multi hosting bc we wnt a
+situation were we can hv severs in a cluster n for us to that we will look at docker swamp 
+""""""""#####################################################:::' READUP POWERPOINT""""""""""\|||||#########################################
+
+
+DOCKER SWAMP
+
+THE TRADITIONAL MODEL;
+traditional docker is running with independent servers n each of the independent docker machine v their docker cli where we run d diff docker commands Bt if u v a docker
+server like this that goes down then that means ur applications are down, so ders no option to resolve such issue so what are we going to do ?
+we v a swamp , a swamp is going to be a cluster
+
+A swamp is a cluster that comprises of master node and worker node 1:20:00
+so far we v been using docker as our containerization tool bt we realized that whan we craete containers, wecannot scale,  e.g w ev sooo much traffic, that traffic we
+cannot scale n dats why we talk abt docker swamp
+Docker swamp is simply a container oschestrator
+so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
+**********************************FEATURES ............................ readup
+SWAMP FEATURES
+1)Cluster mgt : here we v
+masternodes + worker nodes... ..  here we can v like 3 masters and 3 workers in one swamp,, so all these workers are together in one cluster n onces we put dem together,
+doskser runs on all of them, what tk place is dat u can deploy ur app n it is goin to be scahedules in any of thses nodes,
+
+
+
+
+
 
 *******************************************************************************
+
+
+
 
 
 DNT PRINT
