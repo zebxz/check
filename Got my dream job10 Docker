@@ -42,7 +42,11 @@ In docker applications are deployed in lightweight containers:
 Docker is all about 
 Docker files for creating docker images, Images for creating containers, containers are the run time of a docker image.
 ONCE THE applications are containerized, we ar able to run containers
- and we need  networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
+Once developers commit the code, we can create/modify docker files, build images & push to SCM & we are able to do all this running docker commands like 
+docker clone, docker build, docker run, also we can make use of docker compose file or docker swamp, depending on what the job is meant to achieve. eg what
+are the type of services we need to deploy eg login,cart, checkout, we need data base to capture data, we need to ochestrate the containers, the containers
+also need networks for communication
+networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
 external] 
 And finally volumes;volumes = storage/mounts for the containers, the storage can be stateless (does not store data), or stateful needs to maintain its state,
 to prevent data loss,therefore it needs a piece of storage to capture data, data nids to be stored.this include data bases , applications like jenkins
@@ -95,7 +99,7 @@ dnt freak out bc this code is part of our project already, if u go to the projec
 
 START
 
-In my environment we use docker to containerize applications ie applications run as containers
+In my environment we use docker to containerize applications & deploy applications ie applications run as containers
 Docker: Is a containerization multi-platform software use to;create, build, ship, share and deploy containerize applications 
 Compared to the Traditional/Physical Deployment & Virtualized Deployment options, containers are light weight,containers starts up very fast like a cheetah n the integration is very 
 easy. containers also resolved the issue of repetitive task associated with the virtualized system, eg(having to install in the dev en & also testing env ) & thats because 
@@ -136,7 +140,7 @@ starts complaining
 PROFF
 #####u guys dnt nid to freakout, the big issue of docker u can explain it in less than 2minutes in an interview
 my experience inclues writing docker files, maintaining docker files, to containerize our applications, we generally have java base application in our envr, 
-we run those application on a CI/CD platform and before we run the application , we nid a odcker file to containerize it as part of the CI/CD process , so i am 
+we run those application on a CI/CD platform and before we run the application , we nid a docker file to containerize it as part of the CI/CD process , so i am 
 task to write and modify docker files and when i do so, i mk use of key Docker words like: FROM for my base image , COPY to copy files from the host to the 
 container,RUN to execute commands ,CMD and ENTRYPOINT instruction to execute command while creating d container and it is important for me to make mention tht 
 in writing my docker file in our env we mk use of docker file  best practices and these practices that we implement in our env include ensuring that our images 
