@@ -24,34 +24,21 @@ docker5&6
  multi stage docker file  :  it has multiple 'FROM' keyword
 
 
-************************************************
+
+docker push means push to dockerhub
+we clone the raw code from scm/github, build & run sonarqube then push artifact to nexus & images to to nexus/jfrog/dockerhub
+***i bliv we run sonarqube just to make sure the code is ok before we deploy the application.
+once maven build succeeds, it means the code is ok then deployment can take place.
+we deploy either in tomcat or use docker to containerize & deploy the application.
 
 
 
+*** To deploy means you have to pull images like in (docker, 3/4,7) then you run docker run to deploy the application BUT you dnt run docker BUILD or 
+docker push because you didnt clone an application so you dnt have the docker file to create an image. but we can use the image to create a docker file from
+scratch & then containerize an application with the new image we built with the docker file we created.
+WHILE 
+***To containerize means to clone the application (docker 1/2 deploy python image) to get the docker, then run docker build afterwhich we can push the image 
 
-***********   SUMMARIZED FOR INTRVIEW**********************
-Am good with docker 1&2, 5&5b, docker7 & some of 3&4 videos
-
-**********the problem with docker is that when you create containers, you cannot scale BUT with kubernetes we can.
-
-In tomcat applications are deployed in heavy weight virtual machines VMs:
-In docker applications are deployed in lightweight containers:
-****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
- so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
-
-Docker is all about 
-Docker files for creating docker images, Images for creating containers, containers are the run time of a docker image.
-ONCE THE applications are containerized, we ar able to run containers
-Once developers commit the code, we can create/modify docker files, build images & push to SCM & we are able to do all this running docker commands like 
-docker clone, docker build, docker run, also we can make use of docker compose file or docker swamp, depending on what the job is meant to achieve. eg what
-are the type of services we need to deploy eg login,cart, checkout, we need data base to capture data, we need to ochestrate the containers, the containers
-also need networks for communication
-networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
-external] 
-And finally volumes;volumes = storage/mounts for the containers, the storage can be stateless (does not store data), or stateful needs to maintain its state,
-to prevent data loss,therefore it needs a piece of storage to capture data, data nids to be stored.this include data bases , applications like jenkins
-   databases / jenkins, we use jenkis to be able to deploy a lot of works, so we hv jobs in jenkins.
-so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
 
 
 ..1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
@@ -90,6 +77,36 @@ dnt freak out bc this code is part of our project already, if u go to the projec
  *** for this ticket, i bliv we can ignore no.1 to 4, & start from no.5, then we can run 'docker scan' to scan the image after we build the image. 
 
 *** i may only need docker, kubernetes, ansible & Terraform for my job.
+
+
+
+
+
+***********   SUMMARIZED FOR INTRVIEW**********************
+Am good with docker 1&2, 5&5b, docker7 & some of 3&4 videos
+
+
+**********the problem with docker is that when you create containers, you cannot scale BUT with kubernetes we can.
+
+In tomcat applications are deployed in heavy weight virtual machines VMs:
+In docker applications are deployed in lightweight containers:
+****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
+ so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
+
+Docker is all about 
+Docker files for creating docker images, Images for creating containers, containers are the run time of a docker image.
+ONCE THE applications are containerized, we ar able to run containers
+Once developers commit the code, we can create/modify docker files, build images & push to SCM & we are able to do all this running docker commands like 
+docker pull, docker build, docker run, also we can make use of docker compose file or docker swamp, depending on what the job is meant to achieve. eg what
+are the type of services we need to deploy eg login,cart, checkout, we need data base to capture data, we need to ochestrate the containers, the containers
+also need networks for communication
+networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
+external] 
+And finally volumes;volumes = storage/mounts for the containers, the storage can be stateless (does not store data), or stateful needs to maintain its state,
+to prevent data loss,therefore it needs a piece of storage to capture data, data nids to be stored.this include data bases , applications like jenkins
+   databases / jenkins, we use jenkis to be able to deploy a lot of works, so we hv jobs in jenkins.
+so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
+
 
 
 
