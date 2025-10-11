@@ -256,13 +256,15 @@ the jboss is  now the base image
 i can use the image to containerize the appplication 
 
 FROM jboss/wildfly:latest 
-ADD target/*war /opt/jboss/wildfly/standalone/deployments/ 
-am copying the file with the keyword ADD n am changing the file
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/ landmark.war
+am copying the file with the keyword ADD (bc inside the dir:/opt/jboss/wildfly/standalone/deployments, there are other files including *war files) and am 
+changing the name from whatevr the *war' was  to landamark.war
 ls 
 
 1:01:30
 vi Dockerfile_JB
-CREATing a new dockerfile , i will containerize the application n what eva name was here before(tesla.war) is going to change to landmark.war ie deployed as landmark.war
+CREATing a new dockerfile , i will containerize the application n what eva name was here before eg(tesla.war) is going to change to landmark.war ie deployed
+as landmark.war
 FROM jboss/wildfly:latest (am copying this JBoss file we pulled n whateva name is here is going to change to landmark.war, bc dats wot we indicted it to deploy as when we created the new file
 ADD target/*war /opt/jboss/wildfly/standalone/deployments/landmark.war  ,, whateva is here is going to be copied and deployed as landmark.war
 am copying the file with the keyword ADD n am changing the name 
