@@ -378,12 +378,15 @@ available to support
 
 $$$$$$$$$$ 1:34:15 Installing docker swamp , very easy bc kubernetes is kubersome 
 ubuntu@dockerbuild:~/app26$ docker node ls    ,,, i wnt to list the number of nodes
-**WE SEE  ...... This node is not a swarm manager. use Docker swarm init or docker swarm join to connect this node to swarm and try again.
+**because i did not run docker swarm init yet, WE SEE  ...... 'This node is not a swarm manager. use Docker swarm init or docker swarm join to connect this
+node to swarm and try again.
 now i want to create this guy, i wnt this node ubuntu@docker to be my manger, let me jst create a new hostname for this node 
- docker node ls    ,,, i wnt to list the number of nodes
+ 
 ubuntu@dockerbuild:~/app26$ sudo hostname master    ................. so now my host name is manager
 ubuntu@dockerbuild:~/app26$ docker swarm init ...................i wnat to initialize this docker server to become my manger
-immediately i nitialize, it gives me a token i can use to add other worker node; docker swamp join ---token xxxxxxxxxxx
+***** immediately i nitialize, it gives me a token i can use to add other worker node; docker swamp join ---token xxxxxxxxxxx
+
+                         TO ADD ANOTHER MANAGER TO THE CLUSTER
 it also says to add a manager to this swarm, run 'docker swarm token join manger' ....1;36:13
 so i can v 3managers here while running the 'docker swarm join manager' and follow the instructions  
 so if i wnat to add another server to be another master so both of them wil be performing admin task this is what i wil do ... bt i wont now ,, i wnt to do this 
@@ -394,30 +397,42 @@ ubuntu@dockerbuild:~/app26$ he pasted the token to add worker node   .. am going
 
 .............
 
-################################################################################################.... STEPS
+                     .... INSTALLATION STEPS EXPLAINED
 
 Docker swamp setup - Landmark technologies
 prerequisite:
 
-on only ubuntu server
+on only ubuntu server          ***1. 50.07
 1)MASTER:
-docker swarm init
-2) WORKERS
+docker swarm init     ***1.49.40.. This is the only command we run in the master
+2) WORKERS           ***  and in the worker node, we take the token generated from the master & add the token to the script we use to install docker in the 
+                                                              worker nodes.
+***for you to add any worker node to this docker swamp, docker has to be first installed in the node, then add ubuntu user to the docker grp, then we add 
+the node to our cluster;
 
-for you to add any worker node to this docker swamp, docker has to be first installed in the node, then add ubuntu user to the docker grp, then we add the 
-node to our cluster;
 
-1)install docker community Edition in all the 3 servers
+                                            STEPS TO ADD A NODE/NODES TO THE CLUSTER
+
+1) execute below command to inintiate docker swarm manager in one system
+#initialize docker swarm cluster
+  docker swarm init
+#Get worker token
+  docker swarm join-token worker
+#Get manager token to add another node as secondary manager
+docker swarm join-token manager
+
+2)install docker community Edition in all the 3 servers  ***meee*** or mayb any number of  worker nodes we need.
    And Add user (ubuntu) to docker group 
 
 worker nodes:
 #!/bin/bash          **1.40.50... now n AWS, using this script for 'userdata' the script will assign a hostname, install docker & add the server to my cluster 
 sudo hostname node1             1.39.47*** We want to add this node1 to our swamp, 
 sudo apt update -y          
-sudo apt install docker.io -y  
-sudo usermod -aG docker ubuntu 
+sudo apt install docker.io -y        **** install docker in the node
+sudo usermod -aG docker ubuntu           ***** add ubuntu user to the docker group
+sudo docker swarm join --token .......XXXXXXXXX..    (TOKEN generated from step1; to add the node to the cluster)
 
-***1.43.00..  remember what we discussed in AWS, if you want to run confederation  to a server at creation, you use user data
+***1.43.00..  remember what we discussed in AWS, if you want to run confederation to a server at creation, you use user data
 
 2) open below ports in Aws Security Groups          ****1.41.30***all of these ports needs to be open for easy communication within the cluster.
   Tcp PORT 2377 FOR CLUSTER MGT COMMUNICATIOMNS
@@ -426,14 +441,7 @@ sudo usermod -aG docker ubuntu
 
 if you are planning on creating an overlay netwrok with encryption   (--opt encrypted), you will also need to ensure ip protocol 50 (ESP) traffic is allowed
 
-3) execute below command to inintiate docker swarm manager in one system
-#initialize docker swarm cluster
-  docker swarm init
-#Get worker token
-  docker swarm join-token worker
-#Get manager token to add another node as secondary manager
-docker swarm join-token manager
-4) Add workkers machines to cluster
+4) Add workkers machines to cluster      ****i bliv this step is just incase the token & the join command was not included in the installation script.
 # Execute join token(worker token from manager) in all worker machines
 5) display docker cluster nodes in manager machine 
   # docker node ls
@@ -447,17 +455,9 @@ ubuntu@dockerbuild:~/app26$   docker node ls
 1:39:29   we want to deploy a swarm server 
 i will add a hostname to this commands; 'sudo hostname node1'    
 
-#!/bin/bash
-sudo hostname node1                so we wnt to add this node1 to our swarm
-sudo apt update -y          
-1) sudo apt install docker.io -y  ......    install docker in the node
-3) sudo usermod -aG docker ubuntu   ......  add ubuntu user to the docker group
-4) sudo docker swarm join --token .......XXXXXXXXX..    then add the node to the cluster
-..................  the token ....................................... 
-
 
                    
-1.40.50                  STEPS TO ADD A NODE/NODES TO THE CLUSTER
+1.40.50                 ILLUSTRATING THE STEPS TO ADD A NODE/NODES TO THE CLUSTER
 
 we go to the aws account , to create node1
 am deploying docker swarm frm ubuntu server
@@ -478,21 +478,11 @@ add tag: node1
 2) security:  Read up power point for ports rEQ to be open. 
 they should be open for easy communication within the cluster
 ******* he then used the security grp that already had all d reQ ports open
-launch server 
-he launced 2 more servers
+then launched the first worker node server (node1)
+he launced 2 more worker node servers (node2&3)
 
-#####################################################################################################
-commands
-syntax check
- docker-compose config
-docker-compose  -f bossy.yml config   ......  for  files not using the default docker file name
-create services/container
-docker-compose up -d
 
-Remove Services/containers
-docker-compose down
-###############################################################################################
-
+                                         WE ARE NOW IN A CLUSTER
 1:46:50 
 5) ubuntu@dockerbuild:~/app26$ docker node ls
 i now v 3nodes and 1 master   ....... so we ar now in a cluster
@@ -508,53 +498,66 @@ Scalabilty
 L.B
 
 we wil see hw fault tolerance will be able to work within this cluster
+now we hv installed a docker swamp cluster.
 
+
+                                     OVERLAY  NETWORK
+whenever we ar deploying in a swarm, our containers wil be created in the overlay netwrk..overlay ntwrk means that u can communicate wit dif nodes, the master
+can communicate with multiple nodes using the overlay netwrk, with overlay the container in node1 can talk with the conatinters in all the other nodes.
 
 ##############################################################################################################################
+
+
+                               DOCKER SWAMP COMMANDS
 To deploy in normal stanalone server:  .. we use the docker run command 
-#in normal (stanalon) Docker server we can use below command to create a container.
+#in normal (stanalone) Docker server we can use below command to create a container.
 docker run -d -p <hostport>:<containerPort> --name <containerName> <imageName>
 
-##in normal (stanalon) Docker server we can use below command to create a container.
+##in normal (stanalone) Docker server we can use below command to create a container.
  docker-compose up-d   ... using docker-compose file
 
- to deploy application in the swarm cluster:
+1)  TO DEPLOY APPLICATION IN DOCKER SWAMP:           ***1.58.30, i wont use 'docker run', anymore 
 #In Docker swarm we wil use below command to deploy service.
 docker service create --name <serviceName> -p <hostport>:<containerPort> <imageName>
+docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
+netstat - nltup to check if port; 7000 is available.
 
-#In Docker swarm we wil use below command to deploy service using docker compose file
+
+2)#In Docker swarm we wil use below command to deploy service using docker compose file
 docker stack deploy --compose-file docker-compose.yml <stackName>
 
-#i can also update the service with the new image name:
+3)#i can also update the service with the new image name:
 docker service update --image <newImage> appliction name 
 docker service update --image mylandmarktech/myapp:6 javawebapp 
 
-#create a service with volume mapping   ************ i couldnt see the command completely
+4)#create a service with volume mapping   ************ i couldnt see the command completely
 docker service create -p <hostPort>:<containerPort> --name <serviceName 
 
-#create a service with a rolling update policy
+5)#create a service with a rolling update policy
   Deployment = 40
      version 1 -= 25%
      version 2 += 25%
 
-#scale services                        2:43:04
+6)#scale services                        2:43:04
 docker servce scale javawebapp=3
 docker service ps javawebapp    ... to see all the replicas
 
-#to remove 
+7)#to remove 
  docker service rm javawebapp
 
-#Add labels to node 
+8)#Add labels to node 
 docker node update  --label-add key=value <nodeid>
 e.g                            can cal d key:server
 docker node update --label-add server=node2   node2      
 docker node update --label-add server=dbnode  node1    
 
-#Drain nodes in Cluster (swarm wil not create containers in drained nodes)
+9)#Drain nodes in Cluster (swarm wil not create containers in drained nodes)
 docker node update --availability drain <NodeID/nodeName>
 #######################################################################################################################################
 
 
+                           
+                               ILLUSTRATING  'DEPLOY APPLICATION COMMAND'
 1:59:32   ........................... we are creating  a service, the name is called java web app
 #   docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
 netstat nltup ...to check if port 7000 is in use
@@ -562,12 +565,15 @@ now create the service called java web app
 6) docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
 docker service ls
 docker service ps javawebapp  ..... we can see its in the master node 
+REPLICA IS 1/1 : this means what is expected & what is running, so we expect to hv one replica & one replica is running, so the status is 'it is running'
 ########## someone said we can use :....... netstat -an | grep 7000  ... we ran it n it showed listening
+  *** so we have deployed the service using this port number, so in docker swamp we have created a service called 'java web app' 
 now
 when we create a service, we can achieve scaling, i can scale up and scale down my service
 
 
-################### HOW TO SCALE UP AND SCALE DOWN##
+
+                                HOW TO SCALE UP AND SCALE DOWN##
 now we v this service that is running on the master node, we can run:
 ubuntu@dockerbuild:~/app26$ docker service scale javawebapp =3
 now we v scaled to 3
@@ -700,7 +706,7 @@ what do you use in production, this is the type of servers that we use that come
 
 47:00
 
-DEPLOYING  A STACK
+                                          DEPLOYING  A STACK
 
 2:26;14   When we were using docker compose to deploy in docker env we did nt use deploy
 so in deploy what is our deployment strategy?, our deployment strategy, we ar saying the number of replicas we wnt
@@ -833,6 +839,8 @@ and we can see both replicas running in node1
 ##############  so we can use label and constraint to be able to deploy specific containers in specific nodes
 this is very useful if for example ur node is configured for databases  , so i can v my node1 configured for databases.
 
+
+
 QUESTION:
 CAN WE have this a couple of nodes carying the same label?????
 yes we can have 3diff nodes with the same label.
@@ -849,7 +857,7 @@ jjdh7667hhshjnfnn        master                          ready                  
 when u drain a node, docker can longer schedule containers on that node ..
 
 
-                        WHEN TO DRAIN A NODE
+                                     WHEN TO DRAIN A NODE
 when to drain a node ,,why  do i nid to drian a node .......  READ UP MYSELF , GOOgle, browse
 i dnt knw what is wrong with him in the video he said we wil get the note bt he will work on it first so we get al we nid , bt when i asked him he
 said thers no note 
