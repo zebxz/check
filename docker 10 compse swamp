@@ -290,17 +290,22 @@ situation were we can hv severs in a cluster n for us to that we will look at do
 
 
 
+
+
                                DOCKER SWAMP
+
 1:19:52 ... hw does swamp work 
 THE TRADITIONAL MODEL;
 traditional docker is running with independent servers n each of the independent docker machine v their docker cli where we run d diff docker commands Bt if u v a docker
 server like this that goes down then that means ur applications are down, so ders no option to resolve such issue so what are we going to do ?
 we v a swamp , a swamp is going to be a cluster
+
 A swamp is a cluster that comprises of master node and worker node 1:20:00
-so far we v been using docker as our containerization tool bt we realized that whan we craete containers, wecannot scale,  e.g w ev sooo much traffic, that traffic we
-cannot scale n dats why we talk abt docker swamp
 Docker swamp is simply a container oschestrator
 so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
+so far we v been using docker as our containerization tool bt we realized that when we create containers, we cannot scale,  e.g we hv so much traffic, that 
+traffic we cannot scale n dats why we talk abt docker swamp
+
 **********************************FEATURES ............................ readup
 SWAMP FEATURES
 1)Cluster mgt : here we v
@@ -308,20 +313,19 @@ masternodes + worker nodes... ..  here we can v like 3 masters and 3 workers in 
 doskser runs on all of them, what tk place is dat u can deploy ur app n it is goin to be scahedules in any of thses nodes,
 
 1:24:01  ............*  USING A DIAGRAM  , he explained
-we v a manger, ie i bliv a msater , the manger wil talk to diff nodes (worker node) and in all the nodes docker engine is running in all the nodes, so all the nodes v docker
-engine, we ll mk sure taht doscke ris running in al the nodes n same in the master, we v docker running in the master
-wot happens is that when we create containers, the mastr wil b able to lB BT when we ar trying to crate conatiners d masterwil server asa manager an ochestrator so he wil
-b able to scheduel containers to be created in the nodes, it wil act a s amanger,  n part of the task that it does is scheduling.e.g if we nid like 50 replicas of our 
-container running, it is goin to place the conatiners in d nodes that are avilabe ,, this is what a swamp does..  
+we v a manger, ie i bliv a msater , the manger wil talk to diff nodes (worker node) and in all the nodes docker engine is running in all the nodes, so all 
+the nodes v docker engine, we ll mk sure that docker is running in all the nodes n same in the master, we v docker running in the master
+wot happens is that when we create containers, the master wil b able to lB BuT when we ar trying to create conatiners d master wil server as a manager an
+ochestrator, so he wil b able to schedule containers to be created in the nodes, it wil act as amanger,  n part of the task that it does is scheduling.e.g
+if we nid like 50 replicas of our container running, it is goin to place the conatiners in d nodes that are available ,, this is what a swamp does..  
 
 
 2) it has a decentralized design
-3) declarative service model:( docker-compose file) when  u cretae a file(likw we did above) wher u can declare everytin u wnt to deploy , its a declaratibe approach to do
-deployment bt when u
-run command thats d imperative approach , so we can declare everytin we wnt to deploy in a single file
+3) declarative service model:( docker-compose file) when u create a file(likw we did above) wher u can declare everytin u wnt to deploy, its a declarative 
+approach to do deployment bt when u run command thats d imperative approach , so we can declare everytin we wnt to deploy in a single file
 4)scaling :  e.g we can hv 100replicas of our conatiners runing
-5)dESIRED state reconciliation : e.g if i v 100replicas runing n i want to change my replica state to 200, it means that my desired state is now 200, d swamp wil ensure 
-that i v 200replicas running  ,, so it muts reconcile
+5)dESIRED state reconciliation : e.g if i v 100replicas runing n i want to change my replica state to 200, it means that my desired state is now 200, d 
+swamp wil ensure that i v 200replicas running  ,, so it must reconcile
 6) multi-host netwrk : called (overlay)  ... 1:26:40
 7)service discovery 1:27:26  ,,e.g we v this services  , we wnt to run the container bt what do i nid to run the contianers,, the image ,the image is the most imp tin  to
 deply a container ,bc , container is the runnimg instance of the image, so for login, rg,payment,ordeer ,mongodb, we nid the image. n hw wil d containers communicate with 
@@ -347,32 +351,42 @@ services:
    networks:
 dns resolution is done using service names and IP
 1:31:00
- we v to ensure thay ar in the same ntwrk (if nt they wil be created in d default bridge ntwrk n they wil b able to talk using only their ip adress wich is dangerous)
-so in docker swamp, our DNS resolution is done using service names  , this service name is like the application name, it is nt done using service ip . 
-NOW IF login wnats to talk to registration, it wiltalk to it using the name n not the IP address.
 
-$$$$$$$$$$ with docker ochestrators , be it docker swamp, kubernetes etc, they cm wit advanced networking that permits the containers to talk to each other even if we dnt pass 
-ntwrks in d file, once ur deployn in a docker swamp, they ar goin to easily talk wit each oda via service discovery.bc d dns resolution is done using d service names e.g d 
-micro service appl can talk to the database using the name n thats why in our env var we ar very careful wit dis data  ..... 1:32:51
 
-8)load balancing: e.g we ar receiving a lot of trafic. endusers traffic are mounting , so when it mounts n users r trying to access thsi appl, e.g i wnt to create 60 replicas
-of my appl, d master wil schedule d replica to be created in any of this worker node including the master, so it does lb n when trafic equally is coming xtranally,it wil be 
-routed bc ininternally it is doin LB   ... 1:33;35
+                                SERVICE NAME FOR DNS RESOLUTION
+ we v to ensure thay ar in the same ntwrk (if nt they wil be created in d default bridge ntwrk n they wil b able to talk using only their ip adress wich is
+dangerous)so in docker swamp, our DNS resolution is done using SERVICE NAMES, this service name is like the application name, it is nt done using service ip . 
+NOW IF login wnats to talk to registration, it wil talk to it using the name n not the IP address.
+
+$$$$$$$$$$ with docker ochestrators , be it docker swamp, kubernetes etc, they cm wit advanced networking that permits the containers to talk to each other
+even if we dnt pass ntwrks in d file, once ur deployn in a docker swamp, they ar goin to easily talk wit each oda via service discovery.bc d dns resolution 
+is done using d service names e.g d micro service appl can talk to the database using the name n thats why in our env var we ar very careful wit dis data  ..... 1:32:51
+
+8)load balancing: e.g we ar receiving a lot of trafic. endusers traffic are mounting , so when it mounts n users r trying to access this appl, when u do scaling 
+e.g i wnt to create 60 replicas of my appl, d master wil schedule d replica to be created in any of this worker node including the master, so it does lb n 
+when trafic equally is coming externally,it wil be routed bc internally it is doin LB   ... 1:33;35
 9) secure by default
 10) rolling updates
 
-QUESTION: what happens if a node is down???
-remember in real time, w ecan v like 3 masters , we can v a forum/quarum wher we v like 3 masters n 11 replicas so if one master is down d oda master is available to support
 
-$$$$$$$$$$ 1:34:15 Intalling docker swamp , very easy bc kubernetes is kubersome 
+QUESTION: what happens if a node is down???
+remember in real time, we can v like 3 masters , we can v a forum/quarum wher we v like 3 masters n 11 replicas so if one master is down d oda master is 
+available to support
+
+
+                                 an illustration for INSTALLING DOCKER SWAMP
+
+$$$$$$$$$$ 1:34:15 Installing docker swamp , very easy bc kubernetes is kubersome 
 ubuntu@dockerbuild:~/app26$ docker node ls    ,,, i wnt to list the number of nodes
-This node is not a swarm manager. use Docker swarm init or docker awarm join to connect this node to swarm and try again.
+**WE SEE  ...... This node is not a swarm manager. use Docker swarm init or docker swarm join to connect this node to swarm and try again.
 now i want to create this guy, i wnt this node ubuntu@docker to be my manger, let me jst create a new hostname for this node 
+ docker node ls    ,,, i wnt to list the number of nodes
 ubuntu@dockerbuild:~/app26$ sudo hostname master    ................. so now my host name is manager
 ubuntu@dockerbuild:~/app26$ docker swarm init ...................i wnat to initialize this docker server to become my manger
-immediately i nitialize, it gives me a token i can use to add other worker node, it also says to add a manager to this swarm, run docker swarm token join manger ....1;36:13
-so i can v 3managers here running the docker swarm join manager and follow the instructions  
-so if i wnat to add another server to be another master so both of them wil be performing admi task this is what i wil do ... bt i wont now ,, i wnt to do this 
+immediately i nitialize, it gives me a token i can use to add other worker node; docker swamp join ---token xxxxxxxxxxx
+it also says to add a manager to this swarm, run 'docker swarm token join manger' ....1;36:13
+so i can v 3managers here while running the 'docker swarm join manager' and follow the instructions  
+so if i wnat to add another server to be another master so both of them wil be performing admin task this is what i wil do ... bt i wont now ,, i wnt to do this 
 ubuntu@dockerbuild:~/app26$ he pasted the token to add worker node   .. am going to xplain smt cos this takes us to security 
 ************************ 1:37:01  ##############we wnt to initialize docker swarm , we v a command like this initializing docker swarm 
 ##################
@@ -381,20 +395,31 @@ ubuntu@dockerbuild:~/app26$ he pasted the token to add worker node   .. am going
 .............
 
 ################################################################################################.... STEPS
-steps:    ... on only ubuntu server
-MASTER:
+
+Docker swamp setup - Landmark technologies
+prerequisite:
+
+on only ubuntu server
+1)MASTER:
 docker swarm init
+2) WORKERS
+
+for you to add any worker node to this docker swamp, docker has to be first installed in the node, then add ubuntu user to the docker grp, then we add the 
+node to our cluster;
+
+1)install docker community Edition in all the 3 servers
+   And Add user (ubuntu) to docker group 
 
 worker nodes:
-#!/bin/bash
-sudo hostname node1               
+#!/bin/bash          **1.40.50... now n AWS, using this script for 'userdata' the script will assign a hostname, install docker & add the server to my cluster 
+sudo hostname node1             1.39.47*** We want to add this node1 to our swamp, 
 sudo apt update -y          
 sudo apt install docker.io -y  
 sudo usermod -aG docker ubuntu 
 
-1)install docker community Edition in all the 3 servers
-   And Add user (ubuntu) to docker group 
-2) open below ports in Aws Security Groups
+***1.43.00..  remember what we discussed in AWS, if you want to run confederation  to a server at creation, you use user data
+
+2) open below ports in Aws Security Groups          ****1.41.30***all of these ports needs to be open for easy communication within the cluster.
   Tcp PORT 2377 FOR CLUSTER MGT COMMUNICATIOMNS
   Tcp and UDP port 7946 for communication among nodes
  UDP port 4789 for overlay netwrk traffic
@@ -415,27 +440,24 @@ docker swarm join-token manager
 6) deploy sample docker application in docker swarm cluster
  docker service create --name webserver -- replicas 2 -p 80:80 httpd
 ############################################################################################################
-the first tin to do is:
-to add any worker node to the swarm we are going to
-sudo apt update -y             ................      
- sudo apt install docker.io -y    .................   install docker in the node
- sudo usermod -aG docker ubuntu   .................  add ubuntu user to the docker group
-sudo docker swarm join --token ....................  then add the node to the cluster
-..................  thentoken .....................
 
 ubuntu@dockerbuild:~/app26$   docker node ls
   i v jsut one node called master
 
 1:39:29   we want to deploy a swarm server 
-i will add a hostname to this commands 
+i will add a hostname to this commands; 'sudo hostname node1'    
 
 #!/bin/bash
 sudo hostname node1                so we wnt to add this node1 to our swarm
 sudo apt update -y          
-1) sudo apt install docker.io -y  
-3) sudo usermod -aG docker ubuntu   
-4) sudo docker swarm join --token 
+1) sudo apt install docker.io -y  ......    install docker in the node
+3) sudo usermod -aG docker ubuntu   ......  add ubuntu user to the docker group
+4) sudo docker swarm join --token .......XXXXXXXXX..    then add the node to the cluster
 ..................  the token ....................................... 
+
+
+                   
+1.40.50                  STEPS TO ADD A NODE/NODES TO THE CLUSTER
 
 we go to the aws account , to create node1
 am deploying docker swarm frm ubuntu server
@@ -443,16 +465,18 @@ launch instance
 in aws he went to the choose image frm the list of images , t2 micro 
 if u want to run configuration during launch , you use a user data 1:43:00
 paste the user data , wich wil assign a host name , install docker in the server n its goin to add the server(node1) to my cluster
+the script;
+#!/bin/bash 
 sudo hostname node1                
 sudo apt update -y          
 sudo apt install docker.io -y  
 sudo usermod -aG docker ubuntu   
-sudo docker swarm join --token 
+sudo docker swarm join --token..... XXXXXXXXXXXXXX
 ..................  the token ....................................... 
 
 add tag: node1
 2) security:  Read up power point for ports rEQ to be open. 
-they shsdu be open for easy communication within the cluster
+they should be open for easy communication within the cluster
 ******* he then used the security grp that already had all d reQ ports open
 launch server 
 he launced 2 more servers
