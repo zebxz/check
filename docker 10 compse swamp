@@ -293,6 +293,8 @@ situation were we can hv severs in a cluster n for us to that we will look at do
 
 
                                DOCKER SWAMP
+2.18.00
+service is nothing but a collection of one or more replicas(containers)of the same type(image)     
 
 1:19:52 ... hw does swamp work 
 THE TRADITIONAL MODEL;
@@ -374,7 +376,8 @@ remember in real time, we can v like 3 masters , we can v a forum/quarum wher we
 available to support
 
 
-                                 an illustration for INSTALLING DOCKER SWAMP
+                                 
+                             an illustration for INSTALLING DOCKER SWAMP
 
 $$$$$$$$$$ 1:34:15 Installing docker swamp , very easy bc kubernetes is kubersome 
 ubuntu@dockerbuild:~/app26$ docker node ls    ,,, i wnt to list the number of nodes
@@ -509,22 +512,25 @@ can communicate with multiple nodes using the overlay netwrk, with overlay the c
 
 
                                DOCKER SWAMP COMMANDS
+
+    DEPLOY APPLICATION USING COMMAND
 To deploy in normal stanalone server:  .. we use the docker run command 
 #in normal (stanalone) Docker server we can use below command to create a container.
 docker run -d -p <hostport>:<containerPort> --name <containerName> <imageName>
 
-##in normal (stanalone) Docker server we can use below command to create a container.
- docker-compose up-d   ... using docker-compose file
-
-1)  TO DEPLOY APPLICATION IN DOCKER SWAMP:           ***1.58.30, i wont use 'docker run', anymore 
+1)  To deploy application in docker swamp:           ***1.58.30, i wont use 'docker run', anymore 
 #In Docker swarm we wil use below command to deploy service.
 docker service create --name <serviceName> -p <hostport>:<containerPort> <imageName>
 docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
 netstat - nltup to check if port; 7000 is available.
 
+    USING DOCKER COMPOSE FILE TO CREATE CONTAINERS
+##in normal (stanalone) Docker server we can use below command to create a container.
+ docker-compose up-d   ... using docker-compose file
 
 2)#In Docker swarm we wil use below command to deploy service using docker compose file
 docker stack deploy --compose-file docker-compose.yml <stackName>
+
 
 3)#i can also update the service with the new image name:
 docker service update --image <newImage> appliction name 
@@ -557,7 +563,8 @@ docker node update --availability drain <NodeID/nodeName>
 
 
                            
-                               ILLUSTRATING  'DEPLOY APPLICATION COMMAND'
+                               ILLUSTRATING  'DEPLOY APPLICATION IN DOCKER SWAMP'
+            ****we run this command in the master node....
 1:59:32   ........................... we are creating  a service, the name is called java web app
 #   docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
 netstat nltup ...to check if port 7000 is in use
@@ -598,7 +605,7 @@ docker service ps javawebapp
 
 we also use docker compose file to create containers
 
-##in normal (stanalon) Docker server we can use below command to create a container.
+##in normal (stanalone) Docker server we can use below command to create a container.
  docker-compose up -d   ...... using the docker compose file
 
 similarly, 
@@ -610,27 +617,30 @@ note: open REQ ports in AWS Security Groups ####################y
 
 
 
-###################### HOW TO DEPLOY APPLICATION IN DOCKER SWARM
+######################     2 MODES OF DEPLOYING APPLICATION IN DOCKER SWARM
 
-docker swarm has 2modes:
-Replicas ---> it will deploy based on replictaed number    (we v used this mode to deploy above)
+docker swarm has 2modes: REPLICA MODE & GLOBAL MODE
+1)Replicas ---> it will deploy based on replicated number    (we v used this mode to deploy above)
 ***** this is the default mode & with this mode, it wil deploy base on the number of replicas that you want     ... 2:11:24
  ********** scaling is achieveable
 ***** we can run docker service scale javawebapp=5
     we deploy custom applications using this mode  ..
 most of the applictaion we wil be deploying, we wil be using the replica mode
 
-using Replica mode:  in this mode u dnt nid to state taht u are using replica mode
+using Replica mode:  in this mode u dnt nid to state that u are using replica mode
 #docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
 
 
+
+ 2)                 GLOBAL MODE
 Global ---> All the nodes (3servers 1 manager+2workers)
           use for monitoring softwares deployments
           New Relic / Prometheus / Cloudwatch /EFK / logmgt
 
 with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3master + 11 workers)
 if u v a 14 node cluster n u want to deploy an appl using the global mode what wil happen is that a replica wil be created in each of this node 
-so if i v a 14node cluster n i deploy using (Replica mode),meant to say global mode its goin to deploy using deploy 14replicas meanin it wil schedule 1replica in al d nodes
+so if i v a 14node cluster n i deploy using (Replica mode),meant to say global mode its goin to deploy using deploy 14replicas meanin it wil schedule
+1replica in al d nodes
 
 2:15:11 ################## DDEPLOYING IN global mode 
 #docker service create --name logmgt-p 8000:8080 --mode=global\
@@ -640,19 +650,22 @@ now deploy
 ubuntu@dockerbuild:~/app26$ #docker service create --name logmgt-p 8000:8080 --mode=global mylandmarktech/hello
 successful
 ubuntu@dockerbuild:~/app26$ docker service ls   
-we see services that are rnning and for logmgt, w ecan see 3/3 replicas
+we see services that are rUnning and for logmgt, we can see 3/3 replicas
 docker node ls 
 we hv 1master , node1 and node2
-his is bc i bliv Global ---> All the nodes (3servers 1 manager+2workers)
+we have 3replicas becasue; i bliv in Global mode, it deploys i replica in all the servers--->  3 All the servers (3servers 1 manager+2workers)
 *************************************in the global mode we cannot scale
 so if i run : docker service scale logmgt=5
 but it says scale can only be used with replicated-job mode
 
 *************will xplain why we wil mostly use logmgt service for such particular Global mode deployment
 
+
+                             LOGMGT
+
 #################### use cases of global mode ################### 51:33
-assume u v deployed an appl in this server ,now u wnat to deploy a monitor, u want smt that can tell u hw ur appl are behaving , so u want to deploy a logmgt container
-how can that be done:   ... to deploy ur log mgt container
+Assume u v deployed an appl in this server ,now u want to deploy a monitor, u want smt that can tell u hw ur appl are behaving , so u want to deploy a
+logmgt container how can that be done:   ... to deploy ur log mgt container
 we are goin to use the global mode bc we wnt the container to be running in all the nodes n telling us hw the containers ar behaving 
 with global mode, this conatainer is deployed in all the nodes 
 
@@ -662,16 +675,17 @@ with global mode, this conatainer is deployed in all the nodes
 1) WHAT WILL YOU DO , IF U WANT TO DO DEPLOYMENT IN DOCKER and u want to deploy a monitoring service that should be running in all the nodes
 which deplyment mode wil you use,?
 i wil use global mode bc docker wil mk surethat the service  has one replica runnin in all the nodes.
-i wil deploy in Global mode bc this manger(master) schedules ur container to all diff nodes depending on the available resources like cpu ,it goin to scheduled the container
+i wil deploy in Global mode bc this manger(master) schedules ur container to all diff nodes depending on the available resources like cpu ,it goin to 
+scheduled the container
 
 2) what is service in docker or docker swarm?
-service is nothing but a collection of one or more replicas(containers)of same the  type(image)     
+service is nothing but a collection of one or more replicas(containers)of the same type(image)     
 ubuntu@dockerbuild:~/app26$ docker service ls                                 2:23:26
 ID                  NAME           MODE         REPLICAS          IMAGE                                          PORTS
 kb9yek1jaeez        javawebapp     replicated     4/4           mylandmarktech/java-web-app:latest               7000->8080/
 
-*************so here we can see we v a javawebapp conatiner n the image we ar using, so the replicas 4/4 are using the same image, therfore, if i wnt to talk to any of
-the containers running i wil use the service name : javawebapp
+*************so here we can see we v a javawebapp conatiner n the image we ar using, so the replicas 4/4 are using the same image, therfore, if i wnt to 
+talk to any of the containers running i wil use the service name : javawebapp
 
 **************dns resolution is done using serviceName 
 
@@ -697,6 +711,7 @@ mem:       31          5               24        0               1          25
 swap      0            0               0
 
 MY DOCKER SERVR HA 31gb
+
 
 QUESTION: 
 what do you use in production, this is the type of servers that we use that come with 32GB
@@ -884,10 +899,11 @@ QUESTION:   2:55:02
 Why do we need to drain a node???
 we can drain a node if mayb we trying to do some patching
 want to update the software
-want to install some packages   ....... in that case u wil v  to drain the node 
+want to install some packages   ....... in that case u wil v to drain the node 
 
 QUESTION
-2:57:00   is docker compose the advance version of docker file ,, can we run containers and basic process and use docker jst by uisng docker compose n not the file???
+2:57:00   is docker compose the advance version of docker file ,, can we run containers and basic process and use docker jst by uisng docker compose n not
+the file???
 
 ANS:
 there are 2files that are independent, we v the 
