@@ -1030,6 +1030,18 @@ ubuntu@dockerbuild:~/app26$ docker service ls
 
 3) what is stack in docker or docker swarm?
 stack is nothing but a collection of one or more service 
+  When we were using docker compose to deploy in docker env we did nt use deploy
+****me but in docker swamp we will
+so in deploy what is our deployment strategy?, our deployment strategy, we ar saying the number of replicas we wnt
+
+                           ROLLING UPDATE STRATEGY  ...2.29.00
+*** by default rolling update is the deployment strategy, hw dis works is that when u ar tryin
+    delay: 20s           to deploy a new appl, like a new version of d appli , e.g we v 4replicas wot happens is dat when a new version is released since parallel is 1, it
+  restart_policy:        wil bring down 1replica of old apli version n bring up 1replica of the new appl, once d replica of d new version of d appl taken up is running, we
+    condition: on-failure     bring down a 2nd replica of d old appl n bring up d 2nd replica of the new appli ,we continue d process of roling out d old version on a piece
+                               by piece base until d deployment is complete n all replicas of version2 ie the new version is running.2:30:57
+
+
 
 4) How many docker swarm nodes do you have in production? and what is their capacity?
             11 worker nodes =60GB memory and 20TB 
