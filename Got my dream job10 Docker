@@ -35,7 +35,7 @@ we deploy either in tomcat or use docker to containerize & deploy the applicatio
 
 *** To deploy means you have to pull images like in (docker, 3/4,7) then you run docker run to deploy the application BUT you dnt run docker BUILD or 
 docker push because you didnt clone an application so you dnt have the docker file to create an image. but we can use the image to create a docker file from
-scratch & then run docker build to containerize an application with the docker file we created, and run docker push to push the new image we built.
+scratch & then containerize an application with the new image we built with the docker file we created.
 WHILE 
 ***To containerize means to clone the application (docker 1/2 deploy python image) to get the docker, then run docker build afterwhich we can push the image 
 
@@ -88,6 +88,13 @@ Am good with docker 1&2, 5&5b, docker7 & some of 3&4 videos
 
 **********the problem with docker is that when you create containers, you cannot scale BUT with kubernetes we can.
 
+**docker10*** 1.55.20 
+kubernetes is the key of this programm, the only thing you needed to know about docker is to create a docker file, push it to the registry, k8 takes over
+from there to be able to mg8 your containers, ochestrate them,secure them, etc but since you are claiming experience of 105yrs, thats why we hv to still run
+docker again & all the other components.
+
+
+
 In tomcat applications are deployed in heavy weight virtual machines VMs:
 In docker applications are deployed in lightweight containers:
 ****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
@@ -98,8 +105,8 @@ Docker files for creating docker images, Images for creating containers, contain
 ONCE THE applications are containerized, we ar able to run containers
 Once developers commit the code, we can create/modify docker files, build images & push to SCM & we are able to do all this running docker commands like 
 docker pull, docker build, docker run, also we can make use of docker compose file or docker swamp, depending on what the job is meant to achieve. eg what
-are the type of services we need to deploy eg login,cart, checkout, we need data base to capture data, we need to ochestrate the containers, the containers
-also need networks for communication
+are the type of services we need to deploy eg login,cart, checkout, we need data base to capture data, we need to ochestrate the containers, also we have 
+service discovery,ie we need networks for communication between the services for eg login need to disover reg, reg need to discover payment etc so we create
 networks--- (default bridge,custom bridge, host or null network) for the containers to communicate with each other communication[internal or
 external] 
 And finally volumes;volumes = storage/mounts for the containers, the storage can be stateless (does not store data), or stateful needs to maintain its state,
@@ -214,8 +221,8 @@ it needs a piece of storage to capture data, so we can create a mountpoint and m
 *************** END**********************
 
 
-
- 
+***docker10 **1.43.00..  remember what we discussed in AWS, if you want to run confederation  to a server at creation, you use user data
+**docker10 ***1.45.00****by default this searches for the docker config.yml file 
 
 
 
@@ -840,26 +847,119 @@ situation were we can hv severs in a cluster n for us to that we will look at do
 """"""""#####################################################:::' READUP POWERPOINT""""""""""\|||||#########################################
 
 
-DOCKER SWAMP
-
 THE TRADITIONAL MODEL;
 traditional docker is running with independent servers n each of the independent docker machine v their docker cli where we run d diff docker commands Bt if u v a docker
 server like this that goes down then that means ur applications are down, so ders no option to resolve such issue so what are we going to do ?
 we v a swamp , a swamp is going to be a cluster
 
+
+                             DOCKER SWAMP
+service is nothing but a collection of one or more replicas(containers)of the same type(image)     
+
+
 A swamp is a cluster that comprises of master node and worker node 1:20:00
-so far we v been using docker as our containerization tool bt we realized that whan we craete containers, wecannot scale,  e.g w ev sooo much traffic, that traffic we
-cannot scale n dats why we talk abt docker swamp
 Docker swamp is simply a container oschestrator
 so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
+so far we v been using docker as our containerization tool bt we realized that when we craete containers, we cannot scale,  e.g we hv so much traffic, that
+traffic we cannot scale n dats why we talk abt docker swamp
+Docker swamp is simply a container oschestrator
+so we v docker swap , kuberDockernetes , openshift ..all of these are ochestrators
+
 **********************************FEATURES ............................ readup
 SWAMP FEATURES
 1)Cluster mgt : here we v
-masternodes + worker nodes... ..  here we can v like 3 masters and 3 workers in one swamp,, so all these workers are together in one cluster n onces we put dem together,
-doskser runs on all of them, what tk place is dat u can deploy ur app n it is goin to be scahedules in any of thses nodes,
+masternodes + worker nodes... ..  here we can v like 3 masters and 3 workers in one swamp,, so all these workers are together in one cluster n onces we put
+dem together,docker runs on all of them, what tk place is dat u can deploy ur app n it is goin to be scheduled in any of thses nodes,
+
+ USING A DIAGRAM  , he explained
+we v a manger, ie i bliv a msater , the manger wil talk to diff nodes (worker node) and in all the nodes docker engine is running in all the nodes, so all 
+the nodes v docker engine, we ll mk sure that docker is running in all the nodes n same in the master, we v docker running in the master
+wot happens is that when we create containers, the master wil b able to lB BuT when we ar trying to create conatiners d master wil server as a manager an
+ochestrator, so he wil b able to schedule containers to be created in the nodes, it wil act as amanger,  n part of the task that it does is scheduling.e.g
+if we nid like 50 replicas of our container running, it is goin to place the conatiners in d nodes that are available ,, this is what a swamp does..
+
+**meee**
+inside the server you want to use as the master you have to run 'docker swarm init' ......i want to initialize this docker server to become my manger
+***for you to add any worker node to this docker swamp, docker has to be first installed in the node, then add ubuntu user to the docker grp, then we add 
+the node to our cluster;
+***** we can also add a manager to this swarm,  ie inside the first master server you have to run 'docker swarm token join manger' ....1;36:13
+so i can v like 3managers or mayb more with this command; 'docker swarm join manager' and follow the instructions  
+so if i want to add another server to be another master so both of them wil be performing admin task this is what i wil do . 
+
+
+  2.58.56****** WHEN U RUN DOCKER SWAM init, 
+By default it creates an overlay ntwrk, the overlay ntwrk is what permits your docker server to communicate in a cluster like this bc in normal docker der 
+is no overlay ntwrk for that reason, you cannot v docker servers in a cluster like this bc node1 cannot talk to node2 in normal docker
+so once u v the overlay ntwrk, when u create ur containers , when you create ur services, those services can talk to each other irrespective of whether they
+ar created in node1 or node10 bc of the overlay ntwrk n the DNS registration is done using the service names
+
+
+             2 MODES OF DEPLOYING APPLICATION IN DOCKER SWARM
+
+docker swarm has 2modes: REPLICA MODE & GLOBAL MODE
+1)Replicas ---> it will deploy based on replicated number eg; 
+docker service scale javawebapp =3   To scale up the applictaion, i can equally scalled up to any desired number  (this is replica mode)
+
+***** this is the default mode & with this mode, it wil deploy base on the number of replicas that you want     ... 2:11:24
+ ********** scaling is achieveable
+    we deploy custom applications using this mode  ..most of the applictaion we wil be deploying, we wil be using the replica mode
+2)DDEPLOYING IN global mode 
+#docker service create --name logmgt-p 8000:8080 --mode=global mylandmarktech/hello
+
+ global is  good for;
+use for monitoring softwares deployments
+          New Relic / Prometheus / Cloudwatch /EFK / logmgt
+
+ *** with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3master + 11 workers)
+if u v a 14 node cluster n u want to deploy an appl using the global mode what wil happen is that a replica wil be created in each of this node 
+so if i v a 14node cluster n i deploy using (Replica mode),meant to say global mode its goin to deploy using deploy 14replicas meanin it wil schedule
+1replica in al d nodes
+
+
+                   LOGMGT
+
+#################### use cases of global mode ################### 51:33
+Assume u v deployed an appl in this server ,now u want to deploy a monitor, u want smt that can tell u hw ur appl are behaving , so u want to deploy a
+logmgt container how can that be done:   ... to deploy ur log mgt container
+we are goin to use the global mode bc we wnt the container to be running in all the nodes n telling us hw the containers ar behaving 
+with global mode, this conatainer is deployed in all the nodes 
 
 
 
+what is stack in docker or docker swarm?
+stack is nothing but a collection of one or more service 
+  When we were using docker compose to deploy in docker env we did nt use deploy
+****me but in docker swamp we will
+so in deploy what is our deployment strategy?, our deployment strategy, we ar saying the number of replicas we wnt
+
+               ROLLING UPDATE
+*** by default rolling update is the deployment strategy, hw dis works is that when u ar tryin
+    delay: 20s           to deploy a new appl, like a new version of d appli , e.g we v 4replicas wot happens is dat when a new version is released since parallel is 1, it
+  restart_policy:        wil bring down 1replica of old apli version n bring up 1replica of the new appl, once d replica of d new version of d appl taken up is running, we
+    condition: on-failure     bring down a 2nd replica of d old appl n bring up d 2nd replica of the new appli ,we continue d process of roling out d old version on a piece
+                               by piece base until d deployment is complete n all replicas of version2 ie the new version is running.2:30:57
+****so with docker swarm we can do rolling update, 
+
+
+UPDATE SERVICE WITH NEW IMAGE
+i can also update the service with the new image name:
+docker service update --image mylandmarktech/myapp:6 javawebapp  *** once i do this am changing my image name, dis wil do a rolling update,, so am updating the 
+service with the new image name this wasnt possible with docker .
+************ the strategy to be used for the update is rolling update  
+by default, the default version to do a roll out and roll back is rolling update
+
+
+ADD LABELS TO NODE
+When u add label, u can decide to create a container on a particular node that u v labelled , thats very possible and thats where u use what is called 
+constraint in docker.
+
+
+ LABEL & CONSTRAINT
+
+#use label and constraints to create in a particular node 
+*******so if i wnt to create an application or a database service and i want it created on a particular node , i wil use label and constraint
+so we can use label and constraint to be able to deploy specific containers in specific nodes
+this is very useful if for example ur node is configured for databases  , so i can v my node1 configured for databases.
 
 
 
