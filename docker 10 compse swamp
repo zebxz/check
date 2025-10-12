@@ -1,11 +1,16 @@
 ################## just me remember to study the docker commands ,, telling myself
 
 
-NUMBER OF OBJECTS IN THE MICRO SERVICE DEPLOYMENT, CHECKING FOR THE MOUNT POINT FOR mysql in github,  yml LANGUAGE, HOW TO GET UR DOCKER VERSION THAT
-IS RUNNING, CREATING DOCKER COMPOSE FILE WITH DEFAULT NAME FOR DEPLOYMENT, STEPS TO DEPLOY THE DOCKER COMPOSE FILE,TROUBLESHOOTING, 
-DOCKER SWAMP
 
-###########STEPS TO USE A DOCKER SWARM   ...............................................
+ NUMBER OF OBJECTS IN THE MICRO SERVICE DEPLOYMENT, CHECKING FOR THE MOUNT POINT FOR mysql in github,  yml LANGUAGE, HOW TO GET UR DOCKER VERSION THAT
+IS RUNNING, CREATING DOCKER COMPOSE FILE WITH DEFAULT NAME FOR DEPLOYMENT, STEPS TO DEPLOY THE DOCKER COMPOSE FILE,TROUBLESHOOTING, 
+DOCKER SWAMP, SERVICE NAME FOR DNS RESOLUTION,  WHEN U RUN DOCKER SWAM init, OVERLAY  NETWORK, an illustration for INSTALLING DOCKER SWAMP, 
+TO ADD ANOTHER MANAGER TO THE CLUSTER,  INSTALLATION STEPS EXPLAINED,  STEPS TO ADD A NODE/NODES TO THE CLUSTER, ILLUSTRATING THE STEPS TO ADD A NODE/NODES
+TO THE CLUSTER,  WE ARE NOW IN A CLUSTER, DOCKER SWAMP COMMANDS, ILLUSTRATING  'DEPLOY APPLICATION IN DOCKER SWAMP', HOW TO SCALE UP AND SCALE DOWN, 
+2 MODES OF DEPLOYING APPLICATION IN DOCKER SWARM;replica & global, LOGMGT, DEPLOYING  A STACK, ROLLING UPDATE, HOW TO ACHIEVE THE DEPLOYMENT USING A STACK,
+UPDATE SERVICE WITH NEW IMAGE,  ADD LABELS TO NODE, CREATING APPLICATION USING LABEL & CONSTRAINT.
+
+
 
 
 
@@ -376,6 +381,18 @@ remember in real time, we can v like 3 masters , we can v a forum/quarum wher we
 available to support
 
 
+
+2.58.56****** WHEN U RUN DOCKER SWAM init, 
+By default it creates an overlay ntwrk, the overlay ntwrk is what permits your docker server to communicate in a cluster like this bc in normal docker der 
+is no overlay ntwrk for that reason, you cannot v docker servers in a cluster like this bc node1 cannot talk to node2 in normal docker
+so once u v the overlay ntwrk, when u create ur containers , when you create ur services, those services can talk to each other irrespective of whether they
+ar created in node1 or node10 bc of the overlay ntwrk n the DNS registration is done using the service names
+
+            OVERLAY  NETWORK
+whenever we ar deploying in a swarm, our containers wil be created in the overlay netwrk..overlay ntwrk means that u can communicate wit dif nodes, the master
+can communicate with multiple nodes using the overlay netwrk, with overlay the container in node1 can talk with the conatinters in all the other nodes.
+ 
+
                                  
                              an illustration for INSTALLING DOCKER SWAMP
 
@@ -504,10 +521,7 @@ we wil see hw fault tolerance will be able to work within this cluster
 now we hv installed a docker swamp cluster.
 
 
-                                     OVERLAY  NETWORK
-whenever we ar deploying in a swarm, our containers wil be created in the overlay netwrk..overlay ntwrk means that u can communicate wit dif nodes, the master
-can communicate with multiple nodes using the overlay netwrk, with overlay the container in node1 can talk with the conatinters in all the other nodes.
-
+                                    
 ##############################################################################################################################
 
 
@@ -629,6 +643,13 @@ most of the applictaion we wil be deploying, we wil be using the replica mode
 
 using Replica mode:  in this mode u dnt nid to state that u are using replica mode
 #docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
+***mee** but you if you dnt indicate the number of replica, i replica wil be deployed like he said in label & constraint
+
+
+       2.46.00     LABEL & CONSTRAINT
+#use label and constraints to create in a particular node 
+docker service create -p 8000:8080 --name myapp --replicas 2 --constraint 'node.labels.server==nodetwo' mylandmarktech/maven-web-app
+**************if i dnt indicate the number of replica, i replica wil be deployed
 
 
 
@@ -724,7 +745,17 @@ what do you use in production, this is the type of servers that we use that come
                                           DEPLOYING  A STACK
 
 2:26;14   When we were using docker compose to deploy in docker env we did nt use deploy
+****me but in docker swamp we will
 so in deploy what is our deployment strategy?, our deployment strategy, we ar saying the number of replicas we wnt
+
+                                     ROLLING UPDATE
+*** by default rolling update is the deployment strategy, hw dis works is that when u ar tryin
+    delay: 20s           to deploy a new appl, like a new version of d appli , e.g we v 4replicas wot happens is dat when a new version is released since parallel is 1, it
+  restart_policy:        wil bring down 1replica of old apli version n bring up 1replica of the new appl, once d replica of d new version of d appl taken up is running, we
+    condition: on-failure     bring down a 2nd replica of d old appl n bring up d 2nd replica of the new appli ,we continue d process of roling out d old version on a piece
+                               by piece base until d deployment is complete n all replicas of version2 ie the new version is running.2:30:57
+****so with docker swarm we can do rolling update, 
+
 
 version:'3.1'
 services:
@@ -763,9 +794,11 @@ volumes:
   mongodb
     driver: local
 
+
+
 *********************************  HOW TO ACHIEVE THE DEPLOYMENT USING A STACK***********************************************2:23:18
 ubuntu@dockerbuild:~/dc$ docker stack deploy --compose-file dc.yml springmongo
- whil edeploying we can see :  creating network springmongo default     , ,,, it created this ntwrk 
+ whilE deploying we can see :  creating network springmongo default     , ,,, it created this ntwrk 
                                 creating service springmongo_springapp
                                creating service springmongo_mongo
 
@@ -788,8 +821,10 @@ qz400yewjt6p     springmongo_springapp    replicated                 4/4        
 ################## we can access the application online  using the port number 7000 as stated in the file above
 ***************************so we v been able to deploy with a docker compose file 
 
+
+                                        UPDATE SERVICE WITH NEW IMAGE
 i can also update the service with the new image name:
-docker service update --image mylandmarktech/myapp:6 javawebapp     ******** once i do this am changing my image name, dis wil do a rolling update  , ,, so am updating the 
+docker service update --image mylandmarktech/myapp:6 javawebapp  *** once i do this am changing my image name, dis wil do a rolling update,, so am updating the 
 service with the new image name this wasnt possible with docker .
 ************ the strategy to be used for the update is rolling update  
 by default, the default version to do a roll out and roll back is rolling update 
@@ -809,7 +844,9 @@ http://3.93.218.173:7000/
 **************************
 so with docker swarm we can do rolling update, 
 
-*************************************************************************************************************************
+
+
+                                        ADD LABELS TO NODE
 2:45:00
 #Add labels to node 
 docker node update  --label-add key=value <nodeid>
@@ -820,31 +857,39 @@ docker node update --label-add server=dbnode  node1
 ubuntu@dockerbuild:~/dc$  docker node ls   
 lists the nodes
 
+
 ubuntu@dockerbuild:~/dc$ docker inspect node1        ******************* i can inspect a node  
 i can decide to label the node 
 ubuntu@dockerbuild:~/dc$ docker node update --label-add server=nodeone qmdh9tgvdef99sryhez
-& when u add label, u can decide to create a container on a particular node that u v labelled , thats very possible and thats where u use what is called constraint in docker.
+
+& when u add label, u can decide to create a container on a particular node that u v labelled , thats very possible and thats where u use what is called 
+constraint in docker.
+
+                                   
+                                    CREATING APPLICATION USING LABEL & CONSTRAINT
 
 #use label and constraints to create in a particular node 
 docker service create -p 8000:8080 --name myapp --replicas 2 --constraint 'node.labels.server==nodetwo' mylandmarktech/maven-web-app
 **************if i dnt indicate the number of replica, i replica wil be deployed
 
-ie this is docker service create, i wnat to create myapp, replica is 2 , i wnt to constraint dis service, node labels to be run on only node2
+ie this is docker service create, i want to create myapp, replica is 2 , i wnt to constraint dis service, node labels to be run on only node2
 
-so if i wnt to cretae a database service and i want it created on a particular node , i wil use label and constraint
+*******so if i wnt to create a database service and i want it created on a particular node , i wil use label and constraint
 
+1) first label the node:
 ubuntu@dockerbuild:~/dc$ docker node update --label-add server=dbnode  node1 
 ubuntu@dockerbuild:~/dc$  docker inspect node1       ****** i can see
 ID ": "OLC3P2C8795GSWJGYCMKUYOLP"
 labels":
      "server:"dbnode"
 
-so we v created a label for the node 
+*****so we v created a label for the node 
 
-**************** so if we wnt to create a database on this node 
+2)***  i bliv this is to create 'myapp' application
 docker service create -p 8000:8080 --name myapp --replicas 2 --constraint 'node.labels.server==dbnode' mylandmarktech/maven-web-app
 ************* am constrainin it to be created in dbnode
 
+****************Also  if we wnt to create a database on this node 
 anoda e.g ... i wnat to deploy a db     ,, since its a db, i dnt need a port
 docker service create --name mydb --replicas 2 --constraint 'node.labels.server==dbnode' mongo
 ubuntu@dockerbuild:~/dc$ docker service create --name mydb --replicas 2 --constraint 'node.labels.server==dbnode' mongo
@@ -853,6 +898,9 @@ and we can see both replicas running in node1
 
 ##############  so we can use label and constraint to be able to deploy specific containers in specific nodes
 this is very useful if for example ur node is configured for databases  , so i can v my node1 configured for databases.
+
+      *****END***
+
 
 
 
@@ -920,11 +968,11 @@ file and it will create whatever u wnt to create in the docker compose file once
 
 
 
-****** WHEN U RUN DOCKER SWAM init, 
-it creates an overlay ntwrk, the overlay ntwrk is what permits your docker server to communicate in a cluster like this bc in normal docker der is no overlay ntwrk for that
-reason, you cannot v docker servers in a cluster like this bc node1 cannot talk to node2 in normal docker
-so once u v the overlay ntwrk, when u create ur containers , when you create ur services, those services can talk to each other irrespective of whether thay ar created in 
-node1 or node10 bc of the overlay ntwrk n the DNS registration is done using the service names
+2.58.56****** WHEN U RUN DOCKER SWAM init, 
+By default it creates an overlay ntwrk, the overlay ntwrk is what permits your docker server to communicate in a cluster like this bc in normal docker der 
+is no overlay ntwrk for that reason, you cannot v docker servers in a cluster like this bc node1 cannot talk to node2 in normal docker
+so once u v the overlay ntwrk, when u create ur containers , when you create ur services, those services can talk to each other irrespective of whether they
+ar created in node1 or node10 bc of the overlay ntwrk n the DNS registration is done using the service names
 
 
 IS THERS AN ORDER OF COMMUNICATION??????
