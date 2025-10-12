@@ -445,12 +445,85 @@ shows my containers are up
 
 
 
+
+
 DOCKER SWAMP
- docker node ls    ,,, i wnt to list the number of nodes
+Installing docker in the worker nodes:
+
+#!/bin/bash 
+sudo hostname node1                
+sudo apt update -y          
+sudo apt install docker.io -y  
+sudo usermod -aG docker ubuntu   
+sudo docker swarm join --token..... XXXXXXXXXXXXXX
+..................  the token .......................................
+
+
+
+ 
+ DOCKER SWAMP COMMANDS
+
+docker node ls    ,,, i wnt to list the number of nodes
 ubuntu@dockerbuild:~/app26$ sudo hostname master    ................. so now my host name is manager
 ubuntu@dockerbuild:~/app26$ docker swarm init ...................i wnat to initialize this docker server to become my manger
 immediately i nitialize, it gives me a token i can use to add other worker node, it also says to add a manager to this swarm,
 run 'docker swarm token join manger'
+
+docker service scale javawebapp =3      To scale up the applictaion, i can equally scalled up to any desired number
+docker service ps javawebapp            **mee**to list the number of replicas we have for a particular application eg javawebapp
+docker service ls                  ***mee** to list all the applications we have
+
+
+    DEPLOY APPLICATION USING COMMAND
+To deploy in normal stanalone server:  .. we use the docker run command 
+#in normal (stanalone) Docker server we can use below command to create a container.
+docker run -d -p <hostport>:<containerPort> --name <containerName> <imageName>
+
+1)  To deploy application in docker swamp:           ***1.58.30, i wont use 'docker run', anymore 
+#In Docker swarm we wil use below command to deploy service.
+docker service create --name <serviceName> -p <hostport>:<containerPort> <imageName>
+docker service create --name javawebapp -p 7000:8000 mylandmarktech/java-web-app
+netstat - nltup to check if port; 7000 is available.
+
+    USING DOCKER COMPOSE FILE TO CREATE CONTAINERS
+##in normal (stanalone) Docker server we can use below command to create a container.
+ docker-compose up-d   ... using docker-compose file
+
+2)#In Docker swarm we wil use below command to deploy service using docker compose file
+docker stack deploy --compose-file docker-compose.yml <stackName>
+
+
+3)#i can also update the service with the new image name:
+docker service update --image <newImage> appliction name 
+docker service update --image mylandmarktech/myapp:6 javawebapp 
+
+4)#create a service with volume mapping   ************ i couldnt see the command completely
+docker service create -p <hostPort>:<containerPort> --name <serviceName 
+
+5)#create a service with a rolling update policy
+  Deployment = 40
+     version 1 -= 25%
+     version 2 += 25%
+
+6)#scale services                        2:43:04
+docker servce scale javawebapp=3
+docker service ps javawebapp    ... to see all the replicas
+
+7)#to remove 
+ docker service rm javawebapp
+
+8)#Add labels to node 
+docker node update  --label-add key=value <nodeid>
+e.g                            can cal d key:server
+docker node update --label-add server=node2   node2      
+docker node update --label-add server=dbnode  node1    
+
+9)#Drain nodes in Cluster (swarm wil not create containers in drained nodes)
+docker node update --availability drain <NodeID/nodeName>
+
+
+
+
 
 
 
