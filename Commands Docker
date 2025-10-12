@@ -469,9 +469,6 @@ ubuntu@dockerbuild:~/app26$ docker swarm init ...................i wnat to initi
 immediately i nitialize, it gives me a token i can use to add other worker node, it also says to add a manager to this swarm,
 run 'docker swarm token join manger'
 
-docker service scale javawebapp =3      To scale up the applictaion, i can equally scalled up to any desired number
-docker service ps javawebapp            **mee**to list the number of replicas we have for a particular application eg javawebapp
-docker service ls                  ***mee** to list all the applications we have
 
 
     DEPLOY APPLICATION USING COMMAND
@@ -521,6 +518,15 @@ docker node update --label-add server=dbnode  node1
 9)#Drain nodes in Cluster (swarm wil not create containers in drained nodes)
 docker node update --availability drain <NodeID/nodeName>
 
+
+               2 MODES OF DEPLOYING
+1)Deplying using replica mode:
+docker service scale javawebapp =3      To scale up the applictaion, i can equally scalled up to any desired number  (this is replica mode)
+2)DDEPLOYING IN global mode 
+#docker service create --name logmgt-p 8000:8080 --mode=global mylandmarktech/hello
+
+docker service ps javawebapp            **mee**to list the number of replicas we have for a particular application eg javawebapp
+docker service ls                  ***mee** to list all the applications we have
 
 
 
