@@ -117,12 +117,14 @@ so we can create a mountpoint and mount it wit the dockerhost server,he is the g
 Finally DOCKER SWAMP; 
 Docker swamp is simply a container oschestrator
 A swamp is a cluster that comprises of master node and worker node
+stack is nothing but a collection of one or more service 
 service is nothing but a collection of one or more replicas(containers)of the same type(image) ** i bliv eg of service is login, cart, payment, checkout.etc
 so far we v been using docker as our containerization tool bt we realized that when we craete containers, we cannot scale,  e.g we hv so much traffic, that
 traffic we cannot scale n dats why we talk abt docker swamp
-***meee** In docker, we use docker compose file to deploy services but because we cant scale & it poses a big problem when the single/few docker server goes
-down, therefore; we use docker swamp to be able to scale ie create replicas of the containers
-
+***meee** In docker, we use docker compose file to deploy services but because we cant scale & it poses a big problem eg when the single/few docker server 
+goes down, therefore; we use docker swamp to be able to scale ie create replicas of the containers
+When we were using docker compose to deploy in docker env we did nt use deploy but for docker swamp we will & for our 
+ deployment strategy which by default is rolling update, we can state how many replicas we want
 
 
 
@@ -165,6 +167,11 @@ mount it with the dockerhost server,he is the guy hosting all our containers.
 FInally, in our env we create Monitoring dashboards, that monitors and report if there are issues, so if there is a problem, we are aware before the customers
 starts complaining 
 Additionally we use docker swamp for container ochestration bc we cant use docker to scale but with docker swamp we can can scale/create replicas.
+In docker, we use docker compose file to deploy services but because we cant scale & it poses a big problem eg when the single/few docker server goes
+down, therefore; we use docker swamp to be able to scale ie create replicas of the containers
+When we were using docker compose to deploy in docker env we did nt use deploy but for docker swamp we will & for our 
+ deployment strategy which by default is rolling update, we can state how many replicas we want
+
 
 ***meee*** however k8 is a more powerful tool that knocks docker out the water & i'd be glad to expand more on that.
 
