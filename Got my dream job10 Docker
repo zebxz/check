@@ -1,7 +1,8 @@
   
 LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, JENKINS automates the end to end process, 
-AWS for cloud computing services/resources, DOCKER for containerization ie deploying light weight containers, KUBERNETES for container orchestration/MGT  
+AWS for cloud computing services/resources, DOCKER for containerization ie deploying light weight containers, DOCKER SWAMP for container orchestration, KUBERNETES for
+container orchestration/MGT  
 
   
 
@@ -100,7 +101,7 @@ In docker applications are deployed in lightweight containers:
 ****i bliv the short fall of tomcat is resolved by docker & the short fall of docker is resolved by k8... 
  so when we containerize with docker we ar going to manage those containers with kubernetes, dats what we wil be seeing
 
-Docker is all about 
+Docker is all about Containerization
 Docker files for creating docker images, Images for creating containers, containers are the run time of a docker image.
 ONCE THE applications are containerized, we ar able to run containers
 Once developers commit the code, we can create/modify docker files, build images & push to SCM & we are able to do all this running docker commands like 
@@ -113,7 +114,14 @@ And finally volumes;volumes = storage/mounts for the containers, the storage can
 to prevent data loss,therefore it needs a piece of storage to capture data, data nids to be stored.this include data bases , applications like jenkins
    databases / jenkins, we use jenkis to be able to deploy a lot of works, so we hv jobs in jenkins.
 so we can create a mountpoint and mount it wit the dockerhost server,he is the guy hosting all our containers.
-
+Finally DOCKER SWAMP; 
+Docker swamp is simply a container oschestrator
+A swamp is a cluster that comprises of master node and worker node
+service is nothing but a collection of one or more replicas(containers)of the same type(image) ** i bliv eg of service is login, cart, payment, checkout.etc
+so far we v been using docker as our containerization tool bt we realized that when we craete containers, we cannot scale,  e.g we hv so much traffic, that
+traffic we cannot scale n dats why we talk abt docker swamp
+***meee** In docker, we use docker compose file to deploy services but because we cant scale & it poses a big problem when the single/few docker server goes
+down, therefore; we use docker swamp to be able to scale ie create replicas of the containers
 
 
 
@@ -156,6 +164,7 @@ to be stored.so we can create a mountpoint and mount it wit the dockerhost serve
 mount it with the dockerhost server,he is the guy hosting all our containers.
 FInally, in our env we create Monitoring dashboards, that monitors and report if there are issues, so if there is a problem, we are aware before the customers
 starts complaining 
+Additionally we use docker swamp for container ochestration bc we cant use docker to scale but with docker swamp we can can scale/create replicas.
 
 ***meee*** however k8 is a more powerful tool that knocks docker out the water & i'd be glad to expand more on that.
 
