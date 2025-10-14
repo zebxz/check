@@ -39,4 +39,152 @@ AWS for cloud computing services/resources, DOCKER for containerization ie deplo
 container orchestration/MGT  
 
 
+DISADVANTAGES OF DOCKER
+with docker i cannot v more than 1 replica of webapp for e.g u are deploying ur appl n ders a spike , no i cant v multiple replicas in docker , e.g: so if u decide to run
+docker run -name webapp -replicas 5 , ie trying to get the number of replicas u wnat, it wont work.. docker doesnt support it
+also, if my engine goes down , my contaiiners will stop running 
+also docker doesnt support a scenario wher i can v multiple serveers in a cluster  e.g docker engine1 (with container), docker engine2(with containers) such that if one 
+engine is down the 2nd engine can support it ,, docker doesnt v such sys bc the docker ntwrk dose nt support MULTI HOSTING where we can v a cluster of servers, docker 
+netwrking sys doesnt support multi hosting and thats a big problem ,, the docker system doesnt v an overlay ntwrk wher u can v a cluster of server, no overlsy ntwrk support
+and d worst is that when appl ar deplloyed, to expose them to endusers is very limited and we wil see hw it is diff with kub... bc in docker we do port forwarding bt we wil
+see what kub brings to the table
 
+we can use software like docker to deploy applications , to deploy n mange containers bt is it recommanded, shud we use docker ??? we shud nt and u are going to see that shortly, we shud rather
+use container managers or ochestration tools like docker swarm kub n open sheet.
+when we studied dodcker, we deployed appl using docker bt what are the limitations using docker to deploy applications .,.. we ar going to look at that shortly 7: 43 
+bt these ar the contarization software
+
+
+
+   SUMMARIZED FOR INTERVIEW
+FOR autHORIZATION;
+authorisation via RBAC: Roll base access control, 
+this is under kub security , u hv to be authenticated n authorized to perform that task
+once u are authentictaed n authorized , the task is being executed bt if u werent succesfully authorized, u wil get permission denied/ authentication failed
+
+After sucessful auth/author, 
+in docker we deploy our containers directly in containers, in kub they are deployed in what is called ports
+so port is the smallest unit in kub
+so u wnat to deploy an appli, dis is what happens, the API server receives this information either frm UI or kubctl, n immediately it receives it, it will persist the data 
+in our key value store ie etcd,,,
+now u wnat to deploy your appl which are deployed in pods .... in your cluster, der is a pry node agent, so in the node it has kubetes, kubetes is the pry node agent ,
+therfore, the control plane is communicating with the worker node via this pry node agent , once it commun wit the worker node , it wil be checking for resouce availability
+u wnat to deploy a pod , this is a scheduler, this pods requires abt 800mb bt when it comes to availabilty: my node1 got abt 700mb of memory, node9 got abt 8000mb of memory
+we v d scheduler, hes going to schedule d pods based on resource availabilty and other factors.. all other factors ar constant .at this time the scheduler will do automatic
+scheduling on node9 which has enough enough resource availability.now when the pod, lemme cal it webpod is scheduled on node9, inside the webpod containers nid to be created
+now the container runtime wil create n start the container, so now i v my webcontainer inside the pod.
+this is the kub architecture, very powerful 
+now i v my appl scheduled on the pod, and we nid to deploy multiple replicas , in this case we v 2replicas, the scheduler has scheduled the 2replicas on the 2diff nodes.
+therfore 2replicas of the pod have been deployed
+inside this cluster we wnat to ensure that we can access this pod, for the pod to be made accessible we ar going to make what is called a service in kuber.
+35:34
+so u v a service , this service act as a LB
+E.G I V A webSVC, what wil happen is that if u wnat to access this appl running in this pod in kub, it is going to be made discoverable using the service
+so if u wnat to access the appl, it wil be routed via the service, we call this service discovery, u wnt to discover ur appl, the service is involve
+now this entire netwroking wher appls can accessed with relative ease is been suported by a ntwrk agent kube-proxy.
+
+###########if u can xplain dis kub architecture, u ar as good as done 37:26
+
+
+
+
+
+
+
+
+
+KUBERNETES
+IT is an ochestration engine, an open source platform for managing containerized applications... kubernetes is responsible for container deployment, scaling, descaling of
+containers and lB.
+actually, kubernetes is nt a replacement for docker bt can be considered as a replacement for docker swamp , kuber is basically more complex than swarm and REQ more work to 
+deploy.. born in google written in go and go lang
+when we talk abt kub, we classify an all imp tool bc of its imp  of to me as a devops engr, its so important that one of the jobs i can do is a kubernetes administrator 
+
+
+                           TYPES OF OCHESTRATION TOOLS
+Container Orchestration Tools --> :
+   Docker Swarm, Kubernetes, OpenShift
+
+TK NOTE OF THIS TREE
+kubernetes:    kub has a cluster , 
+   cluster: it is a grp of nodes
+   nodes:  in the nodes ther are pods 
+   pods:  in the pods ther ar containers ..  
+   containers :  
+
+therfore in kub we can say that nodes are the subset of the cluster , pods are subset of the nodes and containers are the subset of the pods
+cluster ---> nodes ---> pods  ---> containers  :
+
+ cONTROLLER MANAGER.. >>>>>>>>>
+E.G IF U deploy ur appl and you want 3pods to be deployed , lets assume 2pods shud be running, if 1pod is down, the controller manger has been instructed to create 2pods, if
+one pod goes down, it will automatically create the pod, those are the function of controller mangers
+
+
+
+fEATURES:
+1)the first feature it has is that it supports what is called automatic scheduling ie it provides advance scheduler to launch contianers on node
+2) it has self hidden capabilities, rescheduling, replacinging and rescheduling containers which are dead and the bauty abt it is that if u deploy a wrong application u can 
+go back to what was running before so it has automATED ROLBACKS AND rollouts 
+so kuben supports rollouts and rollbacks for the desired state of containerized application therfore, if u had a version running and u v a deploy a new version n ders a 
+problem, u can rollback 
+3) it has horizomtal scaling and LB , kub can be scaled up and down d appl as per REQuirment
+4) service discovery & LB
+5)WITH kuber DERS no nid to worry about netwrkn n communicatn bc kub wil automatically assign ip address to containers n a single dns name for a set of containers that can LB
+TRAFFIC inside the cluser .... 5:00
+containers get their ips so u can put a set of containers behind a single L Balancer ... this is a very key aspect service discovery n LB , hw powerful is that 
+6)it also supports storage ochestration, u can mount the storage system of your choice , u can either opt for local storage or choose a public cloud 
+
+
+          KUBERNETES CLUSTER & ITS COMPONENT
+
+kubernetes architecture:  why are we doing kub and why is kub imp in my devops journey , that in all thy knowings u must knw kub
+                                ############  kubernetes comes with a cluster in the cluster we v :
+controller noder or controlPlane/MasterNodes: this has some components to tk note of:
+  apiServer             : this is the main entry point into the cluster, it performs admin task in the cluster
+  etcd                  : the key value store ,,, this is like a database
+  scheduler  : 
+  controllerManagers   : 
+workerNodes           :  this is wher appl are running and here we can v node1, to node9  . the components of the nodes includes:
+  kubelet             : this is the main agent that runs on the worker node. its the pry node agent
+  pod                 : is the smallest unit in kub, in kub contaners are deployed in what is called pods
+  container runtime   : and d container runtime we ar going to be seeing is = [Container-d] 
+ kube-proxy           : the netwrk agent
+21:30
+############### in kub if u wnt to perform any task e.g u want to deploy an appl , for that deployment to happen ther are a few things that kub uses, we call it d client
+kub client (how u can access ur cluster)  for e.g we hv docker client , the docker cli
+22:11
+kubernetes-client      : we also hv kub cli , command line interface ,, command line interface here is kubectl
+  kubectl              : if u are authorized, u can run 
+     kubectl create/delete/get/describe/apply/run/expose 
+  so we v the cli which we can use to make some api calls and we also v other APIs 
+  ui- DASHBOARD  
+  api  ,, others APIs
+Or it has a UI wich is called  a dashboard ,, since we started this programe wher v we see any dashboard , to deploy in jenkins we were able to go to the browser,  der was 
+a nice dashboard wher we cud create and run jobs
+Now in kub, to perform any task in ur cluster,  for docker we cud do stuff like docker build, docer run n our docker client was docker bc all the commands started wit docker
+our kub cli is kubectl ... this is our kub server, u want to run a job in kub , u run commands like kubectl run to deploy an appl, what happens is that kubctl is like a msg
+that is sent into ur cluster , dis msg comes to ur cluster, u wnt to deploy an appli, so it cud either b frm ur dashboard, or  ur cli. then regrdless of wher the msg is 
+coming from, d API server receives the msg on behalf of our cluster,d API sevrer performs admin task n when u execute dis command, this will get you tru authenticaton,so  u
+nid to be authenticated n authorization,, 2things wil happen now u v executed kubctl run, wich means u wnt to deploy an appl, for dis to happen, kub nids to authenticate n
+authorize u and the authentication and authorization process wil tk place using a file called .kubeconfig file . this is the file dat authenticates you
+
+kubeconfig [.kube/config ] file will authenticate the admin    ....(ur tryn to mk an APi call, tryn to dd smt to b done) so u must be authenticated) 39:34
+                               the caller admin/Developer/Engineer 
+
+
+
+
+ AUTHENTICATION & AUTHORIZATION
+
+FOR autHORIZATION;
+authorisation via RBAC: Roll base access control, 
+this is under kub security , u hv to be authenticated n authorized to perform that task
+once u are authentictaed n authorized , the task is being executed bt if u werent succesfully authorized, u wil get permission denied/ authentication failed
+
+WHO CAN DO WHAT, who can perform what task .. ,, THIS WILL BE SUPPOERTED BY KUB SECURITY  .. 40: 26
+kubernetes security - RBAC:
+  Developers [ Paul, Joyce, Chidi ] 
+  Engineers  [ James, Dominion, Janet ]    .... we can assign them diff functions
+
+authentication via kubeconfig : 
+authorisation via RBAC:
