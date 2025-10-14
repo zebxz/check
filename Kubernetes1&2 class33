@@ -36,7 +36,7 @@ Ticket 001:  ... remember to change token durimg practice
   requirements -- 
 
 
-HISTORY OF KUBERNETES, K8 ARCHITECTURE , security: authen/author, controller manager, INSTALLATION, installing single or multi node cluster, types of self manged cloud 
+WHAT IS KUBERNETES, FEATURES, HISTORY OF KUBERNETES, K8 ARCHITECTURE , security: authen/author, controller manager, INSTALLATION, installing single or multi node cluster, types of self manged cloud 
 service, rancher , steps to setup muli node self managed cluster, deploying workload in K8, deploy appl using this cluster
 How to deploy run/execute tasks/workloads in kubernetes
 #############################################################################################################################################
@@ -47,12 +47,14 @@ when we talk abt kub, we classify an all imp tool bc of its imp  of to me as a d
 
 WHAT IS KUBERNEYES??????????????????????????
 IT is an ochestration engine, an open source platform for managing containerized applications... kubernetes is responsible for container deployment, scaling, descaling of
-containers and lB.. 
+containers and lB. 
 so u can deploy ur containers using kuber, u can scale, descale  and u can LB traffic 
 actually, kubernetes is nt a replacement for docker bt can be considered as a replacement for docker swamp , kuber is basically more complex than swarm and REQ more work to 
 deploy.. born in google written in go and go lang , it was donated to claud native computing foundation in 2014, kuber version1.o was relaesed on july 21st 2015
 TK NOTE ITS imp to v that understanding or that initial discussion when it comes to kuber n some of its features
 3.33
+
+
 fEATURES:
 1)the first feature it has is that it supports what is called automatic scheduling ie it provides advance scheduler to launch contianers on node
 2) it has self hidden capabilities, rescheduling, replacinging and rescheduling containers which are dead and the bauty abt it is that if u deploy a wrong application u can 
@@ -67,6 +69,7 @@ containers get their ips so u can put a set of containers behind a single L Bala
 6)it also supports storage ochestration, u can mount the storage system of your choice , u can either opt for local storage or choose a public cloud 
 
 
+                                   ARCHITECTURE
 
 How is the kubernetes architecture like  5:50
 so far we v looked at containerization, hw appl are containerized and under containerization u realise that we can use sfwares like docker so when it comes to container , we 
@@ -92,11 +95,14 @@ Containerization:
   and manage Containers
 
 
+                           TYPES OF OCHESTRATION TOOLS
 Container Orchestration Tools --> :
    Docker Swarm,
    Kubernetes,
    OpenShift
 
+
+                                     HISTORY
 7:58    ###########################
 Kubernetes:  began in 2015 which implies that it has been around for 8yrs, so if u go to an interview u cant claim that u have 10years kuber exp
   these are things to tk note of ..... bc the way dis course is deployed by d time u go tru kub u ar like somebody with atleast 7years of kub exp
@@ -107,7 +113,8 @@ we also hv tools like : that began 2023 ..... so u cant go to an interview n tel
 chartGPT started in 2023.     
 
 *************************************    10:59 
-NOW LETS LOOK AT HW POWERFUL KUB is with a diagramatic illustration:
+NOW LETS LOOK AT HW POWERFUL KUB is with a diagramatic illustration:  ***Meee** ***DISADVANTAGES OF DOCKER
+
 when we did docker we realise that if u hv docker there wil be docker engine, with d help of the engine we ar abl to crtae images n run containers
 now if i run my containere.g webapp der ar some problems that dodcker has : if i run my container and thers a problem with the container it goes offline, docker is nt able 
 to recreate the container , so i shud nt deploy my appl using a system that will nt intervenene in a diaster wher a sys is down bt cannot be recreated,,, 
@@ -117,30 +124,32 @@ with docker i cannot v more than 1 replica of webapp for e.g u are deploying ur 
 docker run -name webapp -replicas 5 , ie trying to get the number of replicas u wnat, it wont work.. docker doesnt support it
 also, if my engine goes down , my contaiiners will stop running 
 also docker doesnt support a scenario wher i can v multiple serveers in a cluster  e.g docker engine1 (with container), docker engine2(with containers) such that if one 
-engine is down the 2nd engine can support it ,, docker doesnt v such sys bc the docker ntwrk dose nt support multi hostng wger we can v a cluster of servers, docker 
+engine is down the 2nd engine can support it ,, docker doesnt v such sys bc the docker ntwrk dose nt support MULTI HOSTING where we can v a cluster of servers, docker 
 netwrking sys doesnt support multi hosting and thats a big problem ,, the docker system doesnt v an overlay ntwrk wher u can v a cluster of server, no overlsy ntwrk support
 and d worst is that when appl ar deplloyed, to expose them to endusers is very limited and we wil see hw it is diff with kub... bc in docker we do port forwarding bt we wil
 see what kub brings to the table
 
 
+                                        KUBERNETES CLUSTER & ITS COMPONENT
 16:00
 kubernetes architecture:  why are we doing kub and why is kub imp in my devops journey , that in all thy knowings u must knw kub
                                 ############  kubernetes comes with a cluster in the cluster we v :
 controller noder or controlPlane/MasterNodes: this has some components to tk note of:
-  apiServer  : this is the main entry point into the cluster, it performs admin task in the cluster
-  etcd  : the key value store ,,, this is like a database
+  apiServer             : this is the main entry point into the cluster, it performs admin task in the cluster
+  etcd                  : the key value store ,,, this is like a database
   scheduler  : 
   controllerManagers   : 
-workerNodes:  this is wher appl are running and here we can v node1, to node9  . the components of the nodes includes:
-  kubelet   : this is the main agent that runs on the worker node. its the pry node agent
-  container runtime : and d container runtime we ar going to be seeing is = [Container-d] 
- kube-proxy : the netwrk agent
+workerNodes           :  this is wher appl are running and here we can v node1, to node9  . the components of the nodes includes:
+  kubelet             : this is the main agent that runs on the worker node. its the pry node agent
+  pod                 : is the smallest unit in kub, in kub contaners are deployed in what is called pods
+  container runtime   : and d container runtime we ar going to be seeing is = [Container-d] 
+ kube-proxy           : the netwrk agent
 21:30
-############### in kub if u wnt to perform any task e.g u want to deploy an appl , for that deployment to happen ther are a few things that kub uses, w ecall it d client
+############### in kub if u wnt to perform any task e.g u want to deploy an appl , for that deployment to happen ther are a few things that kub uses, we call it d client
 kub client (how u can access ur cluster)  for e.g we hv docker client , the docker cli
 22:11
-kubernetes-client: we also hv kub cli , command line interface ,, command line interface here is kubectl
-  kubectl  : if u are authorized, u can run 
+kubernetes-client      : we also hv kub cli , command line interface ,, command line interface here is kubectl
+  kubectl              : if u are authorized, u can run 
      kubectl create/delete/get/describe/apply/run/expose 
   so we v the cli which we can use to make some api calls and we also v other APIs 
   ui- DASHBOARD  
@@ -156,10 +165,24 @@ authorize u and the authentication and authorization process wil tk place using 
 
 kubeconfig [.kube/config ] file will authenticate the admin    ....(ur tryn to mk an APi call, tryn to dd smt to b done) so u must be authenticated) 39:34
                                the caller admin/Developer/Engineer 
+
+                    
+
+                        AUTHENTICATION & AUTHORIZATION
+
 FOR autHORIZATION;
 authorisation via RBAC: Roll base access control, 
 this is under kub security , u hv to be authenticated n authorized to perform that task
 once u are authentictaed n authorized , the task is being executed bt if u werent succesfully authorized, u wil get permission denied/ authentication failed
+
+WHO CAN DO WHAT, who can perform what task .. ,, THIS WILL BE SUPPOERTED BY KUB SECURITY  .. 40: 26
+kubernetes security - RBAC:
+  Developers [ Paul, Joyce, Chidi ] 
+  Engineers  [ James, Dominion, Janet ]    .... we can assign them diff functions
+
+authentication via kubeconfig : 
+authorisation via RBAC:
+
 
 After sucessful auth/author, 
 in docker we deploy our containers directly in containers, in kub they are deployed in what is called ports
@@ -185,7 +208,9 @@ now this entire netwroking wher appls can accessed with relative ease is been su
 ###########if u can xplain dis kub architecture, u ar as good as done 37:26
 
 ====================================================================
-TK NOTE OF THIS TREE
+
+
+                   TK NOTE OF THIS TREE
 kubernetes:    kub has a cluster , 
    cluster: it is a grp of nodes
    nodes:  in the nodes ther are pods 
@@ -196,19 +221,14 @@ therfore in kub we can say that nodes are the subset of the cluster , pods are s
 cluster ---> nodes ---> pods  ---> containers  :
 
 
-WHO CAN DO WHAT, who can perform what task .. ,, THIS WILL BE SUPPOERTED BY KUB SECURITY  .. 40: 26
-kubernetes security - RBAC:
-  Developers [ Paul, Joyce, Chidi ] 
-  Engineers  [ James, Dominion, Janet ]    .... we can assign them diff functions
-
-authentication via kubeconfig : 
-authorisation via RBAC:
 
 42:40 .. cONTROLLER MANAGER.. >>>>>>>>>
 E.G IF U deploy ur appl and you want 3pods to be deployed , lets assume 2pods shud be running, if 1pod is down, the controller manger has been instructed to create 2pods, if
 one pod goes down, it will automatically create the pod, those are the function of controller mangers
 
 
+
+                              INSTALLATION
 Installation:
 you can install a single node cluster,  bt we shudnt use a single node to creat k8 cluster to avoid the risk of failure
 with single node cluster u wont optimize the functions of k8 that permits you to have multiple nodes
@@ -227,9 +247,13 @@ Local K8s Cluster(Single Node K8s Cluster) ..  , ,,......... we can use single n
 
 ##############********************dis is aour main interest
 
+
+ 
+                        3 TYPES OF KUBERNETES CLUSTER
+
 Multi Nodes Kubernetes Clusters:  ............ ............ .... for production great deployment, we nid multi node k8 cluster 
 ================================
-the first of its kind which w ecan install is : 
+the first of its kind which we can install is : 
 1. Self Managed Kubernetes [k8s] Cluster = IaaS--EC2  :  thess ar infrastructure as a service , we can launch of k8 cluster on a grp of ec2 instances, using kubeadm
     kubeadm --> We can setup multi node k8's cluster using kubeadm.  ... kubeasm is a sfware that is used to launch a k8, both d control plane n worker node
     kubespray --> We can setup multi node k8s cluster using kubespray , it uses ansible playbook
@@ -240,7 +264,7 @@ WITH  Self Managed Kubernetes [k8s] Clusters both the
      workerNodes: [  kubelet, containerRuntime-Container-d, kube-proxy]  
   are managed by the Admin/Kubernetes/DevOps Engineers
 
-*************** so if u have a self managed cluster u hv to ensure that the control plane wit all its components re healthy n functionin and also the components of the 
+*************** so if u have a self managed cluster u hv to ensure that the control plane wit all its components re healthy n functioning and also the components of the 
 woker nodes are all running and healthy, it is ur function
 
 we v anoda class of clusters wich are  manged by 3rd party, u will nt bother abt he mgt
@@ -248,7 +272,9 @@ we v anoda class of clusters wich are  manged by 3rd party, u will nt bother abt
    The controlPlane is managed by a cloud provider or third party.  
    The controlPlane and all it components are managed by the Cloud provider 
    ***************  howerever,   The workerNodes are managed by the Admins or engineers
-TYPES OF CLOUD manged service:
+
+        
+         TYPES OF CLOUD manged service:
    EKS --> Elastic Kubernetes Service(AWS)
    AKS --> Azure Kubernetes Service(Azure)
    GKE --> Google Kubernetes Engine(GCP)
@@ -256,10 +282,11 @@ TYPES OF CLOUD manged service:
     Kubernetes Cluster = k8s  
 
 ########### so u can deploy your cluster using, either a manged or a self managed sfware
-ideally, companies will prefer to go for managed bc it will give rhem more time to focus on the app , bc if u nid to focus on the architecture, it wil mean taht u wil need
-to spend more time ensuring that ur cluster is running than managing containerized appl,,   ,, bt more time shud be dedicated to appl management.
+ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
+that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
 
-*******************we also v another clas of cluster thatcan be installed 
+*******************we also v another clas of cluster that can be installed 
+
 3. KOPS: is a software use to create production GRADE/ready k8s in AWS and  
          azure for the kops beta version  
          It creates a highly available kubernetes services (he said cluster, mayb a mistake) in Cloud like AWS.
@@ -271,12 +298,13 @@ to spend more time ensuring that ur cluster is running than managing containeriz
               ec2-instances nodes [workerNodes and masterNodes]
               s3  
 
-its very esay to craate a kops cluster ... bt first u must be authorized , hw is securtiy managed in the aws account.. hw do we authroize 
+its very easy to craate a kops cluster ... bt first u must be authorized , hw is securtiy managed in the aws account.. hw do we authroize 
  kops create cluster --name mycluster --az us-east-2b nodes-4 master 3    
 
 we authorize using IAm ... identity and access mgt
 so we nid to create a roles or policies that will permit the user to vps, autoscaling grps, LB, S3 bucket etc
     iam role/user  
+
 
 A TOOL WE CAN USE TO MANAGE MULTIPLE CLUSTER 
 Rancher: - Using Rancher we can deploy both managed and self managed k8s CLUSTER
