@@ -9,7 +9,78 @@ I Didnt print
 Sand 
 Gateway 
 Eks
+*************************
 
+ AWS 1;
+Cloud Service Models:
+=====================
+IaaS -- Infrastructure as a service  :   has components that is managed by the vendors & managed by us 
+e.g ec2 instance  - ec2 
+  - SonarQube
+
+***online sonarqube is Saas, i had to verify it online.
+
+PaaS--  Platform  as a service  : aws container registry, aws kubernetes solution
+  ECR / EKS / ECS / 
+
+
+to tk my aws study to the nxt level
+===================================
+Terraform and other IaC tools to manage aws resources
+=====================================================
+Terraform    ....    .......18hours to cover terraform:
+CloudFormation 
+Ansible  
+Terraform:
+=========
+- support Multiple clouds [aws, GCP, Azure]
+- codes/files are used   
+
+AWS4
+Broad classification of Aws services
+********* he actually logged into aws & on the home page we saw all the aws services, even thode not listed here
+
+1) compute
+  in compute service we hv; server & serverless
+   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
+   serverless; Lambda(run code without servers) / Beanstack / farget profile
+                 Container( ECS ie elastic container service/EKS ie k8 service)
+  2) storage ; EBS/ EFS/ S3
+  3) databases 
+  4)networking 
+  5)data anylytics 
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+
+
+AWS10/11
+1. aws cloud computing
+
+What is Cloud Computing ?
+Cloud computing is the delivery of computing services—including 
+  - servers,storage, databases, networking, software, analytics, and more
+ over the Internet (“the cloud”)  hosted at a remote data center managed
+ by a cloud services provider (CSP).
+   CSP = aws, GCP, Azure, alibaba, vmware, salesforce, oracle, ibm, 
+
+ aws cloud = 
+  - servers,  e.g    = ec2 instances  
+  - severless, e.g   = Lambda functions,
+  - storage,         = ebs, efs,elastic file system, s3, 
+  - databases,  when we get into conatiner     = rds,relational databases e.g [ mySQL, mariaBD, posgressSQL, arura,  ], nonRDS[ dynamoDB,  ]
+  - networking,  = vpc, creating private ntwrk in aws
+  - software,   to create ec2 instance we nid a sfware to create the server resources = ami, SDLC, hw to automate task in aws
+  - analytics,  hw to analyze waht is happening in aws = CloudWatch, 
+  - and more  
+  - security     =aws security services 
+
+
+KUBERNETES 1&2
+TYPES OF CLOUD manged service:      ***I bliv for ochestrating contaners.
+   EKS --> Elastic Kubernetes Service(AWS)
+   AKS --> Azure Kubernetes Service(Azure)
+   GKE --> Google Kubernetes Engine(GCP)
+   IKE --> IBM K8s Engine(IBM Cloud)
+    Kubernetes Cluster = k8s  
 
 
 
@@ -188,3 +259,70 @@ kubernetes security - RBAC:
 
 authentication via kubeconfig : 
 authorisation via RBAC:
+
+
+
+                                           2TYPES OF KUBERNETES YOU CAN INSTALL
+1) Single node cluster 
+2) Multi Nodes Kubernetes Clusters   .. This is our focus....
+
+
+                             3 TYPES OF KUBERNETES CLUSTER
+you can deploy your cluster using, either a manged or a self managed sfware
+ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
+that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
+
+
+the first of its kind which we can install is : 
+1. Self Managed Kubernetes [k8s] Cluster = IaaS--EC2  :  thess ar infrastructure as a service , we can launch of k8 cluster on a grp of ec2 instances, using kubeadm
+    kubeadm --> We can setup multi node k8's cluster using kubeadm.  ... kubeasm is a sfware that is used to launch a k8, both d control plane n worker node
+    kubespray --> We can setup multi node k8s cluster using kubespray , it uses ansible playbook
+     (Ansible Playbooks Used internally by kubespray).
+WITH  Self Managed Kubernetes [k8s] Clusters both the    
+     controlPlane: [apiServer, etcd, scheduler, Controller Managers] 
+      and 
+     workerNodes: [  kubelet, containerRuntime-Container-d, kube-proxy]  
+  are managed by the Admin/Kubernetes/DevOps Engineers
+
+*************** so if u have a self managed cluster u hv to ensure that the control plane wit all its components re healthy n functioning and also the components of the 
+woker nodes are all running and healthy, it is ur function
+
+we v anoda class of clusters wich are  manged by 3rd party, u will nt bother abt the mgt
+2. Managed k8s Cluster  (Cloud Services) = PaaS  : 
+   The controlPlane is managed by a cloud provider or third party.  
+   The controlPlane and all it components are managed by the Cloud provider 
+   ***************  howerever,   The workerNodes are managed by the Admins or engineers
+
+        
+         TYPES OF CLOUD manged service:
+   EKS --> Elastic Kubernetes Service(AWS)
+   AKS --> Azure Kubernetes Service(Azure)
+   GKE --> Google Kubernetes Engine(GCP)
+   IKE --> IBM K8s Engine(IBM Cloud)
+    Kubernetes Cluster = k8s  
+
+########### so u can deploy your cluster using, either a manged or a self managed sfware
+ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
+that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
+
+*******************we also v another clas of cluster that can be installed 
+
+3. KOPS: is a software use to create production GRADE/ready k8s in AWS and  
+         azure for the kops beta version  
+         It creates a highly available kubernetes services (he said cluster, mayb a mistake) in Cloud like AWS.
+            KOPS will leverage Cloud Sevices like: .. so when u deploy wit kops, it comes along with all dis services n its very esay to craate a kops cluster 
+              vpc, 
+              AutoScaling Groups, 
+              LoadBalancer, 
+              Launch Template/configuration
+              ec2-instances nodes [workerNodes and masterNodes]
+
+
+
+
+
+
+
+
+
+
