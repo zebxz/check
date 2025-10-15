@@ -128,6 +128,7 @@ bt these ar the contarization software
 
 
 
+
    SUMMARIZED FOR INTERVIEW
 FOR autHORIZATION;
 authorisation via RBAC: Roll base access control, 
@@ -159,11 +160,11 @@ now this entire netwroking wher appls can accessed with relative ease is been su
 
 
 
+advantages of namespace
+****clusterRole &clusterRolebinding is for the entire cluster 
 
 
-
-
-
+START
 
 KUBERNETES
 IT is an ochestration engine, an open source platform for managing containerized applications... kubernetes is responsible for container deployment, scaling, descaling of
@@ -186,6 +187,26 @@ kubernetes:    kub has a cluster ,
 
 therfore in kub we can say that nodes are the subset of the cluster , pods are subset of the nodes and containers are the subset of the pods
 cluster ---> nodes ---> pods  ---> containers  :
+********therfore if u are going to deploy any appl in k8, it is going to be deployed in a pod
+
+PODS:
+====
+POD --> Pod is the smallest building block use to deploy applications in k8s.
+Pod represents running processes. Pod can contains one or more containers.
+These container will share same network, storage and any other specifications.
+Pod will have unique IP Address in k8s cluster. 
+
+Pods
+ SingleContainerPods --> Pod will have only one container.       98%
+ 
+ MultiContainerPods(SideCar) --> POD with two or more containers. 2%  
+e.g, we can v the  the application container and like a sidecar container
+       application Container :
+          e.g  webapp    , e.g u v a container running and u wnat to ensure this appl doesnt v any problem, so u attach a logmgt container so that whatsover is 
+       SideCar containers:                                                                             happening in the appl, this log is reporting it
+            e.g  logMgt  container   ... like a container that is collecting log from ur application,  can als have like a utility container for supplies
+
+
 
  cONTROLLER MANAGER.. >>>>>>>>>
 E.G IF U deploy ur appl and you want 3pods to be deployed , lets assume 2pods shud be running, if 1pod is down, the controller manger has been instructed to create 2pods, if
@@ -193,7 +214,7 @@ one pod goes down, it will automatically create the pod, those are the function 
 
 
 
-fEATURES:
+fEATURES:    *** OF K8
 1)the first feature it has is that it supports what is called automatic scheduling ie it provides advance scheduler to launch contianers on node
 2) it has self hidden capabilities, rescheduling, replacinging and rescheduling containers which are dead and the bauty abt it is that if u deploy a wrong application u can 
 go back to what was running before so it has automATED ROLBACKS AND rollouts 
@@ -261,6 +282,13 @@ kubernetes security - RBAC:
 authentication via kubeconfig : 
 authorisation via RBAC:
 
+  AUTHORIZATION IN AWS
+         to be authorized to create an aws EKS cluster in aws, i can create an IAM Role for EKS , this wil permit us to create and manage an EKS cluster
+it wil be the same thing for Azure AKS, goodle GKE and Ibm cloud
+
+************* so if i v like 10clusters that i wnt to manage, wich i wnat to be observing hw dey are performing at all times then i need to instal the rancher 
+sfware so i can use it to access those clusters
+
 
 
                                            2TYPES OF KUBERNETES YOU CAN INSTALL
@@ -320,10 +348,117 @@ that u wil need to spend more time ensuring that ur cluster is running than mana
 
 
 
+                             A TOOL WE CAN USE TO MANAGE MULTIPLE CLUSTER 
+Rancher: - Using Rancher we can deploy both managed and self managed k8s CLUSTER
+           Rancher serves as a glass to access and manage multiple k8s  
+           from the rancher dashboard [UI]  - rancher dashboard  ,,,, frm rancher i can create a cluster in EKS/AKS/GKE/IKE 
+           authentication and authorisation: EKS/AKS/GKE/IKE  ... bt u v to be authorized
+
+
+
+DEPLOY/INSTALL MULTI CLUSTER
+
+DEploy master node:
+in mobaxterm connect to the server then set hostname to master  and sudo i to switch to root user
+in the installation script first, we v to 
+we nid to diasable swap n kernel setting,so we wil disable swap memory so that we can enhnace performance in our k8 cluster , then nxt, we ar adding kernel
+details n instal container-d, first instal container-d n its dependecies bc our runtime (to b able to start&runour conatiners) is nt docker bt it is container
+-d, once it is installed, we will proceed to start container-d  afterwhcih we wil instal kublet, kubeabm and kubectl,, after that we wil start the kublet
+service i will run this as a script and i nid to be root user
+Initialize Kubernetes control plane by running the below commond as root user.
+sudo kubeadm init
+****************** but am a root user, so i dnt nid sudo. ... just run kubeadm init 
+and for us to be able to initialize this control plane the req port must be opened. 
+************************** SUCCESSFUL... now i can process as a regular user
+
+to launch nodes/Wokers:   ***************
+
+8)  Generate the master join token on the master node
+so am going to generate the master token on the master node
+kubeadm token create --print-join-command                                                                               1:14:44
+once the token is created,
+
+
+
+K8 BEST PRACTICES FOR LARGE CLUSTER
+
+lets look at k8 BEST PRACTICES FOR LARGE CLUSTERS     *********** so if u have a very large cluster you can click on this link, u wil get more info
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+For very large clusters NB: dnt create :
+   No more than 5,000 nodes
+   No more than 110 pods per node
+   No more than 150,000 total pods
+   No more than 300,000 total containers
+
+
+
+    OBJECTS USED FOR DEPLOYMENT
+kubernetes resources/objects used to deploy application include:
+   Pod :
+or    
+ controllerManagers:
+      Replication Controller
+      ReplicaSet
+      DaemonSet
+      StatefulSets
+      Deployment
+      Volume
+      Job       
+
+
+
+when u deploy appl in k8, u v to make the appl accessible ie exposing appl/accessing appl
+Exposing/accessing applications = Service Discovery:
+    Service Types:  it will route service to our appl n their replicas ,
+    ClusterIP :  it performs LB  , its used for internal communication inside the cluster.
+    NodePort
+    LoadBalancer
+    ExternalName  
+  ingress 
+  networkPolicy 
+
+
+
+
+                                 NAMESAPCE     ***i bliv its kinda similar to label & restriction in docker swamp
+1:34:30  **********************generally for this deployment to tk place even in k8, we will make use of a namespace
+how DO WE ENSURE THE APPL ARE ABLE TO COMMUNICATION  & all of that , ders a concept in k8 called:
+Namespace:
+  It is a virtual cluster inside your cluster  ,,, we can create a name space for dev stage, uat stage , prod stage , sales ... dependn on d project u are managing
+     [ dev / uat / prod ],                            if u create a namespace for e.g, u wnat a situatn wher what dev ar doin does nt affect what is runin in uat &prod
+     [sales, accounts, cs, payroll]                so we can use name spaces for isolation, we'l isolate d dev env frm uat, frm prod using namespaces
 
 
 
 
 
+ HOW DO WE DEPLOY WORKLOAD IN K8 ????????????????
+
+WE DEPLOY workloads using Imperative and declarive approaches    
+
+-#Create Name Space Using Imperative approach =  Command
+   LIKE:
+kubectl create namespace <nameSpaceName>
+    kubectl create namespace dev  
+
+-declarive approach =  makes use of files and less commands  
+-# Using Declarative Manifest file 
+
+ Use the declarive approach to deploy workloads in kubernetes:
+  Manifest files = kams       ........ we use manifest files to deploy in ddeclarative approach
+  Manifest files are written in yaml/yml language 
 
 
+pod.yml  : in this yml language, it deals with stuffs like :
+key:value  pairs     
+dictionary: number of key:value pairs 
+list:
+
+
+
+ APPLICATIONS IN OUR REGISTRY   ... ..... these are all images we can use to depploy our appli in k8
+in our image registry , we have applications like 
+Docker images = dockerHub other registries:
+-- python-web-app ,  nodeweb-app,  net-webapp 
+   mylandmarktech/hello,  nginx,  mysql,  mongo  
+   jenkins,  sonarqube, nexus          
