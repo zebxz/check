@@ -520,7 +520,21 @@ kube-public       Active   57m
 kube-system       Active   57m
 
 
-                                       CREATE FINTECH & ECOMMERCE NAMESPACES
+
+1:50:00 ********************************* HOW DO WE DEPLOY WORKLOAD IN K8 ????????????????
+
+WE DEPLOY workloads using Imperative and declarive approaches    
+
+-#Create Name Space Using Imperative approach =  Command
+   LIKE:
+kubectl create namespace <nameSpaceName>
+    kubectl create namespace dev  
+
+-declarive approach =  makes use of files and less commands  
+-# Using Declarative Manifest file 
+
+
+                                       CREATE FINTECH & ECOMMERCE NAMESPACES USING IMPERATIVE APPROACH  (COMMAND)
 
 Ticke3:
   Create fintech and ecommerce Namespaces   
@@ -583,19 +597,8 @@ For very large clusters NB: dnt create :
 
 
 
-1:50:00 ********************************* HOW DO WE DEPLOY WORKLOAD IN K8 ????????????????
 
-WE DEPLOY workloads using Imperative and declarive approaches    
-
--#Create Name Space Using Imperative approach =  Command
-   LIKE:
-kubectl create namespace <nameSpaceName>
-    kubectl create namespace dev  
-
--declarive approach =  makes use of files and less commands  
--# Using Declarative Manifest file 
-
-
+                                         CREATE PROD NAMESPACE USING DECLARATIVE APPROACH (MANIFEST FILE)
 
 Ticket4: Create prod namespace using the declarive approach.  
 ========
@@ -689,12 +692,16 @@ list:
 
                              KEY VALUE PAIR
 hw do we consider keyvalue pair 
-**************for e.g when u want to create a manifest file, it has this acronym, comes :   where comes stands for kind, api version, metadata and spec
+**************for e.g when u want to create a manifest file, it has this acronym, comes :   where 'comes' stands for kind, api version, metadata and spec
 kind is a key value pair bc for example ; kind is pod , this is a key value pair, it has a key & a value  ,,, so key &value ,, kind:pod
 for e.g , key value pair could be  name and the value is simon
 key:value  pairs 
 name: simon   
-  
+
+
+                                              CREATE POD USING DECLARATIVE APPROACH (MANIFEST FILE) 
+
+
 pod.yml template
 ======
 apiVersion: v1       (this is also a key value pair)
@@ -728,12 +735,15 @@ spec:                         we want to create containers, a pod can v 1 or mor
    - name: web                          e.g container1 caller web
      image: mylandmarktech/hello              
      ports:                              container port is a list also bc we are tryin to list
-     - containerPort: 80       ..... this container port is determined by d image bc when the imsge is being built, d keyword used to defined container port in d dockerfile
+     - containerPort: 80       ..... this container port is determined by d image bc when the image is being built, d keyword used to defined container port in d dockerfile
 
    - name: logmgt                        contianer2 , called logmgt
 ---                                      it can also still v container3
 EXPOSE 80     
 
+
+
+                          DEPLOYING THE MANIFEST FILE TO CREATE POD
 
 ###############2:07:20
 vi pod.yml and paste the mainfest file 
