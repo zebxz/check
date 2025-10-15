@@ -2,3 +2,52 @@
     kubespray --> We can setup multi node k8s cluster using kubespray , it uses ansible playbook
      (Ansible Playbooks Used internally by kubespray).
   
+first instal container-d n its dependecies bc our runtime (to b able to start&runour conatiners) is nt docker bt it is container
+-d, once it is installed, we will proceed to start container-d  afterwhcih we wil instal kublet, kubeabm and kubectl,, after that we wil start the kublet
+service i will run this as a script and i nid to be root user
+
+Initialize Kubernetes control plane by running the below commond as root user.
+sudo kubeadm init
+
+run the 3commands as stated in the success notification in my cli  (mkdir -p $HOME/.kube .......)
+we can cat .kube/config  file, we can see its content n this is d file authenticating us to carry out tasks and d  user now is the admin , so he has admin
+access in d  cluster
+
+we run : kubectl get node  or kubectl get pod
+it shows the master node is not ready
+7) so to ensure its ready we v to deploy the ntwrk plugging
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+************now it has created certain components 
+now if we execute kubectl get node .............. our master node is ready
+
+lets check all the pods in the cluster ..... kubectl -A 
+
+
+kubectl get namespace
+  kubectl get ns 
+
+ kubectl create namespace fintech --v=8      . V , MEANS   in verbose
+ kubectl create namespace dev     
+ kubectl delete namespace dev
+
+
+How to deploy run/execute tasks/workloads in kubernetes??
+   1. Imperative  approach 
+        By using commands 
+
+   2. Declarative approach
+        By using files [manifests files]  
+
+-# Create POD Using Command
+kubectl run <podName> --image=<imageName> --port=<containerPort> -n <namespaceName>
+kubectl run hello --image=mylandmarktech/hello --port=80 -n dev 
+
+
+ubuntu@master:~$  kubectl get po    ...... ........ 
+no resources found in default namespace 
+ubuntu@master:~$ kubectl get po -n dev
+no resources found in dev namespace 
+
+ubuntu@master:~$ kubectl get svc -n dev      .... to check for services
+no resources found in dev namespace 
+
