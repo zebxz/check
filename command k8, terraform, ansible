@@ -1,4 +1,35 @@
-  kubeadm --> We can setup multi node k8's cluster using kubeadm.  ... kubeasm is a sfware that is used to launch a k8, both d control plane n worker node
+kub1&2
+
+advantages of namespace
+****clusterRole &clusterRolebinding is for the entire cluster 
+
+***Docker is 'compose file'  deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
+
+
+   TK NOTE OF THIS TREE
+kubernetes:    kub has a cluster , 
+   cluster: it is a grp of nodes
+   nodes:  in the nodes ther are pods 
+   pods:  in the pods ther ar containers ..  
+   containers :  
+
+
+        OBJECTS USED FOR DEPLOYMENT
+kubernetes resources/objects used to deploy application include:
+   Pod :
+or    
+ controllerManagers:
+      Replication Controller
+      ReplicaSet
+      DaemonSet
+      StatefulSets
+      Deployment
+      Volume
+      Job       
+
+
+
+kubeadm --> We can setup multi node k8's cluster using kubeadm.  ... kubeasm is a sfware that is used to launch a k8, both d control plane n worker node
     kubespray --> We can setup multi node k8s cluster using kubespray , it uses ansible playbook
      (Ansible Playbooks Used internally by kubespray).
   
@@ -21,6 +52,18 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 now if we execute kubectl get node .............. our master node is ready
 
 lets check all the pods in the cluster ..... kubectl -A 
+
+
+
+
+  KEY VALUE PAIR
+hw do we consider keyvalue pair 
+**************for e.g when u want to create a manifest file, it has this acronym, comes :   where 'comes' stands for kind, api version, metadata and spec
+kind is a key value pair bc for example ; kind is pod , this is a key value pair, it has a key & a value  ,,, so key &value ,, kind:pod
+for e.g , key value pair could be  name and the value is simon
+key:value  pairs 
+name: simon   
+
 
 
 kubectl get namespace
@@ -50,4 +93,11 @@ no resources found in dev namespace
 
 ubuntu@master:~$ kubectl get svc -n dev      .... to check for services
 no resources found in dev namespace 
+
+To deploy manifest file
+vi pod.yml and paste the mainfest file 
+kubectl apply -f pod.yml
+
+
+kub 3&4
 
