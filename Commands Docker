@@ -400,8 +400,16 @@ docker-compose config      ................if ders an errror, it will tell you
 **docker10 ***1.45.00****by default this searches for the docker config.yml file 
 
 6) create the containers/DEPLOY THE APPLICATION
+#for  files with default name: docker- compose
 docker-compose up -d 
        docker ps .... the containers are running
+ 
+6b) #docker compose file with custom name.  
+docker-compose -f <CustomeComposeFileName>.yml <command>
+Ex:
+docker-compose -f docker-compose-springapp.yml config
+docker-compose -f docker-compose-springapp.yml up -d
+docker-compose -f docker-compose-springapp.yml down
 
 
 # Remove Services/Contianers  .................  to destroy the containers
