@@ -263,7 +263,7 @@ kubernetes Service:
   So internally we can access using service name(DNS).
 
 2174  2409
-########CREATING SERVICE FOR HELLoAPP
+                              ########CREATING SERVICE FOR HELLoAPP
 hellosvc.yml  
 =========== kams    ..... .....acronmy
 kind: Service  
@@ -388,15 +388,16 @@ service FQDN = hellosvc.dev.svc.cluster.local
     
                                                     APPLYING FQDN 
 
-let me jst use a command to create a new pod   in the default namespace
-kubectl run web --image=mylandmarktech/java-web-app --port=8080 -n default  
+let me jst use a command to create a new pod   in the default namespace  & one in the dev namespace
+ 1)kubectl run web --image=mylandmarktech/java-web-app --port=8080 -n default  
+ 2) kubectl run web --image=mylandmarktech/java-web-app --port=8080 -n dev
 
-ubuntu@master:~$ kubectl get po
+ubuntu@master:~$ kubectl get po                                  *** these are pods in the dev namespace
 NAME            READY       STATUS      RESTARTS       AGE
 hello            1/1         Running      0              4s           
 web               1/1        running     0               10s       .... we see web running
 
-ubuntu@master:~$  kubectl get po -0 wide -n default 
+ubuntu@master:~$  kubectl get po -0 wide -n default                 *** this is the pod  we created in the default namespace
 NAME            READY      STATUS      RESTARTS      AGE     IP            NODE      NOMINATED NODE
 web                1/1      running      0            48s    10.44.0.1      node1
 
@@ -406,9 +407,12 @@ Hellosvc           ClusterIP           10.105.209.246              none         
 
 
 
-                                 EXEC -it COMMAND
 
-********i cud a command in this pod  just like docker  kubectl exec web,  or interactive  (kubectl exec -it web) its the same in k8
+                                USING THE 'EXEC -it' TO RUN FQDN                                                                           
+  1) We want to est communictaion btw the 'hello container' in the dev namespace & the 'web container' created in the default namespace using the 
+hello service :helloSVC ..... we created it above earlier...
+                                                                                                                                          
+********i cud a command in this pod  just like docker,  kubectl exec web,  or interactive  (kubectl exec -it web) its the same in k8
 ubuntu@master:~$   kubectl exec -it web -n default bash         .....  now, i v a pod, the name of my container is web, in default namespace
 kubectl exec [POD] {COMMAND] is DEPRECIATED and will be removed in a future version.
 root@web:/usr/local/tomcat#                *************now we are inside the container and it is running in the default name space 
@@ -417,11 +421,15 @@ root@web:/usr/local/tomcat#                *************now we are inside the co
 root@web:/usr/local/tomcat#  curl hellosvc.dev.svc.cluster.local        52:47   
 we successfully commu with the container (they are in 2diff name space)
 
+
+                         errror... TRYING TO COMM with the 'web pod' in the default namespace using curl
 root@web:/usr/local/tomcat#  curl hellosvc
 curl: (6) could not resolve host: hellosvc    ,,,  wheni use just the service name am unable bc they ar in diff namespaces, so u hv to use the FQDN when d 
 containers ar running in  diff namespaces.
             
-                                                                                                                                                                  container
+
+                       USING CURL TO COMMUNICATE WITH CONTAINERS INSIDE THE SAME NS
+container
 root@web:/usr/local/tomcat#  exit              54:10  ####remember earlier we config our default namespace to be dev n now we didnt indicate default so its in dev lik hello
 ubuntu@master:~$  kubectl exec -it web bash             ......these are now containers in the same namespace n using just the service name am able to comm
 root@web:/usr/local/tomcat# curl hellosvc        ****now am accessing a container that are in the same namespace .. in the same namespace wit just d service name it wil work n 
@@ -440,11 +448,11 @@ web               1/1        running     0               5m30s
 ubuntu@master:~$ kubectl delete po web
 pod web deleted 
 
-ubuntu@master:~$ kubectl get po
+ubuntu@master:~$ kubectl get po                         ***we dnt see the 'web container' again bc it wasnt recreated
 NAME            READY       STATUS      RESTARTS       AGE
 hello            1/1         Running      0             32m
 
-********web wasnt recreated bc when u use pod to deploy k8 objects, pods cannot be recreaed and it cannot be scaled
+********web wasnt recreated bc when u use pod to deploy k8 objects, pods cannot be recreated and it cannot be scaled
 e.g we can decide to have more replicas of hello if we ar going to be using pod
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod    .....
 (we shud use controllers like Replica Sets, Deployment, Deamon sets to keep pod alive)
