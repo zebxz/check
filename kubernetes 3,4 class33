@@ -8,7 +8,63 @@ HOW POD IS MANGED ,create a secret for dockerhub
 
 ********************************************************************************************************************
 
-ubuntu@master:~$ kubectl get po 
+
+ SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE, MORE PODS COMMANDS, 
+
+
+
+****from video 1&2
+
+NAMESAPCE     ***i bliv its kinda similar to label & restriction in docker swamp
+1:34:30  **********************generally for this deployment to tk place even in k8, we will make use of a namespace
+how DO WE ENSURE THE APPL ARE ABLE TO COMMUNICATION  & all of that , ders a concept in k8 called:
+Namespace:
+  It is a virtual cluster inside your cluster  ,,, we can create a name space for dev stage, uat stage , prod stage , sales ... dependn on d project u are managing
+     [ dev / uat / prod ],                            if u create a namespace for e.g, u wnat a situatn wher what dev ar doin does nt affect what is runin in uat &prod
+     [sales, accounts, cs, payroll]                so we can use name spaces for isolation, we'l isolate d dev env frm uat, frm prod using namespaces
+
+
+
+            ILLUSTRATION
+1)created dev namespace
+ubuntu@master:~$ kubectl create namespace dev --v=8  
+kubectl create namespace prod
+
+2) created pod for container 'hello'
+# Create POD Using Command
+kubectl run <podName> --image=<imageName> --port=<containerPort> -n <namespaceName>
+pod/hello created
+ubuntu@master:~$ kubectl get pod
+no resources found in default namespace 
+ubuntu@master:~$ kubectl get po -n dev
+NAME    READY      STATUS       RESTARTS      AGE
+hello     1/1      running         0            11s
+*********************************we have been able to deploy this application
+
+3)created pod for container webapp
+Used manifest file to create pod
+
+*** VIdeo 3&4
+4) to deploy the manifestfile  we created below it wil deploy a pod called hello   *** now using pod to replace what we called image we create when we build 
+mkdir manifests                                                                                                             an app in docker
+vi manifest/hello.yml  and paste the file 
+kubectl apply -f manifest
+
+5) *** seen below        
+created service called HelloSVC  for 'hello' to enable communication btw another app call webapp
+HelloSVC is a (clusterip service), the cluster-ip   10.105.209.246(which is the service ip)
+Curl  cluster-ip   10.105.209.246        ,, and we successfully communicated with the app usin d service ip address
+When I wnt to curl, we curl on port 80 cos if my service port was smt else then I v to write the port number but since it is 80 , I can curl without it
+
+So my hellosvc is a clusterip service  and it has a service ip address, so when the webapp is trying to comm wit it its going to use this service n the
+webapp talks to the service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number
+wich is also port80 in this case
+
+
+
+        ***** VIDEO 3&4 starts
+
+ubuntu@master:~$ kubectl get po       **** By default, it lists pods in the currently configured namespace.
 no resources found in the default namespace    ****************************** this is set to my current context , its my current name space
 
 ubuntu@master:~$ kubectl get po -n dev    ............**************** we can see some pod that v been  deployed in the dev namespace
@@ -16,10 +72,19 @@ NAME      READY      STATUS       RESTARTS      AGE
 hello     1/1       running         0            8m38s
 webapp    1/1       running         0             12s
 
+
+
+                                SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE
+originally, the default namespace is the 'current namspace'
+*Mee*by default, kubectl get po' lists the pods in the configured ns, BUT you hv to run the 'kubectl config set-context' command, to set the ns you configured/
+created to be the current ns
+
  WHEN I RUN  kubectl get po  i want it TO LIST THE pods in my (dev namespace) in the default namespace
 ----
-at the moment the default namespace is my current namespace, thats why when i execute  kubectl get po , it says no resources in the default namespace bt once i run :
-kubectl config set-context --current --namespace=dev       **v modified my current workspace such that if i execute  kubectl get po it lists d pods in the dev namespace
+at the moment the default namespace is my current namespace, thats why when i execute  kubectl get po , it says no resources in the default namespace bt once
+i run :
+kubectl config set-context --current --namespace=dev       **v modified my current workspace such that if i execute  kubectl get po it lists d pods in the
+dev namespace
 
 ubuntu@master:~$ kubectl get po     ....******************************  kubectl get po it lists d pods in the dev namespace, so d dev namespace has become my current  
 NAME      READY      STATUS       RESTARTS      AGE                                                                                    namespace
@@ -27,6 +92,9 @@ hello     1/1       running         0            8m38s
 webapp    1/1       running         0             12s
 
 **************originally, it was the default namespace that was the current namspace but i v changed my context to dev
+SO even if i dont state/indicate the namespace in the manifest file, the app will be deployed in (dev namespace we made)it our default namespace by modifing 
+it above
+                                                                              
 
 
 ########################### MORE PODS COMMANDS ............7:25
@@ -37,7 +105,8 @@ kubectl delete all --all
 kubectl delete all --all -n dev     
 kubectl delete pod --all                                                                                               interpretin , creatin &mangin d pod 
 kubectl get pods                               Anotation is a metadata info abt ur pod that is set by d sys/k8 service n it is what d sys wil understan when it comes to
-kubectl get pods -o yaml   ...   will present the pod in that are runnin in our clustera yml file, we can see annotation,bt when we made d file to create d pod der was no anotation
+kubectl get pods -o yaml   ...   will present the pod in that are runnin in our clustera yml file, we can see annotation,bt when we made d file to create d
+                                                                                                            pod der was no anotation
 kubectl get pods --show-labels
 kubectl get pods -o wide           **************** gives more inf abt the pods
 kubectl get pods -o wide --show-labels
@@ -49,18 +118,22 @@ in docker we run: docker inspect  to get more info abt the container
 kubectl  describe pod <podName>      *********to get more info abt the pod 
 kubectl  describe pod <podName> -n <namespace>
 
+
+
+
+                                     DEPLOYING USING DECLARATIVE APPROACH (MANIFEST FILE)
 16:10:00
 kubectl run app --image=mylandmarktech/hello --port=80              ... dis wil deploy a pod called hello
 
 
-hello.yml       >>>>>>>>>>>>>>>>   using the declaractive approach  ....  (20:50) *************WE want to creat/deploy an appl called pod (i think he meant hello)
+hello.yml       >>>>>>>>>>>>>>>>   using the declaractive approach  ....  (20:50) *********WE want to creat/deploy an appl called pod (i think he meant hello)
 =========   kams     ........ this is the acronmy, it stands for kind,apiversion, metadata, spec
 kind: Pod   
 apiVersion: v1    
 metadata: 
    name: hello
    labels:
-     app: hello     
+     -app: hello          ** this is wrong as explained in the 'TROUBLESHOOTING' below
 spec:
    containers:
    - name: hello   
@@ -73,16 +146,18 @@ kubectl api-resources   *********** to get the apiresources for our pod,, we can
 kubectl api-resources | grep pod      ....  so to specify n grep for pod , we see we can either call it pods or po and the apiversion is v1
 ******************************************************************************************
 
-########## to deploy the manifestfile  we cfeated above 
+########## to deploy the manifestfile  we created above 
 mkdir manifests
 vi manifest/hello.yml  and paste the file 
 kubectl apply -f manifest
 
+
+                                    TROUBLESHOOTING
 ubuntu@master:~$ kubectl apply -f manifest
 error: unable to edcode "manifest/hello.yml:json cannot unmarshla array into 
        GO struct field ObjectMeta.metadata.labels of type map[string}string
 
-************************so he vi again into the file and saw taht he listed metadata bt its suppose to be a dictionary not a list 
+************************so he vi again into the file and saw that he listed label' bt its suppose to be a dictionary not a list 
     metadata: 
    name: hello
    labels:
@@ -92,49 +167,67 @@ ubuntu@master:~$ kubectl apply -f manifest
 pod/hello created
 ubuntu@master:~$ kubectl get all
 NAME            READY       STATUS      RESTARTS       AGE
-Pod/hello         1/1        Running     0              18s               *********** the pod is running bt hw do we discover the pod in our clutser?  service discovery
+Pod/hello         1/1        Running     0              18s         **** the pod is running bt hw do we discover the pod in our clutser?  service discovery
 
 
+
+
+                                      SERVICE DISCOVERY
 ServiceDicovery:
 ==============
 *********the first service type is:
 ClusterIP is the default kubernetes service type that support
 communication within the cluster. 
-************** to communicate within our cluster, we will use a clusterip service type                                             LEts cal it 
-e.g we v the hello app on node1,& d webapp on node9 ,, for webapp to comm with hekllo app, we v to create a service for our helloapp, helloSVC n D sevice type is clusterip
+************** to communicate within our cluster, we will use a clusterip service type                                            
+e.g we v the hello app on node1,& d webapp on node9 ,, for webapp to comm with hekllo app, we v to create a service for our helloapp, Lets call it;
+helloSVC n D sevice type is clusterip
 if u look at the pod we created in the definition file , we v a label; app is mapped to hello
 POD=labels:
   app: hello            *******........... app is mapped to hello
 Serice = selectors:  
    app: hello  
 
-********************* for a service to deiscove rany pod, its going to be using labels, so what is the label of the pod
-so we v labelas n we also v selectors...  so ders a label that says app is mappsed to label , its under the pod, so we v pot label
+
+
+                                LABELS & SELECTORS EXPLAINED
+****SERVice makes pods accessible using labels & selectors
+
+********************* for a service to deiscover any pod, its going to be using labels, so what is the label of the pod
+so we v labelas n we also v selectors...  so ders a label that says app is mapped to hello, its under the pod, so we v Pod label, so 
 under service, we ar goin to v sevice selectors
-in my k8 cluster der wil b many sevices,  hw wil the servoice be able to identify this pod,, it nids to create a selector that matches this pod like that so ... (hello)
-#########so in the hello service (helloSVC), ther will be a selector, n the selector s saying app, bc this selector depends on the pod, so in the app pod, we v a label n app
-is mapped to hello 
+in my k8 cluster der wil b many sevices,  hw wil the service be able to identify this pod,, it nids to create a selector that matches this pod like that so
+... (hello)
+#########so in the hello service (helloSVC), ther will be a selector, n the selector s saying app, bc this selector depends on the pod, so in the app pod, 
+we v a label n app is mapped to hello 
 *******************
-webService                                 hello
-hellSVC                                    labels
-selector                                   app:hello
-app:hello               d app has a container port  80
+        ***kub1&2, 1.36.42... webService is the clusterip..... 
+
+webService                                        hello
+helloSVC                                          labels
+selector                                         app:hello
+app:hello               d 'app' has a container port  80     ***i think this should be 'hello' not app, cos 'hello' is the container name
 ClusteriP                 
 targetport80       when u create a service, wher u v the container port will be represented by the target port, so d servixe is targeting port80
- so the webapp wants to com with thw helloapp , d webbapp can nt comm with d helloapp directly in the cluster, its nt supported in k8, so hw is the com to be established?,
+ so the webapp wants to com with thw helloapp , d webbapp can nt comm with d helloapp directly in the cluster, its nt supported in k8, so hw is the com to 
+be established?,
 via service discovery..
 
 lets assume the webapp pod has its own label:
 webapp
 app:web
 8080           container port
-so the webapp wants to com with thw helloapp, the comm is goin to be est via the helloSVC ,webapp is goin to route traffic to the service that is controlling the hello pod
+so the webapp wants to com with thw helloapp, the comm is goin to be est via the helloSVC ,webapp is goin to route traffic to the service that is controling
+the hello pod
 once it does that, then the service will comm with the pod in this order
 this is service within the cluster
 in k8 we can create a service and we will look at theta very soon 
 
 lets talk abt k8 SVC:  .........,30:52
 
+
+                                    KUBERNETES SERVICE
+   ****SERVice makes pods accessible using labels & selectors
+                     
 kubernetes Service:
   In Kubernetes Service makes our pods accessible/discoverable 
   within the cluster or exposing them outside  the cluster.
@@ -209,13 +302,15 @@ Hellosvc                  10.36.0.1.:80             105s           .... it has j
 Kubectl  get svc –o wide
 NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         SELECTOR
 Hellosvc           ClusterIP           10.105.209.246              none              80/TCP      116s         app=hello
-          
+
+
  (which is the service ip)
 Curl  cluster-ip   10.105.209.246        ,, and we successfully communicated with the app usin d service ip address
 When I wnt to curl, we curl on port 80 cos if my service port was smt else then I v to write the port number but since it is 80 , I can curl without it
 
-So my hellosvc is a clusterip service  and it has a service ip address, so when the webapp is trying to comm wit it its going to use this service n the webapp talks to the
-service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number wich is also port80 in this case
+So my hellosvc is a clusterip service & it has a service ip address, so when the webapp is trying to comm wit it(hello) its going to use this service n the
+webapp talks to the service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number
+wich is also port80 in this case
 
 Other commands regarding service
 
@@ -240,6 +335,9 @@ Endpoints:          10.26.0.1:80
 
 ubuntu@master:~$  curl  10.26.0.1:80   --------> 10.36.0.1:80 
 when we curl on port 80, the service route the traffic to the container IP address  ie we curl to acces the container on that iP address
+
+
+
 
 
                      #########################  FQDN
@@ -367,12 +465,16 @@ myapp-master     1/1         Running      0             8s     ...  this pod is 
                                                                   so long as the manifest file exists, it wil be restarted
 
 ************to delete a static pod , we v to delete the manifest file..   .... I BLIV HE DELEted the manifest file
+
+
+
+ ######################CONTROLLERS****************************************1:05:00
 ---
 NB:
 We should not create pods directly to deploy applications.
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
-                ######################CONTROLLERS****************************************1:05:00
+                
 controllerManagers:
   ReplicationControllers 
   ReplicaSets, 
@@ -389,6 +491,8 @@ cluster and the node hosting the pod fails then pods running on the node
 will fail. Kubernetes treats that level of failure as final. 
 You would need to create a new Pod to recover,even if the node later becomes healthy.
 ************Therfore we nid to use controller mangers such that if this  node goes down a controler manger will ensure that this pod is rescheduled on another node 
+
+
 
 1:07:00   ################ HOW TO CREATE A REPLICATION controller, that wil be creating a particular pod
 
@@ -482,7 +586,7 @@ frm the service, which  now has endpoints ie our pods/containers, so traffic get
 in our cluster we have
 masterIP = 3.128.206.139
 NODE9-IP= 3.148.106.135
-                                  *************this is service disCOVERY, WHICH IS AVERY KEY aspect to take note of 
+                                  *************this is service disCOVERY, WHICH IS A VERY KEY aspect to take note of 
 3.148.106.135:31000  ... accessed online successful, momentarily, we can see d trafic routed as it switches btw d pod names: pod/apprc-kgh2g ,pod/apprc-tmlz8,pod/apprc- zncll 
 
 ubuntu@master:~$ kubectl get all
