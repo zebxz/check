@@ -497,7 +497,7 @@ Exposing/accessing applications = Service Discovery:
   networkPolicy 
 
 
-                                     NAMESAPCE
+                                     NAMESAPCE/ WHAT IT IS USED FOR
 1:34:30  **********************generally for this deployment to tk place even in k8, we will make use of a namespace
 how DO WE ENSURE THE APPL ARE ABLE TO COMMUNICATION  & all of that , ders a concept in k8 called:
 Namespace:
@@ -506,7 +506,7 @@ Namespace:
      [sales, accounts, cs, payroll]                so we can use name spaces for isolation, we'l isolate d dev env frm uat, frm prod using namespaces
   pros:
     isolation                                                                                                               1:39:36
-    permissions                   also for permisions e.g for d dev namespace we assign  deveopers to mange the dev namespace for prod engineers, so developers ar permitted 
+    permissions                also for permisions e.g for d dev namespace we assign deveopers to mange the dev namespace for prod engineers, so developers ar permitted 
        dev  - Developers                     to run their workload in the dev namespace while engineers ar runnin ther workload in the prod namespace
        prod - Engineers
     resource utilisation                          
@@ -557,7 +557,7 @@ kubectl create namespace <nameSpaceName>
 
 
                                        CREATE FINTECH & ECOMMERCE NAMESPACES USING IMPERATIVE APPROACH  (COMMAND)
-
+1.43.50
 Ticke3:
   Create fintech and ecommerce Namespaces   
 kubernetes uses the kubectl client or the UI to run workloads.
@@ -607,7 +607,7 @@ kube-system   weave-net-rzndz                  2/2     Running   0             5
 ****************** SOMEONE ASKED how many pods can we create in one node ???????????????
 
 
-                                   K8 BEST PRACTICES FOR LARGE CLUSTER
+1.48.30                                   K8 BEST PRACTICES FOR LARGE CLUSTER
 
 lets look at k8 BEST PRACTICES FOR LARGE CLUSTERS     *********** so if u have a very large cluster you can click on this link, u wil get more info
 https://kubernetes.io/docs/setup/best-practices/cluster-large/
@@ -638,7 +638,7 @@ ubuntu@master:~$ kubectl apply -f ns.yml
 created
 
 
-
+1.54.40
 PODS:
 ====
 POD --> Pod is the smallest building block use to deploy applications in k8s.
@@ -647,7 +647,7 @@ These container will share same network, storage and any other specifications.
 Pod will have unique IP Address in k8s cluster. 
 
 Pods
- SingleContainerPods --> Pod will have only one container.       98%
+ SingleContainerPods --> Pod will have only one container.       98%  .. HE didint say anything abt these percentages
  
  MultiContainerPods(SideCar) --> POD with two or more containers. 2%  
 e.g, we can v the  the application container and like a sidecar container
@@ -657,7 +657,8 @@ e.g, we can v the  the application container and like a sidecar container
             e.g  logMgt  container   ... like a container that is collecting log from ur application
            utility Container [e.g u have a Truck that is transportin some goods n u v a car infront of that truck, d car can help wit traffic n give warning signs to oda ]
        road users to inform dem that der is a large truck on d road b careful,its like a side car ,it can also be useful to transfer fuel when the main truck run out of fuel
-                    
+
+1.50.40
 How to deploy run/execute tasks/workloads in kubernetes??
    1. Imperative  approach 
         By using commands 
@@ -709,7 +710,7 @@ Docker images = dockerHub other registries:
   Manifest files = kams       ........ we use manifest files to deploy in ddeclarative approach
   Manifest files are written in yaml/yml language 
 
-
+2.01. 50
 pod.yml  : in this yml language, it deals with stuffs like :
 key:value  pairs     
 dictionary: number of key:value pairs 
@@ -735,7 +736,7 @@ metadata:          (this is a dictionary that contains a number of keyvalue pair
   name: <podName>
   namespace: <namespaceName>
   lables:           (this is another dictionary)                    he didnt specify the guy
-    key: <value>                               2:04:24 .. if u look at dis guy, we ar creatin this objects, the acronmy is comes...kind,apiversion,metadata &spec
+    key: <value>                               2:04:24 .. if u look at dis guy, we ar creatin this objects, the acronmy is kams...kind,apiversion,metadata &spec
     key: <value> 
 spec:                                        
   containers:         ... under spec, we want to create containers, a pod can v 1 or more containers
@@ -743,7 +744,6 @@ spec:
     image: imageName  
     ports:
     - containerPort: podNumber
-
 
 
 
