@@ -326,12 +326,12 @@ sfware so i can use it to access those clusters
 
 
 
-                                           2TYPES OF KUBERNETES YOU CAN INSTALL
+                                           2TYPES OF KUBERNETES CLUSTER YOU CAN INSTALL
 1) Single node cluster 
 2) Multi Nodes Kubernetes Clusters   .. This is our focus....
 
 
-                             3 TYPES OF KUBERNETES CLUSTER
+                             WAYS TO MANAGE KUBERNETES CLUSTER
 you can deploy your cluster using, either a manged or a self managed sfware
 ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
 that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
@@ -369,7 +369,18 @@ we v anoda class of clusters wich are  manged by 3rd party, u will nt bother abt
 ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
 that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
 
-*******************we also v another clas of cluster that can be installed 
+*******************we also v another clas of cluster that can be installed ... KOPS
+
+    
+KUBERNETES DISTRIBUTION TOOL
+
+****ONLINE
+Kubernetes distributions and tools: Several open-source tools and distributions assist in deploying and managing self-managed Kubernetes clusters, offering 
+varying degrees of automation and opinionated configurations. Examples include:
+Kubeadm: A tool for bootstrapping a minimum viable Kubernetes cluster.
+Kops (Kubernetes Operations): A tool for building, operating, and maintaining production-grade Kubernetes clusters in the cloud.
+Rancher: A complete software stack for managing multiple Kubernetes clusters.
+
 
 3. KOPS: is a software use to create production GRADE/ready k8s in AWS and  
          azure for the kops beta version  
@@ -388,6 +399,7 @@ Rancher: - Using Rancher we can deploy both managed and self managed k8s CLUSTER
            Rancher serves as a glass to access and manage multiple k8s  
            from the rancher dashboard [UI]  - rancher dashboard  ,,,, frm rancher i can create a cluster in EKS/AKS/GKE/IKE 
            authentication and authorisation: EKS/AKS/GKE/IKE  ... bt u v to be authorized
+
 
 
 
@@ -426,6 +438,20 @@ For very large clusters NB: dnt create :
    No more than 300,000 total containers
 
 
+WE WANT TO DEPLOY WORK LOAD IN k8
+***ticket002
+========
+************************************************************    Deploy workloads in kubernetes;
+kubernetes resources/objects used to deploy application includes:
+kubernetes Orchestrate and managed containerised Applications  
+This applications run as containers  
+These containers are housed in pods  
+Pods are housed in nodes    
+nodes are housed in the cluster   
+********therfore if u are going to deploy any appl in k8, it is going to be deployed in a pod
+
+now we v created our k8 cluster ,how are we able to deploy appl using this cluster ,, ????????????? dats some of the things we wil be able to look at:
+
 
     OBJECTS USED FOR DEPLOYMENT
 kubernetes resources/objects used to deploy application include:
@@ -439,7 +465,6 @@ or
       Deployment
       Volume
       Job       
-
 
 
 when u deploy appl in k8, u v to make the appl accessible ie exposing appl/accessing appl
@@ -483,11 +508,30 @@ kubectl create namespace <nameSpaceName>
   Manifest files = kams       ........ we use manifest files to deploy in ddeclarative approach
   Manifest files are written in yaml/yml language 
 
-
 pod.yml  : in this yml language, it deals with stuffs like :
 key:value  pairs     
 dictionary: number of key:value pairs 
 list:
+
+                        KEY VALUE PAIR
+hw do we consider keyvalue pair 
+**************for e.g when u want to create a manifest file, it has this acronym, comes :   where 'comes' stands for kind, api version, metadata and spec
+kind is a key value pair bc for example ; kind is pod , this is a key value pair, it has a key & a value  ,,, so key &value ,, kind:pod
+for e.g , key value pair could be  name and the value is simon
+key:value  pairs 
+name: simon   
+ 
+
+K8 BEST PRACTICES FOR LARGE CLUSTER
+
+lets look at k8 BEST PRACTICES FOR LARGE CLUSTERS     *********** so if u have a very large cluster you can click on this link, u wil get more info
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+For very large clusters NB: dnt create :
+   No more than 5,000 nodes
+   No more than 110 pods per node
+   No more than 150,000 total pods
+   No more than 300,000 total containers
+
 
 
 
@@ -497,3 +541,29 @@ Docker images = dockerHub other registries:
 -- python-web-app ,  nodeweb-app,  net-webapp 
    mylandmarktech/hello,  nginx,  mysql,  mongo  
    jenkins,  sonarqube, nexus          
+
+
+
+KUB 3&4
+ SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE
+originally, the default namespace is the 'current namspace'
+*Mee*by default, kubectl get po' lists the pods in the configured ns, BUT you hv to run the 'kubectl config set-context' command, to set the ns you configured/
+created to be the current ns
+
+
+  LABELS & SELECTORS EXPLAINED
+****SERVice makes pods accessible using labels & selectors
+
+********************* for a service to deiscover any pod, its going to be using labels, so what is the label of the pod
+so we v labelas n we also v selectors...  so ders a label that says app is mapped to hello, its under the pod, so we v Pod label, so 
+under service, we ar goin to v sevice selectors
+in my k8 cluster der wil b many sevices,  hw wil the service be able to identify this pod,, it nids to create a selector that matches this pod like that 
+ 
+
+SERVICE DISCOVERY
+ServiceDicovery:
+==============
+*********the first service type is:
+ClusterIP is the default kubernetes service type that support
+communication within the cluster. 
+************** to communicate within our cluster, we will use a clusterip service type 
