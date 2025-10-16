@@ -204,13 +204,21 @@ now this entire netwroking wher appls can accessed with relative ease is been su
 
 ###########if u can xplain dis kub architecture, u ar as good as done 37:26
 
-
+KUB 3&4*
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
 We should not create pods directly to deploy applications.
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
-controllerManagers: ReplicationControllers, ReplicaSets, Deployments, DaemonSets
+controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
+ ****in manifest files;
+pods have label .. ie key value pair
+ReplicationControllers has selectors which is used to be able to connect to the pod label
+
+1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are recreated.
+all the pods have been rescheduled/recreated bc my pods are been manged by a 
+ Replication controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
+ selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state of my appli which is 3 
 
 
 advantages of namespace
@@ -588,7 +596,13 @@ created to be the current ns
 so we v labelas n we also v selectors...  so ders a label that says app is mapped to hello, its under the pod, so we v Pod label, so 
 under service, we ar goin to v sevice selectors
 in my k8 cluster der wil b many sevices,  hw wil the service be able to identify this pod,, it nids to create a selector that matches this pod like that 
+
+***online
+No, a manifest file's label does not have to match the container name, but they are often related and must match for certain tools to function correctly. 
+For example, in Kubernetes, a manifest's metadata.
+labels are used by other resources like a Deployment's selector to identify which pods to manage, not to name the container itself. 
  
+
 
 SERVICE DISCOVERY
 ServiceDicovery:
@@ -645,6 +659,22 @@ STATIC PODS***************
     Static Pods are controlled by the kubelet service  
 If we delete a static pod, So long as the manifest file still exists, it will continue to recreate the pod, the kublete service wil restart the pod
 To permanently delete a static pod you must have to delete the manifest file used to create the static pod
+
+
+
+                                              WORKLOADS
+A workload is an application running on Kubernetes consisting of a single 
+component or several components that work together inside a set of pods. 
+In Kubernetes, a Pod represents a set of running containers on your cluster.
+
+
+                                   k8 POD LIFE CYCLE
+Kubernetes pods have a defined lifecycle. 
+For example, once a pod is running in your 
+cluster and the node hosting the pod fails then pods running on the node
+will fail. Kubernetes treats that level of failure as final. 
+You would need to create a new Pod to recover,even if the node later becomes healthy.
+****Therfore we nid to use controller mangers such that if this  node goes down a controler manger will ensure that this pod is rescheduled on another node 
 
 
 
