@@ -9,7 +9,27 @@ I Didnt print
 Sand 
 Gateway 
 Eks
+
+
+
+****meee*********
+we use maven for build and tomcat for deployment having integrated it with nginx webserver for loadbalancing & routing traffic from endusers to the appservers 
+we bring in sonar for security, then nexus aas a repository for backing up our artifacts and jenkins to automate the end to end process (CI/CD)
+Most importantantly or in addition to that; because security is inheerent in our environment we utilize AWS for various levels of security like ........
+furtheer more we use docker & kubernetes for .....
+and finally Ansible and terrfaorm for ..........
+
+
+jenkin 7&8
+someone is aking we hv nt deployed to tomcat ,, we are going to be deploying containerized app, tomcat was an introduction
+  1:12:18 all of these is nt happening in one agent , mvn package will tk place in maven build server, sonar,the code quality analysis will talk to a 3rd party server wich is sonarqube server
+
+2:04:00  we can use jenkins for non java applications and any application as expalined in jenkins shared lib video
+
+
 *************************
+
+
 
  AWS 1;
 Cloud Service Models:
@@ -83,22 +103,6 @@ TYPES OF CLOUD manged service:      ***I bliv for ochestrating contaners.
    IKE --> IBM K8s Engine(IBM Cloud)
     Kubernetes Cluster = k8s  
 
-
-
-
-****meee*********
-we use maven for build and tomcat for deployment having integrated it with nginx webserver for loadbalancing & routing traffic from endusers to the appservers 
-we bring in sonar for security, then nexus aas a repository for backing up our artifacts and jenkins to automate the end to end process (CI/CD)
-Most importantantly or in addition to that; because security is inheerent in our environment we utilize AWS for various levels of security like ........
-furtheer more we use docker & kubernetes for .....
-and finally Ansible and terrfaorm for ..........
-
-
-jenkin 7&8
-someone is aking we hv nt deployed to tomcat ,, we are going to be deploying containerized app, tomcat was an introduction
-  1:12:18 all of these is nt happening in one agent , mvn package will tk place in maven build server, sonar,the code quality analysis will talk to a 3rd party server wich is sonarqube server
-
-2:04:00  we can use jenkins for non java applications and any application as expalined in jenkins shared lib video
 
 
 
@@ -199,6 +203,13 @@ so if u wnat to access the appl, it wil be routed via the service, we call this 
 now this entire netwroking wher appls can accessed with relative ease is been suported by a ntwrk agent kube-proxy.
 
 ###########if u can xplain dis kub architecture, u ar as good as done 37:26
+
+
+in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
+We should not create pods directly to deploy applications.
+If a node  goes down in which pods are running, Pods will not be rescheduled.
+We have to create pods using controllers which manages the POD life cycle.
+controllerManagers: ReplicationControllers, ReplicaSets, Deployments, DaemonSets
 
 
 
@@ -616,8 +627,25 @@ successfully communicated                                                       
 
 
  DISADVANTAGES OF POD   ... 55.50
-********web wasnt recreated bc when u use pod to deploy k8 objects, pods cannot be recreated and it cannot be scaled
+********We deleted the 'web container' but it wasnt recreated bc when u use pod to deploy k8 objects, pods cannot be recreated and it cannot be scaled
 e.g we cannot decide to have more replicas of a container eg 'hello' if we ar going to be using pod
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod    .....
 (we shud use controllers like Replica Sets, Deployment, Deamon sets to keep pod alive)
+We should not create pods directly to deploy applications.
+If a node  goes down in which pods are running, Pods will not be rescheduled.
+We have to create pods using controllers which manages the POD life cycle.
+controllerManagers:
+  ReplicationControllers , ReplicaSets, 
+  Deployments,  DaemonSets  
+
+
+
+STATIC PODS***************
+
+    Static Pods are controlled by the kubelet service  
+If we delete a static pod, So long as the manifest file still exists, it will continue to recreate the pod, the kublete service wil restart the pod
+To permanently delete a static pod you must have to delete the manifest file used to create the static pod
+
+
+
 
