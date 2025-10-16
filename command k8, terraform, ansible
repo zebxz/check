@@ -99,7 +99,7 @@ kubectl run <podName> --image=<imageName> --port=<containerPort> -n <namespaceNa
 kubectl run hello --image=mylandmarktech/hello --port=80 -n dev 
 
 
-ubuntu@master:~$  kubectl get po    ...... ........ 
+ubuntu@master:~$  kubectl get po    ...... ........      ****By default, it lists pods in the currently configured namespace.
 no resources found in default namespace 
 ubuntu@master:~$ kubectl get po -n dev
 no resources found in dev namespace 
@@ -113,4 +113,54 @@ kubectl apply -f pod.yml
 
 
 kub 3&4
+
+ MORE PODS COMMANDS ............7:25
+kubectl get all
+kubectl get events
+kubectl delete po (podname)
+kubectl delete all --all 
+kubectl delete all --all -n dev     
+kubectl delete pod --all                                                                                               interpretin , creatin &mangin d pod 
+kubectl get pods                               Anotation is a metadata info abt ur pod that is set by d sys/k8 service n it is what d sys wil understan when it comes to
+kubectl get pods -o yaml   ...   will present the pod in that are runnin in our clustera yml file, we can see annotation,bt when we made d file to create d pod der was no anotation
+kubectl get pods --show-labels
+kubectl get pods -o wide           **************** gives more inf abt the pods
+kubectl get pods -o wide --show-labels
+kubectl get node
+kubectl get node -o wide    *************** we see d nodes we v , the k8 version, the kernel version and the runtime which is containerd and not docker .(tk note)
+kubectl delete node node5   ******************* to delete node5
+
+in docker we run: docker inspect  to get more info abt the container
+kubectl  describe pod <podName>      *********to get more info abt the pod 
+kubectl  describe pod <podName> -n <namespace>
+
+
+kubectl api-resources   *********** to get the apiresources for our pod,, we can see so many api resources , ...
+kubectl api-resources | grep pod      ....  so to specify n grep for pod , we see we can either call it pods or po and the apiversion is v1
+
+
+
+We can check the service 
+   Kubectl  get svc 
+
+To get the end point 
+Kubectl get ep
+
+Kubectl  get svc –o wide
+
+kubectl get svc -n <namespace>       (svc is service)
+kubectl get svc -n dev  
+
+
+kubectl get svc -n dev  
+kubectl describe svc  
+kubectl get ep      ... we can get the end point.. one/ A single service can route traffic/LB to multiple replicas of an appl  43:20
+kubectl describe svc     gives more info abt the service
+kubectl delete svc
+
+
+
+
+
+
 
