@@ -40,7 +40,8 @@ kubectl run <podName> --image=<imageName> --port=<containerPort> -n <namespaceNa
 pod/hello created
 ubuntu@master:~$ kubectl get pod
 no resources found in default namespace 
-ubuntu@master:~$ kubectl get po -n dev
+   no resources found in the default namespace    ****************************** this is set to my current context , its my current name space
+ubuntu@master:~$ kubectl get po -n dev          *** i had to specify that i want resoures in the '-n dev' namespace bc i hv not set 'current context' to 'dev'
 NAME    READY      STATUS       RESTARTS      AGE
 hello     1/1      running         0            11s
 *********************************we have been able to deploy this application
@@ -48,13 +49,26 @@ hello     1/1      running         0            11s
 3)created pod for container webapp
 Used manifest file to create pod
 
-*** VIdeo 3&4
-4) to deploy the manifestfile  we created below it wil deploy a pod called hello   *** now using pod to replace what we called image we create when we build 
+
+*** VIdeo 3&4, starts...
+
+4)    SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE/ CURRENT CONTEXT
+originally, the default namespace is the 'current namspace'
+*Mee*by default, kubectl get po' lists the pods in the configured ns, BUT you hv to run the 'kubectl config set-context' command, to set the ns you configured/
+created to be the current ns/current context' BC in (no.2) above, it says .. no resources found in the default namespace   
+
+kubectl config set-context --current --namespace=dev       ** now its be set
+ubuntu@master:~$ kubectl get po     ....***********now  kubectl get po, lists d pods in the dev namespace, bc d dev namespace has become my current namespace
+
+
+  **** created now sets of pods, so forget about the 2pods he created from video 1&2 (which are the step3&3 above)
+5)USED MANIFEST FILE TO DEPLOY POD ... Called hello
+to deploy the manifestfile  we created below it wil deploy a pod called hello   *** now using pod to replace what we called image we create when we build 
 mkdir manifests                                                                                                             an app in docker
 vi manifest/hello.yml  and paste the file 
 kubectl apply -f manifest
 
-5) *** seen below        
+6) *** seen below        USE OF CLUSTERIP SERVICE
 created service called HelloSVC  for 'hello' to enable communication btw another app call webapp
 HelloSVC is a (clusterip service), the cluster-ip  10.105.209.246(which is the service ip) **clusterip its a k8 service used for internal comm within d cluster
 Curl  cluster-ip   10.105.209.246        ,, and we successfully communicated with the app usin d service ip address
@@ -63,6 +77,14 @@ When I wnt to curl, we curl on port 80 cos if my service port was smt else then 
 So my hellosvc is a clusterip service  and it has a service ip address, so when the webapp is trying to comm wit it its going to use this service n the
 webapp talks to the service on the service port, port80 and the service is routing the traffic to the appl on the appl port number , d container port number
 wich is also port80 in this case
+
+7)APPLYING FQDN         **** If one POD need to access service & which are in different names space we have to use the FQDN of the service.
+let me jst use a command to create a new pod   in the default namespace
+kubectl run web --image=mylandmarktech/java-web-app --port=8080 -n default  
+
+
+
+
 
 
 
@@ -79,9 +101,9 @@ webapp    1/1       running         0             12s
 
 
                                 SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE
-originally, the default namespace is the 'current namspace'
+originally, the default namespace is the 'current namspace'    *** i bliv it means the 'default namespace' was created by the k8 system.
 *Mee*by default, kubectl get po' lists the pods in the configured ns, BUT you hv to run the 'kubectl config set-context' command, to set the ns you configured/
-created to be the current ns
+created to be the current ns ....   even after we set this, we can still create other pods in the default space by indicating '-n default' as the namespace.
 
  WHEN I RUN  kubectl get po  i want it TO LIST THE pods in my (dev namespace) in the default namespace
 ----
@@ -137,7 +159,7 @@ apiVersion: v1
 metadata: 
    name: hello
    labels:
-     -app: hello          ** this is wrong as explained in the 'TROUBLESHOOTING' below
+     -app: hello          ** this is wrong as explained in the 'TROUBLESHOOTING' below, ts a dictionary not a ist
 spec:
    containers:
    - name: hello   
@@ -152,7 +174,7 @@ kubectl api-resources | grep pod      ....  so to specify n grep for pod , we se
 
 ########## to deploy the manifestfile  we created above 
 mkdir manifests
-vi manifest/hello.yml  and paste the file 
+vi manifest/hello.yml and paste the file 
 kubectl apply -f manifest
 
 
@@ -356,13 +378,15 @@ we have to use the FQDN of the service.
 
  ubuntu@master:~$    curl hellosvc.dev.svc.cluster.local 
 curl: (6) could not resove host: hellosvc.dev.svc.cluster.local                                                                47:30
-*************this is bc this is nt hw am suppose to run this command, am suppose to run it in a diff appli bc that is going to be within the clutser,, if we v more than one
-container or more than one pod running we can execute this command in one other pod so that we ar able to access the appl that runs in a completely diff Namespace.
+*****this is bc this is nt hw am suppose to run this command, am suppose to run it in a diff appli bc that is going to be within the clutser,, if we v more 
+than one container or more than one pod running we can execute this command in one other pod so that we ar able to access the appl that runs in a completely
+diff Namespace.
 
 serviceNAME  = hellosvc   
 service FQDN = hellosvc.dev.svc.cluster.local    
 
-    ############################################################TO USE FQDN 
+    
+                                                    APPLYING FQDN 
 
 let me jst use a command to create a new pod   in the default namespace
 kubectl run web --image=mylandmarktech/java-web-app --port=8080 -n default  
@@ -380,6 +404,10 @@ ubuntu@master:~$ kubectl get svc
 NAME                TYPE               CLUSTER-IP                EXTERNAL-IP       PORTS      AGE         
 Hellosvc           ClusterIP           10.105.209.246              none              80/TCP    14m
 
+
+
+                                 EXEC -it COMMAND
+
 ********i cud a command in this pod  just like docker  kubectl exec web,  or interactive  (kubectl exec -it web) its the same in k8
 ubuntu@master:~$   kubectl exec -it web -n default bash         .....  now, i v a pod, the name of my container is web, in default namespace
 kubectl exec [POD] {COMMAND] is DEPRECIATED and will be removed in a future version.
@@ -390,8 +418,8 @@ root@web:/usr/local/tomcat#  curl hellosvc.dev.svc.cluster.local        52:47
 we successfully commu with the container (they are in 2diff name space)
 
 root@web:/usr/local/tomcat#  curl hellosvc
-curl: (6) could not resolve host: hellosvc    ,,,  whne i use just the service name am unable bc they ar in diff namespaces, so u hv to use the FQDN when d containers ar 
-running in  diff namespaces.
+curl: (6) could not resolve host: hellosvc    ,,,  wheni use just the service name am unable bc they ar in diff namespaces, so u hv to use the FQDN when d 
+containers ar running in  diff namespaces.
             
                                                                                                                                                                   container
 root@web:/usr/local/tomcat#  exit              54:10  ####remember earlier we config our default namespace to be dev n now we didnt indicate default so its in dev lik hello
@@ -422,6 +450,10 @@ in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud
 (we shud use controllers like Replica Sets, Deployment, Deamon sets to keep pod alive)
 
 56:20 ##################  READ UP POWERPOINT
+
+
+
+
 
 ************************************* STATIC PODS***************
 
@@ -700,6 +732,8 @@ pods can be deployed/managed by using:
  1. pods as a kubernetes objects  
  2. controllerManagers kubernetes objects   
   How POD is manage  
+
+
 
 ReplicaSet = RS :   ...  ****************HOW TO USE REPLICA SET TO deploy our application    ......1:53:50
 ==========
