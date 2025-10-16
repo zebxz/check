@@ -500,6 +500,12 @@ Exposing/accessing applications = Service Discovery:
                                      NAMESAPCE/ WHAT IT IS USED FOR
 1:34:30  **********************generally for this deployment to tk place even in k8, we will make use of a namespace
 how DO WE ENSURE THE APPL ARE ABLE TO COMMUNICATION  & all of that , ders a concept in k8 called:
+
+***KUB3&4**
+in kubernetes by default we create containers in the same namespace to enable them comm wit each oda, however, 
+FQDN = Fully Qualified Domain name.                                                     
+If one POD need to access service & which are in different names space we have to use the FQDN of the service.
+*********
 Namespace:
   It is a virtual cluster inside your cluster  ,,, we can create a name space for dev stage, uat stage , prod stage , sales ... dependn on d project u are managing
      [ dev / uat / prod ],                            if u create a namespace for e.g, u wnat a situatn wher what dev ar doin does nt affect what is runin in uat &prod
@@ -768,7 +774,7 @@ pod.yml
 kind: Pod  
 apiVersion : v1   
 metadata:
-   name: webapp    
+   name: webapp          ****mee*** pod name .. webapp
    labels:
      app: web  
      tier: fe  
