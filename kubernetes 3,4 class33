@@ -26,6 +26,10 @@ Namespace:
 
 
             ILLUSTRATION
+
+After installing the multi node cluster
+creater 3servers (one for the master node &  the other 2 is for the worker nodes)
+next;
 1)created dev namespace
 ubuntu@master:~$ kubectl create namespace dev --v=8  
 kubectl create namespace prod
@@ -52,7 +56,7 @@ kubectl apply -f manifest
 
 5) *** seen below        
 created service called HelloSVC  for 'hello' to enable communication btw another app call webapp
-HelloSVC is a (clusterip service), the cluster-ip   10.105.209.246(which is the service ip)
+HelloSVC is a (clusterip service), the cluster-ip  10.105.209.246(which is the service ip) **clusterip its a k8 service used for internal comm within d cluster
 Curl  cluster-ip   10.105.209.246        ,, and we successfully communicated with the app usin d service ip address
 When I wnt to curl, we curl on port 80 cos if my service port was smt else then I v to write the port number but since it is 80 , I can curl without it
 
@@ -245,7 +249,7 @@ apiVersion: v1
 metadata:
   name: hellosvc    ... i can assign a servicename
 spec:
-   type: ClusterIP    ...service type
+   type: ClusterIP    ...service type      ***** used for internal communication within the cluster
    selector:   ... hw wil the service be identified or hw will it identify the app that its suppose to route traffic to ., it wil be based on the label of the appl
       app: hello     .... its hello bc refferring to the manifest/identifictaion file we used to create the hello pod above ,, the label says app:hello
    ports:                                                                              therefore, my selector will be hello, so it can route traffic to the appl
@@ -343,7 +347,7 @@ when we curl on port 80, the service route the traffic to the container IP addre
                      #########################  FQDN
 
 *******************************
-What is FQDN?               ..........           45:21   in kubernetes by default we create containers in the samenamespace to enable them comm wit each oda, however, 
+What is FQDN?               ..........          45:21   in kubernetes by default we create containers in the same namespace to enable them comm wit each oda, however, 
 FQDN = Fully Qualified Domain name.                                                     if pods ar nt in the same namespace we have to use the FQDN
 If one POD need to access service & which are in different names space 
 we have to use the FQDN of the service.
