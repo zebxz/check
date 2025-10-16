@@ -170,6 +170,7 @@ ntwrks, vols, using the docker-compose file.
 
 
 
+
    SUMMARIZED FOR INTERVIEW
 FOR autHORIZATION;
 authorisation via RBAC: Roll base access control, 
@@ -263,6 +264,7 @@ e.g, we can v the  the application container and like a sidecar container
  cONTROLLER MANAGER.. >>>>>>>>>
 E.G IF U deploy ur appl and you want 3pods to be deployed , lets assume 2pods shud be running, if 1pod is down, the controller manger has been instructed to create 2pods, if
 one pod goes down, it will automatically create the pod, those are the function of controller mangers
+*** Meee.. it knows what to do at any given time, eg one pod is down, it automatcally brings up another one.
 
 
 
@@ -582,5 +584,15 @@ ServiceDicovery:
 ==============
 *********the first service type is:
 ClusterIP is the default kubernetes service type that support
-communication within the cluster. 
-************** to communicate within our cluster, we will use a clusterip service type 
+communication within the cluster.    *** Used for internal communication
+************** to communicate within our cluster, we will use a clusterip service type
+
+
+
+What is FQDN?               ..........          45:21   in kubernetes by default we create containers in the same namespace to enable them comm wit each oda, however, 
+FQDN = Fully Qualified Domain name.                                                    
+If one POD need to access service & which are in different names space 
+we have to use the FQDN of the service.
+******************Syntax: <serivceName>.<namespace>.svc.cluster.local
+                 ex: myappsvc.dev.svc.cluster.local
+
