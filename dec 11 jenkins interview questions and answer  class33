@@ -182,19 +182,19 @@ this is under kub security , u hv to be authenticated n authorized to perform th
 once u are authentictaed n authorized , the task is being executed bt if u werent succesfully authorized, u wil get permission denied/ authentication failed
 
 After sucessful auth/author, 
-in docker we deploy our containers directly in containers, in kub they are deployed in what is called ports
-so port is the smallest unit in kub
-so u wnat to deploy an appli, dis is what happens, the API server receives this information either frm UI or kubctl, n immediately it receives it, it will persist the data 
-in our key value store ie etcd,,,
-now u wnat to deploy your appl which are deployed in pods .... in your cluster, der is a pry node agent, so in the node it has kubetes, kubetes is the pry node agent ,
-therfore, the control plane is communicating with the worker node via this pry node agent , once it commun wit the worker node , it wil be checking for resouce availability
-u wnat to deploy a pod , this is a scheduler, this pods requires abt 800mb bt when it comes to availabilty: my node1 got abt 700mb of memory, node9 got abt 8000mb of memory
-we v d scheduler, hes going to schedule d pods based on resource availabilty and other factors.. all other factors ar constant .at this time the scheduler will do automatic
-scheduling on node9 which has enough enough resource availability.now when the pod, lemme cal it webpod is scheduled on node9, inside the webpod containers nid to be created
-now the container runtime wil create n start the container, so now i v my webcontainer inside the pod.
-this is the kub architecture, very powerful 
-now i v my appl scheduled on the pod, and we nid to deploy multiple replicas , in this case we v 2replicas, the scheduler has scheduled the 2replicas on the 2diff nodes.
-therfore 2replicas of the pod have been deployed
+in docker we deploy our containers directly in containers, in kub they are deployed in what is called pods
+so pod is the smallest unit in kub
+so u wnat to deploy an appli, dis is what happens, the API server receives this information either frm UI or kubctl, n immediately it receives it, it will
+persist the data in our key value store ie etcd,, (i bliv UI is using imperative/declarative & kubctl is the way we create static pod using the 'etc/' dir)
+now u wnat to deploy your appl which are deployed in pods .... in your cluster, we hv the worker nodes that comes with the kublets which is the pry node agent
+therfore, the control plane is communicating with the worker node via this pry node agent ,once it commun wit the worker node ,it wil be checking for resouce
+availability u wnat to deploy a pod , this is a scheduler, this pods requires abt 800mb bt when it comes to availabilty: my node1 got abt 700mb of memory, 
+node9 got abt 8000mb of memory we hv d scheduler, hes going to schedule the pods based on resource availabilty & other factors, all other factors are constant.
+At this time the scheduler will do automatic scheduling on node9 which has enough enough resource availability.now when the pod, lemme cal it 
+webpod is scheduled on node9, inside the webpod containers nid to be created now the container runtime wil create n start the container, so now i v my 
+webcontainer inside the pod.this is the kub architecture, very powerful 
+now i v my appl scheduled on the pod, and we nid to deploy multiple replicas , in this case we v 2replicas, the scheduler has scheduled the 2replicas on the 
+2diff nodes.therfore 2replicas of the pod have been deployed
 inside this cluster we wnat to ensure that we can access this pod, for the pod to be made accessible we ar going to make what is called a service in kuber.
 35:34
 so u v a service , this service act as a LB
