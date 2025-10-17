@@ -85,7 +85,8 @@ ubuntu@master:~$   kubectl exec -it web -n default bash         .....
 root@web:/usr/local/tomcat#  curl hellosvc.dev.svc.cluster.local        *** web container est comm with the hello container using the FQDN command  
 we successfully commu with the container (they are in 2diff name space)     
 
-8)we cant est communication btw containers in diff name space using the service name  BUT we can if use the service name if the containers are in the same ns
+8)SERVICE NAME
+we cant est communication btw containers in diff name space using the service name  BUT we can if use the service name if the containers are in the same ns
 
 ***  in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
 We should not create pods directly to deploy applications.
@@ -93,7 +94,18 @@ If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
 controllerManagers:
 
-9) Controller manager....   continue with the rest of the video from there..   1.05.00
+9) Controller manager....   continue with the rest of the video from there..  1.05.00
+    we can scale WIth controller mangers but we cant scale with pod
+We scale based on demands, if Request increases, we scale up
+kubernetes is used to Orchestrate containers     .. .. .with k8, we can scale,, if a junior engr mistakenly delete our pods, k8 will automatically recreate them 
+1:49:30**************** ..... there is no component in docker that is capable of recreating containers,, so we shudnt use a software taht is limited ,but
+docker is nt completely useless, so we are studying docker bc we dnt need to use k8 to create docker files and build images, k8 does nt use docker files to
+build n share images in image registry so we nid docker to be able to create a docker file,build images and share those images to docker registry so that 
+k8 can pull the images to deploy application
+
+***if we dnt pass replica, its goin to create one...
+
+
 
 
 
@@ -156,7 +168,7 @@ kubectl  describe pod <podName> -n <namespace>
 
 
 
-                                     DEPLOYING USING DECLARATIVE APPROACH (MANIFEST FILE)
+                                     DEPLOYING A POD USING DECLARATIVE APPROACH (MANIFEST FILE)
 16:10:00
 kubectl run app --image=mylandmarktech/hello --port=80              ... dis wil deploy a pod called hello
 
@@ -166,12 +178,12 @@ hello.yml       >>>>>>>>>>>>>>>>   using the declaractive approach  ....  (20:50
 kind: Pod   
 apiVersion: v1    
 metadata: 
-   name: hello
-   labels:
-     -app: hello          ** this is wrong as explained in the 'TROUBLESHOOTING' below, ts a dictionary not a ist
-spec:
+   name: hello                   *** i bliv pod name is hello
+   labels:                            ** this is wrong as explained in the 'TROUBLESHOOTING' below, label is a dictionary not a list
+     -app: hello           ** i bliv app is the label & the hello is the container name, for service to discover the pod, we need the 'key value pair' app:hello
+spec:                                         ***online. the label must not be the same as the container name
    containers:
-   - name: hello   
+   - name: hello      **i bliv container name is also hello
      image: mylandmarktech/hello  
      ports:                                          *********with dis definition file, we can deploy our application ,,,
      - containerPort: 80      #######  we did nt declacre our  namespace so.. but what is our current namespace???/ wher wil d app wil be deployed (dev namespace bc we made)
@@ -233,7 +245,7 @@ under service, we ar goin to v sevice selectors
 in my k8 cluster der wil b many sevices,  hw wil the service be able to identify this pod,, it nids to create a selector that matches this pod like that so
 ... (hello)
 #########so in the hello service (helloSVC), ther will be a selector, n the selector s saying app, bc this selector depends on the pod, so in the app pod, 
-we v a label n app is mapped to hello 
+we v a label; app is mapped to hello 
 *******************
         ***kub1&2, 1.36.42... webService is the clusterip..... 
 
@@ -303,7 +315,7 @@ spec:
      image: mylandmarktech/hello  
      ports: 
 ---
-kind: Service  
+kind: Service               *** this down part is for the service
 apiVersion: v1  
 metadata:
   name: hellosvc    
@@ -502,19 +514,19 @@ spec:
         ports:
         - containerPort: 8080   
 
-ubuntu@master:~$ sudo vi /etc/kubernetes/manifests/file.yml 
-then paste the file
+ubuntu@master:~$ sudo vi /etc/kubernetes/manifests/file.yml      ***1.00.00
+then paste the file  ... Once we paste & exit the file, it automatically starts to create the pod
 ubuntu@master:~$ kubectl get po
 NAME            READY       STATUS      RESTARTS       AGE
 hello            1/1         Running      0             37m
-myapp-master      1/1        running     0              21s      ..... the file was created but we didnt need to run kubectl apply -f /etc/kubernetes/manifests/file.yml 
- so the static pod is running                                                                       we ar going to get permisson denied
+myapp-master      1/1        running     0              21s      ..... the file was created and we didnt need to run kubectl apply -f /etc/kubernetes/manifests/file.yml 
+ so the static pod is running                                                                       we are going to get permisson denied
 
 ubuntu@master:~$ kubectl get po
 NAME            READY       STATUS      RESTARTS       AGE
 hello            1/1         Running      0             37m
 myapp-master      1/1        running     0              21s  
-my app              1/1       running     0             64s        ***** immediately the file was created, a static pod was created.
+my app              1/1       running     0             64s        ***** immediately the file was created,we realise that a static pod was created.
 
 ubuntu@master:~$  kubectl describe po myapp
 ubuntu@master:~$ kubectl delete po --all
@@ -563,11 +575,12 @@ You would need to create a new Pod to recover,even if the node later becomes hea
 
 
 
-1:07:00   ################ HOW TO CREATE A REPLICATION controller, that wil be creating a particular pod
+1:07:00   ################ USING MANIFEST FILE TO CREATE A REPLICATION controller, that wil be recreating a particular pod
+                        includes manifest/template for ReplicaControllers, template for Pod, & template for service (Nodeport)
 
 ReplicationControllers = rc 
 =========================== kams 
-kind: ReplicationController      ......keypair
+kind: ReplicationController      ......keypair      ***mee** our kind is now 'replica controller' NOT Pod
 apiVersion: v1   
 metadata:    ..... dictionary
    name: apprc          ..app replication controller,it wil control d state of my pod,for it to select d pod, for selector,app is mapped to web, so the RC wil
@@ -576,7 +589,7 @@ metadata:    ..... dictionary
       app: apprc          ..... this is my replication controller label
 spec:
    selector:
-      app: web  
+      app: web     1.13.40  ** i bliv web is the label & the app is the container name, for service to discover the pod, we need the 'key value pair' app:web
    replicas: 3    
    template:     #podTemplate   ... this is my pod template
       metadata: 
@@ -587,22 +600,26 @@ spec:
          containers:
          - name: app  
            image: mylandmarktech/java-web-app       ......  .... THIS IMAGE is on a tomcat base image  n the container port is 8080 
-           ports:                                  this replication controller we ar creating called apprc, its menat to mange this pod info here ie the pod template ..
-           - containerPort: 8080                                 now for replica we want 3 n d pod label is web,so selector label is also web
----                                
-kind: Service                              ###### AS part of this deployment, we wnt to create a service as well           
+           ports:                             this replication controller we ar creating called apprc, its meant to mange this pod info here ie the pod template ..
+           - containerPort: 8080           & it will be selecting any pod that has the label app:web & it wil ensure that 3replicas are running
+
+
+---                                NODEPORT SERVICE MANIFEST FILE
+kind: Service      ###### AS part of this deployment, we wnt to create a service as well           
 apiVersion: v1  
 metadata:
   name: webappsvc       **********name of service 
 spec:
    type: NodePort         *********this app nids to be accessed externally so we change this from ClusterIP to NodePort  ... . ..1:17:25
    selector: 
-      app: web             ********this is alos based on the pod template
+      app: web             ********this is also based on the pod template
    ports:
    - port: 80  
-     targetPort: 8080               >>************target port is the smae as container port
-     nodePort: 31000 #30000-32676            *****isnce we hv node port, i can also decide the node pod to us so 31000 .... nodport range frm 30000 - 32676
+     targetPort: 8080               >>************target port is the same as container port
+     nodePort: 31000 #30000-32676            *****since we hv node port, i can also decide the node pod to us so 31000 .... nodport range frm 30000 - 32676
                                                     if i dnt choose a pod n #nodePort:, the system wil dynamically assign a port n it will be with the port range
+
+
 
 vi manifests/app.yml   and paste file 
 kubectl apply -f manifest/app.yml     .......deploy application
@@ -642,15 +659,22 @@ pod/apprc- zncll          1/1       running     0             3m9s
 ubuntu@master:~$  curl 10.99.250.229  (this is the serviceip)
 successful
 
+1.39.00
+                       KUBEPROXY/ENDPOINTS/NODEPORT       ** this is service discovery to take note of
 &************* we hv 3ports here if i wnt to comm wit them it has to be done via the sservice  but we v a nod eport that has been created
 with  the node port service called webappSVC
-WE V 3REPLICAS E.G     webapp1 , webapp2, webapp3    ,, bt when der ar some many names der can be a problem,, but when it comes to our service that is routing traffic to 
-all dis pods ,,, the target port is 8080 and we v a master node as part of the cluster and our service is nodeport and this menas it can process external traffic 
-e.g der ar 25million users trying to acces the appli , what happens is that each of this node has an IP address (a node IP address) he login to aws n got the ip adress
+WE V 3REPLICAS E.G     webapp1 , webapp2, webapp3    ,, bt when der ar some many names der can be a problem,, but when it comes to our service that is 
+routing traffic to all dis pods ,,, the target port is 8080 and we v a master node as part of the cluster and our service is nodeport and this menas it can
+process external traffic e.g der ar 25million users trying to acces the appli , what happens is that each of this node has an IP address (a node IP address) he login to aws n got the ip adress
 (we had deleted node5 earlier so now he deleted it in aws)                         (nodeport)
-1:34:18  .. so the users are typing any of the node ip e.g masterIP = 3.128.206.139:31000 , now when traffic gets into this cluster , rmeber that in our clusters, we v 
-kubeproxy running and as such, it will immediately identify that this traffic is meant for a particular service n so it wil be routed immediately to the service concerned 
-frm the service, which  now has endpoints ie our pods/containers, so traffic gets to the endpoints
+1:34:18  .. so the users are typing any of the node ip e.g masterIP = 3.128.206.139:31000 , now when traffic gets into this cluster , rmeber that in our 
+clusters, we v kubeproxy running and as such, it will immediately identify that this traffic is meant for a particular service n so it wil be routed 
+immediately to the service concerned frm the service, which  now has endpoints ie our pods/containers, so traffic gets to the endpoints
+
+2.09.19                                  NODE PORT COMES WITH CLUSTERIP 
+***********nternally, i created a nodeport service for python but that nodeport  service also has a cluster IP assigned to it, so if i wnat to access my 
+python appl, i can curl, using the clusterip ,to  access the appl internally
+
 
 in our cluster we have
 masterIP = 3.128.206.139
@@ -666,7 +690,8 @@ pod/apprc- zncll          1/1       running     0             15m      10.44.0.2
 
 1:39:44 ###################### # ##########READ UP
 Kubernetes Objects
-NodePort - Exposes the service on each Node's IP at a static port. A ClusterIP service, to which the NodePort service will route, is automatically created. You'll be ableito contact the NodePort service, from outside the cluster, by using
+NodePort - Exposes the service on each Node's IP at a static port. A ClusterIP service, to which the NodePort service will route, is automatically created. 
+You'll be ableito contact the NodePort service, from outside the cluster, by using
 "<NodelP>:<NodePort›".
 
 
@@ -698,16 +723,17 @@ ubuntu@master:~$ kubectl get po
 NAME                 READY       STATUS      RESTARTS       AGE
 pod/apprc- 7jr9m      1/1         Running      0            12s
 pod/apprc-ffv25       1/1        running      0             12s  
-pod/apprc- hdd8r      1/1       running     0            12s    ............. all the pods have been rescheduled/recreated bc my pods are been manged by a replication
-                                                                      controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
-                                                            selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state  
+pod/apprc- hdd8r      1/1       running     0            12s    ............. all the pods have been rescheduled/recreated bc my pods are been manged by a 
+                                         Rplication controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
+                                          selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state  
                                                          of my appli which is 3 
 
 
-####################################WE CAN SCALE ..... SO IN deploying i shud nt deploy using a pod as an object  but rather controllers managers like RC
+                          WE CAN SCALE WITH RC
+SO IN deploying i shud nt deploy using a pod as an object  but rather controllers managers like RC
 
 ubuntu@master: ~$
-ubuntu@master:~$ kubectl scale rc appre -- replicas 4
+ubuntu@master:~$ kubectl scale rc apprc-- replicas 4
 replicationcontroller/appre scaled
 ubuntu@master: ~$
 ubuntu@master: ~$ kubectl get po
@@ -752,29 +778,32 @@ spike
   docker is use to containerise                    
   kubernetes is used to Orchestrate containers     .. .. .with k8, we can scale,, if a junior engr mistakenly delete our pods, k8 will automatically recreate them 
 
-1:49:30**************** ..... there is no component in docker that is capable of recreating containers,, so we shudnt use a software taht is limited ,but docker is nt 
-completely useless, so we are studying docker bc we dnt need to use k8 to create docker files and build images, k8 does nt use docker files to build n share images in image 
-registry so we nid docker to be able to create a docker file,build images and share those images to docker registry so that k8 can pull the images to deploy application
+                        WE ONLY USE DOCKER TO
+1:49:30**************** ..... there is no component in docker that is capable of recreating containers,, so we shudnt use a software taht is limited ,but
+docker is nt completely useless, so we are studying docker bc we dnt need to use k8 to create docker files and build images, k8 does nt use docker files to
+build n share images in image registry so we nid docker to be able to create a docker file,build images and share those images to docker registry so that 
+k8 can pull the images to deploy application
 
 
 1:51:22
 ########### hw we deploy applictaions in k8 , which isa very key aspect when it comes to my understnading of k8, 
 where are applications deployed in k8?/??......     we shud be able to est the fact that applictaions/containers are running in pods   
-        HOW POD IS MANGED
+     
+      HOW POD IS MANGED
 pods can be deployed/managed by using:
  1. pods as a kubernetes objects  
  2. controllerManagers kubernetes objects   
   How POD is manage  
 
 
-
+                                      REPLICA SET
 ReplicaSet = RS :   ...  ****************HOW TO USE REPLICA SET TO deploy our application    ......1:53:50
 ==========
 What is difference b/w replicaset and replication controller?
 RS is the next generation of replication controllers 
 The only difference as now is the selector support.
 
-RC --> Supports only equality based selectors.    ......equality based is equal conditions
+RC --> Supports ONLY equality based selectors. (**mee**We saw the use of labels)   ......equality based is equal conditions
 key == value(Equal Condition)    
 selector:
     app: javawebapp
@@ -783,13 +812,13 @@ selector:
 ###while
 RS --> Supports eqaulity based selectors and set based selectors.  ,(set based is that we can hv keys in multiple volumes)
 eqaulity based:
-key == value(Equal Condition)  
+key == value(Equal Condition)     ****me**use of labels
 set based:
   key in [ value1, value2, value3 ]   
 
-      e.g for replication controller
+      e.g for replication controller, as we have seen 
 selector:
-   matchLabels:   -# Equality Based
+   matchLabels:   -# Equality Based    ***use of labels
     key: value
     app: javawebapp
     tier: fe    
@@ -803,6 +832,9 @@ WHILE RS                                for set base we can have one key that is
      - myapp  
      - fe  
 **************************************************************************************************************
+
+ 
+
 rs.yml  = kams      ******************************** CREATING a rePLICA SET  .. this is the template
 --------------
 kind: ReplicaSet
@@ -834,7 +866,9 @@ spec:                                      spec, can start with template bt for 
          image: <imageName:tag>
          ports:
          - containerPort: containerPortNumber  
-******************************************************************************************************DEPLOYING appl using RS
+          
+
+                                          **DEPLOYING appl using RS
 ---                            WE wnat to DEploy rs.yml
 rs.yml   
 kind: ReplicaSet
@@ -895,8 +929,9 @@ Hellosvc           ClusterIP           10.105.209.246              none         
 python svc          nodeport             10.99.232.74               none
 webappsvc           nodeport            10.99.250.229               none
 
-***********nternally, i created a nodeport service for python but that nodeport  service also has a cluster IP assigned to it, so if i wnat to access my python appl, i 
-can curl, using the clusterip ,to  access the appl internally
+2.09.19                                  NODE PORT COMES WITH CLUSTERIP 
+***********nternally, i created a nodeport service for python but that nodeport  service also has a cluster IP assigned to it, so if i wnat to access my 
+python appl, i can curl, using the clusterip ,to  access the appl internally
 
 ubuntu@master:~$ curl 10.99.232.74
 App Works!!! ubuntu@master:~$              .......2:10:06
@@ -916,7 +951,8 @@ successful
 *******************************
 
 
-2:20:00 (he tried to pull an image from a private repository then he made teh repo public so that we can access it) 
+                                    PULL IMAGE DIDNT BUILD, TAGGED IT & PUSHED IT
+2:20:00 (he tried to pull an image from a private repository then he made the repo public so that we can access it) 
 he then created a new private repo.. pull the nodejs image frm github, tag and pushed the same image to the new repo he created  
 2:26:32  .......   my job with docker is to containerize
 
@@ -928,6 +964,10 @@ docker push mylandmarktech/nodeapp
 
 
 ######################## IN the k8 server, we ar deploying in k8 , docker only help us containerize n share the images in image registry
+
+
+                              DEPLOYING REPLICA SET
+
 node-rs.yml            
 ==========                            deploying using replica set
 kind: ReplicaSet
@@ -946,7 +986,7 @@ spec:
         app: node    
     spec:
       imagePullSecrets:
-      - name: dockerhublogin
+      - name: dockerhublogin       *** we added this after we created the secret below
       containers:
       - name: nodeapp  
         image: mylandmarktech/nodeapp   
@@ -984,9 +1024,8 @@ authorization and this is bc we ar tyring to pull the image froom a private imag
 
 
 
-
-Create a secret that will authenticate kubernetes to pull  
-images from dockerHub/nexus/jfrog  
+                               CREATE SECRET
+Create a secret that will authenticate kubernetes to pull images from dockerHub/nexus/jfrog  
 dockerHublogin
 kubectl create secret docker-registry regcred     ...****************** docker-registry is the name of the secret which we call regcred 
  --docker-server=<your-registry-server>  docker.io
@@ -1006,9 +1045,12 @@ and now i can see the secret    .... now i can pull images
 ubuntu@master:~$    kubectl describe secret dockerhublogin
 i can also dercribe the secret
 
+
+                                     APPLY THE SECRET TO THE MANIFEST FILE
 *************** i will go back to my file above and under spec, i will add :imagepullsecrets; name:dockerhublogin
 
 ubuntu@master:~$  vi node-rs.yml 
+Kubectl apply -f node.yml
 replicaset.apps/node-rs configured
 service/nodesvc unchanged
 buntu@master:~$
@@ -1047,7 +1089,9 @@ webappsvc     10.36.0.1:8080,10.44.0.2:8080      69m
 nodesvc         10.44.0.3:9981                10m            ************* the nodesvc  routing traffic to this endpoint
 
 
-############if we ar trying to access the nodesvc,  we can check in github, he checked in the repo we pulled the image frm, we wnt to access our nodejs appl, the ppl has
+2.44.10
+############if we ar trying to access the nodesvc, WE can use the its cluster ip paired with the restful APi's
+we can check in github, he checked in the repo we pulled the image frm, we wnt to access our nodejs appl, the appl has
 some resful API
 
  RESTFULAPIs:                     
@@ -1102,6 +1146,8 @@ kubectl scale rs nodeapp --replicas 0
     http://34.219.16.213:32000
 
 
+
+                                      REPLICA SET TEMPLATE
 deployment of applications using ReplicaSet in kubernetes:  .. replica set is a controller manger bc applications are running in a pod
                                  THIS IS A POD TEMPLATE, and the pod is controlled by the replica set
 ReplicaSet:
