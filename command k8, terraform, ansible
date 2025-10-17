@@ -171,6 +171,46 @@ creating static pod
 sudo vi /etc/kubernetes/manifests/file.yml            ************we ar creating it in the k8 manifest dir
 
 
+REPLICA CONTROLLERS
+ kubectl get rc
+ kubectl describe rc apprc       ..... to see more info     ***i bliv 'apprc' is the rc' label
 
 
 
+
+ ##########more COMMANDS FOR REPLICATOR CONTROLLERS
+labels:    app: web   = address: gra  
+selectors: app: web   = address: gra  
+replicas = 3  
+
+kubectl apply -f <filename.yml>
+kubectl apply -f rc.yml
+kubectl get rc 
+kubectl get rc -o wide  
+kubectl get rc -n <namespace>
+kubectl get all
+kubectl scale rc <rcName> --replicas <noOfReplicas>   ..     **************** ..... WE CAN ASLO SCALE the replication controller 
+
+kubectl scale rc apprc --replicas 4     
+kubectl describe rc <rcName>
+kubectl delete rc <rcName>
+
+
+
+  CREATE SECRET
+Create a secret that will authenticate kubernetes to pull images from dockerHub/nexus/jfrog  
+dockerHublogin
+kubectl create secret docker-registry regcred     ...****************** docker-registry is the name of the secret which we call regcred 
+ --docker-server=<your-registry-server>  docker.io
+ --docker-username=<your-name>  mylandmarktech
+ --docker-password=<your-pword>   admin123
+ --docker-email=<your-email>     ********************************can enter email but without email it will work
+
+kubectl create secret docker-registry dockerhublogin \             **************      we called it dockerhublogin
+    --docker-server=docker.io --docker-username=mylandmarktech \
+    --docker-password=admin123  
+
+ubuntu@master:~$ kubectl get secret
+and now i can see the secret    .... now i can pull images
+ubuntu@master:~$    kubectl describe secret dockerhublogin
+i can also dercribe the secret
