@@ -227,6 +227,11 @@ advantages of namespace
 *me*Docker is 'compose file' deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
 
 
+******if we dnt pass replica, its goin to create one...
+
+**************************************************************************************************************
+
+
 
                            TYPES OF OCHESTRATION TOOLS
 Container Orchestration Tools --> :
@@ -578,7 +583,7 @@ in our image registry , we have applications like
 Docker images = dockerHub other registries:
 -- python-web-app ,  nodeweb-app,  net-webapp 
    mylandmarktech/hello,  nginx,  mysql,  mongo  
-   jenkins,  sonarqube, nexus          
+   jenkins,  sonarqube, nexus            
 
 
 
@@ -677,5 +682,65 @@ You would need to create a new Pod to recover,even if the node later becomes hea
 ****Therfore we nid to use controller mangers such that if this  node goes down a controler manger will ensure that this pod is rescheduled on another node 
 
 
+USING MANIFEST FILE TO CREATE A REPLICATION controller, that wil be recreating a particular pod
+                        includes manifest/template for ReplicaControllers, template for Pod, & template for service (Nodeport)
 
+
+
+                **mee**              NODEPORT/ENDPOINTS/KUBEPROXY  (S
+Nodeport service can process external traffic,
+WE connect to d nodeport service from outside d cluster by using the nodeIP & the node port, SO frm outside the cluster we ar able to acces d app using nodeport
+This is how it works: our nodes have ip address (nodeports) so when endusers type any of the ip address ie trying to access the appl, the nodeport service will
+be routing service to either of the pods we have.
+the kubeproxy we have in our cluster will immediately identify that this traffic is meant for a particular service n so it wil be routed 
+immediately to the service concerned & frm the service, which  now has endpoints ie our pods/containers, so traffic gets to the endpoints 
+***i bliv the endpoints are possible bc of the pod/container label which the service selector matches with.
+1:39:44 ###################### # ##########READ UP
+Kubernetes Objects
+NodePort - Exposes the service on each Node's IP at a static port. A ClusterIP service, to which the NodePort service will route, is automatically created. 
+You'll connect to the NodePort service, from outside the cluster, by using "<NodelP>:<NodePort›".
+
+
+
+   HOW POD IS MANGED
+pods can be deployed/managed by using:
+ 1. pods as a kubernetes objects  
+ 2. controllerManagers kubernetes objects   
+  How POD is manage  
+
+
+
+    REPLICA SET
+ReplicaSet = RS :   ...  ****************HOW TO USE REPLICA SET TO deploy our application    ......1:53:50
+==========
+What is difference b/w replicaset and replication controller?
+RS is the next generation of replication controllers 
+The only difference as now is the selector support.
+
+          ***types of selectors:
+1)matchlabels which is Equality based:
+key == value(Equal Condition)     ****me**use of labels
+2) matchexpression which is set based:
+  key in [ value1, value2, value3 ]   
+
+
+      DIFF BTW RC & RS
+RC
+ Supports ONLY equality based selectors.   *mee** we saw the use of labels..
+selector:
+   matchLabels:   -# Equality Based    ***use of labels
+    key: value
+    app: javawebapp
+    tier: fe    
+    client: tesla
+WHILE
+RS -->  
+Supports eqaulity based selectors and/or set based selectors. (it can be either one) ,(set based is that we can hv keys in multiple volumes)
+ matchExpressions: -# Set Based  ,   under selectors: it can either be  matchlabels which is Equality conditions OR matchexpression which is set based where we can have
+   - key: app              ********* we can hv key, operator, values , so 'app' alone can match to javawebapp,myapp and fe  ... .....1:56:50
+     operator: in
+     values:
+     - javawebpp
+     - myapp  
+     - fe  
 
