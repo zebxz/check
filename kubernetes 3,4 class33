@@ -1,7 +1,8 @@
 \1:27 ........we studied devops with aws, linux and k8  
 ****************************************************************************************************
 1:51:20   ****he said we are talking abt hw we deploy applictaions in k8 
-kubernetes Service , FQDN = Fully Qualified Domain name.,,what is Static Pods ?,, controllers, CONTROL MANAGERS, HOW TO CREATE A REPLICATION controller, that wil be creating a particular pod
+kubernetes Service , FQDN = Fully Qualified Domain name.,,what is Static Pods ?,, controllers, CONTROL MANAGERS, HOW TO CREATE A REPLICATION controller, 
+that wil be creating a particular pod
 
 HOW POD IS MANGED ,create a secret for dockerhub
  
@@ -9,7 +10,14 @@ HOW POD IS MANGED ,create a secret for dockerhub
 ********************************************************************************************************************
 
 
- SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE, MORE PODS COMMANDS, 
+  ILLUSTRATION  ( 1 to 8), SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE/ CURRENT CONTEXT, DEPLOYING A POD USING DECLARATIVE APPROACH (MANIFEST FILE),
+TROUBLESHOOTING,  SERVICE DISCOVERY, LABELS & SELECTORS EXPLAINED, KUBERNETES SERVICE, CREATING SERVICE FOR HELLoAPP, FQDN, APPLYING FQDN, 
+USING THE 'EXEC -it' TO RUN FQDN, CANT USE THE SERVICE TO COMM BTW CONTAINERS IN DIFF NS, USING SERVICE NAME TO COMM WITH CONTAINERS INSIDE THE SAME NS, 
+DISADVANTAGES OF POD, STATIC PODS, USING MANIFEST FILE TO CREATE STATIC POD,  CONTROLLER MANAGERS,  WORKLOADS, k8 POD LIFE CYCLE, 
+USING MANIFEST FILE TO CREATE A REPLICATION, NODEPORT SERVICE MANIFEST FILE, KUBEPROXY/ENDPOINTS/NODEPORT, NODE PORT COMES WITH CLUSTERIP, COMMANDS FOR
+REPLICATOR CONTROLLERS, WE CAN SCALE WITH RC, WE ONLY USE DOCKER TO, HOW POD IS MANGED, REPLICA SET, CREATING a rePLICA SET, DEPLOYING appl using RS,
+NODE PORT COMES WITH CLUSTERIP,  PULL IMAGE FROM PRIVATE REPO, DIDNT BUILD, TAGGED IT & PUSHED IT, DEPLOYING REPLICA SET WITH MANIFEST FILE , CREATE SECRET
+FOR DOCKER HUB, APPLY THE SECRET TO THE MANIFEST FILE, REPLICA SET TEMPLATE
 
 
 
@@ -951,7 +959,7 @@ successful
 *******************************
 
 
-                                    PULL IMAGE DIDNT BUILD, TAGGED IT & PUSHED IT
+                                    PULL IMAGE FROM PRIVATE REPO, DIDNT BUILD, TAGGED IT & PUSHED IT
 2:20:00 (he tried to pull an image from a private repository then he made the repo public so that we can access it) 
 he then created a new private repo.. pull the nodejs image frm github, tag and pushed the same image to the new repo he created  
 2:26:32  .......   my job with docker is to containerize
@@ -966,7 +974,7 @@ docker push mylandmarktech/nodeapp
 ######################## IN the k8 server, we ar deploying in k8 , docker only help us containerize n share the images in image registry
 
 
-                              DEPLOYING REPLICA SET
+                              DEPLOYING REPLICA SET WITH MANIFEST FILE  (with image pulled from private reg but it failed bc need secret key)
 
 node-rs.yml            
 ==========                            deploying using replica set
