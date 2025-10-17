@@ -687,7 +687,7 @@ USING MANIFEST FILE TO CREATE A REPLICATION controller, that wil be recreating a
 
 
 
-                **mee**              NODEPORT/ENDPOINTS/KUBEPROXY  (S
+                **mee**              NODEPORT/ENDPOINTS/KUBEPROXY  (this is service discovery to take note of)
 Nodeport service can process external traffic,
 WE connect to d nodeport service from outside d cluster by using the nodeIP & the node port, SO frm outside the cluster we ar able to acces d app using nodeport
 This is how it works: our nodes have ip address (nodeports) so when endusers type any of the ip address ie trying to access the appl, the nodeport service will
@@ -699,6 +699,10 @@ immediately to the service concerned & frm the service, which  now has endpoints
 Kubernetes Objects
 NodePort - Exposes the service on each Node's IP at a static port. A ClusterIP service, to which the NodePort service will route, is automatically created. 
 You'll connect to the NodePort service, from outside the cluster, by using "<NodelP>:<NodePort›".
+
+2.09.19                                  NODE PORT COMES WITH CLUSTERIP 
+***********nternally, i created a nodeport service for python but that nodeport  service also has a cluster IP assigned to it, so if i wnat to access my 
+python appl, i can curl, using the clusterip ,to  access the appl internally
 
 
 
@@ -743,4 +747,8 @@ Supports eqaulity based selectors and/or set based selectors. (it can be either 
      - javawebpp
      - myapp  
      - fe  
+
+
+    CREATE SECRET
+Create a secret that will authenticate kubernetes to pull images from dockerHub/nexus/jfrog  
 
