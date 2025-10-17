@@ -138,7 +138,12 @@ multi-zonal cluster could be deployed in a cloud environment with a dual-stack n
 
 
 ***********************************************************************************************************************************************
-
+KUB 1/2 & 3/4.. is all abouttypes of k8 cluster to install, installing the multi node cluster & how applications are deployed ie usng pod as a object or 
+controller managers but we shudnt use pods bc of the short life cycle and inability to scale, also we have the way we deploy workload either using the 
+imperative/command approach or declarative/manifest file approach.
+we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
+diff ns we hee FQDN  while nodeport is for externall comm ie been able to
+comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
 
  
 
@@ -176,6 +181,28 @@ ntwrks, vols, using the docker-compose file.
 
 
    SUMMARIZED FOR INTERVIEW
+
+KUB 1&2
+XPLAIN THE K8 ARCHITECTURE  
+kubernetes Orchestrate and managed containerised Applications
+k8 is a grp of servers that are working together to be able to ochestrate containerize applications, its made up of a control plane & worker node, the control
+planee comes with components line the API server which is the main adminstrative point and the entry point into the cl8 & it does generally authentication &
+authoriztion & it ensures that whatevr Req GETS into the cl8 is been made by an authorized & authenticated individual, apart of the API server, we hv the etcd
+that persists data in the cl8, it acts as a database ,whatevr reQ is been made by whoever engr that inf is stored and persisted in the etcd and frm there we 
+also hv the scheduler, which is incharge of scheduling  eg if pods are been REQuested to be scheduled the sheduler will schedule that considering the nodes
+that hv available resources for such a pods to be hosted and if thers any other constrain all the constraint are been factored in
+we also hv the controler managers that is able to ensure that at all times we hv a number of nodes running , pods running , deplyments are runing as expected
+we also hv the worker nodes comes with the kublets which is the pry node agent, we equally hv the kube proxy, which is incharge of netwrk 
+also the container run time, there are diff types of container run time that you can use, docker used to be one of them , also container-D, container runtime
+is any software in your node that is able to create and start containers bc k8 is all abt managing containerized appl n in our env we use containerD as our 
+container run time, we cud hv as well choosen other run time but we are using containerD
+
+Also the k8 architecture is such that calls are made into the cl8 and that happens using the k8 client like kubectl or k8 UI form there we can mk certain API 
+calls either to create containers, namespaces, security like RBAC and for any of these to happen, authentication must happen via the kube config file
+so thats the k8 architecture
+
+
+KUB 3&4
 FOR autHORIZATION;
 authorisation via RBAC: Roll base access control, 
 this is under kub security , u hv to be authenticated n authorized to perform that task
