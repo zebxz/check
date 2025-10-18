@@ -757,6 +757,25 @@ we deployed/provisioned a cluster:
 #################so the scheduler here is scheduling based on resources
 
 
+                USE CASES OF DAEMON SET
+Explain the kubernetes objects recommended to ensure the scheduler schedule a pod  
+in each node or a group of selected node/nodeGroup
+- DaemonSets is the ONLY recommended object for pods to be scheduled in each node  
+Use cases: 
+   - logmgt applications - EFK/ELK    
+   - databaseBackup application  
+
+9 worker nodes: = 
+    dbnode1, dbnode2, dbnode3, appnode1, appnode2, appnode3
+    webnode1, webnode2, webnode13
+
+nodeGroups : in this case, if you have a grp of dbnodes, appnodes, webnodes,, i can schedule pods to be created on only dbnodes grp by passing a node selector, to  say ok,
+select only data base  node or a node affirmity for the specific/selected node i want pods to be created only on.
+    3 dbnodes  [dbnode1, dbnode2, dbnode3  ]
+    3 appnodes [appnode1, appnode2, appnode3]
+    3 webnodes [webnode1, webnode2, webnode13]
+
+
 TAINTING NODE
 we can also taint a node when we want to do :
   -- recommissioning / upgrades / updates / patching  
