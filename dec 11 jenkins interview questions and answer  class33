@@ -11,7 +11,6 @@ Gateway
 Eks
 
 
-
 ****meee*********
 we use maven for build and tomcat for deployment having integrated it with nginx webserver for loadbalancing & routing traffic from endusers to the appservers 
 we bring in sonar for security, then nexus aas a repository for backing up our artifacts and jenkins to automate the end to end process (CI/CD)
@@ -27,82 +26,15 @@ someone is aking we hv nt deployed to tomcat ,, we are going to be deploying con
 2:04:00  we can use jenkins for non java applications and any application as expalined in jenkins shared lib video
 
 
+LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
+In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, JENKINS automates the end to end process, 
+AWS for cloud computing services/resources, DOCKER for containerization ie deploying light weight containers, DOCKER SWAMP for container orchestration, KUBERNETES for
+container orchestration/MGT, Orchestrate means to arrange.
+
+
+
+
 *************************
-
-
-
- AWS 1;
-Cloud Service Models:
-=====================
-IaaS -- Infrastructure as a service  :   has components that is managed by the vendors & managed by us 
-e.g ec2 instance  - ec2 
-  - SonarQube
-
-***online sonarqube is Saas, i had to verify it online.
-
-PaaS--  Platform  as a service  : aws container registry, aws kubernetes solution
-  ECR / EKS / ECS / 
-
-
-
-AWS4
-Broad classification of Aws services
-********* he actually logged into aws & on the home page we saw all the aws services, even thode not listed here
-
-1) compute
-  in compute service we hv; server & serverless
-   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
-   serverless; Lambda(run code without servers) / Beanstack / farget profile
-                 Container( ECS ie elastic container service/EKS ie k8 service)
-  2) storage ; EBS/ EFS/ S3
-  3) databases 
-  4)networking 
-  5)data anylytics 
-we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
-
-
-AWS10/11
-1. aws cloud computing
-
-What is Cloud Computing ?
-Cloud computing is the delivery of computing services—including 
-  - servers,storage, databases, networking, software, analytics, and more
- over the Internet (“the cloud”)  hosted at a remote data center managed
- by a cloud services provider (CSP).
-   CSP = aws, GCP, Azure, alibaba, vmware, salesforce, oracle, ibm, 
-
- aws cloud = 
-  - servers,  e.g    = ec2 instances  
-  - severless, e.g   = Lambda functions,
-  - storage,         = ebs, efs,elastic file system, s3, 
-  - databases,  when we get into conatiner     = rds,relational databases e.g [ mySQL, mariaBD, posgressSQL, arura,  ], nonRDS[ dynamoDB,  ]
-  - networking,  = vpc, creating private ntwrk in aws
-  - software,   to create ec2 instance we nid a sfware to create the server resources = ami, SDLC, hw to automate task in aws
-  - analytics,  hw to analyze waht is happening in aws = CloudWatch, 
-  - and more  
-  - security     =aws security services 
-
-to tk my aws study to the nxt level
-===================================
-Terraform and other IaC tools to manage aws resources
-=====================================================
-Terraform    ....    .......18hours to cover terraform:
-CloudFormation 
-Ansible  
-Terraform:
-=========
-- support Multiple clouds [aws, GCP, Azure]
-- codes/files are used   
-
-
-KUBERNETES 1&2
-TYPES OF CLOUD manged service:      ***I bliv for ochestrating contaners.
-   EKS --> Elastic Kubernetes Service(AWS)
-   AKS --> Azure Kubernetes Service(Azure)
-   GKE --> Google Kubernetes Engine(GCP)
-   IKE --> IBM K8s Engine(IBM Cloud)
-    Kubernetes Cluster = k8s  
-
 
 
 
@@ -137,22 +69,11 @@ These categories are not mutually exclusive, and a Kubernetes cluster can exhibi
 multi-zonal cluster could be deployed in a cloud environment with a dual-stack networking configuration.
 
 
-***********************************************************************************************************************************************
-KUB 1/2 & 3/4.. is all abouttypes of k8 cluster to install, installing the multi node cluster & how applications are deployed ie usng pod as a object or 
-controller managers lik RC, RS but we shudnt use pods bc of the short life cycle and inability to scale, also we have the way we deploy workload either using
-the imperative/command approach or declarative/manifest file approach.
-we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
-diff ns we hee FQDN  while nodeport is for externall comm ie been able to
-comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
-
- 
-
-LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
-In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, JENKINS automates the end to end process, 
-AWS for cloud computing services/resources, DOCKER for containerization ie deploying light weight containers, DOCKER SWAMP for container orchestration, KUBERNETES for
-container orchestration/MGT, Orchestrate means to arrange.
+**********************************************************************************************************************************************
 
 
+
+KUB 3&4
 DISADVANTAGES OF DOCKER
 with docker i cannot v more than 1 replica of webapp for e.g u are deploying ur appl n ders a spike , no i cant v multiple replicas in docker , e.g: so if u decide to run
 docker run -name webapp -replicas 5 , ie trying to get the number of replicas u wnat, it wont work.. docker doesnt support it
@@ -176,7 +97,43 @@ ntwrks, vols, using the docker-compose file.
   Dockerfiles/images/networks/volumes/docker-compose.yml/etc.
 
 
+KUB 3&4*
+in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
+We should not create pods directly to deploy applications.
+If a node  goes down in which pods are running, Pods will not be rescheduled.
+We have to create pods using controllers which manages the POD life cycle.
+controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
+ ****in manifest files;
+pods have label .. ie key value pair
+ReplicationControllers has selectors which is used to be able to connect to the pod label
+
+1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are recreated.
+all the pods have been rescheduled/recreated bc my pods are been manged by a 
+ Replication controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
+ selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state of my appli which is 3 
+
+
+advantages of namespace
+****clusterRole &clusterRolebinding is for the entire cluster 
+
+*me*Docker is 'compose file' deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
+
+
+******if we dnt pass replica, its goin to create one...
+
+**************************************************************************************************************
+
+
+
+KUB 1/2 & 3/4.. is all about types of k8 cluster to we can install, installing d multi node cluster, creating namespace, how applications are deployed ie usng
+pod as a object OR controller managers like RC, RS but we shudnt use pods bc of the short life cycle and inability to scale, also we hv the way we deploy 
+workload either using the imperative/command approach or declarative/manifest file approach.
+we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
+diff ns we hee FQDN  while nodeport is for externall comm ie been able to
+comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
+
+ 
 
 
 
@@ -231,30 +188,7 @@ now this entire netwroking wher appls can accessed with relative ease is been su
 
 ###########if u can xplain dis kub architecture, u ar as good as done 37:26
 
-KUB 3&4*
-in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
-We should not create pods directly to deploy applications.
-If a node  goes down in which pods are running, Pods will not be rescheduled.
-We have to create pods using controllers which manages the POD life cycle.
-controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
- ****in manifest files;
-pods have label .. ie key value pair
-ReplicationControllers has selectors which is used to be able to connect to the pod label
-
-1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are recreated.
-all the pods have been rescheduled/recreated bc my pods are been manged by a 
- Replication controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
- selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state of my appli which is 3 
-
-
-advantages of namespace
-****clusterRole &clusterRolebinding is for the entire cluster 
-
-*me*Docker is 'compose file' deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
-
-
-******if we dnt pass replica, its goin to create one...
 
 **************************************************************************************************************
 
