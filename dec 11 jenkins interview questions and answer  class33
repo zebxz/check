@@ -99,13 +99,19 @@ ntwrks, vols, using the docker-compose file.
 
 KUB 3&4*    POD
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
-We should not create pods directly to deploy applications.
+We should not create pods directly to deploy applications.  **kub5**     lacks self-healing capacities
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
 controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
-**Mee*** therefore in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create service, 
-we wil also have a template/section for service
+
+      MANIFEST FILE DETAIL FOR EACH CONTROLLER MANAGER
+1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create 
+service, we wil also have a template/section for service
+2)for RS, in the manifest file, kind will be 'rs' & we will also hv a template for replica set, also a template for pod inside the same manifest file & if 
+we need to create service, we wil also have a template/section for service
+3) for daemon set,, we only ahve the template for pod, & service, we dnt need RC or RS, because daemon schedules pods on all the nodes
+    because there is no replica template, i bliv thats why we cant scale with daemon set.
 
 
                    CONTROLLER MANAGERS eg RC,RS
@@ -692,7 +698,7 @@ pods can be deployed/managed by using:
 ReplicaSet = RS :   ...  ****************HOW TO USE REPLICA SET TO deploy our application    ......1:53:50
 ==========
 What is difference b/w replicaset and replication controller?
-RS is the next generation of replication controllers 
+RS is the next generation of replication controllers, **kub5** with replica set, we can roll out new version of the application but we cant rollback
 The only difference as now is the selector support.
 
           ***types of selectors:
@@ -726,3 +732,48 @@ Supports eqaulity based selectors and/or set based selectors. (it can be either 
     CREATE SECRET
 Create a secret that will authenticate kubernetes to pull images from dockerHub/nexus/jfrog  
 
+
+
+KUB5 .. Class 34
+
+
+with deployment we can run kubectl undo deployment but we cant undo replicaset
+to undo replica set, it will have to be destroyed before it can be recreated and we will see hw deployment resolves theta issue and that is why we use 
+deployment as an object over replica set
+
+Deploy an app which must hv a pod running in each node = we use: daemonSet
+e.g of diff app that shud hv a pod in each node    e.g logmgt/ logshipper
+deploy an appl with scaling option = we  use : rc/rs/deployment/statefulsets
+***********we cant use pod for  deployment with scaling  capabilities.... although the appl runs inside the pod, we shud nt use pod directly to deploy appl.
+we shud nt use pod as an object for deployment
+
+
+
+DAEON SET
+daemonset is a controller manger that permit a pod to be scheduled on each node
+we deployed/provisioned a cluster:
+   nodes [ node1/node2/node3 ]  
+ we can see the app pod we deployed above was scheduled on node1 and node9
+#################so the scheduler here is scheduling based on resources
+
+
+TAINTING NODE
+we can also taint a node when we want to do :
+  -- recommissioning / upgrades / updates / patching  
+kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]   .................  to taint a node
+kubectl taint nodes node5 key2=value2:NoExecute      [taint the node]
+kubectl taint nodes node1 key1=value1:NoSchedule-    [untaint the node] ..................  to untaint a node
+
+Master node is tainted by default
+ubuntu@master:~$ kubectl describe node master
+under Annotations
+taints :we see master node is tainted
+Unscheduled: false        .. ********* false means with toration we can scedule pods on the node
+
+                   APPLYING TAINT
+ubuntu@master:~$ kubectl taint nodes node1 key1=value1:NoSchedule ...... am  tainting this node wit no schedule which means pod cannot be scheduled on the node  ...1:35:55
+
+       ADD TOLORATION TO TAINTED NODE
+for  a pod to be scheduled on the tainted node we nid to add tolerations in the spec:
+- operator: Exists                       we v operators like exists, effect 
+        effect: "NoSchedule"
