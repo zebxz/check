@@ -1,4 +1,10 @@
-vjvvbgbWITH REPLICA SET WE CANT ROLL BACk  ,,, daemonset ,,,,, toloration,(tainting and untainting nodes) ,,  Master node is tainted by default
+WITH REPLICA SET WE CANT ROLL BACk  ,,, daemonset ,,,,, toloration,(tainting and untainting nodes) ,,  Master node is tainted by default
+
+
+
+WE CANT CREATE CONTAINERS WITH THE SAME NAME, WE CAN ROLL OUT A NEW VERSION OF THE APPLICATION but WITH REPLICA SET WE CANT ROLL BACK, DEPLOY WITH DAEMON SET,
+DAEMON SET TEMPLATE,  TAINTING NODE, ADD TOLORATION TO TAINTED NODE, MASTER NODE IS TAINTED,  WHY WE TAINT NODES,
+
 
 
 
@@ -29,6 +35,7 @@ labels: pod
            ports:
          -containerPort:9981
 ubuntu@master:~$  kubectl apply -f pp.yml
+
 
 WE CANT CREATE CONTAINERS WITH THE SAME NAME:
     ####### The above file wants to create a container with the name nodeapp but it couldnt deploy bc earlier, we had created a container with the name nodeapp ,, therefore 
@@ -74,8 +81,8 @@ but with replica set you cant roll back to a previous version/set
 
 1:18:46
 ##########with deployment we can run kubectl undo deployment but we cant undo replicaset
-to undo replica set, it will have to be destroyed before it can be recreated and we will see hw deployment resolves theta issue and that is why we use deployment as an object
-over replica set
+to undo replica set, it will have to be destroyed before it can be recreated and we will see hw deployment resolves theta issue and that is why we use 
+deployment as an object over replica set
 
 
 
@@ -89,7 +96,7 @@ Deploying applications[creating pods] using controllerManagers as a kubernetes o
 Cluster ---> Nodes ----> Pods  ----> containers
 ie  ....   k8s ---> Nodes ----> Pods  ----> containers      .... k8 is managing containerized appli
 ********
- HOW CAN WE DEPLOY CONtainerised appli ations in K8?
+ HOW CAN WE DEPLOY CONtainerised applications in K8?
 we use kubernetes objects to deploy workloads in k8:       if u use pod as a k8 object to deploy ur app that is goin to b limited so 
 1. pods
     scaling is nt supported
@@ -210,6 +217,9 @@ node1    Ready    <none>          5d10h   v1.28.2
 node5    Ready    <none>          5d10h   v1.28.2
 node9    Ready    <none>          5d10h   v1.28.2
 
+
+
+                             DEPLOY WITH DAEMON SET
 ############################## e.g deploying with daemonSEt (we will take the replica out, no replicas will be there bc it wil schedule each pod in a node)
 
 ds.yml  
@@ -264,6 +274,7 @@ node-rs         1                 1          1            56m
 
   
 
+                                                   DAEMON SET TEMPLATE
 ###################WE cant scale daemonset ,, so this is hw  daemonset template looks like : exactly as we saw with replicaset  ........1:31:49
 ds.yml  = kams                                        and we can also deploy a service for the deployment bc at the moment, when we run get pod we dnt hv any service
 -=====--------
@@ -322,6 +333,8 @@ master   Ready    control-plane   5d10h   v1.28.2
 node1    Ready    <none>          5d10h   v1.28.2              we hv 2workker nodes 
 node9    Ready    <none>          5d10h   v1.28.2                2nd worker node
 
+
+                                 TAINTING NODE
 ubuntu@master:~$ kubectl taint nodes node1 key1=value1:NoSchedule ...... am  tainting this node wit no schedule which means pod cannot be scheduled on the node  ...1:35:55
 
 ubuntu@master:~$ kubectl get ds     
@@ -333,7 +346,9 @@ NAME          READY         STATUS           RESTARTS       AGE            IP   
 appds-mwnh7    1/1           running          o             3m22s        10.36.0.1       node9                 none                  none
 
 **************we tainted node1 with no schedule so no pod can be scheduled on the pod ,for  a pod to be scheduled on the tainted node we nid to add tolerations in the spec:
-                                                                                                                          1:37:01
+                    
+                                       ADD TOLORATION TO TAINTED NODE
+1:37:01
 kind: DaemonSet
 apiVersion: apps/v1  #   = kubectl api-resources | grep rs
 metadata:
@@ -357,6 +372,7 @@ spec:
     matchLabels:
       app: hellos
 ---
+                                      
 ubuntu@master:~$  vi ds.yml and add toloration
 ubuntu@master:~$  kubectl apply -f ds.yml    (deploying with the toloration)
 daemonset.apps/appds configured
@@ -394,7 +410,7 @@ spec:
     matchLabels:
       app: hellos
 
-1:41:49
+1:41:49                                         MASTER NODE IS TAINTED
 #################################      ####################  Master node is tainted by default
 
 ubuntu@master:~$ kubectl describe node master
@@ -403,6 +419,9 @@ taints :we see master node is tainted
 Unscheduled: false        .. ********* false means with toration we can scedule pods on the node
 
 =============================  
+
+
+                     WHY WE TAINT NODES
 we can also taint a node when we want to do :
   -- recommissioning / upgrades / updates / patching  
 kubectl taint nodes node1 key1=value1:NoSchedule     [taint the node]   .................  to taint a node
