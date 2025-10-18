@@ -3,7 +3,7 @@ WITH REPLICA SET WE CANT ROLL BACk  ,,, daemonset ,,,,, toloration,(tainting and
 
 
 WE CANT CREATE CONTAINERS WITH THE SAME NAME, WE CAN ROLL OUT A NEW VERSION OF THE APPLICATION but WITH REPLICA SET WE CANT ROLL BACK, DEPLOY WITH DAEMON SET,
-DAEMON SET TEMPLATE,  TAINTING NODE, ADD TOLORATION TO TAINTED NODE, MASTER NODE IS TAINTED,  WHY WE TAINT NODES,
+DAEMON SET TEMPLATE,  TAINTING NODE, ADD TOLORATION TO TAINTED NODE, MASTER NODE IS TAINTED,  WHY WE TAINT NODES, USE CASES OF DAEMON SET
 
 
 
@@ -185,11 +185,11 @@ SUCCESSFUL
 can check daemonset using this link on k8 website
 https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 
-DaemonSets:
+DaemonSets:     .... 1.25.46
 ==========
 https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
-we deployed/provisioned a cluster:
-   nodes [ node1/node2/node3 ]  
+we deployed/provisioned a cluster:     ****i bliv a cluster is a group of servers
+   nodes [ node1/node2/node3 ]    *** i bliv this was in video 1&2 ,, we called the nodes master, 2worker nodes; node1 and node9
 
 daemonset is a controller manger that permit a pod to be scheduled on each node
 ubuntu@master:~$ kubectl get node
@@ -460,6 +460,9 @@ Ticket6:
 Explain the kubernetes objects recommended to ensure the scheduler schedule a pod  
 in each node or a group of selected node/nodeGroup
 - DaemonSets is the ONLY recommended object for pods to be scheduled in each node  
+
+
+                                    USE CASES OF DAEMON SET
 Use cases: 
    - logmgt applications - EFK/ELK    
    - databaseBackup application  
