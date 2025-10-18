@@ -13,7 +13,7 @@ we shud be able to esta the fact that applications are deployed in ports
 
  ILLUSTRATION  ( 1 to 8), SET CONFIGURED NAMESPACE TO CURRENT NAMESPACE/ CURRENT CONTEXT, DEPLOYING A POD USING DECLARATIVE APPROACH (MANIFEST FILE),
 TROUBLESHOOTING,  SERVICE DISCOVERY, LABELS & SELECTORS EXPLAINED, KUBERNETES SERVICE, CREATING SERVICE TYPE; CLUSTERip, FQDN, APPLYING FQDN, 
-USING THE 'EXEC -it' TO RUN FQDN, CANT USE THE SERVICE TO COMM BTW CONTAINERS IN DIFF NS, USING SERVICE NAME TO COMM WITH CONTAINERS INSIDE THE SAME NS, 
+USING THE 'EXEC -it' TO RUN FQDN, CANT USE THE SERVICE TO COMM BTW PODS IN DIFF NS, USING SERVICE NAME TO COMM WITH PODS INSIDE THE SAME NS, 
 DISADVANTAGES OF POD, STATIC PODS, USING MANIFEST FILE TO CREATE STATIC POD,  CONTROLLER MANAGERS,  WORKLOADS, k8 POD LIFE CYCLE, 
 USING MANIFEST FILE TO CREATE A REPLICATION, NODEPORT SERVICE MANIFEST FILE, KUBEPROXY/ENDPOINTS/NODEPORT, NODE PORT COMES WITH CLUSTERIP, COMMANDS FOR
 REPLICATOR CONTROLLERS, WE CAN SCALE WITH RC, WE ONLY USE DOCKER TO, HOW POD IS MANGED, REPLICA SET, CREATING a rePLICA SET, DEPLOYING appl using RS,
@@ -101,7 +101,9 @@ we cant est communication btw containers in diff name space using the service na
 We should not create pods directly to deploy applications.
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
-controllerManagers:
+controllerManagers: eg RC, RS, deployment, daemon set.
+**** therefore in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create service, 
+we wil also have a template/section for service
 
 9) Controller manager....   continue with the rest of the video from there..  1.05.00
     we can scale WIth controller mangers but we cant scale with pod
@@ -115,6 +117,8 @@ k8 can pull the images to deploy application
 ***if we dnt pass replica, its goin to create one...
 
 
+ therefore in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create service, we wil
+                        also have a template/section for service
 
 
 
@@ -454,14 +458,14 @@ root@web:/usr/local/tomcat#  curl hellosvc.dev.svc.cluster.local        52:47
 we successfully commu with the container (they are in 2diff name space)
 
 
-                                               CANT USE THE SERVICE TO COMM BTW CONTAINERS IN DIFF NS 
+                                               CANT USE THE SERVICE TO COMM BTW PODS IN DIFF NS 
              1) errror... the 'web pod' in the default namespace TRYING TO use the service name to COMM with the 'hello container in the dev namespace  
 root@web:/usr/local/tomcat#  curl hellosvc
 curl: (6) could not resolve host: hellosvc    ,,,  wheni use just the service name am unable bc they ar in diff namespaces, so u hv to use the FQDN when d 
 containers ar running in  diff namespaces.
             
 
-                       USING SERVICE NAME TO COMM WITH CONTAINERS INSIDE THE SAME NS
+                       USING SERVICE NAME TO COMM WITH PODS INSIDE THE SAME NS
        2)successful:  the 'web pod' in the dev namespace TRYING TO use the service name to COMM with the 'hello container in the dev namespace  
 container
 root@web:/usr/local/tomcat#  exit              54:10  ####remember earlier we config our default namespace to be dev n now we didnt indicate default so its 
@@ -493,6 +497,9 @@ hello            1/1         Running      0             32m
 e.g we cannot decide to have more replicas of hello if we ar going to be using pod
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod    .....
 (we shud use controllers like Replica Sets, Deployment, Deamon sets to keep pod alive)
+
+**Mee*** therefore in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create service, 
+we wil also have a template/section for service
 
 56:20 ##################  READ UP POWERPOINT   ***WE should USE CONTROLLERS
 
@@ -561,6 +568,10 @@ NB:
 We should not create pods directly to deploy applications.
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
+
+**Mee*** therefore in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create service, 
+we wil also have a template/section for service
+
 
 
                      CONTROLLER MANAGERS
