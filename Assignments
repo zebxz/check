@@ -843,15 +843,16 @@ Deploy workloads in kubernetes;
 ***ignore, its just about k8 objects used for deployment
 
 
-Ticke3:
-  Create fintech and ecommerce Namespaces  ***ticket4 below**
+Ticket3:
 kubernetes uses the kubectl client or the UI to run workloads.
 
-Ticket4      **i bliv all these is in the master node
-CREATE FINTECH & ECOMMERCE NAMESPACES (fintech) USING IMPERATIVE APPROACH  (COMMAND)
- Create (prod) namespace using the declarive approach (manifest file)
- Create (dev) namespace using the imperative approach (command)
- USING DECLARATIVE APPROACH (MANIFEST FILE), deploy the manifest file to create a pod call it 'myapp', in the 'dev' namespace
+           ****I can practice only Since its not recommended to deploy in using pod as an object
+
+Ticket4          **i bliv all these is in the master node
+1)CREATE FINTECH & ECOMMERCE NAMESPACES (fintech) USING IMPERATIVE APPROACH  (COMMAND)
+2) Create (prod) namespace using the declarive approach (manifest file)
+3)Create (dev) namespace using the imperative approach (command)
+4)USING DECLARATIVE APPROACH (MANIFEST FILE), deploy the manifest file to create a pod call it 'myapp', in the 'dev' namespace
 (remember the manifest file with create a container, call the container 'app')
  
 
@@ -859,12 +860,12 @@ CREATE FINTECH & ECOMMERCE NAMESPACES (fintech) USING IMPERATIVE APPROACH  (COMM
 KUB 3&4           ***continues with KUB 1&2
 Ticket
 1)set configured namespace (dev)to current namespace/context
-2)create service type CLUSTERip for the container (app which is in the dev namespace)
-3)create container/app  called 'hello' in the default namespace using the '-n default' command
-4)Uisng the exec -it command; Apply FQDN  command to est communication by the container in the dev namespace (called app) & the container in the default 
+2)create service type CLUSTERip  called (chatr) for the pod(myapp which is in the dev namespace)
+3) using command, create pod called 'hello' in the default namespace using the '-n default' command
+4)Uisng the exec -it command; Apply FQDN  command to est communication btw the pod in the dev namespace (called myapp) & the pod in the default 
 namespace (called hello)    *** for now i dnt know if it will work without the 'exec' command
-5)create container/app  called 'dollar' in the 'dev'namespace
-6)Est communication btw the 2containers (app & dollar) in the dev namespace uisng just the service name
+5)Using command, create pod  called 'dollar' in the 'dev'namespace
+6)Est communication btw the 2pods (myapp & dollar) in the dev namespace uisng just the service name (chatr)
 8)Use manifest file to create a STATIC POD
 9) use a manifest file to create a replica controller that will be recreating the pod (webapp) with container (web) & will also create a NODEPORT service  
 10) create a docker SECRET, use the secret in the manifest file to deploy/create REPLICA SET that will be recreating the pod (billion) & will also create a 
