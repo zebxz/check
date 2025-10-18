@@ -1,18 +1,105 @@
-
-
 LINUX , scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, terraform, ansible, k8/helm 
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, JENKINS automates the end to end process, 
 AWS for cloud computing services/resources, DOCKER for containerization, KUBERNETES for 
 
 
 
-**** AWS1, AWS4 & AWS 10/11, for Aws cloud services information
+
+**** AWS1, AWS4 & AWS 10/11, for Aws cloud services information, I Gather all of them together here to view easily at a glance..
+
+ AWS 1;
+Cloud Service Models:
+=====================
+IaaS -- Infrastructure as a service  :   has components that is managed by the vendors & managed by us 
+e.g ec2 instance  - ec2 
+  - SonarQube
+
+***online sonarqube is Saas, i had to verify it online.
+
+PaaS--  Platform  as a service  : aws container registry, aws kubernetes solution
+  ECR / EKS / ECS / 
+
+
+
+AWS4
+Broad classification of Aws services
+********* he actually logged into aws & on the home page we saw all the aws services, even thode not listed here
+
+1) compute
+  in compute service we hv; server & serverless
+   for server; we have "ec2 instances, ie your computer in the cloud, meaning that aws is providing server resources
+   serverless; Lambda(run code without servers) / Beanstack / farget profile
+                 Container( ECS ie elastic container service/EKS ie k8 service)
+  2) storage ; EBS/ EFS/ S3
+  3) databases 
+  4)networking 
+  5)data anylytics 
+we use aws services based on the needs of the company ,coy wil use asw services based on task they ar trying to accomplish
+
+
+AWS10/11
+1. aws cloud computing
+
+What is Cloud Computing ?
+Cloud computing is the delivery of computing services—including 
+  - servers,storage, databases, networking, software, analytics, and more
+ over the Internet (“the cloud”)  hosted at a remote data center managed
+ by a cloud services provider (CSP).
+   CSP = aws, GCP, Azure, alibaba, vmware, salesforce, oracle, ibm, 
+
+ aws cloud = 
+  - servers,  e.g    = ec2 instances  
+  - severless, e.g   = Lambda functions,
+  - storage,         = ebs, efs,elastic file system, s3, 
+  - databases,  when we get into conatiner     = rds,relational databases e.g [ mySQL, mariaBD, posgressSQL, arura,  ], nonRDS[ dynamoDB,  ]
+  - networking,  = vpc, creating private ntwrk in aws
+  - software,   to create ec2 instance we nid a sfware to create the server resources = ami, SDLC, hw to automate task in aws
+  - analytics,  hw to analyze waht is happening in aws = CloudWatch, 
+  - and more  
+  - security     =aws security services 
+
+to tk my aws study to the nxt level
+===================================
+Terraform and other IaC tools to manage aws resources
+=====================================================
+Terraform    ....    .......18hours to cover terraform:
+CloudFormation 
+Ansible  
+Terraform:
+=========
+- support Multiple clouds [aws, GCP, Azure]
+- codes/files are used   
+
+
+KUBERNETES 1&2
+TYPES OF CLOUD manged service:      ***I bliv for ochestrating contaners.
+   EKS --> Elastic Kubernetes Service(AWS)
+   AKS --> Azure Kubernetes Service(Azure)
+   GKE --> Google Kubernetes Engine(GCP)
+   IKE --> IBM K8s Engine(IBM Cloud)
+    Kubernetes Cluster = k8s  
+****************************************************
+
+
+
+
+*** NACL.. controls inbount and outbound traffic into the vpc
+**NAT GATEWAY, its attached to the public subnet,allows the private subnet to get access to the internet but does nt allow traffic into the private subnet
+         in the private subnet we place the appservers.
+**IGW...   To ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
+IGW is attached to the vpc & then to the pub route table (so the pub route table ahs access to the internet) then the pub route table is attached to
+the pub subnet. .. IGW is not attached to the private subnet 
+in the public subnet we place the webservers, jumperservers & lb & for traffic to get to our appservers it has to go tru the jumpserver.
+**********************
+
+***AWS8B***
+2:07. one limitation of ntwrk LB is that it doesnt allow more than one traget grps to be added to a particular LB
 
 
 
 
 
-
+****************************    SUMMARIZED FOR INTERVIEW********************************
 
 AWS COVERS 2 THINGS: .. so u can finish this course and work as any of this 
 Cloud Engineering  
@@ -24,27 +111,9 @@ and dis can be done using GUI ... E.g chnaging the name of my server , vpc .. we
 so apart frm using console we can use files 
 
 
-***AWS8B***
-2:07. one limitation of ntwrk LB is that it doesnt allow more than one traget grps to be added to a particular LB
 
 
-
-
-****************************    SUMMARIZED FOR INTERVIEW********************************
-
-
-*** NACL.. controls inbount and outbound traffic into the vpc
-**NAT GATEWAY, its attached to the public subnet,allows the private subnet to get access to the internet but does nt allow traffic into the private subnet
-         in the private subnet we place the appservers.
-**IGW...   To ensure comunication btw the servers by creating a route table, wich detr hw service is routed from one subnet to d oda
-IGW is attached to the vpc & then to the pub route table (so the pub route table ahs access to the internet) then the pub route table is attached to
-the pub subnet. .. IGW is not attached to the private subnet 
-in the public subnet we place the webservers, jumperservers & lb & for traffic to get to our appservers it has to go tru the jumpserver.
-*********************************
-
-
-
-
+START
 in my env, AWS is our Cloud Service Provider we use aws services based on the needs of the company  
 diff coy wil use asw services based on task they ar trying to accomplish
 For our cloud solution which is Based on the need of our company , we thank advantage of the diff computing service/resources provided by AWS including; 
@@ -119,6 +188,9 @@ is somt new the company invites expert from AWs to cm indicate & elborate on the
 
 
 ****************************************************** ENDS***************************************************************
+
+
+
 
 
 
