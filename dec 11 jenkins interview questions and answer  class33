@@ -97,18 +97,15 @@ ntwrks, vols, using the docker-compose file.
   Dockerfiles/images/networks/volumes/docker-compose.yml/etc.
 
 
-KUB 3&4*
+KUB 3&4*    POD
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
 We should not create pods directly to deploy applications.
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
 controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
- ****in manifest files;
-pods have label .. ie key value pair
-ReplicationControllers has selectors which is used to be able to connect to the pod label
-
-1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are recreated.
+                   CONTROLLER MANAGERS eg RC,RS
+1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are RECREATED.
 all the pods have been rescheduled/recreated bc my pods are been manged by a 
  Replication controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
  selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state of my appli which is 3 
@@ -117,10 +114,12 @@ all the pods have been rescheduled/recreated bc my pods are been manged by a
 advantages of namespace
 ****clusterRole &clusterRolebinding is for the entire cluster 
 
-*me*Docker is 'compose file' deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
+
+ ****in manifest files;
+pods have label .. ie key value pair
+ReplicationControllers has selectors which is used to be able to connect to the pod label
 
 
-******if we dnt pass replica, its goin to create one...
 
 **************************************************************************************************************
 
@@ -192,6 +191,10 @@ now this entire netwroking wher appls can accessed with relative ease is been su
 
 **************************************************************************************************************
 
+
+******if we dnt pass replica, its goin to create one...
+
+*me*Docker is 'compose file' deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
 
 
                            TYPES OF OCHESTRATION TOOLS
