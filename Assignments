@@ -836,6 +836,7 @@ https://github.com/LandmakTechnology/package-management/blob/master/kubeadm/READ
 
 *******************in our env, we v created github repo, n we v summarized this REQuirement there, evrytin i nid to deploy my cluster is xplained ther
 
+3)create master node & 2worker nodes
 
 ticket002
 Deploy workloads in kubernetes;
@@ -843,17 +844,28 @@ Deploy workloads in kubernetes;
 
 
 Ticke3:
-  Create fintech and ecommerce Namespaces   
+  Create fintech and ecommerce Namespaces  ***ticket4 below**
 kubernetes uses the kubectl client or the UI to run workloads.
 
-Ticket4
-CREATE FINTECH & ECOMMERCE NAMESPACES USING IMPERATIVE APPROACH  (COMMAND)
- CREATE PROD NAMESPACE USING DECLARATIVE APPROACH (MANIFEST FILE)
-CREATE POD USING DECLARATIVE APPROACH (MANIFEST FILE) 
-DEPLOYING THE MANIFEST FILE TO CREATE POD
- Create prod namespace using the declarive approach
+Ticket4      **i bliv all these is in the master node
+CREATE FINTECH & ECOMMERCE NAMESPACES (fintech) USING IMPERATIVE APPROACH  (COMMAND)
+ Create (prod) namespace using the declarive approach (manifest file)
+ Create (dev) namespace using the imperative approach (command)
+ USING DECLARATIVE APPROACH (MANIFEST FILE), deploy the manifest file to create a pod call it 'myapp', in the 'dev' namespace
+(remember the manifest file with create a container, call the container 'app')
+ 
 
 
-
-KUB 3&4
-
+KUB 3&4           ***continues with KUB 1&2
+Ticket
+1)set configured namespace (dev)to current namespace/context
+2)create service type CLUSTERip for the container (app which is in the dev namespace)
+3)create container/app  called 'hello' in the default namespace using the '-n default' command
+4)Uisng the exec -it command; Apply FQDN  command to est communication by the container in the dev namespace (called app) & the container in the default 
+namespace (called hello)    *** for now i dnt know if it will work without the 'exec' command
+5)create container/app  called 'dollar' in the 'dev'namespace
+6)Est communication btw the 2containers (app & dollar) in the dev namespace uisng just the service name
+8)Use manifest file to create a STATIC POD
+9) use a manifest file to create a replica controller that will be recreating the pod (webapp) with container (web) & will also create a NODEPORT service  
+10) create a docker SECRET, use the secret in the manifest file to deploy/create REPLICA SET that will be recreating the pod (billion) & will also create a 
+NODEPORT service .....   ***we need the SECRET to be able to successfully pull the image from a private repo which we use in the manifest file 
