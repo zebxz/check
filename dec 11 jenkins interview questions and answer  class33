@@ -114,7 +114,8 @@ have a template/section for service
 3) for daemon set, kind will be Daemon set; in the Daemon section, for spec, we dnt indicate no. of replicas bc because daemon schedules pods on all the nodes
 so we dnt need RC/RS, because there is no replica template, i bliv thats why we cant scale with daemon set. & we also have the template for pod, & service.
 4) Deployment rolls out/deploys a replica set therefore; in the manifest file, in daemon section, we have spec & selectors, for spec; we 
- we will indicate the strategy type eg rolling update or recreate, but rolling update is the default strategy. & wwe also hv the pod template & service template
+ we will indicate the strategy type eg rolling update or recreate, but if u dnt indicate the strategy rolling update is the default strategy & if u dnt
+indicate the replica, i replica will be deployed & we also hv the pod template & service template
 
                    CONTROLLER MANAGERS eg RC,RS
 1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are RECREATED.
@@ -809,7 +810,7 @@ Deployment is a kubernetes object.
 k8 objects are used to run workloads in k8
 Deployment is the recommended kubernetes object for deploying applications, running workloads and managing/contolling pods in our environment.   
 Deployment as an object ,deployment strategy: ReCreate strategy , RollingUpdate.  Deployment techniques , 
-The default strategy is ROLLING UPDATE
+The default strategy is ROLLING UPDATE & it has no down time bc b4 it brings down a pod eg an old version, it makes sure the one it rolled up has started.
 
 Advantages:
      Deploy/rollout a RS.
@@ -820,11 +821,24 @@ Advantages:
      Use the status of the Deployment to determine state of replicas.
      Clean up older RS that you don’t need anymore.
 
+
+     ****i think this is rolling update
 e.g we create a deployment called webapp and say that replica is 2
 with deployment as an object :2 rplicas of the appl wil b deployed &2pods for d webapp  &when an update is done ie verson2, the update is deployed wit a new
 set of 2replicas and new pods but the previous replicas will be zero (0) bc the pods wil be 0 bt the replicas stil exists and the webapp for each version 
 still exists, this is the same process for each version that is rolled out and so we can easily delelete or roll back to a previous set bc their replica sets
 were recorded
+
+ 1.19.00     DISADVANTAGE OF ROLLING UPDATE
+*with roling update we can decide to push out 10 replicas of the new version and keep 10 replicas of the old version to that xtent ders a kind of
+trafic mgt and trafic is flowing to both version1 and version2 bt we cant deter who is goin to get version1 and who gets version2 like we ar able to det in
+deployment technique anoda problem of rollin updtae is that even after completely deploying version2 if ders a problem, you still v to rollback
+
+1.14.00
+the issue with rollingupdate deployment, if you release an important appl like a medicapp for an hospital then you realise ders an error and need to rollback
+but before you can rollback lives are gone so we dnt want to deploy using rolling update, we want to deploy using blue green..
+
+*********testing in UAT doesnt mean that ther is no possibilty that der could still be a problem n we wud need to roll back.....1:14:30
 
 
 
@@ -861,3 +875,49 @@ ReCreate strategy  ---
   eg; 8 pods of version1 running and you want to 
    deploy 8 pods of version2 , recreate will first destroy all the 8pods of the current version
 therfore ther will be downtime
+
+Update Deployments  (mayb by rolling out a new version) ,,,,, .......................52:38
+Introduction
+    We can update deployments using two options
+        Set Image   ...OR
+        Edit Deployment(manifest file)
+
+
+
+  1.08.30    DEPLOYMENT TECHNIQUES
+we have blue green techniques & carnary technique
+
+                                                                    2:21:21
+DEPLOYMENT TECHNIQUE  ************************************(this is under using deployment not deploymnet as an object) ............1:08:44
+Blue Green deployment Technique :    
+   version1/blue running in production
+   version2/green  Just 2 replicas deployed in testing env    ... 1.15.30  
+   we deploy version2 in the test environment and observe its performance, 
+   Once the performance is good then we deploy version2/green in production    
+the problem with blue green deployment is that it makes use of lot of ressources bc we need to hv 2sets of deployment running.. each set is consuming 
+resources
+
+1.14.00
+the issue with rollingupdate deployment, if you release an important appl like a medicapp for an hospital then you realise ders an error and need to rollback
+but before you can rollback lives are gone so we dnt want to deploy using rolling update, we want to deploy using blue green...
+so using blue green deploying we have version1 running in production , then we deploy version2 , so  version2 is green and its deployed in the testing/UAT 
+env, which cud be in a diff name space(in k8 we use namespace to isolate clusters) and while its deployed (ders anoda service use To expose it), further test
+is being done ,we are observing hw its performing, we can decide to test it on a client with less severe cases or some rabbit & by the time d testing is 
+saticfactory, we need it to be running in production and in k8 we expose it using a service.the application already runing in prod is being accessed using 
+d service its a nodePortSVC MEDSVC (selector app:medic) wich is routin traffic .the deployment runing in UAT has label=app:med
+NOW for the service MEDSVC to  start routing traffic to the appl in UAT and stop routing traffic to the appl in deployment, i will need to change my selector
+in the service from medic to med and immediately the appl in UAT is now being exposed in production and traffic is no longer routed to the previous appl  and they can be brought down...
+thats how blue green works by switching the service over once we are sactisfied with testing. .... this  is not just a quick switch , this is an ultra fast 
+switch.. so oncee we are satisfied, we then bring the old version down.
+ 1:19:46
+
+                              CANARY  DEPLOYMENT TECHNIQUE
+   Canary deployment Technique :  this gives you a longer time to test ur appl ... (class33 video7a....1:12:35)
+   - TRAFFIC MGT   
+   - 25% traffic VERSION2 goes to Canada  , and if we are sactisfied with how its running we can then switch all the traffic to to version2
+   - 75% traffic VERSION1 goes to USA  
+   - VERSION1 -- 40% to version1    ...e.g we can decide that we hv version1 runing we can decide that since we ar rolling out vesion2 let 40% of our traffic go to version1
+   - VERSION2 -- 60% to version2              and  40% go to version2 and we observe for an extended period and if its sactisfactory we move all the traffic to version2
+   - 40years+   75% traffic VERSION1    OR  we could use the cx age group (using canary setting u can set all that up,, der are some appl that ask for your date of birth etc
+   - 18-39years 25% traffic VERSION2
+   -we can alsouse based on biometrics e.g sex or ages
