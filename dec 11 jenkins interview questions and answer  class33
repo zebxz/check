@@ -106,13 +106,15 @@ controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSet
 
 
       MANIFEST FILE DETAIL FOR EACH CONTROLLER MANAGER
-1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & if we need to create 
-service, we wil also have a template/section for service
-2)for RS, in the manifest file, kind will be 'rs' & we will also hv a template for replica set, also a template for pod inside the same manifest file & if 
-we need to create service, we wil also have a template/section for service
-3) for daemon set,, we only ahve the template for pod, & service, we dnt need RC or RS, because daemon schedules pods on all the nodes
-    because there is no replica template, i bliv thats why we cant scale with daemon set.
-
+1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & in the RC section,
+we have selectors & spec,for spec; we will indicate the number of replicas but if we dnt,it wil create 1 replica & if we need to create service, we wil also 
+have a template/section for service
+2)for RS, in the manifest file, kind will be 'rs' & in the replica set section, we have selectors & spec, for spec, we will indicate the number of replicas,
+& we also have a template for pod inside the same manifest file & if we need to create service, we wil also have a template/section for service
+3) for daemon set, kind will be Daemon set; in the Daemon section, for spec, we dnt indicate no. of replicas bc because daemon schedules pods on all the nodes
+so we dnt need RC/RS, because there is no replica template, i bliv thats why we cant scale with daemon set. & we also have the template for pod, & service.
+4) Deployment rolls out/deploys a replica set therefore; in the manifest file, in daemon section, we have spec & selectors, for spec; we 
+ we will indicate the strategy type eg rolling update or recreate, but rolling update is the default strategy. & wwe also hv the pod template & service template
 
                    CONTROLLER MANAGERS eg RC,RS
 1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are RECREATED.
@@ -473,7 +475,7 @@ now we v created our k8 cluster ,how are we able to deploy appl using this clust
 
 
     OBJECTS USED FOR DEPLOYMENT
-kubernetes resources/objects used to deploy application include:
+kubernetes resources/objects used to deploy application include/RUN WORK LOads:
    Pod :
 or    
  controllerManagers:
@@ -749,7 +751,7 @@ we shud nt use pod as an object for deployment
 
 
 
-DAEON SET
+DAEMON SET
 daemonset is a controller manger that permit a pod to be scheduled on each node
 we deployed/provisioned a cluster:
    nodes [ node1/node2/node3 ]  
@@ -796,3 +798,66 @@ ubuntu@master:~$ kubectl taint nodes node1 key1=value1:NoSchedule ...... am  tai
 for  a pod to be scheduled on the tainted node we nid to add tolerations in the spec:
 - operator: Exists                       we v operators like exists, effect 
         effect: "NoSchedule"
+
+
+
+
+KUB 6
+Deployments  
+==========
+Deployment is a kubernetes object. 
+k8 objects are used to run workloads in k8
+Deployment is the recommended kubernetes object for deploying applications, running workloads and managing/contolling pods in our environment.   
+Deployment as an object ,deployment strategy: ReCreate strategy , RollingUpdate.  Deployment techniques , 
+The default strategy is ROLLING UPDATE
+
+Advantages:
+     Deploy/rollout a RS.
+     Updates pods (PodTemplateSpec).
+     Rollback to older Deployment versions.
+     Scale Deployment up or down.
+     Pause and resume the Deployment.
+     Use the status of the Deployment to determine state of replicas.
+     Clean up older RS that you don’t need anymore.
+
+e.g we create a deployment called webapp and say that replica is 2
+with deployment as an object :2 rplicas of the appl wil b deployed &2pods for d webapp  &when an update is done ie verson2, the update is deployed wit a new
+set of 2replicas and new pods but the previous replicas will be zero (0) bc the pods wil be 0 bt the replicas stil exists and the webapp for each version 
+still exists, this is the same process for each version that is rolled out and so we can easily delelete or roll back to a previous set bc their replica sets
+were recorded
+
+
+
+CLASS 33 vide 5&6.... 52:30 .... i will watch the video later...........
+************* for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with
+docker push to the image registry 
+#########can i use vscode to create my deployment ?????  ..... YES 
+MY QUESTION: .. WHAT is vscode????????
+
+this is an extract of the entire CI/CD process  .......7:58 ....(qusetion n answer vidoe 5&6)
+b4  we containerize, containerize, b4 we ar creatin images, we had gone tru code quality analysis, and depending on the type of project, der are projects were
+we execute sonarqube analysis b4 even creating packages wit mavin,, so if u do that u are good to go, so dis is jst a summary  bc we didnt hv nexus or sonar 
+qube connected in this k8 but on our CI/CD pipeline, we hv developers write code, developing new update of the appl, and once they do that they commit to 
+github and we can connect github to soanat cloud wer once der is a new commit, sonar cloud wil run code quality analysis, its only when that process passes,
+wher our sonarqube or sonar cloud report indicates that it has gone tru all our quality threshold, evrytin is fine , der are no vulnerability in the code, no 
+smell, bug n issues , then once we v realised that then we now bring in maven wich then creates packges , once maven is done we upload artifacts into nexus
+and frm ther we can now build our image using docker, once image is built we use k8 4 deployment.
+
+INORDER FOR US to update the new versionin on the deployment session on k8, that is done by webhook or pull ACM 
+*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a
+build ...32:17
+
+*******i will share the jenkins kubernetes integration, it covers evrytin am tryin to xplain to u now, ,, a lot of folks have had jobs by just goin tru that
+video, hw all this tools connect to ecah other
+
+
+
+Deployment strategies:
+====================== ..........................  ******************       25:33
+ReCreate strategy  --- 
+  It comes with downtime because the current application version is destroy entirely
+  before creating the new version  
+
+  eg; 8 pods of version1 running and you want to 
+   deploy 8 pods of version2 , recreate will first destroy all the 8pods of the current version
+therfore ther will be downtime
