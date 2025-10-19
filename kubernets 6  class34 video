@@ -17,35 +17,40 @@ Advantages:
      Clean up older RS that you don’t need anymore.
 ---
 e.g we create a deployment called webapp and say that replica is 2
-with deployment as an object :2 rplicas of the appl wil b deployed &2pods for d webapp  &when an update is done ie verson2, the update is deployed wit a new set of 2replicas
-and new pods but the previous replicas will be zero (0) bc the pods wil be 0 bt the replicas stil exists and the webapp for each version still exists, this is the same 
-process for each version that is rolled out and so we can easily delelete or roll back to a previous set bc their replica sets were recorded
+with deployment as an object :2 rplicas of the appl wil b deployed &2pods for d webapp  &when an update is done ie verson2, the update is deployed wit a new
+set of 2replicas and new pods but the previous replicas will be zero (0) bc the pods wil be 0 bt the replicas stil exists and the webapp for each version 
+still exists, this is the same process for each version that is rolled out and so we can easily delelete or roll back to a previous set bc their replica sets
+were recorded
 ---
 
 ************************************************************ CLASS 33 vide 5&6.... 52:30 .... i will watch the video later...........
-************* for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with docker push to
-the image registry 
+************* for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with
+docker push to the image registry 
 #########can i use vscode to create my deployment ?????  ..... YES 
 MY QUESTION: .. WHAT is vscode????????
 
 this is an extract of the entire CI/CD process  .......7:58 ....(qusetion n answer vidoe 5&6)
-b4  we containerize, containerize, b4 we ar creatin images, we had gone tru code quality analysis, and depending on the type of project, der are projects were we execute sonar
-qube analysis b4 even creating packages wit mavin,, so if u do that u are good to go, so dis is jst a summary  bc we didnt hv nexus or sonar qube connected in this k8 but on 
-our CI/CD pipeline, we hv developers write code, developing new update of the appl, and once they do that they commit to github and we can connect github to soanat cloud wer
-once der is a new commit, sonar cloud wil run code quality analysis, its only when that process passes, wher our sonarqube or sonar cloud report indicates that it has gone 
-tru all our quality threshold, evrytin is fine , der are no vulnerability in the code, no smell, bug n issues , then once we v realised that then we now bring in maven wich 
-then creates packges , once maven is done we upload artifacts into nexus and frm ther we can now build our image using docker, once image is built we use k8 4 deployment.
+b4  we containerize, containerize, b4 we ar creatin images, we had gone tru code quality analysis, and depending on the type of project, der are projects were
+we execute sonarqube analysis b4 even creating packages wit mavin,, so if u do that u are good to go, so dis is jst a summary  bc we didnt hv nexus or sonar 
+qube connected in this k8 but on our CI/CD pipeline, we hv developers write code, developing new update of the appl, and once they do that they commit to 
+github and we can connect github to soanat cloud wer once der is a new commit, sonar cloud wil run code quality analysis, its only when that process passes,
+wher our sonarqube or sonar cloud report indicates that it has gone tru all our quality threshold, evrytin is fine , der are no vulnerability in the code, no 
+smell, bug n issues , then once we v realised that then we now bring in maven wich then creates packges , once maven is done we upload artifacts into nexus
+and frm ther we can now build our image using docker, once image is built we use k8 4 deployment.
 
 INORDER FOR US to update the new versionin on the deployment session on k8, that is done by webhook or pull ACM 
-*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a build ...32:17
+*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a
+build ...32:17
 
-*******i will share the jenkins kubernetes integration, it covers evrytin am tryin to xplain to u now, ,, a lot of folks have had jobs by just goin tru that video, hw all
-this tools connect to ecah other
+*******i will share the jenkins kubernetes integration, it covers evrytin am tryin to xplain to u now, ,, a lot of folks have had jobs by just goin tru that
+video, hw all this tools connect to ecah other
 
 ********************************************************************************........................
 
 
-#### i can use IDES to generate a file and just copy then jst use what i nid v... integrated development env
+                           DEPLOYING USING ROLLING UPDATE
+
+#### i can use IDES to generate a file and just copy, then jst use what i nid v... integrated development env
 *****strategy can be rolling update or recreate... 
 rolling update is the default startegy  so if u dnt enter a strategy, it wil be uisng rolling update
 also if w dnt define replica only 1 replica will be created
@@ -134,13 +139,16 @@ what is the default deployment strategy?
 kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
 kubectl scale deployment myapp --replicas 2    
 
+
+
+                                          DEPLOYING USING RECREATE STRATEGY
 Deployment strategies:
 ====================== ..........................  ******************       25:33
 ReCreate strategy  --- 
   It comes with downtime because the current application version is destroy entirely
   before creating the new version  
 
-   8 pods of version1 running and you want to 
+  eg; 8 pods of version1 running and you want to 
    deploy 8 pods of version2 , recreate will first destroy all the 8pods of the current version
 therfore ther will be downtime
 -------------------
@@ -193,7 +201,7 @@ we can also deploy version2 but der wil be some downtime bc all the applications
 kubectl create deployment <deployment-Name> --image=<Container-Image>
 kubectl create deployment my-first-deployment --image=mylandmarktech/hello
 
-##### but since we are using apply:
+##### but since we are using apply:  ** i bliv it means using declarative approach ie manifest file
 kubectl apply -f deploy/app.yml  
 
 # Verify Deployment
@@ -229,10 +237,12 @@ kubectl get po
 kubectl scale --replicas=2 deployment/myapp  
 kubectl get deploy
 
-### Expose Deployment as a Service
+
+
+
 we can expose by creating the service
 ==============================
----     we were able to create a service lik ethis for our deployment
+---     we were able to create a service like this for our deployment
 kind: Service
 apiVersion: v1
 metadata:
@@ -246,6 +256,8 @@ spec:
     targetPort: 80
     nodePort: 31400 #[30000-32676]
 
+
+                                                 ROLLING UPDATE STRATEGY NO DOWNTIME
 RollingUpdates strategy:   no downtime 
 -# Deployment RollingUpdate
 ---------------------
@@ -316,31 +328,40 @@ kubectl rollout undo deployment/web
 
 # List Deployment Rollout History
 kubectl rollout history deployment/web    
+
+
+                                            
+  1.08.30                 DEPLOYMENT TECHNIQUES
+we have blue green techniques & carnary technique
+
                                                                     2:21:21
 DEPLOYMENT TECHNIQUE  ************************************(this is under using deployment not deploymnet as an object) ............1:08:44
 Blue Green deployment Technique :    
    version1/blue running in production
-   version2/green deployed in production  
-   we deploy version2 in the test environment and observe its performance 
+   version2/green  Just 2 replicas deployed in testing env    ... 1.15.30  
+   we deploy version2 in the test environment and observe its performance, 
    Once the performance is good then we deploy version2/green in production    
-the problem with blue green deployment is that it makes use of lot of ressources bc we need to hv 2sets of deployment running.. each set is consuming resources
+the problem with blue green deployment is that it makes use of lot of ressources bc we need to hv 2sets of deployment running.. each set is consuming 
+resources
 
-e.g using rollingupdate deployment, you release a medicapp for an hospital then you realise ders an error and need to rollback but before you can rollback lives are gone
-so we dnt want to deploy using rolling update, we want to deploy using blue green...
-so using blue green deploying we have version1 running in production , then we deploy version2 , so  version2 is green and its deployed in the testing/UAT env, which cud
-be in a diff name space(in k8 we use namespace to isolate clusters) and while its deployed (ders anoda service use o expose it), further test is being done ,we are observing
-hw its performing, we can decide to test it on a client with less severe cases or some rabbit & by the time d testing is saticfactory, we need it to be running in production
-and in k8 we expose it using a service.the application already runing in prod is being accessed using d service its a nodePortSVC MEDSVC (selector app:medic) wich is routin 
-traffic .the deployment runing in UAT has label=app:med
-NOW for the service MEDSVC to  start routing traffic to the appl in UAT and stop routing traffic to the appl in deployment, i will need to change my selector in the service
-from medic to med and immediately the appl in UAT is now being exposed in production and traffic is no longer routed to the previous appl  and they can be brought down...
-thats how blue green works by switching the service over once we are sactisfied with testing. .... this  is not just a quick switch , this is an ultra fast switch
+1.14.00
+the issue with rollingupdate deployment, if you release an important appl like a medicapp for an hospital then you realise ders an error and need to rollback
+but before you can rollback lives are gone so we dnt want to deploy using rolling update, we want to deploy using blue green...
+so using blue green deploying we have version1 running in production , then we deploy version2 , so  version2 is green and its deployed in the testing/UAT 
+env, which cud be in a diff name space(in k8 we use namespace to isolate clusters) and while its deployed (ders anoda service use To expose it), further test
+is being done ,we are observing hw its performing, we can decide to test it on a client with less severe cases or some rabbit & by the time d testing is 
+saticfactory, we need it to be running in production and in k8 we expose it using a service.the application already runing in prod is being accessed using 
+d service its a nodePortSVC MEDSVC (selector app:medic) wich is routin traffic .the deployment runing in UAT has label=app:med
+NOW for the service MEDSVC to  start routing traffic to the appl in UAT and stop routing traffic to the appl in deployment, i will need to change my selector
+in the service from medic to med and immediately the appl in UAT is now being exposed in production and traffic is no longer routed to the previous appl  and they can be brought down...
+thats how blue green works by switching the service over once we are sactisfied with testing. .... this  is not just a quick switch , this is an ultra fast 
+switch.. so oncee we are satisfied, we then bring the old version down.
  1:19:46
 
 
-**********with roling update we can decide to push out 10 replicas of the new version and keep 10 replicas of the old version to that xtent ders a kind of trafic mgt 
-and trafic is flowing to both version1 and version2 bt we cant deter who is goin to get version1 and who gets version2 like we ar able to det in deployment technique
-anoda problem of rollin updtae is that even after completely deploying version2 if ders a problem, you still v to rollback
+**********with roling update we can decide to push out 10 replicas of the new version and keep 10 replicas of the old version to that xtent ders a kind of
+trafic mgt and trafic is flowing to both version1 and version2 bt we cant deter who is goin to get version1 and who gets version2 like we ar able to det in
+deployment technique anoda problem of rollin updtae is that even after completely deploying version2 if ders a problem, you still v to rollback
 
 *********testing in UAT doesnt mean that ther is no possibilty that der could still be a problem n we wud need to roll back.....1:14:30
 
@@ -355,6 +376,8 @@ Canary deployment Technique :  this gives you a longer time to test ur appl ... 
    -we can alsouse based on biometrics e.g sex or ages
 
 
+
+                               QUESTIONS
 QUESTION......1:24:35
 1) can a file be use to taint a node or must it be only commands in the CLI
 ANS : anyting can be done with a file ,,,, i will have to check it up and you can check it up too
