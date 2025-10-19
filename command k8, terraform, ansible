@@ -228,3 +228,73 @@ kubectl get ds       GET Daemon set
 TAINTING NODE
 ubuntu@master:~$ kubectl taint nodes node1 key1=value1:NoSchedule ...... am  tainting this node wit no schedule which means pod cannot be scheduled on the node  ...1:35:55
 for  a pod to be scheduled on the tainted node we nid to add tolerations in the spec:
+
+
+
+KUB 6   
+Deployment 
+
+kubectl get deploy 
+ubuntu@master:~ kubectl describe deploy   ..... we can see 1replica created and strategy type: RollingUpdate
+ubuntu@master:~ kubectl get svc........we can see the appsvc service routing service to the backend application
+and we can access the appl online 
+ubuntu@master:~ kubectl scale deployment myapp --replicas 2    
+
+
+kubectl scale deployment <deploymentName> --replicas <noOfReplicas>
+kubectl scale deployment myapp --replicas 2    
+
+
+
+# Create Deployment
+kubectl create deployment <deployment-Name> --image=<Container-Image>
+kubectl create deployment my-first-deployment --image=mylandmarktech/hello
+
+##### but since we are using apply:  ** i bliv it means using declarative approach ie manifest file
+kubectl apply -f deploy/app.yml  
+
+# Verify Deployment
+kubectl get deployments
+kubectl get deploy 
+
+# Describe Deployment
+kubectl describe deployment <deployment-name>
+kubectl describe deploy deploymentname    
+
+# Verify ReplicaSet
+kubectl get rs
+
+# Verify Pod
+kubectl get po
+
+Scaling a Deployment
+====================
+# Scale Up the Deployment
+kubectl scale --replicas=20 deployment/<Deployment-Name>
+kubectl scale --replicas=20 deployment/myapp 
+
+# Verify Deployment
+kubectl get deploy
+
+# Verify ReplicaSet
+kubectl get rs
+
+# Verify Pods
+kubectl get po
+
+# Scale Down the Deployment
+kubectl scale --replicas=2 deployment/myapp  
+kubectl get deploy
+
+
+# Update Deployment -uusing set image  SHOULD WORK NOW
+kubectl set image deploy Deployment-Name> <Container-Name>=<Container-Image> --record=true
+kubectl set image deploy web helloworld=mylandmarktech/hello:2 --record=true
+
+Rollback to previous version
+============================
+# Undo Deployment
+kubectl rollout undo deployment/web  
+
+# List Deployment Rollout History
+kubectl rollout history deployment/web  
