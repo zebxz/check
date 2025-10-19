@@ -16,3 +16,131 @@ For very large clusters NB: dnt create :
 
 IQ: what is Static Pods ?
     Static Pods are controlled by the kubelet service  
+
+
+KUB 6  .. Class33
+what is the default deployment strategy?
+  RollingUpdates  
+
+
+  QUESTIONS
+QUESTION......1:24:35
+1) can a file be use to taint a node or must it be only commands in the CLI
+ANS : anyting can be done with a file ,,,, i will have to check it up and you can check it up too
+
+2) WHAT IS THE MOST used type of deployment
+in k8 we can deploy with our containerized appl directly in a pod or we can use controler Managers like RS,RC or daemonSet bt most importantly we can use deployment and we 
+use deployment it gives us the option to use diff deployment stragey like recretae, rollingUpdate and part of the deployment strategy we can use deployment techniques like
+blue green OR canary deployment and that is you makingyour application available and infact deployment is maeking ur application available
+once the applictaion has been made available the nxt quetsion hw wil the appl be discoverable ,hw wil ur cx discover and ultilize the appl , hw wil it be useful to them
+there services need to be created, we need to expose the appl using services and der are diff services categories :
+cluster IP permits you to access the appl within the cluster ,, so it exposes the apl to objects insid ethe cluster bt if its an appl that end users nid to access clusterIP
+wont work therfoer wil use nodePort service or LB service to make it accessible  bc deployment makes your appl available bt  hw to i access it : service discovery
+
+
+3) CAN deleted replicas be retieved  ,, bc you say we can delete it bt then hw do we roll back if for e.g a junior staff deletes it
+we cant retrieve a deleted replica , once its deleted its gone
+*the fact i sthat someone doesnt jst cm to ur offic eand u give him access bc in ur wrk env, we will use roll base access control like if u ar new we can permit you to hv 
+access only to pod and since our pod are behind a controller managers and when the junior staff delete a pod it will be recreted again so u shu dbe senesitive enough nt 
+to grant him mangers access...
+
+4) for best practice what is the recommended number of replicas to keep  ie replicas of diff versions 
+we cud keep a max of 5replica sets bc it will mean you have deployed about 5versions and the cx is happy with new verion 
+bt its also subjetive to the client , some may decide to keep up to 10 replicas
+
+5) when we rollback wnd then rollout again are new pods always created or the pods are reserved when thay are inactive
+when you store those inf k8 will store the data in etcd , so it knows that version6 has the version6 of the image so when you roll back to version6, it goes back to that
+particular image that was in version6 , thats what happens 
+you can also rollback to a particular version choosing the version you want so when u run kubectl rollout undo deployment/web, u can choose the exact version ur rollin bk to
+
+6) when we deploy w ecan choose for e.g 4replicas  bt when we scale to 2 is there any prefeernce in the pod that are created
+d pods are identical in everything,its nt a matter of  no preference ,if you are updatingnscaling frm ur manifest file it will wrk inline wit d latest version ie d number of 
+replicas u hv defined in the file bt in terms of if it will chooose which pod to create it wiill bring down all the pod wit the old versionof the imgea n bring up the pod 
+wit the new version u now want and in terms of number of replicas its goin to be a function of what is defined in the manifest file 
+
+5) when we taint a node and its undergoin an upgrade when u pass a toloration will pods be schedued on that node?
+what is the rationale behind tainting a node , u taint a node bc u wnat to upgrade the node so if the node is already under upgarde ders no nid to be assigning toloration
+that wil still create a pod on the node right,, we only do that in rare cases .. so toloration is now that pod is nt schduled on dis node bt i am tolorating that to happen
+bt that shud only happen if the node is nt under any maintenance, if its under maintennace u wont want to do that bc what is the rationale
+
+6) hw do we rollback to a specific version???  ..
+. go to k8 and check it out so that  in the  nxt class u can give us a briefing on that
+kubectl rollout undo deployment hello --to revision=1 OR revision2 n so on   ..... class33 video 5&6
+
+
+class33 video5&6
+1) when we create toloration, can we create it so it doesnt create pods in the master node??
+ans: YES, we can do that, ther are many other options when it comes to toloration, which means we have  diff operators and diff keys and wil look at that when we look at
+scheduling, how pods are scheduled on a node.
+
+2) why will we want to schedule pod on a tainted node
+e.g we want to  ensure a particular pod is scheduled on all nodes including master bc the pod wil be gathering logs on the master node to tell us if the node is healthy or nt
+the master node for e.g is tainted by default but we can use toloration to allow a pod to be scheduled on the master node probbaly bc the pod will be gathering logs on the 
+master node
+
+3) what is the actual function of the selector support function of the replica set bc when we were doin the controller managers we had the replication controller n u then
+showed us the replica set and u said the replica set has a selector support but when we did both of them the only diff that i notice is in d format we wrot e our API veerison
+ie in the replica set and also that match label key that we used
+ANS: 
+
+we hv equality based selectors and it is used for what?  
+   ReplicationCOntrollers
+key:values       ********** eaulity based selectors talk abt equal conditions like key:values
+app:myapp
+Set base selectors: is used for ;
+  Deployments
+  Replica Seta
+  DaemonSets
+  StatefulSets
+  NodeSelectors
+  NodeAffinity
+key: app                    for set base we can have key , value in .. lets assume the key is app , value in:javawebapp could be my app
+value in:                            so 1key can hv multiple value , dats why we say setbase selsctor and it basiclaly comes wit stuff like daemonset,RS, deployment etc
+   -javawebapp                     its jst that all the examples we hv done so far we v not needed to get to get into set base selector bt as we progress, we are going to
+   -myapp                          look at set base selector and if u hv any problem jst wqually go to the k8 official documentation
+                                    kubernetes.io abi na oi
+
+4) is der any scenario that will rEQ us to create stactic pods manged by the kubelete service as opposed to using the controller managers bc static pod itself has healing 
+capabilities ACTIVATED 
+ANS: YES , BT Static pod cannot scale, so if it created a pod is just a single replica
+2ndly, static pod are used to create components that manage k8 like kube proxy, dns, all of those pod that manges your cluster, we use that pod to create them so that they 
+will always be recreated even by the kublete service.
+
+5) what det the object we use in deployment, is it coy base ??/ wxcept daemonSeT cos i understand its used for e.g logmgt
+so what det the obj w euse for deployment
+ANS:
+the obj to be used depends on the diff/other components that obj will bring to the table 
+deployment is said to be the recommended object for deployment in k8 or for running/deploying workload in k8 bc when u create a deployment, it creates a replica set so
+it records whatevr u created such that if anything is wrong it can always rollback, thats why most of the time we use deployment bc deployment will rollout a replica set
+u can rollout n rollback ,,, so from a very strong perspective we use deploymentas the recommended obj to deploy workload in k8
+****************************************************************************************************
+
+class33 video7a....1:17:10)
+hw is trafic manged wit canry is dis  solely on the k8 side or we are goin to be depending on the cloud provider like aws to manage the taffic
+ANS;
+for canry we are goin to be use what is called a k8 operator  der are k8 operator like estil that wil enable us to deploy canary so its nt abt cloud side or whatever, u jst 
+need to deploy a particular operator or an add on to your cluster that wil permit that to happen.
+
+2) is there a duration for wich blue green deployment can last 
+ANS: for blue green, its nt very wide, u cud hva testing period for mayb 7day or 30day bt that may
+nt really detect all the problems bt with canary we cud run a canary deployment for asl long as 6months so at a higher level of security we cud want to consider more of 
+canary
+
+most critical appl, we use blue green to deploy them e.g u want to test a vaccine , in this type of scenario we use blue green bc we cant be carrying out n operation on a
+client and then realise that ther is a fault, the new version is nt as gud as the previous one and you need to roll back , that rollbk cud be diasterous, so w edeploy a 
+blue green env and run a test on maybe guinea pig etc , we observer hw itruns and if it is very sucesful, we deploy to production knwing thta it shud nt fail
+even wit tha ther cud stil b afailure bc the tasting period is nt like inifinte for blue green, its nt very wide, u cud hva testing period for mayb 7day or 30day bt that may
+nt really detect all the problems bt with canary we cud run a canary deployment for asl long as 6months so at a higher level of security we cud want to consider more of 
+canary
+
+1:21:30
+is it that each time you refresh it takes you to a diff replica set???
+ANS:
+************here is our cluster ,, whta is manging this pod manifest????
+we are using deployment as the object. .. our deployment is hello , this deployment is manging this 2pods , bt it doesnt manges the pod directly, it manges it via ,
+bt it doesnt mange the pod directly, it manges it via a replica set so when u rol out this deployment, it creates a replica set, SO FOr each version that is rolled out it
+creates a replica set for it and the previous replica set becomes 0  bt they stil exists such that if you want to roll back its done with relative ease.
+
+if am logged in and an upgrade is done will i be logged out such taht i hv to login again into a new replica set
+ANS:
+if its a 0downtime technique that we are using , you wont be logged out
