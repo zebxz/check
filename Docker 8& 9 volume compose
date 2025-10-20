@@ -116,6 +116,8 @@ inside this dir, the data that is captured is frm the inf entered, inf entered b
 process is notmanaged by docker and as such it could be accidentally deleted
 ***************if we ls /tmp , we can see the mount point mongo that we created .... so what happens if its deleted by a non docker process
 
+
+            WHEN DATA BASE IS STOPPED IT STILL WORKS
 **************** lets assume thats our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker 
 start mongo we ar now able to access the data
 now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
@@ -124,7 +126,7 @@ this is because of bind mount
 ******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is 
 destroyed completely
 if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
-BUT DERS A PROBLEM HERE 
+BUT DERS A PROBLEM HERE      (WHEN MOUNT POINT IS DELETED)
 if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
 at the moment our vol is nt managed by the docker process ,
 lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
