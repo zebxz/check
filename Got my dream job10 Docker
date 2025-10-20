@@ -77,7 +77,7 @@ RUN pip install --no cache dir -r requirements-prod.txt      2.00  .... this is 
 5) create networks
 TO ensure containers can communicate they hv to be created in the same ntwrk 
 PROBLEMS WITH DEFAULT BRIDGE NTWRK
-containers communicate with only the containerID
+containers communicate with only the containerID, bt if smt happens & container is recreated, it comes with new ip address & communication is lost
 CUSTOM BRIDGE NTWRK
 containers communicate with only the container ips & container name
 also we hv host ntwrk & none/null ntwrk
@@ -86,12 +86,38 @@ includes docker vol or external volume
 We can makes use of deployment script *ie (vi to create eg spring.sh & put the image,db,netwrk command) to deploy
 Next we will see application arhcitecture; monolechtic appli & microservices ie decouple the monoletechic appl
 7)install docker compose
-8)deploy an application with a docker compose file
+8)deploy an application with a docker compose file   ***This file does not have 'deployment strategy' like docker swamp
 Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
   ***docker10*** and docker compose file is a .yml file; docker-compose .yml
-9)install docker swamp   ... comes with an overlay network
-10) Run docker init to create/initialize the over lay netwrk
-Dns resolution/sevice discovery using service name
+
+        FOR DOCKER SWAMP
+A swamp is a cluster that comprises of master node and worker node
+1)install docker community Edition in all the 3 servers  ***meee*** or mayb any number of  worker nodes we need.
+   And Add user (ubuntu) to docker group 
+2)In master server/node generate token to join worker nodes , token will be used in the user script in AWS for the worker nodes
+   *** security:  Read up power point for ports rEQ to be open in AWS
+3)In master node, Run docker init to create/initialize the over lay netwrk, overlay ntwrk means that u can communicate wit dif nodes
+we dnt hv overlay ntwrk in docker bc docker ntwrk dose nt support MULTI HOSTING where we can v a cluster of servers, 
+4)Dns resolution/sevice discovery using service name  ** i bliv this is about creating a service type, like we saw in k8 bt he didnt do it in docker swamp
+with docker ochestrators , be it docker swamp, kubernetes etc, they cm wit advanced networking that permits the containers to talk to each other
+even if we dnt pass ntwrks in d file, once ur deployn in a docker swamp, they ar goin to easily talk wit each oda via service discovery.bc d dns resolution 
+is done using d service names like the application name,it is nt done using service ip  e.g d micro service appl can talk to the database using the name n
+thats why in our env var we ar very careful wit dis data  ..... 1:32:51
+5)Deploy using the compose file, By default, rolling update is the default strategy
+and if u go without a file its going to be docker service create  ie use command to create a service
+docker service create -p <hostPort>:<containerPort> --name <serviceName  
+ DEPLOYING  A STACK
+stack is nothing but a collection of one or more service  *** i bliv services ie one service with replicas/diff services with replicas
+
+
+docker swarm has 2modes: REPLICA MODE & GLOBAL MODE
+1)Replicas ---> it will deploy based on replicated number    (we v used this mode to deploy above)
+***** this is the default mode & with this mode, it wil deploy base on the number of replicas that you want     ... 2:11:24
+2)Global--- its like daemon set in kubernetes, its good for deploying logmgt container for monitoring
+with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3master + 11 workers)
+if u v a 14 node cluster n u want to deploy an appl using the global mode what wil happen is that a replica wil be created in each of this node 
+
+
 
 
 ***docker8&9***
