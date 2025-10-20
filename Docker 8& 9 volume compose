@@ -70,7 +70,7 @@ docker:
 TYPES OF VOLUME, CREATING VOL USING BIND MOUNT,DOCKER VOLUME; Docker Peristent Volumes(Docker Named Volumes), STEPS TO DEPLOY DOCKER VOL, external volumes,
 USING EXTERNAL (EBS)VOLUME TO DEPLOY OUR APPLICATION , ACCESS KEY & SACRED KEY, DOCKER COMPOSE, MYSQL, INSTALL DOCKER COMPOSE, HOW THE DOCKER COMPOSE VERSION
 HAS AN IMPACT, CREATING DOCKER COMPOSE FILE WITH DEFAULT NAME FOR DEPLOYMENT, STEPS TO DEPLOY THE DOCKER COMPOSE FILE, SAMPLE OF DOCKER COMPOSE FILE WITH 
-CUSTOM NAME, TWO WAYS TO DEPLOY IN DOCKER.
+CUSTOM NAME, TWO WAYS TO DEPLOY IN DOCKER, APPROACH USED TO DEPLOY WORKLOAD IN DOCKER,SAMPLE OF DOCKER COMPOSE FILE WITH CUSTOM NAME, MULTI STAGE FILE (sample),
 
 START
 
@@ -550,7 +550,7 @@ docker-compose -f docker-compose-springapp.yml down
 
 
 ..1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
-1) We can deploy the database and the aplication either using command ...... OR 
+1) We can deploy the database and the aplication either using command (imperative)...... OR   
 docker run --name mongo -d --network tesla \        
 -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
@@ -559,7 +559,7 @@ docker run --name springapp -d -p 8080:8080 --network tesla \
 -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
 -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
-2) using Decompose' ie using 'a file' ..1:31:18
+2) using Decompose' ie using 'a file' ..1:31:18   **(declarative)
 Docker Compose is a tool for defining/declaring and running multiple  containerised micro-services applications.
 
    
@@ -571,6 +571,20 @@ Docker Compose is a tool for defining/declaring and running multiple containeris
 dnt freak out bc this code is part of our project already, if u go to the project that we v for this stuff we already v d code ther
                   is oin our github repository, this docker compose file is already ther, most of the time it wil b part of ur source code bt u nid to understand if u nid 
                to change anytin like the image version and so on 
+
+
+
+ APPROACH USED TO DEPLOY WORKLOAD IN DOCKER 
+
+WE DEPLOY workloads using Imperative and declarive approaches    
+
+1-#Containerize application Imperative approach =  Command
+   LIKE:
+docker build -t teslaimage:1 .
+docker run -d -p 80:8080 --name webapp teslaimage:1
+
+2-declarive approach =  makes use of files and less commands  
+-# Using compose file     *** but this compose file doesnt have the 'deployment strategy' like docker swamp & kubernetes
 
 
 
