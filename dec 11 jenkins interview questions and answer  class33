@@ -214,6 +214,29 @@ now this entire netwroking wher appls can accessed with relative ease is been su
 
 
 
+CLASS 33 vide 5&6.... 52:30 .... i will watch the video later...........
+************* for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with
+docker push to the image registry 
+
+this is an extract of the entire CI/CD process  .......7:58 ....(qusetion n answer vidoe 5&6)
+b4  we containerize, containerize, b4 we ar creatin images, we had gone tru code quality analysis, and depending on the type of project, der are projects were
+we execute sonarqube analysis b4 even creating packages wit mavin,, so if u do that u are good to go, so dis is jst a summary  bc we didnt hv nexus or sonar 
+qube connected in this k8 but on our CI/CD pipeline, we hv developers write code, developing new update of the appl, and once they do that they commit to 
+github and we can connect github to soanat cloud wer once der is a new commit, sonar cloud wil run code quality analysis, its only when that process passes,
+wher our sonarqube or sonar cloud report indicates that it has gone tru all our quality threshold, evrytin is fine , der are no vulnerability in the code, no 
+smell, bug n issues , then once we v realised that then we now bring in maven wich then creates packges , once maven is done we upload artifacts into nexus
+and frm ther we can now build our image using docker, once image is built we use k8 4 deployment.
+
+INORDER FOR US to update the new versionin on the deployment session on k8, that is done by webhook or pull ACM 
+*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a
+build ...32:17
+
+*******i will share the jenkins kubernetes integration, it covers evrytin am tryin to xplain to u now, ,, a lot of folks have had jobs by just goin tru that
+video, hw all this tools connect to ecah other
+
+
+
+
 **************************************************************************************************************
 
 
@@ -852,28 +875,12 @@ but before you can rollback lives are gone so we dnt want to deploy using rollin
 
 
 
-CLASS 33 vide 5&6.... 52:30 .... i will watch the video later...........
-************* for each of the version it goes tru this steps: we create the packages, then run docker build to contianersrize the appl and ship the image with
-docker push to the image registry 
-#########can i use vscode to create my deployment ?????  ..... YES 
-MY QUESTION: .. WHAT is vscode????????
+USE IDES TO GENERATE FILES
 
-this is an extract of the entire CI/CD process  .......7:58 ....(qusetion n answer vidoe 5&6)
-b4  we containerize, containerize, b4 we ar creatin images, we had gone tru code quality analysis, and depending on the type of project, der are projects were
-we execute sonarqube analysis b4 even creating packages wit mavin,, so if u do that u are good to go, so dis is jst a summary  bc we didnt hv nexus or sonar 
-qube connected in this k8 but on our CI/CD pipeline, we hv developers write code, developing new update of the appl, and once they do that they commit to 
-github and we can connect github to soanat cloud wer once der is a new commit, sonar cloud wil run code quality analysis, its only when that process passes,
-wher our sonarqube or sonar cloud report indicates that it has gone tru all our quality threshold, evrytin is fine , der are no vulnerability in the code, no 
-smell, bug n issues , then once we v realised that then we now bring in maven wich then creates packges , once maven is done we upload artifacts into nexus
-and frm ther we can now build our image using docker, once image is built we use k8 4 deployment.
-
-INORDER FOR US to update the new versionin on the deployment session on k8, that is done by webhook or pull ACM 
-*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a
-build ...32:17
-
-*******i will share the jenkins kubernetes integration, it covers evrytin am tryin to xplain to u now, ,, a lot of folks have had jobs by just goin tru that
-video, hw all this tools connect to ecah other
-
+#### i can use IDES to generate a file and just copy, then jst use what i nid v... integrated development env
+*****strategy can be rolling update or recreate... 
+rolling update is the default startegy  so if u dnt enter a strategy, it wil be uisng rolling update
+also if w dnt define replica only 1 replica will be created
 
 
 Deployment strategies:
