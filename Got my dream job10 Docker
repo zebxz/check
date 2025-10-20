@@ -34,6 +34,7 @@ we deploy either in tomcat or use docker to containerize & deploy the applicatio
 
 
 
+             ***DIFFERENCE BTW CONTAINERIZE & DEPLOY
 *** To deploy means you have to pull images like in (docker, 3/4,7) then you run docker run to deploy the application BUT you dnt run docker BUILD or 
 docker push because you didnt clone an application so you dnt have the docker file to create an image. but we can use the image to create a docker file from
 scratch & then containerize an application with the new image we built with the docker file we created.
@@ -42,8 +43,8 @@ WHILE
 
 
 
-..1:31:18                                 TWO WAYS TO DEPLOY IN DOCKER
-1) We can deploy the database and the aplication either using command ...... OR 
+..1:31:18                                 TWO WAYS/APPROACH TO DEPLOY IN DOCKER
+1) We can deploy the database and the aplication either using command (imperative)...... OR 
 docker run --name mongo -d --network tesla \        
 -v ebs3:/data/db -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 \                                                                        
 -e MONGO_INITDB_ROOT_USERNAME=devdb mongo
@@ -52,7 +53,7 @@ docker run --name springapp -d -p 8080:8080 --network tesla \
 -e MONGO_DB_HOSTNAME=mongo -e MONGO_DB_USERNAME=devdb \
 -e MONGO_DB_PASSWORD=devdb@123  mylandmarktech/sping-boot-mongo
 
-2) using Decompose' ie using 'a file' ..1:31:18
+2) using Decompose' ie using 'a file' ..1:31:18   ****(declarative)
 Docker Compose is a tool for defining/declaring and running multiple  containerised micro-services applications.
 
    ALSO******Docker 5&6, we saw multi-stage file
@@ -66,6 +67,31 @@ i bliv  its bc of the docker client, its docker the build and run command.
 we get the docker file when we clone the appl & inside the file;  we see the 'pip command.; we hv docker file for wildfly for e.g
 RUN pip install --no cache dir -r requirements-prod.txt      2.00  .... this is the command that wil do a build , its doing a build wit pip installed 
                                                               whil creatin the image, pip instal is like deploying the application
+
+
+  ***mee**    STEPS IN DOCKER FOR CONTAINERIZATION/ DEPLOYMENT
+1) Install docker
+2) containerize application
+3) we can make image distributable by tagging & push to repo
+4)deploy a database, if its stateful then it needs to maintain its states , need a piece of storage so next volume
+5) create networks
+TO ensure containers can communicate they hv to be created in the same ntwrk 
+PROBLEMS WITH DEFAULT BRIDGE NTWRK
+containers communicate with only the containerID
+CUSTOM BRIDGE NTWRK
+containers communicate with only the container ips & container name
+also we hv host ntwrk & none/null ntwrk
+6)can create vol with bind mount ie create a 1)mountpoint but its nt persistent & so der data loss, OR Preferrd; 2)docker volume concept which
+includes docker vol or external volume
+We can makes use of deployment script *ie (vi to create eg spring.sh & put the image,db,netwrk command) to deploy
+Next we will see application arhcitecture; monolechtic appli & microservices ie decouple the monoletechic appl
+7)install docker compose
+8)deploy an application with a docker compose file
+Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
+  ***docker10*** and docker compose file is a .yml file; docker-compose .yml
+9)install docker swamp   ... comes with an overlay network
+10) Run docker init to create/initialize the over lay netwrk
+Dns resolution/sevice discovery using service name
 
 
 ***docker8&9***
