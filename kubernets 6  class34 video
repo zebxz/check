@@ -1,5 +1,12 @@
 deployment as an object; deployment strategy: ReCreate strategy & RollingUpdate.  Deployment techniques; blue green & carnary deployment strategy 
 
+
+   DEPLOYMENT AS AN OBJECT, ADVANTAGES, DEPLOYING USING RECREATE STRATEGY, DISADVANTAGES, WE CAN EXPOSE BY CREATING THE SERVICE, 
+DEPLOYING USING ROLLING UPDATE/ROLLING UPDATE STRATEGY HAS NO DOWNTIME, DEPLOYMENT TECHNIQUES
+
+
+                                       DEPLOYMENT AS AN OBJECT
+
 Deployments  
 ==========
 Deployment is a kubernetes object. 
@@ -7,6 +14,8 @@ k8 objects are used to run workloads in k8
 Deployment is the recommended kubernetes object for deploying applications,  
 running workloads and managing/contolling pods in our environment.   
 
+
+                                                 ADVANTAGES
 Advantages:
      Deploy/rollout a RS.
      Updates pods (PodTemplateSpec).
@@ -48,7 +57,7 @@ video, hw all this tools connect to ecah other
 ********************************************************************************........................
 
 
-                           DEPLOYING USING ROLLING UPDATE
+                              USE IDES TO GENERATE FILES
 
 #### i can use IDES to generate a file and just copy, then jst use what i nid v... integrated development env
 *****strategy can be rolling update or recreate... 
@@ -148,6 +157,8 @@ ReCreate strategy  ---
   It comes with downtime because the current application version is destroy entirely
   before creating the new version  
 
+
+                                   DISADVANTAGES
   eg; 8 pods of version1 running and you want to 
    deploy 8 pods of version2 , recreate will first destroy all the 8pods of the current version
 therfore ther will be downtime
@@ -239,7 +250,7 @@ kubectl get deploy
 
 
 
-
+                                           WE CAN EXPOSE ***i bliv the app.. BY CREATING THE SERVICE
 we can expose by creating the service
 ==============================
 ---     we were able to create a service like this for our deployment
@@ -257,7 +268,7 @@ spec:
     nodePort: 31400 #[30000-32676]
 
 
-                                                 ROLLING UPDATE STRATEGY NO DOWNTIME
+                                                 ROLLING UPDATE STRATEGY HAS NO DOWNTIME
 RollingUpdates strategy:   no downtime 
 -# Deployment RollingUpdate
 ---------------------
