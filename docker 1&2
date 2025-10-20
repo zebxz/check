@@ -41,8 +41,9 @@ Docker images are input needed/used to create containerised applications
 START
 
 OPTIONS TO USE FOR DEPLYMENT, DIFF BTW VIRTUALIZED DEPLOYMENT & TRADITIONAL, CONTAINERS, VIRTUAL MACHINES vs CONTAINER, APPL RUN AS CONTAINERS,CONTAINERS HAVE ALL THE REQUIRED DEPENDENCIES,  DOCKER, ADVANTAGES OF DOCKER,
-CONTAINERIZATION SOFTWARE RUNTIME,  INSTALL DOCKER ,CONTAINERIZE APPLICATION, DOCKER FILE, DOCKER IMAGE, STEPS FOR CONTAINERIZATION, BUILD IMAGE, INSTALL MAVEN, DOCKER RUN(CREATE CONTAINERS/DEPLOY),
-2 CONTAINERS FROM THE SAME IMAGE CANT HV THE SAME HOST PORT NUMBER& NAME BT CAN HV THE SAME CONTAINER NAME, CAN I DEPLOY A CONTAINER FRM AN IMAGE I DID NOT CREATE, ACCESS MY APPLICATION, DOCKER REGISTRY,  DOCKERHUB.io,  
+CONTAINERIZATION SOFTWARE RUNTIME,  INSTALL DOCKER , APPROACH USED TO DEPLOY WORKLOAD IN DOCKER, CONTAINERIZE APPLICATION, DOCKER FILE, DOCKER IMAGE, STEPS
+FOR CONTAINERIZATION, BUILD IMAGE, INSTALL MAVEN, DOCKER RUN(CREATE CONTAINERS/DEPLOY), 2 CONTAINERS FROM THE SAME IMAGE CANT HV THE SAME HOST PORT NUMBER&
+NAME BT CAN HV THE SAME CONTAINER NAME, CAN I DEPLOY A CONTAINER FRM AN IMAGE I DID NOT CREATE, ACCESS MY APPLICATION, DOCKER REGISTRY,  DOCKERHUB.io,  
 CREATE & SHARE DOCKER IMAGE, DOCKER ARCHITECTURE,  RUN CONTAINER WITH PULLED IMAGE;no docker build.
 
 
@@ -322,6 +323,23 @@ QUESTION 2:26:00
 the recommended option is nt to run chmod bt to add the user to the manager grp
 if u wnt any user  to run docker commands then the user should hv sudo access bt its a vulunerability to grant sudo access to anyone just to run docker commands so in our
 env we add the user to the docker grp with dat the user doesnt nid sudo access to run docker command 
+
+
+
+***mee*** 
+ APPROACH USED TO DEPLOY WORKLOAD IN DOCKER 
+
+WE DEPLOY workloads using Imperative and declarive approaches    
+
+1-#Containerize application Imperative approach =  Command
+   LIKE:
+docker build -t teslaimage:1 .
+docker run -d -p 80:8080 --name webapp teslaimage:1
+
+2-declarive approach =  makes use of files and less commands  
+-# Using compose file 
+
+
 
 
                             
