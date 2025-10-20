@@ -110,7 +110,7 @@ WE DEPLOY workloads using Imperative and declarive approaches
 docker build -t teslaimage:1 .
 docker run -d -p 80:8080 --name webapp teslaimage:1
 
-2-declarive approach= KUB7.. makes use of deployment script *ie(vi to create eg spring.sh & put the image,db,netwrk command) & compose files/less commands 
+2-declarive approach= DOC7.. makes use of deployment script *ie(vi to create eg spring.sh & put the image,db,netwrk command) & compose files/less commands 
 Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
 -# Using compose file     *** but this compose file doesnt have the 'deployment strategy' like docker swamp & kubernetes
 
@@ -126,6 +126,14 @@ ar created in node1 or node10 bc of the overlay ntwrk n the DNS registration is 
 whenever we ar deploying in a swarm, our containers wil be created in the overlay netwrk..overlay ntwrk means that u can communicate wit dif nodes, the master
 can communicate with multiple nodes using the overlay netwrk, with overlay the container in node1 can talk with the conatinters in all the other nodes.
 
+
+DOCKER 10
+docker swarm has 2modes: REPLICA MODE & GLOBAL MODE
+1)Replicas ---> it will deploy based on replicated number    (we v used this mode to deploy above)
+***** this is the default mode & with this mode, it wil deploy base on the number of replicas that you want     ... 2:11:24
+2)Global--- its like daemon set in kubernetes, its good for deploying logmgt container for monitoring
+with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3master + 11 workers)
+if u v a 14 node cluster n u want to deploy an appl using the global mode what wil happen is that a replica wil be created in each of this node 
 
 
 KUB 1&2
