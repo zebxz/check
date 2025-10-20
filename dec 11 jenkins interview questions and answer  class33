@@ -105,7 +105,7 @@ We have to create pods using controllers which manages the POD life cycle.
 controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
 
-      MANIFEST FILE DETAIL FOR EACH CONTROLLER MANAGER
+    **mee**  MANIFEST FILE DETAIL FOR EACH CONTROLLER MANAGER
 1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & in the RC section,
 we have selectors & spec,for spec; we will indicate the number of replicas but if we dnt,it wil create 1 replica & if we need to create service, we wil also 
 have a template/section for service
@@ -117,11 +117,21 @@ so we dnt need RC/RS, because there is no replica template, i bliv thats why we 
  we will indicate the strategy type eg rolling update or recreate, but if u dnt indicate the strategy rolling update is the default strategy & if u dnt
 indicate the replica, i replica will be deployed & we also hv the pod template & service template
 
+
+                             THINGS A MANIFEST FILE INCLUDES
+1) A pod template that has a label
+2)chose a k8 object for deployment, preferrably 'DEPLOYMENT' &Its rolling update strategy, although he said smt about blue green techniques, bt didnt apply it.
+3) Resources request & limit ie cpu/ memory
+
+
                    CONTROLLER MANAGERS eg RC,RS
 1.42,00   Cretaed pods using Replication controller, when we delete them, we see they are RECREATED.
 all the pods have been rescheduled/recreated bc my pods are been manged by a 
  Replication controller n the RC has a label app:web n the RC has a selector that has selected the label, once it is
- selected, the pod labels hv define dthat the replicas is 3, so at all times, the RC must maintain d desired state of my appli which is 3 
+ selected, the pod labels hv defined that the replicas is 3, so at all times, the RC must maintain d desired state of my appli which is 3 
+
+***my own explanation, the pod template has a label & the RC section has a defined the number of replicas & the RC also has a selector that will select the 
+label of the pod template & as such, the RC will maintain the defined number of replicas for the app/pod at all time.
 
 
 advantages of namespace
