@@ -110,7 +110,8 @@ WE DEPLOY workloads using Imperative and declarive approaches
 docker build -t teslaimage:1 .
 docker run -d -p 80:8080 --name webapp teslaimage:1
 
-2-declarive approach =  makes use of files and less commands  
+2-declarive approach= KUB7.. makes use of deployment script *ie(vi to create eg spring.sh & put the image,db,netwrk command) & compose files/less commands 
+Docker Compose is a tool for defining/declaring and running multiple containerised micro-services applications.
 -# Using compose file     *** but this compose file doesnt have the 'deployment strategy' like docker swamp & kubernetes
 
 
@@ -136,10 +137,10 @@ kubernetes resources/objects used to deploy application include/RUN WORK LOads:
 or                                                                                             its nt recreated and that is dangerous.
  controllerManagers:
       Replication Controller; uses only; matchlabels which is Equality based 
-        ReplicaSet; uses both matchlabels which is Equality based &  matchexpression which is set based:
+        ReplicaSet; uses both matchlabels which is Equality based &  matchexpression which is set based:, can rol out new version but cant roll back
         DaemonSet,  creates a pod in each of the nodes.. good to use to deploy logmgt for monitoring purpose
        StatefulSets, 
-       Deployment,   has strategy like 'Recreate' OR 'rolling update' which is the default strategy
+       Deployment,   has strategy like 'Recreate' OR 'rolling update' which is the default strategy, can roll out new version & can roll back
        Volume, Job       
 
 
@@ -154,7 +155,7 @@ We have to create pods using controllers which manages the POD life cycle.
 controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
 
-    **mee**  MANIFEST FILE DETAIL FOR EACH CONTROLLER MANAGER
+    **mee**  WHAT A MANIFEST FILE CONTAINS/DETAILS FOR EACH CONTROLLER MANAGER
 1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & in the RC section,
 we have selectors & spec,for spec; we will indicate the number of replicas but if we dnt,it wil create 1 replica & if we need to create service, we wil also 
 have a template/section for service
@@ -167,10 +168,12 @@ so we dnt need RC/RS, because there is no replica template, i bliv thats why we 
 indicate the replica, i replica will be deployed & we also hv the pod template & service template
 
 
-                             THINGS A MANIFEST FILE INCLUDES
-1) A pod template that has a label
-2)chose a k8 object for deployment, preferrably 'DEPLOYMENT' &Its rolling update strategy, although he said smt about blue green techniques, bt didnt apply it.
+                             
+                   ***meee***        STEPS FOR OCHESTRATING CONTAINERS
+1)After installing either self managed (multi node preferred), OR  paid to manage
+2)chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about blue green techniques, bt didnt apply it.
 3) Resources request & limit ie cpu/ memory
+4)
 
 
                    CONTROLLER MANAGERS eg RC,RS
@@ -205,6 +208,7 @@ workload either using the imperative/command approach or declarative/manifest fi
 we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
 diff ns we hee FQDN  while nodeport is for externall comm ie been able to
 comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
+KUB 3/4,5,6 & 7, We explored the diff k8 objects used for deployment
 
  
 
