@@ -923,3 +923,49 @@ switch.. so oncee we are satisfied, we then bring the old version down.
    - 40years+   75% traffic VERSION1    OR  we could use the cx age group (using canary setting u can set all that up,, der are some appl that ask for your date of birth etc
    - 18-39years 25% traffic VERSION2
    -we can alsouse based on biometrics e.g sex or ages
+
+
+
+KUB 7a
+
+we can use a vscode to help when it comes to the manifest file 
+but we also hv a github repository that conatins almost all the manifest file tha you may need
+prof is there any file you have written that i can go there and copy and use them even at work? ...YES
+CLONE THIS REPOSITORY
+https://github.com/LandmakTechnologies/Kubernetes-manifests    .... almost everytin that we v done so far u wil find it here, when ur trying to deploy appli
+                                                    most of the tins that we v been able to cover in k8, u can see then here, like hw to deploy in mysql db 
+                                                       with configmap and secret , all of that, al d manifest files that we wil stil be loking at u wil find 
+                                                                      them there when it comes to k8
+
+CREATING POD & MAKING USE OF REQUEST, RESOURCE & LIMIT
+one tin i wanted us to look at .... creating a pod and making use of request, RESOURCE,and limit
+when YOu want to create a resourec in k8 generally, we need to decide hw much resources is goin to be asssigned
+when you assign resources to your pod for that pod to be scheduled on a node, the node must have the requested resources available.
+
+**bt while d container is running, if d container need to optimize d resource d  maximum d conatiner can use is what has been defined as limit
+
+after we deploy the file below 
+kubectl describe , if u look at this pod, the pod has a imit as to hw much resources it can consume in a clutser
+this are key aspect when it comes to auto scaling our pod , so if we wnat to deploy our apply, we can deploy it making use of REQ and limit as we v seen here
+
+
+Resource, requests and limits:
+--------------------------
+Requests and limits are the mechanisms Kubernetes uses to control resources such as CPU and memory. 
+Requests are what the container is guaranteed to get. 
+If a container requests a resource, 
+Kubernetes will only schedule it on a node that can give it that resource.
+
+                                 WHAT IS LIMIT
+Limits, on the other hand, make sure a container never goes above
+a certain value. The container is only allowed to go up to the limit, and then it is restricted.
+
+Resource Limit:  .. a container wil never go above a certain value
+A limit is the maximum amount of resources that 
+Kubernetes will allow the container to use.
+
+Resource request:
+---------------
+A request is the amount of that resources that the system will guarantee for the container, and Kubernetes will use this value 
+to decide on which node to place the pod. 
+
