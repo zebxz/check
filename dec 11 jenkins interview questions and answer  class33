@@ -74,29 +74,78 @@ multi-zonal cluster could be deployed in a cloud environment with a dual-stack n
 
 
 KUB 3&4
-DISADVANTAGES OF DOCKER
+DISADVANTAGES OF DOCKER    ****bc of the disadvantages of docker, we therefore use tools like docker swamp, kubernetes & open sheet.     
+
+ we can use software like docker to deploy applications ,to deploy n mange containers bt is it recommanded, shud we use 
+docker ??? we shud nt and u are going to see that shortly, we shud rather use container managers or ochestration tools like docker swarm kub n open sheet.
+when we studied dodcker, we deployed appl using docker bt what are the limitations using docker to deploy applications, we ar going to look at that shortly
+7: 43 bt these ar the contarization software  ... check
+
 with docker i cannot v more than 1 replica of webapp for e.g u are deploying ur appl n ders a spike , no i cant v multiple replicas in docker , e.g: so if u decide to run
 docker run -name webapp -replicas 5 , ie trying to get the number of replicas u wnat, it wont work.. docker doesnt support it
 also, if my engine goes down , my contaiiners will stop running 
 also docker doesnt support a scenario wher i can v multiple serveers in a cluster  e.g docker engine1 (with container), docker engine2(with containers) such that if one 
-engine is down the 2nd engine can support it ,, docker doesnt v such sys bc the docker ntwrk dose nt support MULTI HOSTING where we can v a cluster of servers, docker 
-netwrking sys doesnt support multi hosting and thats a big problem ,, the docker system doesnt v an overlay ntwrk wher u can v a cluster of server, no overlsy ntwrk support
-and d worst is that when appl ar deplloyed, to expose them to endusers is very limited and we wil see hw it is diff with kub... bc in docker we do port forwarding bt we wil
-see what kub brings to the table
-
-we can use software like docker to deploy applications , to deploy n mange containers bt is it recommanded, shud we use docker ??? we shud nt and u are going to see that shortly, we shud rather
-use container managers or ochestration tools like docker swarm kub n open sheet.
-when we studied dodcker, we deployed appl using docker bt what are the limitations using docker to deploy applications .,.. we ar going to look at that shortly 7: 43 
-bt these ar the contarization software
+engine is down the 2nd engine can support it ,, docker doesnt v such sys bc the docker ntwrk dose nt support MULTI HOSTING where we can v a cluster of servers, 
+docker netwrking sys doesnt support multi hosting and thats a big problem ,, the docker system doesnt v an overlay ntwrk wher u can v a cluster of server,
+no overlsy ntwrk support and d worst is that when appl ar deplloyed, to expose them to endusers is very limited and we wil see hw it is diff with kub...
+bc in docker we do port forwarding bt we wil see what kub brings to the table  .. i bliv port forwarding is how we expose the application (on your internal 
+netwrok) to the internet
 
 
     HOW Did WE DEPLOY A WORK LOAD IN DOCKER ??
 we had to use docker resources or objects to deploy applications like docker file we use it to build images n we can now deploy our appl wit the help of 
 ntwrks, vols, using the docker-compose file.
 ........docker resources/objects use to deploy applications:
-  Dockerfiles/images/networks/volumes/docker-compose.yml/etc.
+  Dockerfiles/images/networks/volumes/docker-compose.yml/etc. but the docker compose file doesnt have the 'deployment strategy' so we didnt hv the option of 
+replicas
 
 
+DOCKER 1&2
+ APPROACH USED TO DEPLOY WORKLOAD IN DOCKER 
+
+WE DEPLOY workloads using Imperative and declarive approaches    
+
+1-#Containerize application Imperative approach =  Command
+   LIKE:
+docker build -t teslaimage:1 .
+docker run -d -p 80:8080 --name webapp teslaimage:1
+
+2-declarive approach =  makes use of files and less commands  
+-# Using compose file     *** but this compose file doesnt have the 'deployment strategy' like docker swamp & kubernetes
+
+
+Docker 10
+2.58.56****** WHEN U RUN DOCKER SWAM init, 
+By default it creates an overlay ntwrk, the overlay ntwrk is what permits your docker server to communicate in a cluster like this bc in normal docker der 
+is no overlay ntwrk for that reason, you cannot v docker servers in a cluster like this bc node1 cannot talk to node2 in normal docker
+so once u v the overlay ntwrk, when u create ur containers , when you create ur services, those services can talk to each other irrespective of whether they
+ar created in node1 or node10 bc of the overlay ntwrk n the DNS registration is done using the service names
+
+            OVERLAY  NETWORK
+whenever we ar deploying in a swarm, our containers wil be created in the overlay netwrk..overlay ntwrk means that u can communicate wit dif nodes, the master
+can communicate with multiple nodes using the overlay netwrk, with overlay the container in node1 can talk with the conatinters in all the other nodes.
+
+
+
+KUB 1&2
+HOW WE DEPLOY APPLICATION IN K8
+########### hw we deploy applictaions in k8 , which is a very key aspect when it comes to my understnading of k8, 
+ OBJECTS USED FOR DEPLOYMENT
+kubernetes resources/objects used to deploy application include/RUN WORK LOads:
+   Pod : ***pod is nt recommemded bc we cant scale bc the pod template doesnt hv the option to create replicas like controller managers, so when a pod dies 
+or                                                                                             its nt recreated and that is dangerous.
+ controllerManagers:
+      Replication Controller; uses only; matchlabels which is Equality based 
+        ReplicaSet; uses both matchlabels which is Equality based &  matchexpression which is set based:
+        DaemonSet,  creates a pod in each of the nodes.. good to use to deploy logmgt for monitoring purpose
+       StatefulSets, 
+       Deployment,   has strategy like 'Recreate' OR 'rolling update' which is the default strategy
+       Volume, Job       
+
+
+      
+
+*****************************************************************
 KUB 3&4*    POD
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
 We should not create pods directly to deploy applications.  **kub5**     lacks self-healing capacities
@@ -547,7 +596,7 @@ Namespace:
 
 
 
- HOW DO WE DEPLOY WORKLOAD IN K8 ????????????????
+ APPROACH USED TO DEPLOY WORKLOAD IN K8 ????????????????
 
 WE DEPLOY workloads using Imperative and declarive approaches    
 
@@ -719,10 +768,20 @@ python appl, i can curl, using the clusterip ,to  access the appl internally
 
 
  HOW WE DEPLOY APPLICATION IN K8
-########### hw we deploy applictaions in k8 , which isa very key aspect when it comes to my understnading of k8, 
+########### hw we deploy applictaions in k8 , which is a very key aspect when it comes to my understnading of k8, 
+ OBJECTS USED FOR DEPLOYMENT
+kubernetes resources/objects used to deploy application include/RUN WORK LOads:
+   Pod :
+or    
+ controllerManagers:
+      Replication Controller, ReplicaSet, DaemonSet, StatefulSets, Deployment, Volume, Job       
+
+
+      WHERE APPLICATIONS ARE DEPLOYED IN K8
 where are applications deployed in k8?/??......     we shud be able to est the fact that applictaions/containers are running in pods   
 so pods can be deployed/managed by using:
-                                        HOW POD IS MANGED
+                                     
+              HOW POD IS MANGED
 pods can be deployed/managed by using:
  1. pods as a kubernetes objects  
  2. controllerManagers kubernetes objects , thers a list of k8 objects when it comes to controller managers, we hv seen the first controller manager k8 objects
