@@ -433,18 +433,19 @@ the node to our cluster;
 
                                             STEPS TO ADD A NODE/NODES TO THE CLUSTER
 
-1) execute below command to inintiate docker swarm manager in one system
-#initialize docker swarm cluster
-  docker swarm init
-#Get worker token
-  docker swarm join-token worker
-#Get manager token to add another node as secondary manager
-docker swarm join-token manager
-
-2)install docker community Edition in all the 3 servers  ***meee*** or mayb any number of  worker nodes we need.
+1)install docker community Edition in all the 3 servers  ***meee*** or mayb any number of  worker nodes we need.
    And Add user (ubuntu) to docker group 
 
-worker nodes:
+2) execute below command to inintiate docker swarm manager in one system
+#initialize docker swarm cluster
+  docker swarm init
+A)Get worker token
+  docker swarm join-token worker
+B)Get manager token to add another node as secondary manager
+docker swarm join-token manager
+
+ User script for worker server/worker nodes
+worker nodes: 
 #!/bin/bash          **1.40.50... now n AWS, using this script for 'userdata' the script will assign a hostname, install docker & add the server to my cluster 
 sudo hostname node1             1.39.47*** We want to add this node1 to our swamp, 
 sudo apt update -y          
