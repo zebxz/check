@@ -1,16 +1,16 @@
 
-Okay.. So you're able to make a request as far as a resources is  concerned, based on what you are trying to realize. And that's a very key aspect.. That's a very key
-aspect in k8, you know. And now we have seen that,  while deploying your pod, right? You can decide how much resources should be assigned to this pod. And if you do that, 
-the scheduler  wil only , schedule, that port on, they node  that got sufficient resources to provide what the pod is requesting. So please take notice. Very important.It's
-a very key aspect as far as k8 this is concerned. So this aspect is always considered. While Trying to deploy a pod.
- So when the scheduler is about to schedule a pod, hes is going to schedule that pod based on the node that got sufficient resources. That's what is being considered. You
-see that. So you are node, should have sufficient resources before the pdt is being scheduled. And k8 must always check, you know, in terms of how much resources the node 
-Got before it's able to schedule a port. On that note. So those are very key aspect in k8 to take note of. 
+Okay.. So you're able to make a request as far as a resources is  concerned, based on what you are trying to realize. And that's a very key aspect.. That's
+a very key aspect in k8, you know. And now we have seen that,  while deploying your pod, right? You can decide how much resources should be assigned to this
+pod. And if you do that, the scheduler  wil only , schedule, that port on, they node  that got sufficient resources to provide what the pod is requesting.
+So please take notice. Very important.It's  a very key aspect as far as k8 this is concerned. So this aspect is always considered. While Trying to deploy a
+pod. So when the scheduler is about to schedule a pod, hes is going to schedule that pod based on the node that got sufficient resources.That's what is being
+considered. You see that. So you are node, should have sufficient resources before the pdt is being scheduled. And k8 must always check, you know, in terms of
+how much resources the node Got before it's able to schedule a port. On that note. So those are very key aspect in k8 to take note of. 
 
 **************************************SCALING:
 SCALING
- Now, let's assume we want to deploy an application. We have said one of the features of k8 is that if you deploy your application using a controller, we are able to scale.
-Okay. So how do we scale scaling in k8? 
+ Now, let's assume we want to deploy an application. We have said one of the features of k8 is that if you deploy your application using a controller, we are 
+able to scale. Okay. So how do we scale scaling in k8? 
 How do we scale?
  we have Manual scaling and automated Scaling
 How do we scale manually in k8 If you deployin your application for you to scale manually, you can run the command:
@@ -35,7 +35,7 @@ What is difference b/w Kubernetes AutoScaling(POD AutoScaling) & AWS AutoScaling
 AutoScaling group in aws : so we can have min, desired , max 
      min     = 5          the max
      desired = 5      so these are the no. of servers that we epxect
-     max     = 100              max, so it  cant create more than 100 ,,, so scalin policy hS a tARGET, THE target can b memory utilzation or cpu ultilization ...... 8:14
+     max     = 100      max, so it  cant create more than 100 ,,, so scalin policy hS a tARGET, THE target can b memory utilzation or cpu ultilization .. 8:14
 
 but then when shud it scal? .....  so we hv scaling policy
  scaling policies in aws : it can scale based on 
@@ -52,25 +52,26 @@ but then when shud it scal? .....  so we hv scaling policy
 difference b/w Kubernetes AutoScaling(POD AutoScaling) 
                    & AWS AutoScaling?
 8:50 
-for us to be able to understand hw mch resources are been consumed, we nid to check hw much resources the pods are already consuming, similarly, we can do this in k8
-we cus decide we wnt to scale our pod..
+for us to be able to understand hw mch resources are been consumed, we nid to check hw much resources the pods are already consuming, similarly, we can do 
+this in k8 we cus decide we wnt to scale our pod..
 
 resources:
    requests:     under resources, a pod is able to reqest for this much 
      memory: "128Mi"   
      cpu: "500m" 
 deployment:     lets assume this req is created undera controler manger wich is deployment an dthe deployment has replica as 5
-   replicas: 5    if my replica is 5, hw much resources is each of d replica suppose to consume? for memoery 128mi and cpu:500m, thi sis hw much resources a pod can consume
+   replicas: 5    if my replica is 5, hw much resources is each of d replica suppose to consume? for memoery 128mi and cpu:500m, thi sis hw much resources a 
+pod can consume
 hpa:                 ************* we deploy an hpa and we say min number of pod 5
    min: 5 + 1 =    and say min number of pod is 5      (so we hv a deployment we are deployin and an HPA) 
    max: 50           and max is 50 pod 
-                      based on this deploymnt, the HPA wil maintain 5replicas, however if the 5replicas are all using 128 each, it will add anoda pod bc the vol of resources
-                       being usedby the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
+                      based on this deploymnt, the HPA wil maintain 5replicas, however if the 5replicas are all using 128 each, it will add anoda pod bc the 
+vol of resources being usedby the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
 
 kubectl top pods    : to knw  hw much the pods are consuming , but we dnt hv any operator in aws that is able to check hw much resources our pods are consuming
 kubectl top nodes  
 
-error: Metrics API not available     ..... we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
+error: Metrics API not available    .. we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
     kubernetes addons/plugins:
       Metrics Server
 
@@ -89,7 +90,7 @@ git clone https://github.com/LandmakTechnology/metric-server
 kubectl apply -f metric-server/metrics-server-deploy.yml     
 =====================================================
 
-*************** TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
+******* TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
                                kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
                                creating a cluster role for metrics server, using rbac, it wil ceate all this service.
     
@@ -112,9 +113,9 @@ ubuntu@master:  kubectl get po -A
 ubuntu@master: kubectl top po 
 
 
-18:36****************so all of this hv been created,der is s deployment for our metric server n this metrics server is functional and and it has been deployed such that it
-is able to get into my cluster, we hv given him the permission using RBAC , we are permiting metric server to check all our node, all our pod and report the metrics.. so 
-it can gather metrics and if u lok at some of the objects eployed, we v stuff like metric server can check ur node on yr pod 
+18:36****************so all of this hv been created,der is s deployment for our metric server n this metrics server is functional and and it has been deployed
+such that it is able to get into my cluster, we hv given him the permission using RBAC , we are permiting metric server to check all our node, all our pod and
+report the metrics.. so it can gather metrics and if u lok at some of the objects eployed, we v stuff like metric server can check ur node on yr pod 
 
 metrics-server:
   nodes  
@@ -230,8 +231,8 @@ If you dnt see  a command prompt, try pressing enter
 -# Access the service to increase the load.
 /# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why lo...**** idnt knw what he said ..
 **********.... load is been generted     (it was printing ...OK! OK!)
-min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been genertad, this
-is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
+min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been 
+genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
 
 TYPES OF AUTOSCALING:   ... WE ILL LOOK AT the rest of the autoscaling as far as k8 is concerned
 Vertical Pod AutoScaling : 
