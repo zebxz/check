@@ -18,6 +18,7 @@ How do we scale?
 
                  TYPES OF SCALING
  we have Manual scaling and automated Scaling
+1) MANUAL SCALING
 How do we scale manually in k8 If you deployin your application for you to scale manually, you can run the command:
 kubectl scale deployment/rs/rc/sts
 ie we can scale rs , deployment, rc, stateful set, ...... these ar the scalable objs in k8 and these scaling can be done maually
@@ -31,7 +32,7 @@ scaling in kubernetes:
       ============================
 
 
-                                HORIZONTAL POD AUTOSCALING - HPA
+ 2)                               HORIZONTAL POD AUTOSCALING - HPA
 POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number pod replicas available at any time & based on the observed CPU/Memory 
 utilization on pods, it can scale PODS automatically.
 HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
@@ -58,6 +59,8 @@ but then when shud it scal? .....  so we hv scaling policy
        cpu -gt 80% 
        cpu -lt 40%     
      cpu utilization
+
+                             
 difference b/w Kubernetes AutoScaling(POD AutoScaling) 
                    & AWS AutoScaling?
 8:50 
@@ -68,17 +71,20 @@ resources:
    requests:     under resources, a pod is able to reqest for this much 
      memory: "128Mi"   
      cpu: "500m" 
-deployment:     lets assume this req is created undera controler manger wich is deployment an dthe deployment has replica as 5
+deployment:     lets assume this req is created undera controler manger wich is deployment and the deployment has replica as 5
    replicas: 5    if my replica is 5, hw much resources is each of d replica suppose to consume? for memoery 128mi and cpu:500m, thi sis hw much resources a 
 pod can consume
 hpa:                 ************* we deploy an hpa and we say min number of pod 5
    min: 5 + 1 =    and say min number of pod is 5      (so we hv a deployment we are deployin and an HPA) 
    max: 50           and max is 50 pod 
                       based on this deploymnt, the HPA wil maintain 5replicas, however if the 5replicas are all using 128 each, it will add anoda pod bc the 
-vol of resources being usedby the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
+vol of resources being used by the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
 
 kubectl top pods    : to knw  hw much the pods are consuming , but we dnt hv any operator in aws that is able to check hw much resources our pods are consuming
 kubectl top nodes  
+
+
+                    INSTALL METRICS
 
 error: Metrics API not available    .. we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
     kubernetes addons/plugins:
@@ -101,7 +107,7 @@ kubectl apply -f metric-server/metrics-server-deploy.yml
 
 ***** TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
                      kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
-                               creating a cluster role for metrics server, using rbac, it wil ceate all this service.
+                               creating a cluster role for metrics server, using rbac, it wil create all this service.
     
 ubuntu@master: vi metric-server/metrics-server-deploy.yml   
 
@@ -143,7 +149,9 @@ RBAC objects:
      - 
   rolebinding      ....   all of this hv been deployed
 
-****************************************DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00 
+
+
+                               *DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00 
 Deployment with HPA
 ==================
 vi hpa.yml
@@ -202,7 +210,7 @@ spec:
      target:
       type: Utilization
       averageUtilization: 40
----                              *************we are creating a srvice for our cluster autoscaler
+---                              *************we are creating a service for our cluster autoscaler
 apiVersion: v1
 kind: Service
 metadata:
@@ -217,6 +225,7 @@ spec:
     name: hpapod
   type: ClusterIP
 *********************************** to deploy our cluster autoscaler immediately
+
 ubuntu@master:~$ kubectl apply -f hpa.yml                        ........ 25:00
 horizontalpodautoscaler.autoscaling/autoapp created        .....  ******* resources created
 ubuntu@master:~$ kubectl get hpa
@@ -225,10 +234,15 @@ ubuntu@master:~$  kubectl get deploy
 ubuntu@master:~$ kubectl get po
 pods are running 
 
+
+                              LETS SEE HOW THE AUTOSCALER WORKS
+
 since the pods are running lets see hw we ar going to the autoscaler is goin to wrk
 ********************************** so we hv deployed all the objects including the autoscaler
 ~~~~~~~~~~ next we create/generate a load    .. 25:53 
 
+
+                                         CREATE/ GENERATE A LOAD
 
 TO CREATE A LOAD:
 -# Create temp POD using below command interatively and increase the 
@@ -238,14 +252,17 @@ creatin the pod in interative mode:
 ubuntu@master:~$ kubectl run -i --tty load-generator --rm  --image=busybox /bin/sh
 If you dnt see  a command prompt, try pressing enter
 /#
-......the pod has been created, w ewnt to access d service so that we can generate load on this pod
+......the pod has been created, we wnt to access d service so that we can generate load on this pod
 
 -# Access the service to increase the load.
 /# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why lo...**** idnt knw what he said ..
 **********.... load is been generted     (it was printing ...OK! OK!)
 min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been 
-genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
+genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note this is a very imp aspect
 
+
+
+                                 TYPES OF AUTOSCALING
 TYPES OF AUTOSCALING:   ... WE ILL LOOK AT the rest of the autoscaling as far as k8 is concerned
 Vertical Pod AutoScaling : 
 Horizontal Pod AutoScaling  :
