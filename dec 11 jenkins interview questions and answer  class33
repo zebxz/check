@@ -1079,7 +1079,8 @@ eg; if my replica is 5, hw much resources is each of d replica suppose to consum
 pod can consume, however if each of the pods are all consuming all the 128mi, then its means that more rsource needs to be allocated, thefore bc the 
 vol of resources being used by the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
 
-POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number pod replicas available at any time & based on the observed CPU/Memory 
+POD AutoScaling -->     ***meee** this will hv its own manifest file, * its selector will select the 'podtemplate label whic is deploying a metric server***
+Kuberenets POD AutoScaling Will make sure u have minimum number pod replicas available at any time & based on the observed CPU/Memory 
 utilization on pods, it can scale PODS automatically.
 HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
 based on observerd CPU & Memory utilization base the target specified. 
@@ -1088,6 +1089,12 @@ Horizontal Pod AutoScaling  - HPA
 
 
                           INSTALL METRICS
+Configure a Metrics Server on our Cluster4??     14:29 .. ..    metric server is a k8 operator or pluggin
+
+***ONLINE**
+the Kubernetes Metrics Server is not a Horizontal Pod Autoscaler (HPA). Instead, the Metrics Server is a component that
+provides the necessary data for the Horizontal Pod Autoscaler to function.
+*********************
 
 error: Metrics API not available    .. we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
     kubernetes addons/plugins:
@@ -1109,11 +1116,11 @@ kubectl apply -f metric-server/metrics-server-deploy.yml
 
  *DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00
 ***mee*** includes 3 manifest files
-1) the manifest file to deploy the Application/objects using deployment & also indicating 'HPA', 
-2) the second manifest file is to AUTO scale the application
+1) the manifest file to deploy the Application/objects  for the 'HPA, using deployment strategy 
+2) the second manifest file is to AUTO scale the application ** I bliv based on the resource request made by the deployment strategy
 apiVersion: autoscaling/v2                **************we are deploying  an autoscalin/v2
 'THE kind is': HorizontalPodAutoscaler
-3)we are creating a service for our cluster autoscaler
+3)we are creating a service for our cluster autoscaler  **mee** the cluster we deployed in the first manifest file using deployment strategy
 
 Next;
                               GENERATE A LOAD
