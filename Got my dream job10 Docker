@@ -75,6 +75,7 @@ RUN pip install --no cache dir -r requirements-prod.txt      2.00  .... this is 
 3) we can make image distributable by tagging & push to repo
 4)deploy a database, if its stateful then it needs to maintain its states , need a piece of storage so next volume
 5) create networks
+when creating the compose file, if you already created the network, ie the netwrk exists, then you will indicate 'true'
 TO ensure containers can communicate they hv to be created in the same ntwrk 
 PROBLEMS WITH DEFAULT BRIDGE NTWRK
 containers communicate with only the containerID, bt if smt happens & container is recreated, it comes with new ip address & communication is lost
@@ -104,6 +105,7 @@ even if we dnt pass ntwrks in d file, once ur deployn in a docker swamp, they ar
 is done using d service names like the application name,it is nt done using service ip  e.g d micro service appl can talk to the database using the name n
 thats why in our env var we ar very careful wit dis data  ..... 1:32:51
 5)Deploy using the compose file, By default, rolling update is the default strategy
+  **the docker compose file for docker includes netwrk, d compose file for docker swamp does not include netwrk, because an overlay netwrk has been initialized
 and if u go without a file its going to be docker service create  ie use command to create a service
 docker service create -p <hostPort>:<containerPort> --name <serviceName  
  DEPLOYING  A STACK
