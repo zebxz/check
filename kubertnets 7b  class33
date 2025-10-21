@@ -4,14 +4,19 @@ a very key aspect in k8, you know. And now we have seen that,  while deploying y
 pod. And if you do that, the scheduler  wil only , schedule, that port on, they node  that got sufficient resources to provide what the pod is requesting.
 So please take notice. Very important.It's  a very key aspect as far as k8 this is concerned. So this aspect is always considered. While Trying to deploy a
 pod. So when the scheduler is about to schedule a pod, hes is going to schedule that pod based on the node that got sufficient resources.That's what is being
-considered. You see that. So you are node, should have sufficient resources before the pdt is being scheduled. And k8 must always check, you know, in terms of
+considered. You see that. So you are node, should have sufficient resources before the pod is being scheduled. And k8 must always check, you know, in terms of
 how much resources the node Got before it's able to schedule a port. On that note. So those are very key aspect in k8 to take note of. 
+
+
 
 **************************************SCALING:
 SCALING
  Now, let's assume we want to deploy an application. We have said one of the features of k8 is that if you deploy your application using a controller, we are 
 able to scale. Okay. So how do we scale scaling in k8? 
 How do we scale?
+
+
+                 TYPES OF SCALING
  we have Manual scaling and automated Scaling
 How do we scale manually in k8 If you deployin your application for you to scale manually, you can run the command:
 kubectl scale deployment/rs/rc/sts
@@ -24,12 +29,16 @@ scaling in kubernetes:
    automated scaling:
       Horizontal Pod AutoScaling  - HPA  :
       ============================
-POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number 
-pod replicas available at any time & based on the observed CPU/Memory utilization
-on pods, it can scale PODS automatically.
+
+
+                                HORIZONTAL POD AUTOSCALING - HPA
+POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number pod replicas available at any time & based on the observed CPU/Memory 
+utilization on pods, it can scale PODS automatically.
 HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
 based on observerd CPU & Memory utilization base the target specified. 
 
+
+                           DIFFERENCE BTW K8 AUTOSCALING & AWS AUTOSCALING
 What is difference b/w Kubernetes AutoScaling(POD AutoScaling) & AWS AutoScaling?
  when we did aws, we also saw how we can auto scale by creating auto scaling grp 
 AutoScaling group in aws : so we can have min, desired , max 
@@ -90,8 +99,8 @@ git clone https://github.com/LandmakTechnology/metric-server
 kubectl apply -f metric-server/metrics-server-deploy.yml     
 =====================================================
 
-******* TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
-                               kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
+***** TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
+                     kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
                                creating a cluster role for metrics server, using rbac, it wil ceate all this service.
     
 ubuntu@master: vi metric-server/metrics-server-deploy.yml   
@@ -113,16 +122,18 @@ ubuntu@master:  kubectl get po -A
 ubuntu@master: kubectl top po 
 
 
-18:36****************so all of this hv been created,der is s deployment for our metric server n this metrics server is functional and and it has been deployed
-such that it is able to get into my cluster, we hv given him the permission using RBAC , we are permiting metric server to check all our node, all our pod and
-report the metrics.. so it can gather metrics and if u lok at some of the objects eployed, we v stuff like metric server can check ur node on yr pod 
+18:36****************so all of this hv been created,der is s deployment for our metric server n this metrics server is functional and and it has been
+deployed such that it is able to get into my cluster, we hv given him the permission using RBAC , we are permiting metric server to check all our node, all 
+our pod and report the metrics.. so it can gather metrics and if u lok at some of the objects eployed, we v stuff like metric server can check ur node on 
+yr pod 
+
 
 metrics-server:
   nodes  
   pods 
 
 RBAC objects:
-  serviceaccount metrics-server : we can have 
+  service account metrics-server : we can have 
      - user        ......*******so we can create a service account for a user , for a grp or  a pod 
      - groups 
      - pods     
@@ -217,6 +228,7 @@ pods are running
 since the pods are running lets see hw we ar going to the autoscaler is goin to wrk
 ********************************** so we hv deployed all the objects including the autoscaler
 ~~~~~~~~~~ next we create/generate a load    .. 25:53 
+
 
 TO CREATE A LOAD:
 -# Create temp POD using below command interatively and increase the 
