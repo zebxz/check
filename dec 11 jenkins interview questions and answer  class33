@@ -144,7 +144,7 @@ HOW WE DEPLOY APPLICATION IN K8
 kubernetes resources/objects used to deploy application include/RUN WORK LOads:
    Pod : ***pod is nt recommemded bc we cant scale bc the pod template doesnt hv the option to create replicas like controller managers, so when a pod dies 
 or                                                                                             its nt recreated and that is dangerous.
- controllerManagers:
+ controllerManagers:   ***Deploying with controller managers we are able to scale
       Replication Controller; uses only; matchlabels which is Equality based 
         ReplicaSet; uses both matchlabels which is Equality based &  matchexpression which is set based:, can rol out new version but cant roll back
         DaemonSet,  creates a pod in each of the nodes.. good to use to deploy logmgt for monitoring purpose
@@ -1060,3 +1060,86 @@ Resource request:
 A request is the amount of that resources that the system will guarantee for the container, and Kubernetes will use this value 
 to decide on which node to place the pod. 
 
+
+KUB 7b                             TYPES OF SCALING
+ scaling in kubernetes: we have Manual scaling and automated Scaling
+
+ MANUAL SCALING
+How do we scale manually in k8 If you deployin your application for you to scale manually, you can run the command:
+kubectl scale deployment/rs/rc/sts
+ie we can scale rs , deployment, rc, stateful set, ...... these ar the scalable objs in k8 and these scaling can be done maually
+we can also scale automatically, in k8 using another object Callled HPA .
+ eg manual scaling:
+      kubectl scale deployment/rs/rc/sts/ app --replicas 4   
+   
+HORIZONTAL POD AUTOSCALING - HPA
+***mee** with HPA, we are able to auto scale the number of pod replicas requested by for eg when we use deployment strategy. it is based on the resource 
+    consumed by each pods
+eg; if my replica is 5, hw much resources is each of d replica suppose to consume? for memoery 128mi and cpu:500m, thi sis hw much resources a 
+pod can consume, however if each of the pods are all consuming all the 128mi, then its means that more rsource needs to be allocated, thefore bc the 
+vol of resources being used by the pod is much so it will add one pod :+1, it will keep ading and the process wil be automated  .. 12.06
+
+POD AutoScaling --> Kuberenets POD AutoScaling Will make sure u have minimum number pod replicas available at any time & based on the observed CPU/Memory 
+utilization on pods, it can scale PODS automatically.
+HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
+based on observerd CPU & Memory utilization base the target specified. 
+   automated scaling:  
+Horizontal Pod AutoScaling  - HPA 
+
+
+                          INSTALL METRICS
+
+error: Metrics API not available    .. we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
+    kubernetes addons/plugins:
+      Metrics Server
+
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+*********OR CHECK OUR Github repository wher we hv metric server script already 
+https://github.com/LandmakTechnology/metric-server
+***********to clone the repository:
+git clone https://github.com/LandmakTechnology/metric-server
+***************** to create a metrics server:
+kubectl apply -f metric-server/metrics-server-deploy.yml  
+
+***** TO deploy the metric server: we v a file; inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
+                     kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
+                               creating a cluster role for metrics server, using rbac, it wil create all this service.
+
+
+ *DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00
+***mee*** includes 3 manifest files
+1) the manifest file to deploy the Application/objects using deployment & also indicating 'HPA', 
+2) the second manifest file is to AUTO scale the application
+apiVersion: autoscaling/v2                **************we are deploying  an autoscalin/v2
+'THE kind is': HorizontalPodAutoscaler
+3)we are creating a service for our cluster autoscaler
+
+Next;
+                              GENERATE A LOAD
+
+  
+                                         CREATE/ GENERATE A LOAD
+
+TO CREATE A LOAD:
+-# Create temp POD using below command interatively and increase the 
+-# load on demo app by accessing the service.
+
+creatin the pod in interative mode:
+ubuntu@master:~$ kubectl run -i --tty load-generator --rm  --image=busybox /bin/sh
+If you dnt see  a command prompt, try pressing enter
+/#
+......the pod has been created, w ewnt to access d service so that we can generate load on this pod
+
+-# Access the service to increase the load.
+/# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why lo...**** idnt knw what he said ..
+**********.... load is been generted     (it was printing ...OK! OK!)
+min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been 
+genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
+
+
+   TYPES OF AUTOSCALING
+TYPES OF AUTOSCALING:   ... WE ILL LOOK AT the rest of the autoscaling as far as k8 is concerned
+Vertical Pod AutoScaling : 
+Horizontal Pod AutoScaling  :
+Cluster AutoScaling:
