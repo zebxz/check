@@ -298,3 +298,40 @@ kubectl rollout undo deployment/web
 
 # List Deployment Rollout History
 kubectl rollout history deployment/web  
+
+
+KUB 7b
+AUTOSCALING
+kubectl top pods    : to knw  hw much the pods are consuming , but we dnt hv any operator in aws that is able to check hw much resources our pods are consuming
+kubectl top nodes  
+
+to check if our metrics server is running;
+ubuntu@master:  kubectl get po -A
+********TO check the metrics of our pod:
+ubuntu@master: kubectl top po 
+
+18:36****************so all of this hv been created,der is s deployment for our metric server n this metrics server is functional and and it has been
+deployed such that it is able to get into my cluster, we hv given him the permission using RBAC , we are permiting metric server to check all our node, all 
+our pod and report the metrics.. so it can gather metrics and if u lok at some of the objects eployed, we v stuff like metric server can check ur node on 
+yr pod 
+
+
+         
+                                         CREATE/ GENERATE A LOAD
+
+TO CREATE A LOAD:
+-# Create temp POD using below command interatively and increase the 
+-# load on demo app by accessing the service.
+
+creatin the pod in interative mode:
+ubuntu@master:~$ kubectl run -i --tty load-generator --rm  --image=busybox /bin/sh
+If you dnt see  a command prompt, try pressing enter
+/#
+......the pod has been created, w ewnt to access d service so that we can generate load on this pod
+
+-# Access the service to increase the load.
+/# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why lo...**** idnt knw what he said ..
+**********.... load is been generted     (it was printing ...OK! OK!)
+min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been 
+genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
+
