@@ -85,6 +85,10 @@ kubectl top nodes
 
 
                     INSTALL METRICS
+***ONLINE**
+the Kubernetes Metrics Server is not a Horizontal Pod Autoscaler (HPA). Instead, the Metrics Server is a component that
+provides the necessary data for the Horizontal Pod Autoscaler to function.
+*********************
 
 error: Metrics API not available    .. we nid to instal a metric server bc it acts as a guage for example , it wil chaek ur pod to knw hw much cpu is assigned.
     kubernetes addons/plugins:
@@ -105,8 +109,9 @@ git clone https://github.com/LandmakTechnology/metric-server
 kubectl apply -f metric-server/metrics-server-deploy.yml     
 =====================================================
 
-***** TO deploy the metric server: we v a file, inside metric server ther is :metrics-server-deploy.yml, dis is a file this is going to deploy metric server in the 
-                     kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
+****** TO deploy the metric server: 
+we v a file, inside metric server ther is :metrics-server-deploy.yml file, dis is a file this is going to deploy metric server in the 
+                 kubectl namespace..... so it is creating a metrics account for metrics server.this service account wil b used to manage metrics server, also 
                                creating a cluster role for metrics server, using rbac, it wil create all this service.
     
 ubuntu@master: vi metric-server/metrics-server-deploy.yml   
@@ -151,8 +156,15 @@ RBAC objects:
 
 
 
+
+      **meee**** TAKE NOTE THIS IS JUST A SAME EXPERIMENT PROVIDED BY K8......
+
                                *DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00 
-Deployment with HPA
+                                 ***i bliv this means we want to deploy the 'HPA' deployment inside the metrics server
+
+             *28.48....this is a test appl that k8 provide for u to just run some testing on it.... so tk note this is a very imp aspect
+
+Deployment with HPA    *** i bliv this means we are deploying This manifest file for the 'custom app' provided by k8  & the 2nd manifest file for the 'HPA'
 ==================
 vi hpa.yml
 
@@ -172,7 +184,7 @@ spec:
     spec:
       containers:
         - name: hpacontainer
-          image: k8s.gcr.io/hpa-example              ******* this is a cutom appl that has a k8 image  ... k8.io 
+          image: k8s.gcr.io/hpa-example   *** this is a cutom appl that has a k8 image .. k8.io . **mee** for now, does dis mean we can use any image at all?
           ports:
           - name: http
             containerPort: 80
@@ -184,11 +196,11 @@ spec:
               cpu: "100m"
               memory: "256Mi"
    
-******************************************* as part of thsi deployment, we wnt to auto scale the application.... ..... 21:59
+******************************************* as part of this deployment, we wnt to auto scale the application.... ..... 21:59
 ---                                                   HW DO WE AUTO scale the application
 apiVersion: autoscaling/v2                **************we are deploying  an autoscalin/v2
 kind: HorizontalPodAutoscaler  
-metadata:
+metadata:                         this is to auto scale the hpa 
   name: autoapp        
 spec:
   scaleTargetRef:
@@ -227,13 +239,17 @@ spec:
 *********************************** to deploy our cluster autoscaler immediately
 
 ubuntu@master:~$ kubectl apply -f hpa.yml                        ........ 25:00
-horizontalpodautoscaler.autoscaling/autoapp created        .....  ******* resources created
-ubuntu@master:~$ kubectl get hpa
-we see hpa running 
-ubuntu@master:~$  kubectl get deploy
-ubuntu@master:~$ kubectl get po
+horizontalpodautoscaler.autoscaling/autoapp created        .....  ******* resources created,  ***mee**  2nd manifest file created
+service/hpaclusterservice created              ***mee** hpa cluster here is the name for the 'custom app' that was deployed.
+Deployment.apps/hpaapp created              *** the first manifest file
+
+ubuntu@master:~$ kubectl get hpa    
+****we see HPA running                    *** indicating the minimum/maximum number of 'custom app' it should maintain at all time
+ubuntu@master:~$  kubectl get deploy             *** we see the 2 'customapp'/hpaapp were deployed
+ubuntu@master:~$ kubectl get po                    *** we see the 2 'customapp'/hpaapp, details
 pods are running 
 
+                   so we hv deploy all the objects including the autoscaler
 
                               LETS SEE HOW THE AUTOSCALER WORKS
 
@@ -255,10 +271,10 @@ If you dnt see  a command prompt, try pressing enter
 ......the pod has been created, we wnt to access d service so that we can generate load on this pod
 
 -# Access the service to increase the load.
-/# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why lo...**** idnt knw what he said ..
+/# while true; do wget -q -O- http://hpaclusterservice; done     (we ar executin a why loop..**** idnt knw what he said ..
 **********.... load is been generted     (it was printing ...OK! OK!)
 min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been 
-genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note this is a very imp aspect
+genertad, this is a test appl that k8 provide for u to just run some testing on it.... so tk note this is a very imp aspect
 
 
 
