@@ -239,13 +239,14 @@ KUB 3/4,5,6 & 7, We explored the diff k8 objects used for deployment
 KUB 1&2
 XPLAIN THE K8 ARCHITECTURE 
 kubernetes  is a open source, or ochectration  tool  used to Orchestrate and managed containerised Applications
-k8 is a grp of servers that are working together to be able to ochestrate containerize applications, its made up of a control plane & worker node, where the 
-applications are running & the control planee comes with components line the API server which is the main adminstrative point and the entry point into the 
-cl8 & it does generally authentication & authoriztion & it ensures that whatevr Req GETS into the cl8 is been made by an authorized & authenticated individual,
-apart of the API server, we hv the etcd that persists data in the cl8, it acts as a database ,whatevr reQ is been made by whoever engr that inf is stored and
-persisted in the etcd and frm there we also hv the scheduler, which is incharge of scheduling  eg if pods are been REQuested to be scheduled the sheduler will
-schedule that considering the nodes that hv available resources for such a pods to be hosted & if thers any other constrain all the constraint are been factored
-in we also hv the controler managers that is able to ensure that at all times we hv a number of nodes running ,pods running ,deplyments are runing as expected
+k8 is a grp of servers that are working together to be able to ochestrate containerize applications, its made up of a control plane & worker node, where the
+applications are running & our applications are deployed in pods & the control planee comes with components line the API server which is the main
+adminstrative point and the entry point into the cl8 & it does generally authentication & authoriztion & it ensures that whatevr Req GETS into the cl8 is 
+been made by an authorized & authenticated individual, apart of the API server, we hv the etcd that persists data in the cl8, it acts as a database ,whatevr
+reQ is been made by whoever engr that inf is stored and persisted in the etcd and frm there we also hv the scheduler, which is incharge of scheduling  eg if
+pods are been REQuested to be scheduled the sheduler will schedule that considering the nodes that hv available resources for such a pods to be hosted & if
+thers any other constrain all the constraint are been factored in we also hv the controler managers that is able to ensure that at all times we hv a number
+of nodes running ,pods running ,deplyments are runing as expected.
 we also hv the worker nodes comes with the kublets which is the pry node agent, we equally hv the kube proxy, which is incharge of netwrk 
 also the container run time, there are diff types of container run time that you can use, docker used to be one of them , also container-D, container runtime
 is any software in your node that is able to create and start containers bc k8 is all abt managing containerized appl n in our env we use containerD as our 
@@ -848,6 +849,12 @@ Supports eqaulity based selectors and/or set based selectors. (it can be either 
      - fe  
 
 
+KUB 8&9                       WE have 2 classes of selectors
+   ***Equality base & Selector based selectors
+Replica set, daemon set and  deployment. has what we call both equality base.& Set base selectors .. 16.50
+BUT Replica controller has only Equality based selector
+
+
     CREATE SECRET
 Create a secret that will authenticate kubernetes to pull images from dockerHub/nexus/jfrog  
 
@@ -1083,9 +1090,12 @@ we can also scale automatically, in k8 using another object Callled HPA .
 
 2) AUTO SCALING : Automatically scaling the replicas, it states the minumum& maximum number of replicas
 
+
                       TYPES OF AUTOSCALING
 TYPES OF AUTOSCALING:   ... WE ILL LOOK AT the rest of the autoscaling as far as k8 is concerned
-1) Horizontal Pod AutoScaling  :
+we can use one of these to automate scaling..
+we need the guage bc we hv traffic coming into our cluster, and we hava a HPA, which we want that pod to automate the traffic for us. so we are saying 
+1) Horizontal Pod AutoScaling  :                                                               KUB 8&9, i bliv this is the metrix pod
 2)Vertical Pod AutoScaling : 
 3)Cluster AutoScaling:
 
@@ -1107,16 +1117,18 @@ vol of resources being used by the pod is much so it will add one pod :+1, it wi
 
 
 
-                     ***meee*** STEPS TO DEPLOY THE APPLICATION/POD & the HPA 
+                     ***meee*** STEPS TO DEPLOY THE APPLICATION/POD & the HPA  or KUB8&9 HOW CAN SCALING BE AUTOMATED
 or (cluster autoscaler ie an automated application cluster where by the replicas are created automatically by the HPA) 
                                       
-1) install a metrix server
+1) install a metrix server... kub8&9 By installing a guage API [: metric-server ] in our cluster and using 
+ KUB 8&9.. so we hv a matrix server service and its also deployed as a pod. the pod is able to check hw much resource is been used here
 ***ONLINE**
 the Kubernetes Metrics Server is not a Horizontal Pod Autoscaler (HPA). Instead, the Metrics Server is a component that
 provides the necessary data for the Horizontal Pod Autoscaler to function.
 2) deploy the application cluster:  ***mee*** includes 3 manifest files
 A) the manifest file using deployment strategy to deploy the 'application' & object that states/makes the request for the resources needed for the cluster.
 B) the second manifest file is to deploy the HPA **to ensure the resources requested by the objects for d application are maintained at all time. 
+     I bliv each application will be deployed will its own autoscaler (HPA/VPA/CAS)manifest file
 C)we are creating a service for our cluster autoscaler  **mee** ie the cluster we deployed in (A)the first manifest file using deployment strategy
        I bliv we can use the word 'cluster autoscaler' bc we are autoscaling the cluster
 3) Generate load
@@ -1128,11 +1140,31 @@ not function bc the image doesnt hv the content to generate the workload needed 
 
 
 
+KUB 8&9
 
-KUB 8
+IN DOCKER 6 OR 7
+WE Saw that with endpoints, we can use CMD to add instruction in a docker file to determine what we want to display evarytime it restarts 
+                                   
 
+                                              DERVICE DISCOVERY & END POINTS
+
+Assume this my web service for my web application is able to route traffic and load balance traffic to all of this pods, to the group of pods so this service acts as a 
+single DNS resolver.(domain name service) .. 8:00
+What that means is that, now, if I want to access this pod, I want to call, okay, like, this pod will have, like, maybe Web port one.
+Did you see that? Web port one?Now observe something This web pod one.,This pod two.Okay. Now if you want to access all of this pod, web, pod three.,web pod4
+Now do I need to be calling Web for one Web, web port2,No, I-I don't have to do that so I can use one name to call all of this pod,
+so which Name would i will use, the name of the service.So, because my servicename is, is constant.So DNS domain name is resolver.So  it, it is going to achieve 
+domain name resolution.Okay, to all of the set of pods that are linked to this service now.So how do we call this pods in  k8 that are linked to a service?
+We call them What END POINTS? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four and point.
+Now, for my scale, if need be can I scale?  if there is need to scale, am I able to scale to have maybe more pod, Can the number of end point increase?The 
+answer is yes.The number of end point, okay, can increase.and once it increases
+The same service is going to be achieving DNS resolution. The same service because that's what services are all about It's good to be achieving DNS resolutio
 
                         
 
-
+          API VERSION
+API version for pod  is V1.
+What is the API version for replication? Controller? V1.
+What is the API version for replica? Sets.. apps/V1.
+What is it API version for daemon set, app/V1,   for deployments, app/V1.
  
