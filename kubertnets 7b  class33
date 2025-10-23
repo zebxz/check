@@ -84,6 +84,28 @@ kubectl top pods    : to knw  hw much the pods are consuming , but we dnt hv any
 kubectl top nodes  
 
 
+
+                       ***meee*** STEPS TO DEPLOY THE APPLICATION/POD/CLUSTER WITH the HPA or TO AUTOSCALE THE APPLICATION/CLUSTER/POD
+or (cluster autoscaler ie an automated application cluster where by the replicas are created automatically by the HPA) 
+                                      
+1) install a metrix server
+***ONLINE**
+the Kubernetes Metrics Server is not a Horizontal Pod Autoscaler (HPA). Instead, the Metrics Server is a component that
+provides the necessary data for the Horizontal Pod Autoscaler to function.
+2) deploy the application cluster:  ***mee*** includes 3 manifest files
+A) the manifest file using deployment strategy to deploy the 'application' & object that states/makes the request for the resources needed for the cluster.
+B) the second manifest file is to deploy the HPA **to ensure the resources requested by the objects for d application are maintained at all time. 
+C)we are creating a service for our cluster autoscaler  **mee** ie the cluster we deployed in (A)the first manifest file using deployment strategy
+       I bliv we can use the word 'cluster autoscaler' bc we are autoscaling the cluster
+3) Generate load      ***i think at work, we wnt nid to generate workload, bt rather wait for the application/cluster to gradually use up the resources which
+                              will then trigger the HPA to auto scale.
+   ***I Bliv we had to generate a workload here because we need to confirm that the HPA is working, so thats why we used the 'customized image' bc its 
+customizedso taht when we run the workload command, it generate the workload... i think if we use any other image & run the workload command, the HPA will
+not function bc the image doesnt hv the content to generate the workload needed for the HPA to work ie autoscale 
+
+
+
+
                     INSTALL METRICS
 ***ONLINE**
 the Kubernetes Metrics Server is not a Horizontal Pod Autoscaler (HPA). Instead, the Metrics Server is a component that
@@ -157,9 +179,9 @@ RBAC objects:
 
 
 
-      **meee**** TAKE NOTE THIS IS JUST A SAME EXPERIMENT PROVIDED BY K8......
+      **meee**** TAKE NOTE THIS IS JUST A SAMPLE EXPERIMENT PROVIDED BY K8......
 
-                               *DEPLOYING WITH METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00 
+         *DEPLOYING  THE APPLICATION CLUSTER WITH/ IN THE METRICS SERVER:  ... we wnt to deploy an application that wil include metrics server  ...21:00 
                                  ***i bliv this means we want to deploy the 'HPA' deployment inside the metrics server
 
              *28.48....this is a test appl that k8 provide for u to just run some testing on it.... so tk note this is a very imp aspect
@@ -196,7 +218,7 @@ spec:
               cpu: "100m"
               memory: "256Mi"
    
-******************************************* as part of this deployment, we wnt to auto scale the application.... ..... 21:59
+******************************************* as part of this deployment, WE WANT TO AUTO SCALE THE APPLICATION .... ..... 21:59
 ---                                                   HW DO WE AUTO scale the application
 apiVersion: autoscaling/v2                **************we are deploying  an autoscalin/v2
 kind: HorizontalPodAutoscaler  
