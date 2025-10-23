@@ -135,7 +135,7 @@ work on node, that is the architecture.So , you know, there is a server that is 
 applications are running.Now we went ahead to discuss how do we deploy work load in  k8.How is work load deploy?
 So we realize that generally, when we talk about k8 and work load, okay, is a very sensitive aspect to take note of when we talk about k8 and workload.
 So E.G., we are managing containers, so containerized applications are deployed in k8 . we are deploying containerized application inside our k8 cluster
-And for that to happen, We saw stuff where .We have Worker node. And, you know, that is our application are deployed in import.That's where they are 
+And for that to happen, We saw stuff where .We have Worker node. And, you know, that is our application are deployed in pods.That's where they are 
 deployed.But now, should we just deploy our application directly in a port?The answer is no. So k8. So in k8, we have a k8 cluster, And this is a group of
 one group of savers working together Okay, now we have a cluster, okay. And this cluster, we can can call it, k8s. Now, inside the inside the cluster, what 
 do we have? We have nodes.Inside the notes, we have pods.And inside the pots, we have one containers.So this is the diagram. The cluster is made up of a 
@@ -166,14 +166,15 @@ Look at this diagram,  Look at this service. I have a cluster I-P service here o
 Assume this my web service for my web application is able to route traffic and load balance traffic to all of this pods, to the group of pods so this service acts as a 
 single DNS resolver.(domain name service) .. 8:00
 What that means is that, now, if I want to access this pod, I want to call, okay, like, this pod will have, like, maybe Web port one.
-Did you see that? Web port one?Now observe something This web pod one.,This pod two.Okay. Now if you want to access all of this pod, web, pod three., web pod4
+Did you see that? Web port one?Now observe something This web pod one.,This pod two.Okay. Now if you want to access all of this pod, web, pod three.,web pod4
 Now do I need to be calling Web for one Web, web port2,No, I-I don't have to do that so I can use one name to call all of this pod,
 so wish Name would be using i will use, the name of the service.So, because my servicename is, is constant.So DNS domain name is resolver.So  it, it is going to achieve 
 domain name resolution.Okay, to all of the set of parts that are linked to this service now.So how do we call this pods in  k8 that are linked to a service?
 We call them What end points? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four and point.
-Now, for my scale, if need be can I scale?  if there is need to scale, am I able to scale to have maybe more pod, Can the number of end point increase?The answer is yes.
+Now, for my scale, if need be can I scale?  if there is need to scale, am I able to scale to have maybe more pod, Can the number of end point increase?The 
+answer is yes.
 The number of end point, okay, can increase.and once it increases
-The same service is going to be achieving DNS resolution. The same service because that's what services are all about It's good to be achieving DNS resolution, .
+The same service is going to be achieving DNS resolution. The same service because that's what services are all about It's good to be achieving DNS resolution,.
 
 If need be? Can we have more end point?, yes, if need be.
 We can scale to how many replicas , right now 6
@@ -213,11 +214,11 @@ We can hv a situation wher  a particular key  e..g key1 can hv multiple values l
                  value3  
 
 we also spoke abt replica sets ,,  with replication controller, and replica set, if you deploy your application, what happens?
-We can scale them.Same with deployment, we can scale them so we can decide to have any number of replicas. So giving k8 support, one as a feature of k8, we hv scaling.
-Could we skill in Doctor? No, but in k8, we able to scale, so we can run command like, :
+We can scale them.Same with deployment, we can scale them so we can decide to have any number of replicas. So giving k8 support, one as a feature of k8, we
+hv scaling. Could we skill in Doctor? No, but in k8, we able to scale, so we can run command like, :
 kubectl scale deployment/rc/rs --replicas 10   = manual scaling    .... 19:00
-  kubectl scale ds --replicas 10   = .. but we can scale with daemon set bc daemon set ar used to deploy appl which we expect them to be hosted in each node or a selectd 
-number of nodes, that when wwe use daemon set.
+  kubectl scale ds --replicas 10   = .. but we can scale with daemon set bc daemon set ar used to deploy appl which we expect them to be hosted in each node
+or a selectd number of nodes, that when wwe use daemon set.
 so we hv seen that in k8 we are able to sclae ... .. and we can also automae scaling
 
 ************************* HOW CAN SCALING BE AUTOMATED?  ..........  INTERVIEW Questions.....
@@ -228,33 +229,35 @@ By installing a guage API [: metric-server ] in our cluster and using
        2. VerticalPodAutoscaler[VPA] for pods      ,, .........  so we can scale our nodes and pods
        3. CUSTER Autoscaler[CAS] for nodes  , we are scaling the number od nodes 
 ************we can use one of these to automate scaling..
-we need the guage bc we hv traffic coming into our cluster, and we hava a HPA, which we want that pod to automate the traffic for us. so we are saying that :
-HPA
+we need the guage bc we hv traffic coming into our cluster, and we hava a HPA, which we want that pod to automate the traffic for us. so we are saying 
+that :HPA
 min2/max50    ....ie replicas....  this is what we ar defing for our HPA , we ar also sayin that our target resource can be a deployment,RS/RC/STS
 target resource 
 deployment RS/RC/STS      ,, it could be any of these   .... now what is my target ultilization?
-target ultilization  ... now when theHPA react? ... the HPA wil react when CPU ultilization or memUltilistaion is greater than 70% ,, and thats when it wil scale
+target ultilization  ... now when theHPA react? .. the HPA wil react when CPU ultilization or memUltilistaion is greater than 70% ,& thats when it wil scale
 cpu Utilisation>70
 memUltilisation >70
                                         26:56
-so our HPA is targeting one of d resource for e.g we use deployment & d deployment name is myapp,the deployment is suppose to control a set of pods &the deployment(myapp) is
-using a selector (match labels, if it is equality based) to know the set of pods that its suppose to control.,  to know the pods we ar managing.. 
-we wnt to automate it,, e.g we hv node1 and node9  and based on our replica:2  we hv mayapp1 on node1 and myapp2 on node9 so in our cluster we  hv deployed another object 
-in the cluster,which is called a metrix server whic is runin as a pod ,,so we hv a matrix server service and its also deployed as a pod. the pod  is able to check hw much
-resource is been used here.. e.g it can check n tell us we ar using 10% memory, etc and when it gets TO  70%, ie if ders a spike& and we hv to process abt e.g 40m request, 
-my app1 & myapp2 are receiving 20m reQ each due to Load been balanced automatically in k8, bt the 20m REQ is making use of up to abt 70% usage, our CPU usage exceeds 70% avg
+so our HPA is targeting one of d resource for e.g we use deployment & d deployment name is myapp,the deployment is suppose to control a set of pods &the 
+deployment(myapp) is using a selector (match labels, if it is equality based) to know the set of pods that its suppose to control.,  to know the pods we ar
+managing.. we wnt to automate it,, e.g we hv node1 and node9  and based on our replica:2  we hv mayapp1 on node1 and myapp2 on node9 so in our cluster we  
+hv deployed another object in the cluster,which is called a metrix server whic is runin as a pod ,,so we hv a matrix server service and its also deployed as
+a pod. the pod  is able to check hw much resource is been used here.. e.g it can check n tell us we ar using 10% memory, etc and when it gets TO  70%, ie if
+ders a spike & we hv to process abt e.g 40m request, my app1 & myapp2 are receiving 20m reQ each due to Load been balanced automatically in k8, bt the 20m 
+REQ is making use of up to abt 70% usage, our CPU usage exceeds 70% avg
 for all our pods, our HPA will be triggered and one more pod will be automatically created,, this is an automatic addition and once the pod is created, more
 traffic will be assigned to the pod.
-************if we are now processing 60m REQ, ie our nodes are at their max carryin capacity, but inside our cluster we hv installed CAS which we will be seeing n in the CAS
-we ar sayin that athe max number of nodes is min2/max40 .. now when ar we goin to scale the node or when shud the node be scaled??? for us to knw the proportion of our CPU 
-that is been used, k8 wil use matrix server to check the vol of cpu for my node
+********if we are now processing 60m REQ, ie our nodes are at their max carryin capacity, but inside our cluster we hv installed CAS which we will be seeing
+n in the CAS we ar sayin that athe max number of nodes is min2/max40 .. now when ar we goin to scale the node or when shud the node be scaled??? for us to
+knw the proportion of our CPU that is been used, k8 wil use matrix server to check the vol of cpu for my node
  CAS/min2/max40 
 target ultilization  ... 
 cpu Utilisation>70
 memUltilisation >70
-so when our HPA wants the scheduler ro scheedule more nodes bt all our nodes has insufficient resources so CAS wil be triggerred and it will add more node to the cluster,&
-once the node is added new pods can be scheduled.
-now the CAS is runin in our cluster n its runing as a pod and we hv the server wivh wil be checking hw much resources is our node consuming, our pod consuming ... 37:25
+so when our HPA wants the scheduler ro scheedule more nodes bt all our nodes has insufficient resources so CAS wil be triggerred and it will add more node
+to the cluster,& once the node is added new pods can be scheduled.
+now the CAS is runin in our cluster n its runing as a pod and we hv the server wivh wil be checking hw much resources is our node consuming, our pod consuming 
+... 37:25
 
 ******** HOW WIL VERTICAL pod autoscaler work.//..... 
 VPA resources:
@@ -263,10 +266,11 @@ cpu=500m
 mem=128Mi
 limits:cpu 900m
 memory:512Mi
- based on the VPA, when a pod is created, this is the resource that is going to be assigned. resources assigned to the pod wil be based on what is reQuested.assumin that the 
-pod is caryin out some load,load is being assigned to the pod, at 500m it can process a max of abt 20m reQS bt if the number of rEQ is increasing,its goin to scale vertically
-ie increasing/growing upwards in size. the max cpu can increase to is 900m , so again, more req can be processed to a max of when cpu grows to 900m & it processin abt 40m REQ
-therfore, the same pod that was using cpu of 500m & processing 20m REQ has grown vertically to 900m and processing 40m REQ..  ... 43:00
+ based on the VPA, when a pod is created, this is the resource that is going to be assigned. resources assigned to the pod wil be based on what is reQuested.
+assumin that the pod is caryin out some load,load is being assigned to the pod, at 500m it can process a max of abt 20m reQS bt if the number of rEQ is 
+increasing,its goin to scale vertically ie increasing/growing upwards in size. the max cpu can increase to is 900m , so again, more req can be processed to a
+max of when cpu grows to 900m & it processin abt 40m REQ therfore, the same pod that was using cpu of 500m & processing 20m REQ has grown vertically to 900m
+and processing 40m REQ..  ... 43:00
 
 metrics-server    
 Resources / Limits / Requests / ResourceLimits  
@@ -341,8 +345,8 @@ repository to clone:
 3. https://github.com/LandmakTechnology/kubernetes-manifests
 
 ######this is a springboot application that requires a database, it has has been developed by our developers usin the springboot framewrk
-this was not hardcoded, our developers left the hostname, username,passwd as a variable, meaning that if i am deployin in the dev, uat, prod env, i can use diff values based 
-on my project requirement....   .. 53:15
+this was not hardcoded, our developers left the hostname, username,passwd as a variable, meaning that if i am deployin in the dev, uat, prod env, i can use
+diff values based on my project requirement....   .. 53:15
 
 spring:
   data:
@@ -360,8 +364,8 @@ if u run this command:
    ssh username@hostname [ It will request for the password ]  
 hostname is a variable.
                                               
-however if we v an e.g like dis wher d variables hv been given,it means its hardcoded then it becomes a problem bc we cant use it acros multiple env &can result in code smell
-if we are to run sonarqube code analysis/review
+however if we v an e.g like dis wher d variables hv been given,it means its hardcoded then it becomes a problem bc we cant use it acros multiple env &can 
+result in code smell if we are to run sonarqube code analysis/review
     mongodb:
       host: mongo
       port: 27017
@@ -451,8 +455,8 @@ ubuntu@master:~$ curl ifconfig.me
 3.36.7561ubuntu@master:~$
 ubuntu@master:~$
 ubuntu@master:~$ curl 3.16.75.61:32136    ... or  in google 3.16.75.61:32136 , w ecan access the application
-  ###we can see this appl is a springbootapp thet needs the mondodb  databse and we can automate it using jenkins,docker & k8 , and we are using k8 now, we already used
-docker to containerize
+  ###we can see this appl is a springbootapp thet needs the mondodb  databse and we can automate it using jenkins,docker & k8 , and we are using k8 now, 
+we already used docker to containerize
 ***** right now our database has nt been deployed n so ders no database that the appl is able to comm with.
 
 *********8*************now we deploy our database
@@ -508,7 +512,8 @@ if we run kubectl delete pod mongors-966hc                 ,......1:33:40
 we can see a new pod is being created automatically.. n this is permitted bc it has a controller manger which is our mongors but if u run: kubectl delete rs mongors, db wnt
 although it was automTICALLY CREATED, we cant get back data that was previously created                       be recreated bc D replication controller MANAGer managing the.
 for us to be able to capture data we hv to look at volume concept in k8                                      db pod has been deleted  ... 1:42:50
-                                                                ***  bt goin further in d video he kefpt deletin the rs each time he had to deploy a manifest file  like 
+                                                                ***  bt goin further in d video he kefpt deletin the rs each time he had to deploy a manifest 
+                                                                                                   file  like 
 
 
 ---1:15:48                                                                                    for NFS and persistent vol
@@ -539,7 +544,8 @@ repository to clone:
 
 ****IF U ARE TRYING to deploy a stateless appl we hv to mk use of k8 volumes  ...  1:3540
 since we are deployin a database we nid to ensure that a piece of storage is created..
-we ar goin to see hw to use vol for example:   .. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around eith volume
+we ar goin to see hw to use vol for example:   .. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around 
+eith volume
 
 kubernetes volumes:
 ===================
@@ -595,9 +601,9 @@ DEPLOYING OUR VOL Uing NFS
 ######## ******************    2:01:20  ..   netwoRK FILE SYSTEM OR EFS
 
 NFS    
-if we introduce any of these, then we are goin to create an nfs server & ther wil be a mount poinT on d node& nfs server then data is captured in both the db container and 
-the nfs such that evEN if the container is recreated on another node, once the container syncronizes with the nfs server all the data that was captured in the Nfs server wil 
-reflect in the container and this wil result in data consistency
+if we introduce any of these, then we are goin to create an nfs server & ther wil be a mount poinT on d node& nfs server then data is captured in both the db
+container and the nfs such that evEN if the container is recreated on another node, once the container syncronizes with the nfs server all the data that was
+captured in the Nfs server wil reflect in the container and this wil result in data consistency
 
       volumes:
       - name: mongodbhostvol    
@@ -669,7 +675,8 @@ sudo vi /etc/exports
 
 =#/mnt/share/ <clientIP or Clients CIDR>(rw,sync,no_subtree_check,no_root_squash)
  #Ex:
-    and paste the below in the file then go to my vpc in aws n copy the CIDR (ipv4CIDR) N PASte it in place of the * , for access within the vpc but if i dnt use CIDR, it 
+    and paste the below in the file then go to my vpc in aws n copy the CIDR (ipv4CIDR) N PASte it in place of the * , for access within the vpc but if i dnt
+use CIDR, it 
 means am allowing access frm anywher
 /mnt/share/ 10.0.0.0/24(rw,sync,no_subtree_check,no_root_squash)    *acess within vpc
 
@@ -685,11 +692,14 @@ sudo systemctl restart nfs-kernel-server
 Step 5: Open firewall for the client (s) PORT 2049
 
 
-Configuring the Client Machine  .. ie client are my worker nodes, i can also instal in on my master, so we installed on both master n worker node1&9, or all nodes in d cluster
-==========================       so on my master &worker node1,9, we are just going to update n instal nfs client wich is nfs common, thats all... 
-                             rather than doing this installation manually, we could hv used ansible to automate the process
+Configuring the Client Machine  .. ie client are my worker nodes, i can also instal in on my master, so we installed on both master n worker node1&9, or all
+        nodes in d cluster  so on my master &worker node1,9, we are just going to update n instal nfs client wich is nfs common, thats all..
+        rather than doing this installation manually, we could hv used ansible to automate the process
+==========================      
+                            
 Step 1: Install NFS Common
-Before installing the NFS Common application, we need to update our system’s repository index with that of the Internet through the following apt command as sudo:
+Before installing the NFS Common application, we need to update our system’s repository index with that of the Internet through the following apt command as
+sudo:
 
 $ sudo apt-get update && sudo apt-get install nfs-common -y
 
@@ -698,7 +708,7 @@ $ sudo apt-get install nfs-common
 
 nfs server: public n private ip 3.17.179.30  / 10.0.0.76
 ********************************************************************HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
----------------------   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
+----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
 mongo-nfs.yml  
 ==================
 apiVersion: apps/v1
@@ -801,8 +811,8 @@ The claim policy (associated at the PV and not the PVC) is responsible for what 
 
 2:37:13
 **********************************CREATING THE DATABASE POD USING PERSISTENT VOL 
-inside my cluster, i wil create persistent vol, now my db nids this vol n the vol can only be assigned using persistent vol claim ,,, PVC, with the PVC we are able to mount
-we ar able to create a mount point btw the container n the persistent vol, the PVC permits the container to claim the persistent vol
+inside my cluster, i wil create persistent vol, now my db nids this vol n the vol can only be assigned using persistent vol claim ,,, PVC, with the PVC we 
+are able to mount we ar able to create a mount point btw the container n the persistent vol, the PVC permits the container to claim the persistent vol
 *************with this system ders no data loss if db container goes down bc persistent vol is anoda k8 object whic is independent of my pod lifecycle
 ##########we wil use retain claim policy most of the time
 
@@ -896,7 +906,7 @@ just like docker vol is manged by docker and thats why we use persistent vol in 
                                           we chnaGE whats necessary in the file                                                
 mongo-pv-pvc-nfs.yml   
 ===================
---- ******************* we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFS as our VOL Type
+--- ** we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFSas our VOL Type
 
 apiVersion: v1
 kind: PersistentVolume   .................  though kind id persistent volume
@@ -964,8 +974,8 @@ mongors deleted
 vi spring/pv-pvc-pfs-momgos.yml and paste
 kubectl apply -f spring/pv-pvc-pfs-momgos.yml and paste
 
-**************after we deployed this nfs vol  , bc synchronization has taken place we can see data captured previously in the nfs  bc its the same mountpoint that was created earlier 
-these are persistent vol and that is the choice that is being used in depsloyment 
+**************after we deployed this nfs vol  , bc synchronization has taken place we can see data captured previously in the nfs  bc its the same mountpoint 
+that was created earlier these are persistent vol and that is the choice that is being used in depsloyment 
 kubernetes volumes  :
 ==========================
 
@@ -979,10 +989,10 @@ why didnt we use stateful set for deployment ?
 we will use it dnt worry
 
 ******i dnt understand persistent and nfs
-the nfs is kind of s storage option that we can use to store data like we saw hostpath wher data wil only be hosted by one particular node in the clusted bt in the nfs data
-is distributed to all the nodes and taht leads to data constitency,, howeve rif u create a nfs and it is nt created under a persistent vol, bc it is the recommended approach 
-to store data in k8 bc when u create a persistent vol it is manged by the kube service , therefore the vol is independent of the livecycle of the pod that is consuming the vol
-so if the pod goes down we can stil retieve the data
+the nfs is kind of s storage option that we can use to store data like we saw hostpath wher data wil only be hosted by one particular node in the clusted bt
+in the nfs data is distributed to all the nodes and taht leads to data constitency,, howeve rif u create a nfs and it is nt created under a persistent vol, 
+bc it is the recommended approach to store data in k8 bc when u create a persistent vol it is manged by the kube service , therefore the vol is independent 
+of the livecycle of the pod that is consuming the vol so if the pod goes down we can stil retieve the data
 the persistence vol could either be host path, NFS and other vol options 
 with persistent vol, the vol itself is managed by the kube service
 
