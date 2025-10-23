@@ -160,6 +160,9 @@ EXAMPLES OF SERVICE DISCOVERY
 
 these Are the different services in communities.
 
+
+
+                                           DERVICE DISCOVERY & ENDPOINTS
 So with these, we can use any of these  to discover our application.
 Therefore, we saw again, this diagram, where, with the help of a service, am I able to access, you know,access some  pods that are deployed in  my cluster.
 Look at this diagram,  Look at this service. I have a cluster I-P service here okay now Let's.
@@ -168,12 +171,11 @@ single DNS resolver.(domain name service) .. 8:00
 What that means is that, now, if I want to access this pod, I want to call, okay, like, this pod will have, like, maybe Web port one.
 Did you see that? Web port one?Now observe something This web pod one.,This pod two.Okay. Now if you want to access all of this pod, web, pod three.,web pod4
 Now do I need to be calling Web for one Web, web port2,No, I-I don't have to do that so I can use one name to call all of this pod,
-so wish Name would be using i will use, the name of the service.So, because my servicename is, is constant.So DNS domain name is resolver.So  it, it is going to achieve 
-domain name resolution.Okay, to all of the set of parts that are linked to this service now.So how do we call this pods in  k8 that are linked to a service?
-We call them What end points? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four and point.
+so which Name would i will use, the name of the service.So, because my servicename is, is constant.So DNS domain name is resolver.So  it, it is going to achieve 
+domain name resolution.Okay, to all of the set of pods that are linked to this service now.So how do we call this pods in  k8 that are linked to a service?
+We call them What END POINTS? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four and point.
 Now, for my scale, if need be can I scale?  if there is need to scale, am I able to scale to have maybe more pod, Can the number of end point increase?The 
-answer is yes.
-The number of end point, okay, can increase.and once it increases
+answer is yes.The number of end point, okay, can increase.and once it increases
 The same service is going to be achieving DNS resolution. The same service because that's what services are all about It's good to be achieving DNS resolution,.
 
 If need be? Can we have more end point?, yes, if need be.
@@ -189,23 +191,32 @@ Okay. Now, recommendation.we shouldn't use pods to deploy applications in k8.
  what should we use?  if you're going to deploy, use controller managers?
 
 So we saw some controller managers. What are some of the controller managers that we have seen, which are part of the k8 object, okay?
-Now, if you look at all of this controller my managers like pod for e.g , what is the API version for pod? API version for Pod? Well, what are their API versions for ports?
+Now, if you look at all of this controller my managers like pod for e.g , what is the API version for pod? API version for Pod? Well, what are their API
+versions for pods?
 
+
+
+                                    API VERSION
 API version for pod  is V1.
 What is the API version for replication? Controller? V1.
 What is the API version for replica? Sets.. apps/V1.
 What is it API version for daemon set, app/V1,   for deployments, app/V1.
 
+
+  15.00                                      CONTROLLER MANGERS & THEIR DIFF SELECTOR SUPPORT
+
 So do you realize that the replica set for pod and replication controllers, for E.G.,  differs from that of replica set?, daemon set n deployment? yes.
 
-And this difference is captured in what we call Selector  support.
+And this difference is captured in what we call Selector support.
 for  E.G. replication controller. Which kind of selector does it have?
 it Has equality based selector,. So this is like the old version  ….replication controller.- old version 
 How about replica set on the others? Which kind of selector do they support Replica set?, daemon set ,  which kind of selector, and  deployment.
-Which kind of selector does it have? Now this has what we call both equality base.
+Which kind of selector does it have? Now this has what we call both equality base.& Set base selectors .. 16.50
+
+                             2 CLASSES OF SELECTORS
  They have two classes of selectors.They have equality Base  selectors What else do they have apart frm  the equality base?
-They have equality base. Selectors = key:value .... (key1: value1) ie key1  is equals to value1
-it also has set base selectors.
+1)They have equality base. Selectors = key:value .... (key1: value1) ie key1  is equals to value1
+2)it also has set base selectors.
 We can hv a situation wher  a particular key  e..g key1 can hv multiple values like: one key is having multiple values like 
  key1:
                values:
@@ -215,19 +226,21 @@ We can hv a situation wher  a particular key  e..g key1 can hv multiple values l
 
 we also spoke abt replica sets ,,  with replication controller, and replica set, if you deploy your application, what happens?
 We can scale them.Same with deployment, we can scale them so we can decide to have any number of replicas. So giving k8 support, one as a feature of k8, we
-hv scaling. Could we skill in Doctor? No, but in k8, we able to scale, so we can run command like, :
+hv scaling. Could we skill in Docker? No, but in k8, we able to scale, so we can run command like, :
 kubectl scale deployment/rc/rs --replicas 10   = manual scaling    .... 19:00
   kubectl scale ds --replicas 10   = .. but we can scale with daemon set bc daemon set ar used to deploy appl which we expect them to be hosted in each node
 or a selectd number of nodes, that when wwe use daemon set.
 so we hv seen that in k8 we are able to sclae ... .. and we can also automae scaling
 
+
+2.00
 ************************* HOW CAN SCALING BE AUTOMATED?  ..........  INTERVIEW Questions.....
 IQ: How can scaling be automated in kubernetes? 
    to sucesfully deploy auto scaling
 By installing a guage API [: metric-server ] in our cluster and using 
       1. HorizontalPodAutoscaler[HPA] for pods   
        2. VerticalPodAutoscaler[VPA] for pods      ,, .........  so we can scale our nodes and pods
-       3. CUSTER Autoscaler[CAS] for nodes  , we are scaling the number od nodes 
+       3. CUSTER Autoscaler[CAS] for nodes  , we are scaling the number oF nodes 
 ************we can use one of these to automate scaling..
 we need the guage bc we hv traffic coming into our cluster, and we hava a HPA, which we want that pod to automate the traffic for us. so we are saying 
 that :HPA
@@ -238,39 +251,46 @@ target ultilization  ... now when theHPA react? .. the HPA wil react when CPU ul
 cpu Utilisation>70
 memUltilisation >70
                                         26:56
+
+                              HOW HPA WORKS
 so our HPA is targeting one of d resource for e.g we use deployment & d deployment name is myapp,the deployment is suppose to control a set of pods &the 
 deployment(myapp) is using a selector (match labels, if it is equality based) to know the set of pods that its suppose to control.,  to know the pods we ar
 managing.. we wnt to automate it,, e.g we hv node1 and node9  and based on our replica:2  we hv mayapp1 on node1 and myapp2 on node9 so in our cluster we  
 hv deployed another object in the cluster,which is called a metrix server whic is runin as a pod ,,so we hv a matrix server service and its also deployed as
 a pod. the pod  is able to check hw much resource is been used here.. e.g it can check n tell us we ar using 10% memory, etc and when it gets TO  70%, ie if
 ders a spike & we hv to process abt e.g 40m request, my app1 & myapp2 are receiving 20m reQ each due to Load been balanced automatically in k8, bt the 20m 
-REQ is making use of up to abt 70% usage, our CPU usage exceeds 70% avg
-for all our pods, our HPA will be triggered and one more pod will be automatically created,, this is an automatic addition and once the pod is created, more
+REQ is making use of up to abt 70% usage, our CPU usage exceeds 70% avg for all our pods,
+our HPA will be triggered and one more pod will be automatically created,, this is an automatic addition and once the pod is created, more
 traffic will be assigned to the pod.
-********if we are now processing 60m REQ, ie our nodes are at their max carryin capacity, but inside our cluster we hv installed CAS which we will be seeing
-n in the CAS we ar sayin that athe max number of nodes is min2/max40 .. now when ar we goin to scale the node or when shud the node be scaled??? for us to
-knw the proportion of our CPU that is been used, k8 wil use matrix server to check the vol of cpu for my node
+
+34.18
+********if we are now processing 60m REQ, ie our nodes are at their max carryin capacity, but inside our cluster we hv deployed/install CAS 
+n in the CAS we ar sayin that athe max number of nodes is min2/max40 .CAS is scaling the number of nodes. now when ar we goin to scale the node or when shud
+the node be scaled??? for us to knw the proportion of our CPU that is been used, k8 wil use matrix server to check the vol of cpu for my node
  CAS/min2/max40 
 target ultilization  ... 
 cpu Utilisation>70
 memUltilisation >70
-so when our HPA wants the scheduler ro scheedule more nodes bt all our nodes has insufficient resources so CAS wil be triggerred and it will add more node
-to the cluster,& once the node is added new pods can be scheduled.
-now the CAS is runin in our cluster n its runing as a pod and we hv the server wivh wil be checking hw much resources is our node consuming, our pod consuming 
+so when our HPA wants the scheduler To scheedule more nodes bt all our nodes has insufficient resources so CAS wil be triggerred and it will add more node
+to the cluster,& once the node is added new pods can be scheduled. this process is automatic
+now the CAS is runin in our cluster n its runing as a pod and we hv the server which wil be checking hw much resources is our node consuming, 
+our pod consuming, thats how it goes
 ... 37:25
 
+
 ******** HOW WIL VERTICAL pod autoscaler work.//..... 
-VPA resources:
+Let assume we want to deploy another application & we want to use the VPA to manage it
+VPA resources:  under resources, we have request, how much resource can a pod requet
 request:
-cpu=500m
-mem=128Mi
+cpu=500m  miliquo
+mem=128Mi   miliquo
 limits:cpu 900m
 memory:512Mi
- based on the VPA, when a pod is created, this is the resource that is going to be assigned. resources assigned to the pod wil be based on what is reQuested.
-assumin that the pod is caryin out some load,load is being assigned to the pod, at 500m it can process a max of abt 20m reQS bt if the number of rEQ is 
-increasing,its goin to scale vertically ie increasing/growing upwards in size. the max cpu can increase to is 900m , so again, more req can be processed to a
-max of when cpu grows to 900m & it processin abt 40m REQ therfore, the same pod that was using cpu of 500m & processing 20m REQ has grown vertically to 900m
-and processing 40m REQ..  ... 43:00
+ based on the VPA, when a pod is created, this is the resource (the resources listed above) that is going to be assigned initially/the first time. resources
+assigned to the pod wil be based on what is reQuested.assumin that the pod is caryin out some load,load is being assigned to the pod, at 500m it can process
+a max of abt 20m requests bt if the number of rEQ is increasing,its goin to scale vertically ie increasing/growing upwards in size. the max cpu can increase
+to is 900m , so again, more req can be processed to a max point of when cpu grows to 900m & it processin abt 40m REQ therfore, the same pod that was using 
+cpu of 500m & processing 20m REQ has grown vertically to 900m and processing 40m REQ..  ... 43:00
 
 metrics-server    
 Resources / Limits / Requests / ResourceLimits  
@@ -282,6 +302,7 @@ Stateful applications maintained their state. Examples are  :
   databases, Jenkins, 
 
 *******************************
+                                               
 kubernetes
 =========
   -- Kubernetes CLUSTER = Group of servers working together - k8s  
@@ -324,17 +345,27 @@ IQ: How can scaling be automated in kubernetes?
        2. VerticalPodAutoscaler[VPA] for pods 
        3. CUSTER Autoscaler[CAS] for nodes  
 
+
+
+44.00
+                                             WE ARE DEPLOYING OUR legacy application
+All of this is to bring us to what we have covered.
+
 metrics-server    
 Resources / Limits / Requests / ResourceLimits  
 ==========================================================
-https://github.com/LandmakTechnology/spring-boot-docker
--# Spring App & Mongod DB as POD without volumes
-Stateless applications deployment doesn't require to maintain it state   :
+https://github.com/LandmakTechnology/spring-boot-docker         *** this application has a github repository, the application is called spring boot docker
+-# Spring App & Mongod DB as POD without volumes         *** we are deploying a springboot application & a database pod
+we will be deploying: a Stateless & a stateful application
+1)Stateless applications deployment doesn't require to maintain it state   :  & we will be loking at that
   Use deployment as the choice kubernetes object  
   ReplicaSets/ReplicationController:  
-Stateful applications maintained their state. Examples are  :
-  databases, Jenkins, 
+2)Stateful applications maintained their state. Examples are  :
+  databases, Jenkins, where we create jenkins job , we hv to maintain its state
+but generally databases are stateful applications
 
+
+    ****WE  have this application that has been developed by our tema of developers
 
 1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
 2. image: mylandmarktech/spring-boot-mongo               ********this is maintained by us
@@ -363,7 +394,9 @@ server:
 if u run this command:
    ssh username@hostname [ It will request for the password ]  
 hostname is a variable.
-                                              
+
+
+52.10                                  CODE SMELL
 however if we v an e.g like dis wher d variables hv been given,it means its hardcoded then it becomes a problem bc we cant use it acros multiple env &can 
 result in code smell if we are to run sonarqube code analysis/review
     mongodb:
@@ -374,18 +407,27 @@ result in code smell if we are to run sonarqube code analysis/review
   ssh devdb@mongo   , we can run smt like this.. to ssh
 
 
-mongo database:
+
+ 53.55 .... WE ARE DEALING WITH OUR legacy application
+Deleted all previous resources
+
+mongo database:               48.00       
 ===============
+ **** we have staefull aplications & stateless applications
   1. use StatefulSets as the choice kubernetes object for Stateful  
      application deployments   , however,
   2. USE ReplicaSets/ReplicationController/deployment StateLESS      
-     application deployments                                                       
-                                                                                
+     application deployments              
+
+                  
+                        WE WANT TO DEPLOY THIS MONGO DB
+Why is required for this deployment, if you look at the database configuration & the appliaction,
 if we decide to deploy this application some objects ar goin to be affected  ..... 49:01 
-we wnt to deploy our stateless appli called springboot mongo n we alos  deploy our stateful application wich is a mongo db, so we ar goin to create 2files.
-Stateless
+we wnt to deploy our stateless appli called springboot mongo n we also  deploy our stateful application wich is a mongo db, 
+so we ar goin to create 2files:
+1)Stateless
 --- springapp.yml/
-Stateful
+2)Stateful
 --- mongo.yml/
 
 *********the default deployment strategy in k8 is rolling update
