@@ -170,7 +170,7 @@ We have to create pods using controllers which manages the POD life cycle.
 controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
 
 
-    **mee**  WHAT A MANIFEST FILE CONTAINS/DETAILS FOR EACH CONTROLLER MANAGER
+    **mee**  WHAT A MANIFEST FILE CONTAINS/DETAILS FOR EACH CONTROLLER MANAGER & OTHER K8 OBJECTS/CONCEPT
 1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & in the RC section,
 we have selectors & spec,for spec; we will indicate the number of replicas but if we dnt,it wil create 1 replica & if we need to create service, we wil also 
 have a template/section for service
@@ -181,9 +181,18 @@ so we dnt need RC/RS, because there is no replica template, i bliv thats why we 
 4) Deployment rolls out/deploys a replica set therefore; in the manifest file, in daemon section, we have spec & selectors, for spec; we 
  we will indicate the strategy type eg rolling update or recreate, but if u dnt indicate the strategy rolling update is the default strategy & if u dnt
 indicate the replica, i replica will be deployed & we also hv the pod template & service template
-
+      ***controller managers end****
  5)                        AUTOSCALING
 ****The manifest file states the minumum& maximum number of replicas of the application/pod to maintain at all times.
+
+          KUBERNETES VOLUME CONCEPT
+6) Creating hostpath vol for database..  the manifest file for mongo db with hostpath/kubernetes volume, will have: under spec
+A)we add volumes & 
+B)path: /mongodata  *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
+               TO CREATE NFS OR EFS
+ A) Under spec, we add volumes & NFS 
+nfs:
+path: /mongodata 
 
 
                              
@@ -1419,6 +1428,26 @@ container and the nfs server such that evEN if the container is recreated on ano
 that was captured in the Nfs server wil reflect in the container and this wil result in data consistency
 
 
+   DEPLOYING OUR VOL Uing NFS
+######## ******************    2:01:20  ..   netwoRK FILE SYSTEM OR EFS
+
+NFS    
+if we introduce any of these, then we are goin to create an nfs server & ther wil be a mount poinT on d node& nfs server then data is captured in both the db
+container and the nfs such that evEN if the container is recreated on another node, once the container syncronizes with the nfs server all the data that was
+captured in the Nfs server wil reflect in the container and this wil result in data consistency
+
+  volumes:
+      - name: mongodbhostvol    
+        hostPath:
+          path: /mongodata 
+      volumes:
+      - name: mongodbhostvol    
+        nfs:
+          path: /mongodata 
+
+when it comes to VOLUME CONCEPT, ther are several vol options we can look at like:
+awsElasticBlockStore, azureDisk, azureFile, configMap, emptyDir g, cePersistentDisk, gitRepo (deprecated) 
+hostPath, nfs, persistentVolumeClaim, secret
 
 
 
