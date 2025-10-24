@@ -166,14 +166,15 @@ these Are the different services in communities.
 So with these, we can use any of these  to discover our application.
 Therefore, we saw again, this diagram, where, with the help of a service, am I able to access, you know,access some  pods that are deployed in  my cluster.
 Look at this diagram,  Look at this service. I have a cluster I-P service here okay now Let's.
-Assume this my web service for my web application is able to route traffic and load balance traffic to all of this pods, to the group of pods so this service acts as a 
-single DNS resolver.(domain name service) .. 8:00
+Assume this my web service for my web application is able to route traffic and load balance traffic to all of this pods, to the group of pods so this 
+service acts as a single DNS resolver.(domain name service) .. 8:00
 What that means is that, now, if I want to access this pod, I want to call, okay, like, this pod will have, like, maybe Web port one.
 Did you see that? Web port one?Now observe something This web pod one.,This pod two.Okay. Now if you want to access all of this pod, web, pod three.,web pod4
 Now do I need to be calling Web for one Web, web port2,No, I-I don't have to do that so I can use one name to call all of this pod,
 so which Name would i will use, the name of the service.So, because my servicename is, is constant.So DNS domain name is resolver.So  it, it is going to achieve 
 domain name resolution.Okay, to all of the set of pods that are linked to this service now.So how do we call this pods in  k8 that are linked to a service?
-We call them What END POINTS? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four and point.
+     #####We call them What END POINTS? Okay, so this service has How many end point? How many end points? How many end points are there now? They are four
+and point.
 Now, for my scale, if need be can I scale?  if there is need to scale, am I able to scale to have maybe more pod, Can the number of end point increase?The 
 answer is yes.The number of end point, okay, can increase.and once it increases
 The same service is going to be achieving DNS resolution. The same service because that's what services are all about It's good to be achieving DNS resolution,.
@@ -201,6 +202,7 @@ API version for pod  is V1.
 What is the API version for replication? Controller? V1.
 What is the API version for replica? Sets.. apps/V1.
 What is it API version for daemon set, app/V1,   for deployments, app/V1.
+
 
 
   15.00                                      CONTROLLER MANGERS & THEIR DIFF SELECTOR SUPPORT
@@ -263,7 +265,9 @@ REQ is making use of up to abt 70% usage, our CPU usage exceeds 70% avg for all 
 our HPA will be triggered and one more pod will be automatically created,, this is an automatic addition and once the pod is created, more
 traffic will be assigned to the pod.
 
-34.18
+34.18              
+
+                             CLUSTER  AUTOSCALER 
 ********if we are now processing 60m REQ, ie our nodes are at their max carryin capacity, but inside our cluster we hv deployed/install CAS 
 n in the CAS we ar sayin that athe max number of nodes is min2/max40 .CAS is scaling the number of nodes. now when ar we goin to scale the node or when shud
 the node be scaled??? for us to knw the proportion of our CPU that is been used, k8 wil use matrix server to check the vol of cpu for my node
@@ -346,18 +350,23 @@ IQ: How can scaling be automated in kubernetes?
        3. CUSTER Autoscaler[CAS] for nodes  
 
 
-
-44.00
-                                             WE ARE DEPLOYING OUR legacy application
-All of this is to bring us to what we have covered.
-
 metrics-server    
 Resources / Limits / Requests / ResourceLimits  
 ==========================================================
+                                    
+All of this is to bring us to what we have covered.
+
+
+
+44.00
+
+                                                 WE ARE DEPLOYING OUR legacy application
+
+
 https://github.com/LandmakTechnology/spring-boot-docker         *** this application has a github repository, the application is called spring boot docker
 -# Spring App & Mongod DB as POD without volumes         *** we are deploying a springboot application & a database pod
 we will be deploying: a Stateless & a stateful application
-1)Stateless applications deployment doesn't require to maintain it state   :  & we will be loking at that
+1)Stateless applications deployment doesn't require to maintain it state   :   ***i bliv this is the main application itself
   Use deployment as the choice kubernetes object  
   ReplicaSets/ReplicationController:  
 2)Stateful applications maintained their state. Examples are  :
@@ -365,7 +374,83 @@ we will be deploying: a Stateless & a stateful application
 but generally databases are stateful applications
 
 
-    ****WE  have this application that has been developed by our tema of developers
+    ****WE  have this application that has been developed by our team of developers
+mongo database:               48.00       
+===============
+ **** we have staefull aplications & stateless applications
+  1. use StatefulSets as the choice kubernetes object for Stateful application deployments   
+ however,
+  2. USE ReplicaSets/ReplicationController/deployment StateLESS      
+     application deployments              
+
+
+
+      STEPS TO DEPLOY THE SPRING APP , THE MONGO DB & THEIR SERVICE
+
+so we ar goin to create 2files:
+      *mee** one file for the application & one for the database & we wil deploy each of the files seperately with their own service manifest file
+1) We create & deploy the springapp manifest file & a nodeport service for the application
+    ***we need a nodport service so that: 
+ we can hv external users and their traffic can get into the cluster either thru any of d worker nodes or the master node
+   bc we v kubeproxy running ,the trafic doesnt leave d node n talk to d pods directly, it goes tru the service n once it recieves d msg it does dns 
+         resolution, it routes the traffic n it lb to all d end points 
+2) We create & deploy the mongo db manifest file & a clusterip service for the application
+   now dis appl nids to write in the db so we ar deployin a db pod & for the communication to be established they wil communicate tru
+a service, dis  is internal comm so we nid clusterip service, so we create a mongosvc;app:mongo
+      so for springapp to talk to the mongo db it wil be resolved via the service name of the db  ... 1:26:40
+
+
+                  
+                        WE WANT TO DEPLOY THIS MONGO DB  ***mee** with DATABASE & SERVICE
+Why is required for this deployment, if you look at the database configuration & the appliaction,
+if we decide to deploy this application some objects ar goin to be affected  ..... 49:01 
+we wnt to deploy our stateless appli called springboot mongo n we also  deploy our stateful application wich is a mongo db, 
+so we ar goin to create 2files: *mee** 1) file for d application & one for the database & we wil deploy each of d files seperately with their own service file
+1)Stateless  
+--- springapp.yml/            ***meee** this is the main application
+2)Stateful 
+--- mongo.yml/                   ** this is the database
+
+
+49.30   
+the way developers develop this application, it listens on port 8080
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOSTNAME}
+      port: 27017       ******** the db listens on 27017
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      database: users
+      authentication-database: admin
+server:
+  port: 8080    .... ******the spring appl listens on 8080
+
+
+   ** 49.47,,.. for you to access a database server or application, is like if we were going to ssh, it goes with username/hostname
+if u run this command:
+   ssh username@hostname [ It will request for the password ]  
+hostname is a variable.
+
+lets assume we hv smt like this, whereby the variables are already given 
+52.10                                                CODE SMELL
+however if we v an e.g like dis wher d variables hv been given,it means its hardcoded then it becomes a problem bc we cant use it acros multiple env &can 
+result in code smell if we are to run sonarqube code analysis/review
+    mongodb:
+      host: mongo
+      port: 27017
+      username: devdb  
+      password: devdb123  
+  ssh devdb@mongo   , we can run smt like this.. to ssh
+
+53.00
+so we want to deploy this application, lets start with the first one 
+1)Stateless  
+--- springapp.yml/ 
+
+53.55 .... WE ARE DEALING WITH OUR legacy application
+Deleted all previous resources
+
 
 1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
 2. image: mylandmarktech/spring-boot-mongo               ********this is maintained by us
@@ -379,59 +464,9 @@ repository to clone:
 this was not hardcoded, our developers left the hostname, username,passwd as a variable, meaning that if i am deployin in the dev, uat, prod env, i can use
 diff values based on my project requirement....   .. 53:15
 
-spring:
-  data:
-    mongodb:
-      host: ${MONGO_DB_HOSTNAME}
-      port: 27017       ******** the db listens on 27017
-      username: ${MONGO_DB_USERNAME}
-      password: ${MONGO_DB_PASSWORD}
-      database: users
-      authentication-database: admin
-server:
-  port: 8080    .... ******the spring appl listens on 8080
-
-if u run this command:
-   ssh username@hostname [ It will request for the password ]  
-hostname is a variable.
-
-
-52.10                                  CODE SMELL
-however if we v an e.g like dis wher d variables hv been given,it means its hardcoded then it becomes a problem bc we cant use it acros multiple env &can 
-result in code smell if we are to run sonarqube code analysis/review
-    mongodb:
-      host: mongo
-      port: 27017
-      username: devdb  
-      password: devdb123  
-  ssh devdb@mongo   , we can run smt like this.. to ssh
-
-
-
- 53.55 .... WE ARE DEALING WITH OUR legacy application
-Deleted all previous resources
-
-mongo database:               48.00       
-===============
- **** we have staefull aplications & stateless applications
-  1. use StatefulSets as the choice kubernetes object for Stateful  
-     application deployments   , however,
-  2. USE ReplicaSets/ReplicationController/deployment StateLESS      
-     application deployments              
-
-                  
-                        WE WANT TO DEPLOY THIS MONGO DB
-Why is required for this deployment, if you look at the database configuration & the appliaction,
-if we decide to deploy this application some objects ar goin to be affected  ..... 49:01 
-we wnt to deploy our stateless appli called springboot mongo n we also  deploy our stateful application wich is a mongo db, 
-so we ar goin to create 2files:
-1)Stateless
---- springapp.yml/
-2)Stateful
---- mongo.yml/
 
 *********the default deployment strategy in k8 is rolling update
-now since am using the default strategy,i wnt put a value for strategy bc the default wil be used
+now since am using the default strategy,i wnt put a value for strategy bc the default wil be used ie rolling update
 
 springapp.yml: kams   
 kind: Deployment  
@@ -478,6 +513,7 @@ kubectl apply -f springapp.yml
 
 ubuntu@master:~$ kubectl get pod
 
+                                    GET END POINTS
 ubuntu@master:~$  kubectl get ep
 NAME                    ENDPOINTS                      AGE 
 springappsvc             10.36.0.1:8080,10.44.0.3:8080   67s
@@ -560,9 +596,10 @@ for us to be able to capture data we hv to look at volume concept in k8         
 
 ---1:15:48                                                                                    for NFS and persistent vol
 1. image: mongo         ******this is maintained by the mongo community, in docker hub, we can check for the image inf to get the env variable  1:16:30, just type mongo
+         *** The mongo image got over 1B downloads
 2. image: mylandmarktech/spring-boot-mongo               ********this is maintained by us
 
-    environment:
+  This is its environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
            env:
@@ -576,19 +613,23 @@ for us to be able to capture data we hv to look at volume concept in k8         
 
 ==========================
 
+WE ARE GOING TO BE LOOKING AT VOLUME CONCEPT IN KUBERNETES
+                                       IMP REPOSITORIES TO CLONE
 IMP REPOSITORIES TO CLONE
 repository to clone:
 1. https://github.com/LandmakTechnology/kubernetes-notes
 2. https://github.com/LandmakTechnology/kops-k8s
 3. https://github.com/LandmakTechnology/kubernetes-manifests
 
-********************************************** CREATING HOSTPATH VOLUMES .................
+
+                                   CREATING HOSTPATH VOLUMES .................
 
 ****IF U ARE TRYING to deploy a stateless appl we hv to mk use of k8 volumes  ...  1:3540
 since we are deployin a database we nid to ensure that a piece of storage is created..
-we ar goin to see hw to use vol for example:   .. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around 
-eith volume
+we ar goin to see hw to use vol for example:  
+.. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around With volume
 
+                               DEPLOYING MONGO DB WITH
 kubernetes volumes:
 ===================
 mongovol.yml  
@@ -639,6 +680,8 @@ result in data loss because we are using hostpath volume :
   hostPath volume will store data ONLY on the node where the POD is scheduled .. ie inf entered while d db pod was on d node cant be transfered to anoda node if d db is
   This can result data lost and data inconsistency                                                         recreated on anoda node
 
+
+
 DEPLOYING OUR VOL Uing NFS
 ######## ******************    2:01:20  ..   netwoRK FILE SYSTEM OR EFS
 
@@ -656,6 +699,7 @@ captured in the Nfs server wil reflect in the container and this wil result in d
         nfs:
           path: /mongodata 
 
+
 when it comes to vol concept, ther are several vol options we can look at like:
 awsElasticBlockStore 
 azureDisk
@@ -669,15 +713,15 @@ nfs
 persistentVolumeClaim 
 secret
 
-
-*********************   ************Configuration of NFS Server
-===========================
+ 
+                              STEPS FOR Configuration of NFS Server
+A)===========================
 Step 1: 
 Create one Server for NFS
 2:08:31
 go to aws and create a server for nfs
-the server has to be launched in the same vpc like the other servers ie k8 servers, like the master node ..
-can creaye a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
+the server has to be launched in the same vpc like the other servers ie k8 servers, like the master node .. *** mee** like all the servers in the cluster..
+can create a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
 then connect the server in mobaxterm
 
 ######***********************then Install NFS Kernel Server in 
@@ -734,7 +778,8 @@ sudo systemctl restart nfs-kernel-server
 Step 5: Open firewall for the client (s) PORT 2049
 
 
-Configuring the Client Machine  .. ie client are my worker nodes, i can also instal in on my master, so we installed on both master n worker node1&9, or all
+ B)  NEXT STEP
+Configuring the Client Machine  .. ie client are my worker nodes, i can also instal IT on my master, so we installed on both master n worker node1&9, or all
         nodes in d cluster  so on my master &worker node1,9, we are just going to update n instal nfs client wich is nfs common, thats all..
         rather than doing this installation manually, we could hv used ansible to automate the process
 ==========================      
@@ -749,7 +794,9 @@ $ sudo apt-get install nfs-common
 
 
 nfs server: public n private ip 3.17.179.30  / 10.0.0.76
-********************************************************************HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
+*******************************************************************
+
+                                HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
 ----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
 mongo-nfs.yml  
 ==================
@@ -1023,7 +1070,7 @@ kubernetes volumes  :
 
 QUESTION
 
-CAn we use NFS TO scale inordervto meet the wrk load??
+CAn we use NFS TO scale inorder to meet the wrk load??
 if u are refering to hw to hv multiple read replicas 
 we wil be seeing hw to replicate the db so we can hv multiple read replicas
 
