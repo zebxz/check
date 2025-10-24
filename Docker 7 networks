@@ -401,6 +401,10 @@ we can redeploy the database bt th eoriginal data is gone.. ie e.g users info or
 
 
                                                     CREATE VOL USING BIND MOUNT
+Bind Mounts:
+Bind mounts may stored data anywhere on the host system. 
+They may even be important system files or directories. 
+
 1:34:10
 *****************************   WE ARE GOING TO SEE HOW TO DEPLOY THE DATA BASE TO AVOID DATA LOSS/HOW TO CHANGE MOUNT POINT
 haven passed the ENV variables correctly,and deployed the application bt thers a data loss problem
@@ -420,19 +424,22 @@ i can change it to /tmp/mydb,so mydb is the customised name for my mount point, 
 having done this, in deploying my mongo contianer , we'l use the -V  ,     -V /tmp/mydata: paired to /data/db mongo
 
 
+
 2)  This is the command from step5 above; DEPLOYING THE DATABASE with the vol                                                              
      5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to 
                   /data/db mongo
-   therefore                               
-this is the mount point for my container: /data/db   and       i bliv  'data' is the name of the storage while 'db' is the name of the official mount point
+   taza22122w2222222w23122212222222 2w2 22 22 22222222222222w2w22w22222w2222222222222222222222w22q1 qq112q231111111 1111111111111112111211 2111111111111111111111111111111111111111111111111111111111111121212111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111                            2w1111121herefore                               
+this is the mount point for my container: /data/db   and       i bliv  'data' is the name of the storage while 'db' is the name of the official mount point2
 this is the mount point for my docker host server: /tmp/mydata     ie  temp is the name of the storage while my data is the name of the customized mountpoint
 
 
-*****from docker10***** 
-we did another eg with bind mount
-we created anoda vol called mongo & i realised that /tmp/ is the name of the vol, /mongo, is the customized mount point, while /tmp/mongo, the dir we created
-In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
-ubuntu@docker:¬ $  ls /tmp/mongo/
+*****from docker8&9**** 
+ eg with bind mount, we created anoda vol called mongo in docker 8&9
+so for the above eg in thie docker7, i realised that /tmp/ is the name of the vol, /mydata, is the customized mount point, & /tmp/mydata, is the dir we
+created.
+In the host server; i bliv in our database server, data is stored in /data/db, which in the official image we saw thats where data is stored, 
+Then the vol name we created /tmp' together with /mydata, forms the dir we created.   ie this is the dir that we created /tmp/mydata:
+ubuntu@docker:¬ $  ls /tmp/mydata/
 ******************************2:33:04************************************************************************
 
 
