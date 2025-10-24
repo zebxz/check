@@ -186,10 +186,16 @@ indicate the replica, i replica will be deployed & we also hv the pod template &
 ****The manifest file states the minumum& maximum number of replicas of the application/pod to maintain at all times.
 
           KUBERNETES VOLUME CONCEPT
-6) Creating hostpath vol for database..  the manifest file for mongo db with hostpath/kubernetes volume, will have: under spec
-A)we add volumes & 
-B)path: /mongodata  *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
-               TO CREATE NFS OR EFS
+In k8, we can create volumes with or without PVC
+1)   HOSTPATH
+     a) Without PVC; the hostpath created is like a mount point just like in 'DOCKER bind mount' , its not persistent
+     b)With PVC; the hostpath created is like 'Docker vol' we created in docker , its persistent
+            STEPS TO CREATING HOSTPATH VOL WITHOUT PVC    
+ Creating hostpath vol for database..  the manifest file for mongo db with hostpath, will have: under spec
+      i)we add volumes & 
+     ii)path: /mongodata  *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
+ 2)    NFS OR EFS 
+     a) Without PVC; the NFS/EFS created is like 'EBS' we created in Doker, its not persistent
  A) Under spec,we add NFS 
 the only thing that wil change in this manifest file compared to the hostpath file is the nfs server address and remove hostpath cos d vol type we are 
 using is nfs, then everytin remains the same
