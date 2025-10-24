@@ -190,12 +190,23 @@ indicate the replica, i replica will be deployed & we also hv the pod template &
 A)we add volumes & 
 B)path: /mongodata  *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
                TO CREATE NFS OR EFS
- A) Under spec, we add volumes & NFS 
-nfs:
-path: /mongodata 
+ A) Under spec,we add NFS 
+the only thing that wil change in this manifest file compared to the hostpath file is the nfs server address and remove hostpath cos d vol type we are 
+using is nfs, then everytin remains the same
+ nfs:
+          server: 10.0.0.76          ********using the private ip bc they ar in the same vpc ie both my nfs server & k8 nodes
+          path: /mnt/share
 
 
-                             
+                     STEPS TO CREATE PVC  **PERSISTENT VOL    *** we will automate all these with ansible
+7) Creating a host path with persistent vol
+  a) manifest file to create the persistent vol
+  b) manifest file to create the mongo db with PV. .. persistent vol
+  c) manifest file to create the persistent claim policy
+  d) manifest file to create the mongodb with the  persistent claim policy
+
+
+
                    ***meee***        STEPS FOR OCHESTRATING CONTAINERS
 1)After installing either self managed (multi node preferred), OR  paid to manage
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
@@ -1464,4 +1475,81 @@ Before installing the NFS Kernel server,
   we need to update our system’s repository index with that of the Internet 
   through the following apt command as sudo:
 B) 
+
+          HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
+-- the only thing that wil change in this manifest file compared to the hostpath file is the nfs server address and remove hostpath cos d vol type we are 
+using is nfs, then everytin remains the same
+
+with this nfs deploymnet we dnt have issues with data loss / inconsistency .............2:33
+
+############WE CAN USE EFS instead of NFS, but we used NFS without any issues here
+
+
+
+
+           Persistent volumes             ***we wil use retain claim policy most of the time
+===================
+this are simply a piece of storage in your cluster
+
+deploy a kubernetes using Kops  
+
+
+PV --> It's a piece of storage (hostPath, nfs,ebs,azurefile,azuredisk) in k8s cluster. 
+PV exists independently from from pod life cycle form which it is consuming.
+
+PersistentVolumeClaim -->
+   It's request for storage(Volume).Using PVC we can request(Specify) 
+   how much storage u need and with what access mode u need.
+
+Persistent Volumes are provisioned in two ways, Statically or Dynamically.:  ... 2:35:40  ... power point script
+
+1) Static Volumes (Manual Provisionging)
+    A k8's Administrator can create a PV manually so that pv's can be available for PODS which requires.
+    Create a PVC so that PVC will be attached PV. We can use PVC with PODS to get an access to PV. 
+
+2) Dynamic Volumes (Dynamic Provisioning)
+     It's possible to have k8s provision(Create) volumes(PV) as required. 
+     Provided we have configured A storageClass [sc].
+     So when we create PVC if PV is not available Storage Class will Create PV dynamically.        
+
+PVC: If pod requires access to storage(PV),it will get an access using PVC.
+     PVC will be attached to PV.
+
+PersistentVolume – the low level representation of a storage volume.
+PersistentVolumeClaim – the binding between a Pod and PersistentVolume.
+Pod – a running container that will consume a PersistentVolume.
+StorageClass – allows for dynamic provisioning of PersistentVolumes.
+
+PV Will have Access Modes:
+============================
+ReadWriteOnce=RWO – the volume can be mounted as read-write by a single node = EBS 
+ReadOnlyMany=ROM  – the volume can be mounted read-only by many nodes
+ReadWriteMany=RWM – the volume can be mounted as read-write by many nodes = NFS 
+
+
+Claim Policies
+================
+A Persistent Volume Claim can have several different claim policies associated with it including
+Retain – When the claim(PVC) is deleted, the volume(PV) will exists.
+Recycle – When the claim is deleted the volume remains but in a state where the data can be manually recovered.
+Delete – The persistent volume is deleted when the claim is deleted.
+
+The claim policy (associated at the PV and not the PVC) is responsible for what happens to the data when the claim is deleted.
+
+2:37:13
+**********************************CREATING THE DATABASE POD USING PERSISTENT VOL 
+inside my cluster, i wil create persistent vol, now my db nids this vol n the vol can only be assigned using persistent vol claim ,,, PVC, with the PVC we 
+are able to mount we ar able to create a mount point btw the container n the persistent vol, the PVC permits the container to claim the persistent vol
+*************with this system ders no data loss if db container goes down bc persistent vol is anoda k8 object whic is independent of my pod lifecycle
+    ***we wil use retain claim policy most of the time
+
+
+                   STEPS TO CREATE PVC  **PERSISTENT VOL
+7) Creating a host path with persistent vol
+  a) manifest file to create the persistent vol
+  b) manifest file to create the mongo db with PV. .. persistent vol
+  c) manifest file to create the persistent claim policy
+  d) manifest file to create the mongodb with the  persistent claim policy
+
+
 
