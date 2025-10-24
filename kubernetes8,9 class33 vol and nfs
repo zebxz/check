@@ -795,9 +795,13 @@ $ sudo apt-get install nfs-common
 
 nfs server: public n private ip 3.17.179.30  / 10.0.0.76
 *******************************************************************
+When used as a Persistent Volume, an EFS volume can be mounted with ReadWriteMany access mode, allowing multiple Pods on different nodes to read and write
+to the same volume simultaneously.
+EFS is suitable for applications requiring shared file access, such as content management systems or distributed applications.
 
                                 HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
 ----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
+    ***i bliv its bc the hostpath is like a mount point/vol in docker where data is stored, but here we are using NFS as our vol/piece of storage
 mongo-nfs.yml  
 ==================
 apiVersion: apps/v1
@@ -918,10 +922,11 @@ are able to mount we ar able to create a mount point btw the container n the per
 
 
 ########################################## CREATING A PERSISTENT VOL ..................2:44:44
+2.48.45 if any of this object is not created, it will not work, the container will not run.
 
-***i bliv.. this firt manifest file is where we create the 'hostpath' & we see  its 'kube' like in Docker; Bind mount, we created mount point 
+*i bliv.. this firt manifest file is where we create d 'pv & hostpath' & we see  its 'kube' like in Docker; Bind mount, we created mount point which is d vol
 mongo-pv-hostpath.yml   
----------------------                           ********** persistent vol
+---------------------                           ********** i think this is the hostpath
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -938,7 +943,7 @@ spec:
     path: "/kube"             ************  WE SEE the hostpath is manged by the kube   .......2:53:11
 
 ---
-# Mongo db pod with PVC      **************************** CREATING mongodb with pV
+                ************************** CREATING mongodb with pV , this is the vol
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -962,8 +967,8 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
----                                ***************CREATING     Mongodb with PVC
+      storage: 100Mi                2.48.20***its claiming 100Mi from the 1G of the pv ie the first manifest file above
+---                                ***************CREATING     Mongodb manifest file using Replicaset 
 # Mongo db pod with PVC
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -1011,11 +1016,12 @@ just like docker vol is manged by docker and thats why we use persistent vol in 
 mongo-pv-pvc-nfs.yml   
 ===================
 --- ** we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFSas our VOL Type
+ ***i bliv we dnt need the vol bc instead we are using NFS as our vol/piece of storage
 
 apiVersion: v1
-kind: PersistentVolume   .................  though kind id persistent volume
+kind: PersistentVolume   
 metadata:
-  name: pv-nfs-pv1
+  name: pv-nfs-pv1         ......  i bliv this is the manifest file for path for the nfs which we are using as our vol, he said we dnt need the vol manifest 
   labels:
     type: local
 spec:
