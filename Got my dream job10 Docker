@@ -550,24 +550,26 @@ docker run --name mongo --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e M
 
 TYPES OF VOLUME
 1)BIND POINT:   Not persistent. BUT BindMount: can store your data anywherE;  /tmp/mongo:/data/db ,  /home/ubuntu/data:/data/db
-
 Bind mounts may stored data anywhere on the host system. They may even be important system files or directories. 
-In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo
+
+ In the host server, data is stored in  -V /tmp/mongo,its the vol/piece of storage we created & tmp/mongo is also the dir that was created, &
+ WHILE data/db is the mount point for the container
 if we ls /tmp , we can see the mount point mongo that we created
 this volume concept is nt a persistent volume example, bc this process is nt manged by docker, when we run ll /tmp/mongo/ , we see the
 process is not managed by docker and as such it could be accidentally deleted. so what happens if its deleted by a non docker process??
 
-eg lets assume that our database is down, the mongo db is down n so we can enter data e.g docker stop mongo , bt when we retsrat .. docker 
+          ***Mee, database is the mongo db  application we deployed.. the mount point is data/db
+eg lets assume that our database is down, the mongo db is down n so we cant enter data e.g docker stop mongo , bt when we retsrat .. docker 
 start mongo we ar now able to access the data
 now lets kill the database ,,  lets completely remove this database, docker rm -f mongo n so the db is no longer running 
 now lets redeploy the database, then we can still see the the previous data..this is because of bind mount 
 ******27:00  what happens is that any data that is being captured by this database is also sychronizing wit our docker host such that if the database is 
 destroyed completely
 if we recreate the database with the same mount point, the data will syn with the data that is on this piece of storage that is on our docker host.
-BUT DERS A PROBLEM HERE 
+BUT DERS A PROBLEM HERE       (WHEN THE MONGO DB & CUSTOMIZED MOUNT POINT WE CREATED IS DELETED & recreated)
 if we remove the container again   .... docker rm -f mongo      ... now the container is no longer running , so our database is killed , we cant access it again
 at the moment our vol is nt managed by the docker process ,
-lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/
+Also, lets assume the mount point is accidentally deleted  sudo rm -rf /tmp/mongo/   **mee** ie the customized mount point point we created
 if we recreate our data base, we wont be able to access our data anymore bc the mount point is nt managed by the dcker process n as such , it can be deleted 
 unnoticed
 
@@ -581,29 +583,29 @@ Docker home dir :  DHD = /var/lib/docker
 
 
 DIFF BETWEEN BIND POINT & DOCKER VOL & External volume
-****** i realised that for external vol we had to run; docker volume craete ebs3 -d rexray/ebs before deploying the database BUT for bind mount & docker vol
-we dont, we only need to deployed the command to deploy the database with the volume
+1) i realised that for external vol we had to first create the vol: run; docker volume craete ebs3 -d rexray/ebs before deploying the vol with the database 
+BUT for 
+bind mount & docker vol we dont, we only need to run the command to deploy the database with the volume we want to create
 also we need access & sacred key for extenal vol BUT for bind mount & docker vol, we dont.
+2) For Bind mount we have to create a mount point but for docker vol and external vol we dont, we only need the vol name: 
+
 
 1)BIND POINT
 a)Not persistent. BUT can store your data anywherE
 b)for the BIND mount, we nid to create a mount point for the host server  eg from  docker7; /tmp/mydata
 we have to create a mount point; 
 /tmp/mydata to pair with the contianer mount point of the image form the official doc is /data/db  /tmp/mydata: paired to /data/db
-  Storage name is 'tmp, while 'mydata' is the customized mount point  
+  vol/Storage created is tmp/mydata' its the customized mount point  
 *****
 create the database with the vol
 docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 -V /tmp/mydata: paired to/data/db mongo
 
-****docker10****
-we did another eg with bind mount
-we created anoda vol called mongo & i realised that /tmp/ is the name of the vol, /mongo, is the customized mount point, while /tmp/mongo, the dir we created
-In the host server, data is stored in  /data/db, and this is the dir that was created /tmp/mongo:
-ubuntu@docker:¬ $  ls /tmp/mongo/
 
 
+2)FOR DOCKER VOL  
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
 
-2)FOR DOCKER VOL   
 a) Persistent but Docker home dir  DHD = /var/lib/docker    so ******* in this home dir we ar given the mountpoint point of our volume ie cant store anywhere
 b)dnt need to create a mount point, what i need to do,just the vol name: eg mongodata  ,data33                                                i bliv dats what it means
 create volume: 
@@ -617,9 +619,9 @@ docker run --name mongo -d --network tesla -v data33:/data/db -e MONGO_INITDB_RO
 need to create a mount point, just the volume name  data33 & pair it data/db from the official document.
 
 3)FOR external vol
-a)dnt need to create a mount point, what i need to do,just the vol name: eg ebs33
+a)persistent vol, dnt need to create a mount point, what i need to do,just the vol name: eg ebs33
 b) -d is for driver, the driver is rexray/ebs 
-c) docker volume craete ebs3 -d rexray/ebs;   to create the vol
+c) first run docker volume craete ebs3 -d rexray/ebs;   to create the vol then pass the vol with the mongo db & its env var
 d) Access & sacred key
 create the database with the vol;
 so he used the file app.sh  and paste the below command 
