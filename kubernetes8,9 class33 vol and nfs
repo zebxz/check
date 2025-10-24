@@ -852,9 +852,8 @@ kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
                                  PERSISTENT VOLUMES 
 ===================
 this are simply a piece of storage in your cluster
- the ideal appraoch to store data in k8 is by using persiastent vol by it is managd by the kube service
+ the ideal appraoch to store data in k8 is by using persiastent vol bc it is managd by the kube service
 just like docker vol is manged by docker and thats why we use persistent vol in docker as well
-
 
 *** Based on someones question: the persistence vol could either be host path, NFS and other vol options 
 with persistent vol, the vol itself is managed by the kube service
@@ -919,6 +918,8 @@ are able to mount we ar able to create a mount point btw the container n the per
 
 
 ########################################## CREATING A PERSISTENT VOL ..................2:44:44
+
+***i bliv.. this firt manifest file is where we create the 'hostpath' & we see  its 'kube' like in Docker; Bind mount, we created mount point 
 mongo-pv-hostpath.yml   
 ---------------------                           ********** persistent vol
 apiVersion: v1
