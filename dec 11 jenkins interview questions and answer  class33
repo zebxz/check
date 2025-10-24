@@ -204,6 +204,9 @@ path: /mongodata
 5) Resources request & limit ie cpu/ memory for the pod/application
 6) Autoscale the controller manager
 7) Volumes & NFS
+the NFS server has to be launched in the same vpc like the other servers ie k8 servers, like the master node . *** mee** like all the servers in the cluster..
+can create a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
+Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 
 
                    CONTROLLER MANAGERS eg RC,RS
@@ -1450,4 +1453,15 @@ awsElasticBlockStore, azureDisk, azureFile, configMap, emptyDir g, cePersistentD
 hostPath, nfs, persistentVolumeClaim, secret
 
 
+                         Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
+  NFS = Network file system 
+        distributed file system 
+        shared file system 
+
+A) Step1 TO 3
+Step 1: Install NFS Kernel Server
+Before installing the NFS Kernel server, 
+  we need to update our system’s repository index with that of the Internet 
+  through the following apt command as sudo:
+B) 
 
