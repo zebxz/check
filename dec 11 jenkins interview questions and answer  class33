@@ -185,31 +185,16 @@ indicate the replica, i replica will be deployed & we also hv the pod template &
  5)                        AUTOSCALING
 ****The manifest file states the minumum& maximum number of replicas of the application/pod to maintain at all times.
 
-          KUBERNETES VOLUME CONCEPT
-In k8, we can create volumes with or without PVC
+6)          KUBERNETES VOLUME CONCEPT
+In k8, we can create volumes with or without PVC    ***for it to be persistent, its adviced to use PVC
 1)   HOSTPATH
-     a) Without PVC; the hostpath created is like a mount point just like in 'DOCKER bind mount' , its not persistent
-     b)With PVC; the hostpath created is like 'Docker vol' we created in docker , its persistent
-            STEPS TO CREATING HOSTPATH VOL WITHOUT PVC    
- Creating hostpath vol for database..  the manifest file for mongo db with hostpath, will have: under spec
-      i)we add volumes & 
-     ii)path: /mongodata  *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
- 2)    NFS OR EFS 
-     a) Without PVC; the NFS/EFS created is like 'EBS' we created in Doker, its not persistent
- A) Under spec,we add NFS 
-the only thing that wil change in this manifest file compared to the hostpath file is the nfs server address and remove hostpath cos d vol type we are 
-using is nfs, then everytin remains the same
- nfs:
-          server: 10.0.0.76          ********using the private ip bc they ar in the same vpc ie both my nfs server & k8 nodes
-          path: /mnt/share
-
-
-                     STEPS TO CREATE PVC  **PERSISTENT VOL, this is manual provisioning  *** we will automate all these with ansible
-7) Creating a host path with persistent vol
-  a) manifest file to create the persistent vol
-  b) manifest file to create the mongo db with PV. .. persistent vol
-  c) manifest file to create the persistent claim policy
-  d) manifest file to create the mongodb with the  persistent claim policy
+ a) Without PVC; the hostpath created is like a mount point just like in 'DOCKER bind mount', we hv to create a mount point & its not persistent
+ b)With PVC; the hostpath created is the PVC,  its mg8 by kubernetes so its like 'Docker vol' we created in docker , its persistent bc its mg8 by docker 
+   it has 4 manifest files  .. but we can use ansible
+2)    NFS OR EFS 
+     a) Without PVC; the NFS/EFS created is like  external vol 'EBS' we created in Doker, its persistent but i think not mg8 by k8
+      b) with PVC; the NFS/EFS created is mg8 by kubernetes so its like 'Docker vol' we created in docker , its persistent bc its mg8 by docker 
+            it has 3manifest files... but we can automate with ansible
 
 
 
@@ -1561,8 +1546,30 @@ are able to mount we ar able to create a mount point btw the container n the per
     ***we wil use retain claim policy most of the time
 
 
-                   STEPS TO CREATE PVC  **PERSISTENT VOL, this is manual provisioning, we can automate the process with Ansible
-7) Creating a host path with persistent vol
+ KUBERNETES VOLUME CONCEPT FOR PVC
+In k8, we can create volumes with or without PVC    ***for it to be persistent, its adviced to use PVC
+1)   HOSTPATH
+ a) Without PVC; the hostpath created is like a mount point just like in 'DOCKER bind mount', we hv to create a mount point & its not persistent
+            STEPS TO CREATING HOSTPATH VOL WITHOUT PVC MANIFEST FILE 
+ Creating hostpath vol for database..  the manifest file for mongo db with hostpath, will have: under spec
+      i)we add volumes & 
+     ii)path: /mongodata  *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
+          
+ b)With PVC; the hostpath created is the PVC,  its mg8 by kubernetes so its like 'Docker vol' we created in docker , its persistent bc its mg8 by docker 
+               **8 check main file For the 4  manifest file
+2)    NFS OR EFS 
+     a) Without PVC; the NFS/EFS created is like  external vol 'EBS' we created in Doker, its persistent but i think not mg8 by k8
+            STEPS TO CREATING NFS/EFS VOL WITHOUT PVC MANIFEST FILE 
+      Under spec,we add NFS 
+     the only thing that wil change in this manifest file compared to the hostpath file is the nfs server address and remove hostpath cos d vol type we are 
+      using is nfs, then everytin remains the same
+       nfs:
+          server: 10.0.0.76          ********using the private ip bc they ar in the same vpc ie both my nfs server & k8 nodes
+          path: /mnt/share
+      b) with PVC; the NFS/EFS created is mg8 by kubernetes so its like 'Docker vol' we created in docker , its persistent bc its mg8 by docker 
+
+                  4 MANIFEST FILES FOR HOSTPATH WITH PVC  **PERSISTENT VOL, this is manual provisioning, we can automate the process with Ansible
+   Creating a host path with persistent vol
   a) manifest file to create the persistent vol
   b) manifest file to create the mongo db with PV. .. persistent vol
   c) manifest file to create the persistent claim policy
