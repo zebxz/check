@@ -198,7 +198,7 @@ using is nfs, then everytin remains the same
           path: /mnt/share
 
 
-                     STEPS TO CREATE PVC  **PERSISTENT VOL    *** we will automate all these with ansible
+                     STEPS TO CREATE PVC  **PERSISTENT VOL, this is manual provisioning  *** we will automate all these with ansible
 7) Creating a host path with persistent vol
   a) manifest file to create the persistent vol
   b) manifest file to create the mongo db with PV. .. persistent vol
@@ -1490,6 +1490,17 @@ with this nfs deploymnet we dnt have issues with data loss / inconsistency .....
            Persistent volumes             ***we wil use retain claim policy most of the time
 ===================
 this are simply a piece of storage in your cluster
+ the ideal appraoch to store data in k8 is by using persiastent vol by it is managd by the kube service
+just like docker vol is manged by docker and thats why we use persistent vol in docker as well
+
+
+*** Based on someones question: the persistence vol could either be host path, NFS and other vol options 
+with persistent vol, the vol itself is managed by the kube service
+the nfs is kind of storage option that we can use to store data like we saw hostpath wher data wil only be hosted by one particular node in the clusted bt
+in the nfs data is distributed to all the nodes and taht leads to data constitency,, however if u create a nfs and it is nt created under a persistent vol, 
+bc it is the recommended approach to store data in k8 bc when u create a persistent vol it is manged by the kube service , therefore the vol is independent 
+of the livecycle of the pod that is consuming the vol so if the pod goes down we can stil retieve the data
+
 
 deploy a kubernetes using Kops  
 
@@ -1544,7 +1555,7 @@ are able to mount we ar able to create a mount point btw the container n the per
     ***we wil use retain claim policy most of the time
 
 
-                   STEPS TO CREATE PVC  **PERSISTENT VOL
+                   STEPS TO CREATE PVC  **PERSISTENT VOL, this is manual provisioning, we can automate the process with Ansible
 7) Creating a host path with persistent vol
   a) manifest file to create the persistent vol
   b) manifest file to create the mongo db with PV. .. persistent vol
