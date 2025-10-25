@@ -67,6 +67,51 @@ Local Clusters: Tools like Kind (Kubernetes in Docker), Minikube, or K3s allow d
 development and testing purposes.
 These categories are not mutually exclusive, and a Kubernetes cluster can exhibit characteristics from multiple types simultaneously. For example, a 
 multi-zonal cluster could be deployed in a cloud environment with a dual-stack networking configuration.
+**********************************************************************************************************
+
+  SO FAR;
+I understand that in deploying an application that requires endusers to enter some information ,then the deployment requires 2 application & this is will
+involve 2steps
+STEP1) DEPLOYING THE 2 APPLICATIONS
+a)the main application which is stateless bc no info is been entered into it therefor it doesnt require a piece of storage to help retain/remember such info
+ b) A database where the information entered by endusers will be captured, this requires to create a piece of storage to help retain/remember such info
+
+STEP2) CREATING A VOL/PIECE OF STORAGE FOR THE DATABASE
+The types of vol includes:
+awsElasticBlockStore, azureDisk, azureFile, configMap, emptyDir gcePersistentDisk
+gitRepo (deprecated), hostPath, nfs, persistentVolumeClaim, secret
+Docker 8&9
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
+
+    THe type of vol been created can either be persistent or non persistent
+NON PERSISTENT VOL: eg bindmount
+non persistent means it can be accidentally removed/deleted sudo rm -rf because its not managed by the application process eg docker process
+ 30:23 Non-Docker processes on the Docker host can modify, Bind Mounts volumes at any time unnoticed so we nid to introduce persistence vol 
+PERSISTENT VOL:
+ most of the types of vol are persistent including docker vol
+However in Kubernetes, its recommended to create all volumes with a PVC  ** eg for NFS with PVC, online i saw its called NFS based PVC..
+so far, i understand that when deploying an application that includes a database, its best to use the volume concept provided by the application eg docker,
+use docker vol, for kubernetes; use kubernetes volume
+
+**online**
+A persistent volume is a storage resource in a cluster that has a lifecycle independent of any single pod. It provides persistent storage for stateful 
+applications, ensuring that data is not lost even if the pods using it are deleted or rescheduled. 
+Administrators provision persistent volumes, which can be backed by various types of physical storage like local drives or cloud-based systems. 
+
+
+  SCALING
+based on how we seperately deployed the 2 application; ie the main application with a nodeport service & the mongo db application with a clusterip service
+i bliv we scale only the data base application, bc its the application concerned with inputing information to be stored, & thats why a piece of storage is
+attached which is associated with how much storage space it has & hw much is been consumed.
+
+DOCKER vs KUBERNETES
+1)In docker we created networks, & ensured the appl are created in the same ntwrk to ensure communication 
+BUT
+In kubernetes, its uses DNS resolution ie service discovery eg clusterip , nodeport, loadbalancer service.
+2)Docker uses just docker vol concept WHILE  kubernetes uses kubenretes vol concept with PVC
+3)In kubernetes we can scale using controler mangers & we can also auto scale using hPA/CAS/VPA BUT in docker swamp we can scale, for now nt sure we can autoscale
+
 
 
 **********************************************************************************************************************************************
@@ -245,7 +290,8 @@ workload either using the imperative/command approach or declarative/manifest fi
 we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
 diff ns we hee FQDN  while nodeport is for externall comm ie been able to
 comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
-KUB 3/4,5,6 & 7, We explored the diff k8 objects used for deployment
+KUB 3/4,5,6 & 7, We explored the diff k8 objects used for deployment, kub7 autoscaling, kub 8&9 deploy the legacy appl with nodeport service & mongodb with
+clusterip, deploy the mongodb with diff vol without & with pVC, kub10&11
 
  
 
