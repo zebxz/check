@@ -800,6 +800,8 @@ Deploy the database image with a docker volume   ..... Docker home dir :  DHD = 
 Deploy the database image with an external volume
 install docker compose
 deploy an application with a docker compose file , should include a custom bridge netwrk & a piece of docker vol or external vol
+***i bliv the netwrk can be already existing ie before creating the compose file,we can create it using command & then inside the compose file we indicate
+'true'
 
 
 DOCKER10
@@ -922,9 +924,8 @@ KUB 7
 KUB 7b
 1)Deploy an application/pod & Auto scale the application/pod with a HPA, &a service for the cluster autoscaler** this will include to install a metrix server
 where the deployment will be done & a install a HPA, which will auto scale the application
-OR 
-we can also say deploy a cluster autoscaler
-He only deployed with HPA, he didnt deploy with VPA & CAS
+
+**** He only deployed with HPA, he didnt deploy with VPA & CAS
 
 
 
@@ -940,6 +941,7 @@ from kub7
 
 Ticket
 1)Deploy the legacy appication with their diff service type ie springboot mongo with nodeport service & mongo db with cluster ip service
-2) we deployed d database with diff vols; we deployed mongo db with hostport vol & mongo db with nfs vol ** but i can ignore this & go straight to no.3&4 task
+2) we deployed d database with diff vols; we deployed mongo db with hostport vol & mongo db with nfs vol , doesnt require a manifest to create a service type
+** i can ignore task no.2 & go straight to no.3&4 task
 3)Deploy mongo db with hostport based PVC  .. this will include 3manifest files the PV,the PVC & the mongo db appl
 4)Deploy mongo db with nfs based PVC  ... this will include 3manifest files the PV,the PVC & the mongo db appl
