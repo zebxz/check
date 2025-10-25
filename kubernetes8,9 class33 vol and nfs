@@ -110,6 +110,10 @@ STEP2) CREATING A VOL/PIECE OF STORAGE FOR THE DATABASE
 The types of vol includes:
 awsElasticBlockStore, azureDisk, azureFile, configMap, emptyDir gcePersistentDisk
 gitRepo (deprecated), hostPath, nfs, persistentVolumeClaim, secret
+Docker 8&9
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
+
     THe type of vol been created can either be persistent or non persistent
 NON PERSISTENT VOL: eg bindmount
 non persistent means it can be accidentally removed/deleted sudo rm -rf because its not managed by the application process eg docker process
@@ -120,8 +124,19 @@ However in Kubernetes, its recommended to create all volumes with a PVC  ** eg f
 so far, i understand that when deploying an application that includes a database, its best to use the volume concept provided by the application eg docker,
 use docker vol, for kubernetes; use kubernetes volume
 
+**online**
+A persistent volume is a storage resource in a cluster that has a lifecycle independent of any single pod. It provides persistent storage for stateful 
+applications, ensuring that data is not lost even if the pods using it are deleted or rescheduled. 
+Administrators provision persistent volumes, which can be backed by various types of physical storage like local drives or cloud-based systems. 
+
 ************************************************************************************************************************************************************
 
+
+EXAMPLES OF SERVICE DISCOVERY, DERVICE DISCOVERY & ENDPOINTS, API VERSION, CONTROLLER MANGERS & THEIR DIFF SELECTOR SUPPORT, 2 CLASSES OF SELECTORS, 
+HOW CAN SCALING BE AUTOMATED, THE DIFF AUTOSCALERS, 1)HPA/HOW HPA WORKS, 2)CLUSTER  AUTOSCALER, 3)VERTICAL AUTOSCALER, DEPLOYING OUR LEGACY APPLICATION;
+SPRING BOOT DOCKER, STEPS TO DEPLOY THE SPRING APPLICATION WITH ITS SERVICE, & THE MONGO DB WITH ITS SERVICE, VOLUME CONCEPT IN KUBERNETES, 
+DEPLOYING MONGO DB WITH HOSTPATH VOL, CREATING NFS VOL, STEPS FOR Configuration of NFS Server,  DEPLOYING MONGO DB WITH NFS VOL, PERSISTENT VOLUMES,
+ClAIM POLICIES, THE RELATIONSHIP BTW THE CONTAINER & THE PV & THE PVC, DEPLOYING MONGO DB WITH HOSTPATH PVC,  DEPLOYING MONGO DB WITH NFC BASED PVC.
 
 
 
@@ -644,7 +659,7 @@ since we are deployin a database we nid to ensure that a piece of storage is cre
 we ar goin to see hw to use vol for example:  
 .. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around With volume
 
-                               DEPLOYING MONGO DB WITH HOSTPATH
+                               DEPLOYING MONGO DB WITH HOSTPATH VOL
 kubernetes volumes:
 ===================
 mongovol.yml  
@@ -697,7 +712,7 @@ result in data loss because we are using hostpath volume :
 
 
 
-DEPLOYING OUR VOL Uing NFS
+CREATING NFS VOL 
 ######## ******************    2:01:20  ..   netwoRK FILE SYSTEM OR EFS
 
 NFS    
@@ -727,6 +742,8 @@ hostPath
 nfs 
 persistentVolumeClaim 
 secret
+***Docker 8&9... Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
 
  
                               STEPS FOR Configuration of NFS Server
@@ -814,7 +831,7 @@ When used as a Persistent Volume, an EFS volume can be mounted with ReadWriteMan
 to the same volume simultaneously.
 EFS is suitable for applications requiring shared file access, such as content management systems or distributed applications.
 
-                                HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
+                               DEPLOYING MONGO DB WITH NFS VOL
 ----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
     ***i bliv its bc we already created the nfs server & we use it as our vol/piece of storage, 
 mongo-nfs.yml  
@@ -869,6 +886,11 @@ kubectl taint nodes node9 key1=value1:NoSchedule-    [untaint the node]
 
 
                                  PERSISTENT VOLUMES 
+**online**
+A persistent volume is a storage resource in a cluster that has a lifecycle independent of any single pod. It provides persistent storage for stateful 
+applications, ensuring that data is not lost even if the pods using it are deleted or rescheduled. 
+Administrators provision persistent volumes, which can be backed by various types of physical storage like local drives or cloud-based systems. 
+
 ===================
 this are simply a piece of storage in your cluster
  the ideal appraoch to store data in k8 is by using persiastent vol bc it is managd by the kube service
@@ -877,7 +899,7 @@ just like docker vol is manged by docker and thats why we use persistent vol in 
 *** Based on someones question: the persistence vol could either be host path, NFS and other vol options 
 with persistent vol, the vol itself is managed by the kube service
 the nfs is kind of s storage option that we can use to store data like we saw hostpath wher data wil only be hosted by one particular node in the clusted bt
-in the nfs data is distributed to all the nodes and taht leads to data constitency,, howeve rif u create a nfs and it is nt created under a persistent vol, 
+in the nfs data is distributed to all the nodes and that leads to data constitency,, howeve rif u create a nfs and it is nt created under a persistent vol, 
 bc it is the recommended approach to store data in k8 bc when u create a persistent vol it is manged by the kube service , therefore the vol is independent 
 of the livecycle of the pod that is consuming the vol so if the pod goes down we can stil retieve the data
 
@@ -929,14 +951,14 @@ Delete – The persistent volume is deleted when the claim is deleted.
 The claim policy (associated at the PV and not the PVC) is responsible for what happens to the data when the claim is deleted.
 
 2:37:13
-**********************************CREATING THE DATABASE POD USING PERSISTENT VOL 
+**********************************THE RELATIONSHIP BTW THE CONTAINER & THE PV & THE PVC    *** i bliv its the db container..
 inside my cluster, i wil create persistent vol, now my db nids this vol n the vol can only be assigned using persistent vol claim ,,, PVC, with the PVC we 
 are able to mount we ar able to create a mount point btw the container n the persistent vol, the PVC permits the container to claim the persistent vol
 *************with this system ders no data loss if db container goes down bc persistent vol is anoda k8 object whic is independent of my pod lifecycle
 ##########we wil use retain claim policy most of the time
 
 
-########################################## CREATING A PERSISTENT VOL ..................2:44:44
+##########################################DEPLOYING MONGO DB WITH HOSTPATH PVC..................2:44:44
 2.48.45 if any of this object is not created, it will not work, the container will not run.
 
 *i bliv.. this firt manifest file is where we create d 'pv & hostpath' & we see  its 'kube' like in Docker; Bind mount, we created mount point which is d vol
@@ -1026,7 +1048,7 @@ just like docker vol is manged by docker and thats why we use persistent vol in 
 
 
  
-**********************************PERISTENT VOL USING TYPE NFS...........
+**********************************   DEPLOYING MONGO DB WITH NFC BASED PVC...........
                                           we chnaGE whats necessary in the file                                                
 mongo-pv-pvc-nfs.yml   
 ===================
