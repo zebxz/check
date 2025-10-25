@@ -34,6 +34,19 @@ use docker vol, for kubernetes; use kubernetes volume
 A persistent volume is a storage resource in a cluster that has a lifecycle independent of any single pod. It provides persistent storage for stateful 
 applications, ensuring that data is not lost even if the pods using it are deleted or rescheduled. 
 Administrators provision persistent volumes, which can be backed by various types of physical storage like local drives or cloud-based systems. 
+
+    SCALING
+based on how we seperately deployed the 2 application; ie the main application with a nodeport service & the mongo db application with a clusterip service
+i bliv we scale only the data base application, bc its the application concerned with inputing information to be stored, & thats why a piece of storage is
+attached which is associated with how much storage space it has & hw much is been consumed.
+
+
+DOCKER vs KUBERNETES
+1)In docker we created networks, & ensured the appl are created in the same ntwrk to ensure communication 
+BUT
+In kubernetes, its uses DNS resolution ie service discovery eg clusterip , nodeport, loadbalancer service.
+2)Docker uses just docker vol concept WHILE  kubernetes uses kubenretes vol concept with PVC
+3)In kubernetes we can scale using controler mangers & we can also auto scale using hPA/CAS/VPA BUT in docker swamp we can scale, for now nt sure we can autoscale
 ********************************************************************************************************
 
 
