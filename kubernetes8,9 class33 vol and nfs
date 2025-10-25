@@ -1,7 +1,3 @@
-DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes with stateless appl ,hostpath ,  NFS ... ..........persistent vol and claim policy
-
-
-*************************************************************************************************
 1. Terraform   -- Provisioning
 -------------------------------
 1) Infrastructure as Code (IaC)
@@ -102,29 +98,18 @@ destroy options :
   terraform destroy --target local_file.test      
   terraform destroy --target aws_instance.web         
 How have you applied terraform in your environment/landmark??? 
+***********************************************************************************************
 
 
-output block:
-   create ec2-instances :
-      metadata = 
-        ipAddresses
-        az/ami/dns/
-        Instance ID
-       
-   vpc : vpc-id  / cidr block   
-   eks cluster:
-     kubeconfig    
 
 
-DEPLOYING OUR LEGacy AAPLICATION : Springmongo and mongodb and volumes , NFS ... ............  persistent vol and claim policy
-without nfs :*if the db pod(ie the database container) was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
-in the file in dockerhub we see data is stored in /data/db therfore in our db container, data will be stored /data/db ,ie the mountpath in our manifest file
-if we introduce any of these, then we are goin to create an nfs server &ther wil be a mount poinT on d node& nfs server then data is captured in both the db
-container and the nfs server such that evEN if the container is recreated on another node, once the container syncronizes with the nfs server all the data 
-that was captured in the Nfs server wil reflect in the container and this wil result in data consistency
+******* While creating hostpath with PVC, i dnt knw why he repeated the same PV manifest twice before the PVC manifest BUT for this NFS with PVC, he didnt
+                  When am practicing ill check if that was just an error, ie if it works without repeating the PV twice.
+
+
+
 
                                    ##########  STARTED HERE ########################
-*********************************************************************************************************************************************************
 So we've been looking at k8 And one of the things that we discuss about k8, we realize that k8 is an orchestration.Is an open source orchestration tool.
 That's k8, open source, or ochectration  tool which is used to orchestrate containerized applications.
 So when applications are containerized using order tools like docker, we use k8 to orchestrate the containers, we use k8 to manage the containers.
@@ -647,7 +632,7 @@ spec:
         app: mongo    
     spec:       .. ******  under spec, we add volumes
       volumes:        *********vol is a list so we can v more than one vol e.g we can v, name: vol2 ,hostpath:  and path can jst be /data n also multiple mount point
-      - name: mongodbhostvol    
+      - name: mongodbhostvol                **i bliv hostpath can be like docker vol &/or bind mount, wher we can need only d vol name or create a mount point
         hostPath:
           path: /mongodata        *****if the db pod was created on node9, a mountpoint will be created on node9 and it wil be called /mongodata
       containers:
@@ -801,7 +786,7 @@ EFS is suitable for applications requiring shared file access, such as content m
 
                                 HOW TO USE NFS SEERVER FOR OUR DEPLOYMENT
 ----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
-    ***i bliv its bc the hostpath is like a mount point/vol in docker where data is stored, but here we are using NFS as our vol/piece of storage
+    ***i bliv its bc we already created the nfs server & we use it as our vol/piece of storage, 
 mongo-nfs.yml  
 ==================
 apiVersion: apps/v1
@@ -889,7 +874,7 @@ Persistent Volumes are provisioned in two ways, Statically or Dynamically.:  ...
      Provided we have configured A storageClass [sc].
      So when we create PVC if PV is not available Storage Class will Create PV dynamically.        
 
-PVC: If pod requires access to storage(PV),it will get an access using PVC.
+PVC: If pod requires access to storage(PV),it will get an access using PVC. 
      PVC will be attached to PV.
 
 PersistentVolume – the low level representation of a storage volume.
@@ -926,7 +911,7 @@ are able to mount we ar able to create a mount point btw the container n the per
 
 *i bliv.. this firt manifest file is where we create d 'pv & hostpath' & we see  its 'kube' like in Docker; Bind mount, we created mount point which is d vol
 mongo-pv-hostpath.yml   
----------------------                           ********** i think this is the hostpath
+---------------------                   ********** i dnt knw why he repeated the same PV manifest twice before the PVC manifest
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -943,7 +928,7 @@ spec:
     path: "/kube"             ************  WE SEE the hostpath is manged by the kube   .......2:53:11
 
 ---
-                ************************** CREATING mongodb with pV , this is the vol
+                ************************** CREATING mongodb with pV ,   ** mee*** this is the vol
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -956,8 +941,8 @@ spec:
   - ReadWriteOnce
   hostPath:
     path: "/kube"
----                  ************************ cREATING THE claim policy
-apiVersion: v1
+---                  ************************ cREATING THE claim policy ie the PVC
+apiVersion: v1                     PVC: If pod requires access to storage(PV),it will get an access using PVC. PVC will be attached to PV
 kind: PersistentVolumeClaim
 metadata:
   name: pvc-hostpath
@@ -1016,12 +1001,15 @@ just like docker vol is manged by docker and thats why we use persistent vol in 
 mongo-pv-pvc-nfs.yml   
 ===================
 --- ** we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFSas our VOL Type
- ***i bliv we dnt need the vol bc instead we are using NFS as our vol/piece of storage
+**went tru this part of d video now in 2025, bt didnt hear him say this, so i probably wrote this myself in 2024 based on my understanding then & its wrong
+    **** While creating hostpath with PVC, i dnt knw why he repeated the same PV manifest twice before the PVC manifest BUT for this NFS with PVC, he didnt
+                               When am practicing ill check if that was just an error, ie if it works without repeating the PV twice.
+
 
 apiVersion: v1
 kind: PersistentVolume   
 metadata:
-  name: pv-nfs-pv1         ......  i bliv this is the manifest file for path for the nfs which we are using as our vol, he said we dnt need the vol manifest 
+  name: pv-nfs-pv1         
   labels:
     type: local
 spec:
@@ -1085,7 +1073,7 @@ vi spring/pv-pvc-pfs-momgos.yml and paste
 kubectl apply -f spring/pv-pvc-pfs-momgos.yml and paste
 
 **************after we deployed this nfs vol  , bc synchronization has taken place we can see data captured previously in the nfs  bc its the same mountpoint 
-that was created earlier these are persistent vol and that is the choice that is being used in depsloyment 
+that was created earlier these are persistent vol and that is the choice that is being used in deployment 
 kubernetes volumes  :
 ==========================
 
