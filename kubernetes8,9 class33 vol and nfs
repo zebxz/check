@@ -99,6 +99,28 @@ destroy options :
   terraform destroy --target aws_instance.web         
 How have you applied terraform in your environment/landmark??? 
 ***********************************************************************************************
+    SO FAR;
+I understand that in deploying an application that requires endusers to enter some information ,then the deployment requires 2 application & this is will
+involve 2steps
+STEP1) DEPLOYING THE 2 APPLICATIONS
+a)the main application which is stateless bc no info is been entered into it therefor it doesnt require a piece of storage to help retain/remember such info
+ b) A database where the information entered by endusers will be captured, this requires to create a piece of storage to help retain/remember such info
+
+STEP2) CREATING A VOL/PIECE OF STORAGE FOR THE DATABASE
+The types of vol includes:
+awsElasticBlockStore, azureDisk, azureFile, configMap, emptyDir gcePersistentDisk
+gitRepo (deprecated), hostPath, nfs, persistentVolumeClaim, secret
+    THe type of vol been created can either be persistent or non persistent
+NON PERSISTENT VOL: eg bindmount
+non persistent means it can be accidentally removed/deleted sudo rm -rf because its not managed by the application process eg docker process
+ 30:23 Non-Docker processes on the Docker host can modify, Bind Mounts volumes at any time unnoticed so we nid to introduce persistence vol 
+PERSISTENT VOL:
+ most of the types of vol are persistent including docker vol
+However in Kubernetes, its recommended to create all volumes with a PVC  ** eg for NFS with PVC, online i saw its called NFS based PVC..
+so far, i understand that when deploying an application that includes a database, its best to use the volume concept provided by the application eg docker,
+use docker vol, for kubernetes; use kubernetes volume
+
+************************************************************************************************************************************************************
 
 
 
@@ -147,7 +169,7 @@ these Are the different services in communities.
 
 
 
-                                           DERVICE DISCOVERY & ENDPOINTS
+                                           SERVICE DISCOVERY & ENDPOINTS
 So with these, we can use any of these  to discover our application.
 Therefore, we saw again, this diagram, where, with the help of a service, am I able to access, you know,access some  pods that are deployed in  my cluster.
 Look at this diagram,  Look at this service. I have a cluster I-P service here okay now Let's.
@@ -224,7 +246,7 @@ so we hv seen that in k8 we are able to sclae ... .. and we can also automae sca
 ************************* HOW CAN SCALING BE AUTOMATED?  ..........  INTERVIEW Questions.....
 IQ: How can scaling be automated in kubernetes? 
    to sucesfully deploy auto scaling
-By installing a guage API [: metric-server ] in our cluster and using 
+By installing a guage API [: metric-server ] in our cluster and using *** mee** THE DIFF AUTOSCALERS 
       1. HorizontalPodAutoscaler[HPA] for pods   
        2. VerticalPodAutoscaler[VPA] for pods      ,, .........  so we can scale our nodes and pods
        3. CUSTER Autoscaler[CAS] for nodes  , we are scaling the number oF nodes 
@@ -239,7 +261,8 @@ cpu Utilisation>70
 memUltilisation >70
                                         26:56
 
-                              HOW HPA WORKS
+                             1)HPA
+HOW HPA WORKS
 so our HPA is targeting one of d resource for e.g we use deployment & d deployment name is myapp,the deployment is suppose to control a set of pods &the 
 deployment(myapp) is using a selector (match labels, if it is equality based) to know the set of pods that its suppose to control.,  to know the pods we ar
 managing.. we wnt to automate it,, e.g we hv node1 and node9  and based on our replica:2  we hv mayapp1 on node1 and myapp2 on node9 so in our cluster we  
@@ -252,7 +275,7 @@ traffic will be assigned to the pod.
 
 34.18              
 
-                             CLUSTER  AUTOSCALER 
+                           2)  CLUSTER  AUTOSCALER 
 ********if we are now processing 60m REQ, ie our nodes are at their max carryin capacity, but inside our cluster we hv deployed/install CAS 
 n in the CAS we ar sayin that athe max number of nodes is min2/max40 .CAS is scaling the number of nodes. now when ar we goin to scale the node or when shud
 the node be scaled??? for us to knw the proportion of our CPU that is been used, k8 wil use matrix server to check the vol of cpu for my node
@@ -267,6 +290,7 @@ our pod consuming, thats how it goes
 ... 37:25
 
 
+3)
 ******** HOW WIL VERTICAL pod autoscaler work.//..... 
 Let assume we want to deploy another application & we want to use the VPA to manage it
 VPA resources:  under resources, we have request, how much resource can a pod requet
@@ -345,7 +369,7 @@ All of this is to bring us to what we have covered.
 
 44.00
 
-                                                 WE ARE DEPLOYING OUR legacy application
+                                                 WE ARE DEPLOYING OUR legacy application **(i bliv spring boot docker)
 
 
 https://github.com/LandmakTechnology/spring-boot-docker         *** this application has a github repository, the application is called spring boot docker
@@ -370,7 +394,7 @@ mongo database:               48.00
 
 
 
-      STEPS TO DEPLOY THE SPRING APP , THE MONGO DB & THEIR SERVICE
+      STEPS TO DEPLOY THE SPRING APPLICATION WITH ITS SERVICE, & THE MONGO DB WITH ITS SERVICE
 
 so we ar goin to create 2files:
       *mee** one file for the application & one for the database & we wil deploy each of the files seperately with their own service manifest file
@@ -450,6 +474,7 @@ this was not hardcoded, our developers left the hostname, username,passwd as a v
 diff values based on my project requirement....   .. 53:15
 
 
+                                    DEPLYING THE SPRING APPLICATION
 *********the default deployment strategy in k8 is rolling update
 now since am using the default strategy,i wnt put a value for strategy bc the default wil be used ie rolling update
 
@@ -522,6 +547,8 @@ ubuntu@master:~$ curl 3.16.75.61:32136    ... or  in google 3.16.75.61:32136 , w
 we already used docker to containerize
 ***** right now our database has nt been deployed n so ders no database that the appl is able to comm with.
 
+
+                              DEPLOY THE DATABASE APPLICATION
 *********8*************now we deploy our database
 mongo.yml  = kams:  
 =========
@@ -598,6 +625,8 @@ for us to be able to capture data we hv to look at volume concept in k8         
 
 ==========================
 
+
+
 WE ARE GOING TO BE LOOKING AT VOLUME CONCEPT IN KUBERNETES
                                        IMP REPOSITORIES TO CLONE
 IMP REPOSITORIES TO CLONE
@@ -607,6 +636,7 @@ repository to clone:
 3. https://github.com/LandmakTechnology/kubernetes-manifests
 
 
+        
                                    CREATING HOSTPATH VOLUMES .................
 
 ****IF U ARE TRYING to deploy a stateless appl we hv to mk use of k8 volumes  ...  1:3540
