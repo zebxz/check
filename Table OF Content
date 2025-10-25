@@ -2,6 +2,39 @@ APPLICATION DEPLOYMENT   ***tomcat1&2**
 which kind of projects are we managing?
 we are managing java based projects - projects that are developed in the java lanaguage
 *****mee***  jboss/wildfly supports/used for enterprise application while tomcat supports jar/standalone & war/web applications
+****************************************************************************************
+
+
+ SO FAR;
+I understand that in deploying an application that requires endusers to enter some information ,then the deployment requires 2 application & this is will
+involve 2steps
+STEP1) DEPLOYING THE 2 APPLICATIONS
+a)the main application which is stateless bc no info is been entered into it therefor it doesnt require a piece of storage to help retain/remember such info
+ b) A database where the information entered by endusers will be captured, this requires to create a piece of storage to help retain/remember such info
+
+STEP2) CREATING A VOL/PIECE OF STORAGE FOR THE DATABASE
+The types of vol includes:
+awsElasticBlockStore, azureDisk, azureFile, configMap, emptyDir gcePersistentDisk
+gitRepo (deprecated), hostPath, nfs, persistentVolumeClaim, secret
+Docker 8&9
+Docker Volumes
+Volumes stored data in a part of the host filesystem managed by docker
+
+    THe type of vol been created can either be persistent or non persistent
+NON PERSISTENT VOL: eg bindmount
+non persistent means it can be accidentally removed/deleted sudo rm -rf because its not managed by the application process eg docker process
+ 30:23 Non-Docker processes on the Docker host can modify, Bind Mounts volumes at any time unnoticed so we nid to introduce persistence vol 
+PERSISTENT VOL:
+ most of the types of vol are persistent including docker vol
+However in Kubernetes, its recommended to create all volumes with a PVC  ** eg for NFS with PVC, online i saw its called NFS based PVC..
+so far, i understand that when deploying an application that includes a database, its best to use the volume concept provided by the application eg docker,
+use docker vol, for kubernetes; use kubernetes volume
+
+**online**
+A persistent volume is a storage resource in a cluster that has a lifecycle independent of any single pod. It provides persistent storage for stateful 
+applications, ensuring that data is not lost even if the pods using it are deleted or rescheduled. 
+Administrators provision persistent volumes, which can be backed by various types of physical storage like local drives or cloud-based systems. 
+********************************************************************************************************
 
 
 
