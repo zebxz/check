@@ -7,6 +7,7 @@ we are managing java based projects - projects that are developed in the java la
 *****mee***  jboss/wildfly supports/used for enterprise application while tomcat supports jar/standalone & war/web applications
 
 
+   ****mee** REMEMBER TO CLONE ALL the necessary repos for each topic/software
 
 
 linux1
@@ -789,7 +790,7 @@ Ticket024:   **** includes;HOW TO CHANGE MOUNT POINT (ill use step6 in place of 
     mylandmarktech/sping-boot-mongo
 
 crteate custom netwrk
-deploy in the custom netwrk
+deploy in the custom bridge netwrk
 deploy in the host netwrok
 create docker null/none netwrk
 
@@ -798,12 +799,15 @@ DOCKER8&9
 Deploy the database image with a docker volume   ..... Docker home dir :  DHD = /var/lib/docker
 Deploy the database image with an external volume
 install docker compose
-deploy an application with a docker compose file
+deploy an application with a docker compose file , should include a custom bridge netwrk & a piece of docker vol or external vol
 
 
 DOCKER10
 install docker swamp
+Deploy a stack, it will create an overlay netwrk so i dnt need to create any netwrk like in docker/docker 8&9 assignement
+but this stack should include a vol
 *** meee** deploy using a compose file this will have the 'deploy strategy' that has the 'replica option'
+
 Ticket014:     
 ﻿﻿﻿﻿Prepare a jenkins ci/cd job for maven-web-application
          **************************************************IN the pipeline stage one is to clone frm scm , ur building using maven9
@@ -917,10 +921,25 @@ KUB 7
 
 KUB 7b
 1)Deploy an application/pod & Auto scale the application/pod with a HPA, &a service for the cluster autoscaler** this will include to install a metrix server
-where the deployment will be done
+where the deployment will be done & a install a HPA, which will auto scale the application
 OR 
 we can also say deploy a cluster autoscaler
+He only deployed with HPA, he didnt deploy with VPA & CAS
 
 
 
-KUB 8
+KUB 8&9
+CAn we use NFS TO scale inorder to meet the wrk load??
+if u are refering to hw to hv multiple read replicas 
+we wil be seeing hw to replicate the db so we can hv multiple read replicas
+
+***mee** when we do, i will confirm if we introduce the nFS vol or any type of vol first before we replicate/autoscale or replictate/autoscale first before
+introducing NFS 
+in Kub7, in the HPA illustration, he autoscaled a diff application but when he started kub vol concept in kub8&9, he didnt continue with the same application
+from kub7
+
+Ticket
+1)Deploy the legacy appication with their diff service type ie springboot mongo with nodeport service & mongo db with cluster ip service
+2) we deployed d database with diff vols; we deployed mongo db with hostport vol & mongo db with nfs vol ** but i can ignore this & go straight to no.3&4 task
+3)Deploy mongo db with hostport based PVC  .. this will include 3manifest files the PV,the PVC & the mongo db appl
+4)Deploy mongo db with nfs based PVC  ... this will include 3manifest files the PV,the PVC & the mongo db appl
