@@ -685,7 +685,8 @@ since we are deployin a database we nid to ensure that a piece of storage is cre
 we ar goin to see hw to use vol for example:  
 .. and the only deployment that will be affected is our mongors , so we wil deploy it agin this time around With volume
 
- 1)                              DEPLOYING MONGO DB WITH HOSTPATH VOL
+ 1)                              DEPLOYING MONGO DB WITH HOSTPATH VOL  
+    *dnt know why we didnt create a manifest file to create a service,is it bc earlier we created the mongodb with a clusterip or the service is jst nt required
 kubernetes volumes:
 ===================
 mongovol.yml  
@@ -858,9 +859,11 @@ to the same volume simultaneously.
 EFS is suitable for applications requiring shared file access, such as content management systems or distributed applications.
 
                             
-2)                DEPLOYING MONGO DB WITH NFS VOL
+2)                DEPLOYING MONGO DB WITH NFS VOL    **dnt know why we didnt create a manifest file to create a service, i bliv clusterip
 ----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
-    ***i bliv its bc we already created the nfs server & we use it as our vol/piece of storage, 
+ *dnt know why we didnt create a manifest file to create a service,is it bc earlier we created the mongodb with a clusterip or the service is jst nt required
+
+
 mongo-nfs.yml  
 ==================
 apiVersion: apps/v1
