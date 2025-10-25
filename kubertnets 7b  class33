@@ -48,6 +48,13 @@ utilization on pods, it can scale PODS automatically.
 HPA Will Scale up/down pod replicas of Deployment/ReplicaSet/ReplicationController 
 based on observerd CPU & Memory utilization base the target specified. 
 
+***Online
+Horizontal Pod Autoscaler (HPA)
+What it scales: The number of pod replicas for a deployment or statefulset.   ***i bliv this is the database application
+How it works: Monitors metrics like CPU or memory and increases or decreases the pod count to match the demand.
+Installation: A built-in Kubernetes component that is configured and applied to your workloads, often using YAML files or tools like Helm. 
+
+
 
                            DIFFERENCE BTW K8 AUTOSCALING & AWS AUTOSCALING 
 What is difference b/w Kubernetes AutoScaling(POD AutoScaling) & AWS AutoScaling?
@@ -229,10 +236,10 @@ spec:
               memory: "256Mi"
    
 ******************************************* as part of this deployment, WE WANT TO AUTO SCALE THE APPLICATION .... ..... 21:59
----               HW DO WE AUTO scale the application  *** I bliv each application will be deployed will its own autoscaler (HPA/VPA/CAS)manifest file
+---               HW DO WE AUTO scale the application  *** I bliv each application will be deployed with its own autoscaler (HPA/VPA/CAS)manifest file
 apiVersion: autoscaling/v2                **************we are deploying  an autoscalin/v2
 kind: HorizontalPodAutoscaler  
-metadata:                         this is to auto scale the hpa 
+metadata:                         this is to auto scale the application
   name: autoapp        
 spec:
   scaleTargetRef:
