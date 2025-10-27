@@ -72,8 +72,9 @@ when i practice ill hv to tk note of the connection btw the jumpserver & the web
 
 START
 
- VPC, SUBNET/ CIDR BLOCK/ ADDRESSES, S3 BUCKET CANT BE CREATED IN SUBNET, Internet Gateway (IGW),ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, CONNECTING TO THE APP/DB SERVERS VIA THE JUMPSRVER,
-LAUNCH WEBSERVER(install ngnix) 
+ VPC, SUBNET/ CIDR BLOCK/ ADDRESSES, S3 BUCKET CANT BE CREATED IN SUBNET, RELATIONSHIP BTW LOADBALANCER & WEBSERVER & DATABASE, Internet Gateway (IGW)
+ROUTE TABLES, NAT GATEWAY, NACL, LAUNCH JUMPSERVER, LAUNCH DBSERVER, CONNECTING TO THE APP/DB SERVERS VIA THE JUMPSRVER,LAUNCH WEBSERVER(install ngnix) 
+
 
 ****** 2:38:25 our webserver is running in the public subnet which has route to the internet via the internet gateway
 i think its bettr to use the same key for all the jump,db,&webserver so that  no nid to chmod 400 multiple times,, if i use the same key, once i chmod once for dbserver,
@@ -221,6 +222,8 @@ but for subnet with only local traffic; 10.0.0.0/24
 **********************************************************
 
 
+
+
 2:38:25 our webserver is running in the public subnet which has route to the internet via the internet gateway
 i think its bettr to use the same key for all the jump,db,&webserver so that  no nid to chmod 400 multiple times,, if i use the same key, once i chmod once for dbserver,
 i dnt nid to chmod again when i ssh the webserver
@@ -230,6 +233,27 @@ S3 BUCKET CANT BE CREATED IN SUBNET (Because its a regional service, i can creat
 1:03:22 my s3 bucket cannot be be created in a subnet, e.ginside us east2a subnet ..bc its a regional service whose name must be globally unique
 i can create it in the us region inside my vpc e.g us east,us west   ***me***but not inside the subnet, remember subnets are created inside the vpc
 ****meeee***** its like the s3 can be created inside the compound but not inside the house/rooms
+
+
+
+
+******online
+RELATIONSHIP BTW LOADBALANCER & WEBSERVER & DATABASE 
+
+A load balancer sits in front of web servers, acting as a traffic director that distributes user requests across multiple web servers to prevent any single
+server from becoming overloaded.
+The web servers, in turn, interact with a database (or a pool of databases) to retrieve and store data needed to fulfill the user's request. 
+How they all work together
+1)A user sends a request to your website.
+2)The load balancer receives the request and, based on its configuration, sends it to one of the available web servers.
+3)The web server receives the request and determines what data is needed.
+4)The web server queries the database to get the data.
+5)The database returns the requested data to the web server.
+6)The web server processes the data and generates a response.
+7)The web server sends the response back to the load balancer, which then sends it to the user. 
+
+
+
 
 
 ***Online** PRIVATE SUBNET 
