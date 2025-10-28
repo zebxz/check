@@ -1713,6 +1713,29 @@ kubectl create secret generic springappsecret --from-literal=mongodbpassword=dev
 
 
 
+ APPLICATION DEPLOYMENT
+if we are going to deploy an application what is involved????
+LETS ASSUME the we are deploying the database as a stateful set , database stateful set or as we saw as a replica set
+what else are we deploying as part of the database, we nid a storageclass, wich we wil be sseeing verysoon , thats part of vol, also persistent vol, pvc , 
+this is one appl we are deploying, we cud nid configmaps and secret ,  so one deployment requires all of this.. we'l also nid to deploy a service to mk this
+database discoverable
+
+Stateful applications mongodb :
+  - statefulsets/RS  
+  - storageClass 
+  - PersistentVolume 
+  - PersistentVolumeClaim
+  - configMaps 
+  - Secrets   
+  - service = ClusterIP   
+stateless applications:  
+  - deployment       .....recommended obj is deployment 
+  - configMaps 
+  - Secrets   
+  - service - most of the time this could be NodePort / LoadBalancer     .......35:40
+
+#######pls take note this is  very imp this is a key aspect  to underline and thats one thing that we are covering to mk sure u have a gud understanding when 
+it cm to configmap n secrets
 
 
 
