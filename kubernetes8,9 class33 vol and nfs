@@ -864,9 +864,7 @@ EFS is suitable for applications requiring shared file access, such as content m
                             
 2)                DEPLOYING MONGO DB WITH NFS VOL    **dnt know why we didnt create a manifest file to create a service, i bliv clusterip
 ----   the only thing that wil change here is the nfs server address and remove hostpath cos d vol type we are using is nfs, then everytin remains the same
- *dnt know why we didnt create a manifest file to create a service,is it bc earlier we created the mongodb with a clusterip or the service is jst nt required
-   or he just skipped that part
-but that illustration is completely independent of this vol illustration & also the pvc illustration, 
+ *dnt know why we didnt create a manifest file to create a service, i bliv he just skipped that part bc we did in kub 10&11
 
 
 mongo-nfs.yml  
@@ -998,7 +996,7 @@ are able to mount we ar able to create a mount point btw the container n the per
 
 *i bliv.. this firt manifest file is where we create d 'pv & hostpath' & we see  its 'kube' like in Docker; Bind mount, we created mount point which is d vol
 mongo-pv-hostpath.yml   
----------------------                   ********** i dnt knw why he repeated the same PV manifest twice before the PVC manifest
+---------------------                   ********** i dnt knw why he repeated the same PV manifest twice before the PVC manifest, Mayb error
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -1089,9 +1087,7 @@ mongo-pv-pvc-nfs.yml
 ===================
 --- ** we dnt nid to deploy the persistent VOL part of the script here like we did above when we mounted persistent vol bc we are using NFSas our VOL Type
 **went tru this part of d video now in 2025, bt didnt hear him say this, so i probably wrote this myself in 2024 based on my understanding then & its wrong
-    **** While creating hostpath with PVC, i dnt knw why he repeated the same PV manifest twice before the PVC manifest BUT for this NFS with PVC, he didnt
-                               When am practicing ill check if that was just an error, ie if it works without repeating the PV twice.
-
+       **kub 10&11, he didnt create pv, & said its bc we used Kops to deploy which already created an EBS/storage class while we were installing KOps
 
 apiVersion: v1
 kind: PersistentVolume   
