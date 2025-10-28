@@ -260,6 +260,7 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
 the NFS server has to be launched in the same vpc like the other servers ie k8 servers, like the master node . *** mee** like all the servers in the cluster..
 can create a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
 Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
+8) configmap & secret
 
 
                    CONTROLLER MANAGERS eg RC,RS
@@ -1626,6 +1627,83 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
   b) manifest file to create the mongo db with PV. .. persistent vol
   c) manifest file to create the persistent claim policy
   d) manifest file to create the mongodb with the  persistent claim policy
+
+
+
+KUB 10&11
+
+we also realize that why we v dif option when it cm to vol der are some other imp aspect to consider like:
+diff vol option:
+secret
+nfs
+hostpath
+azuredisk
+configmaps
+
+env variables are  like secret variable ,, because the inf is stored in our source code mgt and so we shouldnt pass the env variable like this 
+ env:
+           - name: MONGO_DB_HOSTNAME
+             value: mongosvc
+           - name: MONGO_DB_USERNAME
+             value: devdb
+           - name: MONGO_DB_PASSWORD
+             value: devdb@123
+
+
+CONFIG MAP
+######  HOW CAN WE DEPLOY THE ENV variable/file in a more secured way
+
+kubernetes volumes :
+
+======== by using:
+Config Maps & Secrets
+======================
+We can create ConfigMap & Secretes in the Cluster using command or also using yml.
+********************ConfigMaps:
+  are used to passed non confidential information in key:value  pair that weren't 
+  hardcoded/included in the Dockerfiles/code by Developers
+   E.G we can use config map to pass stuff like 
+    HOSTNAME
+    USERNAME 
+8.25 ...also if developers are required nt to hardcode, we are then required to use config maps to pass/verify to the variables
+
+e.g we are tryin to deloy an appl and we are using a kind of a tomcat image  n in that tomcat image hw do we access n manage tomcat
+we hv a file called tomcat users.xml, so  we could create a config map for our tomat users
+
+
+   OPTIONS FOR CREATING  CONFIGMAP:
+1)Create ConfigMap Using Command:
+  kubectl create configmap springappconfig --from-literal=db-username=devdb 
+  kubectl create configmap springappconfig --from-literal=db-hostname=mongosvc 
+
+2)
+Create ConfigMap Using files/declarative approach
+
+11.43 
+eg we are trying to deploy this application, as part of this deployment, we hv env variables
+i can decide to create a config map for stuff like hostnamename, username, bc config map is used to pass non confidential values in key value pair
+& we could create it in this manner, creating config map using commands... 
+17.53 .. but its not recommended to use config map to create PW, rather we use secret
+should we use imperative or declarative approach to create config maps? we shud use files/declarative approach
+
+
+
+    SECRETS
+****************************Secrets:
+  are used to passed confidential information in base64 format e.g 
+    PASSWORD
+    SSH_PRIVATE_KEYS  
+    dockerHub LOGIN password  
+    tls certificate  
+
+
+  OPTIONS FOR CREATING SECRET
+***me
+   1)Secret Using Command: 
+kubectl create secret generic springappsecret --from-literal=mongodbpassword=devdb@123 
+
+2) Create Secret Using files/declarative approach
+
 
 
 
