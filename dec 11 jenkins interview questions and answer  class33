@@ -251,7 +251,7 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
                    ***meee***        STEPS FOR OCHESTRATING CONTAINERS
 i bliv the following steps starts after we have used Docker to containerize the application, then for management & deployment  of the application/container
 we continue with these steps;
-1)After installing either self managed (multi node preferred), OR  paid to manage
+1)After installing either self managed (multi node preferred), OR  paid to manage OR we install KObs because of the disadvantage of using self managed
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
 4)chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about blue green techniques, bt didnt apply it.
@@ -1768,5 +1768,9 @@ KOPS is IaaC
 
 
 
-
+the rule for kobs is that whatever u are craeting must end with .k8s.local
+we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some
+aws resources, vpc, subnet route gatway, evrytin wil be created
+**********is this similar to what we saw in terrafrom as terraform plan???  in terraform when you do terrafrom plan it wil tell u evrtin tht WIL BE Created
+####copy the sshkey so that we can ssh to our master node  ....1:01:39
 
