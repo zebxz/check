@@ -249,6 +249,8 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
 
 
                    ***meee***        STEPS FOR OCHESTRATING CONTAINERS
+i bliv the following steps starts after we have used Docker to containerize the application, then for management & deployment  of the application/container
+we continue with these steps;
 1)After installing either self managed (multi node preferred), OR  paid to manage
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
@@ -256,6 +258,8 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
 5) Resources request & limit ie cpu/ memory for the pod/application
 6) Autoscale the controller manager
 7) Kubernetes Volume concept (vols can be created with or without PVC  but for it to be consistent, using PVC is recommended)
+stateful; we always need to maintain its state bc it captures data and we nid to ensure the data is stored and retrievable and vol concept in k8 is what we
+can use to achieve that process
  for NFS with or without PVC
 the NFS server has to be launched in the same vpc like the other servers ie k8 servers, like the master node . *** mee** like all the servers in the cluster..
 can create a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
