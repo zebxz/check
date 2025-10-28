@@ -335,3 +335,32 @@ If you dnt see  a command prompt, try pressing enter
 min replica is 2, max is 5  and now we hv 3replicas ... the replica was created tru an automated process,  this entire process was automated, load has been 
 genertad, this is a test appl tha k8 provide for u to just run some testing on it.... so tk note thia ia a very imp aspect
 
+
+KUB 10&11
+
+
+                          OPTIONS FOR CREATING  CONFIGMAP:
+1)Create ConfigMap Using Command:
+  kubectl create configmap springappconfig --from-literal=db-username=devdb 
+  kubectl create configmap springappconfig --from-literal=db-hostname=mongosvc 
+
+2)
+Create ConfigMap Using files/declarative approach
+
+
+  OPTIONS FOR CREATING SECRET
+***me
+   1)Secret Using Command: 
+kubectl create secret generic springappsecret --from-literal=mongodbpassword=devdb@123 
+
+2) Create Secret Using files/declarative approach
+
+
+
+                              GREPING FOR KUBERNETES RESOURCES
+1)kubectl api-resources                         15.16
+kubectl api-resources | grep -i configmap           .... to get a particular api version resource, to get extract it from this file, i can pipe it & grep 
+                          this can be used for any kubernetes resource  
+
+2) To grep for replica set
+kubectl api-resources | grep -i rs
