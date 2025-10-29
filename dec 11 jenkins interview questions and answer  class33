@@ -1767,18 +1767,8 @@ Ticket07: Install a kops cluster using company documentation
           https://github.com/LandmakTechnology/kops-k8s
 
 
-installation step                              EXPORT KUBECONFIG FILE
-10b)   1:14:55                                   **lets export the kubeconfig file, we want to mange the file as the admin user
-   kops export kubecfg $NAME --admin            once we run this command, it exports the kubectl context to the s3 bucket we created earlier, 
-kubectl get node  ,,  we get a response                      now we see some nodes hv been deployed by the kobs software
-
-
-
-the rule for kobs is that whatever u are craeting must end with .k8s.local
-we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some
-aws resources, vpc, subnet route gatway, evrytin wil be created
-**********is this similar to what we saw in terrafrom as terraform plan???  in terraform when you do terrafrom plan it wil tell u evrtin tht WIL BE Created
-####copy the sshkey so that we can ssh to our master node  ....1:01:39
+installation step                           
+7) ssh-keygen      ............  57:27
 
 
 59.30                             EVERYTHING THAT KOPS CREATED
@@ -1787,11 +1777,22 @@ the rule for kobs is that whatever u are craeting must end with .k8s.local
 we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some
 aws resources, vpc, subnet route gatway, evrytin wil be created
 
+**********is this similar to what we saw in terrafrom as terraform plan???  in terraform when you do terrafrom plan it wil tell u evrtin tht WIL BE Created
+####copy the sshkey so that we can ssh to our master node  ....1:01:39
+
+
 1:09:21 
-when we use kops
+when we use kops, ITS a software
+we are running ;kops create cluster when we execute what does it do?
 kops create cluster : since our target is aws cloud, it gets into the aws cloud and in the aws cloud this command execute/achieves , it creates a series of 
 resources e.g vpc n subnets, re.g subnet1& subnet2 , LB, autoscaling grp managing some worker noder, masternode, we didnt need to create server manually 
 with terraform we cud cretae resources in a cloud provide
+
+
+EXPORT KUBECONFIG FILE
+10b)   1:14:55                                   **lets export the kubeconfig file, we want to mange the file as the admin user
+   kops export kubecfg $NAME --admin            once we run this command, it exports the kubectl context to the s3 bucket we created earlier, 
+kubectl get node  ,,  we get a response                      now we see some nodes hv been deployed by the kobs software
 
 
 
@@ -1801,6 +1802,9 @@ how many clusters do we hv now?
 now we hv kubadbm **(i bliv the previous one when we first install multi node cluster & ran sudo kubeadm init) and kops cluster, we v deployed a self manged
 cluster using kops
 1:18:05 *********lets go to our github and deploy a particular application
+
+
+
 
 
  CLUSTER COMPONENT
