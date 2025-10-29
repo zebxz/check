@@ -172,3 +172,148 @@ from kub7
 
 
 KUB 10&11
+
+  KUBERNETES DISCUSSION POINTS
+    2:05
+ IQ: Explain your experience in kubernetes? 
+  **2.15.40.. take note about all these key points, these are discussion points....
+I have over 6 years experience in kubernetes performing the following;
+- setting up a multi-node self managed kubernetes cluster using kubeadm    ,kubeadm this is self managed
+- setting up a multi-node production ready kubernetes cluster using  kops     ,, kops is also self managed bt it comes wit other aws services
+- setting up a single-node self managed cluster using minikube and Docker Desktop for testing. (if u want to test certain appl you can deploy them on a single
+node cluster
+- setting up a multi-node managed production ready k8s cluster
+  using amazon eks  ******* may in a video i can show us how to
+*****if ther are ant issues in these appl am i able to fix them? 
+- troubleshooting issues from k8s setup/configuration or installation. ,, so v been able to trpubleshoot issues like trying to stup my kubeadm n its failing,
+or cant add worker node to master node, v had issues like tht n hv been able to fix it by creatin a token in the master runing in the workernode n having them
+join the cluster
+- maintaining, monitoring and upgrading the cluster components E.G   :
+  scheduler, etcd, controllerManagers, kube-proxy, kubectl, kubelet,
+  container-D, Kubernetes-cni[weave, flannel], kubectl-csi, apiServer    ***2.08.50,, these are cluster component 
+  kops export kubecfg $NAME --admin 
+- deploying applications and workloads using kubernetes objects:
+    - pods/ReplicationControllers/ReplicaSets/DaemonSets,
+      Deployments/StatefulSets/PersistentVolume/ConfigMaps and
+      secrets
+- using deployment as a choice kubernetes objects for stateless apps  
+- using replicasets, volumes with persistenvolumes for Stateful apps  
+- using statefulsets to deploy Stateful applications  
+- rollouts and rollbacks of Deployments  ********** we can deploy new versions of the appl bc we knw what to do
+- deploying applications using controllerManagers [RC/RS/DS/STS/deploy]
+- setting up Jenkins-kubernetes integration pipeline for full automation ,,. 2.15.30... very soon we wil also look at this, i think we hv a video for it as well
+- deploying both Stateful applications and Stateless applications  
+- making use of objects like; PV,PVC and dynamic storage classes to 
+  persist data for Stateful applications [mongodb/ES/prometheus/jenkins]
+- using configmaps and secrets for a secured application deployment   
+- using probes for Health checks configuration in our deployments     
+- using RBAC/namespaces/IAM for a secure access in the k8s. 
+
+#### these are some few things i shud be able to talk about ..........
+
+
+
+
+2:36:35      QUESTIONS
+
+                 KOPS SERVER DIFF FROM MASTER NODE
+1)FROM THE CL8 WE created using kobs i unsderstood it but, i knw we shh tru d ec2 insatnce, the server wher wecarried out the whole operation is der a way we 
+can ssh into the master node using mobaxterm or vscode remote host
+****ANS: we did nt nid to sh into the master node bc we created a kops sever bt tk note that the kops server is nt our k8 master node, so frm the kops server
+we cud jst remotely mange our kops cl8, we did nt nid to ssh into the kops bt if we had to do that then we can stil do that
+
+
+    SSH KEY & SECRET
+student : cos i knw we did nt create a key pair dasts why am asking, hw do we then do it ?
+ANS: WE did nt nid to create a key pair bt we craeted sssh keys while deploying our kops command , when we ran the ssh gen key command and we had exported that
+key into the kops as a secret n we can use the key.
+
+
+                 COMMUNICATION BTW APP & DATABASE
+ 2) when u tal abt hw the appl comm in the cl8 like d springapp n the dtabase,, hw does dis comm is it tru the programm that mayb the springapp like the  one
+we were using like when u put ur data automatically u see it showing in the database,,,,, is it the programmer that do the database that wil create the 
+interface?   
+ANS:  
+the fact is that we are using k8 to orchestrate containerized appl,in our team we v programers who are writing code they hv written d software that wil permit
+users to write their name , dob number ,, they hv done that in the backend, we as devops engr we hv been able to build that code, create pipelines n we v been
+able to containerize the appl by creatin an image and pushin the image to dockerhub,, in k8 we can pull that image n deploy the appl, onec it is deployed we v
+an appl that is running which reQ usr to enter their inf and thos info needs to be captured in a database ..... how can it be captured ina database???? that 
+becaomes a serious issue that is why we are now deploying a db appl called mongo in this case,,, 
+HW DOES THAT APPL COMM WITH EACH OTHER IN K8 ??? it is done via service discovery and within the cl8 we use the cl8 ip service.
+
+STUDENT: so frm what ur saying, ders a reference in the code that will link the info straight to yhe database ryt
+ANS: .. of course
+
+
+                        CONTAINER-D
+3) i nw for k8 our container runtime is containerD, is ther  a particular reason why we using it,, is der a preference??
+ANS: 
+we learnt docker bc we use docker to containerize appl , once we use docker, we write the docker file, with the help of the file, we build images, the images
+are our appl that have been packaged, now these packages we hv shared n distributed them to our image registry like docker hub for example, now der are 2tins
+involved here: containerizin and deploying the appl ,, for u to deploy the appl it means that u hv to create the conatiner n start the container.. so the 
+containerD in k8 is simply doing 2thing: it create and start the container that is all bc thats why containerD is running in the workernode that create n 
+start the container so in the past we used to use docker to achieve that purpose but k8 has deprecated dockcer tahts why we no londer use docker, we sue 
+conatinerD
+
+  ***mee** so does this mean we longer need docker at all?... bc i was thinking that we will use docker to containerize then use k8 to manage the containers.
+
+
+                UBUNTU USER PW
+4) when u ran kops u put a pW, HW do u knw the PW to use 
+ANS:
+when i was creatin my kops user , user add kops
+when u craete a user with ubuntu, ubuntu wil request for u to assign a PW to the user automatically , so when u ar createin a user, it wil REQ for u to assign
+a PW as well
+
+5) whne u use kops to provison ther was an autoscaling grp that was craeted , hw does the autoscaling grp works, how is it dif frm the k8 horizontal pod 
+autoscaler
+ANS:    
+...... very imp question, i thin i missed that when i was explaining.....let me go bk and explain that
+how is the autoscalin grp diff from frm what we did When we deployed a self managed cl8 with kubeabdm  that did nt cm with any autoscaler ??????
+
+
+                  KOPS INSTALLATION CREATES AUTOSCALER/ PRODUCTION READY
+now if u look at our ec2 instances lets observe smt  ...... 2:44:41
+now am in west virgina, ther are 2worker nodes, if i delete this worker nodes what will happen?
+ok , am deleting the 2instances .. obsever what happens when we shut down the instances, now lets check (in the ubuntuserver, he switched to kops user)
+unbutu@master:~$ su - kops
+;we can see only the master is ready , the 2worker nodes shows not ready bc we are shutting down the other2 nodes 
+when we run kubectl get node : we see the 2nodes are now completely offline bc they v beeen terminated
+bt now if i check my ec2 dashboard 2nodes are running and a new node is coming up (wit a diff ip address) bc we v an autoscaling grp taht was created wit min
+and max and it is what is managing our node lifecycle.
+we v an autoscaling grp for the master node that says hw many master node must be ther at al times, so if u delete the master nod ethe auto sacling grp wil 
+craete anoda one and we also hv an autoscaling grp for worker node it works the same way .. thats why we call it production ready k8 cluster.
+
+
+                          UPDATING AUTOSCALING IN KOPS
+unbutu@master:~$  kubectl get svc
+we hv a (springapp)lb that was created in aws
+i can delete it in aws , i  can als run cli command to delete it 
+kubectl delete svc springapp
+once it is deleted , checking in aws  we see it says (ur resources cud nt be retrieved bc the lbwas only created when we created a type loadbalancer ssrvice
+kubectl get service : but we c\nt see the (springapp)lb service again
+if we run kubectl egt node, we see the master node n the 2nodes are all running now but if i want to remove the nodes completely, the only thing i can do is
+to wrk on my autoscaler  .... he went to autoscaling grp in aws and he changed the desired min to zero, max to 0 and update .... the autoscaler will 
+bring/shut down the nodes like ryt now we hv only the master running
+*****so if u wnt to delete/stop/reduce your node just go to ur autoscaling grp and update it bring it down to zero
+the same applies to the masternode .. u can udate the autoscaling grp for master
+
+### bt am just doing it for e.g bc ,u cant be working for bank of america n just go n bring down their server bt since we ar just practising n i wnt to reduce
+my cost i can do that
+
+
+CONFIGMAPS & SECRET
+6) where do we store the configmap and screts
+ans; 
+we store them in our local env nt in the scm
+
+
+          EXTERNAL & INTERNAL LB
+7) i need clarity for the internal n external lb, wher dey are placed cos frm the diagram u ilustrated above, u said we place the lb in the public subnet pls
+xplain more
+
+ANS\;
+if u hv an internal lb u can put it in the private subnet that is ok n the external wil be in the public bc the external is internet facing so all those that
+wnt to access ur env frm the internet they go tru the external
+
+
