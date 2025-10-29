@@ -211,8 +211,8 @@ app/db server where we can install like tomcat software for deployment?
 
 
 vIDEO  7/8: 
-Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), (ALB)APPLICATION LOAD BALANCER,
-GATEWAY LOADBANCER,  USERDATA to install tomcat & docker for the APPSERVERS
+Elastic Load Balancers& AUTO SCALLING GRP,  LISTENER, (NLB)NETWRK LOAD BALANCER*** Meee (LAYER 4 support), DIFF BTW NETWORK LOAD BALANCER(layer4) & 
+APPLICATION LOAD BALANCER (layer7), (ALB)APPLICATION LOAD BALANCER, GATEWAY LOADBANCER,  USERDATA to install tomcat & docker for the APPSERVERS
 *****1.05.16.. our main target is to acces our application via the lb
 
 ====================================
@@ -318,13 +318,16 @@ An ELB is a component used in front of web servers to manage traffic, rather tha
 23:37 ... 1)THERS ALSO NTWRK LOAD BALANCER /    *** Meee (LAYER 4 support)
 it deals with source and destination, &when it comes to d target grp dey ar created using TCp id or protocol & a trget grp can v up..
 to 1000 targets and we will do all the config ..tcp= source &destination..video 8a (1:11.. d protocol here that it suport, the listener is tcp got to do wit source& destinatn 
-this falls under layer4support..... ntwrk lb is faster than ALB BC NTwrk is source to destination bt for ALB when it receives a trafic it has to filters the tarfic to knw the
+this falls under layer4support.....
+
+            DIFF BTW NETWORK LOAD BALANCER(layer4) & APPLICATION LOAD BALANCER (layer7)
+ntwrk lb is faster than ALB BC NTwrk is source to destination bt for ALB when it receives a trafic it has to filters the tarfic to knw the
 the right target to route the trafic to .... also it has multiple target grps wjile ntwrk has one target grp... ntwrk LB ia faster bc its routed on layer4 of the osi model &
 its the transport layer dedicated for transport so by default for transmissn data layer4 is super fast
 layer7 the application layer, route trafic base on content of the trafic.
 
 
- APPLICATION LOAD BALANCER
+ APPLICATION LOAD BALANCER eg nginx
 24:25.... 2)  thers also application load balancer(AIB)
 IT will use the http/https protocol,, in dis case , we can v multiple target groups/ diff target grps
 the applications are grouped with the help of a target grp
