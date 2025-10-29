@@ -1781,6 +1781,13 @@ the rule for kobs is that whatever u are craeting must end with .k8s.local
 we can scroll down to see everything/objects kobs will create , including a vpc , autoscaling grp fro master n worker node, lb for the api server,even some
 aws resources, vpc, subnet route gatway, evrytin wil be created
 
+1:09:21 
+when we use kops
+kops create cluster : since our target is aws cloud, it gets into the aws cloud and in the aws cloud this command execute/achieves , it creates a series of 
+resources e.g vpc n subnets, re.g subnet1& subnet2 , LB, autoscaling grp managing some worker noder, masternode, we didnt need to create server manually 
+with terraform we cud cretae resources in a cloud provide
+
+
 
 **** so we hv deployed our kops cluster 
 
@@ -1788,5 +1795,83 @@ how many clusters do we hv now?
 now we hv kubadbm **(i bliv the previous one when we first install multi node cluster & ran sudo kubeadm init) and kops cluster, we v deployed a self manged
 cluster using kops
 1:18:05 *********lets go to our github and deploy a particular application
+
+
+
+SCHEDULER / etcd
+
+scheduler for scheduling pods on nodes  , this is the function of the scheduler n if for some reasn the sscheduler is nt running we wont be able to deploy any application
+we can also check the sheduler pod :
+ubuntu@master:~$ kubectl get pod -n kube-system    :  .... the kubectl has very imp pod that is used to run the cluster
+NAME            READY       STATUS          RESTARTS             AGE
+etcd-master      1/1      running            ....... we can see the etcd pod is running, if its nt running ther wil be a problem, it means we wont be able to have record bc it
+                                       is our key value store, whatevr is happenin in d cl8 is stored here,like if u create a pod here, the record of the pod is found in etcd
+ kube-apiserver-master     running                the apisever is the main administrative component of the cl8, the entrypoint to d cl8, if its nt running we cant mk api calls
+                                               bc we cant run any of the kubectl commands, these are calls we ar making, so the apiserver needs to be healthy.
+
+
+        
+             KUBE PROXY/ KUBECTL/ KUBLET/ CONTAINERD /CNI/ CSI
+kube proxy .. if  its nt running all the networking will fail if the proxy is not working
+kuectl : if it is nt installed, we can make api calls
+kublet : if its nt running appsl cannot be deployed, its the main agent runing in our worker node that comm with the master
+cointainerD:  k8is managing containers, if our container runtime like containerD is nt installed, we cant create and stsrt containers
+cni: container netwrk interface, e.g weave ntwrk, flannel. if these netwrk interfaces are nt running, our nodes wil nt be ready
+csi: container storage interface: if its nt running we cant deploy our stateful appl
+********* all of these we hv to check if they ar working or nt and have been able to check all of these  2:14:00
+
+
+ PARAMETERS TO CONSIDER IN SCHEDULING
+parameteres to consider when it comes to scheduling 
+1)the default is resource 
+2)node selector bt thers a problem with selector so we have
+3) node afffirmity  : this is like selecting a node with some flexibility .. :with this we hv prefferred n required
+  this is the new generation of node selector
+4) pod affirnity: 
+
+2:22:28
+when an api call is made fOR pods to be made,d scheduler wil wil schedule the pod on the node with sufficient resources but when all the nodes dont have 
+sufficient resources (this is the default expectation) the pod wil be in pending state..
+the default is resource that are available but ther are other options:
+node selector : for e.g i wnat to create a pod wich is my fronend app,in this deployment, if i want to ensure thatbthe pod is only scheduled on the node that 
+is optimized for frontend appl, i can select the node by using node selector, so i will select it based on the label, so the scheduler wil schedule the pod on
+the right node i want but if the pod i want doesnt have sufficient resource and thers anoda pod that has sufficient resource the scheduler wont schedule it 
+bc the selection doesnt match that label therfor my pod wil be left in pending state.
+
+3)node afffirmity  : this is like selecting a node with some flexibility .. :with this we hv prefferred n required
+e.g i can say i prefer u host my frontend appl on node2 but with node affirnity, if node2 doesnt hv sufficient resource the node wil stil be scheduled bc it
+now depend on the constraint, bc if the constraint says it is preferred to schedule this pod on node2 bt if node2 lack sufficient resources we can schedule 
+the pod on any other node with sufficient resources... this is affirnity
+one other thing is possible here, we have preferred during scheduling and;
+required during education   .................. bc with affirnity its like selecting a node with some flexibility
+
+4(pod affirnity: we can decide that is one pod is in us1east, the other one shud go to useast2 etc
+based on our topology, it says that let the pod be distributed accross diff availabilty zones , therfore if we ar deploying replicas, all of them wil nt be in
+one AZ, IT WIL be distributed.
+
+
+####        ######## he wil stil send the video
+
+
+
+                         PARAMETERS TO CONSIDER IN SCHEDULING, HELM/CHARTS
+we still have helm
+if you run:
+helm create springapp ], it will create charts
+lets assune u wnat to deploy an application, charts is like manifest files all i will do is just cahnge some information
+ charts-manifest files [ 
+it wil create a deployment for springapp: 
+        deployment.yml,
+if it reqs service , it wil create
+service.yml,
+if it reqs ingress, it wil create 
+ingress.yml,
+horizontal auto scale hpa.yml,
+if my deployment reQS security, it wil create 
+rbac.yml 
+
+so evrytin that is needed  so once u run helm create, it wil create all my chart and nd all i may need to chnage cud be the pod,the tag, the imgage name bt 
+everytin chart wil be created for me 
+helm is a package manager for k8, we wil look at it in nxt class
 
 
