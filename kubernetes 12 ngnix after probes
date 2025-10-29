@@ -63,6 +63,12 @@ users > ingresSVC lb , it acts as d frontend therfore it provides additional lay
          service in k8 bc it doe nt accept traffic outside the cl8, our cluster is vulnerable when it accepts external comm, external com is likely to mk our cl8 vulnerable
        therfore clusterip increases our cl8 security, so introducing ngnix ingress, it hepls us to use a highly secured k8 discovry type which is clusterip.
 
+
+
+              CHANGING SERVICE TYPE
+ if our service type was clusterip, we can change it to loadbalancer or nodeport but if it was loadbalancer we cant change it to clusterip
+we can also change from nodeport to loadbalancer
+
 ~######### in the ubuntu server
 kubectl get all
 we can see deployments done with loadbalancer service type
@@ -74,28 +80,57 @@ we can also change from nodeport to loadbalancer
 ######## #############  to change service type we can also vi into the manifest file that we deployed 
 
 
-********we are deploying the ngnix ingress controller using some yml file in the github account  .... ...........  34:47
-  1) clone
-    cd 
-2) namespace : the service account is for k8 security
-3)RBAC
-4) CREATE daemon set, we can deploy using a daemonset, k8 will cread a daemon controller on evry node or a deploy it using deployment , 
+
+
+
+34.47                                  DEPLOYING INGRESS CONTROLLER
+********we are deploying the ngnix ingress controller using some yml file in the github account  .... ........... 
+  1) clone application in github
+    cd   into : ingress/deployments
+2)create a namespace and a SA(service account) : the service account (i bliv RBAC) is for k8 security
+3) for the RBAC ; kubectl apply -f common/
+4)we can CREATE daemon set, we can deploy using a daemonset, k8 will cread a daemon controller on evry node of the cluster OR We can deploy it using deployment
 so he ls and we saw: 
-common daemon-set deployment service
-if we wnat to use deployment, we just wnt to create a single pod:  kubectl apply -f deployment
-deployment.apps/nginx-ingress created
+common  daemon-set  deployment  service    ** i bliv these are the options we hv inside the application we cloned
+if we wnat to use deployment, we just wnt to create a single pod: 
+kubectl apply -f deployment
+deployment.apps/nginx-ingress created        *****so it has created this deployment called nginx ingress
 5) check if the ngnix pod is running with the command
 when we run kubectl get po, we dnt see the pod bc its running on a specific namespce so we hv to specify the namespace
 kubectl get po -n nginx-ingress
+next
+get access to the ngnix ingress controller    >>for us to get access, we are going to deploy a loadbalancer
 6)create loadbalancer service
 $ kubectl apply -f service/loadbalancer-aws-elb.yaml
-kubectl get svc -n nginx-ingress
+kubectl get svc -n nginx-ingress     ... we see the service was deploy
+     so our ngnix ingress service has been deployed
 
+55:36
+############ CREATING INGRESS RULE  ...........  continued with our ingress installation script below
+7) we can use hostbased routing or path based routing
+
+
+
+                         
 43:20 
+ls      ... we see these 2 applications
+app.yml  jp.yml   metric-server      ns.yml
+aws      ir.yml    nginx-ingress   pod.yml 
+
+vi jp.yml ... this is a javawebapp
+we dnt hv any service for the application
+lets use it as our sample application, it doesnt have any service yet 
+the image used for the application is hello ,
+1)We wil all the applictaion hello
+2) we will deploy another application called webapp
+    ** both application details are inside the jp.yml file 
+
+41.27                              NGINX SERVICE TYPE IS CLUSTERIP
 bc we hv nginx controller deployed, our service type will be clusterip
 he did a deployment using deployment as our choice k8 object, he said we can also use replica set but deployment is our choice k8 object
 kubectl appl -f jp.yml
 but it failed
+                                       TROUBLESHOOTING
 he realised thers was a resource quota he created in previous class 
 kubectl get resourcequota
 kubectl delete resourcequota test-ns-quota
@@ -103,13 +138,8 @@ kubectl appl -f jp.yml
 created
 kubectl get deploy and we can see the pods running as desired
 ############ 47:50
-creating a service
-bc we hv nginx controller whic is a k8 operator or what we call a k8 plugin or an add on that enhances the function an dthe security of k8,  so with it we are sure that 
-our cl8 wil be more secured so we cna take advantege of such a secured parameter 
-the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip and no NopePort number as wud hv been d csae if 
-it was NodePort service
 
-
+                                        DEPLOYING THE APPLICATION WITHOUT SERVICE
 
 apiVersion: apps/v1
 kind: Deployment      ........... deployment for hello
@@ -155,6 +185,14 @@ selector:
       - containerPort:80
 
 
+                       47.22 CREATING SERVICES FOR OUR APPLICATION
+                             
+bc we hv nginx controller whic is a k8 operator or what we call a k8 plugin or an add on that enhances the function and the security of k8, 
+so with it we are sure that our cl8 wil be more secured so we can take advantege of such a secured parameter 
+the type of service we will create is  clusterip and as such i can decide to write it or not and ther shud be no port ip and no NopePort number as wud hv been d csae if 
+it was NodePort service
+
+
 apiVersion: v1         .........service for webapp
 kind: Service
 metadata:
@@ -186,6 +224,8 @@ kubectl get po --show-labels
 we can see our pods and their labels
 
 
+
+
 55:36
 ############ CREATING INGRESS RULE  ...........  continuing with our ingress installation script
 7) we can use hostbased routing or path based routing
@@ -201,6 +241,7 @@ hello.mylnadmark .........> hellosvc
 
 .........now we will create an ingress rule to achieve this
 vi ingress-resource.yml
+
 
 *****************################################################ created using HOSTBASED ROUTING
 
