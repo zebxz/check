@@ -215,6 +215,40 @@ join the cluster
 
 
 
+ HOW DOES TRAFFIC GET TO THE PODS/CONTAINERS RUNNING IN KUBERNETES; FROM AN INFRASTRUTURE PERSPECTIVE
+
+ 1:36:00  .....   frm an infrastruture perspective
+How does traffic get to the PODS/containers running in kubernetes.
+we v 50m users whaen they try to access this appl, they are typing the lb dns name , based on our deployment we v deployed a cluster wich has private n public 
+subnet in our public subnet der is an Elb , SO endusers are trying to access the appl tru the ELB guy. insid ethe cluster we v node1 and 9 , frm an infrastruture 
+perspective, we v the frontend and we hv the backend , now  when ensuders tyep the lb url in the background a command wil be executed, the reQ  frm endusers wil 
+query global dns servers searching for the nameserver so in d background nslookup is searching for the nameserver, this is taking mini seconds, some of d 
+global dns service providers it wil check is godaddy, google,aws route53, once nslookup is executed it wil immediately route traffic  via the ELS url n then 
+traffic gets into our cluster  .........1:56:00 (&inside our cluster we v a service called springSVC
+n its routing traffic to backend pod , now any service u create in k8 must create a cluster service ip as well, he ran kubectl get svc n we cud see a clusterip
+attached to the loadbalancer service that was created when we deployed the springapp service above,) so frm the elb, traffic gets into the cluster n for it to
+get to the cluster it wil hv to get to the node n since its now in the cluster it wil identify which service the traffic is meant for n via the service traffic
+gets to the pods, bc traffic cannot go to the pod directly the pods are discovered via the service n as such traffic wil get to the backend pod accordinly and
+as part of the spring app  we also deployed a database pod , for the db we hv another service.. .. all our servers are runing in private subnet master n worker
+while ELB is in the  public subnet
+
+**mee** enusers traffic (they type lb url, the REQ, queries global dns & in the background, nslookup searches for the nameserver in eg godaddy,google, aws
+route53) once nslookup is executed, traffic is routed via the elb (clusterip)into our cluster to the backend pod (appserver/db), inside the cluster the elb 
+identifies which pod (app or db) the traffic is meant for & the pod is discovered via service discovery
+
+52.30 Nginx/tomcat
+WHAT HAPPENS WHEN YOU TYPE  app.com or google.com    (domain name service)
+54:30
+  once you type google.com it going to query global DNS searching for the webservers that are associated to this hostname and once it locates the server, immediately traffic
+will be routed to that server
+
+for example, why you type www.landmark.org, what happens is that in the backend you are going to query global DNS(global Domain name service) and there is a command is the 
+backend called NS look up, it is going to be searching for the server.
+
+eg    if i run nslookup www.landmark.org shows the address of our ngnix webserver
+
+
+
 
 2:36:35      QUESTIONS
 
