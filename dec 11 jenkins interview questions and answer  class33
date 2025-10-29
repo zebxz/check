@@ -1657,6 +1657,12 @@ env variables are  like secret variable ,, because the inf is stored in our sour
              value: devdb@123
 
 
+WHERE WE STORE CONFIG MAP & SECRET
+ where do we store the configmap and screts
+ans; 
+we store them in our local env nt in the scm
+
+
 CONFIG MAP
 ######  HOW CAN WE DEPLOY THE ENV variable/file in a more secured way
 
@@ -1827,14 +1833,19 @@ etcd-master      1/1      running            ....... we can see the etcd pod is 
 
 
         
-             KUBE PROXY/ KUBECTL/ KUBLET/ CONTAINERD /CNI/ CSI
+                   KUBE PROXY/ KUBECTL/ KUBLET/ CONTAINERD /CNI/ CSI
 kube proxy .. if  its nt running all the networking will fail if the proxy is not working
 kuectl : if it is nt installed, we can make api calls
 kublet : if its nt running appsl cannot be deployed, its the main agent runing in our worker node that comm with the master
-cointainerD:  k8is managing containers, if our container runtime like containerD is nt installed, we cant create and stsrt containers
+cointainerD:  k8is managing containers, if our container runtime like containerD is nt installed, we cant create and start containers
+**FROM QUESTIONS**
+containerD in k8 is simply doing 2thing: it create and start the container that is all bc thats why containerD is running in the workernode that create n 
+start the container so in the past we used to use docker to achieve that purpose but k8 has deprecated dockcer tahts why we no londer use docker, we sue 
+conatinerD
 Kubernetes-cni: container netwrk interface, e.g weave ntwrk, flannel. if these netwrk interfaces are nt running, our nodes wil nt be ready
 kubectl-csi: container storage interface: if its nt running we cant deploy our stateful appl
 ********* all of these we hv to check if they ar working or nt and have been able to check all of these  2:14:00
+
 
 
  PARAMETERS TO CONSIDER IN SCHEDULING
