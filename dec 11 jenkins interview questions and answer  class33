@@ -254,6 +254,8 @@ we continue with these steps;
 1a)After installing either self managed (multi node preferred), OR  paid to manage 
   b)we install KObs because of the disadvantage of using self managed rg it doesnt create aws resource for us
    therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates them for you including ELB, so you dnt need to create nginx
+   c) EKS
+   D) GKE
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
 4)for deployment; chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about carnary,
@@ -269,6 +271,7 @@ can create a security grp for nfs with the REQ ports open like  ssh  port ffrm a
 Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 8) configmap & secret
 9)ngnix  .. this is required for self manged cluster
+10) Helm ... its a package manger for k8
 
 35.00****kub 10&11  ....  so one deployment requires all of this
 ********************************************************************
@@ -1750,7 +1753,38 @@ it cm to configmap n secrets
 
 
 
- INSTALL & DEPLOY A K8 CLUSTER USING KOBS    ...... 40:50  ,, read  the  file in github account
+
+  ***mee***            DIFF BTW KOPS & EKS
+1) Both of them dont have a master node
+  a)we did nt nid to sh into the master node bc we created a kops sever bt tk note that the kops server is nt our k8 master node, so frm the kops server
+we cud jst remotely mange our kops cl8
+ b)eks automatically creates & deploys the control pane & we can use a worker node as the control pane to mg8 the cluster
+ANY SERVER BC WHEN U CREATE an eks cl8 u dnt v access to d master node, the master node is exclusively managed by eks which means that u can only mange ur eks cl8 by using
+a remote node n call it our eks control, wich is jst used to control the eks cl8, so it cud be ubuntu node, whatever node it is, can be used.. dats what we did
+so u can jst create a new node for that purpose n use that node to manage ur eks cl8 
+
+
+
+
+  QUESTIONS
+
+                 KOPS SERVER DIFF FROM MASTER NODE
+1)FROM THE CL8 WE created using kobs i unsderstood it but, i knw we shh tru d ec2 insatnce, the server wher wecarried out the whole operation is der a way we 
+can ssh into the master node using mobaxterm or vscode remote host
+****ANS: we did nt nid to sh into the master node bc we created a kops sever bt tk note that the kops server is nt our k8 master node, so frm the kops server
+we cud jst remotely mange our kops cl8, we did nt nid to ssh into the kops bt if we had to do that then we can stil do that
+
+ SSH KEY & SECRET
+student : cos i knw we did nt create a key pair dasts why am asking, hw do we then do it ?
+ANS: WE did nt nid to create a key pair bt we craeted sssh keys while deploying our kops command , when we ran the ssh gen key command and we had exported that
+key into the kops as a secret n we can use the key.
+
+
+
+  ***************** INSTALL & DEPLOY A K8 CLUSTER USING KOBS    ...... 40:50  ,, read  the  file in github account
+
+                  **I noticed that kops doesnt have any commands perculiar to kops...
+
 
        KOBS IS A SOFTWARE used to deploy a production ready k8 cluster
 here is our github account wich we'l be using to create a kobs cluster
@@ -1928,7 +1962,9 @@ helm is a package manager for k8, we wil look at it in nxt class
 
 
 
-KUB 12
+
+
+KUB 12                            NGINX
 
 frm an infrastructure point of view u realise that we can access our appl using multiple services ,,, if u were going to access ur appl uisng a lbalancer service that wil
 incur additional cost bc a lbalancer wil create a new lbalancer in aws  
@@ -1955,6 +1991,13 @@ when we create ngnix service for our appl we can now hv service of type cl8 ip s
 external traffic we wil deploy an nginx ingress controller inside the cl8, on a node we can do a dployment called ngnix ingress so the pod is scheduled wil mg8 hw traffic is 
 routed to our backend appl, so as part of the deployment we are also creating a service (ingressSVC )for ngnix ingress controler and the service will act as our frontend n 
 based on this service  we aer goin to create some ingress rules wich will state hw traffic can be routed
+
+
+
+           DEPLOYING NGINX INGRESS CONTROLLER
+This was deployed 
+then we changed the service type of a previous application we deployed in kub10&11 
+& we changed the service type from lb to ngnix
 
 
  CHANGING SERVICE TYPE
@@ -2021,3 +2064,18 @@ app.com
 webapp.com
 aws.amazon.com
 amazon.com
+
+
+
+KUB 13         EKS
+
+   *** was all about setting up the EKS cluster.
+
+
+KUB 14
+
+Helm:                   ...... CAN GO TRU THE POWERPOINT SLIDE
+  Helm is a package manager for Kubernetes applications.
+Helm will ease the process of managing hw appl are deployed in our cl8
+
+
