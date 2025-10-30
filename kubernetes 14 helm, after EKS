@@ -241,9 +241,9 @@ javawebapp
 
 
 
-                                   STEPS TO CREATE TEMPLATE FOR  AN APPLICATION
+                                   STEPS TO CREATE HELM CAHRT FOR AN APPLICATION
 
-EXAMPLE  create template for 'myapp'
+EXAMPLE  create template for 'myapp'     ***mee** we dnt need to create a manifest file by our selve as we have been doing, we need jsut the app image..
 
 1)ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
 based on what we hv for the template these are going to be created
@@ -286,19 +286,24 @@ affimity
 
 
 
-                             TO APPLY OUR CHANGES, RE-RUN 'Helm Template
+                             TO APPLY OUR CHANGES, RE-RUN 'Helm Template'application name'
 ubuntu@ip-10-0-0-24:~$  helm template myapp 
 now we see the changes i effected in the values file
 
-############# i am creating helmchart from my own custom appl, once this is done
+36.35 ############# i am creating helmchart for my own custom appl, once this is done   
 ubuntu@ip-10-0-0-24:~$  ls
 myapp
+
+                            DEPLOYING THE APPLICATION USING HELM CHART
   ********* now i can deploy appl uisng this helm chart
 ubuntu@ip-10-0-0-24:~$  helm install app myapp/
 STATUS: deployed
 ubuntu@ip-10-0-0-24:~$  helm ls 
 we can see the appl , it was deployed in the dev namespace
 ubuntu@ip-10-0-0-24:~$ kubectl get pod
+
+                                               
+                       TROUBLESHOOTING
 thers an error , my app got an error in pulling the image
 copy the image name
 ubuntu@ip-10-0-0-24:~$  kubectl describe pod (the image name)
@@ -311,19 +316,31 @@ change tag to latest
 ubuntu@ip-10-0-0-24:~$  helm install app myapp/
 ubuntu@ip-10-0-0-24:~$ kubectl get deploy
 deployed
-**************************so with the help of helm w ehv deployed thsi appl  with relative ease
+**************************so with the help of helm we hv deployed thsi appl  with relative ease
+
+
+                                      UPGRADING THE IMAGE VERSION/ CHANGING THE SERVICE TYPE
 ubuntu@ip-10-0-0-24:~$ kubectl get svc
 we see the service we created
 we can access the appl using the loadbalancer service but its nt secured discovery option
 we wnat to upgarde thi sdeployment and change the service to clusterip and also the image version to v2
 so we check dockerhub where our containerized images are found if we hv v2 bc k8 is simply manging containerized app ,so we use docker to conatinerized n k8 to mg8 d 
 container
-but we dnt hv v2 just 2
+45;32 in dodckerh hub, we see we hv v2 
+before we use latest
 so we cahnge the tag to 2
-so ww are deploying now with the version2 and clusterip
+so ww are deploying now with the version2 
 ubuntu@ip-10-0-0-24:~$  helm upgrade app app/myapp/
 upgraded
-ubuntu@ip-10-0-0-24:~$ kubectl apply -f ingress-resource.yml
+
+
+     43.00                                         CREATE INGRESS RULE FOR HOST BASED ROUTING 
+cd   ... out of the myapp dir
+vi ngress
+Creating one more host using the previous manifest file from kub 12; nginx
+Vi app/myapp/value.yaml
+
+47. 50 .. ubuntu@ip-10-0-0-24:~$ kubectl apply -f ingress-resource.yml
 it has been reconfigured
 ubuntu@ip-10-0-0-24:~$ kubectl get svc 
 the service type has changed
@@ -510,6 +527,8 @@ but the main tin to master is that we are using helm as a packege manager ofr k8
 when u use helm it wil create the manifest file and render the maanifest files n once the manifest file are rendered
 u can deploy appl with relative ease
 
+
+=
 
  .................................questtion
 1) i installed the EKS Ctl tool 
