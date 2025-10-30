@@ -8,6 +8,9 @@ with the use of helm we can deploy diff appl in k8, remember if u wnt to deploy 
 to deploy our spring app????????? now we hv a stateless appl , 
 We deploy workloads in kubernetes using kubernetes objects declared in manifests files:
  e.g we deloyed a springapp Stateless web application: and how many objects were involved?
+
+
+                              MANIFEST FILES WE CREATED FOR OBJECTS TO DEPLOY STATELESS APPLICATION
 we had to write a manifest file for :
      deployment
      service 
@@ -18,6 +21,8 @@ we had to write a manifest file for :
 all these was for one appl deployment
 and in addition to this we are also deploying a stateful appl
 
+
+                                      MANIFEST FILES WE CREATED FOR OBJECTS TO DEPLOY STATEFUL APPLICATION
    mongodb Stateful database application: and for us to deploy this app, we nid smt like this either we ar using
      deployment/ and or what else can we use with deployment
      service 
@@ -31,6 +36,10 @@ and in addition to this we are also deploying a stateful appl
 
 so all of this obj need to be written, we nid to write manifest file for all of this
 and this is too much job but with the help of helm, it eases n simplifies the deployment of workload in k8
+
+
+
+                                               HELM SIMPLIFIES THE DEPLOYMENT OF WORKLOADS
 
   Helm eases/simplifies the deployment of workloads in kubernetes   
 when we did maven if u want to instal maven in ur cl8???
@@ -60,7 +69,9 @@ OPTION2:    ****************************USING A PACKAGE MANAGER
     yum install maven -y   
 
 ************ in this case option2 is preferred as its simplified SO we dnt nid all of the manifest file of option1 to accomplish this installaton deployment
-so similarly when it come sto amven we can deploy appl in k8 using helm
+so similarly when it comeS to maven we can deploy appl in k8 using helm
+
+
 
 *****************WITH THE HELP OF MANIFEST FILE , WE have deployed some:
 Custom applications: these are appl developed by our developers, our team of developers hv developed this appl
@@ -104,6 +115,8 @@ we use package managers to install packages:
 WE also have :
 Helm is a package manager for kubernetes.
 
+                                                    HELM CONCEPTS
+
 Helm concepts:
   Helm cli: = It's a command line interface used to work with packages to 
              install upgrade or uninstall 
@@ -115,6 +128,9 @@ Helm concepts:
              helm add repo    ********* to add a helm repository in nexus or other locations
              kubectl apply app.yml       
 
+
+                                 HELM CHARTS
+
   Helm charts: are packaged kubernetes manifest files organised in a directory 
   format that can be reused
   helm charts are stored in helm repository and frm der we can pull the helm chart n deploy our appl in mutiple env
@@ -123,7 +139,9 @@ it has a cli wich we can equally use to run helm commands :helm add repo
   Helm repository: -- 
       jar/ear/war, npm, python
 
-############################################### HELM ARCHITECTURE ............
+ 
+
+                                         HELM ARCHITECTURE ............
 
 Helm 3 Architecture:
 helm 2 Architecture= 
@@ -131,23 +149,37 @@ helm 2 Architecture=
 Install Helm 3                   .............17:52
 --------------
 
-E.G
-Lets cal it a k8 client server , frm this serverv we can mk api calls like kubectl -apply, one we mk the call we are authenticated n ibside my cl8 w ev master &worker node
-so once we mk the call, we need to be uathenticated, on th emaster  node the api authenticates u, it enusre u are authoirzed to mk such call, n the authentication allows
-you to have tha kube config file, so the file is authenticating you thta yes u are permitted to mk the api call .. 
-similarly w ecan execute commands like : 
-helm install , onec this is done the same kube config file wil authenticate u but it will depend on the helm architecture, if u were appl helm helm some 4yrs ago since you hv 
+E.G                                           HELM AUTHENTICATION
+Lets cal it a k8 client server , frm this server we can mk api calls like kubectl -apply, onCe we mk the call we are authenticated n inside my cl8 we v master &worker node
+so once we mk the call, we need to be uathenticated, on the master node the api authenticates u, it ensures u are authoirzed to mk such call, n the authentication allows
+you to have that kube config file, so the file is authenticating you that yes u are permitted to mk the api call .. 
+similarly we can execute commands like : 
+helm install , once this is done the same kube config file wil authenticate u but it will depend on the helm architecture, if u were appl helm some 4yrs ago since you hv 
 multiple years of experience ,
+
+                                  AGENT
 for helm 2 architecture :for the api call  to be made (ie comm with your cl8) we nid to install an agent called tiller, it nids to be 
 deployed in your cl8,, if its nt ders no way u can execute  the helm commands 
+
+                           PREFERRED ARCHITECTURE3
 **********for helm3 architechure, we no longer need any agent
 so the architecture3 is preferred bc we hv less job, no nid to install an agaent
+
+
+
 
 ************WE ARE GOING TO BE USING HELM TO DEPLOY A LOT OF APPL IN OUR env
 we just deployed nginx  using a lot of manifest files, 
 
+
+
+
+                                  HELM INSTALLATION
 ##########################################  helm installation script   ... helm3
 
+
+
+                       GOING FORWARD WE NEED JUST ONE CLUSTER
 ************.................   need to have just one cl8 running going forward ........................... 24:30
 we wil download helm  software
 change the permission and
@@ -163,12 +195,14 @@ chmod 700 get_helm.sh            ........... change permission
 we can run helm 
 to seee the diff helm commands
 
-so we can create our own chart to deploy our appll using th ehelm create command
+so we can create our own chart to deploy our appll using the helm create command
 before we create we need to install the tree command 
 to check if tree is already instaled: tree
 sudo apt instal tree
 
 
+
+                                INSTEAD OF WRITING,NOW WE CREATE THE MANIFEST FILES
 instead of writing our files for myapp
 we want to create them
 -# Create deployment manifests (helm charts) for myapp
