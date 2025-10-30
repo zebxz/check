@@ -202,9 +202,11 @@ sudo apt instal tree
 
 
 
-                                INSTEAD OF WRITING,NOW WE CREATE THE MANIFEST FILES
+26.29                                INSTEAD OF WRITING, NOW WE CREATE THE DEPLOYMENT MANIFEST FILES
 instead of writing our files for myapp
 we want to create them
+
+
 -# Create deployment manifests (helm charts) for myapp
 mkdir app && cd app 
 helm create myapp 
@@ -213,22 +215,37 @@ we see the number of files that were created
 4dirs  and 10files
 so all the resources need we can find them in this dir
 
-e.g          when u craete ur manifest file it comes iwth          ............ check powerpoint
+lets check the template thats in this chart: the templete ls 
+
+
+e.g          when u craete ur manifest file it comes wIth all this, ie the chart concept details         ............ check powerpoint
 javawebapp
      Chart.yaml      this includes #METADATA : this is data abt data... tells you what u are going to be accomplishing, some inf , explanation etc
-     charts  #dir           .... manually managed dependencies
-     templates  #dir
+     charts  #dir           .... manually managed dependencies can be placed in this dir, though it is better to use requirements.yaml to dynamically link dependencies
+     templates  #dir    .. contains template files that are combined with configuration values (frm values.yaml& the command line).it uses d GO progrming language format
         deployment.yaml
-        hpa.yaml
+        hpa.yaml                these are templates for deployment
         ingress.yaml
         service.yaml
         serviceaccount.yaml
         tests
            test-connection.yaml
-   values.yaml                ************************what is very imp here i sthis file bc this contains default values.. whtaever uwnt to create i sdefined in this file
+   values.yaml                ************************what is very imp here is this file bc this contains default values.. whtaever u wnt to create is defined in this file
+                  values.yaml is a yaml file of default configuration values for the chart
 
-lets check the template thats in this chart: the templete is 
-ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
+
+
+
+  30.00                 THE MOST IMPRTANT FILE
+            Its values.yaml
+
+
+
+                                   STEPS TO CREATE TEMPLATE FOR  AN APPLICATION
+
+EXAMPLE  create template for 'myapp'
+
+1)ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
 based on what we hv for the template these are going to be created
 it wil create a service acount for u
 evrytin defined 
@@ -239,29 +256,41 @@ its cereatinga deployment for ur appl
 and here is the pod template for the dpeloyment
 *************this template depend son the values , so we can also run the command helm show values 
 
-ubuntu@ip-10-0-0-24:~$ helm show values myapp/
+2) ubuntu@ip-10-0-0-24:~$ helm show values myapp/
 i wnat to see the default value for my app
 these are the default values
 our replica is 1
 my image is nginx 
 but i can also change all this inf
+
+                                                   VI vALUES FILE TO CHANGE IMAGE
 i wil go to the values files, vi into it and cahnge it 
 ubuntu@ip-10-0-0-24:~$  vi myapp/values.yaml
+
+                                          IF I NEED SECRET TO PULL 
 now if am deployin an appl and the image is coming frm a private repo, i wil hv to run image pull secret, i wil enter it here
 we dnt nid a service account for this deployment so i can change true to  false
+
+
+                             CAN CHANGE SERVICE TYPE
 service type can also be changed frm clusterip to nodeport n or LB   n viceversa
 am i creating an ingress, by default it says false , am nt creatin an ingress
+
+                     CAN ENABLE/DIABLE AUTO SCALE
 am i autoscaling my pod , i can change false to true bt i wont do it ofr now
 discolarations
 tolorations      
 affimity
      we can pass all these values here
-***************these become sour default values
+***************these becomes our default values
 
+
+
+                             TO APPLY OUR CHANGES, RE-RUN 'Helm Template
 ubuntu@ip-10-0-0-24:~$  helm template myapp 
 now we see the changes i effected in the values file
 
-############# i am creating helmchart from my own  custom appl, once this is done
+############# i am creating helmchart from my own custom appl, once this is done
 ubuntu@ip-10-0-0-24:~$  ls
 myapp
   ********* now i can deploy appl uisng this helm chart
