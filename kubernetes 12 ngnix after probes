@@ -130,6 +130,7 @@ the image used for the application is hello ,
 2) we will deploy another application called webapp
     ** both application details are inside the jp.yml file 
 
+
 41.27                              NGINX SERVICE TYPE IS CLUSTERIP
 bc we hv nginx controller deployed, our service type will be clusterip
 he did a deployment using deployment as our choice k8 object, he said we can also use replica set but deployment is our choice k8 object
@@ -143,6 +144,7 @@ kubectl appl -f jp.yml
 created
 kubectl get deploy and we can see the pods running as desired
 ############ 47:50
+
 
                                         DEPLOYING THE APPLICATION WITHOUT SERVICE
 
@@ -230,9 +232,16 @@ we can see our pods and their labels
 
 
 
+**mee** STEPS FOR CREATING INGRESS RULE
+1)IN Aws, route53; create record set to establish the response
+2) Create the route type ie either bath based OR host based manifest file.
+3) deploy the rule
+
+
+                                           CREATING INGRESS RULE
 
 55:36
-############ CREATING INGRESS RULE  ...........  continuing with our ingress installation script
+##...  continuing with our ingress installation script
 7) we can use hostbased routing or path based routing
 
 in aws  we see a LBalancer was deployed in uS West1, where our eks cluster is running     .....  .......  56:10
@@ -248,7 +257,7 @@ hello.mylnadmark .........> hellosvc
 vi ingress-resource.yml
 
 
-*****************################################################ created using HOSTBASED ROUTING
+                                             CREATING HOSTBASED ROUTING
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -281,20 +290,21 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: "/java-web-app"             *******dnt knw why we are using this  ??????????????????????????????????????????????????????
+        path: "/java-web-app"             **
         backend:
           service:
             name: webappsvc
             port:
               number: 80
 
+                                                    DEPLOYING HOST BASED ROUTING
 
-before wwe deploy this lets run
+before we deploy this lets run
 kubectl get ingress
 none
 kubectl apply -f ingress-resource.yml
-ingress ruke created
-and wwe hvae this ingress here
+ingress rule created
+and we have this ingress here
 lets describe the ingress , its called app ingress  rule
 kubectl describe ingress apps-ingress-rule
 we can see the host and the backend app its routing traffic to 
@@ -308,7 +318,7 @@ web.mylandmarktech.net
 
 we type this in google and we can access the database
 springapp.mylandmarktech.net
-hello.mylandmarktech.net/java-web-app         ??????????? i dnt knw why this has a java-web-app path
+hello.mylandmarktech.net/java-web-app         
 
 we see that ingress is working
 so with the help of ingres we are able to access our appl and we are able to use the most secured service discovery option in k8 which is clusterip service
@@ -317,10 +327,17 @@ so with the help of ingres we are able to access our appl and we are able to use
 
 
 
+**mee***      DIFF BTW HOSTBASED ROUTING & PATH BASED ROUTING
+1) Host based manifest file can have more than one 'host' object ...lol@ object
+ 1.200... its is used for when we have diff applications **i bliv like monolethic application
+while
+2) Path based will have only one host' object
+   it is used for microservices ie decouple monolethic application
 
-##############################################  DEPLOYING USING PATH BASED
 
-we can also deploy using path based routingand in this case we will just have one hostname with diff path like 
+                      CREATING PATH BASED ROUTING
+
+we can also deploy using path based routing and in this case we will just have one hostname with diff path like
 while creating ingress
 vi ingress2.yml
 apiVersion: networking.k8s.io/v1
@@ -348,11 +365,11 @@ spec:
             port:
               number: 80
 
-**********this ingress2 is routing traffic to 2backned service but it can alos route traffic to more 
+**********this ingress2 is routing traffic to 2backned service but it can also route traffic to more 
 lets add one more 
 
 - pathType: Prefix
-        path: "/tesla"               *we hv an appl /taela   
+        path: "/tesla"               *we hv an appl /tesla   
         backend:
           service:
             name: teslasvc            so this routing trffic to my tesla app
@@ -374,9 +391,12 @@ ingress2                  nginx               mylandmarktech.net             ***
 
 1:18:00
 ************ if we type mylandmarktech.net in google we dnt get any response bc we hv nt created the record set to establaish the response
-in aws we are using a dns service which is route53, in route53 w ehv to create A record set wherewe will state that my landmark tech is being forwarded to the loadbalancer
-so lets go bk to aws and create the record set
+in aws we are using a dns service which is route53, in route53 we hv to create A record set where we will state that my landmark tech is being forwarded to 
+the loadbalancer so lets go bk to aws and create the record set
+           
 
+
+                   ERROR
 502 error is server error , 502 error its called server site
 
 
@@ -386,7 +406,10 @@ some /java-web-app
 some appl is just the root path  /
 this can help us to define our like if we wnt to use path based routing
 
-****************************************WHEN CAN WE USE PATH BASED ROUTING
+
+
+
+****************************************WHEN CAN WE USE PATH BASED ROUTING eg microservices
 Lets assume u are deploying a micro service appl,
 we can have :
 ebay/login
@@ -395,6 +418,8 @@ ebay/payment
 ebay/orders
 ebay/returns
 
+
+                              WHEN WE CAN USE HOST BASED ROUTING
 in a situation like this the recommendation to use is path based routing 
 if i have diff appl in my env am managing then ill use host based e.g
 app.com
