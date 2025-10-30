@@ -1,3 +1,6 @@
+
+         AMAZON ELASTIC KUBERNETES SERVICES
+
 EKS Cluster Setup
 Topics Covered
 1. Introduction to AWS EKS cluster
@@ -10,12 +13,15 @@ Topics Covered
 8 Deploy Demo Application
 
 
+
+
 AWS eks : elastic k8 service
 it has benefits bc it can be integrated with other aws resources like ec2 instances, rts databases n lb etc
 we are deploying the eks cluster from our mgt console 
 
-we cannot create EKS on a default vpc
-1) he went to his aws account  and created vpc in us west1
+we cannot create EKS on a default vpc    ...5.30
+so ill create a create a deicated vpc for this
+1) he went to his aws account  and created vpc in us west1 (vpc & more)
 vpc shud hv sufficient ip address
 4.g 10.10.0.0/20    gives .. 4096 ips
 2 az
@@ -23,7 +29,9 @@ vpc shud hv sufficient ip address
 need nat gatway to route traffic to the private subnet , so  (in 1 AZ)
 enable dns hostnames
 enable dns resolution   ,, OTHERWISE nodes cant register to the cl8
-vpc n more was selected so all the components for the vpc will be created 
+5.00....     vpc n more was selected so all the components for the vpc will be (auto) created  
+  *****VPC created........
+
 
 7.30
 2) now we nid to do some configurations to the subnets (2public)  that are associated to this vpc, so let us go n edit the subnet
@@ -68,6 +76,9 @@ select add ons: these are k8 add ons , like kube proxy, coredns, amazon vpc will
 amazon version has iff options bt we ll just allow the default version assigned to us nxt and create
 ow  the cl8 is being created, wil tk a while , took abt 10minutes
 
+
+ 
+          HOW THE CLUSTER WORKS/EKS PROVIDES A FULLY MG8 CONTROL PLANE7 & AUTOMATICALLY DEPLOYS IT
 hw th cl8 works
 EKS provides a fully manged contrl plane7
 u provision an EKS  cl8 , ek8 automatically deploy control plane 
@@ -76,7 +87,7 @@ so we can create our worker node grps then connect toe the EKS cl8 , then we can
 
 
 now the eks has bee n provisioned, we nid to deploy our workernode into the cl8
-create iam role for the node with this ploicies ... 23:56
+create iam role for the node with this policies ... 23:56
 
 iam
 role create
@@ -101,6 +112,7 @@ i can also configure ssh access to the node, select .... , select  security grp 
 nxt 
 node grp is been created n onec it is provisioned, if u come to compute, its certain the node grp
 ***********we can created multiple node grps
+
 
 *to access the eks cl8s
 in mobarterm , 
