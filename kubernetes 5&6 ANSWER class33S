@@ -5,46 +5,55 @@
 No Schedule  ... caplital N and capital S
 
 
+                         REASONS FOR TAINTING NODE
 1) what are the circumstance for wich we can taint a node and then tolorate the scheduler for pods to be scheduled on the node 
 when will a node be tainted?
-e.g we v a k8 cluster running with abt 11worker nodes, and it is runnin a particular version of kubectl bc kubectl is a software, remember when we configured our k8 cluster
-we install a lot of packages in the cluster, like kubectl was insatlled kubelete ,API server, etcd, scheduler, controller managers , all of these are conrainers that have 
-specific versions or software, now want to recommision this server which means that we wnt to remove d current version of any of the software that is runnin and replace it
-with a current versione.g kublete service from version 1.9 to version 1.11, now the process of recommissioning the server it wil nt b gud to allow pods to be scheduled
- on that particular worker node so we are going to taint the node so once you taint the node , it means you are instructin k8 scheduler nt to scheudel aNY POD DON THE node,
-you are also instructing k8 to evict ANY POD that is currently runin on the node, so if der were any pods currently running on the node they wil be evicted and probably 
-rescheduled on another node.
-also, THE NODE COULD BE HAVING MEmory leakage , ders a problem with the node so we need to troubleshoot and resolve the problem so before we start to TS we will taint the node
-so that no pod shud be scheduled on the nodde
-also generally, the amster node is tainted by default bt we hv a particular logmt appl that we want to deploy which shud gather logs even from the master node, so we need to 
-use toloration to allow pods to be schedule on the master node 
-ALSO, we can taint a node to keep it on reserve, such that we could have some redundancy bt whenever we decide to assign node to the pod, we now use toloration,ie torqtaing k8
-scheduler to stil schedule a pod or pods on the node
+e.g we v a k8 cluster running with abt 11worker nodes, and it is runnin a particular version of kubectl bc kubectl is a software, remember when we configured 
+our k8 cluster we install a lot of packages in the cluster, like kubectl was insatlled kubelete ,API server, etcd, scheduler, controller managers ,all of these
+are conrainers that have specific versions or software, now want to recommision this server which means that we wnt to remove d current version of any of the
+software that is runnin and replace it with a current versione.g kublete service from version 1.9 to version 1.11, now the process of recommissioning the server
+it wil nt b gud to allow pods to be scheduled on that particular worker node so we are going to taint the node so once you taint the node ,it means you are
+instructin k8 scheduler nt to scheudel aNY POD DON THE node, you are also instructing k8 to evict ANY POD that is currently runin on the node, so if der were 
+any pods currently running on the node they wil be evicted and probably rescheduled on another node.
+also, THE NODE COULD BE HAVING MEmory leakage , ders a problem with the node so we need to troubleshoot and resolve the problem so before we start to TS we 
+will taint the node so that no pod shud be scheduled on the nodde
+also generally, the amster node is tainted by default bt we hv a particular logmt appl that we want to deploy which shud gather logs even from the master node,
+so we need to use toloration to allow pods to be schedule on the master node 
+ALSO, we can taint a node to keep it on reserve, such that we could have some redundancy bt whenever we decide to assign node to the pod, we now use toloration,
+ie torqtaing k8 scheduler to stil schedule a pod or pods on the node
 if you are done recommissioning a node a simply remove the taint
 
 2) When we use tolorations to shedule pods we can still acess the pods,, when nodes are tainted they are nt fshut down e.g master node
 
+
 3) what is the default deployment strategy in kubernetes??
 RollingUpdates is the default deployment strategy in kubernetes
 
+                                          WEBHOOK/ PULL SCM
 5) INORDER FOR US to update the new versionin on the deployment session on k8, that is done by webhook or pull ACM 
-*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a build ...32:17
+*************SOME ONE SAID ,, with the help of the webhook created in github wich is triggered when thers a new comit, github  then notify jenkins to do a
+build ...32:17
  ans : 
-another tin u shud knw is that our jobs are trigered frm JENkins, jenkins is our CI/CD pipeline, so frm jenkins if u are runin job1 , we can pass the job number to become
-the default version number of the image that is goin to be pushed to dockerhub such that when k8 is goin to pull, it is goin to dynamically get the latest image version
-that was pushed to dockerhub
+another tin u shud knw is that our jobs are trigered frm JENkins, jenkins is our CI/CD pipeline, so frm jenkins if u are runin job1 , we can pass the job 
+number to become the default version number of the image that is goin to be pushed to dockerhub such that when k8 is goin to pull, it is goin to dynamically 
+get the latest image version that was pushed to dockerhub
 
+
+                                   ADDING MSG TO ROLLOUT/ROLL BACK VERSION
 6) is ther a way to add a msg such that u see what ur rollin back to
-il illustrate that particular aspect in our subsequent classes, when u are rollin out a new version u pass an option that says --record so u can like tag a particular msg
-to that such that you can easily xplain what happened in a particular deployment such that if u ar goin to be rollin back to previous verisons, u can be able to get that msg 
-so u can use theat particular concept and if u want to rollout new versions u can create msgs to ease the processes as well
+il illustrate that particular aspect in our subsequent classes, when u are rollin out a new version u pass an option that says --record so u can like tag a 
+particular msg to that such that you can easily xplain what happened in a particular deployment such that if u ar goin to be rollin back to previous verisons,
+u can be able to get that msg so u can use theat particular concept and if u want to rollout new versions u can create msgs to ease the processes as well
 
-7)is it possible to integrate our workflow iwth pool REQ so that in our work env at work , someone doesnt just change the deployment witout any approval frm say lead engr
+
+                             INTEGRATE WORK FLOW WITH POOL REQ
+7)is it possible to integrate our workflow with pool REQ so that in our work env at work , someone doesnt just change the deployment witout any approval frm 
+say lead engr
 ANS:
-its very possible,,, and thats what actually happens in our env, dats why we did pool rEQ under git such that if ders a new version of the app, developers aaare nt comitin 
-dicrectly to d master branch, they are developin to probably the dev branch and from that branch they nid to create a pool for other members to be able to review b4 it is 
-commited to the master branch n it is only in the master branch that once der is a new commit github webhook wil b trigered to be able to do a buil, do a test, uplosd artifact,
-run sonarqude code, dockerize, push to regitry and deploy in a k8 cluster.
+its very possible,,, and thats what actually happens in our env, dats why we did pool rEQ under git such that if ders a new version of the app, developers
+aaare nt comitin dicrectly to d master branch, they are developin to probably the dev branch and from that branch they nid to create a pool for other members 
+to be able to review b4 it is commited to the master branch n it is only in the master branch that once der is a new commit github webhook wil b trigered to 
+be able to do a buil, do a test, uplosd artifact, run sonarqude code, dockerize, push to regitry and deploy in a k8 cluster.
 
 8) am a devops engr, i work for a coy, which k8 object shud i use n what will deter my choice object,,, any of this objects can be used for ur deployment
 based on our env deployment is what we use as our object for deployment bc it :
