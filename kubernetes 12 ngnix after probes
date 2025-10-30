@@ -1,4 +1,12 @@
-INGRESS INSTALLATION, INGRESS RULES (HOST BASE AND PATH BASED ROUTING)
+
+
+WE CAN USE NGNIX TO REDUCE LB COST, INGRESS INSTALLATION, NGINX LAYER 7LB/ ENDPOINT EXPLAINED, CHANGING SERVICE TYPE, DEPLOYING INGRESS CONTROLLER, 
+NGINX SERVICE TYPE IS CLUSTERIP, TROUBLESHOOTING, DEPLOYING THE APPLICATION WITHOUT SERVICE, CREATING SERVICES FOR OUR APPLICATION/ KUBERNETES PLUGGIN,
+STEPS FOR CREATING INGRESS RULE, CREATING INGRESS RULE, CREATING HOSTBASED ROUTING, DEPLOYING HOST BASED ROUTING, DIFF BTW HOSTBASED ROUTING & PATH BASED ROUTING
+CREATING PATH BASED ROUTING, TROUBLESHOOTING, WHEN CAN WE USE PATH BASED ROUTING, WHEN WE CAN USE HOST BASED ROUTING
+
+
+
 
 he said der was ngnix in the k814 video on probes but i dnt think so 
 helm   
@@ -70,7 +78,8 @@ users > ingresSVC lb , it acts as d frontend therfore it provides additional lay
 
 
 
-              CHANGING SERVICE TYPE
+
+                    CHANGING SERVICE TYPE
  if our service type was clusterip, we can change it to loadbalancer or nodeport but if it was loadbalancer we cant change it to clusterip
 we can also change from nodeport to loadbalancer
 
@@ -136,6 +145,7 @@ bc we hv nginx controller deployed, our service type will be clusterip
 he did a deployment using deployment as our choice k8 object, he said we can also use replica set but deployment is our choice k8 object
 kubectl appl -f jp.yml
 but it failed
+
                                        TROUBLESHOOTING
 he realised thers was a resource quota he created in previous class 
 kubectl get resourcequota
@@ -396,7 +406,7 @@ the loadbalancer so lets go bk to aws and create the record set
            
 
 
-                   ERROR
+                      TROUBLESHOOTING
 502 error is server error , 502 error its called server site
 
 
@@ -409,7 +419,7 @@ this can help us to define our like if we wnt to use path based routing
 
 
 
-****************************************WHEN CAN WE USE PATH BASED ROUTING eg microservices
+**************************************  TROUBLESHOOTING, WHEN CAN WE USE PATH BASED ROUTING eg microservices
 Lets assume u are deploying a micro service appl,
 we can have :
 ebay/login
