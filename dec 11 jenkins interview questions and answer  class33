@@ -253,7 +253,7 @@ i bliv the following steps starts after we have used Docker to containerize the 
 we continue with these steps;
 1a)After installing either self managed (multi node preferred), OR  paid to manage 
   b)we install KObs because of the disadvantage of using self managed rg it doesnt create aws resource for us
-   therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates it for you
+   therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates them for you including ELB, so you dnt need to create nginx
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
 4)for deployment; chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about carnary,
@@ -1927,3 +1927,20 @@ everytin chart wil be created for me
 helm is a package manager for k8, we wil look at it in nxt class
 
 
+
+KUB 12
+
+ WE CAN USE NGNIX TO REDUCE LB COST
+frm an infrastructure point of view we can place our lb in the public subnet n our node in private subnet, for (one appl to com to the other, it nids to go tru the service of 
+the appl) evrytin is runin in aws, lb is nt free , they are xpensive (for us to be able to keep our cost at the barest minimun we can deploy nginx ingress,we can create a new
+service in the cl8 called ngnix ingress
+
+**I bliv when he says we can reduce cost by using ngnix, it means that rather than creating a lb service for all the application which then means that  each of
+the appl will incurr a seperate cost, rather we can create a lb service for nginx then we use the ngnix service for all the applications, that way its only the
+nginx that will incurr lb cost.***
+
+                                                            **mee** ie we are changing the nodeport or lb service type we have being using for to deploy the services/app
+when we create ngnix service for our appl we can now hv service of type cl8 ip service, that way all the service/*me*app in the cl8 wil be a cl8 ip type for the appl to recive 
+external traffic we wil deploy an nginx ingress controller inside the cl8, on a node we can do a dployment called ngnix ingress so the pod is scheduled wil mg8 hw traffic is 
+routed to our backend appl, so as part of the deployment we are also creating a service (ingressSVC )for ngnix ingress controler and the service will act as our frontend n 
+based on this service  we aer goin to create some ingress rules wich will state hw traffic can be routed
