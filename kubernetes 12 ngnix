@@ -2,8 +2,9 @@
 
 WE CAN USE NGNIX TO REDUCE LB COST, INGRESS INSTALLATION, NGINX LAYER 7LB/ ENDPOINT EXPLAINED, CHANGING SERVICE TYPE, DEPLOYING NGINX INGRESS CONTROLLER, 
 NGINX SERVICE TYPE IS CLUSTERIP, TROUBLESHOOTING, DEPLOYING THE APPLICATION WITHOUT NGINX SERVICE, CREATING NGINX SERVICE FOR THE APPLICATION/ KUBERNETES 
-PLUGGIN, STEPS FOR CREATING INGRESS RULE, CREATING INGRESS RULE, CREATING/DEPLOYING HOSTBASED ROUTING, DIFF BTW HOSTBASED ROUTING & PATH BASED ROUTING,
-CREATING/DEPLOY PATH BASED ROUTING, TROUBLESHOOTING, WHEN CAN WE USE PATH BASED ROUTING, WHEN WE CAN USE HOST BASED ROUTING, HOW TRAFFIC IS ROUTED TO BACKENDPOINTS
+PLUGGIN, STEPS FOR CREATING INGRESS RULE, CREATING RECORD SET FOR HOST BASED ROUTING, CREATING/DEPLOYING INGRESS RULE FOR HOSTBASED ROUTING, 
+HOW TRAFFIC IS ROUTED TO BACKENDPOINTS, DIFF BTW HOSTBASED ROUTING & PATH BASED ROUTING,CREATING/DEPLOYINGRESS RULE FOR PATH BASED ROUTING, TROUBLESHOOTING, WHEN CAN WE USE
+PATH BASED ROUTING, WHEN WE CAN USE HOST BASED ROUTING,HOW TRAFFIC IS ROUTED TO BACKENDPOINTS
 
 
 
@@ -246,11 +247,11 @@ we can see our pods and their labels
 
 **mee** STEPS FOR CREATING INGRESS RULE
 1)IN Aws, route53; create record set to establish the response
-2) Create the route type ie either bath based OR host based manifest file.
+2) Create the ingress rule (manifest file)for the route type ie either bath based OR host based .
 3) deploy the rule
 
 
-                                           CREATING INGRESS RULE
+                                           CREATING RECORD SET FOR HOST BASED ROUTING
 
 55:36
 ##...  continuing with our ingress installation script
@@ -269,7 +270,7 @@ hello.mylnadmark .........> hellosvc
 vi ingress-resource.yml
 
 
-                                             CREATING HOSTBASED ROUTING
+                                             CREATING INGRESS RULE FOR HOSTBASED ROUTING
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -309,7 +310,7 @@ spec:
             port:
               number: 80
 
-                                                    DEPLOYING HOST BASED ROUTING 
+                                                    DEPLOYING INGRESS RULE FOR HOST BASED ROUTING 
 
 before we deploy this lets run
 kubectl get ingress
@@ -340,7 +341,7 @@ so with the help of ingres we are able to access our appl and we are able to use
 
 
 
-**mee***      DIFF BTW HOSTBASED ROUTING & PATH BASED ROUTING
+**mee***      DIFF BTW HOSTBASED ROUTING INGRESS RULE & PATH BASED ROUTING INGRESS RULE
 1) Host based manifest file can have more than one 'host' object ...lol@ object
  1.200... its is used for when we have diff applications **i bliv like monolethic application
 while
@@ -348,7 +349,7 @@ while
    it is used for microservices ie decouple monolethic application
 
 
-                      CREATING PATH BASED ROUTING
+                      CREATING INGRESS RULE FOR PATH BASED ROUTING
 
 we can also deploy using path based routing and in this case we will just have one hostname with diff path like
 while creating ingress
@@ -402,7 +403,9 @@ apps-ingress-rule          nginx             springapp.mylanmarktech.net,hello.m
 ingress2                  nginx               mylandmarktech.net             **********we hv jst one host bc its path based routing 
              80            23s
 
-1:18:00
+
+
+1:18:00                              CREATING RECORD SET FOR PATH BASED ROUTING
 ************ if we type mylandmarktech.net in google we dnt get any response bc we hv nt created the record set to establaish the response
 in aws we are using a dns service which is route53, in route53 we hv to create A record set where we will state that my landmark tech is being forwarded to 
 the loadbalancer so lets go bk to aws and create the record set
