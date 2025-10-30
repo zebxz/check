@@ -15,12 +15,17 @@ what else can we create? we can create loadbalancer(this a lbalancer service)...
 external comm
 
 
-                                  CREATE NGNIX TO REDUCE LB COST
+                                  WE CAN USE NGNIX TO REDUCE LB COST
 frm an infrastructure point of view we can place our lb in the public subnet n our node in private subnet, for (one appl to com to the other, it nids to go tru the service of 
 the appl) evrytin is runin in aws, lb is nt free , they are xpensive (for us to be able to keep our cost at the barest minimun we can deploy nginx ingress,we can create a new
 service in the cl8 called ngnix ingress
 
-when we create ngnix service for our appl we can now hv service of type cl8 ip service, that way all the service in the cl8 wil be a cl8 ip type for the appl to recive 
+**I bliv when he says we can reduce cost by using ngnix, it means that rather than creating a lb service for all the application which then means that  each of
+the appl will incurr a seperate cost, rather we can create a lb service for nginx then we use the ngnix service for all the applications, that way its only the
+nginx that will incurr lb cost.***
+
+                                                            **mee** ie we are changing the nodeport or lb service type we have being using for to deploy the services/app
+when we create ngnix service for our appl we can now hv service of type cl8 ip service, that way all the service/*me*app in the cl8 wil be a cl8 ip type for the appl to recive 
 external traffic we wil deploy an nginx ingress controller inside the cl8, on a node we can do a dployment called ngnix ingress so the pod is scheduled wil mg8 hw traffic is 
 routed to our backend appl, so as part of the deployment we are also creating a service (ingressSVC )for ngnix ingress controler and the service will act as our frontend n 
 based on this service  we aer goin to create some ingress rules wich will state hw traffic can be routed, we say smt like  e.g if somebody type myland.net it wil route
