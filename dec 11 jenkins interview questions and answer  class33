@@ -259,8 +259,8 @@ we continue with these steps;
    D) GKE
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
-4)for deployment; chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about carnary,
-blue green techniques, bt didnt apply it.
+4)for manifest file for deployment; chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about 
+carnary, blue green techniques, bt didnt apply it.
 5) Resources request & limit ie cpu/ memory for the pod/application
 6) Autoscale the controller manager
 7) Kubernetes Volume concept (vols can be created with or without PVC  but for it to be consistent, using PVC is recommended)
@@ -271,7 +271,7 @@ the NFS server has to be launched in the same vpc like the other servers ie k8 s
 can create a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
 Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 8) configmap & secret
-9)ngnix  .. this is required for self manged cluster
+9)ngnix/ ingress rule  .. this is required for self manged cluster
 10) Helm ... its a package manger for k8
 
 35.00****kub 10&11  ....  so one deployment requires all of this
@@ -2073,10 +2073,120 @@ KUB 13         EKS
    *** was all about setting up the EKS cluster.
 
 
-KUB 14
+
+
+
+
+KUB 14                         HELM
+
+
+                                HELM ARCHITECTURE
 
 Helm:                   ...... CAN GO TRU THE POWERPOINT SLIDE
   Helm is a package manager for Kubernetes applications.
 Helm will ease the process of managing hw appl are deployed in our cl8
+with the use of helm we can deploy diff appl in k8, remember if u wnt to deploy an appl in k8 most of the time like our spring app deployment, what was needed
+to deploy our spring app????????? now we hv a stateless appl , 
+We deploy workloads in kubernetes using kubernetes objects declared in manifests files:
+ e.g we deloyed a springapp Stateless web application: and how many objects were involved?
+we had to write a manifest file for :
+     deployment
+     service 
+     ingress 
+     hpa       atimes we also need this 
+     secrets  
+     configmaps 
+all these was for one appl deployment
+and in addition to this we are also deploying a stateful appl
+
+   mongodb Stateful database application: and for us to deploy this app, we nid smt like this either we ar using
+     deployment/ and or what else can we use with deployment
+     service 
+     ingress 
+     hpa 
+     secrets  
+     configmaps 
+     persistentvolumes  
+     persistentvolumeclaims 
+     StatefulSets
+
+so all of this obj need to be written, we nid to write manifest file for all of this
+and this is too much job but with the help of helm, it eases n simplifies the deployment of workload in k8
+
+
+
+                       WITH THE HELP OF MANIFEST FILE , WE have deployed some:
+Custom applications: these are appl developed by our developers, our team of developers hv developed this appl
+    springapp  
+    java-web-app  
+    maven-web-app 
+    pythonapp  
+    nodejsapp  
+  Third party applications:
+    mongo 
+    mysql 
+    jenkins
+    metrics-server 
+    csi drivers - EBSCSI  
+    CNI Plugins/Add-ons:
+      vpc-cni 
+      weave 
+      calico 
+      Flannel  
+    nginx-ingress 
+    RBAC: services in k8
+      clusterrole and clusterrolebinding   
+      Role  and RoleBinding  
+      serviceaccount
+
+################################################# ALL OF THESE involves manifest files
+
+
+               
+                          HELM SIMPLIFIES THE DEPLOYMENT OF WORKLOADS
+
+
+ HOW CAN WE SIMPLIFY THE PROCESS OF DEPLOYMENT IN K8
+We can simplify the process of deployment in k8 using  helm as a package manger
+
+DIFF PACKAGE MANAGERS:
+we use package managers to install packages:
+  apt /  FOR  = package manager for ubuntu/debian
+  yum /   FOR = package manager for redhatOS/centOS  
+  dnf /  FOR  = package manager for redhatOS/centOS 
+  rpm /  FOR = package manager for redhat 
+  deb /      = 
+  choco /  FOR = package manager for windows OS
+  pip-python-pip = package manager FOR PYTHON  
+  brew = package manager for macOS  
+WE also have :
+Helm is a package manager for kubernetes.
+
+
+                                  HELM CONCEPTS
+Helm concepts:
+  Helm cli: = It's a command line interface used to work with packages to 
+             install upgrade or uninstall 
+
+         e.g you can run               
+           helm install springapp app/springapp /     (he said that this is helm chart :app/springapp 
+             helm upgrade springapp app/springapp  /     ..... to upgrade to version of ur appl
+             helm uninstall springapp
+             helm add repo    ********* to add a helm repository in nexus or other locations
+             kubectl apply app.yml       
+
+
+                                 HEKM CHARTS
+Helm charts: are packaged kubernetes manifest files organised in a directory 
+  format that can be reused
+  helm charts are stored in helm repository and frm der we can pull the helm chart n deploy our appl in mutiple env
+so we can create a helm repository n these helm charts are like artifacts n we can store them in repository like nexus as well as github pages
+it has a cli wich we can equally use to run helm commands :helm add repo 
+  Helm repository: -- 
+      jar/ear/war, npm, python
+
+
+
+
 
 
