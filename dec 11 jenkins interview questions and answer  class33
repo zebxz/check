@@ -251,10 +251,13 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
                    ***meee***        STEPS FOR OCHESTRATING CONTAINERS
 i bliv the following steps starts after we have used Docker to containerize the application, then for management & deployment  of the application/container
 we continue with these steps;
-1)After installing either self managed (multi node preferred), OR  paid to manage OR we install KObs because of the disadvantage of using self managed
+1a)After installing either self managed (multi node preferred), OR  paid to manage 
+  b)we install KObs because of the disadvantage of using self managed rg it doesnt create aws resource for us
+   therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates it for you
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
-4)chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about blue green techniques, bt didnt apply it.
+4)for deployment; chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about carnary,
+blue green techniques, bt didnt apply it.
 5) Resources request & limit ie cpu/ memory for the pod/application
 6) Autoscale the controller manager
 7) Kubernetes Volume concept (vols can be created with or without PVC  but for it to be consistent, using PVC is recommended)
@@ -265,6 +268,7 @@ the NFS server has to be launched in the same vpc like the other servers ie k8 s
 can create a security grp for nfs with the REQ ports open like  ssh  port ffrm anywher, nfs 2049 
 Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 8) configmap & secret
+9)ngnix  .. this is required for self manged cluster
 
 35.00****kub 10&11  ....  so one deployment requires all of this
 ********************************************************************
