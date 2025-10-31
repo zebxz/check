@@ -2186,9 +2186,79 @@ it has a cli wich we can equally use to run helm commands :helm add repo
       jar/ear/war, npm, python
 
 
-So we can install helm in a k8 cluster & we are able to run helm commands using the cli as well as k8 commands
+
+***online.......      KUBERNETES ARCHITECTURE
+
+A Kubernetes client-server architecture refers to the interaction between clients that manage and interact with a Kubernetes cluster,
+and the server-side components of that cluster.
+In essence, the Kubernetes API Server acts as the central hub, receiving instructions from various clients and orchestrating the cluster's state accordingly.
+
+THE SERVER (Kubernetes Control Plane):
+The "server" in this context is the Kubernetes API Server, a core component of the Kubernetes control plane. It exposes a RESTful API that serves as the central point of 
+interaction for all clients.
+FUNCTION: The API Server processes requests, validates them, and updates the state of Kubernetes objects (like Pods, Deployments, Services) in the cluster's distributed 
+key-value store (etcd). It also handles authentication and authorization.
+COMPONENTS: It is part of the control plane, which also includes the scheduler, controller manager, and etcd.
+
+
+
+          HELM AUTHENTICATION
+Lets cal it a k8 client server , frm this server we can mk api calls like kubectl -apply, onCe we mk the call we are authenticated n inside my cl8 we v master &worker node
+so once we mk the call, we need to be uathenticated, on the master node the api authenticates u, it ensures u are authoirzed to mk such call, n the authentication allows
+you to have that kube config file, so the file is authenticating you that yes u are permitted to mk the api call .. 
+similarly we can execute commands like : 
+helm install , once this is done the same kube config file wil authenticate u but it will depend on the helm architecture
+
+***meee*** So it means we can install helm in a k8 cluster & we are able to run helm commands using the cli as well as k8 commands
+
+
+
+QUESTION
+
+WHAT IS THE BESTS TOOL WE CAN USE TO MANAGE OUR CL8
+
+ANS:      it all depends 
+maybe u want to ask hw we can best deploy our cl8
+............u can deploy ur EKS cl8 using terraform scipt, u can use commands to deploy your EKS ie rather than going to the console 
+u can jst run on the CLI , aws  EKS create cl8 ( the name of the cl8) that wil create it or eks ctl create cl8 bt u nid to ensure 
+that your EKS command line utility has already been installed 
+so u can use :
+commaNd
+console 
+terraform
+once u do that u can now proceed to deploy appl bc ur main task is appl deployment
+most time at wrk u are goinmg to join a coy that already has running cl8 , it cud be EKS cl8, kubeabm cl8, kops cl8
+once the cl8 is already existing all u nid is to use the cl8 to deploy appl, so main task now is appl deployment bc u wrk in an env 
+with existing cl8 already , so u are goin to be worried abt how  appl are ruuing that are installed and exposed , u hv vol installed and all of that.
+
+
+  CAN U CONSIDER KOPS IN THE SAME LINE AS HELM??? .... is it the same as helm
+
+ANS:
+kops is a software used to create a k8 cl8
+what do u need to deploy ur appl in k8 , u nid running cl8 , a cl8 that is functionig 
+a cl8 is a grp of nodes  , that cl8 may v been created using kops or u cud hv created it using aws k8 service or using kubadm
+it doesnt amtter what u hv used,all u nid is a cl8,  once u hv  a cl8 u can deploy appl 
+
+***************************************************************************
+
+
+NEXT....
+   HELM INSTALLATION
+
+
+ THE MOST IMPORTANT FILE
+            Its values.yaml
+
+
+***mee**               2 WAYS TO DEPLOY THE APPLICATION USING HELM
+1)By using just the image then creating the manifest/helm charts, review the application template & deploy
+2) By cloning the application from then repo add the repo, review the applicaton template & deploy
 
 
 
 
+
+
+KUB 15 .... PROBES
 
