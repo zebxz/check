@@ -246,25 +246,31 @@ javawebapp
 
 
 
-  30.00                 THE MOST IMPRTANT FILE
+  30.00                 THE MOST IMPORTANT FILE
             Its values.yaml
 
 
+***mee**               2 WAYS TO DEPLOY THE APPLICATION USING HELM
+1)By using just the image then creating the manifest/helm charts, review the application template & deploy
+2) By cloning the application from then repo add the repo, review the applicaton template & deploy
 
-                                   STEPS TO CREATE HELM CHART FOR AN APPLICATION
 
-EXAMPLE  create template for 'myapp'     ***mee** we dnt need to create a manifest file by our selve as we have been doing, we need jsut the app image..
+                          
+1)                         DEPLOYING A CUSTOM APPLICATION OF OURS BY CREATING THE MANIFEST/ HELM CHARTS 
+                                   
+EXAMPLE  create template for 'myapp'     ***mee** we dnt need to write a manifest file by our selve as we have been doing, we need jsut the app image, then helm will create 
+                                                  the manifest for us
 
 1) -# Create deployment manifests (helm charts) for myapp
 mkdir app && cd app 
-helm create myapp 
+helm create myapp                   renders/creates manifest files  for myapp
 run tree 
 we see the number of files that were created
 4dirs  and 10files
 so all the resources need we can find them in this dir
 
 
-2)ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
+2)ubuntu@ip-10-0-0-24:~$  helm template myapp          *********  to review charts template for myapp
 based on what we hv for the template these are going to be created
 it wil create a service acount for u
 evrytin defined 
@@ -452,6 +458,8 @@ helm template nginx-stable/nginx-ingress    # review charts
 helm show values nginx/nginx-ingress   # show values/varaiables
 
 
+
+Illustration 1)
 TICKET 
 install nginx ingress using helm
 
@@ -481,7 +489,7 @@ if u ae going to deploy nginx this is the values file
 we can use the value file to deploy the appl as expected
 
                                    
-2)           CREATE HELM CHART FOR THE NGINX INGRESS APPLICATION
+2)           REVIEW CHARTS
 ubuntu@ip-10-0-0-24:~$ helm template nginx/ingress-nginx
 we can see the diff components/objs that will be created
 service account is being created
@@ -511,6 +519,11 @@ helm repo ls
 helm repo rm nginx
 we del;eted the ngnix repo we created 
 
+   (He didnt deploy it again, rather he deleted the ngnix repo we cloned & added another nginx repo which he deployed but it 
+
+
+
+Illustration 2)
 
                            OTHER CHARTS TO USE TO DEPLOY NGINX
 now let add another  repository, we hv some other chart to deploy nginx
@@ -565,7 +578,9 @@ am going to check on this nginx ingress bt again
 ########### we will also discuss RANCher as well to see hw wwe can use it to visualize and access our cl8
 
 
-                                DPELOYING CUSTOM APPLICATION
+
+
+   2)                             DPELOYING A CUSTOM APPLICATION OF OURS BY CLONING THE REPO
 in the pas we hv created our own helm chart for one of our appl
 we hv an appl that we hv created helm chart for, the appl is found in this github repository so if u want to see this chart
 the chart are found in our github repository  
@@ -588,12 +603,13 @@ we can see the image  is mylandmarktech spring boot mongo
 service is false bc w e dnt nid it for this deployment
 lb service type
 
-2)
+2)        REVIEW CHART
 ********************helm template will show show us all the object to be created 
 its crtaing an HPA autoscaler
 etc
 we wnat to use the chart to deploy our appl 
 
+  DEPLOY USING HELM CHART
 3)helm installn app31 webapp/myapp
 deployed
 this is a custom appl of ours 
