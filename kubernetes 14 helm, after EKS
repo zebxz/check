@@ -254,7 +254,7 @@ it wil create a service
 we can seeits created the default service type : clusterip
 its cereatinga deployment for ur appl 
 and here is the pod template for the dpeloyment
-*************this template depend son the values , so we can also run the command helm show values 
+*************this template depends on the values , so we can also run the command helm show values 
 
 2) ubuntu@ip-10-0-0-24:~$ helm show values myapp/
 i wnat to see the default value for my app
@@ -294,23 +294,23 @@ now we see the changes i effected in the values file
 ubuntu@ip-10-0-0-24:~$  ls
 myapp
 
-                            DEPLOYING THE APPLICATION USING HELM CHART
+       37.10                     DEPLOYING THE APPLICATION USING HELM CHART
   ********* now i can deploy appl uisng this helm chart
 ubuntu@ip-10-0-0-24:~$  helm install app myapp/
 STATUS: deployed
 ubuntu@ip-10-0-0-24:~$  helm ls 
 we can see the appl , it was deployed in the dev namespace
-ubuntu@ip-10-0-0-24:~$ kubectl get pod
 
                                                
                        TROUBLESHOOTING
+ubuntu@ip-10-0-0-24:~$ kubectl get pod
 thers an error , my app got an error in pulling the image
 copy the image name
 ubuntu@ip-10-0-0-24:~$  kubectl describe pod (the image name)
- we dnt have the version of the image its trying to pull , so the deployment didnt tk palce 
+ we didnt state the version of the image its trying to pull , so the deployment didnt tk palce 
 ubuntu@ip-10-0-0-24:~$  helm uninstall app
-ubuntu@ip-10-0-0-24:~$ helm ls 
-we no longer hav ethe deployment
+ubuntu@ip-10-0-0-24:~$ helm ls  or kubectl get po
+we no longer have the deployment
 ubuntu@ip-10-0-0-24:~$  vi myapp/values.yaml
 change tag to latest
 ubuntu@ip-10-0-0-24:~$  helm install app myapp/
@@ -319,27 +319,36 @@ deployed
 **************************so with the help of helm we hv deployed thsi appl  with relative ease
 
 
-                                      UPGRADING THE IMAGE VERSION/ CHANGING THE SERVICE TYPE
+42.00
+                                     WE SEE THE SERVICE THE APPL WAS DEPLOYED 
 ubuntu@ip-10-0-0-24:~$ kubectl get svc
 we see the service we created
 we can access the appl using the loadbalancer service but its nt secured discovery option
-we wnat to upgarde thi sdeployment and change the service to clusterip and also the image version to v2
-so we check dockerhub where our containerized images are found if we hv v2 bc k8 is simply manging containerized app ,so we use docker to conatinerized n k8 to mg8 d 
+  so we can change it;                                  
+                            
+     43.00                          CHANGING THE SERVICE TYPE TO NGNIX INGRESS/ UPGRADING THE IMAGE VERSION
+
+  1) CREATE INGRESS RULE FOR HOST BASED ROUTING 
+cd   ... out of the myapp dir
+vi ngress-resource.yml
+Creating one more host using the previous manifest file from (kub 12; nginx ingress)
+host: myapp.mylandmarktech.net
+save & exit file
+44.53 we wnat to upgarde this deployment and change the service to clusterip and also change the image version to v2
+Vi app/myapp/value.yaml
+in upgrading this deployment, am changing service type to cluster ip
+am also changing the image version
+before we used latest
+i want to use V2
+so we go to check dockerhub where our containerized images are found if we hv v2 bc k8 is simply manging containerized app ,so we use docker to conatinerized n k8 to mg8 d 
 container
-45;32 in dodckerh hub, we see we hv v2 
-before we use latest
-so we cahnge the tag to 2
-so ww are deploying now with the version2 
-ubuntu@ip-10-0-0-24:~$  helm upgrade app app/myapp/
+46.00 in docker hub, we see we hv v2 
+so we change the tag to 2
+so we are deploying now with the version2 
+ubuntu@ip-10-0-0-24:~$  helm upgrade app app/myapp/         ***am changing the application version & the service type  
 upgraded
 
-
-     43.00                                         CREATE INGRESS RULE FOR HOST BASED ROUTING 
-cd   ... out of the myapp dir
-vi ngress
-Creating one more host using the previous manifest file from kub 12; nginx
-Vi app/myapp/value.yaml
-
+next
 47. 50 .. ubuntu@ip-10-0-0-24:~$ kubectl apply -f ingress-resource.yml
 it has been reconfigured
 ubuntu@ip-10-0-0-24:~$ kubectl get svc 
@@ -348,12 +357,15 @@ ubuntu@ip-10-0-0-24:~$ kubectl get ingress
 isee my ingress rule
 ubuntu@ip-10-0-0-24:~$ kubectl describe ingress appas-ingress-rule
 we see its routin traffic to the backend pods
-but we unable to access the appl bc the Arecord has not be created
+but we unable to access the appl bc the record has not be created
+
+                                                       CREATE THE A RECORD TO BE ABLE TO ACCESS THE APPLICATION
 SO in route53, we create the record
 after wich we can accses it online, traffic ias been routed as expected
 this is helm for you
-so with thw use of helm, we hv created our own custom chatr
+                     ******* so with thw use of helm, we hv created our own custom chatr
 so we can cfeate our chart with relative ease
+
 
 ###########################
 ubuntu@ip-10-0-0-24:~$ ls app/myapp
@@ -370,7 +382,7 @@ so evrythin is making use of variables
 ubuntu@ip-10-0-0-24:~$ cat app/myapp/templates/service.yaml
 apiVersion: v1                        
 kind: Service                            
-metadata:                                     *******************this is hw variables are passed, soif u want to assign varaible is smt like this
+metadata:                                     *******************this is hw variables are passed, so if u want to assign varaible is smt like this
   name: {{ include "myapp.fullname" . }}
   labels:
     {{- include "myapp.labels" . | nindent 4 }}
