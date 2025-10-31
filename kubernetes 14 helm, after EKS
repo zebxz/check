@@ -232,7 +232,7 @@ javawebapp
            test-connection.yaml
    values.yaml                ************************what is very imp here is this file bc this contains default values.. whtaever u wnt to create is defined in this file
                   values.yaml is a yaml file of default configuration values for the chart
-
+            51.16  .. Variables are defined in the values.yaml file, everything is making use of variables, labels are variables
 
 
 
@@ -241,11 +241,20 @@ javawebapp
 
 
 
-                                   STEPS TO CREATE HELM CAHRT FOR AN APPLICATION
+                                   STEPS TO CREATE HELM CHART FOR AN APPLICATION
 
 EXAMPLE  create template for 'myapp'     ***mee** we dnt need to create a manifest file by our selve as we have been doing, we need jsut the app image..
 
-1)ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
+1) -# Create deployment manifests (helm charts) for myapp
+mkdir app && cd app 
+helm create myapp 
+run tree 
+we see the number of files that were created
+4dirs  and 10files
+so all the resources need we can find them in this dir
+
+
+2)ubuntu@ip-10-0-0-24:~$  helm template myapp          *********the template is for myapp
 based on what we hv for the template these are going to be created
 it wil create a service acount for u
 evrytin defined 
@@ -256,14 +265,14 @@ its cereatinga deployment for ur appl
 and here is the pod template for the dpeloyment
 *************this template depends on the values , so we can also run the command helm show values 
 
-2) ubuntu@ip-10-0-0-24:~$ helm show values myapp/
+3) ubuntu@ip-10-0-0-24:~$ helm show values myapp/
 i wnat to see the default value for my app
 these are the default values
 our replica is 1
 my image is nginx 
 but i can also change all this inf
 
-                                                   VI vALUES FILE TO CHANGE IMAGE
+ 4)                                                  VI vALUES FILE TO CHANGE IMAGE
 i wil go to the values files, vi into it and cahnge it 
 ubuntu@ip-10-0-0-24:~$  vi myapp/values.yaml
 
@@ -286,7 +295,7 @@ affimity
 
 
 
-                             TO APPLY OUR CHANGES, RE-RUN 'Helm Template'application name'
+       5)                      TO APPLY OUR CHANGES, RE-RUN 'Helm Template'application name'
 ubuntu@ip-10-0-0-24:~$  helm template myapp 
 now we see the changes i effected in the values file
 
@@ -294,7 +303,8 @@ now we see the changes i effected in the values file
 ubuntu@ip-10-0-0-24:~$  ls
 myapp
 
-       37.10                     DEPLOYING THE APPLICATION USING HELM CHART
+     37.10    
+6)               DEPLOYING THE APPLICATION USING HELM CHART
   ********* now i can deploy appl uisng this helm chart
 ubuntu@ip-10-0-0-24:~$  helm install app myapp/
 STATUS: deployed
@@ -325,7 +335,9 @@ ubuntu@ip-10-0-0-24:~$ kubectl get svc
 we see the service we created
 we can access the appl using the loadbalancer service but its nt secured discovery option
   so we can change it;                                  
-                            
+
+
+
      43.00                          CHANGING THE SERVICE TYPE TO NGNIX INGRESS/ UPGRADING THE IMAGE VERSION
 
   1) CREATE INGRESS RULE FOR HOST BASED ROUTING 
@@ -335,7 +347,7 @@ Creating one more host using the previous manifest file from (kub 12; nginx ingr
 host: myapp.mylandmarktech.net
 save & exit file
 44.53 we wnat to upgarde this deployment and change the service to clusterip and also change the image version to v2
-Vi app/myapp/value.yaml
+2)Vi app/myapp/value.yaml
 in upgrading this deployment, am changing service type to cluster ip
 am also changing the image version
 before we used latest
@@ -349,7 +361,8 @@ ubuntu@ip-10-0-0-24:~$  helm upgrade app app/myapp/         ***am changing the a
 upgraded
 
 next
-47. 50 .. ubuntu@ip-10-0-0-24:~$ kubectl apply -f ingress-resource.yml
+47. 50 ..
+3)ubuntu@ip-10-0-0-24:~$ kubectl apply -f ingress-resource.yml
 it has been reconfigured
 ubuntu@ip-10-0-0-24:~$ kubectl get svc 
 the service type has changed
@@ -360,16 +373,18 @@ we see its routin traffic to the backend pods
 but we unable to access the appl bc the record has not be created
 
                                                        CREATE THE A RECORD TO BE ABLE TO ACCESS THE APPLICATION
-SO in route53, we create the record
+4)SO in route53, we create the record
 after wich we can accses it online, traffic ias been routed as expected
 this is helm for you
                      ******* so with thw use of helm, we hv created our own custom chatr
 so we can cfeate our chart with relative ease
 
 
-###########################
+
+
+###########################                          
 ubuntu@ip-10-0-0-24:~$ ls app/myapp
-chart.yaml charts templates values.yaml
+chart.yaml charts templates values.yaml                   TAKE A LOOK AT THE TEMPLATE
 ubuntu@ip-10-0-0-24:~$
 ubuntu@ip-10-0-0-24:~$ ls app/myapp/templates/       ******************inside this deployment let us check how this deloyment.yaml file is
 NOTES.txt _helpers.tpl deployment.yaml ingress.yaml service.yaml serviceaccount.yaml tests
@@ -377,8 +392,11 @@ ubuntu@ip-10-0-0-24:~$
 ubuntu@ip-10-0-0-24:~$ ls app/myapp/templates/deployment.yaml           *************inside this deployment let us check how this deloyment.yaml file is
 this is making reference like the name of the deployment includ myapp.fullname
 so these are variable, the labels 
-and the variables are defined in the values.yaml file
+
+                  ***********and the variables are defined in the values.yaml file
 so evrythin is making use of variables
+
+                                                 SERVICE.YAML
 ubuntu@ip-10-0-0-24:~$ cat app/myapp/templates/service.yaml
 apiVersion: v1                        
 kind: Service                            
@@ -399,54 +417,74 @@ spec:
 
 ubuntu@ip-10-0-0-24:~$ ls app/myapp/templates                             
 NOTES.txt _helpers.tpl deployment.yaml ingress.yaml service.yaml serviceaccount.yaml tests
-                                                  
-                                                                          ***********we hv now all our chart, now we can push this chart to a kind of remote repository 
-                                                                                                for helm and now use that chart oin the future to deploy appl
+
+
+    5)                              PUSH CHART TO REPOSITORY
+                               *we hv now all our chart, now we can push this chart to a kind of remote repository 
+                                                 for helm and now use that chart in the future to deploy appl
 
 
 
 helm commands:
-helm create myapp    = renders manifest files  
+helm create myapp    = renders/Creates manifest files  
 helm install         =# will deploy applications
 helm uninstall       =# will undeploy applications
 helm upgrade   =# will rollout new versions deployments of applications
 helm ls    =# List deployments
 
+
+                                                      TO LIST REPOS WE HAVE
 helm repo ls                            ************to show our helm repositories
+we have some helm repositories we can add
 helm repo rm nginx
-helm search repo nginx  # searches number of deploys
+helm search repo nginx  # searches number of deploys/we can  check the  repo to see the chart that are in the repository
 helm template nginx-stable/nginx-ingress    # review charts
 helm show values nginx/nginx-ingress   # show values/varaiables
 
 
-############################### lets assume we hv a task to install nginx ingress using helm , can that be done ...?? yes
+TICKET 
+install nginx ingress using helm
+
+lets assume we hv a task to install nginx ingress using helm , can that be done ...?? yes
 install nginx-ingress using helm:
- https://kubernetes.github.io/ingress-nginx              ************this is the repository wher d nginx ingress chartt are found wich we can use to deploy appls
-  Add repository:
-     helm repo add nginx https://kubernetes.github.io/ingress-nginx         ***********can be added with this command: we can run helm repo add nginx or any name at all
+
+                 THE REPO WHERE THE NGINX INGRESS CHART ARE FOUND
+ https://kubernetes.github.io/ingress-nginx              ************this is the repository wher d nginx ingress chart are found 
+                                                                  this repo contains charts that we can use to deploy applications
+
+
+               STEPS TO INSTALL NGINX INGRESS USING HELM
+1)Add repository:
+    helm repo add          ***the repo can be added with this command: we can run helm repo add nginx or any name at all of your choice (like we did git repo add alias name
+     helm repo add nginx https://kubernetes.github.io/ingress-nginx         
      helm repo add ingress https://kubernetes.github.io/ingress-nginx          
 
                                                                             55:54
 ubuntu@ip-10-0-0-24:~$ helm repo add nginx https://kubernetes.github.io/ingress-nginx
 ubuntu@ip-10-0-0-24:~$ helm repo ls
-ubuntu@ip-10-0-0-24:~$ helm search repo ngnix           *************to check the chart that are in the repository
+ubuntu@ip-10-0-0-24:~$ helm search repo ngnix           *************we can  check the repo to see the chart that are in the repository
 we can see the ngnix/ingress- nginx chart as well as the version
-i can check the template to knw how the files were written
-ubuntu@ip-10-0-0-24:~$ helm show values nginx/ingress-nginx
+
+ubuntu@ip-10-0-0-24:~$ helm show values nginx/ingress-nginx        *** i can check the template to knw how the files were written
 we can see the value files for the nginx ingress
 if u ae going to deploy nginx this is the values file
-we can sue the value file to deploy the appl as expected
+we can use the value file to deploy the appl as expected
+
+                                   
+2)           CREATE HELM CHART FOR THE NGINX INGRESS APPLICATION
 ubuntu@ip-10-0-0-24:~$ helm template nginx/ingress-nginx
-we can see the diff objs that will be created
+we can see the diff components/objs that will be created
 service account is being created
 config map
 clusterrole for nginx ingres
 role binding
 service of type clusterip
 deployment for ngnix ingress controller
-all the objs need ed is being created
+all the objs needed is being created
 evrything needed is being deployed
 at the moment we hv nginx ingress already deployed in our env
+
+59.45
 ubuntu@ip-10-0-0-24:~$    kubectl get ns      .....................59: 41
 we had created a ns called nginx ingress b4 the ns was used to deploy oour appl
 kubectl get all -n nginx ingress       ................... we had earlier deployes an ngnix  before using manifest file we can now use n chart
@@ -457,36 +495,54 @@ service ngnix ingress deleted
 ################  we hv deleted our nginx ingress controller pod  so at this time the nginc controller pod is nt running bt are we able to
 achieve this routing wit the absence of the controller pod, even if we hv this hostname created ?  we CAN NOT . bc the pod is gone ,
 the LB service is gone the deployment is gone,in the nginx ingress NS everytin is gone, bt we are able to use nchart for this deployment
+
+1.0200
 helm repo ls
 helm repo rm nginx
-we del;eted the ngnix repo we cretaed 
+we del;eted the ngnix repo we created 
+
+
+                           OTHER CHARTS TO USE TO DEPLOY NGINX
 now let add another  repository, we hv some other chart to deploy nginx
 helm repo add nginx://helm.nginx.com/stable
 nginx has been added to your repository
 helm search repo nginx
-we hv a good number of manifesty file like nginx
+we hv a good number of manifest file like nginx
 we can also update this repo 
-helm update repo
-this wil get trhe latest version
-*************i want to deploy nginx ingress n i want too use n chart 
+helm repo update
+this wil get the latest version
+*************i want to deploy nginx ingress n i want to use helm chart 
+
+                         DEPLOY NGNIX INGRESS USING HELM CHART
+                               
 helm install nginx nginx/nginx-ingress
 error , ns alreaDY EXIST 
 kubectl delete ns nginx-ingress       ...................1:06:00
 deleted ,,,,,, 
 helm install nginx nginx/nginx-ingress 
   ******************************error continued       1:06:40
-so he cd into nginx  **********************************************bt couldnt rectify it  so he continued to explain1:11:16
-i wanted to illustrate hw we can use helm for this purpose bt one of trhe tins i had wanted to xplain in the class today 
+so he cd into nginx  **********************************************bt couldnt rectify it so he continued to explain1:11:16
+i wanted to illustrate hw we can use helm for this purpose bt one of the tins i had wanted to xplain in the class today 
 is the fact that we are going be using helm to look at other concept in k8 , 
 
+
+                               OTHER THINGS WE ARE GOING TO USE HELM TO INSTALL
 we are goin to ne using helm to install 
 helm to install and deploy:
   P/G  
   EFK  
   Rancher    
-we cud als use helm to deploy our metrix server
+we cud alsO use helm to deploy our metrix server
 so we hv a helm repository for metrix server, we cud do the same for, i already hv metric server deployed
-so we cud do the helm add metrix server andwe can  deploy the  metrix server in our cl8 using helm
+so we cud do the helm add metrix server and we can  deploy the  metrix server in our cl8 using helm
+
+
+
+                      THE REPO WHERE THE NGINX INGRESS CHART ARE FOUND
+https://kubernetes-sigs.github.io/metrics-server/
+
+
+Add repo:
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 
 helm install metrics-server metrics-server/metrics-server 
@@ -498,13 +554,17 @@ am going to check on this nginx ingress bt again
 ***************** so pls tk note its very imp 
 ########### we will also discuss RANCher as well to see hw wwe can use it to visualize and access our cl8
 
-in the pas we hv created our own nchart for one of our appl
-we hv an appl that we hv created nchart for, the appl is found in this github repository so if u want to see this chart
+
+                                DPELOYING CUSTOM APPLICATION
+in the pas we hv created our own helm chart for one of our appl
+we hv an appl that we hv created helm chart for, the appl is found in this github repository so if u want to see this chart
 the chart are found in our github repository  
 https://github.com/LandmakTechnology/helm-app23  
-*******we can use the nchatr to deploy appl in our repository by jst adding this chart once we add d repo we can also update it
+*******we can use the helm chart to deploy appl in our repository by jst adding this chart once we add d repo we can also update it
+
+1)Add repo:
 helm repo add webapp https://landmaktechnology.github.io/helm-app23/
-helm repo update 
+helm repo update         **we can update
 
 ******************this is now for a custom appl
 after the adding , we see we hv a chart called webapp
@@ -517,20 +577,25 @@ whata re the objects to be created ?
 we can see the image  is mylandmarktech spring boot mongo
 service is false bc w e dnt nid it for this deployment
 lb service type
+
+2)
 ********************helm template will show show us all the object to be created 
 its crtaing an HPA autoscaler
 etc
 we wnat to use the chart to deploy our appl 
-helm installn app31 webapp/myapp
+
+3)helm installn app31 webapp/myapp
 deployed
 this is a custom appl of ours 
 kubectl get deploy
 kubectl get po
 kuibectl dsecribe pod (pod name)  ................18:46
+
+                                     TROUBLESHOOTING
 readiness probe is failing , the pod is unhealthy so traffic cannot be routed there
 kubectl top node 
 lets see hw much memeory is available 
-helm show values ************************************ to see hw the trmplate is configured
+helm show values ************************************ to see hw the template is configured
 the pod was successfully assigned, the liveness probe is failing, the pod is restrting
 lets check the template  ******************************* helm template webapp/myapp
 wa re suppose to get a minimum wait time for readiness probe which am not seeing here
@@ -555,13 +620,13 @@ u can actually create ur cl8 by running eks ctl create cl8 or aws create cl8 , a
 n if ur trying to delete the cl8 using command, most of the time u must first delete the cl8 dependency like node grp
 so if a node grp was created in that cl8, u must first delete the node grp , delete the de[pendency before deleting the cl8
 
-2) WHAT IS THE BESTS TOOL WE CAN SUE TO MANAGE OUR CL8
+2) WHAT IS THE BESTS TOOL WE CAN USE TO MANAGE OUR CL8
 
 ANS:      it all depends 
 maybe u want to ask hw we can best deploy our cl8
 ............u can deploy ur EKS cl8 using terraform scipt, u can use commands to deploy your EKS ie rather than going to the console 
-u can jst run on the CLI , aws  EKS create cl8 ( the name of the cl8) that wi;l create it or eks ctl create cl8 bt u nid to ensure 
-that your EKS command line utility has aklready been installed 
+u can jst run on the CLI , aws  EKS create cl8 ( the name of the cl8) that wil create it or eks ctl create cl8 bt u nid to ensure 
+that your EKS command line utility has already been installed 
 so u can use :
 commaNd
 console 
@@ -569,27 +634,27 @@ terraform
 once u do that u can now proceed to deploy appl bc ur main task is appl deployment
 most time at wrk u are goinmg to join a coy that already has running cl8 , it cud be EKS cl8, kubeabm cl8, kops cl8
 once the cl8 is already existing all u nid is to use the cl8 to deploy appl, so main task now is appl deployment bc u wrk in an env 
-with existing cl8 already , so u are goin to be worried abt u appl are ruuing that are installed and exposed , u hv vol installed and all of that.
+with existing cl8 already , so u are goin to be worried abt how  appl are ruuing that are installed and exposed , u hv vol installed and all of that.
 
 
 3) DIFF bTW helm and aws EKS 
 k8 comes wit  a cl8 the cl8 cud be EKS cl8, kubeabm cl8, kops cl8, now once u aleady hv a cl8 u nid to be able to deploy wrk load in the cl8
 the question now becomes how can i deploy workload ????  for u to be albe to deploy a work in my cl8, u id a command line utility called kubectl
-u cud aslo us the GUI to deploy apkl , tahts what u nid for deployment, now aprt from using kubectl only we hv a package manager  we can use
+u cud aslo use the GUI to deploy apkl , tahts what u nid for deployment, now aprt from using kubectl only we hv a package manager  we can use
 to deploy called helm and helm can be deployed in any cl8 be it kops, eks etc once its installed u can then use it to deploy Ur appl
 
 DIFF BTW HELM AND EKS 
- helm is a package manager for k8 while EKS is a k8 cl8b that come swith a fully managed controled plane provided by aws
-so one is is a cl8 and the other is a command line utility and with the heklp of helm, u can reder ur manifest file, it can create the 
-manifest filwe for u. 
+ helm is a package manager for k8 while EKS is a k8 cl8 that comes with a fully managed controled plane provided by aws
+so one is is a cl8 and the other is a command line utility and with the help of helm, u can reder ur manifest file, it can create the 
+manifest file for u. 
 
 4)   CAN U CONSIDER KOPS IN THE SAME LINE AS HELM??? .... is it the same as helm
 
 ANS:
 kops is a software used to create a k8 cl8
-what do u nid need to deploy ur appl in k8 , u nid running cl8 , a cl8 thatb is functionig 
+what do u need to deploy ur appl in k8 , u nid running cl8 , a cl8 that is functionig 
 a cl8 is a grp of nodes  , that cl8 may v been created using kops or u cud hv created it using aws k8 service or using kubadm
-it doesnt amtter what u hv used,all u nid is a cl8,  pnce u hv  a cl8 u can deploy appl 
+it doesnt amtter what u hv used,all u nid is a cl8,  once u hv  a cl8 u can deploy appl 
 
 
 
