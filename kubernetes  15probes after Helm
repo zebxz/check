@@ -20,7 +20,7 @@ SO DATS ONE TIN U SHUD BE ABLE TO DISCUS THE USE OF PROBES WHEN IT COMES TO DEPL
 
 
 
-                                             TYPES OF PROBES
+10.00                                             TYPES OF PROBES
 1)Liveness Probe:
 Suppose that a Pod is running our application inside a container, 
 but due to some reason let’s say memory leak, cpu usage, application deadlock etc the
@@ -31,10 +31,12 @@ internally , when i deploy my appl i can check if the appl is runnin by runnin t
   curl localhost:8080       ..even for normal tomcat when I DEPLOY A tomcat appl, i can check if the appl is running or nt, i can curl
   curl localhost:8080/java-web-app     ...... also, i can the path to the appl
   curl localhost:8080/maven-web-app 
-  curl localhost:8080/tesla       this is an apl that we v deployed, internally this appl can mk sure that its able to start this container, it must ensure that the 
+  curl localhost:8080/tesla       this is an apl that we v deployed, internally this appl can mk sure that its able to start this container, it must ensure that this
                                          path is healthy, if its nt healthy our liveness probe is goin to fail n the container wil be restarted via d kubelet service..19.00
 $? = 0  exit code !=0                  if it runs this command curl n the exit code is equal to $=0, then it means that it wil be routing trafic to that particular pod bt 
-  curl localhost:80/tesla                 if nt equals to 0, it can route trafic to the pod, thats hw liveness probe is expected
+  curl localhost:80/tesla                 if nt equals to 0, it cant route trafic to the pod, thats hw liveness probe is expected
+
+if '$' is equal to '0', it will route traffic 
 
 
 2)Readiness Probe:
@@ -84,19 +86,27 @@ https://github.com/LandmakTechnology/kubernetes-manifests/
 
 
 
-                                          DEPLOYING APPL INCORPORATING LIVENESS PROBES...........
+20.25                                          DEPLOYING APPL INCORPORATING LIVENESS PROBES...........
                LETs deploy a replica set
-in the ubuntu server he sitched to sudo su - kops
+in the ubuntu server he switched to sudo su - kops
 but got error when he ran
 kubectl get all     ... 24:24
 he was unable to access his kops cl8 so 
+
+
+                           TROUBLESHOOTING KOPS INSTALLATION ERROR
 when that happens we nid to export the kube config file again(i guess thats 10b in the inatallation file we used in kops installation): run kops export kubecfg $NAME --admin
 now run
 kubectl get all and we hv our cl8 running
 
 ***********we wnt to deploy an appl that has liveness probes
-we ar deploying the appl as a replicaset n we ar using the javawebapp image n web thsi appl i sinstaled for u to be sure that the appl is running the container pod for this
-appl 8080, therefore for us to be sure, we hv a readiness probe ,wich is our http get REQ, am i able to access this appl on this pod number
+
+
+25.40
+we ar deploying the appl as a replicaset n we ar using the javawebapp image n when this appl is instaled for u to be sure that the appl is running the container pod for this
+appl is port 8080, therefore for us to be sure, we hv a readiness probe ,wich is our http get REQ, am i able to access this appl on this pod number
+
+vi app-probes.yml
 
 app-probes.yml  
 ==============
@@ -127,7 +137,7 @@ spec:
           initialDelaySeconds: 5           , when we create the container it will delay for 5sec, it wil be running a command in the background trying to check if our pod 
           timeoutSeconds: 1                           is ready to accept traffic, if its nt ready it will wait agin and evry 15sec , it wil tryy to repeat the process, ar u
           periodSeconds: 15                                         ready to accept trafic b4 it can add it to the lb or to the backend pod
-        livenessProbe:            *******if smt is wrong it wil restart the container/pod, readiness probe wil only route traffic to the pod unles it has passed d appl
+        livenessProbe:            ******if smt is wrong it wil restart the container/pod, readiness probe wil only route traffic to the pod unles it has passed d health check
           httpGet:
             path: /java-web-app
             port: 8080
@@ -135,7 +145,7 @@ spec:
           timeoutSeconds: 1
           periodSeconds: 15 
 
----
+---                                        CREATE NODE PORT SERVICE
 apiVersion: v1
 kind: Service
 metadata:
@@ -154,9 +164,13 @@ vi app-probes.yml
 kubectl apply -f app-probes.yml
 kubectl get po
 our pod is running
+28.40
+In the backend, its going to be running a particular process to mk sure that the conatiner is up & runing before traffic is routed.
+
 kubectl describe po javawebapprs-m9qwr
 we see it has a liveness probe in an http get req, it wil delay for 15sec n it wil redo the process again,until the result is positive n healthy ders no way trafic wil be
 routed to that pod.
+
 
 ************so this is what liveness n readiness probe are goin to do
 
@@ -166,12 +180,19 @@ http://:8080/java-web-app
 
 http://34.215.29.198:32000/java-web-app 
 
+
+
+                     GOOD MASTERY OF PROBES
 *******these are probes n vthey are very imp as far as having a gud mastery in k8, u nid to v a gud mastery when it comes to probe
 
 ###### one other aspect/thing we nid to look at carefully is metrics server ..................  32:10
 
 
-******************** ************* CONGFIGUE 
+
+                   ANOTHER ASPECT METRIX SERVER
+
+
+******************** ************* CONGFIGURE MATRIX SERVER ON KOPS CLUSTER
 
 Configure a Metrics Server on your kops Cluster4??
 =================================================
@@ -193,6 +214,8 @@ NAME               CPU(cores)           MEMORY(bytes)
 **************so we v deployed a metrics server , and all we had to do was jst to clone the repository n run kubectl apply -f metric-server/metrics-server-deploy.yml
 
 
+                   **SO U CAN ALWAYS GET THE LATEST VERSION HERE TO DEPLOY METRIX SERVER AT WORK
+
 35:34 
 if we redeploy :
 kops@master:~$ kubectl apply -f metric-server/metrics-server-deploy.yml
@@ -208,9 +231,12 @@ service/metrics-server unchanged
 deployment.apps/metrics-server configured
 apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io unchanged
 
-37:00
+
+37:00                                        RBAC
 when u are deploying any obj in k8 part of what was deployed here gots to do with rbac ,whic got to do with k8 security n  in the rbac der are a few things to look at:
 rbac:
+
+                              SERVICE ACCOUNT
 serviceaccount:
    ServiceAccounts Subject =  Users/Groups/otherApplications  
 so for e.g we can create a service account , the service account can be created for a user, grps, other appl
@@ -218,12 +244,22 @@ e.g  we created a service account for anappl called metrics server, so this is g
 so subject can be :Users/Groups/otherApplications
 so if u create a service account the nxt thing is that we can create a role n role binding
 
+
+                             HOW TO CREATE ROLE/ROLES
 role : we cud create a role ,this  role for example is expected to perform specific tasks, so  i create a role for my pod, deployment services, etc or 
 for my objects = pods/deployments/services/rs/ds/rc [ * ] ,, n if it is * its  means its for evrytin, all k8 objects bt if its for a particular obj like pod i create a role
 n  whats the verbs   =  i can edit/delete/view/read  [*] , or it cud be  i can do evrything or anything                                                                                            for my pod 
    for  apiGroups = [ v1 ]  [ * ],   e.g for pod, rc, services is v1, if i do *, it means the role is going to manage all d api grp category
-    namespace = role are applicable to a particular namespace , role is for a particular namespace .........41:15
+    
 
+          40.17 ROLES ARE APPLICABLE 
+namespace = role are applicable to a particular namespace , role is for a particular namespace .......
+we can also bind that particular role to a subject
+so this assigning or associating the role to a subject or a service account,mayb a user, groups or other application
+so we can bind the role..
+
+
+                            ROLE BINDING         
 if u created a role, we can also bind that particular role to a subject
 RoleBinding: lets assume we created a role to mg8 deployment for e.g, once that role is assigned to a particular user that is called role binding n ro
    This is assigning/association the role to a subject 
@@ -251,7 +287,8 @@ services account for metric server in the kubectl namespace
 cluster role for metrics service , it can edit etc, these are the stuff it can do
 clusterrole binding
 
-******* so its very imp
+
+******* so its very imp                           HELM HELPS TO MANGE ALL THESE KUBERNETES FILES
 but again if u look at managing  all of these k8 filr or manifest file is a serious task so this is resolved by using stuff like helm 
 helm is a package manger for k8
 
