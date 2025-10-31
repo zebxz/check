@@ -150,7 +150,39 @@ it has a cli wich we can equally use to run helm commands :helm add repo
   Helm repository: -- 
       jar/ear/war, npm, python
 
- 
+
+
+***online                                  KUBERNETES ARCHITECTURE
+
+A Kubernetes client-server architecture refers to the interaction between clients that manage and interact with a Kubernetes cluster,
+and the server-side components of that cluster.
+In essence, the Kubernetes API Server acts as the central hub, receiving instructions from various clients and orchestrating the cluster's state accordingly.
+
+THE SERVER (Kubernetes Control Plane):
+The "server" in this context is the Kubernetes API Server, a core component of the Kubernetes control plane. It exposes a RESTful API that serves as the central point of 
+interaction for all clients.
+FUNCTION: The API Server processes requests, validates them, and updates the state of Kubernetes objects (like Pods, Deployments, Services) in the cluster's distributed 
+key-value store (etcd). It also handles authentication and authorization.
+COMPONENTS: It is part of the control plane, which also includes the scheduler, controller manager, and etcd.
+
+
+THE CLIENT:
+KUBERNETES CLINETS are tools or applications that communicate with the Kubernetes API Server to manage and interact with the cluster.
+kubectl: This is the official command-line interface (CLI) for Kubernetes. Users interact with kubectl to deploy applications, inspect and manage cluster resources, and view
+logs. kubectl translates user commands into API calls that are sent to the API Server.
+Client Libraries: Kubernetes provides client libraries in various programming languages (e.g., Python, Java, Go, Ruby). Developers use these libraries to build custom 
+applications that programmatically interact with the Kubernetes API, allowing for automation and integration with other systems.
+KUBERNETES DASHBOARD: This is a web-based user interface that provides a visual way to manage and monitor the Kubernetes cluster. It interacts with the API Server to retrieve
+and display cluster information and to send commands.
+OTHER TOOLS & INTEGRATIONS : Many third-party tools and platforms integrate with Kubernetes by acting as clients and communicating with the API Server to perform various 
+tasks like continuous integration/continuous delivery (CI/CD), monitoring, and security scanning.
+
+In essence, the Kubernetes API Server acts as the central hub, receiving instructions from various clients and orchestrating the cluster's state accordingly.
+***********************************************************************************************************
+
+
+
+
 
                                          HELM ARCHITECTURE ............
 
@@ -187,6 +219,19 @@ we just deployed nginx  using a lot of manifest files,
 
                                   HELM INSTALLATION
 ##########################################  helm installation script   ... helm3
+
+
+    ***He said this ....   need to have just one cl8 running going forward
+so i asked.....
+why is helm characterized with using just one cluster????
+**online
+Helm is not restricted to a single cluster, but it is designed to manage one specific Kubernetes cluster at a time through a direct client-API server interaction. 
+The perception of it being single-cluster-only stems from its fundamental architecture as a package manager rather than a multi-cluster orchestration tool
+
+Key reasons for this characteristic include:
+Client-Side Architecture: Helm 3, the current major version, operates as a client-only tool that communicates directly with the Kubernetes API server of a specified cluster. 
+It does not have a centralized, server-side component (like the now-deprecated Tiller in Helm 2) that could manage the state across multiple clusters simultaneously.
+***********************************************************************
 
 
 
