@@ -514,3 +514,57 @@ kops is a software used to create a k8 cl8
 what do u need to deploy ur appl in k8 , u nid running cl8 , a cl8 that is functionig 
 a cl8 is a grp of nodes  , that cl8 may v been created using kops or u cud hv created it using aws k8 service or using kubadm
 it doesnt amtter what u hv used,all u nid is a cl8,  once u hv  a cl8 u can deploy appl 
+
+
+
+kub 16
+
+NICE explantion for :  .. 2) Explain your experience in kubernetes?? .......  18:00
+my question: when is hosted zones created
+
+4:00     ................... watch it
+you would be ask what you have been able to use k8 to solve in your environment
+ITS A Common experience when it comes to k8, either they want u to explain your experience or they just want to discus some problems u may v encountered using k8 and hw you
+were able to fix those problem. also when u apply k8 thersa lot of xperience u gather n der a lot of problem uve been able to solve, 
+so the xpectation is for you to be able to state clearly the kind of problems uv been able to fix applying k8 in ur env
+
+also at times , they ask to xplain  k8 architecture
+this is a very imp aspect in k8      
+
+
+6:00
+this is a very imp aspect in k8 n u shud be able to xpln dem                        
+
+1) Explain the kubernetes architecture??  
+   masterNodes/controlPlane:
+made up of 
+      apiServer  : wich is the main adminstartor, the entry point into our cl8
+/etcd/scheduler/controllerManagers
+   WorkerNodes:
+      kubelet/kube-proxy/containerRuntime-Container-d/  
+these are the component
+we also have the
+   kubernetesClient|: 
+      kubectl / UI- Kuberenets dashboard
+********thes are what we can use to mg8 task in k8 when it comes to architecture
+
+2) Explain your experience in kubernetes??
+
+
+  COMMON ERROR IN KUBERNETES
+common errors in kubernetes:  
+1)  pods are in pending  state 
+  pullimage error / imagepulloff   
+   WRONG  image: mylandmarktech/hello:20     
+          mylandmarktech/hello:22   
+2) authenticationerror:
+  mylandmarktech/nodejs-fe-app:2  
+  imagePullSecrets:
+  - dockerhubcred
+3)KOPS CLUSTER DEPLOYMENT ISSUES: like
+  IAM user not authorise     ............. we nid this to create a kops cl8 in aws
+    create an IAM role with required permissions/policy  
+       VPCFULLACCESS/EC2FULLACCESS/S3FULLACCESS and attached
+       to the kops control server 
+    Attached required IAM policies to the IAM user/group and   
+    run aws configure  
