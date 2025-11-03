@@ -1,3 +1,9 @@
+
+
+  ************CHECK ALL THE TABLE OF CONTENT AND NOTE ALL THE TOPICS WITH troubleshooting....
+
+
+
 kub1&2
 
 
@@ -402,6 +408,39 @@ helm template nginx-stable/nginx-ingress    # review charts
 helm show values nginx/nginx-ingress   # show values/varaiables/ we can check the default configuration in this repository by executing 
 helm repo update
 this wil get the latest version
+
+
+
+KUB 16
+
+What problems have you encountered applying kubernetes in environment?
+we kn the k8 mg8 containerized appl, if ders a problem in the app 
+How can you troubleshoot application related issues in kubernetes??
+our appl are running in pods so if ders a problem, we v a few things we can do , we also saw dat when it comes to docker 
+now if u look at k8 and docker, if ders a problem in doker in our container we can run the below , also for k8 we run the command below
+kubernetes manages containerised applications:
+  kubernetes                                                    docker    :
+  kubectl get pods                                          docker ps or docker ps -a      
+  kubectl describe pods podName                             docker inspect containerName/ID  
+  kubectl get svc/service  
+  kubectl get endpoint/ep  
+  kubectl logs podName                                        docker logs containerName/ID 
+  kubectl exec podName  
+exec to execute command inside the pod ..... 24:00                       docker exec containerName/id 
+  kubectl top podName                                            docker stats/top   
+we can also pipe n grep for errors
+kubectl logs app-(app name) | gre errors
+
+
+#############more xplanation  .................13:05
+kubectl get po 
+he tried to access his kops cl8 bt it didnt wrk so  he said 
+when we v dis rror msg   to get it fixed we go to our kops cl8 setup n export the kube config file that is the file we used for kops inatallation
+kops export kubecfg $NAME  --admin
+then run 
+kubectl get pod 
+so if ders a problmr in our appl we can run that and we can also describe the pod 
+kubectl describe po (pod name)
 
 
 
