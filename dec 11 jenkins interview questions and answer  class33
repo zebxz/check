@@ -2262,6 +2262,79 @@ NEXT....
 
 KUB 15 .... PROBES
 
+1)Liveness Probe:
+Suppose that a Pod is running our application inside a container, 
+but due to some reason let’s say memory leak, cpu usage, application deadlock etc the
+application is not responding to our requests, and stuck in error state.
+Liveness probe checks the container health as defined (we tell it do), 
+and if for some reason the liveness probe fails, it restarts the container.
+internally , when i deploy my appl i can check if the appl is runnin by runnin the curl command
+  curl localhost:8080       ..even for normal tomcat when I DEPLOY A tomcat appl, i can check if the appl is running or nt, i can curl
+  curl localhost:8080/java-web-app     ...... also, i can the path to the appl
+  curl localhost:8080/maven-web-app 
+  curl localhost:8080/tesla       this is an apl that we v deployed, internally this appl can mk sure that its able to start this container, it must ensure that this
+                                         path is healthy, if its nt healthy our liveness probe is goin to fail n the container wil be restarted via d kubelet service..19.00
+$? = 0  exit code !=0                  if it runs this command curl n the exit code is equal to $=0, then it means that it wil be routing trafic to that particular pod bt 
+  curl localhost:80/tesla                 if nt equals to 0, it cant route trafic to the pod, thats hw liveness probe is expected
+
+if '$' is equal to '0', it will route traffic 
+
+
+2)Readiness Probe:
+This type of probe is used to detect if a container is ready to accept traffic.
+You can use this probe to manage which pods are used as
+backends for load balancing services. If a pod is not ready, 
+it can then be removed from the list of load balancers.
+
+#############EXPLANATION: 15:00
+COS services act as lb, n if a pod is nt ready , it wil nt add the pod to the pool, so if a pod is ready dats the only time the job is goin to be performed, if its nt ready
+then it means our health check has failed, so thats what readiness probe is going to achieve
+
+(routing traffic to the pods)
+      service                                 
+      webappSVC                      Routing traffic to webapp003, & webapp002 & webapp007
+
+  ****** so if for e.g pod007 is nt ready, it will remove it frm our lb agorithm, it wnt be der anymore, the service wil nt be routing traffic to an unhealthy pod, 
+until when the pod is active thats when it will route traffic
+
+
+3)startup Probe:
+This is use for slow starting containers  
+60 secs  
+for containers that are taking a long time to start, we deploy the container using using startup probe as the health check
+
+18:00
+
+
+                          WE SOME INF ONLINE THAT U CHECK ABT PROBES ASwell, hw it works, it has a gud documentaction we can look at
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/ 
+https://kubernetes.io/
+
+https://github.com/LandmakTechnology/kubernetes-manifests/blob/main/liveness_readiness_probes_example.yml
+https://github.com/LandmakTechnology/kubernetes-manifests/
+
+
+
+
+
+20.25                                          DEPLOYING APPL INCORPORATING LIVENESS PROBES...........
+               LETs deploy a replica set
+in the ubuntu server he switched to sudo su - kops
+but got error when he ran
+kubectl get all     ... 24:24
+he was unable to access his kops cl8 so 
+
+
+                           TROUBLESHOOTING KOPS INSTALLATION ERROR
+when that happens we nid to export the kube config file again(i guess thats 10b in the inatallation file we used in kops installation): run kops export kubecfg $NAME --admin
+now run
+kubectl get all and we hv our cl8 running
+
+***********we wnt to deploy an appl that has liveness probes
+
+
+
 
 
 
