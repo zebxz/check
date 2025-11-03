@@ -3,7 +3,7 @@ my question: when is hosted zones created
 
 4:00     ................... watch it
 you would be ask what you have been able to use k8 to solve in your environment
-ITS A Common experience when it comes to k8, either they want u to explain your experience or they just want todiscus some problems u may v encountered using k8 and hw you
+ITS A Common experience when it comes to k8, either they want u to explain your experience or they just want to discus some problems u may v encountered using k8 and hw you
 were able to fix those problem. also when u apply k8 thersa lot of xperience u gather n der a lot of problem uve been able to solve, 
 so the xpectation is for you to be able to state clearly the kind of problems uv been able to fix applying k8 in ur env
 
@@ -20,6 +20,8 @@ helm to install and deploy:
 6:00
 this is a very imp aspect in k8 n u shud be able to xpln dem                        
 
+
+          REVISION;KUBERNETES ARCHITECTURE
 1) Explain the kubernetes architecture??  
    masterNodes/controlPlane:
 made up of 
@@ -33,13 +35,15 @@ we also have the
       kubectl / UI- Kuberenets dashboard
 ********thes are what we can use to mg8 task in k8 when it comes to architecture
 
+                                            PROBLEMS FACED IN YOUR ENV
+
 2) Explain your experience in kubernetes??
 
 3)What problems have you encountered applying kubernetes in environment?
 we kn the k8 mg8 containerized appl, if ders a problem in the app 
 How can you troubleshoot application related issues in kubernetes??
 our appl are running in pods so if ders a problem, we v a few things we can do , we also saw dat when it comes to docker 
-now if u look at k8 n docker, if ders a problem in doker in our container we can run the below , also for k8 we run the command below
+now if u look at k8 and docker, if ders a problem in doker in our container we can run the below , also for k8 we run the command below
 kubernetes manages containerised applications:
   kubernetes                                                    docker    :
   kubectl get pods                                          docker ps or docker ps -a      
@@ -52,7 +56,10 @@ exec to execute command inside the pod ..... 24:00                       docker 
   kubectl top podName                                            docker stats/top   
 we can also pipe n grep for errors
 kubectl logs app-(app name) | gre errors
- 
+
+
+
+                              TROUBLESHOOTING
 #############more xplanation  .................13:05
 kubectl get po 
 he tried to access his kops cl8 bt it didnt wrk so  he said 
@@ -63,7 +70,9 @@ kubectl get pod
 so if ders a problmr in our appl we can run that and we can also describe the pod 
 kubectl describe po (pod name)
 
-IN K8 appl IS EXPOSED USING SERVICE DISCOVERY
+
+
+                         IN K8 appl IS EXPOSED USING SERVICE DISCOVERY
  service discovery:
     webAppservice ---> 7webAppPods
 lets assume i hv 7 webApppods
@@ -90,22 +99,23 @@ if ders an error the error msg is able to tell us
 
 ########################################we cud also have these errors ............27:00       our images are found in dockerhub or amazonECR
 WE can run kubectl get events
-in the process of pulling the image
-creating the container and
-strating the container there could be a problm inbtw this proceses
-iys either we are pulling the wrong image
+in the process of pulling the image creating the container and
+starting the container there could be a problem in btw this proceses
+its either we are pulling the wrong image
 we cud hv the right image but wrong authentication with the image pull sercert when pulling frm a private repo
 
+
+                        COMMON ERROR IN KUBERNETES
 common errors in kubernetes:  
-#  pods are in pending  state 
+1)  pods are in pending  state 
   pullimage error / imagepulloff   
    WRONG  image: mylandmarktech/hello:20     
           mylandmarktech/hello:22   
-# authenticationerror:
+2) authenticationerror:
   mylandmarktech/nodejs-fe-app:2  
   imagePullSecrets:
   - dockerhubcred
-#KOPS CLUSTER DEPLOYMENT ISSUES: like
+3)KOPS CLUSTER DEPLOYMENT ISSUES: like
   IAM user not authorise     ............. we nid this to create a kops cl8 in aws
     create an IAM role with required permissions/policy  
        VPCFULLACCESS/EC2FULLACCESS/S3FULLACCESS and attached
@@ -113,10 +123,15 @@ common errors in kubernetes:
     Attached required IAM policies to the IAM user/group and   
     run aws configure  
 
+
+                                     VPC LIMIT
   #vpc limit reached / :............ by default when u run a vpc tier account, the max numbe rof vpc u can crtae in one regionis 5, so when u reach this u can request#
     5 vpc running in production  
     Request additional vpc quota from aws  
   deploying a kops cluster [ a new vpc,s3, ec2-instances, ELB, ASG ]
+
+
+                          NODE NOT READY (MG8 CLUSTER)
 
 node notReady: when u deploy self mg8 cl8, u hv to deploy ur node , u hv to mk sure that ur nodes are ready bt  mg8 cl8 like  EKS we dnt worry abt d node nt being ready
   kops/kubeadm = kubernetes CNI [flannel, weave, calico] is not deployed our node will nt be ready
@@ -124,7 +139,7 @@ NODES not ready cud be bc of k8 cli, k8 netwrk interfaces nt installed
   ensure that the kubelet service is running [systemctl start kubelet]   if not node wil nt be ready    
   node is stopped/terminated in aws , in this case restart it 
  OR  Place the nodes behind an ASG with a ELB for health check  
-  use kops/eks over kubeadm    to manage such problem
+ *** use kops/eks over kubeadm    to manage such problem
 #crashloopbackoff 
   # pod repeatedly crashing
 #ReadinessProbeFailed or 
@@ -133,13 +148,15 @@ NODES not ready cud be bc of k8 cli, k8 netwrk interfaces nt installed
 #persistent volume mount failures
 #InvalidNamespace
 #cni plugin error
+
+                                 ERROR CONVERTING YAML TO JSON
  
 # error converting YAML to json
 =============================
 
 k8 manifest file can be written in json or yaml
-bt whenu run kubectl apply, it has to us ethe file 
-e.g   ............. this is an erroe bc we dnt hv any kind as devops
+bt when u run kubectl apply, it has to use the file 
+e.g   ............. this is an error bc we dnt hv any kind as devops
 kind: Devops
 apiVersion: PODS    
 metadata  
@@ -151,9 +168,8 @@ but no result
 kubectl api-resources | grep i pod
 
 
-
-# what about issues when all pods are running but the
-applications are unable to communicate?
+                                        COMMUNICATION ERROR
+# what about issues when all pods are running but the applications are unable to communicate?
 this cud be as a result of misconfigurations.
 for example: for external access we use a nodeport service type
 pod.yml   
@@ -196,9 +212,11 @@ we dnt hv port range of 40200, its out of our service range
 *********** so if am given a scenario like this i identify problems and fixed them
 
 so if u are asked did u encounter any problem using k8 ????
-the answe is yes
+the answer is yes
 did u suceesd in fixing them ?
 most of the time yes
+
+
 
 
 
@@ -206,8 +224,20 @@ most of the time yes
 PROMETHEUS AND GRAFANA               *********************47:40  .............########### check powerpoint
 if we want to ensure our server is function well we hv to install a software that will monitor the server and give us info abt it 
 =====================
-its an open source monitoring aaaaand alerting toolkit. prometheus consists of serveral components some of which are listed below:
+its an open source monitoring and alerting toolkit. prometheus consists of serveral components some of which are listed below:
+***online***
+Prometheus and Grafana are a popular combination used for application performance monitoring (APM). Prometheus collects and stores time-series data like metrics from 
+applications, while Grafana visualizes this data in dashboards to provide real-time insights into performance, health, and potential issues. 
 
+How they work together for APM
+Prometheus: Gathers metrics from your applications. You can instrument your code using Prometheus client libraries to collect custom metrics, such as request latencies,
+error rates, and business-specific KPIs. It then stores this data in a time-series database. 
+Grafana: Connects to Prometheus as a data source to create customizable dashboards. These dashboards allow you to visualize the metrics collected by Prometheus, helping you 
+track trends, identify bottlenecks, and set up alerts for performance anomalies. 
+
+
+
+                              IMP OF MONITORING
 importance os monitoring:
   •  avoid reactive panics  
   •  Increase uptime. webapp pod    in k8, automatically it wil restart the pod or if the pod goes down it will recreate a new pod replace it. 
@@ -215,7 +245,7 @@ importance os monitoring:
   •  Plan for the future by making the best use of your resources.
   •  get an almost immediate return on investment
 
-************if ur server is abt to go doen or is running short of resources, it may get to a point wher the appl can no longe rrun in the server 
+************if ur server is abt to go down or is running short of resources, it may get to a point wher the appl can no longer run in the server 
 e.g 
 server [mem4GB ] --- maven[2BG], at all  time i need 2gb for my maven service to run                                             to avoid reactive panic
   OTHER SERVICES/processes are using 3G , then maven will nt run , therefore no bill can be done appl can run n dats a server so to avoid this we can monitor the server
@@ -245,6 +275,7 @@ monitoring (micro-service) applications with
 Prometheus and Grafana
 ======================================
 
+                                                   DEPLOY PROMETHUS USING HELM
 ********************************deploy prometheus using helm
 helm repo add prometheus https://prometheus-community.github.io/helm-charts
 helm install prometheus prometheus/prometheus
@@ -254,11 +285,13 @@ helm template prometheus/prometheus
 helm install prometheus prometheus/prometheus
 helm upgrade prometheus prometheus/prometheus -f prometheus-values.yml -n dev
 
-we acn still deploy promethus cloning this , bc its in our github repository ............ and folloeing the instruction but thats not what we ar using
+we acn still deploy promethus cloning this , bc its in our github repository ............ and following the instruction but thats not what we ar using
 git clone https://github.com/myLandmakTechnology/prometheus-grafana-ELK-EFK
 
+
+
 PREREQUISITE
-*********************************************** w eneed a k8 server with dynamic storage class  to deploy prometheus n grafana 
+*********************************************** we need a k8 server with dynamic storage class  to deploy prometheus n grafana 
 2) Kubernetes nodes iwt mini 4GB RAM with 2 core processor
 3) server which has kubectl $ helm configured
 
@@ -287,7 +320,8 @@ prometheus
 ######we saw nginx ingress b4, bt lets see hw we can deploy nginx ingress using helm
 
 
-#################first thing to do is to ensure that helm is installed
+ step1
+first thing to do is to ensure that helm is installed
 
 1)  ****************************make sure that helm3 is installed   
 ================================
@@ -299,7 +333,7 @@ chmod 700 get_helm.sh
 *********************   helm ls ........... to see we v helm installed 
 *****************  helm repo ls ........... 
 
-2)..........................#############ADD Helm chart FOR  ngninx, promrtheus, grafana
+1a).........ADD Helm chart FOR  ngninx, promrtheus, grafana
 deploy33.sh    (he didndt use dis, jst copy and paste the 3links)
 helm repo add nginx-ingress https://helm.nginx.com/stable
 helm repo add prometheus https://prometheus-community.github.io/helm-charts 
@@ -310,19 +344,19 @@ we can also upadte the repositort: ........helm update repo
 
 helm install prometheus  prometheus/prometheus 
 
-i) ******************deploy prometheus using helm   
+2) ******************deploy prometheus using helm   
 ==========================
 this promethus has some chart, so we wnt to deploy this using the chart called promrtheus/promtheus
 we can search this repository
 e.g helm search repo promethus and we can see so many charts 
 but we are using chart prometheus/prometheus
-the cahart has some value faile  so we can run:
+the chart has some value files  so we can run:
 helm show values prometheus/prometheus
 now we can see values for my prometheus configuration, these are default values
 value files are default values
 everytin has been configured
 ############  we also have templates              *************1:25:00
-from this values file waht is going to be installed
+from this values file what is going to be installed
 so we can run helm template promethus/promethus
 lets see the diff k8 objs that will be 
 we hv a long list of obj
@@ -332,17 +366,20 @@ we hv are also cretain a deployment and this is happening in the default namespa
 we hv her promethus non exporter , its a daemon set
 we hv the service of promethus
 ***************i can also cahnge some info on my file
-#################################################################****************** i dont understand this file hes referring to ....................???????????????
 
-there is a values file here, i hv di svalues file  ...: promethus-file.yml, hv done some configurations   (hv shared it in the class)
+
+                                     ALERT MANAGER
+there is a values file here, i hv dis values file  ...: promethus-file.yml, hv done some configurations   (hv shared it in the class)
 in my deployment here
 vi promethus-file.yml                  *******************************1:27:00
 am just changin some info on my values file for promethus
 in this info whats applicable in the changes
 the alert manger file is goin to be changing, we are goin to be sending alert via email notification to my landmarkech. gmail.com
 and this is the interval, gmial wil be notified   .......... the grp interval is goi to be 2minutes
+
+                                         WHEN DO WE SEND ALERT
 so when do we send alert?
-serverfils:
+serverfails:
   alerting_rules.yml:
       groups:
       name:NodeDown
@@ -353,7 +390,7 @@ when persisten vol error
 etc
 *************************************************pls make sure you copy this guy and create a file for it ( i bliv the alert file) ?????????????????
 
-######################################## NOW TO DEPLOY PROMETHUS
+2a)  NOW TO DEPLOY PROMETHUS
 we could decide to create a namespcae
 kubectl get ns
 kubectl create ns dev
@@ -380,8 +417,8 @@ it has this headless service bc this is deployed as a stateful set
 all our services a cl8 ip
 
 
-lets deploy grafana
-ii) ************************************************************* DEPLOY GRAFANA USING HELM ................. 1:32
+3)   lets deploy grafana
+ DEPLOY GRAFANA USING HELM ................. 1:32
 
 grafana   https://grafana.github.io/helm-charts             ********************we only hv this helm chart
   helm repo add grafana https://grafana.github.io/helm-charts
@@ -393,7 +430,7 @@ kubectl get secret --namespace dev grafana -o jsonpath="{.data.admin-password}" 
   username = admin  
   password = 5ibxy9DOfkwuTjyWaW34T5wKAmA5sQ7Dp7aBkvmh
 
-#################### whta do we use to access grafana externally , its a service right?
+#################### what do we use to access grafana externally , its a service right?
 we need the service
 lets check the dev ns 
 kubectl get svc -n dev
@@ -606,6 +643,8 @@ kubectl get ds -ndaemonset
 promthus promthus node exporter       *************** this was deployed as ad aemonset 
 
 
+
+
 what we shud tk note of is that 
 helm instal promethus came with all these micro services
 
@@ -616,9 +655,12 @@ helm instal promethus came with all these micro services
 5. prometheus-server   ( deployed alongside vol concept)  - statefulset/database     ***** this is deployed as a statefulset bc it comes wit abdatabase
 
 
+
+
+
 EFK =  
- Ther is elastic file , fibric and kunberner whic i will be sgharing the vidoe with with you guys but before we look at that 
-thats the final stuff to master bt befor ethen rancher
+ Ther is elastic file , fibric and kunberner whic i will be sharing the vidoe with with you guys but before we look at that 
+thats the final stuff to master bt before then rancher
 
 Rancher and kubernetes:
 PROVIDE A Kubernetes platform  
