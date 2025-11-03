@@ -609,3 +609,99 @@ common errors in kubernetes:
 
 
 
+    VPC LIMIT
+  #vpc limit reached / :............ by default when u run a vpc tier account, the max numbe rof vpc u can crtae in one regionis 5, so when u reach this u can request#
+    5 vpc running in production  
+    Request additional vpc quota from aws  
+  deploying a kops cluster [ a new vpc,s3, ec2-instances, ELB, ASG ]
+
+
+                          NODE NOT READY (MG8 CLUSTER)
+
+node notReady: when u deploy self mg8 cl8, u hv to deploy ur node , u hv to mk sure that ur nodes are ready bt  mg8 cl8 like  EKS we dnt worry abt d node nt being ready
+  kops/kubeadm = kubernetes CNI [flannel, weave, calico] is not deployed our node will nt be ready
+NODES not ready cud be bc of k8 cli, k8 netwrk interfaces nt installed 
+  ensure that the kubelet service is running [systemctl start kubelet]   if not node wil nt be ready    
+  node is stopped/terminated in aws , in this case restart it 
+ OR  Place the nodes behind an ASG with a ELB for health check  
+ *** use kops/eks over kubeadm    to manage such problem
+#crashloopbackoff 
+  # pod repeatedly crashing
+#ReadinessProbeFailed or 
+#LivenessProbeFailed
+#Insufficient resources
+#persistent volume mount failures
+#InvalidNamespace
+#cni plugin error
+
+                                 ERROR CONVERTING YAML TO JSON
+ 
+# error converting YAML to json
+=============================
+
+k8 manifest file can be written in json or yaml
+bt when u run kubectl apply, it has to use the file 
+e.g   ............. this is an error bc we dnt hv any kind as devops
+kind: Devops
+apiVersion: PODS    
+metadata  
+spec
+
+kubectl api-resources | grep devops  
+but no result
+ bt grep for pod n we v result
+kubectl api-resources | grep i pod
+
+
+                                        COMMUNICATION ERROR
+# what about issues when all pods are running but the applications are unable to communicate?
+this cud be as a result of misconfigurations.
+for example: for external access we use a nodeport service type
+pod.yml   
+-------
+kind: Pod    
+apiVersion: v1   
+metadata:  
+   name: myapp  
+   labels:
+      tier: be  
+spec:
+   containers:
+   - name: myapp   
+     image: mylandmarktech/hello   
+     ports:
+     - containerPort: 80
+
+svc.yml  
+-------
+kind: Service
+apiVersion: v1
+metadata:
+  name: websvc
+  namespace: dev
+  labels:
+    app: web
+spec:
+  type: NodePort # ClusterIP
+  selector:
+    app: myapp # labels= tier:be
+  ports:
+  - port: 80
+  - targetPort: 8080  # containerPort80/8080
+  - nodePort: 40200   # 30000 - 32676
+we dnt hv port range of 40200, its out of our service range
+
+################################ so if u go for an interview and u are asked what is wrong with this script, why cant we route traffic what cud be the problem
+ its just misconfiguration   , also our target port has to be the same with container port, also my selector has to match to my labels
+
+*********** so if am given a scenario like this i identify problems and fixed them
+
+so if u are asked did u encounter any problem using k8 ????
+the answe is yes
+did u suceesd in fixing them ?
+most of the time yes
+
+
+
+
+
