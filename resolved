@@ -511,5 +511,101 @@ join the cluster
 
 
 
+kUB 16
+
+NICE explantion for :  .. 2) Explain your experience in kubernetes?? .......  18:00
+my question: when is hosted zones created
+
+4:00     ................... watch it
+you would be ask what you have been able to use k8 to solve in your environment
+ITS A Common experience when it comes to k8, either they want u to explain your experience or they just want to discus some problems u may v encountered using k8 and hw you
+were able to fix those problem. also when u apply k8 thersa lot of xperience u gather n der a lot of problem uve been able to solve, 
+so the xpectation is for you to be able to state clearly the kind of problems uv been able to fix applying k8 in ur env
+
+
+
+3)What problems have you encountered applying kubernetes in environment?
+we kn the k8 mg8 containerized appl, if ders a problem in the app 
+How can you troubleshoot application related issues in kubernetes??
+our appl are running in pods so if ders a problem, we v a few things we can do , we also saw dat when it comes to docker 
+now if u look at k8 and docker, if ders a problem in doker in our container we can run the below , also for k8 we run the command below
+kubernetes manages containerised applications:
+  kubernetes                                                    docker    :
+  kubectl get pods                                          docker ps or docker ps -a      
+  kubectl describe pods podName                             docker inspect containerName/ID  
+  kubectl get svc/service  
+  kubectl get endpoint/ep  
+  kubectl logs podName                                        docker logs containerName/ID 
+  kubectl exec podName  
+exec to execute command inside the pod ..... 24:00                       docker exec containerName/id 
+  kubectl top podName                                            docker stats/top   
+we can also pipe n grep for errors
+kubectl logs app-(app name) | gre errors
+
+
+
+#############more xplanation  .................13:05
+kubectl get po 
+he tried to access his kops cl8 bt it didnt wrk so  he said 
+when we v dis rror msg   to get it fixed we go to our kops cl8 setup n export the kube config file that is the file we used for kops inatallation
+kops export kubecfg $NAME  --admin
+then run 
+kubectl get pod 
+so if ders a problmr in our appl we can run that and we can also describe the pod 
+kubectl describe po (pod name)
+
+
+         IN K8 appl IS EXPOSED USING SERVICE DISCOVERY
+ service discovery:
+    webAppservice ---> 7webAppPods
+lets assume i hv 7 webApppods
+THEREfore i will create a webapp service wich will lb traffic to the 7pods
+############for me to knw my webappservice is routing traffic to all of this pod i can run
+kubectl get svc
+impotrantly we can get the endpoints/ ep
+
+#############   also  .................................................NICE .........................################################18.00
+we run kubectl get deploy  to see the app we deployed
+kubectl get ep 
+WE SEE THE CURRENT EP is 2 
+kubectl scale deply (app name) ----- replica 4
+we run kubectl get ep again 
+now we see Ep is 4
+############### there fore we can rightly say that the service is routing traffic as expected
+so i can be abl rto xpalin this in real time bc it is working as expected
+#########we can aslo check kubestl get svc 
+to see if we can accesss the app and also check online
+
+********** we can also get logs for the appl
+kubectl logs app-(app name) | gre errors
+if ders an error the error msg is able to tell us 
+
+
+we cud also have these errors ............27:00       our images are found in dockerhub or amazonECR
+WE can run kubectl get events
+in the process of pulling the image creating the container and
+starting the container there could be a problem in btw this proceses
+its either we are pulling the wrong image
+we cud hv the right image but wrong authentication with the image pull sercert when pulling frm a private repo
+
+
+  COMMON ERROR IN KUBERNETES
+common errors in kubernetes:  
+1)  pods are in pending  state 
+  pullimage error / imagepulloff   
+   WRONG  image: mylandmarktech/hello:20     
+          mylandmarktech/hello:22   
+2) authenticationerror:
+  mylandmarktech/nodejs-fe-app:2  
+  imagePullSecrets:
+  - dockerhubcred
+3)KOPS CLUSTER DEPLOYMENT ISSUES: like
+  IAM user not authorise     ............. we nid this to create a kops cl8 in aws
+    create an IAM role with required permissions/policy  
+       VPCFULLACCESS/EC2FULLACCESS/S3FULLACCESS and attached
+       to the kops control server 
+    Attached required IAM policies to the IAM user/group and   
+    run aws configure  
+
 
 
