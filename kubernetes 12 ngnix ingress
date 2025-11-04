@@ -55,10 +55,12 @@ the ingress service cannot route trafic directly ot the hellopod bc  the ingres 
 
 
 
-******************************************  DEPLOYING NGNIX  INGRESS in our CL8   >>>>>>>>>>> 21:006
+******************************************  DEPLOYING NGNIX INGRESS in our CL8   >>>>>>>>>>> 20.:35
 nninx ingress can be easily deployed 
 IF YOU HAVE :
  a kops cluster , that will be deployed seamlessly 
+also if you hv EKS cluster it will be deployed seamlessly
+
 
 
 he goes to github                               NGINX LAYER 7LB/ ENDPOINT EXPLAINED
@@ -67,17 +69,25 @@ nginx-ingress contoller:    ( more info on ingress and steps  to setup ngnix in 
 ==========================
 https://github.com/LandmakTechnology/nginx-ingress
 
-23:38                                                                                                                                                
-users > ingresSVC lb , it acts as d frontend therfore it provides additional layer of scurity n with it we can route traffic to multiple lb ie d diff app services:>  e.g
-        bc its a layer 7LBalancer. **Mee**ALB, AWS 7&8                                                                                                            ingress rules
-                                                                                                                                               helloSVC: hello.myland.net7
-                                                                                                                                               appSVC:app.mylandtech.net8
-                                                                            26:50                                                                   webSVC: web.mylandtech.net9
-                                                                            each of theses service hv their own endpoint e.g 7,8,9, 
+
+bc its a layer 7LBalancer. **Mee**ALB, AWS 7&8 
+
+23:38                  nginx ingress is manged by the nginx ingress svc, the nginx ingress svc is a lb service                                                                                                                               
+endusers trafic > ingresSVC lb , it acts as d frontend therfore it provides additional layer of scurity n with it we can route traffic to multiple lb ie d diff app services:> 
+
+e.g
+                                                                 ingress rules
+                                                                                                                                             
+                                                     ----         helloSVC: hello.myland.net7
+             users   ---->      ingress svc      --             appSVC:app.mylandtech.net8
+                                loadbalancer        ----          webSVC: web.mylandtech.net9
+                                                                           
+                                                                       26.50  each of theses service hv their own endpoint e.g 7,8,9, ngnix ingress has 1 endpoint
                                                                                        the endpoint is the number of pod replicas that are deployed
                                                         we ar routing traffic to our backendappl using cluaterip  and btw clusterip n NOdeport, cluserip is the most secured
          service in k8 bc it doe nt accept traffic outside the cl8, our cluster is vulnerable when it accepts external comm, external com is likely to mk our cl8 vulnerable
        therfore clusterip increases our cl8 security, so introducing ngnix ingress, it hepls us to use a highly secured k8 discovry type which is clusterip.
+
 
 
 
