@@ -417,7 +417,7 @@ it has this headless service bc this is deployed as a stateful set
 all our services a cl8 ip
 
 
-3)   lets deploy grafana
+3)   lets deploy grafana               ****  take note ...2.18.25 initially he tried to use clusterip wich is more secured bt  gateway eror,so changed it back to loadbalancer 
  DEPLOY GRAFANA USING HELM ................. 1:32
 
 grafana   https://grafana.github.io/helm-charts             ********************we only hv this helm chart
@@ -437,7 +437,7 @@ kubectl get svc -n dev
 we see grafana service is clusterIP 
 we cant use clusterIP for external service so we can edith the grafana service 
 kubectl edit svc grafana -n dev        *** to vi & edit the deployment file
-since am using kops cl8 i can change it to service type loadbalancer and its going to create a loadbalancer in aws .. 2.18.25. gateway eror, so changed it back to clusterip 
+since am using kops cl8 i can change it to service type loadbalancer and its going to create a loadbalancer in aws 
 but loadbalancer are not free 
 kubectl get svc -n default   (ie default ns)
 i have this loadbalancer i created before
@@ -453,11 +453,12 @@ helm ls -n dev
 we see the deployments in the dev ns (grafana & promethus)
 lets delete the grafana deployment
 helm uninstall grafana -n dev
-when i deployed grafana it created a lb in aws 
-now redeploy grafana   ** 1.51.15: install it in the dev ns as well **mee* (bc hes trying to illutrate that ngnix is in default ns but it can lb promethus & grafana in dev ns)
+when i deployed grafana before, it created a lb in aws 
+now redeploy grafana    .. he deployed it in the default ns & it now had clusterip ..     2.18.25. gateway eror, so changed it back to loadbalancer 
+** 1.51.15: he had to reinstall it in the dev ns  **mee* (bc hes trying to illutrate that ngnix is in default ns but it can lb promethus & grafana in dev ns)
                                                                                         and also  spring app & java web  which are in the default ns.
-i want to show you smt that is very important /...............................1:41
-why do i wnat to use only clusterIP services
+i want to show you smt that is very important /...............................1:40.30
+why do i wnat to use only clusterIP services bc its more secured
 
                                                         
                                                      GRAFANA HAS NEW ADMIN PASSWD ANYTIME ITS REDEPLOYED
