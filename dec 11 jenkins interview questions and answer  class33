@@ -253,10 +253,14 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
 i bliv the following steps starts after we have used Docker to containerize the application, then for management & deployment  of the application/container
 we continue with these steps;
 1a)After installing either self managed (multi node preferred), OR  paid to manage 
-  b)we install KObs because of the disadvantage of using self managed rg it doesnt create aws resource for us
-   therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates them for you including ELB, so you dnt need to create nginx
-   c) EKS
-   D) GKE
+  b)we install KObs because of the disadvantage of using self managed eg it doesnt create aws resource for us
+   therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates them for you including ELB, bt for no.9 to cut down cost, we may need to create nginx
+   c) EKS   ....  provides a fully manged contrl plane7 ... 
+  WHEN U CREATE an eks cl8 u dnt v access to d master node, the master node is exclusively managed by eks which means that u can only mange ur eks cl8 by using
+a remote node n call it our eks control, wich is jst used to control the eks cl8, so it cud be ubuntu node, whatever node it is, can be used.. dats what we did
+you cud use anoda node that is nt ur k8 , that is nt found in ur first worker node n master node for kubabdm n kops, so u can jst create a new node for that purpose n use  
+that node to manage ur eks cl8 
+   D) GKE   .. didnt illustrate this
 2)create namespace, add label in pod template, so service can make pod discovered/accessible,
 3) create service type either clusterip or nodeport (using service template)
 4)for manifest file for deployment; chose a controller manager, k8 object for deployment prefered 'DEPLOYMENT' &Its rolling update strategy, although he said smt about 
@@ -272,9 +276,13 @@ can create a security grp for nfs with the REQ ports open like  ssh  port ffrm a
 Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 8) configmap & secret
 9)ngnix/ ingress rule  .. this is required for self manged cluster
-10) Helm ... its a package manger for k8
+10) Helm ... its a package manger for k8 (makes use of charts/creates manifest for deployment so we dnt hv to write manifest or add repositories to use for deployment)
+11)probes for pod health check 
+14)promethus & grafana
+15) EFK/ Rancher
+16) Security
 
-35.00****kub 10&11  ....  so one deployment requires all of this
+35.00****kub 10&11  ....  so one deployment requires all of this 
 ********************************************************************
 
 
