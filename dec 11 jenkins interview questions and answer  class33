@@ -253,9 +253,9 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
 i bliv the following steps starts after we have used Docker to containerize the application, then for management & deployment  of the application/container
 we continue with these steps;
 1a)After installing either self managed (multi node preferred), OR  paid to manage 
-  b)we install KObs because of the disadvantage of using self managed eg it doesnt create aws resource for us
+  b)we install KObs because of the disadvantage of using kubeadm eg it doesnt create aws resource for us
    therfore if we are using kops skip  step (2.3.5,6,7 & 9) bc kops creates them for you including ELB, bt for no.9 to cut down cost, we may need to create nginx
-   c) EKS   ....  provides a fully manged contrl plane7 ... 
+   c) EKS   ....  provides a fully manged contrl plane7 ... then i will need to create frm no.2 below
   WHEN U CREATE an eks cl8 u dnt v access to d master node, the master node is exclusively managed by eks which means that u can only mange ur eks cl8 by using
 a remote node n call it our eks control, wich is jst used to control the eks cl8, so it cud be ubuntu node, whatever node it is, can be used.. dats what we did
 you cud use anoda node that is nt ur k8 , that is nt found in ur first worker node n master node for kubabdm n kops, so u can jst create a new node for that purpose n use  
@@ -277,6 +277,7 @@ Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 8) configmap & secret
 9)ngnix/ ingress rule  .. this is required for self manged cluster
 10) Helm ... its a package manger for k8 (makes use of charts/creates manifest for deployment so we dnt hv to write manifest or add repositories to use for deployment)
+   helm can be deployed in any cl8 be it kops, eks etc once its installed u can then use it to deploy Ur appl
 11)probes for pod health check 
 14)promethus & grafana
 15) EFK/ Rancher
