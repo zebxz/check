@@ -320,10 +320,12 @@ prometheus
 ######we saw nginx ingress b4, bt lets see hw we can deploy nginx ingress using helm
 
 
- step1
+        STEPS  TO DEPLOY PROMETHUS & GRAFANA
 first thing to do is to ensure that helm is installed
 
-1)  ****************************make sure that helm3 is installed   
+1)  Install helm
+
+****************************make sure that helm3 is installed   
 ================================
 helm installation:copy this 3line command and execute in my cl8:
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
@@ -596,7 +598,7 @@ we can see the alerts that have been configured
 ************ we tried to access prometheus.landmarkapp.net  ... i think alerts.landmarkapp.net
 
 
-   **mee***                    ONE LOADBALANCER (NGINX INGRESS)IS ROUTING TRAFFIC TO MULTIPLE APPLICATIONS
+   **mee***                    ONE LOADBALANCER (NGINX INGRESS)IS ROUTING TRAFFIC TO MULTIPLE APPLICATIONS IN DIFFERENT NS
            (springapp.landmarkapp.net,java.landmarkapp.net in default ns & grafana.landmarkapp.net, prometheus.landmarkapp.net, alerts.landmarkapp.net in dev ns)
 
 
@@ -716,6 +718,9 @@ EFK =
  Ther is elastic file , fibric and kunberner whic i will be sharing the videO with with you guys thats the final stuff to master, but before we look at that 
 LET me xplain smt else, thers what we call rancher
 
+
+                                    RANCHER
+
 Rancher and kubernetes:
 PROVIDE A Kubernetes platform  
 With Rancher we can import and manage multiple kubernetes clusters    
@@ -723,6 +728,8 @@ We can create clusters like EKS / AKS / GKE, etc.
 Rancher provide a dasborad for kubernetes
 Rancher is deployed using docker  
 
+
+                                          INSTALL RANCHER/NEED DOCKER 
 we will deploy rancher using docker  ................................ 2.33.00
 checking if he has docker server to deploy rancher
 didnt hv , so creating docker server using ubuntu
@@ -732,7 +739,7 @@ COMMAND TO INSTALL RANCHER
 sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
 
 
-hes using auser data to install rancher, so paste the script 
+hes using a user data to install rancher, so paste the script 
 #!/bin/sh  
 sudo apt install docker.io -y  
 sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
@@ -765,6 +772,8 @@ successfuly installed
 ######################################### now deploy rancher
 sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
 
+
+                                        CAN IMPORT ANY AMOUNT OF CL8 INTO RANCHER
 ************once rancher is deployed, we can import our cl8 into rancher
 i can import any number of cl8 into rancher
 rancher is being deployed, its a massive deployment
@@ -797,6 +806,8 @@ allow
 copy the sever ip adress
 continue
 but couldnt connect
+
+                     RANCHER DIDNT WORK/ WILL ilustrate again in bootcamp
 
 ############## he said he wanted us to connect so he can show us how to connect to our cl8 from rancher
 but bc of the error he wil hv to reillustrate in booth camp
