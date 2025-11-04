@@ -2390,10 +2390,108 @@ importance os monitoring:
 ************if ur server is abt to go down or is running short of resources, it may get to a point wher the appl can no longer run in the server 
 
 
+                   INstall promethus & grafana using helm
+                 THIS DEPLOYMENT comes with 6 other services which includes an alert manager
+
+PREREQUISITE
+*********************************************** we need a k8 server with dynamic storage class  to deploy prometheus n grafana 
+2) Kubernetes nodes iwt mini 4GB RAM with 2 core processor
+3) server which has kubectl $ helm configured
+
+
+THREE ASPECTS OF HELM
+
+deploy prometheus using helm:
+helm comes with the :
+  helm: CLI/charts/repository     .....these are the 3aspects of helm
+ helm-charts      : predefined manifest files we can use to deploy both custon and 3rd partyapplications
+helm-cli           : the command line utility
+helm-repository     : where the charts are found
+
+
+what we shud tk note of is that 
+helm instal promethus came with all these micro services
+
+1. alertmanager-0       -- statefulset
+2. kube-state-metrics   -- deployment     ********** 
+3. node-exporter        -- DaemonSet     ********* collects metrics from all the nodes so we nid each pod to be runnin in each node thats why its deployed as a daemonset
+4. pushgateway           - deployment
+5. prometheus-server   ( deployed along side vol concept)  - statefulset/database     ***** this is deployed as a statefulset bc it comes wit a database
 
 
 
 
+  GRAFANA HAS NEW ADMIN PASSWD ANYTIME ITS REDEPLOYED
+whenevr you deploy grafana make sure you get the admin PW
+helm I
+The pW wil be diff from what we got before
+
+
+
+                               DEPLOY NGINX & CREATE INGRESS RULE FOR PROMETHUS & GRAFANA & alERT MANAGER
+
+         Also; CREATE A RECORD FOR PROMETHUS & GRAFANA & alERT MANAGER
+
+
+
+    GRAFANA DASHBOARD IS PREFERRED  
+he said the promethus UI isnt the best option to use so we hv to use the grafana dashboard
+but we still couldnt access it
+with this error am unable to xplain hw all of this guy will give us the expected result
+he said we couldnt acces it yet bc it takes a while 
+finally, we can now acceess it , the grafana dashboard pops up
+2.21.00   so we hve deployed our cluster
+
+
+                                                   SETTING UP GRAFANA
+then we entered the username and PW we generated earlier when we installed grafana 
+ the grafana dashboard has a data source and the source is promethus   ...................**************2:22:21
+name : promethus server
+save and test
+connection: http://promethus server
+successfully connected to promethus
+so its building a dashboard 
+we can see the grafana dashboard wich is communucarting with the prometus server
+we can import a dashboard
+in the dashboard he typed 7249
+connection: promethus server
+now we see the dashboard ,n whatever is happening in your cl8 can be visualized in your promethus dashboard
+so whtaever issues we ar hv  e.g running low on memmory ,on our promethus UI we have alert
+
+
+                                                             SAMPLE DASHBOARDS TO IMPORT
+when u configure promethus as we hv done, there are some sample dashboard to watch out for 
+e.g
+Sample Dash Board IDS: 
+  3119, 7249,  8919, 6417 ,11074
+we can import any of these dashboards
+it gives us info on memeory usage and 
+all of these inf can also be understood by non IT GUYS
+these are dashboards that have been designed by other developer
+***************so promenthus is monitorng my entire cl8
+the mamory uasge the pods that are ruuning their metris, whatever that is happenin
+there are diff dashboard that we can check
+all my k8 objects, frm deployment, the pods,replicaset , node, controller
+ther is an alert manager wich we hv created certain alert: like when memory is low,
+POd not ready, pod crashing, persistent vol error, these are the alerts
+there are congifuration for the different issues for which we will receive alert
+so this promethus
+
+
+
+EFK =  
+ Ther is elastic file , fibric and kunberner whic i will be sharing the videO with with you guys thats the final stuff to master, but before we look at that 
+LET me xplain smt else, thers what we call rancher
+
+
+                                    RANCHER
+
+Rancher and kubernetes:
+PROVIDE A Kubernetes platform  
+With Rancher we can import and manage multiple kubernetes clusters    
+We can create clusters like EKS / AKS / GKE, etc.   
+Rancher provide a dasborad for kubernetes
+Rancher is deployed using docker  
 
 
 
