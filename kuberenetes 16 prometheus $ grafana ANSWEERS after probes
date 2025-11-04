@@ -436,8 +436,8 @@ lets check the dev ns
 kubectl get svc -n dev
 we see grafana service is clusterIP 
 we cant use clusterIP for external service so we can edith the grafana service 
-kubectl edit svc grafana -n dev
-since am using kops cl8 i can change it to service type loadbalancer and its going to create a loadbalancer in aws
+kubectl edit svc grafana -n dev        *** to vi & edit the deployment file
+since am using kops cl8 i can change it to service type loadbalancer and its going to create a loadbalancer in aws .. 2.18.25. gateway eror, so changed it back to clusterip 
 but loadbalancer are not free 
 kubectl get svc -n default   (ie default ns)
 i have this loadbalancer i created before
@@ -450,17 +450,22 @@ service type has been changed
 so now we hv the loadbalancer service in the dev ns bt its nt free
 so i wnat to maintain my clusterIP which is most secured
 helm ls -n dev
-we see the deployments in the dev ns
+we see the deployments in the dev ns (grafana & promethus)
 lets delete the grafana deployment
 helm uninstall grafana -n dev
-when i deploy grafan it created a lb in aws 
-now redeploy grafana
-################################# i want to show you smt that is very important /...............................1:41
+when i deployed grafana it created a lb in aws 
+now redeploy grafana   ** 1.51.15: install it in the dev ns as well **mee* (bc hes trying to illutrate that ngnix is in default ns but it can lb promethus & grafana in dev ns)
+                                                                                        and also  spring app & java web  which are in the default ns.
+i want to show you smt that is very important /...............................1:41
 why do i wnat to use only clusterIP services
+
+                                                        
+                                                     GRAFANA HAS NEW ADMIN PASSWD ANYTIME ITS REDEPLOYED
 whenevr you deploy grafana make sure you get the admin PW
 helm I
-The pW wil be diff from what we had before
+The pW wil be diff from what we got before
 
+4)                                       DEPLOY NGINX
 lets also deploy ngnix ingress
 i can search the repository and get the charts that are there
 so lets search this repository and get the right helm chart to use 
@@ -472,17 +477,21 @@ so lets search this repository and get the right helm chart to use
 helm search repo  nginx-ingress    
  nginx  nginx-ingress/nginx-ingress       >>>>>>>>>>>>>>>>>>>>>>>  ... i v this helm chart
 helm install nginx  nginx-ingress/nginx-ingress -n dev      . .... in the dev ns
-#########no wthe nginx ingress controller has been insatlled, 
+#########now the nginx ingress controller has been installed, 
 kubectl get svc -n dev
 it has created a lb in aws
 we check the lb in aws and we see the hosted zone    ... ie ( landmarkapp.net, grafana.landmarkapp.net)
 i bliv hosted zones were creayted earlier
 let me show u guys smt
+
+4a)                                               A record for (promethus & grafana )2.02.55
 since we hv this lb in aws i can  go to aws and create  Arecords ................1:46:00
 mk sure to cretae the right loadbalancer while making the Arecord
 now we create a file (the ingress file)
 
-'.....................########## ingress file using the host based routing 
+
+  4b)                                                         CREATING INGRESS RULE FOR HOSTBASED ROUTING  (in default ns)
+'.....................########## ingress rule using the host based routing for springapp.landmarkapp.net & java.landmarkapp.net
 vi ingress33.yml
  
 
@@ -515,6 +524,10 @@ spec:
             port:
               number: 80
 
+
+                             ONE LOADBALANCER (NGINX INGRESS)IS ROUTING TRAFFIC TO MULTIPLE APPLICATIONS
+                                     (springapp.landmarkapp.net,java.landmarkapp.net)
+
 kubectl apply -f ingress33.yml
 deployed
 kubestl get ingress
@@ -522,14 +535,21 @@ kubectl describe ingress
 we see its in the dev ns
 we see the backend
 springapp.landmarkapp.net
+java.landmarkapp.net
 and its routing traffic when we check online 
 one lb is routing traffic to multiple applications
+
+
+
+                                               CREATING INGRESS RULE FOR HOSTBASED ROUTING  in the dev namespace
+                                       (grafana.landmarkapp.net, prometheus.landmarkapp.net, alerts.landmarkapp.net)
 
 ####lets create another file 
 cp ingress33.yml ingress3.yml
 vi ingress3.yml
-                                       1:5700
----
+             
+ 1:5700
+---                                           Prometus and grafana are running in the dev ns
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -570,19 +590,39 @@ spec:
               number: 9093
 
 ********************************************* kubectl apply -f ingress3.yml
-we caheck online: prometheus.landmarkapp.net
+we check online: prometheus.landmarkapp.net
 we can see the alerts that have been configured
-************ we tried to access prometheus.landmarkapp.net
+************ we tried to access prometheus.landmarkapp.net  ... i think alerts.landmarkapp.net
+
+
+   **mee***                    ONE LOADBALANCER (NGINX INGRESS)IS ROUTING TRAFFIC TO MULTIPLE APPLICATIONS
+           (springapp.landmarkapp.net,java.landmarkapp.net in default ns & grafana.landmarkapp.net, prometheus.landmarkapp.net, alerts.landmarkapp.net in dev ns)
+
+
+
+
+
+2.05.00 to 2.16.55          TROUBLESHOOTING
+     error.......       bad gateway
+now we can  alerts.landmarkapp.net
+
+                                                  CREATE A RECORD FOR ALERT MANAGER
 but couldnt bc we havent created Arecords for alert manager service
 after the ARecord created we can access it online 
-we caould also access grafana.landmarkapp.net 
+we could also access grafana.landmarkapp.net 
+
+                                                 2.08.36              GRAFANA DASHBOARD IS PREFERRED  
 he said the promethus UI isnt the best option to use so we hv to use the grafana dashboard
 but we still couldnt access it
-with this erroe am unable to xplain hw all of this guy will give us the expected result
+with this error am unable to xplain hw all of this guy will give us the expected result
 he said we couldnt acces it yet bc it takes a while 
 finally, we can now acceess it , the grafana dashboard pops up
+2.21.00   so we hve deployed our cluster
+
+
+                                                   SETTING UP GRAFANA
 then we entered the username and PW we generated earlier when we installed grafana 
- the grafana dashboard hasa a data source and the sourec is promethus   ...................**************2:22:21
+ the grafana dashboard has a data source and the source is promethus   ...................**************2:22:21
 name : promethus server
 save and test
 connection: http://promethus server
@@ -594,6 +634,9 @@ in the dashboard he typed 7249
 connection: promethus server
 now we see the dashboard ,n whatever is happening in your cl8 can be visualized in your promethus dashboard
 so whtaever issues we ar hv  e.g running low on memmory ,on our promethus UI we have alert
+
+
+                                                             SAMPLE DASHBOARDS TO IMPORT
 when u configure promethus as we hv done, there are some sample dashboard to watch out for 
 e.g
 Sample Dash Board IDS: 
@@ -606,10 +649,15 @@ these are dashboards that have been designed by other developer
 the mamory uasge the pods that are ruuning their metris, whatever that is happenin
 there are diff dashboard that we can check
 all my k8 objects, frm deployment, the pods,replicaset , node, controller
-ther is an alert manager wich we hv created certain alert like when memory is low 
+ther is an alert manager wich we hv created certain alert: like when memory is low,
+POd not ready, pod crashing, persistent vol error, these are the alerts
 there are congifuration for the different issues for which we will receive alert
 so this promethus
 
+
+2.18.25... grafana to lb
+
+                                                   SERVICES/ITEMS PROMETHUS DEployed
 ********************when we deployed promethus , some items were deployed 
 kubectl get po -n dev
 didnt get exactly what he wanted so 
@@ -617,6 +665,7 @@ sudo su - kops
 kubectl get po -n dev
 we can see the items 
 remember we deployed garafana independently
+                                             PROMETHUS DEployeD    
 when we deployed prometus, it deployed 
 promrthus alert manager
 promethus kube state metrics
@@ -624,13 +673,13 @@ promethus node exporter
 promtheus push gateway
 promethus server 
 etc
-################# but how did it deploy my alert manager
+2.28.15 but how did it deploy my alert manager
 kubectl get deploy -n dev
 NAME
 grafana
-nginx-nginx ingress controller
-promethus kube state metrics
-promethu promthus push gateway
+nginx-nginx ingress controller    ******** deployed as a deployment
+promethus kube state metrics                ** deployed as a deployment
+promethu promthus push gateway              ** deployed as a deployment
 promethus seevrer     ************************  all these as a deployment
 
 how about staeful staeful
@@ -638,9 +687,10 @@ kubectl get sts -n dev
 NAME                              READY
 promethus -alertmanger             1/1
 ******************** PROMETHUS ALERT manger was deployed as a statefulset with one replica
-######################## lets check daemon set
+
+lets check daemon set
 kubectl get ds -ndaemonset 
-promthus promthus node exporter       *************** this was deployed as ad aemonset 
+promthus promthus node exporter       *************** this was deployed as a daemonset 
 
 
 
@@ -650,17 +700,20 @@ helm instal promethus came with all these micro services
 
 1. alertmanager-0       -- statefulset
 2. kube-state-metrics   -- deployment     ********** 
-3. node-exporter        -- DaemonSet     ********* collects metrics from all the nodes so we nid each pod to be runnin in ecah node thats why its deployed as a daemonset
+3. node-exporter        -- DaemonSet     ********* collects metrics from all the nodes so we nid each pod to be runnin in each node thats why its deployed as a daemonset
 4. pushgateway           - deployment
-5. prometheus-server   ( deployed alongside vol concept)  - statefulset/database     ***** this is deployed as a statefulset bc it comes wit abdatabase
+5. prometheus-server   ( deployed along side vol concept)  - statefulset/database     ***** this is deployed as a statefulset bc it comes wit a database
 
 
 
 
+                   EFK
+
+                                
 
 EFK =  
- Ther is elastic file , fibric and kunberner whic i will be sharing the vidoe with with you guys but before we look at that 
-thats the final stuff to master bt before then rancher
+ Ther is elastic file , fibric and kunberner whic i will be sharing the videO with with you guys thats the final stuff to master, but before we look at that 
+LET me xplain smt else, thers what we call rancher
 
 Rancher and kubernetes:
 PROVIDE A Kubernetes platform  
@@ -669,7 +722,7 @@ We can create clusters like EKS / AKS / GKE, etc.
 Rancher provide a dasborad for kubernetes
 Rancher is deployed using docker  
 
-we will deploy rancher using docker  ................................ 19.08
+we will deploy rancher using docker  ................................ 2.33.00
 checking if he has docker server to deploy rancher
 didnt hv , so creating docker server using ubuntu
 open all ports
