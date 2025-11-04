@@ -1,14 +1,18 @@
 check the EFK/ ELK powerpoint
 WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
 
-we are talking bout elastic stack , lock stack and kuberna or elastic stack fibric and kuberna
+we are talking about elastic stack , lock stack and kuberna or elastic stack,  fibric and kuberna
 we are goin to be deploying this stack in our k8 cl8 using helm
 
 
 REASON WE NID TO DO THIS:        **************** powerpoint
-monitoring, alertingand log aggregationare essential for the smooth functioning of a production grade k8 cl8
+monitoring, alerting and log aggregationare essential for the smooth functioning of a production grade k8 cl8
 
+
+
+                                       TO ACCESS APPLICATION THAT IS RUNNING 
 e.g 
+1) WHEN WE DONT HAVE MANY APPLICATION:
 when u want to access an applictaion that is running, in k8 we can check the logs
 kubectl get pod
 we see the pods that are running in the defaulf dev space
@@ -16,7 +20,7 @@ NAME                        READY     STATUS
 hello-app-6hztm              1/1         running
 tdapp-759f7c6687              1/1         running
 
-we can check the logs of ecah of the appl
+we can check the logs of each of the appl
 we can describe the pod
 kubectl describe  tdapp-759f7c6687     
 OR check/get the logs  of the pod
@@ -34,8 +38,10 @@ tdapp                       2/2
 Error from server (Not found): pods tdapp not found 
 ####################### ie it has to be in pods to check the logs , ( run kubectl get pod, first before running kubectl get logs tdapp)
 
-*****************************  9:10
-##############  but when u have multiple appl and ther are issues,
+* 9:10
+
+2) WHEN WE HAVE MULTIPLE APPLICATIONS:     kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system    (kubectl logs app-(app name) | gre errors)
+  but when u have multiple appl and ther are issues,
 kubectl get pod -A        * TO get all the pods in all the name spaces
 we see all the pods running
 NAMESPACE            NAME    
@@ -43,6 +49,7 @@ apm                 grafana
 apm                 promethus
 kube-system         cluster-autoscaler-6cf74d69f7
 grafana pod is running
+
 the alertmanger   , incharge of sending alert, if smt is going wrong 
 kubestate -maetrics ttaht gathr all the data, whatever is happening within our k8 objects eg pods, deplyment, rs, rc,  even nodes
 node exporter is also gathering whatererv is happening in the nodes, the metrics  node exporter is gathering them 
@@ -55,15 +62,20 @@ ERROR form server not found clustr-autoscaler      ************************** th
 kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system
 the logs are successfully generated                     8:25
 
+
+
+
 HOW ARE WE ABLE TO CENTRALIZE OUR LOG MGT  ************************ powerpoint 12:40
 we can use Elastic stack along with Docker to collect, process, store and visualize logs of microservices
+
+
 
 WHAT IS ELASTIC STACK  .........................the vendor is ELASTIC
 its an open source app from elastic designed to take data From any source and in any format and then search, analyze,and visualize that data in real time.
 it was formely known as ELK stack, in wich the letters in the name stood for the appl in the grp. Elasticsearch, lahstack,and kibana. A fourth app, Beats, was 
 subsquently added to the stack.
 
-ELATICT search: ie now we can use elastic stack to staore data and to index the data, indexing streamas of semi-structured data, e.g logs or decoded ntwrk packets.
+ELASTIC search: ie now we can use elastic stack to staore data and to index the data, indexing streamas of semi-structured data, e.g logs or decoded ntwrk packets.
 ************* so elastic search will act as a container, it will store all the logs  ...... this i sthe use of elastic stack, it also does indexing.
 it will index the logs , so when the logs are inside elastic search or the semi structure data n some ntwrk packages are inside elasticsearch waht happens is 
 elasticsearch can do indexing, it will index the logs , it will perform indexing ,indexing is just like a pattern , lets assume it wants to cfreate an index which is goin
@@ -91,7 +103,10 @@ logstssh enhances the data and sends it to elasticsearch
 elasticsearch stores and indexe the data
 kibana displays the data stored in elasticsearch
 
-ELK Stack Architecture
+
+
+
+                         ELK Stack Architecture
            2) data processing        3)storage           4)Visualize
 1)Log
 
@@ -105,9 +120,16 @@ however one more component is needed or data collection called beats. this led E
               beats                       logstash                 elatsicsearch         kibana (can also be used to share)
 
 
-PREREQUISITE TO DEPLOY ELastic Stask     .....23:00
 
-we need a k8 cl8 with storage calss configured
+
+PREREQUISITE TO DEPLOY ELastic Stask     .....23:00
+we need a k8 cl8 with storage class configured
+
+
+
+                           USE HELM TO DEPLOY EFK
+
+                         **** . (since we ar not changin any values we wont use -f) bc we wont use any customized file for the deployemt, we did nt chnGE D 
 
 kubectl get pv 
 to check for our persist volume we created initially
@@ -116,10 +138,14 @@ to see we hv a dynamic storage class
 ************* also if we have deploy k8 using kops, it would have as well cm with dynamic storgae class
 
 
-create namespace
+                            STEPS TO DEPLOY EFK
+
+1)create namespace
 kubectl create ns efk
 add
 we are using helm to deploy efk
+
+B)  ADD efk repo
 helm repo add elastic https://helm.elastic.co
 we can go to this site to search the chart that are der   :https://helm.elastic.co
 helm repo update
@@ -132,7 +158,8 @@ this is the chart we want to use :   elastic/elasticsearch
 helm show values elastic/elasticsearch
 lets see the values in the chart
 lets createa anew file 
-mkdir efk
+
+c) mkdir efk
 cd efk
 ls                                                  (redirectin it into this custom file)
 helm show values elastic/elasticsearch >> elasticsearch.values  
@@ -142,6 +169,7 @@ vi elasticsearch.values                   ................ 31:00
 we see the valuesfile that will be used to deploy elastic search
 he changed replicas from 3 to 1 and master node from 3 to 1 ,, just for this practical
 
+2)
 helm install elasticsearch elastic/elasticsearch     ........(using the default values file)
    It will deploy elasticsearch in the default namespace 
    It will deploy elasticsearch using default value file 
@@ -151,17 +179,17 @@ it will be deployed in the efk ns we created earlier
 
 kubectl get all -n efk 
 nothing available
-1) ######################## 
+
 helm install elasticsearch elastic/elasticsearch -n efk -f elasticsearch.values    
 kubectl get all -n efk 
-now we see the elasticsearch pod coming up and its being deployed as a stateful pod 
+*********now we see the elasticsearch pod coming up and its being deployed as a stateful pod ....1
 kubectl get pvc -n efk
 it has pvc for the elasticsearch pod with 30Gi
-this is bc we hv dynamic class storage configured in our env so data can be stored bc elastic search wil stpre the data
+this is bc we hv dynamic class storage configured in our env so data can be stored bc elastic search wil store the data
 kubectl get pod -n efk 
 we can see the pod and the service created
 
-2) ##############     WE WANT to deploy kbana    .... (helm install elastic/kibana)
+2) ##############     WE WANT to deploy kibana    .... (helm install elastic/kibana)
 
 helm show values elastic/kibana
 we see the default values for kibana
@@ -169,7 +197,7 @@ one replica is being deployed and dats what we need
 we hv some cinfigs maps that wil be deployed
 config maps are additional configuration
 we see the service type is CLusterIP and we can work with that bc we have nginx already deployed
-but if nginx wasnt deployed, we would have changed the service type to nodeport or lb 
+*********** but if nginx wasnt deployed, we would have changed the service type to nodeport or lb ....2
 all the default values are ok
 the chart we are using for thais deployment ias elastic/kibana
 ################### deploying kibana
@@ -177,17 +205,18 @@ the chart we are using for thais deployment ias elastic/kibana
 helm install  elastic/kibana -n efk      ... (since we ar not changin any values we wont use -f) bc we wont use any customized file for the deployemt, we did nt chnGE D 
 VALUES file           
 kubectl get po -n efk
-we see kibana was deployed using deployment, k8 object
+  ***********we see kibana was deployed using deployment, k8 object........3
 kubctl get statefulset -n efk
 we see elasticsearch was deployed using stateful set
 bc elastic search comes with a database, its the database wher all the logs are shipped into
-and logs that hv been shipped into elasticsearch,we can visualize the log using kibana
+*********************and logs that hv been shipped into elasticsearch,we can visualize the log using kibana
 filebeats will ship the log into elasticsearch
 ***********************we now install filebeat
 helm install filebeat elastic/filebeat -n efk        (in the efk namesapce)
 also we are nt changing any values for filebeat 
 we nid filebeat to be running in all the nodes, so it can be collecting the logs and shipping it 
 therefore, it will be deployed as a daemonset
+
 3) ##########
 helm install filebeat elastic/filebeat -n efk
 now deployed
@@ -200,14 +229,21 @@ elasticsearch-master                 CLusterip
 elasticsearch-master-headless        Clusterip
 kibana-kibana                        Clusterip
 
+
+                             NEED TO ACCESS KIBANA EXTERNALLY
 we need to access kibana service externally 
 right now we hv just the clusterip we hv used to deploy kibana
 but see we already hv ingress controller deployed in our cl8, we dnt ned to worry abt nodeport
+
+
+                      CREATE INGRESS RULE FOR KIBANA
 4)  ***************************so we are goin to create ingress rule for kibana
 we created one yesterday for alertmanger, promethus server and grafana
 so hw do we wnat to access kibana, we are creating an ingress rule
 ############# host base routing
 
+
+                                                      HOST BASE ROUTING INGRESS RULE FOR KIBANA
 # ingress2.yml
 apiVersion: extensions/v1beta1  # networking.k8s.io/v1
 kind: Ingress
@@ -224,6 +260,7 @@ spec:
           serviceName: kibana-kibana       (gotten by running kubectl get svc )
           servicePort: 5601                 (gotten by running kubectl get svc ) at work u also maintain the right service port
 
+
 this is host basse routing
 to create thsi ingress resource
 vi  ingress-rule.yml   ,  and paste
@@ -232,16 +269,18 @@ ingress.extensions/ingress-rule-1 created
 kubectl describe ingress ingress-rule-1 -n efk
  we can see kibana.dominionsystem.net
 and its routing trafic to the backendport on the port number   kibana-kibana:5601(10.0.1.124:5601)
-its port forwarding taking place her     ................ 52:00
+its port forwarding taking place here     ................ 52:00
 bc when u type : kibana.dominionsystem.net
 ur traffic is routed via the lbalancer service
 &once it comes into d cl8,it talks 2 dis service kibana-kibana:on d service port number 5601 & kibana service route d service to dcontainer on dis port no.(10.0.1.124:5601)
 this is what is happens
+
+                                                   CREATE A RECORD 
 in aws we hv to go to route 53 n create dns record    ....... 52:16
 now we can access it online by typing kibana.dominionsystem.net
 
-now we hv some pod taht we hv deployed
-kubectl get infress -o wide
+now we hv some pod that we hv deployed
+kubectl get ingress -o wide
 we can see the address
 lets get ingress in the right namespace
 kubectl get ingress -n efk -o wide 
@@ -253,6 +292,8 @@ when endusers type          ## it talks to    >>   this talks to   >> talks to >
 ******************* kibana.dominionsystem.net >> Ingress controller >> kibanaSVC >> Kibanapods
 the ingress controller is using the rules defined in this ingress resource and to talk to the ingress controller pod, it goes tru the lb and the lb we hv created Arecords
 so if you want to talk to the lb just type kibana.dominionsystem.net, traffic is routed, it gets to the ingress controller, ic routes  to the kibanapods tru the kibanaSVC
+
+
 
 NOW THAT WE HAVE ALL THESE ESTABLISHED 
 now hes logged into elastic search engine online   >> (i guess)
