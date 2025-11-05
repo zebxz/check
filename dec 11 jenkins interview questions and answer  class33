@@ -279,7 +279,7 @@ Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 10) Helm ... its a package manger for k8 (makes use of charts/creates manifest for deployment so we dnt hv to write manifest or add repositories to use for deployment)
    helm can be deployed in any cl8 be it kops, eks etc once its installed u can then use it to deploy Ur appl
 11)probes for pod health check 
-14)promethus & grafana .. Prometheus: Gathers metrics from your applications, 
+14)promethus & grafana ..Prometheus and Grafana are a popular combination used for application performance monitoring (APM) Prometheus: Gathers metrics from your applications, 
      Grafana Connects to Prometheus as a data source to create customizable dashboards. These dashboards allow you to visualize the metrics collected by Prometheus
 15) EFK/ Rancher
 16) Security
@@ -2348,7 +2348,7 @@ kubectl get all and we hv our cl8 running
 
 
 
-KUB 16
+KUB 16                    PROMETHEUS AND GRAFANA
 
 NICE explantion for :  .. 2) Explain your experience in kubernetes?? .......  18:00
 my question: when is hosted zones created
@@ -2493,5 +2493,155 @@ We can create clusters like EKS / AKS / GKE, etc.
 Rancher provide a dasborad for kubernetes
 Rancher is deployed using docker  
 
+
+
+
+
+KUB 17                                             ELASTIC STACK
+                     
+                          check the EFK/ ELK powerpoint
+WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
+
+   
+               TO ACCESS APPLICATION THAT IS RUNNING
+
+1) WHEN WE DONT HAVE MANY APPLICATION:
+    ***** run kubectl get pod, first before running kubectl get logs tdapp)
+when u want to access an applictaion that is running, in k8 we can check the logs
+kubectl get pod
+we see the pods that are running in the defaulf dev space
+NAME                        READY     STATUS
+hello-app-6hztm              1/1         running
+tdapp-759f7c6687              1/1         running
+
+
+we can check the logs of each of the appl
+we can describe the pod
+kubectl describe  tdapp-759f7c6687     
+OR check/get the logs  of the pod
+kubectl logs tdapp-759f7c6687     
+we can see the appl was deployed using the spring booth frame work
+if u look at the appl, you can visualize the logs
+********************if ders anytin wrong with your appl you can check the logs it will tell whats happening
+
+
+ 2) WHEN WE HAVE MULTIPLE APPLICATIONS :  kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system    (kubectl logs app-(app name) | gre errors)                     
+but when u have multiple appl and ther are issues,
+kubectl get pod -A        * TO get all the pods in all the name spaces
+we see all the pods running
+NAMESPACE            NAME    
+apm                 grafana
+apm                 promethus
+kube-system         cluster-autoscaler-6cf74d69f7
+grafana pod is running
+
+ so if we hv 100 pods we cant be running kubectl for all of the pods, that will be a tidious task
+kubectl logs cluster-autoscaler-6cf74d69f7
+ERROR form server not found clustr-autoscaler      ************************** this is bc we didnt check in the correct namespace (we nid to pass the namespace)
+kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system
+the logs are successfully generated                     8:25
+
+
+the alertmanger   , incharge of sending alert, if smt is going wrong 
+kubestate -maetrics ttaht gathr all the data, whatever is happening within our k8 objects eg pods, deplyment, rs, rc,  even nodes
+node exporter is also gathering whatererv is happening in the nodes, the metrics  node exporter is gathering them 
+promrthus sererv pod , it will scrap all of this data into the promethus  time series databasea nd once the dta has been scrapped we can visualise what is hapening using 
+grafana
+
+
+
+                           INSTALL EFK/ELK stack K8's cluster  USING HELM
+
+
+OBJECTIVE:
+
+Monitoring, alerting & log aggregation are essential for the smooth functioning of a productive grade kubernetes cluster.
+
+Appplication & system logs help us to understand what is happening inside a cluster, the logs are particularly useful for debugging problems and monitoring cluster activity.
+
+In microservices architecture, a single business operation might trigger a chain of downstream microservices calls, which acn be pretty challenging to debug.
+Things, however can be easier when the logs of all microservices are centralized and each log event contains details that allow us trace thr interaction between the application.
+we can use Elastic stack along with Docker to collect, process, store, index, and visualize logs of microservices.
+
+
+HOW ARE WE ABLE TO CENTRALIZE OUR LOG MGT  ************************ powerpoint 12:40
+we can use Elastic stack along with Docker to collect, process, store and visualize logs of microservices
+
+
+
+
+WHAT IS ELASTIC STACK  .........................the vendor is ELASTIC
+its an open source app from elastic designed to take data From any source and in any format and then search, analyze,and visualize that data in real time.
+it was formely known as ELK stack, in wich the letters in the name stood for the appl in the grp. Elasticsearch, logstack,and kibana. A fourth app, Beats, was 
+subsquently added to the stack.
+
+ELASTIC search: is a real time, distributed storage, JSON-based search, and analytics engine designed for horizontal scalability, maximum reliability & easy management. it can
+be used for many purposes, but one context where it excels is indexing streams of semi-structured data, suscha s logs or decoded ntwrk packets.
+
+
+WHAT IS ELASTIC STACK  .........................the vendor is ELASTIC
+its an open source app from elastic designed to take data From any source and in any format and then search, analyze,and visualize that data in real time.
+it was formely known as ELK stack, in wich the letters in the name stood for the appl in the grp. Elasticsearch, logstack,and kibana. A fourth app, Beats, was 
+subsquently added to the stack.
+
+ELASTIC search: ie now we can use elastic stack to store data and to index the data, indexing streamas of semi-structured data, e.g logs or decoded ntwrk packets.
+************* so elastic search will act as a container, it will store all the logs  ...... this i sthe use of elastic stack, it also does indexing.
+it will index the logs , so when the logs are inside elastic search or the semi structure data n some ntwrk packages are inside elasticsearch waht happens is 
+elasticsearch can do indexing, it will index the logs , it will perform indexing ,indexing is just like a pattern , lets assume it wants to cfreate an index which is goin
+to like be displaying logs on a timestamp basis so that whatever is happening in the cl8 , u can use ur timestamp to know aht is goin on, so that can tk place, therfore
+elastic search is goin to act as a store n a kind of an analyzer.. thats what elastic search is goin to do.
+once the logs are stored, the next thing is that we want to visuaize these logs and we can use kibana  .... (THE SAMe way we saw grafana)
+
+KIBANA: is an open source analytics and visualizationplatform designed to work with elasticsearch. it can be used to search,view n interact wit data stored in elasticsearc
+indices, allowing sadvanced dtaa analysis n visualing dta in a variety of charts, tables n maps
+
+the nxt componant is called beats
+BEATS: open source data shipprs that can be installed as agents on servers to send operational data directly to Elasticsearch or via logstash, wher it can be further
+processed n enhanced.
+Therea re a number of beats for diff purposes.
+FILEbaet    , logfile
+metricbeat  , metrics   e.g metric data like cpu, memory
+packetbeta , netwrk data
+heartbeat: uptime monitoring
+
+WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
+
+in few words
+filebeats collects data from the log files and sends it to logstash
+logstssh enhances the data and sends it to elasticsearch
+elasticsearch stores and indexe the data
+kibana displays the data stored in elasticsearch
+
+
+                          ELK Stack Architecture
+           2) data processing        3)storage           4)Visualize
+1)Log
+
+            logstash                 elatsicsearch      kibana
+
+however one more component is needed or data collection called beats. this led Elatic to rename ELK as the Elastic stack.
+
+            Data collection          data processing        3)storage           4)Visualize
+1)Log
+
+              beats                       logstash                 elatsicsearch         kibana (can also be used to share)
+
+
+
+
+                CAN RETAIN LOGS IN ELASTIC SEARCH 
+we can decide to retain logs in elastic search for like a month  cos u dnt wnat to keep logs ther for so long. bc logs are  goin to be generated constantly so our retainment
+policy can just be for a month  ,,, bt it also depends , it can be decided by mgt ,,, so in INTERVIEW, we can say that logs are kept for one month afetr wich we can decide to 
+move the logs from elastic search n save them in my aws s3 bucket
+i just went to data stream, we can visualize data in a format wher even non IT folks can underatnd, 
+
+
+                           LOG
+A log is a variable file, which means whatsoevr is hapening, they keep on changing, they are goin to be constantly changing
+its just like when u run  : top
+
+                                       TOPS
+tops tells u whats happening in ur system , hw many users, the processes that are runing , the values keep changing
+the events that are taking place are variable events 
 
 
