@@ -1,7 +1,7 @@
 check the EFK/ ELK powerpoint
 WE ARE GOING TO SEE HOW TO USE ELASTICSEARCH, KIBANA AND BEATS
 
-we are talking about elastic stack , lock stack and kuberna or elastic stack,  fibric and kuberna
+we are talking about elastic stack , lock stack and kuberna or elastic stack,  filebeat and kuberna
 we are goin to be deploying this stack in our k8 cl8 using helm
 
 
@@ -65,17 +65,36 @@ the logs are successfully generated                     8:25
 
 
 
+
+
+         INSTALL EFK/ELK stack K8's cluster  USING HELM
+
+
+OBJECTIVE:
+
+Monitoring, alerting & log aggregation are essential for the smooth functioning of a productive grade kubernetes cluster.
+
+Appplication & system logs help us to understand what is happening inside a cluster, the logs are particularly useful for debugging problems and monitoring cluster activity.
+
+In microservices architecture, a single business operation might trigger a chain of downstream microservices calls, which acn be pretty challenging to debug.
+Things, however can be easier when the logs of all microservices are centralized and each log event contains details that allow us trace thr interaction between the application.
+we can use Elastic stack along with Docker to collect, process, store, index, and visualize logs of microservices.
+
 HOW ARE WE ABLE TO CENTRALIZE OUR LOG MGT  ************************ powerpoint 12:40
 we can use Elastic stack along with Docker to collect, process, store and visualize logs of microservices
 
 
 
+
 WHAT IS ELASTIC STACK  .........................the vendor is ELASTIC
 its an open source app from elastic designed to take data From any source and in any format and then search, analyze,and visualize that data in real time.
-it was formely known as ELK stack, in wich the letters in the name stood for the appl in the grp. Elasticsearch, lahstack,and kibana. A fourth app, Beats, was 
+it was formely known as ELK stack, in wich the letters in the name stood for the appl in the grp. Elasticsearch, logstack,and kibana. A fourth app, Beats, was 
 subsquently added to the stack.
 
-ELASTIC search: ie now we can use elastic stack to staore data and to index the data, indexing streamas of semi-structured data, e.g logs or decoded ntwrk packets.
+ELASTIC search: is a real time, distributed storage, JSON-based search, and analytics engine designed for horizontal scalability, maximum reliability & easy management. it can
+be used for many purposes, but one context where it excels is indexing streams of semi-structured data, suscha s logs or decoded ntwrk packets.
+
+ie now we can use elastic search to store data and to index the data, indexing streamas of semi-structured data, e.g logs or decoded ntwrk packets.
 ************* so elastic search will act as a container, it will store all the logs  ...... this i sthe use of elastic stack, it also does indexing.
 it will index the logs , so when the logs are inside elastic search or the semi structure data n some ntwrk packages are inside elasticsearch waht happens is 
 elasticsearch can do indexing, it will index the logs , it will perform indexing ,indexing is just like a pattern , lets assume it wants to cfreate an index which is goin
@@ -127,7 +146,7 @@ we need a k8 cl8 with storage class configured
 
 
 
-                           USE HELM TO DEPLOY EFK
+                           USE HELM TO DEPLOY Elk
 
                          **** . (since we ar not changin any values we wont use -f) bc we wont use any customized file for the deployemt, we did nt chnGE D 
 
@@ -310,22 +329,32 @@ we hv a lot of option we can do, index policy, index mgt , roll back ..... etc
 now we hv 6,268hits
 now its goin gto be capturing evrytin that is happeing in the cl8 based on the timestamp , whatevr is happening u can see evrytin
 we can add a field  ...... 1:04:50
-so dis is jst u creating tryin to creste some data tracing pattern like when u hv elastic serach u can create like hw long do u reatin logs  in elastic search, we can
-decide to retain logs in elastic serach for lke a month  cos u dnt wnat to keep logs ther for so long. bc logs are  goin to be generated constantlyso our retainment policy
-can just be for a month  ,,, bt it also depends , it can be decided by mgt  ,,, so in INTERVIEW, we can say that logs are kept for one month afetr wich we can decide to 
-move the logs from elastic search n save them in myb aws s3 bucket
-i just went to data stream, we can visyalize data in a format wher even non IT folks can underatnd, 
+so dis is jst u creating tryin to creste some data tracing pattern like when u hv elastic serach u can create like hw long do u reatin logs  in elastic search,
 
-A log is a variable file, which means whatso eevr is hapening, they keep on changing, they are goin to be constantly changing
+                                          
+                                              CAN RETAIN LOGS IN ELASTIC SEARCH 
+we can decide to retain logs in elastic search for like a month  cos u dnt wnat to keep logs ther for so long. bc logs are  goin to be generated constantly so our retainment
+policy can just be for a month  ,,, bt it also depends , it can be decided by mgt ,,, so in INTERVIEW, we can say that logs are kept for one month afetr wich we can decide to 
+move the logs from elastic search n save them in my aws s3 bucket
+i just went to data stream, we can visualize data in a format wher even non IT folks can underatnd, 
+
+
+                           LOG
+A log is a variable file, which means whatsoevr is hapening, they keep on changing, they are goin to be constantly changing
 its just like when u run  : top
-tops stells u whats happening in r system , hw many users, the processes that are runing , the values keep cahanging
-the events that are taking place are vaarible events 
 
-#############################
+                                       TOPS
+tops tells u whats happening in ur system , hw many users, the processes that are runing , the values keep changing
+the events that are taking place are variable events 
+
+
+
 
 ####################################  1:11 35
 ###################### PLS THERs one ASPECT  OF K8  WHich I HVAE NT COVERD WITH YOU GUYS n some other aspects WHICH I WILL COVER IN BOOT CAMP , bt the aspect i was supose 
- to cover i decided to share the video with u guys bc i wnat to shed some light in the 2nd half of the class, on certain terraform concepts...... k8 security n rbac
+ to cover i decided to share the video with u guys bc i want to shed some light in the 2nd half of the class, on certain terraform concepts...... k8 security n rbac
+
+
 
 
 ****************************** K8 TALKING POINT
@@ -346,7 +375,7 @@ Summary
 
 we use k8 objects to deploy workload in our cl8
 imp objs to tk note of 
-services for  service discovery
+services for service discovery
 pods
 rc , rs, 
 satefulset  ,, which we just saw today
@@ -472,6 +501,9 @@ Health Checkers:
 startup probes        ..... for containers that are slow to start if we dnt wnt the container to fail, we can use startup probes
 
 ###################### this are imp stuff to tk note of    #############
+
+
+
 
 you;ll go tru the security video 
 security
