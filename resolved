@@ -501,6 +501,12 @@ choose bt this sonarsoftware is running on a base image OS
 
 
 
+                                      KUBERNETES
+
+                   ****Kub17:  run kubectl get pod, first before running kubectl get logs tdapp)
+
+
+
 
 KUB 10&11
  troubleshooting issues from k8s setup/configuration or installation. ,, so v been able to trpubleshoot issues like trying to stup my kubeadm n its failing,
@@ -724,6 +730,47 @@ most of the time yes
 
 
 KUB 17 ELF
+                               TO ACCESS APPLICATION THAT IS RUNNING
+
+1) WHEN WE DONT HAVE MANY APPLICATION:
+    ***** run kubectl get pod, first before running kubectl get logs tdapp)
+when u want to access an applictaion that is running, in k8 we can check the logs
+kubectl get pod
+we see the pods that are running in the defaulf dev space
+NAME                        READY     STATUS
+hello-app-6hztm              1/1         running
+tdapp-759f7c6687              1/1         running
+
+
+we can check the logs of each of the appl
+we can describe the pod
+kubectl describe  tdapp-759f7c6687     
+OR check/get the logs  of the pod
+kubectl logs tdapp-759f7c6687     
+we can see the appl was deployed using the spring booth frame work
+if u look at the appl, you can visualize the logs
+********************if ders anytin wrong with your appl you can check the logs it will tell whats happening
+
+ 2) WHEN WE HAVE MULTIPLE APPLICATIONS :  kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system    (kubectl logs app-(app name) | gre errors)                     
+but when u have multiple appl and ther are issues,
+kubectl get pod -A        * TO get all the pods in all the name spaces
+we see all the pods running
+NAMESPACE            NAME    
+apm                 grafana
+apm                 promethus
+kube-system         cluster-autoscaler-6cf74d69f7
+grafana pod is running
+
+ so if we hv 100 pods we cant be running kubectl for all of the pods, that will be a tidious task
+kubectl logs cluster-autoscaler-6cf74d69f7
+ERROR form server not found clustr-autoscaler      ************************** this is bc we didnt check in the correct namespace (we nid to pass the namespace)
+kubectl logs cluster-autoscaler-6cf74d69f7 -n kube-system
+the logs are successfully generated 
+
+
+
+
+
 
 
 
