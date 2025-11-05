@@ -281,7 +281,8 @@ Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 11)probes for pod health check 
 14)promethus & grafana ..Prometheus and Grafana are a popular combination used for application performance monitoring (APM) Prometheus: Gathers metrics from your applications, 
      Grafana Connects to Prometheus as a data source to create customizable dashboards. These dashboards allow you to visualize the metrics collected by Prometheus
-15) EFK/ Rancher
+15) EFK/ELK Stack.....  to centralize our log mgt
+Rancher
 16) Security
 
 35.00****kub 10&11  ....  so one deployment requires all of this 
@@ -2550,6 +2551,19 @@ grafana
 
 
 
+****online..
+No, the Elastic Stack is a collection of tools that includes Elastic APM, which is an application performance monitoring system. 
+The Elastic Stack is the foundation that Elastic APM is built upon, consisting of other components like Elasticsearch, Logstash, and Kibana. 
+
+
+DIFF BETWEEN PROMETHUS/GRAFANA & ELASTIC STACK
+Prometheus, Grafana, and the Elastic Stack serve different primary functions in the realm of observability, though their roles can overlap. 
+Prometheus is for metrics monitoring, the Elastic Stack (ELK) is for log management and analysis, and Grafana is a versatile visualization tool that can sit on top of both
+
+
+
+
+
                            INSTALL EFK/ELK stack K8's cluster  USING HELM
 
 
@@ -2643,5 +2657,188 @@ its just like when u run  : top
                                        TOPS
 tops tells u whats happening in ur system , hw many users, the processes that are runing , the values keep changing
 the events that are taking place are variable events 
+
+
+
+   LS THERs one ASPECT  OF K8  WHich I HVAE NT COVERD WITH YOU GUYS n some other aspects WHICH I WILL COVER IN BOOT CAMP , bt the aspect i was supose 
+ to cover i decided to share the video with u guys bc i want to shed some light in the 2nd half of the class, on certain terraform concepts...... k8 security n rbac
+
+
+
+
+****************************** K8 TALKING POINT
+
+
+
+Summary 
+   Talking points:
+1. Container Orchestra     ... ie
+      kubernetes Orchestrate containerise applications 
+      kubernetes Orchestrate containerise micro-service applications 
+
+******* we choose k8 bc
+
+2. Self healing capacity, scalability, Disaster recovery, LB,  
+   
+3. Automated rollouts and rollbacks
+
+we use k8 objects to deploy workload in our cl8
+imp objs to tk note of 
+services for service discovery
+pods
+rc , rs, 
+satefulset  ,, which we just saw today
+daemonset
+deployment
+volumes
+configmaps
+secrets
+namespace concept
+ResourceQuota
+nodeAffinity
+podAffinity
+security
+
+*********these are very imp concepts for  to b able to xplain them
+before the objects, we spoke abt the architecture
+in the architecture, we saw the controlpaane, wich is also called the master node
+apiserver
+etcd
+scheduler
+controller-managers
+kubernetes-cni  :
+kube-proxy
+kube-dns
+workernodes
+
+Kubernetes architecture:
+  control plane /master-node:
+    apiServer        ************ this receives the api call  eg         kubectl get  ,        helm install   
+       kubectl get  
+       helm install   
+       ui       *********************  using the k8 dashboard with  some ui commands , u wil be communiatoin wit the APiserver, once it receives it it persist it in etcd
+    etcd [db]   (db or keyvalue store)   ,,,, then whatevar info has been stored here the scheduler is notified that some wrk nids to be done
+    scheduler         ************ then transfer d inf to d workernode ,kublet receives d info n immediaterly, d scheduler schedules d pod in d worker node n d resorce  
+    controller-managers                                                                                              is created
+    kubernetes-cni:
+      kube-proxy 
+      kube-dns 
+  worker-nodes:                                                                                    1:21:10
+    container-runtime[docker, containerD]  ,, cud be docker in the past or today cntainerD ...i pu docker in d past bc docker was depreciated jst last yr n ur xperience 
+    kubelet                                                                                           is nt  docker was only 
+    kubernetes-cni:        the cni is also ruuning in the worker node like in the master node
+      kube-proxy 
+      kube-dns 
+Kubernetes objects:
+  services = service discovery :   our app are running inside a pod so to acces them u must go tru a service
+    users/admin/app--->SVC--->pod[APPcontainer]          user,admin , app can access the pod tru a service e.g spring talk to the db pod tru the service 
+    service-TYPES:                                                                               the pod to d service is an endpoint n d service performs this task does lb
+      ClusterIP :              the default service in k8                                                                          that is service discovery
+        spec:         
+          type       1:33:00 ...  how will a service identify that it nids to route service to a po dvia service discovery, under service we hv api version, metadata, spec, 
+          selector:                   under spec seletor, in the selector we pass smt like this ,app: myapp bc d selector must match
+            app: myapp 
+      NodePort         *********** external
+      LoadBalancer      ****************** external
+      ExternalName       **************** we didnt demo this, used to cmm with app outised ur cls8
+      ingress            ***has  alot of advantages .in security its xplained as additional layer of security, we can use it to deploy app using clusterIP wich increses 
+         ClusterIP                                  security in our cl8
+  pods---> houses containers       ************* wher appl are run
+     SingleContainerPods         *********** truout this course we hadjst had singlecontainer pod bt we can v some  pod that act as ultilty  pod to the main pod 
+     MultiContainerPods       ************    and in that case we can hv multi container pod
+  PodTemplate:
+    metadata:
+      labels:
+        app: myapp 
+    spec:
+      containers
+  ReplicationControllers:   (rs,staefulset, daemonset,deployment) therfore, we dnt deploy d containers directly inside the pod dirctly bc  d pod lifecycle is very short
+    spec:                                      so we depoy them using controllers, so wit the help of controlers we cqn deploy our appl
+      selector:                                 bt how will d controller knw that they are incaharge of a pod,  remeber that in d pod ther is a template file,
+        app: myapp                                 and in the pod ders a template ders a metadata wher we pass some labels like app: myapp
+                                  for replication controllers we hv selector is looking for app:myapp, so selector knw that app=myapp, so d controllers ar able to identify
+                                                      their pod usin labels n selectors, so this  replicationcontroller knows that ist responsible for this guy app:myapp
+ReplicaSet:                                       similarly,if it was for rs, daemonset , deployment , these are the new generation or the big guys bc 
+    selector:                                         they jst dnt use equalitybased selector
+      matchExpressions [set-based]                under selector they add anoda layer : e.g match label for equality base
+      matchLabels: [eqaulity based]            1:32:00           this is the same pattern for rs, stateful set , daemonset, deployment
+        app: myapp 
+  StatefulSet    .... used to deploy db appl
+  DaemonSet          ... to deploy appl that wil run in all your node like exporter we deployed yesterday n filebead  we deployed today
+  Deployment        ... recommended k8  obj to deploy in k8 bc it has rollback , rollout n it also maintains all d replicaset for all d deployment, it kips a recrd of it
+  volumes                   imp  for deploying db appl ,we lokked at  PV wher a piece of storage can b created withinin our cl8 n managed by cl8 by d kube service                                                                    dats y u can rolbk n rollout
+  configMaps      .......  since we create portable containerise applications , wich means our Developers don't hard code , since they dnt hardcode 
+  if they are tryin to pass
+    db-username: ${username}     ie in the dockerfile this info are not hardcoded, so we use config maps to pass this inf whiledeploying our contaainerized appl in k8
+    db-password: ${password}            so config is goin 2 be used for us to pass additional config that were not nt passed in d docker file or any additonal config
+    dockerHub-credentials , ssh-keys                that the container need to run effectively . its used to pass non-confidntial data e.g we v smt like db-password: ${password}
+                                               this is a secret info, hw do we pass dis info in our cls8 or we wnt to dpeloy appl n our images ar in private repositories
+                                we nid our dockerhub credentials, hw ar we goin to pass d credentials for dockerhub, or we wnt to pass some ssh keys all of dis will be passe
+  secrets                                                                            using secrets
+  namespace :       *********** helps us to create virtual cl8 within our k8 cl8, e.g u can create ns for dev env, prod , stagin  n ts also gud for security, e.g u can decide
+    virtual clusters within our k8s.                                           that developers wil only wrk in the dev ns, they v nothing to do with prod ns
+
+ResourceQuota    ********* also a gud k8 obj, since we v ns we can restrict hw much resources each ns can create to uptimize our resource usage in k8 ,,, using resourcequota
+  node   ********* very imp, bc dis is wher all d workload are deployed, thay are dpeloyed in worker node , we v nodeselector, nodeaffinity, node affinity 
+  what happens with node is that:  by default the scheduler assigns pods to be 
+    created in node with sufficient resources 
+  nodeSelector   : if we wnt a pod to be created only in a particular node (nodeselector or nodeaffinity)
+    use to restrict the node(s) where pods should be created     
+  nodeAffinity 
+    use to restrict the node(s) where pods should be created 
+  podAffinity  : this is used to prioritize     ,, use pod affinity to assign high priority to the pod   ..    (INTERVIEW QUESTION)
+    PriorityClasses     ...................    lets assume u ar deployin multiplse appl, with d help of affinity ur prod app wil tk priority, 
+      prod-app [high priority]  
+      dev-app  [low priority]
+      test-app [meduim priority]
+    dev-app is running   , you are deployin prod app bt its 
+    prod-app is pending due to insufficient resources  bc u hv deploy dev app already
+    If podAffinity is enforced dev-app pods will be evicted and    
+    prod-app pods will be running  ,, bc my server doesnt hv suficient resources
+
+1:46:45             ,, if the pod is nt ready liveness will restart it to make sure it comes up 
+Health Checkers:
+  liveness probes/
+  readiness probes/   lets assume we v 4containers running, b4 traffic is routed to a pod a health check is performed using readiness probe, it mksure trafic is nt routed
+     users/apps/admins --->appSVC---> 4pods[appsContainer]                                                      to a pod thats nt ready to receive trafic
+     http:
+        /java-web-app
+    curl -v localhost:8080/java-web-app    e.g to run the curl command on ur command line, to run a test if ur appl is running, so this is like a health test as well
+                                        so readiness probe wil mk sure that b4 trafic is routed to a pod by a service, the pod is ready to receive trafic
+                                       so if a pod is nt ready, readines probe wil remove the pod frm the loadservice algorithm bc the appSVC cant route trafic to the pod
+   
+startup probes        ..... for containers that are slow to start if we dnt wnt the container to fail, we can use startup probes
+
+###################### this are imp stuff to tk note of    #############
+
+
+
+                                      S3 BUCKET
+
+1:54:40
+moving logs  into s3 bucket
+
+simon@k8:~/efk$ aws s3 ls                 ********* now we see the buckets we already hv 
+class27adevops
+landmark27
+simon@k8:~/efk$          ******* so if  simon@k8:~/efk$   is our elastic search server and i v some log files, we can copy the logs into any of the buckets i v chosen to
+                                                             move my log file into , so that implies we can store our log files in elastic search for 1month after 1mth
+                                                                  we can move the logs to s3 bucket.
+
+
+elastic-search:
+  storage for log files 
+    nodes 
+    pods   
+
+s3:
+  objects  storage ,
+objects like
+    log files  
+    audio files   
+    video files 
+    archive files 
+  storage classes 
+
 
 
