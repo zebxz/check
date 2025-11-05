@@ -1,12 +1,14 @@
 HOW TO DO  RBAC using EKS , CONFIGURE THE CONFIGMAP TO AUTHORIZE USER , How to configure roles and cluster roles to easily permit who can perform what in our k8 cluster, 
-cl8 was deployed using terraform   ********** 
+EKS cl8 was deployed using terraform   ********** 
  TO MK THE USER GET ACCESS TO SVC ,   TO MK THE USER GET ACCESS TO READ ALL THE SERVICES
 
 Security Best Practices for Kubernetes Deployment   :
 =======================================================
 
-referred to a diagram on hw com is est within our k8 cl8 n on of the tin we realise is the fact that we can use ingres for that purpose , we wil stil visit this guy again 
+referred to a diagram on hw com is est within our k8 cl8 n one of the tin we realise is the fact that we can use ingres for that purpose , we wil stil visit this guy again 
 bt b4 we do that lets look at security, why do we nid to secure our k8 cl8
+
+
 
 BEST PRACTICES
 
@@ -57,8 +59,21 @@ e.g who can access certain pods n containers
      EFK  
 using EFK to mg8 the logs that are generated frm our appl
 
-8. Summary.
+****online:
+Kubernetes supplies cluster-based logging, allowing to log container activity into a central log hub. When a cluster is created, the standard output and standard error output
+of each container can be ingested using a Fluentd agent running on each node into either Google Stackdriver Logging or into Elasticsearch and viewed with Kibana.
 
+
+8. Summary.
+Kubernetes supplies many options to create a secured deployment. There is no one-size-fit-all solution that can be used everywhere, 
+so a certain degree of familiarity with these options is required, as well as an understanding of how they can enhance your application’s security.
+
+We recommend implementing the best practices that were highlighted in this blog, and use Kubernetes flexible configuration capabilities to incorporate security processes 
+into the continuous integration pipeline, automating the entire process with security seamlessly “baked in”.
+
+
+
+                                         RBAC
 Kubernetes Role Based Access Control (RBAC):
 
 When a request is sent to the API Server, it first needs to be authenticated (to make sure the requestor is known by the system) before it’s authorized (to make sure the 
@@ -78,6 +93,9 @@ may want a user, say Michale from development, to have access only to some resou
 based access, we use the concept of Authentication and Authorization in Kubernetes.
 
 #############To achieve this type of role based access, we use the concept of auhENTICATION N Authorization in k8
+
+
+                        TYPES OF USERS IN K8 CLUSTER
 
 Broadly, there are three kinds of users that need access to a Kubernetes cluster:
 1.	Developers/Admins/Engineers: 
@@ -103,7 +121,9 @@ Ingress-->
               Role 
               RoleBinding 
 
-  #THERE ARE SOME KEY WORD TO TAKE NOTE OF :
+
+
+  #THERE ARE SOME KEY WORD TO TAKE NOTE OF : VERBS/ API RESOURCES/ SUBJECTS
 RBAC in Kubernetes is based on three key concepts:
                                                                THESE are the main verbs we are going to see when you are tryin to create a role or a cl8 role
 1.Verbs: This is a set of operations that can be executed on resources. There are many verbs, but they’re all, LIKE Create, Read, Update, or Delete (also known as CRUD).
@@ -112,6 +132,9 @@ RBAC in Kubernetes is based on three key concepts:
                                                                         deplymen, daemonset etc  .. kubectl get pod, so the pod is an api resource
 3.	Subjects: These are the objects (Users, Groups, Processes(Service Account)) allowed access to the API, based on Verbs and Resources.
                       e.g we can create a grp of devops engrs and if u ar a member of that grp u ar goin to b able to peform all the task assigned to the grp
+
+
+
 
 E.G WE ARE CREATING A ROLE
 
@@ -163,11 +186,14 @@ RoleBinding
 
 WE AR goin to be dealing with 
 Clusterrolebindingss
-clusterroles : are created foe the entire cluster
+clusterroles : are created for the entire cluster
 rolebindings  : Assigning the role to a subject (users, groups, certain applications)
 role : Resourece we create wich is perimtting certain action to be carried out in your cl8
                      A role is created for a namesapce
 
+
+                                                                   
+                                CONFIGURE ROLES & CLUSTER ROLES
 41:00
 How to cobfigur reoles and Cluster roles to easily permit who can perform what in our k8 cluster
 our EKS cluster was deployed using Terraform
@@ -181,7 +207,7 @@ i hv my cl8 runing, if i want to get it :
 ubuntu@demo:~/eks/EKS$  aws eks list-clusters
 ListClusters
 clusters
-terraform-eks-demo              ******** this is my cl8, wich is ruing, i v deployed the cls8
+terraform-eks-demo              ******** this is my cl8, wich is ruNNing, i v deployed the cls8
 ubuntu@demo:~/eks/EKS$
 to knw the authorixation that any user has 
 ubuntu@demo:~/eks/EKS$  kubectl auth can-i delete pods
@@ -192,9 +218,10 @@ ubuntu@demo:~/eks/EKS$  kubectl auth can-i " *" "*"          ************this me
 yes                                                       ************this means this person is a super user, he can do evrytin
 ubuntu@demo:~/eks/EKS$                               you are working in a team, you are nt working alone
 
-we are going to aws account n we wil perform certain key task  like,  last weekin an 
+we are going to aws account n we wil perform certain key task  like,  last week in an 
 ########################### INTERVIEW SOMEONE WAS ASKED WHAT IS YOUr IAM EXPERIENCE
 
+                                       AWS IAM CONSOLE CREATE GROUP
 47:00
  in the iam console in aws
 we create a grp: fintech grp 
@@ -211,10 +238,12 @@ bode is identified with his ARN
 we hv to confirm the region our eks cl8 is ruing in
 now i wil try to access the cl8 usin bode , bc we hv created a subject 
 
+
+                                              INSTALL AWS CLI 
 now using his laptop
 he used another server
 in his windown server , the local treminal .............. 52:40
-***********************pls ensue u hv aws cli installed on ur laptop or any othet server u want to use
+***********************pls ensue u hv aws cli installed on ur laptop or any otheR server u want to use
 i wnat to log into my sever as bode
 i have a local terminal here 
 who am i 
@@ -293,6 +322,9 @@ aws-auth                     1            76m
 coredns                      1            79m
 kube-proxy                   1            79m
 
+
+
+                                          CONFIG MAP
 ********** so we hv this config map : aws-auth
 we can also edith the config map and add mapUsers, bc its the config map that contains users that want to access our cl8 , but w eneed Bode to get access
 ubuntu@demo:~/eks/EKS$  kubectl edit configmap aws-auth -n kube-system    *********** (its found in the kubectl namespace)
@@ -314,6 +346,8 @@ we hv used IAM to authenticate BOde
 
 ####### lets see that he has right to list pod
 
+
+                                       CREATE ROLE
 lets create a role
 vi role-dev.yml
 
@@ -330,6 +364,9 @@ apiGroups:["apps"]
 resources: ["deployments", "replicasets", "daemonsets"]
 verbs: ["get", "list"]
 
+
+
+                                      BIND ROLE TO USER
 #### now we bind the role to the user, if we dnt bind it he wont still have access .. .... 
 
 kind: RoleBinding
@@ -352,6 +389,8 @@ kubectl apply-f dev-roles.yml
 kubectl get pod 
 we see he now has acess
 
+
+                                DEPLOY AN APPLICATION
 ########## lets deploy an appl, in the main server as an admin
 kubectl apply -f app.yml
 deployed
