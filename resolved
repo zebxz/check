@@ -905,5 +905,78 @@ Implement VPC endpoints/PrivateLink.
 
 Add retries and circuit breakers for reliability.
 
+****************************************************************************
+
+
+
+
+Mozahid HusainMozahid Husain
+
+Kubernetes looks smooth — until something breaks 😅.
+That’s when real DevOps skill begins.
+Here are 35 real-world issues I’ve faced in production (and how to fix them) 👇
+
+⸻
+
+⚙️ POD & CONTAINER ISSUES
+1️⃣ CrashLoopBackOff → kubectl logs <pod> -p
+2️⃣ ImagePullBackOff → Wrong image or registry auth issue
+3️⃣ ErrImagePull → Invalid image path/tag
+4️⃣ OOMKilled → Increase memory limits
+5️⃣ ContainerCreating forever → PVC not bound or pull delay
+6️⃣ Init Container Failed → Missing config or dependency
+7️⃣ Pod Stuck Terminating → Finalizer/mount issue → --grace-period=0
+8️⃣ Completed Pods not cleaned → CronJob history limits
+9️⃣ Pod in Unknown state → Node unreachable
+🔟 Back-off restarting container → App crash loop
+
+⸻
+
+🧠 SCHEDULING & NODE ISSUES
+11️⃣ Pod Pending → No node resources or taint mismatch
+12️⃣ Node NotReady → Kubelet or CNI issue
+13️⃣ Evicted Pods → Disk/memory pressure
+14️⃣ Unschedulable Pod → Wrong affinity/selector
+15️⃣ High CPU Usage → kubectl top nodes/pods
+16️⃣ DiskPressure Warning → Clear /var/lib/docker
+17️⃣ Node NotFound → Re-register kubelet
+18️⃣ Taint/Toleration conflict → Fix mismatched tolerations
+
+⸻
+
+🌐 NETWORKING & SERVICE ISSUES
+19️⃣ Service Not Reachable → Check endpoints
+20️⃣ DNS Resolution Failure → Inspect CoreDNS logs
+21️⃣ LoadBalancer Pending → Cloud provider or MetalLB misconfig
+22️⃣ Ingress 404/503 → Rule/path mismatch
+23️⃣ NetworkPolicy blocking → kubectl describe networkpolicy
+24️⃣ Pod-to-Pod communication failed → Check CNI plugin
+25️⃣ Port-forward failure → Local firewall or proxy issue
+26️⃣ Service IP Conflict → CIDR overlap
+
+⸻
+
+💾 STORAGE & CONFIG ISSUES
+27️⃣ PVC Pending → Misconfigured StorageClass
+28️⃣ ReadOnly filesystem → SecurityContext issue
+29️⃣ ConfigMap not mounted → Wrong path or key
+30️⃣ Secret mount failed → Invalid base64
+31️⃣ PersistentVolume unavailable → NFS/EBS backend issue
+
+⸻
+
+📊 MONITORING & CONTROL PLANE ISSUES
+32️⃣ Metrics Missing → metrics-server not running
+33️⃣ API Server Down → ETCD overload
+34️⃣ Kubelet Crash → System resource exhaustion
+35️⃣ ETCD Disk Full → API latency, monitor /var/lib/etcd
+
+⸻********************************************************************
+
+
+
+
+
+
 
 
