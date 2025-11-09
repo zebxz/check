@@ -1,7 +1,13 @@
-HOW TO DO  RBAC using EKS , CONFIGURE THE CONFIGMAP TO AUTHORIZE USER , How to configure roles and cluster roles to easily permit who can perform what in our k8 cluster, 
-EKS cl8 was deployed using terraform   ********** 
- TO MK THE USER GET ACCESS TO SVC ,   TO MK THE USER GET ACCESS TO READ ALL THE SERVICES
+BEST PRACTICES, RBAC, TYPES OF USERS IN K8 CLUSTER, THERE ARE SOME KEY WORD TO TAKE NOTE OF : VERBS/ API RESOURCES/ SUBJECT, WE ARE CREATING A ROLE, HOW TO DO RBAC using EKS,
+CONFIGURE ROLES & CLUSTER ROLES TO PERMIT WHO CAN PERFORM DUTIES IN OUR K8 CLUSTER, AWS IAM CONSOLE CREATE GROUP,  ENSURE AWS CLI IS INSTALLED, 
+CONFIGURE THE CONFIGMAP TO AUTHORIZE USER, CREATE ROLE, BIND ROLE TO USER, DEPLOY AN APPLICATION, TO MK THE USER GET ACCESS TO SVC, 
+TO MK THE USER GET ACCESS TO READ ALL THE SERVICES, 
+  ***** EKS cl8 was deployed using terraform... 
 
+
+
+
+ 
 Security Best Practices for Kubernetes Deployment   : 
 =======================================================
 
@@ -192,8 +198,11 @@ role : Resourece we create wich is perimtting certain action to be carried out i
                      A role is created for a namesapce
 
 
+
+
+                  
                                                                    
-                                CONFIGURE ROLES & CLUSTER ROLES
+                                CONFIGURE ROLES & CLUSTER ROLES TO PERMIT WHO CAN PERFORM DUTIES IN OUR K8 CLUSTER
 41:00
 How to cobfigur reoles and Cluster roles to easily permit who can perform what in our k8 cluster
 our EKS cluster was deployed using Terraform
@@ -324,7 +333,8 @@ kube-proxy                   1            79m
 
 
 
-                                          CONFIG MAP
+
+                                 CONFIGURE THE CONFIGMAP TO AUTHORIZE USER 
 ********** so we hv this config map : aws-auth
 we can also edith the config map and add mapUsers, bc its the config map that contains users that want to access our cl8 , but w eneed Bode to get access
 ubuntu@demo:~/eks/EKS$  kubectl edit configmap aws-auth -n kube-system    *********** (its found in the kubectl namespace)
@@ -346,6 +356,8 @@ we hv used IAM to authenticate BOde
 
 ####### lets see that he has right to list pod
 
+
+                   
 
                                        CREATE ROLE
 lets create a role
