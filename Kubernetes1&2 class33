@@ -281,6 +281,10 @@ open-source command-line tool used to automate the deployment and management of 
  
                               WAYS TO MANAGE KUBERNETES CLUSTER 
 
+***meee, kubeadm & kops are self managed, they are not paid service, while EKS is paid service the contrl plane is manged by aws (the cloud provider)
+by we mg8 the master/worker nodes ourselves
+
+
 Multi Nodes Kubernetes Clusters:  ............ ............ .... for production great deployment, we nid multi node k8 cluster 
 ================================
 the first of its kind which we can install is : 
@@ -315,19 +319,9 @@ we v anoda class of clusters wich are  manged by 3rd party, u will nt bother abt
 ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
 that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
 
-*******************we also v another clas of cluster that can be installed 
- **online
-Kops (Kubernetes Operations) is an open-source and self-managed tool for deploying and managing Kubernetes clusters. It is not a paid service itself. 
-Here are the key points regarding its management and cost:
-Self-Managed: When you use kops, you are responsible for managing both the Kubernetes control plane (master nodes) and the worker nodes. This means your team handles tasks 
-like patching, upgrades, monitoring, and incident response.
-Open-Source and Free: The kops software itself is completely free to use.
-Infrastructure Costs: You are responsible for paying for the underlying cloud infrastructure (e.g., EC2 instances, S3 buckets, load balancers, etc.) that kops provisions in
-your own cloud provider account (primarily AWS, with beta support for others like GCP and DigitalOcean).
-Total Cost of Ownership (TCO): While the tool is free, the total cost of ownership includes the cost of the cloud infrastructure and the engineering time required for manual
-setup, maintenance, and upgrades. 
-In contrast, fully managed Kubernetes services like Amazon EKS, Google Kubernetes Engine (GKE), or Azure Kubernetes Service (AKS) handle the management of the control plane 
-for a fee, reducing the operational overhead for your team. 
+*******************we also v another class of cluster that can be installed 
+
+
 
 3. KOPS: is a software use to create production GRADE/ready k8s in AWS and  
          azure for the kops beta version  
@@ -347,9 +341,28 @@ we authorize using IAm ... identity and access mgt
 so we nid to create a roles or policies that will permit the user to vps, autoscaling grps, LB, S3 bucket etc
     iam role/user  
 
+***Online
+kops is an open-source tool for automating the creation, management, and maintenance of production-ready Kubernetes clusters in cloud environments. It handles the provisioning
+of cloud infrastructure and automates tasks like cluster upgrades, scaling, and deletion, allowing users to manage their clusters with a configuration-as-code approach.
+While it officially supports AWS, it also offers support for other providers like GCP, DigitalOcean, and OpenStack. 
+
+ **online
+Kops (Kubernetes Operations) is an open-source and self-managed tool for deploying and managing Kubernetes clusters. It is not a paid service itself. 
+Here are the key points regarding its management and cost:
+Self-Managed: When you use kops, you are responsible for managing both the Kubernetes control plane (master nodes) and the worker nodes. This means your team handles tasks 
+like patching, upgrades, monitoring, and incident response.
+Open-Source and Free: The kops software itself is completely free to use.
+Infrastructure Costs: You are responsible for paying for the underlying cloud infrastructure (e.g., EC2 instances, S3 buckets, load balancers, etc.) that kops provisions in
+your own cloud provider account (primarily AWS, with beta support for others like GCP and DigitalOcean).
+Total Cost of Ownership (TCO): While the tool is free, the total cost of ownership includes the cost of the cloud infrastructure and the engineering time required for manual
+setup, maintenance, and upgrades. 
+In contrast, fully managed Kubernetes services like Amazon EKS, Google Kubernetes Engine (GKE), or Azure Kubernetes Service (AKS) handle the management of the control plane 
+for a fee, reducing the operational overhead for your team. 
 
 
-A TOOL WE CAN USE TO MANAGE MULTIPLE CLUSTER 
+
+
+                               A TOOL WE CAN USE TO MANAGE MULTIPLE CLUSTER 
 Rancher: - Using Rancher we can deploy both managed and self managed k8s CLUSTER
            Rancher serves as a glass to access and manage multiple k8s  
            from the rancher dashboard [UI]  - rancher dashboard  ,,,, frm rancher i can create a cluster in EKS/AKS/GKE/IKE 
