@@ -249,6 +249,7 @@ In k8, we can create volumes with or without PVC    ***for it to be persistent, 
 
 
 
+
                    ***meee***        STEPS FOR OCHESTRATING CONTAINERS
 i bliv the following steps starts after we have used Docker to containerize the application, then for management & deployment  of the application/container
 we continue with these steps;
@@ -315,14 +316,6 @@ LABELS & SELECTORS EXPLAINED
 
 
 
-KUB 1/2 & 3/4.. is all about types of k8 cluster to we can install, installing d multi node cluster, creating namespace, how applications are deployed ie usng
-pod as a object OR controller managers like RC, RS but we shudnt use pods bc of the short life cycle and inability to scale, also we hv the way we deploy 
-workload either using the imperative/command approach or declarative/manifest file approach.
-we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
-diff ns we hee FQDN  while nodeport is for externall comm ie been able to
-comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
-KUB 3/4,5,6 & 7, We explored the diff k8 objects used for deployment, kub7 autoscaling, kub 8&9 deploy the legacy appl with nodeport service & mongodb with
-clusterip, deploy the mongodb with diff vol without & with pVC, kub10&11
 
  
 
@@ -557,7 +550,12 @@ sfware so i can use it to access those clusters
 2) Multi Nodes Kubernetes Clusters   .. This is our focus....
 
 
+
                              WAYS TO MANAGE KUBERNETES CLUSTER
+***meee, kubeadm & kops are self managed, they are not paid service, while EKS is paid service the contrl plane is manged by aws (the cloud provider)
+by we mg8 the master/worker nodes ourselves
+
+
 you can deploy your cluster using, either a manged or a self managed sfware
 ideally, companies will prefer to go for managed bc it will give them more time to focus on the app , bc if u nid to focus on the architecture, it wil mean
 that u wil need to spend more time ensuring that ur cluster is running than managing containerized appl,,  bt more time shud be dedicated to appl management.
@@ -618,6 +616,17 @@ Rancher: A complete software stack for managing multiple Kubernetes clusters.
               Launch Template/configuration
               ec2-instances nodes [workerNodes and masterNodes]
 
+kops is an open-source tool for automating the creation, management, and maintenance of production-ready Kubernetes clusters in cloud environments. It handles the provisioning
+of cloud infrastructure and automates tasks like cluster upgrades, scaling, and deletion, allowing users to manage their clusters with a configuration-as-code approach.
+While it officially supports AWS, it also offers support for other providers like GCP, DigitalOcean, and OpenStack. 
+
+ **online
+Kops (Kubernetes Operations) is an open-source and self-managed tool for deploying and managing Kubernetes clusters. It is not a paid service itself. 
+Here are the key points regarding its management and cost:
+Self-Managed: When you use kops, you are responsible for managing both the Kubernetes control plane (master nodes) and the worker nodes. This means your team handles tasks 
+like patching, upgrades, monitoring, and incident response.
+Open-Source and Free: The kops software itself is completely free to use.
+
 
 
                              A TOOL WE CAN USE TO MANAGE MULTIPLE CLUSTER 
@@ -625,6 +634,20 @@ Rancher: - Using Rancher we can deploy both managed and self managed k8s CLUSTER
            Rancher serves as a glass to access and manage multiple k8s  
            from the rancher dashboard [UI]  - rancher dashboard  ,,,, frm rancher i can create a cluster in EKS/AKS/GKE/IKE 
            authentication and authorisation: EKS/AKS/GKE/IKE  ... bt u v to be authorized
+
+
+*****online
+Rancher is an open-source platform that provides a unified interface for managing container clusters, especially Kubernetes. It simplifies the deployment, management, and 
+scaling of containerized applications across various environments, including multi-cloud and on-premises. Rancher adds value by centralizing authentication, providing tools 
+for monitoring and logging, and integrating with other DevOps tools to manage the entire application lifecycle. 
+Key functions
+Cluster management: Allows users to manage multiple Kubernetes clusters from a single dashboard, whether they are in the cloud or on-premise.
+Centralized control: Provides a single point for managing user access, authentication, and security policies across all clusters.
+Application deployment: Simplifies the deployment and management of applications on Kubernetes, including integrations with tools like Helm.
+Monitoring and logging: Includes features for detailed monitoring, alerting, and shipping logs to external providers.
+Hybrid and multi-cloud support: Enables consistent governance and policy enforcement across different cloud providers and on-premises infrastructure. 
+Other meanings
+Rancher (person): In a general or dictionary sense, a rancher is a person who owns or works on a ranch, typically raising livestock like cattle or sheep
 
 
 
