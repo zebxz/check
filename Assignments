@@ -951,28 +951,36 @@ Ticket
 ***skip all, deploy will kops kub 10&11
 
 
+
+
 Kub 10&11
 
 1)Deploy an application with configmap & secret using delacrative approach
 2)change service type in a file from nodeport to loadbalancer ,..... ignore just an illustration to show disadvantage of self managed cluster
 3) Install kops
 4) Deploy the legacy application using kops
+KOPS create a storage class, so we dnt need to create a PV, we create only a PVC Claim
+
+
+
 
 
 KUB 12; nginx-ingress       **mee*based on the info below form kub 10&11, we only need nginx for a self manged cluster, which requires me to create a lb ie the 
                                                nodeport(app) or clusterip(database) service type which does loadbalancing for us
 1) Deploy nginx ingress controller
-2) deploy application with nginx service
-3)create ingress rule
-4)Create & deploy host based routing
-5)create & deploy path based routing
+2) deploy an application with nginx service
+paths
+3)create Arecord for the application hostbased routing & for the application pathbased routing
+4)Create & deploy ingress rule for the application hostbased routing
+5)Create & deploy ingress rule for the application pathbased routing
 
   **kub 10&11
 managed or self managed  LB 
-if i create a self mangaed lb, wit the self managed LB, i may create a server n in the server, i wil install a software like ngnix afterwich i wil deter hw 
-service is routed
+if i create a self mangaed lb, wit the self managed LB, i may create a server n in the server, i wil install a software like ngnix afterwich it wil deter hw 
+service is routed, we might also need nginx for EKS cluster to reduce cost of lB
 self managed =
    NGINX   
+
 
 
 
@@ -991,9 +999,40 @@ c)change the service type of the application (this wil include creating Arecord 
 
 
 
+KUB 15
+Probes
+
+
+
+kuB 16
+Install & deploy promethus & grafana using helm  (the deployment will include an alert manager)
+create a record & ingress rule for promethus/grafana & alert manager
+Deploy nginx
+deploy applications to see how nginx routes traffic to them & also see how promethus/grafana can be used to visulaize/see how the applications in the cl8 are performing
+I think he didnt create A record for the applications bc they arent our focus/ he didnt try accessing them online
+But i may need to create it
 
 
 
 
+KUB 17
+applying some commands
+1)Access an application that is running
+
+install EFK/ELK stack using helm
+should be able to acces kibana externally
+create A record & ingress rule for kibana
+create host base routing ingress rule for kibana
+ HOST BASE ROUTING INGRESS RULE FOR KIBANA
 
 
+
+KUB 18
+iluustrate RBAC using EKS
+1)CONFIGURE ROLES & CLUSTER ROLES TO PERMIT WHO CAN PERFORM DUTIES IN OUR K8 CLUSTER, 
+2)AWS IAM CONSOLE CREATE GROUP,  ENSURE AWS CLI IS INSTALLED, 
+3)CONFIGURE THE CONFIGMAP TO AUTHORIZE USER, 
+4)CREATE ROLE, 
+5)BIND ROLE TO USER, DEPLOY AN APPLICATION, 
+6) MK THE USER GET ACCESS TO SVC, 
+7) MK THE USER GET ACCESS TO READ ALL THE SERVICES,
