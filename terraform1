@@ -6,7 +6,7 @@ SETTING, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE, CREATE VARIABLE
 
 
 
-                                    MANUALLY CREATING RESOURCES IN AWS IS NOT A CONSISTENT PROCESS
+                            MANUALLY CREATING RESOURCES IN AWS DOES NOT ALLOW CONSISTENCY OF THE INFRASTRUCTURE PROVISIONED IF THE PROCESS NEEDS TO BE REPEATED
 when u login to AWS u choose the AMI (LINUS, macoS , ubuntu, windows, redhat etc) 
 my Ami is like my operatin sys u wnt the ec2 instance to be based on 
 then instance type e.g t2 micro, it specifies what your memory is and what your cpu is
@@ -47,31 +47,35 @@ b4 we use terrform, we hv to install it
 
 ********************************  READ UP THE POWER POINT SCRIPT******************************* 11: 30 
 INFRASTRUCTURE AS A CODE: MEANING   
-1)managing and provisoning of infrsatruture tru code instaed of manually.
-so instaed of u going to the console to manage or provison infrasture , u can write a code n use the particulr coseb to craeet infrasture
+
+1)managing and provisoning of infrsatruture using code instead of manually.
+so instaed of u going to the console to manage or provison infrasture , u can write a code n use the particular code to create infrastrure
 so intaed of creatuing ec2 instance in aws , we are able to wirte it  i bliv (ec2 instance ) n v terraform go to aws and create the same ec2 instance for us.
 this process is repeatable bc i can create 20 of the same ec2 instance and all of them wil be exactly the same bc they ar using the same code
 and that swhat infrasture as a code is 
-2)files that contain configurations are created n makes it easy to edit and contribute
+
+2)files that contain configurations are created n makes it easy to edit and distribute
 so we are goin to create this terraform files n bc we v created these files,its easy to distribute bc we can push theSE files in our SCM 
 
 ****** helps avoid undocumented, ad-hoc  configuration changes 
 this means that if i hv an ec2 instance, i can easily go on the console n add a tag on the console, when i do dis its is called ad-hoc configuration changes,
-theses are changes that am editing manually but they are undocument bc no one knws who changed the code , no one knws who added the tag ,so that is undocumented ad-hoc 
+theses are changes that am editing manually but they are undocumented bc no one knws who changed the code , no one knws who added the tag ,so that is undocumented ad-hoc 
 configuration 
 but if am doing it tru code format then i can add the tag to my code n so its documented tht its me who made the changes bt also the chnages has be captured in code format 
-n so the process is documnet n visible to everyone to see.
+n so the process is documneted n visible to everyone to see.
 
 3)easy to version control
 4)you can create infrastruture in modualar components , u are able to vv the codes in modules
-e.g i can v a vpc as a module, an ec2 instance as a moudle , s3 as a module sn be able to createa all dis infrastruture as a module 
+e.g i can v a vpc as a module, an ec2 instance as a moudle , s3 as a module sn be able to create all dis infrastruture as a module 
+
 5)gives you a template to follow for provisioning
 e.g ur boss ask u to create a vpc in north virginia,, may ders a vpc in california that was created u are able to look at the code , the requimrnet, how thay provision the
 vpc in carlifornia, so that gives u a template, u are able to copy that code or use it for a denmo, as an example of whjat u are creating , so that becomes a template
 thats the baeuty of writing code OR  creating infrasture IN code FormaT, IT GIVES U A TEMPLAte
 
-benefits 
-1cost reduction
+
+BENEFITS
+1)cost reduction
 u create it once 
 ie it reduces the time used to do the actual work
 2reduc error
