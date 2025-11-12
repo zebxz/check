@@ -1,12 +1,30 @@
-INTRODUTION TO TERRAFORM, INFRASTRUCTURE AS A CODE: MEANING ,  benefits ,  TERRADORM Configuration files, TERRAFORM INSTALLATON, HOW DO U USE TERRAFORM, FORMS OF CREDENTIALS
-U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT, ALL THESE ARE INTERVIEW QUESTION, HOW MANY WAYS THOS ETERRA FORM ALLOW US TO PASS THOSE CREDENTIALS????,
+INTRODUTION TO TERRAFORM, WHY YOU SHOULD USE TERRAFORM, INFRASTRUCTURE AS A CODE:CHARCTERISTIC, BENEFITS, 2 FORMAT OF TERRAFORM CONFIGURATION FILES, TERRAFORM INSTALLATON, 
+HOW DO U USE TERRAFORM, FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT, ALL THESE ARE INTERVIEW QUESTION, HOW MANY WAYS THOS ETERRA FORM ALLOW US 
+TO PASS THOSE CREDENTIALS????,
 TERRAFORM COMMAND BASICS, TERRAFRM WORKFLOW, TERRAFORM CONFIGURATION LANGUAGE SYNTAX, we hv 10 high level blocks that tefrm defines, SO HOW DO THESE BLOCKS WOWRKS, TERfrm
 SETTING, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE, CREATE VARIABLE, REQ VARIABLE 
 
 
 
 
-                            MANUALLY CREATING RESOURCES IN AWS DOES NOT ALLOW CONSISTENCY OF THE INFRASTRUCTURE PROVISIONED IF THE PROCESS NEEDS TO BE REPEATED
+
+19:38   .......................... READUP SCRIPT
+Now we are being introduced to a tool called terraform : MEANING
+Iaac tool from Hashicorp
+its uses HCL- hashicorp configuration language- human readable
+HASHICORP is the vendor
+hashicorp has other several products, once is called packer, it can automatically create AMIs , u can customize ur AMI
+for security:1) vault, 2) boundary
+vault , it can give us dynamic credentials , it can go to AWS, get credentials for us and inject it into our pipeline.
+...
+terraform is platform agnostic: meaning, u can use it on linux , on windows, mac ox, its also cloud agnostic , meaning: u can run it on multiple cloud
+tereraform can create resource on multiple cloud,e.g aws , azure, alibaba, gcp, k8, helm
+
+
+
+
+***meeeee..... WHY YOU SHOULD USE TERRAFORM
+ Manually creating resources in aws does not allow consistency of the infastructure provisioned if the process needs to be repeated:
 when u login to AWS u choose the AMI (LINUS, macoS , ubuntu, windows, redhat etc) 
 my Ami is like my operatin sys u wnt the ec2 instance to be based on 
 then instance type e.g t2 micro, it specifies what your memory is and what your cpu is
@@ -23,7 +41,11 @@ consistent, an infrastrue that u can crate d same tin over n over again, cos if 
 
 
 
+
+
+
                              IAAC
+
 THIS BRINGS US TO THE PROCESS CALLED INFASTRUCTURE AS A CODE  6:17
 we ar not creating infrasture on the console but instead we ar creating infrasture as a code 
 when ever u hv anytin written in code format that process is repeatabe bc the code will reamain the same n evrytime u execute the code u get the same result e.g u hv a script to
@@ -46,7 +68,7 @@ definition, benefits, vendor, workflow, syntax  etc
 b4 we use terrform, we hv to install it
 
 ********************************  READ UP THE POWER POINT SCRIPT******************************* 11: 30 
-INFRASTRUCTURE AS A CODE: MEANING   
+INFRASTRUCTURE AS A CODE: CHARACTERISTICS
 
 1)managing and provisoning of infrsatruture using code instead of manually.
 so instaed of u going to the console to manage or provison infrasture , u can write a code n use the particular code to create infrastrure
@@ -57,67 +79,56 @@ and that swhat infrasture as a code is
 2)files that contain configurations are created n makes it easy to edit and distribute
 so we are goin to create this terraform files n bc we v created these files,its easy to distribute bc we can push theSE files in our SCM 
 
-****** helps avoid undocumented, ad-hoc  configuration changes 
+3)****** helps avoid undocumented, ad-hoc  configuration changes 
 this means that if i hv an ec2 instance, i can easily go on the console n add a tag on the console, when i do dis its is called ad-hoc configuration changes,
 theses are changes that am editing manually but they are undocumented bc no one knws who changed the code , no one knws who added the tag ,so that is undocumented ad-hoc 
 configuration 
 but if am doing it tru code format then i can add the tag to my code n so its documented tht its me who made the changes bt also the chnages has be captured in code format 
 n so the process is documneted n visible to everyone to see.
 
-3)easy to version control
-4)you can create infrastruture in modualar components , u are able to vv the codes in modules
+4)easy to version control
+5)you can create infrastruture in modular components , u are able to vv the codes in modules
 e.g i can v a vpc as a module, an ec2 instance as a moudle , s3 as a module sn be able to create all dis infrastruture as a module 
 
-5)gives you a template to follow for provisioning
+6)gives you a template to follow for provisioning
 e.g ur boss ask u to create a vpc in north virginia,, may ders a vpc in california that was created u are able to look at the code , the requimrnet, how thay provision the
 vpc in carlifornia, so that gives u a template, u are able to copy that code or use it for a denmo, as an example of whjat u are creating , so that becomes a template
 thats the baeuty of writing code OR  creating infrasture IN code FormaT, IT GIVES U A TEMPLAte
+
 
 
 BENEFITS
 1)cost reduction
 u create it once 
 ie it reduces the time used to do the actual work
-2reduc error
+2) reduces error
 b4 u depoy , u look n test the code 
-3) improve infrstrure consistency
+3) improves infastruture consistency
 even if u create 5vpcs , the parameter remains the same 
 4) eliminates configuratin drift
-if i v created an ec2instance based on some parameters i v passed in my code, those are the only attributes that wil be captured on my instance, i will n t hv anytin more
-than what is in the code, so i wont hv a lot of changes in my configurayion,  so i wnt v a drift in the configuration bc evryb i anticipatecd that my instance nids to hv 
+if i v created an ec2instance based on some parameters i v passed in my code, those are the only attributes that wil be captured on my instance, i will nt hv anytin more
+than what is in the code, so i wont hv a lot of changes in my configuration,  so i wnt v a drift in the configuration bc evrytin i anticipated that my instance nids to hv 
 is been captured in the code.
-
-interview quetsions
-what is IAC
-waht are the benefits of iac
-hv u evr implamemterd IAC in ur environment.
-
-
-19:38   .......................... READUP SCRIPT
-Now we are being introduced to a tool called terraform : MEANING
-Iaac tool from Hashicorp
-its uses HCL- hashicorp configuration language- human readable
-HASHICORP is the vendor
-hashicorp has other several products, once is called packer, it can automatically create AMIs , u can customize ur AMI
-for security:1) vault, 2) boundary
-vault , it can give us dynamic credentials , it can go to AWS, get credentials for us and inject it into our pipeline.
-...
-terraform is platform agnostic: meaning, u can use it on linux , on windows, mac ox, its also cloud agnostic , meaning: u can run it on multiple cloud
-tereraform can create resource on multiple cloud,e.g aws , azure, alibaba, gcp, k8, helm
-state mgt: terraform manages a state file, it creares a stae file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
+   24.00
+5) state mgt: terraform manages a state file, it creares a state file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
 evrytin that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
  u can look at the file n knw the sate of ur infrasture
-it creates opeartor confidence bc  when u using terraform as an operator it gives u confidence,  once u hv all ur configuration file , terraform wil give u a plan 
+6)it creates opeartor confidence bc  when u using terraform as an operator it gives u confidence,  once u hv all ur configuration file , terraform wil give u a plan 
 n as u cretae resources , terraform manges them for you, so it gives u confidence bc it shows u exactly what u have.
 
+
+
+                                        
 25:32
-TERRADORM Configuration files
-terra uses declarative syntax to describe ur infrastructure (iac0 n thne perists it in configuration files that can be shared, reviewed, edited, versoned, preservedn reused
+                        2 FORMAT OF TERRAFORM CONFIGURATION FILES
+terra uses declarative syntax to describe ur infrastructure (iac n thne perists it in configuration files that can be shared, reviewed, edited, versoned, preservedn reused
 **************this means that we create a file thats ritten in HSC language, the file describes the infrasture, so u v a configration file that terraform wil use, it can 
-be in 2 foremt either : HCL langusge or JSON format which is machine readable.
-config files that use the HCL format must end wit . tf file extension for terrafrom to be able to read it , it nt terraform wont read it.
+be in 2 format either : HCL langusge or JSON format which is machine readable.
+configuration files that use the HCL format must end wit . tf file extension for terrafrom to be able to read it , if nt terraform wont read it.
 while JSON File format must end with .tf.json file extenson.
 these aare the basic inf u nid regarding terraform .
+
+
 
 TERRAFORM INSTALLATON 29:40
 its very easy to install.
@@ -156,6 +167,8 @@ so the same tin applies to terraform, it will need credentila that wil enable it
 once its authenticated, it wil retrun for u a plan n say based on specification this is the paln , this is what we ar goin to do ,and once u apprv ethe plan , terraform wil
 go ahead n create ur resource n once taht is done, it now has what is called a state file, and it wil keep a copy of ur file(state file) locally so that it wil show u 
 exactly what resources u hv, that will be captured on this file which is called a state file
+
+
 
 ALL THESE ARE INTERVIEW QUESTION
 1)what is a state file
