@@ -114,7 +114,7 @@ if i v created an ec2instance based on some parameters i v passed in my code, th
 than what is in the code, so i wont hv a lot of changes in my configuration,  so i wnt v a drift in the configuration bc evrytin i anticipated that my instance nids to hv 
 is been captured in the code.
    24.00
-5) state mgt: terraform manages a state file, it creares a state file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
+5) STATE MGT: terraform manages a state file, it creares a state file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
 evrytin that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
  u can look at the file n knw the sate of ur infrasture
 6)it creates opeartor confidence bc  when u using terraform as an operator it gives u confidence,  once u hv all ur configuration file , terraform wil give u a plan 
@@ -132,10 +132,11 @@ configuration files that use the HCL format must end wit . tf file extension for
 while JSON File format must end with .tf.json file extenson.
 these aare the basic inf u nid regarding terraform .
 
-
+29:40
 
                                      STEPS TO USE TERRAFORM 
-1) TERRAFORM INSTALLATON 29:40
+                               Terraform installation script landmark website
+1) TERRAFORM INSTALLATON 
 its very easy to install.
 1) you can down load the binary
 2) you can use a package manager, which is the easiest way to do it
@@ -152,14 +153,14 @@ e.g vs code editor..... visual studio code
 
 
 
-  3) u  will nid to hv terraform binary 
+  3) u  will nid to hv TERRAFORM BINARY
 34:50
 ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM
 TERRaform is a third party application that is hosted/managed by hashicorp
 
 when u wnat to use terraform in ur env (wher wver ur env is)
 so u hv ur aws account, u nid terraform to create a resource for u in ur account
-so u  will nid to hv terraform binary , which is why we are downloading it, bt as we v it, we nid to give it specifications
+so u  will nid to hv TERRAFORM BINARY, which is why we are downloading it, bt as we v it, we nid to give it specifications
 what do we wnt It do in aws, gcp, azure, we are giVing it specifications, wich is in the form of configuration files, we are writing files in our env using the terrafform
 workflow, we run the terraform workflow
 so b4 teraform interacts with aws it wil nid to be authenticated bc it is a 3rd party appl, for it to be auth , it wil rely on the inf that u as a user wil provide it with.
@@ -179,25 +180,47 @@ exactly what resources u hv, that will be captured on this file which is called 
 
 
 
-ALL THESE ARE INTERVIEW QUESTION
-1)what is a state file
-this is a file athat mahages the stae of ur infrasture, it give u a picture of ur infrasture, what is the actual state of ur infrasture, it is captured as a file
-2)does terraform need credentioals to intercst with cloud provider like an API, like aws
-yes terrarfeom needs credentilas 
-3)how do we pass credentials to terraform ??.....................44.30
-credentials:
+
+                                         HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM  ............44.30
+                        ****now we go to aws
 firts , if u are trying to create resources in aws, u must hv an aws account, the same applies to GCP , or azure
 
-for AWS, we need to generate security credentials in the console
+for AWS, we need to generate security credentials in the console ie in AWS 
 so to do that, we go to the IAM user n create seceurity credentials wher we create an access key    
-  we can create n IAM user............................. 46:00
-(and add to admin grp ,when i click on Administrator access , - JSON  , ..... it has allow all actions on all resources)
-next
+ WE all know we can easly go to IAM (Service as IAM ) and we can create n IAM user............................. 46:00
+(and add to admin grp ,when i click on Administrator access , - JSON  , ..... it has allow all actions on all resources), this is an admin permission
+next : security credentials  ***me, ie the acess & secret key 
+***meee, To configure AWS cli, which enables us/the user we created to manage our Aws resources in the command line shell ie remotely, eg in  mobaxterm, we need d credentials 
+
+
+
+                                       AWS CLI
+***online  
+The AWS Command Line Interface (AWS CLI) is an open-source tool that allows interaction with AWS services from the command line in your terminal. 
+It offers a unified interface to manage multiple AWS services and can be used to perform operations equivalent to those available in the AWS Management Console. 
+Here are the primary uses of the AWS CLI:
+Managing AWS services: You can control and configure various AWS services, such as Amazon EC2, S3, DynamoDB, IAM, and many more, directly from your command-line shell. 
+This includes tasks like launching instances, creating S3 buckets, managing users and permissions, and configuring network settings.
+Automation and scripting: The AWS CLI is essential for automating repetitive tasks and building scripts for more complex operations. You can integrate AWS CLI commands into
+shell scripts (Bash, PowerShell) to streamline workflows, deploy resources, and manage infrastructure programmatically.
+Faster operations: For users familiar with command-line interfaces, the AWS CLI can often be quicker than navigating through the graphical user interface of the AWS Management 
+Console, especially for specific, well-defined tasks or when managing multiple resources.
+Cross-platform compatibility: The AWS CLI is available for various operating systems, including Linux, macOS, and Windows, allowing you to manage your AWS resources from your
+preferred environment.
+Advanced features and direct API access: The AWS CLI, particularly with the s3api commands for S3, provides direct access to the underlying AWS API operations, enabling 
+advanced configurations and fine-grained control over resources that might not be readily available in the console's high-level functionalities.
+
+
+
+                      GENERATE SECURITY CREDENTIALS FOR THE ACCESS & SECRET KEY WE NEED to Access AWS CLI 
+                   ***I Bliv the AWS CLI is like the interface that allows us run AWS commands so that we can manage our aws resources from the cli in eg mobaxterm
 to generate security credentials  for this user, click seceurity credentials 
 now  need  create access key (when creating, tick AWS cli , cos i wnt to use the credentials for my cli) n secret key
 now we v the acess key, copy it 
 this user has adminstrative access/credential
-once u hv ur credentials    ><>>>>>>>>>>>>>>>>>>.>>>>>>........(COMMAND to configure AWS is in the landmark terraform installation script)
+
+next SET THE CREDENTIAL
+once u hv ur credentials   
 nxt we set the credentials n this is why we needed to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
 once u hv ur AWS cli, u wil need to configure,  run aws configure so that u set ur crednetial
 if u run jst the aws configure, it will set default credentials
@@ -213,20 +236,26 @@ so when i run aws config , i am setting credentials and in the credentials i hv 
 
 cat credentials , and i can see the default profile n i v an access key whic i jst set n i hv a secet key which i jsudt set  ,noow
 this becomes my default profile  .......... 53:33
+
+                                   MULTIPLE PROFILES
 we can seee there are multiple profile here , ken profile, manager, mark
 but when i run aws configure, just this command i am setting a default profile, 
-default means if nothing else is passed, if nothing else is availablethen terafrm wil alkwys fall bk on whwat has been set as the default.
+default means if nothing else is passed, if nothing else is available then terafrm wil alkwys fall bk on whwat has been set as the default.
 *****************************so once we v set our credebtials , how can we then pass this credentials???............ 54.54
-we can use teraform especially when we look at credentials, we can pass those credentails a sa profile
+we can use teraform especially when we look at credentials, we can pass those credentails as a profile
 
-HOW MANY WAYS THOS ETERRA FORM ALLOW US TO PASS THOSE CREDENTIALS????
-for us to knw hw to use thsoe credn , we nid to knw the command basis n nid to knw hw to write a teraform configuration so we knw  wher we can pass our credentials
+
+
+
+HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS????
+for us to knw hw to use those credential , we nid to knw the command basis n nid to knw hw to write a teraform configuration so we knw  wher we can pass our credentials
+
 
 SOMEBODY QUESTION: 1)
 show us how to setup the CLI abi how to run aws configure, saw u are running directly frm ur macbk bt all along we hv been seting up the servers in aWS
 prof said if u hv gitash/mbaxtem/vs code installed in ur envr run aws configure bc we wnt to config ur credentials, u config ur credntials in ur local envrn for security 
 reasson u, if ur using ec2 instances, u dnt configure static credentials in aws, if u are using ec2 instance, u create a role and attach to the instance bt ur nt using a
-key in ur instance bc if u set a key that is static, anybody who has has ccess to ur instance that becomes a security issue
+key in ur instance bc if u set a key that is static, anybody who has access to ur instance that becomes a security issue
 so using ec2 instance, we instaed create a role n give permission to the role, we always attach roles to resources. bt in ur local env u hv ur aws cli configure.
 am showing that we can run terrform from our local env, we can write code in our local envn n mg8 resources in aws n 2mrw we ill see that we can instal teraform on an ec2
 instance n create a role, give permission to the role n the ec2instance wil perform action in aws on ur behalf
