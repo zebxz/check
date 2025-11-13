@@ -183,14 +183,16 @@ exactly what resources u hv, that will be captured on this file which is called 
 
                                          HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM  ............44.30
                         ****now we go to aws
-firts , if u are trying to create resources in aws, u must hv an aws account, the same applies to GCP , or azure
+       firts , if u are trying to create resources in aws, u must hv an aws account, the same applies to GCP , or azure
 
-for AWS, we need to generate security credentials in the console ie in AWS 
-so to do that, we go to the IAM user n create seceurity credentials wher we create an access key    
+              
+In AWS, we need to generate security credentials in the console ie in AWS ..... security credentials  ***me, ie the acess & secret key 
+***meee, To configure AWS cli, which enables us/the user we created to manage our Aws resources in the command line shell ie remotely, eg in  mobaxterm, we need the
+security credentials, so first create iam user then the security credentials ( access & secret key)
+4i)  cREATE IAM USER
+so to do that, we go to the IAM user n create security credentials wher we create an access key    
  WE all know we can easly go to IAM (Service as IAM ) and we can create n IAM user............................. 46:00
 (and add to admin grp ,when i click on Administrator access , - JSON  , ..... it has allow all actions on all resources), this is an admin permission
-next : security credentials  ***me, ie the acess & secret key 
-***meee, To configure AWS cli, which enables us/the user we created to manage our Aws resources in the command line shell ie remotely, eg in  mobaxterm, we need d credentials 
 
 
 
@@ -209,17 +211,20 @@ Cross-platform compatibility: The AWS CLI is available for various operating sys
 preferred environment.
 Advanced features and direct API access: The AWS CLI, particularly with the s3api commands for S3, provides direct access to the underlying AWS API operations, enabling 
 advanced configurations and fine-grained control over resources that might not be readily available in the console's high-level functionalities.
+*****************************************************************************************************************************
 
 
 
-                      GENERATE SECURITY CREDENTIALS FOR THE ACCESS & SECRET KEY WE NEED to Access AWS CLI 
+
+  4ii)                      GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to Access AWS CLI )
                    ***I Bliv the AWS CLI is like the interface that allows us run AWS commands so that we can manage our aws resources from the cli in eg mobaxterm
 to generate security credentials  for this user, click seceurity credentials 
 now  need  create access key (when creating, tick AWS cli , cos i wnt to use the credentials for my cli) n secret key
 now we v the acess key, copy it 
 this user has adminstrative access/credential
 
-next SET THE CREDENTIAL
+next
+4iii) SET THE CREDENTIAL    (aws config and pass the access & secret key)
 once u hv ur credentials   
 nxt we set the credentials n this is why we needed to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
 once u hv ur AWS cli, u wil need to configure,  run aws configure so that u set ur crednetial
@@ -236,6 +241,9 @@ so when i run aws config , i am setting credentials and in the credentials i hv 
 
 cat credentials , and i can see the default profile n i v an access key whic i jst set n i hv a secet key which i jsudt set  ,noow
 this becomes my default profile  .......... 53:33
+
+
+
 
                                    MULTIPLE PROFILES
 we can seee there are multiple profile here , ken profile, manager, mark
@@ -263,11 +271,12 @@ instance n create a role, give permission to the role n the ec2instance wil perf
 
 QUESTION2
 WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
-ok since t can do that n terafrom can also do that so whats the diff btw the 2
+ok since it can do that n terafrom can also do that so whats the diff btw the 2
   .. ANS..
 WE can use aws CLI to provision resources in AWS bt AWS CLI  is native to aws bc i cant use it to provisin resources in azure or gcp , thats bc a cli just for aws
 the benefti that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
 thats why companies are adopting teraform as an iaac
+
 
 QUESTION3
 why do we v the multiple profiles?/
