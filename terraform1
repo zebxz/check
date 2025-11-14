@@ -263,7 +263,6 @@ so when i run aws config , i am setting credentials and in the credentials i hv 
 cat credentials , and i can see the default profile n i v an access key which i jst set n i hv a secet key which i jsudt set 
 noow this becomes my default profile  .......... 53:33
 
-
 also below we can see other multiple profiles:
                               MULTIPLE PROFILES
 we can see there are multiple profile here , terraform user profile, ken profile, manager, mark ,,, i bliv he already created this users before he did this class video
@@ -272,10 +271,28 @@ default means if nothing else is passed, if nothing else is available then teraf
 *****************************so once we v set our credebtials , how can we then pass this credentials???............ 54.54
 we can use teraform especially when we look at credentials; He opened a file in the tarrafrm repo called credentials, we can pass those credentails as a profile
 
+QUESTION3                          
+why do we v the multiple profiles?/
+
+ANSWER:
+when u run just aws configure you configure a defualt profile n each time u set a new default profile, it overrides the previous default profile
+but when u run aws configure --profile amaka , this wil create a name profile called amaka , bc you pass an option, we can also vi into the credentials file n add d secret, 
+acess keys n create a square bracket n put the nmae of the profile ......... 1:08
+                                WE CAN PASS A PROFILE 
+so when am runing my teraform, if i dnt want it to use my default credentials , i can pass a profile
+e.g i v a developer profile n it only has read ccessn and i wnt to tesT my code wit jst read access, so yes i can v and mg8 multiple accounts, u can send me a secrte key 
+frm ur account n i can create a profile here n anythin i do using ur profile, it wil be happening in ur account bc this credentials they also hv a mapping of the account
+they v permissions of the prticular account that supply the credential. bt if i switch to my default, its hapening in my account, dats hw we use profiles n we wil see hw we 
+can use diff profiles for our teraform runs.
+                                                  WE CANT CREATE A PROFILE ON AWS CONSOLE
+on the console, we can only create access n secret keys, we cant create profile on the console. bt when we wnt to configure our CLI env then we can then configure a profile
+like this to be able to call aws on our behalf. .............. 1:07
+just mk sure u hv set ur credential b4 u are able to use terraform.
+
 
 
                                      HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS????
-for us to knw hw to use those credentials, we nid to knw the command basis n nid to knw hw to write a teraform configuration so we knw  wher we can pass our credentials
+for us to knw hw to use those credentials, we nid to knw the command basis n need to knw hw to write a teraform configuration so we know wher we can pass our credentials
 
 
 
@@ -292,33 +309,37 @@ instance n create a role, give permission to the role n the ec2instance wil perf
 
 
 
-QUESTION2
+QUESTION2                    Diff btw AWS CLI and TERRAFORM CLI
 WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
 ok since it can do that n terafrom can also do that so whats the diff btw the 2
   .. ANS..
-WE can use aws CLI to provision resources in AWS bt AWS CLI  is native to aws bc i cant use it to provisin resources in azure or gcp , thats bc a cli just for aws
-the benefti that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
+WE can use aws CLI to provision resources in AWS bt AWS CLI is a tool that is native to aws bc i cant use it to provision resources in azure or gcp, thats bc its a cli just 
+for aws.
+the benefit that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
 thats why companies are adopting teraform as an iaac
 
 
-QUESTION3
-why do we v the multiple profiles?/
-when u run just aws configure you configure a defualt profile n each time u set a new default profile, it overrides the previous default profile
-but when u run aws configure --profile amaka , this wil create a name profile called amaka , bc you pass an option, we can also vi into the credentials file n add d secret, 
-acess keys n create a square bracket n put the nmae of the profile ......... 1:08
-so when am runing my teraform, if i dnt want it to use my default credentials , i can pass a profile
-e.g i v a developer profile n it only has read ccessn and i wnt to tets my code wit jst read access, so yes i can v and mg8 multiple accounts, u can send me a secrte key 
-frm ur account n i can create a profile here n anythin i do using ur profile, it wil be happening in ur account bc this credentials they also hv a mapping of the account
-they v permissions of the prticular account that supply the credential. bt if i switch to my default, its hapening in my account, dats hw we use profiles n we wil see hw we 
-can use diff profiles for our teraform runs.
-on the console, we can only create access n secret keys, we cant create profile on the console. bt when we wnt to configure our CLI env then we can then configure a profile
-like this to be able to call aws on our behalf. .............. 1:07
-just mk sure u hv set ur credential b4 u are able to use terraform.
 
 
 
-A)TERRAFORM COMMAND BASICS ............................................................ ..  ...............1:09:30
-terraform configuration files, its declarative in nature , must  with .tf   
+
+
+1.09.30
+                                       TERRAFORM COMMAND BASICS 
+
+                                    
+                                       TERRAFORM CONFIGURATION FILES
+its declarative in nature , must  with .tf   
+
+Terraform uses declarative syntax to describe your Infrastructure as Code (IaC) infrastructure and then persist it in configuration files that can be shared, reviewed, edited,
+versioned, preserved, and reused.
+Terraform configuration files can use either of two formats: Terraform domain-specific language (HashiCorp Configuration Language format [HCL]), which is the recommended approach,
+or JSON format if the files need to be machine-readable.
+Configuration files that use the HCL format end with the .tf file extension;
+Those using JSON format end with the .tf.json file extension.
+The Terraform format is human-readable, while the JSON format is machine readable
+
+
 
 B)TERRAFORM WORKFLOW
 whenever we are running terrafrm ther is a certain workflow that we hv to follow, it begins wit terrafrm init wich initializes our wrking dir n downloads our modules 
@@ -327,39 +348,46 @@ includes a number of commands we run to inorder to create  a conf file
 the first command is terraform init 
 let say u v written ur configuration files , now u hv multiple conf files , the files are in the same dir , that dir is called ur terraform working dir
 
-INTERVIEW QUESTION:
-WHAT IS A TERRAFORM WORKING DIR 
-this a dir wher u v terraform config files
-THATS Wher terraform wil be reading the files n creating a plan ..................1:13
 
 the first command to enable terraform read the files is:
 1)terraform init
 its used to initialize a working directory containing terraform config files.
-this is the 1st command that shud be run after writing a nwe conf file.
+this is the 1st command that shud be run after writing a new conf file.
 it downloads providers n modules.  ........................................................1:15
-what this means is that the when u go to ur terraform n look up registry , u see browse providers , browse module, policy librabries
+
+                      PROVIDERS
+what this means is that the when u go to terraform.io n look up registry , u see browse providers , browse module, policy librabries
 providers are what provides the service , e.g we can see aws, alibaba, gcp, etc, all these are providers that i can use wit terraform.
 providers are logical abstractions of an app stream API, they are responsible for understanding API interactions n exposing resources.
-therfore if am using terform n inwant to create resources in aws, therfor i need an AWS provider, it acts as an API, its what stands in btw terrfrm n ur aws to be able to 
-interprete what terrafr intens to do in aws
-********************so once u run terrafrm init, the first init does is it downloads the resource that u want to use
-if i wnt to create a resource in aws, i wil need tell terfrm thta my provider is aws but hw do i do that, ? it thefore means that i need a configuration file  .... 1:18 00
-if u v ur vscode n uv instaled an extension , when u go to extension n serach harsicop/terraform , click the first one , this is an extension, once u v the extension, 
+therfore if am using terform n i want to create resources in aws, therfor i need an AWS provider, 
+it acts as an API, its what stands in btw terrfrm n ur aws to be able to interprete what terrafr intenDs to do in aws
+
+                                             EXTENSION HELPS  TO AUTO COMPLETE
+********************so once u run terrafrm init, the first init what it does is it downloads the resource that u want to use
+if i wnt to create a resource in aws, i wil need tell to terfrm that my provider is aws but hw do i do that, ? it thefore means that i need a configuration file  .... 1:18 00
+if u v ur vscode n uv instaled an extension , when u go to extension n search harsicop/terraform , click the first one , this is an extension, once u v the extension, 
 it wil help u wit writing ur code for auto completion bcx  it knows what u intend to do, n u wil see this symbol symbolizing harsicop, dat shows your ext hv been installed.
-if i go bk to my files, if i create any file that ends wit .ttf , i wil see this symbol, menaing this is a terafrm config file, inside thwe file  once i type provider,
-bc of the ext it wil auto complete it for me n i can pass my provider "aws"   ..... .......  1:20: 50 
-proviser "aws" {} , this 2 calibres means its a map, i can map key value pairs, i can put key value pairs inside, this hw we write/defin e a map,,.
+if i go bk to my files, if i create any file that ends wit .ttf , i wil see the terraform symbol, meaning this is a terafrm config file, inside the file  once i type provider,
+bc of the extention it wil auto complete it for me n i can pass my  provider 
+
+
+                          **meee....    HOW TO PASS PROVIDER
+just type 'provider' and indicate the provider name, provider "aws"   ..... .......  1:20: 50 
+
+provider "aws" {} , this 2 calibres means its a map, i can map key value pairs, i can put key value pairs inside, this hw we write/define a map,,.
 so inside of ur privder block, it is a map , i can map diff resources
 now if i go to my terminal n ls , i see the file
-now i can run terraforn init , inside it. ... n we see it initializing
-so bc i indicated aws as my provider, once i did terfm init , terfrm goes to the terfrm registry n looks for the rprivder i v ststed , once it goes to tht PARTICULAR 
-PROVIDER it download th epluggin n bc i didnt specufty the version, it wil allways download the lastest version of ur plugin frm harscop, n once it downloads ur
-provider plugin , insiden  of this dir it wil create for u one file (terafrm lock.hcl) n one dir ( a.terfrm dir)
+now i can run terraforn init , inside it. ... its now going to do smt else
+it says it has initialized the backend 
+its initializing the provider pluggins 
+so bc i indicated aws as my provider, once i did terfm init , terfrm goes to the terfrm registry n looks for the provider i v stated , once it goes to that PARTICULAR 
+PROVIDER it download that particular pluggin n bc i didnt specify the version, it wil allways download the lastest version of ur plugin frm harscop, n once it downloads ur
+provider plugin , inside  of this dir it wil create for u one file (terafrm lock.hcl) n one dir ( a.terfrm dir)
 
 
 INTERVIEW QUESTION:
-whta is the purpose of terraform init/ when do w run it?
-it i sthe first command we run to intialize our working dir and also to download our provider pluggings n also our modules.
+what is the purpose of terraform init/ when do we run it?
+it is the first command  we run to intialize our working dir and also to download our provider pluggings n also our modules.
 
 2)TERAFRM VALALIDATE    ...... 1:25
 it wil validiate the config file in the respective dir to ensure they are syntically valid n  internally consistent
@@ -375,7 +403,7 @@ by default scans the curent dir for d config n applies d cahnges appriopriately.
 the state file is created when apply is ran the first time
 
 
-*************once we strt taliking abt the diff blocks u guys wil ubderstand what it imeans..................
+*************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
 resourcev"aws_ instance" "project2ec2" {
 i want to create an ec2 instance , am creatin it by----- using what is called a"  resource" block ............................................. 1:28:50
  the type : this is a resource type  :"aws_ instance"  ......  am creating an aws ec2 instance , bc my provider is aws 
