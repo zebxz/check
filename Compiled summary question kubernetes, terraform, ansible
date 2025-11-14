@@ -2,7 +2,7 @@
 
 KUB 14 HElm
 **meeee** WHY do we have more than one cluster in kubernetes  ????
-why is helm characterized with using just one cluster?????
+why is helm characterized with using just one cluster?????    **** Helm manages one cluster while Rancher manages more than one cluster
 **online
 Helm is not restricted to a single cluster, but it is designed to manage one specific Kubernetes cluster at a time through a direct client-API server interaction. 
 The perception of it being single-cluster-only stems from its fundamental architecture as a package manager rather than a multi-cluster orchestration tool
@@ -605,7 +605,43 @@ so to do that, we go to the IAM user n create seceurity credentials wher we crea
 
 
 
+QUESTION2                    Diff btw AWS CLI and TERRAFORM CLI
+WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
+ok since it can do that n terafrom can also do that so whats the diff btw the 2
+  .. ANS..
+WE can use aws CLI to provision resources in AWS bt AWS CLI  is native to aws bc i cant use it to provisin resources in azure or gcp , thats bc a cli just for aws
+the benefit that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
+thats why companies are adopting teraform as an iaac
 
+
+QUESTION3                          
+why do we v the multiple profiles?/
+
+ANSWER:
+when u run just aws configure you configure a default profile n each time u set a new default profile, it overrides the previous default profile
+but when u run aws configure --profile amaka , this wil create a name profile called amaka , bc you pass an option, we can also vi into the credentials file n add d secret, 
+acess keys n create a square bracket n put the nmae of the profile ......... 1:08
+                                WE CAN PASS A PROFILE 
+so when am runing my teraform, if i dnt want it to use my default credentials , i can pass a profile
+e.g i v a developer profile n it only has read ccessn and i wnt to tesT my code wit jst read access, so yes i can v and mg8 multiple accounts, u can send me a secrte key 
+frm ur account n i can create a profile here n anythin i do using ur profile, it wil be happening in ur account bc this credentials they also hv a mapping of the account
+they v permissions of the prticular account that supply the credential. bt if i switch to my default, its hapening in my account, dats hw we use profiles n we wil see hw we 
+can use diff profiles for our teraform runs.
+                                                    WE CANT CREATE A PROFILE ON AWS CONSOLE
+on the console, we can only create access n secret keys, we cant create profile on the console. bt when we wnt to configure our CLI env then we can then configure a profile
+like this to be able to call aws on our behalf. .............. 1:07
+just mk sure u hv set ur credential b4 u are able to use terraform.
+
+
+INTERVIEW QUESTION:
+WHAT IS A TERRAFORM WORKING DIR 
+this a dir wher u v terraform config files
+THATS Wher terraform wil be reading the files n creating a plan ..................1:13
+
+
+INTERVIEW QUESTION:
+what is the purpose of terraform init/ when do we run it?
+it is the first command  we run to intialize our working dir and also to download our provider pluggings n also our modules.
 
 
 
