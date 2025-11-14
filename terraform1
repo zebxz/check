@@ -362,7 +362,7 @@ providers are logical abstractions of an app stream API, they are responsible fo
 therfore if am using terform n i want to create resources in aws, therfor i need an AWS provider, 
 it acts as an API, its what stands in btw terrfrm n ur aws to be able to interprete what terrafr intenDs to do in aws
 
-                                             EXTENSION HELPS  TO AUTO COMPLETE
+                                            INSTALL EXTENSION, IT HELPS TO AUTO COMPLETE
 ********************so once u run terrafrm init, the first init what it does is it downloads the resource that u want to use
 if i wnt to create a resource in aws, i wil need tell to terfrm that my provider is aws but hw do i do that, ? it thefore means that i need a configuration file  .... 1:18 00
 if u v ur vscode n uv instaled an extension , when u go to extension n search harsicop/terraform , click the first one , this is an extension, once u v the extension, 
@@ -371,8 +371,9 @@ if i go bk to my files, if i create any file that ends wit .ttf , i wil see the 
 bc of the extention it wil auto complete it for me n i can pass my  provider 
 
 
-                          **meee....    HOW TO PASS PROVIDER
-just type 'provider' and indicate the provider name, provider "aws"   ..... .......  1:20: 50 
+1:20:50                          **meee....    HOW TO PASS PROVIDER
+just type 'provider' and indicate the provider name eg azure, alibaba, 
+provider "aws"   
 
 provider "aws" {} , this 2 calibres means its a map, i can map key value pairs, i can put key value pairs inside, this hw we write/define a map,,.
 so inside of ur privder block, it is a map , i can map diff resources
@@ -391,30 +392,40 @@ it is the first command  we run to intialize our working dir and also to downloa
 
 2)TERAFRM VALALIDATE    ...... 1:25
 it wil validiate the config file in the respective dir to ensure they are syntically valid n  internally consistent
-U run this after terfrm init  and u will get success config is valid but if i miss the closn }, it wil say "error" uncosed config block
-so bc d syntax is nt correct, i canrdo anytin else until i correct it 
+U run this after terfrm init  and u will get success config is valid but if i miss the closing  bracket/calibres '}, it wil say "error" uncosed config block
+so bc d syntax is nt correct, i cant do anytin else until i correct it 
 so terfrm validate ensures the syntax is corect
 
 3) TERAFRM PLAN
-creats an execution plan
+creates an execution plan
 the best cause of action to follow/apply
-4) Terasfrm app : used to apply the changes to reach the esired state of the configuration
-by default scans the curent dir for d config n applies d cahnges appriopriately.
+Terraform performs a refresh and determines what actions are necessary to achieve the desired state specified in the configuration files
+
+4) Terafrm apply : used to apply the changes to reach the desired state of the configuration
+by default scans the curent dir for d config n applies d changes appriopriately.
 the state file is created when apply is ran the first time
 
 
+  eg                            CREATE AN AWS INSTANCE USING A RESOURCE BLOCK ... aws instance bc my provider is AWS                    
+1.28.47
 *************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
 resourcev"aws_ instance" "project2ec2" {
 i want to create an ec2 instance , am creatin it by----- using what is called a"  resource" block ............................................. 1:28:50
  the type : this is a resource type  :"aws_ instance"  ......  am creating an aws ec2 instance , bc my provider is aws 
-the name: this is the resource name , the  name that trfrm wil knw   .... : project2ec2" , the name that wil b captured in the state file, a name that is local to trfrm .. and 
-this is the name aws knows :   .......... "aws_ instance , the resource type known to aws but 
+
+                                RESOURCE NAME (Known to terraform)
+the name: this is the resource name, the name that trfrm wil knw  ... : project2ec2" , the name that wil b captured in the state file, a name that is local to trfrm.
+
+                               RESOURCE TYPE (known to AWS)
+this is the name aws knows :  
+.......... "aws_ instance , the resource type known to aws but 
+
 
  ************************WATCH THIS PART .****************************** 1:30:20
-****************************   AS we were talking abt creating an instance in aws console, we needed an ami n an instance type 
-    *****************
-in
-to illustrae an example,  he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
+ AS we were talking abt creating an instance in aws console, Remember when we needed to launch an instance, we needed an ami n an instance type 
+
+1.31.05   
+to illustrate an example,  he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
 resourcev"aws_ instance" "project2ec2" {
 ami =    ****************************
 instanc etype: "t2.micro" 
@@ -423,31 +434,37 @@ tags = {
  Name = "firstEC2"
 
 ***************now in my provider i v only passed 'aws" , i hv nt pass any credential and so the provider is goin to use the default credential bc it has to talk to aws
-also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configurebt aws configure default region is US west2
+also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure bt aws configure default region is US west2
 
 WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
-1)Terafrm init  ................minitializing, .
+1)Terafrm init  ................initializing, .
 bc it already downloaded the plugggings, it wont download it again
 2)terfrm validate  .............. valid, our AMI n instance type is valid 
 3)terafrm plan .... terfrm goes now to aws, using the credentials that are default bc i hvnt passed any credentials yet for my provider, it assumes i wnt to use d default 
 credentials 
 it goes to aws n now generates a plan 4 me  .......... saying terfrm wil perfrm the folowing action
 the plus sign means they are the things that will be added
-**so far the tins that aRE knw is our AMI, instance type.........evrytin else we do not knw, bt we wil knw them after d instance hv been created,
+**so far the tins that are knw is our AMI, instance type.........evrytin else we do not knw, bt we wil knw them after d instance hv been created,
 terfm wil tel u "known after apply"
-this AMI belongs to US East1
-4)terafrm apply
-we dnt knw the state of our infarsture yet, we dnt hv a state file yet
-once we run apply, we know we hv an an created n a staefile to represent that.
-when u run app, it wil fast run th eplan again, it wil regenertae the plan again n ask u to confirm
+remember this AMI belongs to US East1
+4)terafrm apply              1.37.25 ***it will first run the plan again/ regenerate the plan again for you & aks you to confirm 
+terrafrm apply basically shows you the plan of what terrafrm intends to do 
+so after you run apply and you confrim that this is what you intend to do so on the work flow  ... reading frm the 'command basis file' terfm plan creates an execution plan
+right now we dnt knw the state of our infastructure, we hvnt created an infastructure yet,  so we dnt hv a state file yet
+but once we run apply, we know what the state is, we knw we hv one ec2 instance created  and therfore, we will have a statefile to represent that.
+ 
+so when u run apply, it wil first run the plan again/it wil regenerate the plan again n ask u to confirm
   . yes ...... n it stars creating the instance
+
+                  TROUBLESHOOTING
 ************** bt we got an error ...............  ***** reason ...........??
 first we knw that AMI are region specific 
-we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provison our resorces in US west2 bc we hvnt passed any region
+we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
 and thats why we get the error
 although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
 
-to correct the error we will pass our region in the providr
+ **                 NEED TO PASS REGION IN THE PROVIDER
+to correct the error we will pass our region in the provider
 region="us-east-1"
 the region we pass wil overide the default region bt we ar stil uising d default credential.
 lets say we wnt to pass a profile (credential)  profile = "marie"   .... bc its the provider that nids to authenticate
