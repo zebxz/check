@@ -350,7 +350,8 @@ let say u v written ur configuration files , now u hv multiple conf files , the 
 
 
 the first command to enable terraform read the files is:
-1)terraform init
+
+1)terraform init              ****terfrm init ,, u can run it as many time 
 its used to initialize a working directory containing terraform config files.
 this is the 1st command that shud be run after writing a new conf file.
 it downloads providers n modules.  ........................................................1:15
@@ -406,7 +407,10 @@ by default scans the curent dir for d config n applies d changes appriopriately.
 the state file is created when apply is ran the first time
 
 
-  eg                            CREATE AN AWS INSTANCE USING A RESOURCE BLOCK ... aws instance bc my provider is AWS                    
+
+  eg                            CREATE AN AWS INSTANCE USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
+               ****objective is to see that we have to pass the AMI region in the provider to avoid getting an error
+
 1.28.47
 *************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
 resourcev"aws_ instance" "project2ec2" {
@@ -456,12 +460,14 @@ but once we run apply, we know what the state is, we knw we hv one ec2 instance 
 so when u run apply, it wil first run the plan again/it wil regenerate the plan again n ask u to confirm
   . yes ...... n it stars creating the instance
 
+
                   TROUBLESHOOTING
 ************** bt we got an error ...............  ***** reason ...........??
 first we knw that AMI are region specific 
 we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
 and thats why we get the error
 although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
+
 
  **                 NEED TO PASS REGION IN THE PROVIDER
 to correct the error we will pass our region in the provider
@@ -473,7 +479,7 @@ the profile i pass overides the default profile.
 
 *lets see hw terfrm wil handle that**************
 terfrm init ,, u can run it as many time 
-terfrm plan  ............... ERRER, profilr marie nt found.............. 
+terfrm plan  ............... ERROR, profile marie nt found.............. 
 so we comment the profile "#"
 terfrm plan .................. sucessful
 terfrm apply ............ ERROR ... NO specified vpc, no default vpc for this user............................ 1:44:00 ......... WATCH
@@ -503,7 +509,8 @@ u hv any terminal that u hv ur aws configured then u will be able to run terfrm
 in ur terminal download terfrm
 as long as u hv ur aws cli configured
 
-DIFF BTW TRM PLAN n TERFRM apply
+
+                                    DIFF BTW TRM PLAN n TERFRM apply
 trfrm gives u a plan without actually executing it , ie it gives the option of accepting or changing or destroy the plan while
 apply creates the resources
 
@@ -516,20 +523,21 @@ we use aws configure
 MY QUESTION
 if we dnt tell terfm the region we wnt it to provide our resources, it wil create it in the default region set when u run aws config
 if u dnt specify d  vpc or the subnet, , bc terfrm wil assume u wnt to create it in the default vpc
-so if u dnt hv a default vpc,  terfrm wil return an error , c it wil b looking for  adefault vpc to b able to create ur resource
+so if u dnt hv a default vpc,  terfrm wil return an error, cos it wil b looking for a default vpc to b able to create ur resource
 so if u dnt v a default vpc terfrm wil fail
 so some of the prerequisite: if u want to create a resource in a default vpc mk sure the region u ar creating ur resource has a default vpc
 so how do you create a default vpc ????? ....... i knw 
 
 
-I SEE THE SCRIPT HAS A COMMANDC THAT SAYS FORMAT 
+I SEE THE SCRIPT HAS A COMMAND THAT SAYS FORMAT 
 ANS:
 terfrm has a lot of commands , we wil seee hw we ll format our code
 what we did was a very basic code , we didnt nid to format the code 
-when we write more code we see hw wev  can use more commands bt the basic work flow, init, validate, plan, apply, destroy 
+when we write more code we see hw we v can use more commands bt the basic work flow, init, validate, plan, apply, destroy 
 
 
-2:04:00 TERRAFORM CONFIGURATION LANGUAGE SYNTAX
+
+2:04:00                                  TERRAFORM CONFIGURATION LANGUAGE SYNTAX
     LANGUAGE SYNTAX
 how do we write trfrm conf file  .... ....... ?
 
@@ -567,8 +575,9 @@ whne we craete an instanvce what we get out is called an attribute e.g ip addres
 *************** so when you are defining your blocks to create your resource, we are pasing arguments inside the blocks but once the rsource hv been created we can get 
 atrribute out of it
 
+
 we hv 10 high level blocks that tefrm defines
-1) terfrm settings blks > we pass the version of trm we wnt to use , it sets the required version of trfrm 
+1) terfrm settings blks > we pass the version of trm we wnt to use, it sets the required version of trfrm 
 2) provider blk: wher we specify our provider , if we wnt to specify our provider then we hv to use a provider blk
 3)resource blk : evrytin we create is cerated using a resource blk, resourecs are what are being created
 4)input varaibles blk: we are passing input into our resource , we wnt to modularize or make our code flexible thefore we use variable  , input in our resource
@@ -583,7 +592,8 @@ bc i hv everytin written as code
 10) import blk
 
 
-SO HOW DO THESE BLOCKS WOWRKS >>>>>>>>>>>>  2:20   .................   CAN READUP
+
+SO HOW DO THESE BLOCKS WORKS >>>>>>>>>>>>  2:20   .................   CAN READUP
 so, a blk basically has a type 
 so each blk type defines hw many labels might fall
 ARGUMENTS will asign value to a name, tghey appeAR within a blk, arguments can be reQ or optional
@@ -627,6 +637,7 @@ constrained to a specify vesrion of trfrm , so now bc of that u wil constrain it
 ompartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
 after that we can aslo set our REQ providers  ................................................2:38:00
 now when we talk abt backends we ill also see that if we config a whcih we ar calling a remote bk end we will be able to config it in this terfmrm setting blk
+
 
 PROVIDER BLOCK
 we can also set our credentials n our region
