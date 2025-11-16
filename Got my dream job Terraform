@@ -269,7 +269,8 @@ ANSWER:
 when u run just aws configure you configure a defualt profile n each time u set a new default profile, it overrides the previous default profile
 but when u run aws configure --profile amaka , this wil create a name profile called amaka , bc you pass an option, we can also vi into the credentials file n add d secret, 
 acess keys n create a square bracket n put the nmae of the profile ......... 1:08
-                                WE CAN PASS A PROFILE 
+                               
+                                     WE CAN PASS A PROFILE 
 so when am runing my teraform, if i dnt want it to use my default credentials , i can pass a profile
 e.g i v a developer profile n it only has read ccessn and i wnt to tesT my code wit jst read access, so yes i can v and mg8 multiple accounts, u can send me a secrte key 
 frm ur account n i can create a profile here n anythin i do using ur profile, it wil be happening in ur account bc this credentials they also hv a mapping of the account
@@ -284,34 +285,6 @@ just mk sure u hv set ur credential b4 u are able to use terraform.
 
                                      HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS????
 for us to knw hw to use those credentials, we nid to knw the command basis n need to knw hw to write a teraform configuration so we know wher we can pass our credentials
-
-
-
-SOMEBODY QUESTION: 1)
-show us how to setup the CLI abi how to run aws configure, saw u are running directly frm ur macbk bt all along we hv been seting up the servers in aWS
-
-ANS REPLIED;
- if u hv gitash/mbaxtem/vs code installed in ur envr run aws configure bc we wnt to config ur credentials, u config ur credntials in ur local envrn for security 
-reasson u, if ur using ec2 instances, u dnt configure static credentials in aws, if u are using ec2 instance, u create a role and attach to the instance bt ur nt using a
-key in ur instance bc if u set a key that is static, anybody who has access to ur instance that becomes a security issue
-so using ec2 instance, we instaed create a role n give permission to the role, we always attach roles to resources. bt in ur local env u hv ur aws cli configure.
-am showing that we can run terrform from our local env, we can write code in our local envn n mg8 resources in aws n 2mrw we ill see that we can instal teraform on an ec2
-instance n create a role, give permission to the role n the ec2instance wil perform action in aws on ur behalf
-
-
-
-QUESTION2                    Diff btw AWS CLI and TERRAFORM CLI
-WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
-ok since it can do that n terafrom can also do that so whats the diff btw the 2
-  .. ANS..
-WE can use aws CLI to provision resources in AWS bt AWS CLI is a tool that is native to aws bc i cant use it to provision resources in azure or gcp, thats bc its a cli just 
-for aws.
-the benefit that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
-thats why companies are adopting teraform as an iaac
-
-
-
-
 
 
 
@@ -420,8 +393,11 @@ Provides an interactive console for evaluating expressions.
 
 
 
+     ***illustration
+
+
   eg                            CREATE AN AWS INSTANCE USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
-               ****objective is to see that we have to pass the 'region' where the AMI we got in AWS is found, in the provider to avoid getting an error
+               ****objective is to see that we have to pass the 'region' ie where the AMI we got in AWS is found, in the provider to avoid getting an error
 
          the steps to follow are:
 1) resource name, 2) resource type  3) AMI id,  4)AMI id region  5) the VPC  after which we run terraform, init/validate/plan/apply.
@@ -452,7 +428,7 @@ the name: this is the resource name, the name that trfrm wil knw  ... : project2
  AS we were talking abt creating an instance in aws console, Remember when we needed to launch an instance, we needed an ami n an instance type 
 
 1.31.05   
-to illustrate an example,  
+  
 3) AMI id
 he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
 resourcev"aws_ instance" "project2ec2" {
@@ -463,7 +439,8 @@ tags = {
  Name = "firstEC2"
 
 ***************now in my provider i v only passed 'aws" , i hv nt pass any credential and so the provider is goin to use the default credential bc it has to talk to aws
-also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure bt aws configure default region is US west2
+also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure bt aws configure default region is US west2, we got our AMI id frm
+US east1 N virginia, so we will get an error when we try to create it as illustrated below
 
 
 WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
@@ -495,7 +472,7 @@ and thats why we get the error
 although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
 
 
- 4)               NEED TO PASS REGION IN THE PROVIDER
+     4)           NEED TO PASS REGION IN THE PROVIDER
 to correct the error we will pass our region in the provider
 region="us-east-1"
 the region we pass wil overide the default region bt we ar stil uising d default credential.
@@ -548,15 +525,11 @@ we can see it shutting down the instance in aws
 this is hw terfrm is able to mag8 ur resources.
 
 
-
 I SEE THE SCRIPT HAS A COMMAND THAT SAYS FORMAT 
 ANS:
 terfrm has a lot of commands , we wil seee hw we ll format our code
 what we did was a very basic code , we didnt nid to format the code 
 when we write more code we see hw we v can use more commands bt the basic work flow, init, validate, plan, apply, destroy 
-
-                                  
-
 
 
 
