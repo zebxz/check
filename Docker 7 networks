@@ -226,7 +226,9 @@ codes as with monolithic but only the 2,000lines of code for login for microserv
 
 
 
-                           DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK
+****illustration
+
+                                      DEPLOY A MICRO SERVICE USING SPRING BOOT FRAMEWORK
       **** he pulled the images for both the appliction & the data base
 
 46:20 ************************************************** We support Java based applications:
@@ -236,6 +238,12 @@ We support nodeJS and .net based applications: (also some python base appl, like
 
 **** the objective/challenge in this ticket is to see how to deploy the database container as stateful ie needs to maintain its state, therefore it needs 
 a piece of storage for the captured data, therefore we can create a mountpoint and using bind mount ie docker volume concept
+   
+****online
+Bind Mounts: These allow you to mount a specific file or directory from the host machine into a container. 
+They offer more granular control over the host location but are less managed by Docker.
+
+
 Ticket024:
   Deploy a microservice application for tesla.  
   - GitHub repository
@@ -355,7 +363,7 @@ eg the correct hostname of the db;mongodb, the correct db username we assigned &
 ****************************I ALSO HV TO PUT BOTH OF THEM IN THE SAME NTWRK(network tesla) bc i wnat them to comunicate with each oda ********
 
 
-   **** can replace step5 with step5 that has the volume/bind mount command attached from below. 
+   **** i can replace step5 with step5 we made below that has the volume/bind mount command attached from below. 
 #########DEPLOYING THE DATABASE                                                                     ****image we creating is mongo
 5) docker run --name mongodb --network tesla -e MONGO_INITDB_ROOT_USERNAME=devdb -e MONGO_INITDB_ROOT_PASSWORD=devdb@123 mongo
                                                   
@@ -413,6 +421,10 @@ mount point given in the official document which is the mount point for the cont
 once we pair/bind the 2 mount point together ie pass the vol with the mongo db & its var using the docker run command then the bind mount has been created
 Therfore the mount point we create whether a file or a dir, becomes the piece of storage where data is stored on
 the host server.the mount point we create can be a file or a dir eg  of a dir is the customized mount point we created in the illustration below; temp/mydata
+
+**online
+Bind Mounts: These allow you to mount a specific file or directory from the host machine into a container.
+They offer more granular control over the host location but are less managed by Docker.
 
 
 1:34:10
