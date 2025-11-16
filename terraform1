@@ -693,55 +693,92 @@ The # single-line comment style is the default comment style and should be used 
 
 
 
-2:28.40      This is the first block           TERFRM SETTING 
-u can put a partivular version of terfrm u wnt ur code to run with
+
+2:28.40      This is the first block           TERFRM SETTING   (2.40.25.... he later called it terrafrm block)
+        ***me contains 2 required versions: Terraform version & Provider version
+
+1) this sets the required version of terraform
+u can put a particular version of terfrm u wnt ur code to run with
+terraform {
+  required_version = "~> 1.0" #1.1.4/5/6/7   1.2/3/4/5 1.1.4/5/6/7
+
+terraform --version to know the terraform version
+
+                                                          TERRAFROM VERSION
+     ***meee***  Always constrain it to the minor version  "~>1.5", do not include the patch
+e.g    major.minor.patch
+           1.5.5 
+
+
 ~ we use this symbol before the version
-e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
+e.g "~>1.5"  .. this means that the version of trfrm or this code can run with any version, (again this is symetic versioning) any version like terfrm .5 wit any path version
 version is always in 3digits , major.minor.patch
 the fisrt didgit is the major 
 then minor 
 then patch
 e.g    major.minor.patch
            1.4.5 
-so   amyb every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
+so may b every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
 so it goes frm 1.4.5 to 1.4.6 , 1.4.7
-but lets say the update is a feature then it becomes 1.5.0 , then the patch wil reset to 0 
+but lets say the update is a feature 
+1.4.5 to 1.4.6 , 1.4.7 then it becomes 1.5.0 , then the patch wil reset to 0 
 bc if i update a miNor version the patch wil reset to 0
-what if i update a major version , if create a whole newv version of terfrm .... 2.0.0
+what if i update a major version , if create a whole newv version/binary of terfrm .... 2.0.0
 this is hw versioning works 
-**************** so when u are placing the rEQ version of terfrm, am constraing it such tha am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
+**************** so when u are placing the rEQ version of terfrm, am constraint it such thaT am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
 so this a more flexible way
-if u contrain it to a specificy version then  "~>1.5.6" it jst menas that if that particualr patch version comes up and its update dur code might easily break bc uve 
-constrained to a specify vesrion of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within th em they wil be c
-ompartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
-after that we can aslo set our REQ providers  ................................................2:38:00
-now when we talk abt backends we ill also see that if we config a whcih we ar calling a remote bk end we will be able to config it in this terfmrm setting blk
+but if u constrain it to a specific version then  "~>1.5.6" it jst means that if that particualr patch version comes up and its updated ur code might easily break bc uve 
+constrained to a specify version of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within this minor version they
+wil be compartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
+
+2) after that we can aslo set our REQ providers  ................................................2:38:00
+required_providers {
+    aws = {
+        source  = "hashicorp/aws"
+        version = "~> 3.0"
+i can constrain bc when we look at the versions of hashicorp/aws provider, the latest one is 5.24, but i have many other versions of that pluggin
+so if i want to constrain, so that it downloads a specific version of my provider then i have to constrain it by placing a req version of the aws provider
+but if i dnt pass the 2 required version it is always going to get the latest.
+so this is how we use the terraform setting block to set/constrain our providers
+you might have a code that requires aws version 3.2, the latest version of AWs right now is 5.2, but you might hv code that can only run with this provider pluggin that is 3.0
+so you would need to constrain it so that it the pluggin that is downmloaded is that particular version, if u dnt it will download the latest version which might break ur code
 
 
-PROVIDER BLOCK
-we can also set our credentials n our region
-If  u leave it open it will use the default
+                                        BACKEND
+now when we talk abt backends we ill also see that if we config a backend whcih we ar calling a remote backend we will be able to config it in this terfmrm setting blk
 
-RSOURCE BLK
+
+2.42.40
+VARIABLE BLOCK
 INStead of harding coding , we can create a variable n reference the variable in my resource , n so its flexible  .............................2:43:45
-then create a new file called variable.tf n copy n paste all the variables i created, 
-can also create a new file called provider.tf n paste the provider info and the terfrm setting blk info
-an my file called main wich only has my resource blk wich is referencing variables
-so what am doing is called refactoring , ie am breaking up my code so that its easily readable, so instasde of having evrytin on one file am refactoring my code , making 
-sure if i hv resourecss i jus t hv that on one file , if uwant to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
-wnt to deploy a t2micro, just go to the varaible file n cahnge it there n once u run the code its goin to read the variable n replace it.
-we wil also se the diff types of variables.
-when i created  a vroiable here, i passed a default value.
-default value means if no other is passed it is goin to fall bk on the value uve passed as default 
 
 
 ################# TO CREATE VARIABLE 
-We create the resource block with the  defaultvalues  (hardcoding)
-e.g resource AMi
-then we create the variable with type string and the default value 
-e.g variable AMi
+ eg variable for Ami
+then we create the variable with type string and the default value eg t2 medium
 then go bk to the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
 ie :  ami = var.myami
+
+we can also create a variable for instance type and also for subnet
+
+
+                            REFACTORING
+next 
+after creating all the variables above
+so i can go ahead to clean up my code bc all these are inside one file and its hard to read
+therefore
+i can create a new file called variable.tf (all files ends with .tf) n copy n paste all the variables i created in this seperate file, 
+can also create a new file called provider.tf n paste the provider info and the terfrm setting blk info
+and my file called main wich only has my resource blk wich is referencing variables
+so what am doing is called refactoring , ie am breaking up my code so that its easily readable, so instasde of having evrytin on one file am refactoring my code , making 
+sure if i hv resourecss i just hv that on one file , if u want to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
+wnt to deploy a t2micro, just go to the varaible file n change it there n once u run the code its goin to read the variable n replace it.
+This is how you use a variable block as an input
+we wil also se the diff types of variables.
+when i created  a variable here, i passed a default value.
+whats the purpose of a defualt value
+default value means if no other Value is passed it is goin to fall bk on the value you passed as a default
+
 
 
 **********************INTERVIEW QUESTION .............2:51:00
@@ -750,8 +787,9 @@ how do u mk a variable  REQuired?
 by not giving a default value
 when we dnt supply a default value, we make it rEQ variable
 e.g , now, in the variable file, if i comment on the instance type, bt in the main file i stil refernce the variable , then the variable becaomes a REQ variable
-*************so if i run plan , its asking me tp  enter a value, so am making terfrm interact wit the user
-terfrm wil nt plan until i supply these value bc i commented out the variable, i didnrt supply the default value, so its now a REQ variable
+*************so if i run plan , its asking me to  enter a value, so am making terfrm interact wit the user
+terfrm wil nt plan until i supply these value bc i commented out the variable, i didnt supply the default value, so its now a REQ variable
+
 
 OUTPUT VALUES BLK  ...2 :54:40
 we use the output blk to capture data or retrun an attribute
