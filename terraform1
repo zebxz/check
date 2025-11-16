@@ -369,12 +369,9 @@ if i wnt to create a resource in aws, i wil need tell to terfrm that my provider
 if u v ur vscode n uv instaled an extension , when u go to extension n search harsicop/terraform , click the first one , this is an extension, once u v the extension, 
 it wil help u wit writing ur code for auto completion bcx  it knows what u intend to do, n u wil see this symbol symbolizing harsicop, dat shows your ext hv been installed.
 if i go bk to my files, if i create any file that ends wit .ttf , i wil see the terraform symbol, meaning this is a terafrm config file, inside the file  once i type provider,
-bc of the extention it wil auto complete it for me n i can pass my  provider 
+bc of the extention it wil auto complete it for me n i can pass my  provider eg AWS, We will talk abt all these..
 
-
-1:20:50                          **meee....    HOW TO PASS PROVIDER
-just type 'provider' and indicate the provider name eg azure, alibaba, 
-provider "aws"   
+1:20:50                             
 
 provider "aws" {} , this 2 calibres means its a map, i can map key value pairs, i can put key value pairs inside, this hw we write/define a map,,.
 so inside of ur privder block, it is a map , i can map diff resources
@@ -403,10 +400,40 @@ Terraform performs a refresh and determines what actions are necessary to achiev
 by default scans the curent dir for d config n applies d changes appriopriately.
 the state file is created when apply is ran the first time
 
+5) terraform refresh
+Used to reconcile the state Terraform knows about (via its state file) with the real-world infrastructure
+Does not modify infrastructure, but does modify the state file
+terraform destroy
+
+6) Destroy the infrastructure and all resources
+Modifies both state and infrastructure
+terraform destroy -target can be used to destroy targeted resources
+terraform plan -destroy allows creation of destroy plan
+
+
+7) terraform import
+Helps import already-existing external resources, not managed by Terraform, into Terraform state and allow it to manage those resources
+Terraform is not able to auto-generate configurations for those imported modules, for now, and requires you to first write the resource definition in Terraform and then import this resource
+
+8) terraform taint
+Marks a Terraform-managed resource as tainted, forcing it to be destroyed and recreated on the next apply.
+Will not modify infrastructure, but does modify the state file in order to mark a resource as tainted. Infrastructure and state are changed in next apply.
+Can be used to taint a resource within a module
+
+9) terraform fmt
+Lints the code into a standard format
+
+10) terraform console
+Provides an interactive console for evaluating expressions.
+
+
 
 
   eg                            CREATE AN AWS INSTANCE USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
-               ****objective is to see that we have to pass the AMI region in the provider to avoid getting an error
+               ****objective is to see that we have to pass the 'region' where the AMI we got in AWS is found, in the provider to avoid getting an error
+
+         the steps to follow are:
+1) resource name, 2) resource type  3) AMI id,  4)AMI id region  5) the VPC  after which we run terraform, init/validate/plan/apply.
 
 1.28.47
 *************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
@@ -414,19 +441,29 @@ resourcev"aws_ instance" "project2ec2" {
 i want to create an ec2 instance , am creatin it by----- using what is called a"  resource" block ............................................. 1:28:50
  the type : this is a resource type  :"aws_ instance"  ......  am creating an aws ec2 instance , bc my provider is aws 
 
-                                RESOURCE NAME (Known to terraform)
-the name: this is the resource name, the name that trfrm wil knw  ... : project2ec2" , the name that wil b captured in the state file, a name that is local to trfrm.
 
-                               RESOURCE TYPE (known to AWS)
+
+STEPS:
+resource "aws_
+
+1)                               RESOURCE TYPE (known to AWS)
 this is the name aws knows :  
 .......... "aws_ instance , the resource type known to aws but 
+
+
+2)                                RESOURCE NAME (Known to terraform)
+the name: this is the resource name, the name that trfrm wil knw  ... : project2ec2" , the name that wil b captured in the state file, a name that is local to trfrm.
+
+
 
 
  ************************WATCH THIS PART .****************************** 1:30:20
  AS we were talking abt creating an instance in aws console, Remember when we needed to launch an instance, we needed an ami n an instance type 
 
 1.31.05   
-to illustrate an example,  he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
+to illustrate an example,  
+3) AMI id
+he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
 resourcev"aws_ instance" "project2ec2" {
 ami =    ****************************
 instanc etype: "t2.micro" 
@@ -436,6 +473,7 @@ tags = {
 
 ***************now in my provider i v only passed 'aws" , i hv nt pass any credential and so the provider is goin to use the default credential bc it has to talk to aws
 also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure bt aws configure default region is US west2
+
 
 WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
 1)Terafrm init  ................initializing, .
@@ -466,30 +504,48 @@ and thats why we get the error
 although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
 
 
- **                 NEED TO PASS REGION IN THE PROVIDER
+ 4)               NEED TO PASS REGION IN THE PROVIDER
 to correct the error we will pass our region in the provider
 region="us-east-1"
 the region we pass wil overide the default region bt we ar stil uising d default credential.
-lets say we wnt to pass a profile (credential)  profile = "marie"   .... bc its the provider that nids to authenticate
+lets say we wnt to pass a profile (credential)     .... bc its the provider that nids to authenticate
+so we can pass a profile profile = "marie"  this profile marie doesnt exists.
 bc we v pass a profile , terfrm wil wnt to use the credentials that are identified within the profile
+ bt this profile marie doesnt exists.
 the profile i pass overides the default profile.
 
 *lets see hw terfrm wil handle that**************
-terfrm init ,, u can run it as many time 
-terfrm plan  ............... ERROR, profile marie nt found.............. 
-so we comment the profile "#"
-terfrm plan .................. sucessful
-terfrm apply ............ ERROR ... NO specified vpc, no default vpc for this user............................ 1:44:00 ......... WATCH
-whwat happens is that terfrm wil create it in d default vpc bc in my code i didnt specify ehrr i wnt to creaqte it 
+we hv given it the correct region
+1)terfrm init ,, u can run it as many times
+2)terrfrm validate
+it says the syntax is correct
+bc it just checks fo rthe syntax
+terfrm plan  ............... this is when it goes to aws to find out whether it can actually create the resource you want
+it queries the aws API
+ERROR, profile marie nt found.............. 
+FAILED to get shared config profile ..marie
+so bc i had passed a profile, this is the credentials that am teling terrafrm to use this credential
+ but the credential does not exist
+so terrafrm is giving me an error
+bc this profile overides the default profile....... 1.42.37
+so we can comment the profile "#"
+3)terfrm plan .................. sucessful
+4)terfrm apply ............ ERROR ... NO specified vpc, no default vpc for this user............................ 1:44:00 ......... WATCH
+
+
+
+  5)                            TROUBLESHOOTING/ NEED TO SPECIFY THE VPC
+bc i need to create an ec2 instance and i need to create it in a certain vpc and bc i ddint state which vpc or subnet i wnat to create the ec2 instance
+what happens is that terfrm wil create it in d default vpc bc in my code i didnt specify where i wnt to creaqte it 
 if i go to my vpc in us est1, Virginia, i v 4vpcs bt ders no default vpc, so bc der no default vpc i hv to specify whiv vpc i nid to create this
-n to specify i look at the subnet n pick n public vpc n copy the id of of d particular subnet n coopy the id 
+n to specify i look at the subnet n pick n public vpc n copy the id of of d particular subnet n copy the id 
 and in my code i pass the id , so v specified that i wnt the instance to b created in that subnet bt if i dnt pass it wil wnt to create it in a default vpc
-subnetid:*****************************, i can pass it as a sring bc dats wher i wnat to create my resources
+subnetid:*****************************, i can pass it as a string bc dats wher i wnat to create my resources
 terfrm plan
 now we can see the plan creating the instance 
 now we hv the instance id  and if u go to aws we see the TAG " FIRSTEC2" , Jst as the tag we indidcated in the code .............1:49:00
-*********bc i hv creadted this instancE using code, it means that i can do this 10times n i wil stil create the same instance 
-after the instance ahs been cretae it wil create a terfrm .tf state.... thisn is the  statefile
+*********bc i hv created this instancE using code, it means that i can do this 10times n i wil stil create the same instance 
+after the instance has been cretae it wil create a terfrm .tf state.... thisn is the statefile
 when u open it u wil see it has captured for you the steps, evrytin abt the instance its captured for u
 
 
@@ -511,41 +567,53 @@ when we write more code we see hw we v can use more commands bt the basic work f
                                   
 
 
+
 2:04:00                                  TERRAFORM CONFIGURATION LANGUAGE SYNTAX
     LANGUAGE SYNTAX
 how do we write trfrm conf file  .... ....... ?
 
- when we write trfrm cong file , trfrm has what is xcalled top level blocks
-blocks ar jsy representation of codes ,  hw we write code
+ when we write trfrm config file , trfrm has what is called top level blocks
+blocks ar jst representation of codes ,  hw we write code
 blocks can also be template 
 terfrm has 10 top levelin wich anytin u wnt to write or createv in trfrm wil fall under one of those blks
 terafrm use the top level blks whenever its provisioning infrastructure    ...... 2:12:40
 
-e.g 
- we hv a name : provider 
+2.06.30 e.g 
+1) PROVIDER BLOCK
+ we hv a name of what the blk is: eg,  provider 
 a certain label :aws 
-a blk wil always be btw this 2{}  which are a map 
-in the calibres {} is always a map ., this map are jst key bvalue pairs we ar pasing in der, 
+a blk wil always be btw this 2calibres{
+}  which are a map 
+in the calibres {} is always a map ., this map are jst key value pairs we ar pasing in der, 
+then nxt 
+2) RESOURCE BLOCK
 this is called a resoure block bc the block starts with the word: resource  .. resourcev"aws_ instance" "project2ec2"
-a resource blk wil v 2labels , 
-1) the resource type ( in aws we v dif resourcese.g vpc, inernt gatway,) bt all our resoure in aws wil start wit the keywrd aws_ (aws_vpc) bc its a
+a resource blk wil v 2labels , (resource type) and (resource name)
+i) the resource type ( in aws we v dif resourcese.g vpc, inernt gatway,) bt all our resoure in aws wil start wit the keywrd aws_ (aws_vpc) bc its a
 resource that is knw to aws , if i wnt t create a resource blk , d 1st tin is d resource type n once i v the ext installed ,i wil hv to 
-populate so i can selet frm the list of resources
-2) resource name  .... the name must be unique to terfrm bc its possibl ethat i can crate 2resource in the same vpc bt the name has to be diff ......... 2:08:
+populate so i can select frm the list of resources
+ii) resource name  .... the name must be unique to terfrm bc its possible that i can create 2resource in the same vpc bt the name has to be diff ......... 2:08:
 so the name has to b unique to trfrm so that it can identify d resources bc if the nmaes ar nt unique trf wil nt kn w hw to mg8 the dif resources
 bc the resource type will b d same in this case  hwer we are creating multiple resoure in the same vpc 
-e.g resource "aws_vpc"  nmae "my vpc" {
+e.g resource "aws_vpc"  name "my vpc" {
    resource "aws_vpc"  nmae "my_test_ vpc" {
 if u dnt dif it n run apply , trm frm wil indicate it as duplicate resouce
 so the name must be unique
 
+
+***mee                       DIFF BTW PROVIDER BLK & RESOURCE BLK
+                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name
+
+
+
+TEMPLATE
 blocks can also be template 
-terfrm has 10 top levelin wich anytin u wnt to write or createv in trfrm wil fall under one of those blks
+terfrm has 10 top level in which anytin u wnt to write or create in trfrm wil fall under one of those blks
 terafrm use the top level blks whenever its provisioning infrastructure    ...... 2:12:40
-a blk can also be smt like a template which has  a block type, (like a resource, providr, variable), it also has a block label (resource type) n block label(resource name)
-then below , inside the brcaket, we hv the block body ... thers idnetifiers & expression, indentifiers are also called argument
+a blk can also be smt like a template which has a block type, (like a resource, providr, variable), it also has a block label (resource type) n block label(resource name)
+then below , inside the bracket, we hv the block body ... thers idnetifiers & expression, indentifiers are also called argument
 arguments are parameters u pass inside of a resource like an AMI, instance type, subnet id , secrity grp,,   these are argument
-whne we craete an instanvce what we get out is called an attribute e.g ip address, instance id
+when we create an instance what we get out is called an attribute e.g ip address, instance id
 *************** so when you are defining your blocks to create your resource, we are pasing arguments inside the blocks but once the rsource hv been created we can get 
 atrribute out of it
 
