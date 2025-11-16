@@ -596,7 +596,7 @@ so the name must be unique
 
 
 ***mee                       DIFF BTW PROVIDER BLK & RESOURCE BLK
-                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name
+                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & Arguments
 
 
 
@@ -629,7 +629,9 @@ a blk can also be smt like a template which has a block type, (like a resource, 
 then below , inside the bracket, we hv the block body ... thers idnetifiers & expression, indentifiers are also called argument
 
 ARGUMENTS
-arguments are parameters u pass inside of a resource like an AMI, instance type, subnet id , secrity grp,,   these are argument
+They assign a value to a name. They appear within blocks
+arguments are parameters u pass inside of a resource **mee,blk) like an AMI, instance type, subnet id , secrity grp,,   these are argument
+arguments can be reQ or optional
 
 ATTRIBUTE
 when we create an instance what we get out is called an attribute e.g ip address, instance id
@@ -641,27 +643,56 @@ atrribute out of it
 SO HOW DO THESE BLOCKS WORKS >>>>>>>>>>>>  2:20   .................   CAN READUP
 so, a blk basically has a type 
 so each blk type defines hw many labels might fall
-ARGUMENTS will asign value to a name, tghey appeAR within a blk, arguments can be reQ or optional
+ARGUMENTS will asign value to a name, they appeAR within a blk, arguments can be reQ or optional
 e.g 
+                               REQ ARGUMENTS
 REQ arguments when creatin an instance : AMI id, intance type , he rest are optional, bc i can pass a security grp or nt the instance wil still be created bc it is optional
-e.g i wnt to crete an ec2 instance , in ur browser type aws_instance ..... it shows u terfrm 
+e.g i wnt to create an ec2 instance , in ur browser type aws_instance ..... it shows u terfrm 
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
 bc i want to create a resource called aws_instance , it brings u to the documentaion n we can also see data sources which we can use to query 
-we also seee arguments rEference: these are d tins we can pass in ur ec2 instance when ur creating n they are optional , so u can pass them or nt bt if ur ticket requires
-if the specification req u pass it, then u poass it as its written here in ur configuration
-we hv some arguments that are eithr bullions  that are either true or false , u hv to check out what ur refernece are
-apart frm that whe  u stroll down, we hv the attibute Reference   ..............2:23:50
-ARN , instance state
-so if u wnat to knw what u can get out of the reource ur createing , cm to the dodcumentation section
-theses are tins u can return out of ur resource
+2.22.00
+while looking at the documention/ the registry, it has selected the aws_instance
+aws_instance : this is what i can create  but if i want data about an AMi, i can use a data source called 'AwS ami, 
+Data sources : I can use a data source called AMi, it will fetch the data for the Ami & return to me
+
+
+                  ARGUMENTS REFERENCE
+ ***when u scroll down for this particular instance, it has Arguments reference
+we also see arguments rEference: these are d tins we can pass in ur ec2 instance when ur creating n they are optional , so u can pass them or nt bt if ur ticket requires
+if the specification req u pass it, then u pass it as its written here in ur configuration
+arguments means they go btw the 2{} calibres
+2.23.38    Arguments are key value pairs 
+we hv some arguments that are bullions that are either true or false , u hv to check out what ur refernece are
+
+
+
+                                    ATTRIBUTE REFERENCE
+2.25.40 theses are tins u can return out of ur resource after it has been created
+
+apart frm that when  u stroll down, we hv the attibute Reference   ..............2:23:50
+eg key name
+After my instance has created, i can get the ARN, i can return the ARN of the instance, this is an attribute
+i can return the instance state, the passwd data, private/public dns
+so if u wnat to knw what u can get out of the resource ur createing , cm to the documentation section
+
 we also hv 
 COMMENTS
 /*
 so this section terfrm doesnt see it what ever is written here
 */
 
-2:29  TERFRM SETTING 
+The Terraform language supports three different syntax for comments:
+The # begins a single-line comment, ending at the end of the line.
+// also begins a single-line comment, as an alternative to #.
+/* and */ are start and end delimiters for a comment that might span over multiple lines.
+The # single-line comment style is the default comment style and should be used in most cases. Automatic
+
+
+
+
+2:28.40      This is the first block           TERFRM SETTING 
 u can put a partivular version of terfrm u wnt ur code to run with
-~ we sue this symbol before the version
+~ we use this symbol before the version
 e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
 version is always in 3digits , major.minor.patch
 the fisrt didgit is the major 
@@ -684,9 +715,11 @@ after that we can aslo set our REQ providers  ..................................
 now when we talk abt backends we ill also see that if we config a whcih we ar calling a remote bk end we will be able to config it in this terfmrm setting blk
 
 
+
 PROVIDER BLOCK
 we can also set our credentials n our region
 If  u leave it open it will use the default
+
 
 RSOURCE BLK
 INStead of harding coding , we can create a variable n reference the variable in my resource , n so its flexible  .............................2:43:45
