@@ -376,7 +376,7 @@ provider plugin , inside  of this dir it wil create for u one file (terafrm lock
 
 
 
-2)TERAFRM VALALIDATE    ...... 1:25
+2)TERAFRM VALIDATE    ...... 1:25
 it wil validiate the config file in the respective dir to ensure they are syntically valid n  internally consistent
 U run this after terfrm init  and u will get success config is valid but if i miss the closing  bracket/calibres '}, it wil say "error" uncosed config block
 so bc d syntax is nt correct, i cant do anytin else until i correct it 
@@ -595,9 +595,22 @@ if u dnt dif it n run apply , trm frm wil indicate it as duplicate resouce
 so the name must be unique
 
 
-***mee                       DIFF BTW PROVIDER BLK & RESOURCE BLK
-                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & Arguments
+2.30.00
+PROVIDER BLOCK
+This is where you config ur provider blk
+its abt specifying what provider you want to get, right now we our provider is Aws
+Inside the provider blk we hv some arguments we can pass
+we can also pass our credentials n our region
+If  u leave it open it will use the default
+this is where we set our credentials & region
 
+
+
+ 
+
+***mee                       DIFF BTW PROVIDER BLK & RESOURCE BLK
+                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & we pass Arguments
+  2.40.40.... terraform block/setting block doesnt have any label
 
 
 
@@ -680,6 +693,7 @@ COMMENTS
 /*
 so this section terfrm doesnt see it what ever is written here
 */
+2.28.24   #AMis are region specify... this is just for the user to understand what am trying to do
 
 The Terraform language supports three different syntax for comments:
 The # begins a single-line comment, ending at the end of the line.
@@ -690,60 +704,117 @@ The # single-line comment style is the default comment style and should be used 
 
 
 
-2:28.40      This is the first block           TERFRM SETTING 
-u can put a partivular version of terfrm u wnt ur code to run with
+2:28.40      This is the first block           TERFRM SETTING   (2.40.25.... he later called it terrafrm block)
+        ***me contains 2 required versions: Terraform version & Provider version
+
+1) this sets the required version of terraform
+u can put a particular version of terfrm u wnt ur code to run with
+terraform {
+  required_version = "~> 1.0" #1.1.4/5/6/7   1.2/3/4/5 1.1.4/5/6/7
+
+terraform --version to know the terraform version
+
+                                                          TERRAFROM VERSION
+     ***meee***  Always constrain it to the minor version  "~>1.5", do not include the patch
+e.g    major.minor.patch
+           1.5.5 
+
+
 ~ we use this symbol before the version
-e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
+e.g "~>1.5"  .. this means that the version of trfrm or this code can run with any version, (again this is symetic versioning) any version like terfrm .5 wit any path version
 version is always in 3digits , major.minor.patch
 the fisrt didgit is the major 
 then minor 
 then patch
 e.g    major.minor.patch
            1.4.5 
-so   amyb every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
+so may b every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
 so it goes frm 1.4.5 to 1.4.6 , 1.4.7
-but lets say the update is a feature then it becomes 1.5.0 , then the patch wil reset to 0 
+but lets say the update is a feature 
+1.4.5 to 1.4.6 , 1.4.7 then it becomes 1.5.0 , then the patch wil reset to 0 
 bc if i update a miNor version the patch wil reset to 0
-what if i update a major version , if create a whole newv version of terfrm .... 2.0.0
+what if i update a major version , if create a whole newv version/binary of terfrm .... 2.0.0
 this is hw versioning works 
-**************** so when u are placing the rEQ version of terfrm, am constraing it such tha am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
+**************** so when u are placing the rEQ version of terfrm, am constraint it such thaT am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
 so this a more flexible way
-if u contrain it to a specificy version then  "~>1.5.6" it jst menas that if that particualr patch version comes up and its update dur code might easily break bc uve 
-constrained to a specify vesrion of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within th em they wil be c
-ompartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
-after that we can aslo set our REQ providers  ................................................2:38:00
-now when we talk abt backends we ill also see that if we config a whcih we ar calling a remote bk end we will be able to config it in this terfmrm setting blk
+but if u constrain it to a specific version then  "~>1.5.6" it jst means that if that particualr patch version comes up and its updated ur code might easily break bc uve 
+constrained to a specify version of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within this minor version they
+wil be compartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
+
+2) after that we can aslo set our REQ providers  ................................................2:38:00
+required_providers {
+    aws = {
+        source  = "hashicorp/aws"
+        version = "~> 3.0"
+i can constrain bc when we look at the versions of hashicorp/aws provider, the latest one is 5.24, but i have many other versions of that pluggin
+so if i want to constrain, so that it downloads a specific version of my provider then i have to constrain it by placing a req version of the aws provider
+but if i dnt pass the 2 required version it is always going to get the latest.
+so this is how we use the terraform setting block to set/constrain our providers
+you might have a code that requires aws version 3.2, the latest version of AWs right now is 5.2, but you might hv code that can only run with this provider pluggin that is 3.0
+so you would need to constrain it so that it the pluggin that is downmloaded is that particular version, if u dnt it will download the latest version which might break ur code
 
 
-
-PROVIDER BLOCK
-we can also set our credentials n our region
-If  u leave it open it will use the default
+                                        BACKEND
+now when we talk abt backends we ill also see that if we config a backend whcih we ar calling a remote backend we will be able to config it in this terfmrm setting blk
 
 
-RSOURCE BLK
+2.42.40
+VARIABLE BLOCK
 INStead of harding coding , we can create a variable n reference the variable in my resource , n so its flexible  .............................2:43:45
-then create a new file called variable.tf n copy n paste all the variables i created, 
-can also create a new file called provider.tf n paste the provider info and the terfrm setting blk info
-an my file called main wich only has my resource blk wich is referencing variables
-so what am doing is called refactoring , ie am breaking up my code so that its easily readable, so instasde of having evrytin on one file am refactoring my code , making 
-sure if i hv resourecss i jus t hv that on one file , if uwant to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
-wnt to deploy a t2micro, just go to the varaible file n cahnge it there n once u run the code its goin to read the variable n replace it.
-we wil also se the diff types of variables.
-when i created  a vroiable here, i passed a default value.
-default value means if no other is passed it is goin to fall bk on the value uve passed as default 
 
 
 ################# TO CREATE VARIABLE 
-We create the resource block with the  defaultvalues  (hardcoding)
-e.g resource AMi
-then we create the variable with type string and the default value 
-e.g variable AMi
+ eg variable for Ami
+then we create the variable with type string and the default value eg t2 medium
 then go bk to the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
 ie :  ami = var.myami
 
+we can also create a variable for instance type and also for subnet
 
 
+                            REFACTORING
+next 
+after creating all the variables above
+so i can go ahead to clean up my code bc all these are inside one file and its hard to read
+therefore
+i can create a new file called variable.tf (all files ends with .tf) n copy n paste all the variables i created in this seperate file, 
+can also create a new file called provider.tf n paste the provider info and the terfrm setting blk info
+and my file called main wich only has my resource blk wich is referencing variables
+so what am doing is called refactoring , ie am breaking up my code so that its easily readable, so instasde of having evrytin on one file am refactoring my code , making 
+sure if i hv resourecss i just hv that on one file , if u want to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
+wnt to deploy a t2micro, just go to the varaible file n change it there n once u run the code its goin to read the variable n replace it.
+This is how you use a variable block as an input
+we wil also se the diff types of variables.
+when i created  a variable here, i passed a default value.
+whats the purpose of a defualt value
+default value means if no other Value is passed it is goin to fall bk on the value you passed as a default
+
+
+
+OUTPUT VALUES BLK  ...2 :54:40
+we use the output blk to capture data or retrun an attribute
+if we wnt to get any attribute frm the instance type after its created then we are able to use the output blk to get it
+you create an output blk and check the documentTION TO SEE HW U REFERENCE it
+
+**************if u dnt wnat to type yes , each time you run terfrm apply then u can automate it
+terfrm apply -auto-approve
+especially when u run pipelines, u dnt wnt trfrm to stop, to interrupt , so that u enter yes to confrim, so u do auto approve
+
+************************** he SKIPPED LOCAL VALUE BLOKS
+
+DATA SOURCE 
+this has two labels
+then u can passs in filters
+we use it to get information or return inf from aws
+i can check the documentation to see how i can pass the data source n the arguments i can pass.
+this is basically hw we use data sources to query data
+
+**********************tomao we wil see hw we use data source to get AMI
+once u hv an understnding of this blk, this now understanding the syntax of hw trfrn conf files are written 
+THIS IS FOUNDATION , THe EBUILDING BLK , for u to b able to write trfrm congiguration u nid to understnd this blk , bc evry eil be basde on these 10 blks as we wil see
+
+clone the trfrm codes
+inital the dir
 
 
 
