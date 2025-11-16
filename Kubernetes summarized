@@ -34,10 +34,20 @@ container orchestration/MGT, Orchestrate means to arrange.
 
 
 
-*************************
+*************************    SUMMARY OUTLINE OF ALL THE KIBERNETES VIDEOS
 
+KUB 1/2 & 3/4.. is all about types of k8 cluster we can install, installing d multi node cluster, creating namespace, how applications are deployed ie usng
+pod as a object OR controller managers like RC, RS but we shudnt use pods bc of the short life cycle and inability to scale, also we hv the way we deploy 
+workload either using the imperative/command approach or declarative/manifest file approach.
+we have then the service discovery ; we have clusterip service & nodeport service.. clusterip is for internal comm within the same ns BUt to est comm from a
+diff ns we hee FQDN  while nodeport is for externall comm ie been able to
+comm into the cluster from outside , Then to use k8 to pull frm docker/private reg need to create secret login for dockerhub.
 
+KUB 3/4,5,6 & 7, We explored the diff k8 objects used for deployment, kub7 autoscaling, kub 8&9 deploy the legacy appl with nodeport service & mongodb with
+clusterip, deploy the mongodb with diff vol without & with pVC,
+******** i bliv all the remaining videos (KUB 9 TO 18) is about managing the k8 cluster...
 
+*******************************************************************************************************************************
 
 
  **** onLINE*** 
@@ -69,6 +79,8 @@ These categories are not mutually exclusive, and a Kubernetes cluster can exhibi
 multi-zonal cluster could be deployed in a cloud environment with a dual-stack networking configuration.
 **********************************************************************************************************
 
+
+
   SO FAR;
 I understand that in deploying an application that requires endusers to enter some information ,then the deployment requires 2 application & this is will
 involve 2steps
@@ -97,14 +109,12 @@ KUB 10&11
 we always need to maintain its state bc it captures data and we nid to ensure the data is stored and retrievable and vol concept in k8 is what
 we can use to achieve that process
 
-
 **online**
 A persistent volume is a storage resource in a cluster that has a lifecycle independent of any single pod. It provides persistent storage for stateful 
 applications, ensuring that data is not lost even if the pods using it are deleted or rescheduled. 
 Administrators provision persistent volumes, which can be backed by various types of physical storage like local drives or cloud-based systems. 
 
-
-  SCALING
+ SCALING
 based on how we seperately deployed the 2 application; ie the main application with a nodeport service & the mongo db application with a clusterip service
 i bliv we scale only the data base application, bc its the application concerned with inputing information to be stored, & thats why a piece of storage is
 attached which is associated with how much storage space it has & hw much is been consumed.
@@ -116,9 +126,10 @@ In kubernetes, its uses DNS resolution ie service discovery eg clusterip , nodep
 2)Docker uses just docker vol concept WHILE  kubernetes uses kubenretes vol concept with PVC
 3)In kubernetes we can scale using controler mangers & we can also auto scale using hPA/CAS/VPA BUT in docker swamp we can scale, for now nt sure we can autoscale
 
-
-
 **********************************************************************************************************************************************
+
+
+
 
 
 
@@ -147,6 +158,7 @@ ntwrks, vols, using the docker-compose file.
 ........docker resources/objects use to deploy applications:
   Dockerfiles/images/networks/volumes/docker-compose.yml/etc. but the docker compose file doesnt have the 'deployment strategy' so we didnt hv the option of 
 replicas
+
 
 
 DOCKER 1&2
@@ -186,6 +198,8 @@ with the global mode for e.g, if u v a cluster that has 14servers or 14 nodes(3m
 if u v a 14 node cluster n u want to deploy an appl using the global mode what wil happen is that a replica wil be created in each of this node 
 
 
+******WHILE
+
 KUB 1&2
 HOW WE DEPLOY APPLICATION IN K8
 ########### hw we deploy applictaions in k8 , which is a very key aspect when it comes to my understnading of k8, 
@@ -208,20 +222,20 @@ Manual scaling (Controller managers) OR Auto scaling the 'replica' using either 
 4) Kubernetes Service discovery objects:
    ClusterIP , NodePort, LoadBalancer, i bliv this comes with ELB, ExternalName, ingress, networkPolicy
 
-
-      
-
 *****************************************************************
+
+
 KUB 3&4*    POD
 in k8, the pod lifecycle is very short so if we ar going to deploy appl, we shud nt use pod
 We should not create pods directly to deploy applications.  **kub5**     lacks self-healing capacities
 If a node  goes down in which pods are running, Pods will not be rescheduled.
 We have to create pods using controllers which manages the POD life cycle.
 controllerManagers: ReplicationControllers , ReplicaSets, Deployments, DaemonSets
+******************************************
 
 
     **mee**  WHAT A MANIFEST FILE CONTAINS/DETAILS FOR EACH CONTROLLER MANAGER & OTHER K8 OBJECTS/CONCEPT
-1)**Mee*** therefore for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & in the RC section,
+1) for Rc, in the manifest file, kind will be 'rc' & we will also hv a template for pod inside the same manifest file & in the RC section,
 we have selectors & spec,for spec; we will indicate the number of replicas but if we dnt,it wil create 1 replica & if we need to create service, we wil also 
 have a template/section for service
 2)for RS, in the manifest file, kind will be 'rs' & in the replica set section, we have selectors & spec, for spec, we will indicate the number of replicas,
@@ -292,6 +306,7 @@ Configuration of NFS Server ( WE CAN USE ANSIBLE TO AUTOMATE THE PROCESS)
 
 35.00****kub 10&11  ....  so one deployment requires all of this 
 ********************************************************************
+
 
 
                    CONTROLLER MANAGERS eg RC,RS
@@ -405,9 +420,10 @@ video, hw all this tools connect to ecah other
 **************************************************************************************************************
 
 
-******if we dnt pass replica, its goin to create one...
+******if we dnt pass the number of replica we want, its goin to create one...
 
-*me*Docker is 'compose file' deploy with command 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed with command 'kubectl apply -f pod.yml'
+*me*Docker is 'compose file' deploy with this command: 'Docker compose up -d' WHILE kubernetes is 'manifest file' deployed it with this command: 'kubectl apply -f pod.yml'
+
 
 
                            TYPES OF OCHESTRATION TOOLS
