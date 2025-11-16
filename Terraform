@@ -1,0 +1,717 @@
+19:38   .......................... READUP SCRIPT
+Now we are being introduced to a tool called terraform : MEANING
+Iaac tool from Hashicorp
+its uses HCL- hashicorp configuration language- human readable
+HASHICORP is the vendor
+hashicorp has other several products, once is called packer, it can automatically create AMIs , u can customize ur AMI
+for security:1) vault, 2) boundary
+vault , it can give us dynamic credentials , it can go to AWS, get credentials for us and inject it into our pipeline.
+...
+terraform is platform agnostic: meaning, u can use it on linux , on windows, mac ox, its also cloud agnostic , meaning: u can run it on multiple cloud
+tereraform can create resource on multiple cloud,e.g aws , azure, alibaba, gcp, k8, helm
+34:50
+TERRaform is a third party application that is hosted/managed by hashicorp
+so b4 teraform interacts with aws it wil nid to be authenticated
+*************there are number of ways terraform allows u to pass credentials to it, credentials to interact with AWS
+
+
+
+
+***meeeee..... WHY YOU SHOULD USE TERRAFORM
+ Manually creating resources in aws does not allow consistency of the infastructure provisioned if the process needs to be repeated:
+when u login to AWS u choose the AMI (LINUS, macoS , ubuntu, windows, redhat etc) 
+my Ami is like my operatin sys u wnt the ec2 instance to be based on 
+then instance type e.g t2 micro, it specifies what your memory is and what your cpu is
+then the key pair n that is if you hv the intention to log into the instance bc you can lauch an instance without a key pair ********************************
+forb the netwrk, u can select the ntwrk the ec2 instance will be e.g the subnet , security grp , all these re optional
+u hv the option to configure the storage , vol, hw much ebs vol the instance wil hv when its launched
+all these are optional, 
+but we saw that one of the requirments when creating an instance is to select the AMI and also the instance type which mounts or maps hw many vpc or memory u wil hv on ur instance 
+once these 2 hv been selected you can then launch your instance.
+                              
+bt if i ask u in 2wks to create the same instance nxrt week , chnaces are you may nt remember the exact securty grp , or key that u used b4 
+so dis prosces of creatin a resource on the console is nr repeatalbe, thats why in the industry they want a sys that is repeatable, they wnt u to create infrsature that is always 
+consistent, an infrastrue that u can crate d same tin over n over again, cos if i hv a sysytem that is repeatble then its easy to manage.
+
+
+
+
+
+
+                             IAAC
+
+THIS BRINGS US TO THE PROCESS CALLED INFASTRUCTURE AS A CODE  6:17
+we ar not creating infrasture on the console but instead we ar creating infrasture as a code 
+when ever u hv anytin written in code format that process is repeatabe bc the code will reamain the same n evrytime u execute the code u get the same result e.g u hv a script to
+instal a jenkins server that script is repeatable bc as long as u run the script evrytime, it wil always provision the same thing evrytime,  that
+process is what is called infrasture as a code. 
+
+SO  as we start off this series of terraform going tru infastructure as a code some of the thins we ar going to be looking at as we do tonight just abt our introduction 
+wea re gouin to b focuing on a tool called terraform
+
+
+
+
+INTRODUTION TO TERRAFORM  ... 7:50
+Terraform is a tool that helps us build our infrasture in a code format so that we no ,longer nid to go on the console to provision our infrasture bnc we want 
+process to be repeatbel. so that 2wks/onths  frm now i can run the sam ecod3e n when i do that i can always provison the same resources. 
+so bc of that it enhnaces speed , enhances a process that is repaetalbe, over and over  n u get the same result just bc u ar using code.
+
+we wil look at the key concepts 
+definition, benefits, vendor, workflow, syntax  etc
+b4 we use terrform, we hv to install it
+
+********************************  READ UP THE POWER POINT SCRIPT******************************* 11: 30 
+INFRASTRUCTURE AS A CODE: CHARACTERISTICS
+
+1)managing and provisoning of infrsatruture using code instead of manually.
+so instaed of u going to the console to manage or provison infrasture , u can write a code n use the particular code to create infrastrure
+so intaed of creatuing ec2 instance in aws , we are able to wirte it  i bliv (ec2 instance ) n v terraform go to aws and create the same ec2 instance for us.
+this process is repeatable bc i can create 20 of the same ec2 instance and all of them wil be exactly the same bc they ar using the same code
+and that swhat infrasture as a code is 
+
+2)files that contain configurations are created n makes it easy to edit and distribute
+so we are goin to create this terraform files n bc we v created these files,its easy to distribute bc we can push theSE files in our SCM 
+
+3)****** helps avoid undocumented, ad-hoc  configuration changes 
+this means that if i hv an ec2 instance, i can easily go on the console n add a tag on the console, when i do dis its is called ad-hoc configuration changes,
+theses are changes that am editing manually but they are undocumented bc no one knws who changed the code , no one knws who added the tag ,so that is undocumented ad-hoc 
+configuration 
+but if am doing it tru code format then i can add the tag to my code n so its documented tht its me who made the changes bt also the chnages has be captured in code format 
+n so the process is documneted n visible to everyone to see.
+
+4)easy to version control
+5)you can create infrastruture in modular components , u are able to vv the codes in modules
+e.g i can v a vpc as a module, an ec2 instance as a moudle , s3 as a module sn be able to create all dis infrastruture as a module 
+
+6)gives you a template to follow for provisioning
+e.g ur boss ask u to create a vpc in north virginia,, may ders a vpc in california that was created u are able to look at the code , the requimrnet, how thay provision the
+vpc in carlifornia, so that gives u a template, u are able to copy that code or use it for a denmo, as an example of whjat u are creating , so that becomes a template
+thats the baeuty of writing code OR  creating infrasture IN code FormaT, IT GIVES U A TEMPLAte
+
+
+
+BENEFITS
+1)cost reduction
+u create it once 
+ie it reduces the time used to do the actual work
+2) reduces error
+b4 u depoy , u look n test the code 
+3) improves infastruture consistency
+even if u create 5vpcs , the parameter remains the same 
+4) eliminates configuratin drift
+if i v created an ec2instance based on some parameters i v passed in my code, those are the only attributes that wil be captured on my instance, i will nt hv anytin more
+than what is in the code, so i wont hv a lot of changes in my configuration,  so i wnt v a drift in the configuration bc evrytin i anticipated that my instance nids to hv 
+is been captured in the code.
+   24.00
+5) STATE MGT: terraform manages a state file, it creares a state file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
+evrytin that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
+ u can look at the file n knw the sate of ur infrasture
+6)it creates opeartor confidence bc  when u using terraform as an operator it gives u confidence,  once u hv all ur configuration file , terraform wil give u a plan 
+n as u cretae resources , terraform manges them for you, so it gives u confidence bc it shows u exactly what u have.
+
+
+
+                                        
+25:32
+                        2 FORMAT OF TERRAFORM CONFIGURATION FILES
+terra uses declarative syntax to describe ur infrastructure (iac n thne perists it in configuration files that can be shared, reviewed, edited, versoned, preservedn reused
+**************this means that we create a file thats ritten in HSC language, the file describes the infrasture, so u v a configration file that terraform wil use, it can 
+be in 2 format either : HCL langusge or JSON format which is machine readable.
+configuration files that use the HCL format must end wit . tf file extension for terrafrom to be able to read it , if nt terraform wont read it.
+while JSON File format must end with .tf.json file extenson.
+these aare the basic inf u nid regarding terraform .
+
+29:40
+
+************************************** Online............
+
+The "binary for Terraform" is the single, self-contained executable file that is the Terraform Command Line Interface (CLI). When you install Terraform, you are installing 
+this executable, which you then use to manage infrastructure as code by running commands like terraform apply. It is written in the Go programming language and is distributed
+as a pre-compiled package for various operating systems, such as Windows, macOS, and Linux. 
+Core functionality: The binary contains the core logic for Terraform, including its configuration language parser and the ability to interact with different cloud providers 
+through plugins.
+How to use it: You download the correct binary for your operating system, place it in a directory that is in your system's PATH, & then you can run Terraform commands directly
+from your terminal.
+Installation: You can install Terraform by downloading the official binary from HashiCorp's website or by using a package manager.
+Verification: It's good practice to verify the downloaded binary's checksum and signature to ensure it hasn't been tampered with.
+Plugins: While the CLI is a single binary, Terraform's functionality is extended through plugins. The CLI binary is responsible for downloading and managing these plugins 
+automatically when needed. 
+
+***********************************************************************************************
+
+
+
+
+       STEPS TO USE TERRAFORM 
+ 34.10                              Terraform installation script landmark website
+1) TERRAFORM INSTALLATON 
+its very easy to install.
+***i bliv we can use either of the 2 options to install terraform
+i) you can download the binary
+ii) you can use a package manager, which is the easiest way to do it
+choco or choco install terraform -y
+
+
+TO know if terrafrom has been installed in ur env, if u just type Terraform, it wil give u an output, listing many terraorm commands
+we can install terraform in our local env,  ie (mobaxterm)
+we can also install terraform on an ec2 instance,, ie create an instance using file to install terraform ....... 31:20
+either way once u type terfaorm in ur local env it shud give u the same output showing the list of commands
+
+NEXT:
+2)bc we will be writing codes, u need a code editor
+e.g vs code editor..... visual studio code
+
+
+
+
+                                 ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM
+38.00                 TERRaform is a third party application that is hosted/managed by hashicorp
+
+when u wnat to use terraform in ur env (wher wver ur env is)
+so u hv ur aws account, u nid terraform to create a resource for u in ur account
+so u  will nid to hv terraform binary, ie self-contained executable file that is the Terraform Command Line Interface (CLI), which is why we are downloading it, bt as we v it,
+we nid to give it specifications
+what do we wnt It do in aws, gcp, azure, we are giVing it specifications, wich is in the form of configuration files, we are writing files in our env using the terrafform
+workflow, we run the terraform workflow
+so b4 teraform interacts with aws it wil nid to be authenticated bc it is a 3rd party appl, for it to be auth , it wil rely on the inf that u as a user wil provide it with.
+
+*************there are number of ways terraform allows u to pass credentials to it, credentials to interact with AWS
+
+
+
+                      FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT
+ for me to be able to do anytin in aws i need to v permission/to be authenticated , e.g i nid  access key n secret key thaT auth  me to access the my secret n access key 
+actually nid to v permission to actually create an ec2 instance
+thats hw persmission works in aws
+so the same tin applies to terraform, it will need credentiaL that wil enable it to go to AWS and create a resource based on the specification that you have given it
+once its authenticated, it wil retrun for u a plan n say based on specification this is the paln , this is what we ar goin to do ,and once u apprv ethe plan , terraform wil
+go ahead n create ur resource n once that is done, it now has what is called a state file, and it wil keep a copy of ur file(state file) locally so that it wil show u 
+exactly what resources u hv, that will be captured on this file which is called a state file
+
+
+
+
+                                         HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM  ............44.30
+                        ****now we go to aws
+       firts , if u are trying to create resources in aws, u must hv an aws account, the same applies to GCP , or azure
+
+              
+In AWS, we need to generate security credentials in the console ie in AWS ..... security credentials  ***me, ie the acess & secret key 
+***meee, To configure AWS cli, which enables us/the user we created to manage our Aws resources in the command line shell ie remotely, eg in  mobaxterm, we need the
+security credentials, so first create iam user then the security credentials ( access & secret key)
+4i)  cREATE IAM USER
+so to do that, we go to the IAM user n create security credentials wher we create an access key    
+ WE all know we can easly go to IAM (Service as IAM ) and we can create n IAM user............................. 46:00
+(and add to admin grp ,when i click on Administrator access , - JSON  , ..... it has allow all actions on all resources), this is an admin permission
+
+
+
+                                       AWS CLI
+***online  
+The AWS Command Line Interface (AWS CLI) is an open-source tool that allows interaction with AWS services from the command line in your terminal. 
+It offers a unified interface to manage multiple AWS services and can be used to perform operations equivalent to those available in the AWS Management Console. 
+Here are the primary uses of the AWS CLI:
+Managing AWS services: You can control and configure various AWS services, such as Amazon EC2, S3, DynamoDB, IAM, and many more, directly from your command-line shell. 
+This includes tasks like launching instances, creating S3 buckets, managing users and permissions, and configuring network settings.
+Automation and scripting: The AWS CLI is essential for automating repetitive tasks and building scripts for more complex operations. You can integrate AWS CLI commands into
+shell scripts (Bash, PowerShell) to streamline workflows, deploy resources, and manage infrastructure programmatically.
+Faster operations: For users familiar with command-line interfaces, the AWS CLI can often be quicker than navigating through the graphical user interface of the AWS Management 
+Console, especially for specific, well-defined tasks or when managing multiple resources.
+Cross-platform compatibility: The AWS CLI is available for various operating systems, including Linux, macOS, and Windows, allowing you to manage your AWS resources from your
+preferred environment.
+Advanced features and direct API access: The AWS CLI, particularly with the s3api commands for S3, provides direct access to the underlying AWS API operations, enabling 
+advanced configurations and fine-grained control over resources that might not be readily available in the console's high-level functionalities.
+*****************************************************************************************************************************
+
+
+
+
+  4ii)                      GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to Access AWS CLI )
+                   ***I Bliv the AWS CLI is like the interface that allows us run AWS commands so that we can manage our aws resources from the cli in eg mobaxterm
+to generate security credentials  for this user, click seceurity credentials 
+now  need  create access key (when creating, tick AWS cli , cos i wnt to use the credentials for my cli) n secret key
+now we v the acess key, copy it 
+this user has adminstrative access/credential
+
+next                              AWS CONFIG SETS THE CREDENTIAL & DEFAULT PROFILE
+4iii) SET THE CREDENTIAL    (aws config and pass the access & secret key)
+once u hv ur credentials   
+nxt we set the credentials n this is why we needed to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
+once u hv ur AWS cli, u wil need to configure,  run aws configure so that u set ur crednetial
+now i go to my aws cLI (mobaxterm) run aws configure ............51:00 
+it asks for the ke id n access key we copied , i paste it 
+ask for region, i leave it as default region
+now hv set my credentials
+                           i bliv he meant the sys already created .aws dir
+now when i cd into home cd ~/ .aws, it creates what is called a .aws dir in the home of the user
+thats why am using ~ , its the home , ders a dir called .aws
+now am in the config credentials
+
+                                    DEFAULT PROFILE
+so when i run aws config , i am setting credentials and in the credentials i hv set a default profile
+
+cat credentials , and i can see the default profile n i v an access key which i jst set n i hv a secet key which i jsudt set 
+noow this becomes my default profile  .......... 53:33
+
+also below we can see other multiple profiles:
+                              MULTIPLE PROFILES
+we can see there are multiple profile here , terraform user profile, ken profile, manager, mark ,,, i bliv he already created this users before he did this class video
+but when i run aws configure, just this command (aws configure) i am setting a default profile, 
+default means if nothing else is passed, if nothing else is available then terafrm wil alkwys fall bk on whwat has been set as the default.
+*****************************so once we v set our credebtials , how can we then pass this credentials???............ 54.54
+we can use teraform especially when we look at credentials; He opened a file in the tarrafrm repo called credentials, we can pass those credentails as a profile
+
+QUESTION3                          
+why do we v the multiple profiles?/
+
+ANSWER:
+when u run just aws configure you configure a defualt profile n each time u set a new default profile, it overrides the previous default profile
+but when u run aws configure --profile amaka , this wil create a name profile called amaka , bc you pass an option, we can also vi into the credentials file n add d secret, 
+acess keys n create a square bracket n put the nmae of the profile ......... 1:08
+                                WE CAN PASS A PROFILE 
+so when am runing my teraform, if i dnt want it to use my default credentials , i can pass a profile
+e.g i v a developer profile n it only has read ccessn and i wnt to tesT my code wit jst read access, so yes i can v and mg8 multiple accounts, u can send me a secrte key 
+frm ur account n i can create a profile here n anythin i do using ur profile, it wil be happening in ur account bc this credentials they also hv a mapping of the account
+they v permissions of the prticular account that supply the credential. bt if i switch to my default, its hapening in my account, dats hw we use profiles n we wil see hw we 
+can use diff profiles for our teraform runs.
+                                                  WE CANT CREATE A PROFILE ON AWS CONSOLE
+on the console, we can only create access n secret keys, we cant create profile on the console. bt when we wnt to configure our CLI env then we can then configure a profile
+like this to be able to call aws on our behalf. .............. 1:07
+just mk sure u hv set ur credential b4 u are able to use terraform.
+
+
+
+                                     HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS????
+for us to knw hw to use those credentials, we nid to knw the command basis n need to knw hw to write a teraform configuration so we know wher we can pass our credentials
+
+
+
+SOMEBODY QUESTION: 1)
+show us how to setup the CLI abi how to run aws configure, saw u are running directly frm ur macbk bt all along we hv been seting up the servers in aWS
+
+ANS REPLIED;
+ if u hv gitash/mbaxtem/vs code installed in ur envr run aws configure bc we wnt to config ur credentials, u config ur credntials in ur local envrn for security 
+reasson u, if ur using ec2 instances, u dnt configure static credentials in aws, if u are using ec2 instance, u create a role and attach to the instance bt ur nt using a
+key in ur instance bc if u set a key that is static, anybody who has access to ur instance that becomes a security issue
+so using ec2 instance, we instaed create a role n give permission to the role, we always attach roles to resources. bt in ur local env u hv ur aws cli configure.
+am showing that we can run terrform from our local env, we can write code in our local envn n mg8 resources in aws n 2mrw we ill see that we can instal teraform on an ec2
+instance n create a role, give permission to the role n the ec2instance wil perform action in aws on ur behalf
+
+
+
+QUESTION2                    Diff btw AWS CLI and TERRAFORM CLI
+WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
+ok since it can do that n terafrom can also do that so whats the diff btw the 2
+  .. ANS..
+WE can use aws CLI to provision resources in AWS bt AWS CLI is a tool that is native to aws bc i cant use it to provision resources in azure or gcp, thats bc its a cli just 
+for aws.
+the benefit that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
+thats why companies are adopting teraform as an iaac
+
+
+
+
+
+
+
+1.09.30
+                                       TERRAFORM COMMAND BASICS 
+
+                                    
+                                       TERRAFORM CONFIGURATION FILES
+its declarative in nature , must  with .tf   
+
+Terraform uses declarative syntax to describe your Infrastructure as Code (IaC) infrastructure and then persist it in configuration files that can be shared, reviewed, edited,
+versioned, preserved, and reused.
+Terraform configuration files can use either of two formats: Terraform domain-specific language (HashiCorp Configuration Language format [HCL]), which is the recommended approach,
+or JSON format if the files need to be machine-readable.
+Configuration files that use the HCL format end with the .tf file extension;
+Those using JSON format end with the .tf.json file extension.
+The Terraform format is human-readable, while the JSON format is machine readable
+
+
+
+B)TERRAFORM WORKFLOW
+whenever we are running terrafrm ther is a certain workflow that we hv to follow, it begins wit terrafrm init wich initializes our wrking dir n downloads our modules 
+and we need to ensure that we hv terfrm config files in our env for us to be able to intialize or doenload d apprioriate prorvider.
+includes a number of commands we run to inorder to create  a conf file
+the first command is terraform init 
+let say u v written ur configuration files , now u hv multiple conf files , the files are in the same dir , that dir is called ur terraform working dir
+
+
+the first command to enable terraform read the files is:
+
+1)terraform init              ****terfrm init ,, u can run it as many time 
+its used to initialize a working directory containing terraform config files.
+this is the 1st command that shud be run after writing a new conf file.
+it downloads providers n modules.  ........................................................1:15
+
+                      PROVIDERS
+what this means is that the when u go to terraform.io n look up registry , u see browse providers , browse module, policy librabries
+providers are what provides the service , e.g we can see aws, alibaba, gcp, etc, all these are providers that i can use wit terraform.
+providers are logical abstractions of an app stream API, they are responsible for understanding API interactions n exposing resources.
+therfore if am using terform n i want to create resources in aws, therfor i need an AWS provider, 
+it acts as an API, its what stands in btw terrfrm n ur aws to be able to interprete what terrafr intenDs to do in aws
+
+                                            INSTALL EXTENSION, IT HELPS TO AUTO COMPLETE
+********************so once u run terrafrm init, the first init what it does is it downloads the resource that u want to use
+if i wnt to create a resource in aws, i wil need tell to terfrm that my provider is aws but hw do i do that, ? it thefore means that i need a configuration file  .... 1:18 00
+if u v ur vscode n uv instaled an extension , when u go to extension n search harsicop/terraform , click the first one , this is an extension, once u v the extension, 
+it wil help u wit writing ur code for auto completion bcx  it knows what u intend to do, n u wil see this symbol symbolizing harsicop, dat shows your ext hv been installed.
+if i go bk to my files, if i create any file that ends wit .ttf , i wil see the terraform symbol, meaning this is a terafrm config file, inside the file  once i type provider,
+bc of the extention it wil auto complete it for me n i can pass my  provider eg AWS, We will talk abt all these..
+
+1:20:50                             
+
+provider "aws" {} , this 2 calibres means its a map, i can map key value pairs, i can put key value pairs inside, this hw we write/define a map,,.
+so inside of ur privder block, it is a map , i can map diff resources
+now if i go to my terminal n ls , i see the file
+now i can run terraforn init , inside it. ... its now going to do smt else
+it says it has initialized the backend 
+its initializing the provider pluggins 
+so bc i indicated aws as my provider, once i did terfm init , terfrm goes to the terfrm registry n looks for the provider i v stated , once it goes to that PARTICULAR 
+PROVIDER it download that particular pluggin n bc i didnt specify the version, it wil allways download the lastest version of ur plugin frm harscop, n once it downloads ur
+provider plugin , inside  of this dir it wil create for u one file (terafrm lock.hcl) n one dir ( a.terfrm dir)
+
+
+
+2)TERAFRM VALALIDATE    ...... 1:25
+it wil validiate the config file in the respective dir to ensure they are syntically valid n  internally consistent
+U run this after terfrm init  and u will get success config is valid but if i miss the closing  bracket/calibres '}, it wil say "error" uncosed config block
+so bc d syntax is nt correct, i cant do anytin else until i correct it 
+so terfrm validate ensures the syntax is corect
+
+3) TERAFRM PLAN
+creates an execution plan
+the best cause of action to follow/apply
+Terraform performs a refresh and determines what actions are necessary to achieve the desired state specified in the configuration files
+
+4) Terafrm apply : used to apply the changes to reach the desired state of the configuration
+by default scans the curent dir for d config n applies d changes appriopriately.
+the state file is created when apply is ran the first time
+
+5) terraform refresh
+Used to reconcile the state Terraform knows about (via its state file) with the real-world infrastructure
+Does not modify infrastructure, but does modify the state file
+terraform destroy
+
+6) Destroy the infrastructure and all resources
+Modifies both state and infrastructure
+terraform destroy -target can be used to destroy targeted resources
+terraform plan -destroy allows creation of destroy plan
+
+
+7) terraform import
+Helps import already-existing external resources, not managed by Terraform, into Terraform state and allow it to manage those resources
+Terraform is not able to auto-generate configurations for those imported modules, for now, and requires you to first write the resource definition in Terraform and then import this resource
+
+8) terraform taint
+Marks a Terraform-managed resource as tainted, forcing it to be destroyed and recreated on the next apply.
+Will not modify infrastructure, but does modify the state file in order to mark a resource as tainted. Infrastructure and state are changed in next apply.
+Can be used to taint a resource within a module
+
+9) terraform fmt
+Lints the code into a standard format
+
+10) terraform console
+Provides an interactive console for evaluating expressions.
+
+
+
+
+  eg                            CREATE AN AWS INSTANCE USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
+               ****objective is to see that we have to pass the 'region' where the AMI we got in AWS is found, in the provider to avoid getting an error
+
+         the steps to follow are:
+1) resource name, 2) resource type  3) AMI id,  4)AMI id region  5) the VPC  after which we run terraform, init/validate/plan/apply.
+
+1.28.47
+*************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
+resourcev"aws_ instance" "project2ec2" {
+i want to create an ec2 instance , am creatin it by----- using what is called a"  resource" block ............................................. 1:28:50
+ the type : this is a resource type  :"aws_ instance"  ......  am creating an aws ec2 instance , bc my provider is aws 
+
+
+
+STEPS:
+resource "aws_
+
+1)                               RESOURCE TYPE (known to AWS)
+this is the name aws knows :  
+.......... "aws_ instance , the resource type known to aws but 
+
+
+2)                                RESOURCE NAME (Known to terraform)
+the name: this is the resource name, the name that trfrm wil knw  ... : project2ec2" , the name that wil b captured in the state file, a name that is local to trfrm.
+
+
+
+
+ ************************WATCH THIS PART .****************************** 1:30:20
+ AS we were talking abt creating an instance in aws console, Remember when we needed to launch an instance, we needed an ami n an instance type 
+
+1.31.05   
+to illustrate an example,  
+3) AMI id
+he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
+resourcev"aws_ instance" "project2ec2" {
+ami =    ****************************
+instanc etype: "t2.micro" 
+
+tags = {
+ Name = "firstEC2"
+
+***************now in my provider i v only passed 'aws" , i hv nt pass any credential and so the provider is goin to use the default credential bc it has to talk to aws
+also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure bt aws configure default region is US west2
+
+
+WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
+1)Terafrm init  ................initializing, .
+bc it already downloaded the plugggings, it wont download it again
+2)terfrm validate  .............. valid, our AMI n instance type is valid 
+3)terafrm plan .... terfrm goes now to aws, using the credentials that are default bc i hvnt passed any credentials yet for my provider, it assumes i wnt to use d default 
+credentials 
+it goes to aws n now generates a plan 4 me  .......... saying terfrm wil perfrm the folowing action
+the plus sign means they are the things that will be added
+**so far the tins that are knw is our AMI, instance type.........evrytin else we do not knw, bt we wil knw them after d instance hv been created,
+terfm wil tel u "known after apply"
+remember this AMI belongs to US East1
+4)terafrm apply              1.37.25 ***it will first run the plan again/ regenerate the plan again for you & aks you to confirm 
+terrafrm apply basically shows you the plan of what terrafrm intends to do 
+so after you run apply and you confrim that this is what you intend to do so on the work flow  ... reading frm the 'command basis file' terfm plan creates an execution plan
+right now we dnt knw the state of our infastructure, we hvnt created an infastructure yet,  so we dnt hv a state file yet
+but once we run apply, we know what the state is, we knw we hv one ec2 instance created  and therfore, we will have a statefile to represent that.
+ 
+so when u run apply, it wil first run the plan again/it wil regenerate the plan again n ask u to confirm
+  . yes ...... n it stars creating the instance
+
+
+                  TROUBLESHOOTING
+************** bt we got an error ...............  ***** reason ...........??
+first we knw that AMI are region specific 
+we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
+and thats why we get the error
+although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
+
+
+ 4)               NEED TO PASS REGION IN THE PROVIDER
+to correct the error we will pass our region in the provider
+region="us-east-1"
+the region we pass wil overide the default region bt we ar stil uising d default credential.
+lets say we wnt to pass a profile (credential)     .... bc its the provider that nids to authenticate
+so we can pass a profile profile = "marie"  this profile marie doesnt exists.
+bc we v pass a profile , terfrm wil wnt to use the credentials that are identified within the profile
+ bt this profile marie doesnt exists.
+the profile i pass overides the default profile.
+
+*lets see hw terfrm wil handle that**************
+we hv given it the correct region
+1)terfrm init ,, u can run it as many times
+2)terrfrm validate
+it says the syntax is correct
+bc it just checks fo rthe syntax
+terfrm plan  ............... this is when it goes to aws to find out whether it can actually create the resource you want
+it queries the aws API
+ERROR, profile marie nt found.............. 
+FAILED to get shared config profile ..marie
+so bc i had passed a profile, this is the credentials that am teling terrafrm to use this credential
+ but the credential does not exist
+so terrafrm is giving me an error
+bc this profile overides the default profile....... 1.42.37
+so we can comment the profile "#"
+3)terfrm plan .................. sucessful
+4)terfrm apply ............ ERROR ... NO specified vpc, no default vpc for this user............................ 1:44:00 ......... WATCH
+
+
+
+  5)                            TROUBLESHOOTING/ NEED TO SPECIFY THE VPC
+bc i need to create an ec2 instance and i need to create it in a certain vpc and bc i ddint state which vpc or subnet i wnat to create the ec2 instance
+what happens is that terfrm wil create it in d default vpc bc in my code i didnt specify where i wnt to creaqte it 
+if i go to my vpc in us est1, Virginia, i v 4vpcs bt ders no default vpc, so bc der no default vpc i hv to specify whiv vpc i nid to create this
+n to specify i look at the subnet n pick n public vpc n copy the id of of d particular subnet n copy the id 
+and in my code i pass the id , so v specified that i wnt the instance to b created in that subnet bt if i dnt pass it wil wnt to create it in a default vpc
+subnetid:*****************************, i can pass it as a string bc dats wher i wnat to create my resources
+terfrm plan
+now we can see the plan creating the instance 
+now we hv the instance id  and if u go to aws we see the TAG " FIRSTEC2" , Jst as the tag we indidcated in the code .............1:49:00
+*********bc i hv created this instancE using code, it means that i can do this 10times n i wil stil create the same instance 
+after the instance has been cretae it wil create a terfrm .tf state.... thisn is the statefile
+when u open it u wil see it has captured for you the steps, evrytin abt the instance its captured for u
+
+
+5) tefrm destroy to terminate the resource  if no longer needed
+it will generate a plan
+we can see the plus sign has changed frm + to - 
+if i say yes,
+we can see it shutting down the instance in aws
+this is hw terfrm is able to mag8 ur resources.
+
+
+
+I SEE THE SCRIPT HAS A COMMAND THAT SAYS FORMAT 
+ANS:
+terfrm has a lot of commands , we wil seee hw we ll format our code
+what we did was a very basic code , we didnt nid to format the code 
+when we write more code we see hw we v can use more commands bt the basic work flow, init, validate, plan, apply, destroy 
+
+                                  
+
+
+
+
+
+
+2:04:00                                  TERRAFORM CONFIGURATION LANGUAGE SYNTAX
+    LANGUAGE SYNTAX
+how do we write trfrm conf file  .... ....... ?
+
+ when we write trfrm config file , trfrm has what is called top level blocks
+blocks ar jst representation of codes ,  hw we write code
+blocks can also be template 
+terfrm has 10 top levelin wich anytin u wnt to write or createv in trfrm wil fall under one of those blks
+terafrm use the top level blks whenever its provisioning infrastructure    ...... 2:12:40
+
+2.06.30 e.g 
+1) PROVIDER BLOCK
+ we hv a name of what the blk is: eg,  provider 
+a certain label :aws 
+a blk wil always be btw this 2calibres{
+}  which are a map 
+in the calibres {} is always a map ., this map are jst key value pairs we ar pasing in der, 
+then nxt 
+2) RESOURCE BLOCK
+this is called a resoure block bc the block starts with the word: resource  .. resourcev"aws_ instance" "project2ec2"
+a resource blk wil v 2labels , (resource type) and (resource name)
+i) the resource type ( in aws we v dif resourcese.g vpc, inernt gatway,) bt all our resoure in aws wil start wit the keywrd aws_ (aws_vpc) bc its a
+resource that is knw to aws , if i wnt t create a resource blk , d 1st tin is d resource type n once i v the ext installed ,i wil hv to 
+populate so i can select frm the list of resources
+ii) resource name  .... the name must be unique to terfrm bc its possible that i can create 2resource in the same vpc bt the name has to be diff ......... 2:08:
+so the name has to b unique to trfrm so that it can identify d resources bc if the nmaes ar nt unique trf wil nt kn w hw to mg8 the dif resources
+bc the resource type will b d same in this case  hwer we are creating multiple resoure in the same vpc 
+e.g resource "aws_vpc"  name "my vpc" {
+   resource "aws_vpc"  nmae "my_test_ vpc" {
+if u dnt dif it n run apply , trm frm wil indicate it as duplicate resouce
+so the name must be unique
+
+
+***mee                       DIFF BTW PROVIDER BLK & RESOURCE BLK
+                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name
+
+
+
+
+10 HIGH LEVEL BLOCKS
+
+we hv 10 high level blocks that tefrm defines
+1) terfrm settings blks > we pass the version of trm we wnt to use, it sets the required version of trfrm 
+2) provider blk: wher we specify our provider , if we wnt to specify our provider then we hv to use a provider blk
+3)resource blk : evrytin we create is cerated using a resource blk, resourecs are what are being created
+4)input varaibles blk: we are passing input into our resource , we wnt to modularize or make our code flexible thefore we use variable  , input in our resource
+5) output values blk : these gets the attribute out of the instance/resource
+6)local values blk:
+7)data sources blk: blks we use to query data, e.g now we nt to aws to find the AMI bt as engineers we can do this dynamically, i dnt hv to go to aws to copy the AMI, i can
+use the data blk, it wil dynmaically or automaticaly go into aws fetch the AMI n bring it bk to me so that i inject it inside my code. so as an engineer, u might find that 
+u may never log into aws  to find anytin cos if i need anytin i can use a data source, il hv the data source go to aws and get the info for me, so i may never log into aws 
+bc i hv everytin written as code
+8)modules blk: how i can arrange my code so i package it as a module
+9)moved blk: used if i need to migrtae resource frm one name to another
+10) import blk
+
+
+
+
+TEMPLATE
+blocks can also be template 
+terfrm has 10 top level in which anytin u wnt to write or create in trfrm wil fall under one of those blks
+terafrm use the top level blks whenever its provisioning infrastructure    ...... 2:12:40
+a blk can also be smt like a template which has a block type, (like a resource, providr, variable), it also has a block label (resource type) n block label(resource name)
+then below , inside the bracket, we hv the block body ... thers idnetifiers & expression, indentifiers are also called argument
+
+ARGUMENTS
+arguments are parameters u pass inside of a resource like an AMI, instance type, subnet id , secrity grp,,   these are argument
+
+ATTRIBUTE
+when we create an instance what we get out is called an attribute e.g ip address, instance id
+*************** so when you are defining your blocks to create your resource, we are pasing arguments inside the blocks but once the rsource hv been created we can get 
+atrribute out of it
+
+
+
+SO HOW DO THESE BLOCKS WORKS >>>>>>>>>>>>  2:20   .................   CAN READUP
+so, a blk basically has a type 
+so each blk type defines hw many labels might fall
+ARGUMENTS will asign value to a name, tghey appeAR within a blk, arguments can be reQ or optional
+e.g 
+REQ arguments when creatin an instance : AMI id, intance type , he rest are optional, bc i can pass a security grp or nt the instance wil still be created bc it is optional
+e.g i wnt to crete an ec2 instance , in ur browser type aws_instance ..... it shows u terfrm 
+bc i want to create a resource called aws_instance , it brings u to the documentaion n we can also see data sources which we can use to query 
+we also seee arguments rEference: these are d tins we can pass in ur ec2 instance when ur creating n they are optional , so u can pass them or nt bt if ur ticket requires
+if the specification req u pass it, then u poass it as its written here in ur configuration
+we hv some arguments that are eithr bullions  that are either true or false , u hv to check out what ur refernece are
+apart frm that whe  u stroll down, we hv the attibute Reference   ..............2:23:50
+ARN , instance state
+so if u wnat to knw what u can get out of the reource ur createing , cm to the dodcumentation section
+theses are tins u can return out of ur resource
+we also hv 
+COMMENTS
+/*
+so this section terfrm doesnt see it what ever is written here
+*/
+
+2:29  TERFRM SETTING 
+u can put a partivular version of terfrm u wnt ur code to run with
+~ we sue this symbol before the version
+e.g "~>1.5"  .. this means thst the version of trfrm or this code can run with any version, again this is symetic versioning any version like terfrm 1.5 wit any path version
+version is always in 3digits , major.minor.patch
+the fisrt didgit is the major 
+then minor 
+then patch
+e.g    major.minor.patch
+           1.4.5 
+so   amyb every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
+so it goes frm 1.4.5 to 1.4.6 , 1.4.7
+but lets say the update is a feature then it becomes 1.5.0 , then the patch wil reset to 0 
+bc if i update a miNor version the patch wil reset to 0
+what if i update a major version , if create a whole newv version of terfrm .... 2.0.0
+this is hw versioning works 
+**************** so when u are placing the rEQ version of terfrm, am constraing it such tha am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
+so this a more flexible way
+if u contrain it to a specificy version then  "~>1.5.6" it jst menas that if that particualr patch version comes up and its update dur code might easily break bc uve 
+constrained to a specify vesrion of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within th em they wil be c
+ompartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
+after that we can aslo set our REQ providers  ................................................2:38:00
+now when we talk abt backends we ill also see that if we config a whcih we ar calling a remote bk end we will be able to config it in this terfmrm setting blk
+
+
+PROVIDER BLOCK
+we can also set our credentials n our region
+If  u leave it open it will use the default
+
+RSOURCE BLK
+INStead of harding coding , we can create a variable n reference the variable in my resource , n so its flexible  .............................2:43:45
+then create a new file called variable.tf n copy n paste all the variables i created, 
+can also create a new file called provider.tf n paste the provider info and the terfrm setting blk info
+an my file called main wich only has my resource blk wich is referencing variables
+so what am doing is called refactoring , ie am breaking up my code so that its easily readable, so instasde of having evrytin on one file am refactoring my code , making 
+sure if i hv resourecss i jus t hv that on one file , if uwant to look at my variabl file u can look at the variable file n if u nid to change a variable e.g nxt time u 
+wnt to deploy a t2micro, just go to the varaible file n cahnge it there n once u run the code its goin to read the variable n replace it.
+we wil also se the diff types of variables.
+when i created  a vroiable here, i passed a default value.
+default value means if no other is passed it is goin to fall bk on the value uve passed as default 
+
+
+################# TO CREATE VARIABLE 
+We create the resource block with the  defaultvalues  (hardcoding)
+e.g resource AMi
+then we create the variable with type string and the default value 
+e.g variable AMi
+then go bk to the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
+ie :  ami = var.myami
+
+
+
+
+
+
+
