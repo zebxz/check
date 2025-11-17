@@ -433,7 +433,8 @@ Provides an interactive console for evaluating expressions.
                ****objective is to see that we have to pass the 'region' where the AMI we got in AWS is found, in the provider to avoid getting an error
 
          the steps to follow are:
-1) resource name, 2) resource type  3) AMI id,  4)AMI id region  5) the VPC  after which we run terraform, init/validate/plan/apply.
+1) Terraform version inside terraform setting blk 2) resource name, 3) resource type & REsource version 4) AMI id,  5)AMI id region  6) the VPC  after which we run terraform,
+init/validate/plan/apply.
 
 1.28.47
 *************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
@@ -725,9 +726,12 @@ but lets say the update is a feature
 bc if i update a miNor version the patch wil reset to 0
 what if i update a major version , if create a whole newv version/binary of terfrm .... 2.0.0
 this is hw versioning works 
+
+
+                                                 HOW TO USE VERSION
 **************** so when u are placing the rEQ version of terfrm, am constraint it such thaT am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
 so this a more flexible way
-but if u constrain it to a specific version then  "~>1.5.6" it jst means that if that particualr patch version comes up and its updated ur code might easily break bc uve 
+but if u constrain it to a specific version like  "~>1.5.6" it jst means that if that particualr patch version comes up and its updated ur code might easily break bc uve 
 constrained to a specify version of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within this minor version they
 wil be compartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
 
@@ -792,9 +796,20 @@ terfrm wil nt plan until i supply these value bc i commented out the variable, i
 
 
 OUTPUT VALUES BLK  ...2 :54:40
-we use the output blk to capture data or retrun an attribute
+eg 
+After creating an instance & i want to get the public ip, i can use an output blk
+output is a blk that you use to get smt out of a resource you created
+we use the output blk to capture data or return an attribute
 if we wnt to get any attribute frm the instance type after its created then we are able to use the output blk to get it
 you create an output blk and check the documentTION TO SEE HW U REFERENCE it
+the description is optional
+but you need to pass the value .. what value are you trying to get
+the value becomes an argument inside of your output
+  value       = aws_instance.inst1.public_ip
+so for the value; am referencing the instance type (.) the instance name. OR resource type (.) resouce name (.) the attribute 
+so it uses a dot (.) notation
+
+
 
 **************if u dnt wnat to type yes , each time you run terfrm apply then u can automate it
 terfrm apply -auto-approve
@@ -802,18 +817,32 @@ especially when u run pipelines, u dnt wnt trfrm to stop, to interrupt , so that
 
 ************************** he SKIPPED LOCAL VALUE BLOKS
 
+
 DATA SOURCE 
+it starts with the keyword; data
 this has two labels
 then u can passs in filters
 we use it to get information or return inf from aws
+eg  we want to get the id of the instance     ** i can also use the option of 'instances' if i want the id of the  multiple instances i created in aws
 i can check the documentation to see how i can pass the data source n the arguments i can pass.
+3.05.30  .. eg i went to aws & i created an instance on the console, i can use a data source to get the id 
+it will go to that region, read & return the id of that particular instance that is there
 this is basically hw we use data sources to query data
 
-**********************tomao we wil see hw we use data source to get AMI
-once u hv an understnding of this blk, this now understanding the syntax of hw trfrn conf files are written 
-THIS IS FOUNDATION , THe EBUILDING BLK , for u to b able to write trfrm congiguration u nid to understnd this blk , bc evry eil be basde on these 10 blks as we wil see
+**********************tomao we wil see hw we use data source to get AMI, modules , moved blks & input blocks & also local blk
+once u hv an understnding of this blocks, this now understanding the syntax of hw trfrn conf files are written 
+THIS IS the FOUNDATION , THe BUILDING BLK , for u to b able to write trfrm congiguration u nid to understnd this blk , bc evrytin wil be based on these 10 blks as we wil see
 
+
+
+3.12.10
 clone the trfrm codes
+once you hv your vscode setup, as long as you are able to get your terminal, that is all i wnat you to practice
+get your terminal & be able to create a dir right here, from your terminal cd into the dir and try to initialize the dir
+as long as you are able to that you are all set 
+frm tomorw we il see hw ur able to write terrafrm config files & been able to initialize and run terrafrm 
+but once u hv your terminal open on ur vs code, once you hv terafrm installed, just run terfrm on that particular terminal if it runs this ... terrafrm 
+the u hv terrfm installed , then run aws configured,& mk sure you hv your default credentials/profile configured , thats all you need to do for tonight
 inital the dir
 
 
@@ -821,25 +850,33 @@ QUESTION
 WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE
 IT just depends on the use case
 for u to be able to create anytin u must use a resource blk
-E.g, if u need an output , u hv to use an output blk
+but if u need an attribute , u hv to use an output blk bc ders no other way of getting it (eg public ip frm an instance) if you are using code, u hv to create an output blk
+when it comes to refactoring your code
 when u start to write code for prod env , u hv to refactor ur code, u hv to split up ur code  so that it is easily readable, if code is easily readable then its easy to 
-maintain. u mk use of variables, split it into multiple files so that anybody using ur code they can easily find what they are looking for.
+maintain. u hv to mk use of variables, split it into multiple files so that anybody using ur code they can easily find what they are looking for.
 ********if u nid to constrain ur version of trfrm then u hv to use the trfrm settting blk 
 
-QUESTION  ............... 3:22:00
-WHY DNT WE USE Mobarxterm
-vscode id called an IDE  ...integrated development , its gives an option to edit and run ur code, this is an integrated envr
-the disadvantage 
-in mobaxterm, i dnt hv the flexiblity of the auto complettion like i hv in vscode
-when u go into ur companies, in the market u wil be using IDES
-i personally use intellyG IDE
-SOME PEOPLE HV the IDE for their code  their terminal in mobaxterm for exmaple to run their code. just like me, as long a si can see my code here n run it frm my termial
 
-3:26:00
+3:20:00
+i tried installing the terrafrm on the powershell but its not working
+mk sure you hv choco installed
 ************to instal chololatey
 
 
+QUESTION  ............... 3:22:00
+WHY DNT WE USE Mobarxterm
+vscode id called an IDE  ...integrated development env , its gives an option to edit and run ur code, it has a tunnel, this is an integrated envr
+the disadvantage of mobaxterm, etc
+i can use the moboxterm but i cant edit 
+in mobaxterm, i dnt hv the flexiblity of the auto complettion like i hv in vscode
+when u go into ur companies, in the market u wil be using IDES
+there are many IDES
+i personally use intellyG IDE
+SOME PEOPLE HV the IDE for their code & their terminal in mobaxterm for exmaple to run their code. just like me, as long as i can see my code here n run it frm my termial
 
+
+
+3.25.30   ***PLS HELP US WITH THE PACKAGE TO INSTALL CHOcolatey on windows
 
 terfrm destroy, destroys our managed infrasture
 again as we go on wit the course u wil see that u can select specific infrastrue if u dnt want to destroy all our infrasture, u can pass on command line arguments to target specific resources that u want to destroy
