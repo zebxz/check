@@ -325,7 +325,7 @@ thats why companies are adopting teraform as an iaac
 
 
 1.09.30
-                                       TERRAFORM COMMAND BASICS 
+                                          TERRAFORM COMMAND BASICS 
 
                                     
                                        TERRAFORM CONFIGURATION FILES
@@ -341,7 +341,7 @@ The Terraform format is human-readable, while the JSON format is machine readabl
 
 
 
-B)TERRAFORM WORKFLOW
+                                                TERRAFORM WORKFLOW
 whenever we are running terrafrm ther is a certain workflow that we hv to follow, it begins wit terrafrm init wich initializes our wrking dir n downloads our modules 
 and we need to ensure that we hv terfrm config files in our env for us to be able to intialize or doenload d apprioriate prorvider.
 includes a number of commands we run to inorder to create  a conf file
@@ -355,6 +355,15 @@ the first command to enable terraform read the files is:
 its used to initialize a working directory containing terraform config files.
 this is the 1st command that shud be run after writing a new conf file.
 it downloads providers n modules.  ........................................................1:15
+Initializes a working directory containing Terraform configuration files.
+performs
+backend initialization
+storage for terraform state file.
+modules installation,
+downloaded from terraform registry to local path
+provider(s) plugins installation,
+the plugins are downloaded in the sub-directory of the present working directory at the path of .terraform/plugins
+
 
                       PROVIDERS
 what this means is that the when u go to terraform.io n look up registry , u see browse providers , browse module, policy librabries
@@ -462,7 +471,7 @@ the name: this is the resource name, the name that trfrm wil knw  ... : project2
  AS we were talking abt creating an instance in aws console, Remember when we needed to launch an instance, we needed an ami n an instance type 
 
 1.31.05   
-to illustrate an example,  
+
 3) AMI id
 he started to create an instance in aws n he copied the AMI ID and paste it in the terform file (it is the AMI ID of the instance type 
 resourcev"aws_ instance" "project2ec2" {
@@ -497,7 +506,7 @@ so when u run apply, it wil first run the plan again/it wil regenerate the plan 
   . yes ...... n it stars creating the instance
 
 
-                  TROUBLESHOOTING
+                  TROUBLESHOOTING (REGION Needed)
 ************** bt we got an error ...............  ***** reason ...........??
 first we knw that AMI are region specific 
 we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
@@ -604,6 +613,7 @@ so the name must be unique
 
 ***mee                       DIFF BTW PROVIDER BLK & RESOURCE BLK
                    A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & Arguments
+  2.40.40.... terraform block/setting block doesnt have any label
 
 
 
@@ -695,7 +705,7 @@ The # single-line comment style is the default comment style and should be used 
 
 
 
-2:28.40      This is the first block           TERFRM SETTING   (2.40.25.... he later called it terrafrm block)
+2:28.40      This is the first block           TERFRM SETTING BLOCK  (2.40.25.... he later called it terrafrm block)
         ***me contains 2 required versions: Terraform version & Provider version
 
 1) this sets the required version of terraform
