@@ -605,6 +605,19 @@ so to do that, we go to the IAM user n create seceurity credentials wher we crea
 
 
 
+SOMEBODY QUESTION: 1)
+show us how to setup the CLI abi how to run aws configure, saw u are running directly frm ur macbk bt all along we hv been seting up the servers in aWS
+
+ANS REPLIED;
+ if u hv gitash/mbaxtem/vs code installed in ur envr run aws configure bc we wnt to config ur credentials, u config ur credntials in ur local envrn for security 
+reasson u, if ur using ec2 instances, u dnt configure static credentials in aws, if u are using ec2 instance, u create a role and attach to the instance bt ur nt using a
+key in ur instance bc if u set a key that is static, anybody who has access to ur instance that becomes a security issue
+so using ec2 instance, we instaed create a role n give permission to the role, we always attach roles to resources. bt in ur local env u hv ur aws cli configure.
+am showing that we can run terrform from our local env, we can write code in our local envn n mg8 resources in aws n 2mrw we ill see that we can instal teraform on an ec2
+instance n create a role, give permission to the role n the ec2instance wil perform action in aws on ur behalf
+
+
+
 QUESTION2                    Diff btw AWS CLI and TERRAFORM CLI
 WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
 ok since it can do that n terafrom can also do that so whats the diff btw the 2
@@ -643,18 +656,6 @@ INTERVIEW QUESTION:
 what is the purpose of terraform init/ when do we run it?
 it is the first command  we run to intialize our working dir and also to download our provider pluggings n also our modules.
 
-
-
-
-
-QUESTION2                    Diff btw AWS CLI and TERRAFORM CLI
-WE V INSTALL the aws cli n now can the aws provision resources in aws? ........... yes 
-ok since it can do that n terafrom can also do that so whats the diff btw the 2
-  .. ANS..
-WE can use aws CLI to provision resources in AWS bt AWS CLI is a tool that is native to aws bc i cant use it to provision resources in azure or gcp, thats bc its a cli just 
-for aws.
-the benefit that terrform brings is that its cloud agnostic , i can use terraform in aws, gcp, azure, k8 ... etc
-thats why companies are adopting teraform as an iaac
 
 
 INTERVIEW QUESTION:
