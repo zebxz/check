@@ -1,18 +1,66 @@
 ************ version dertermines the syntax
 
 WE CAN CREATE MODULE FOR VPC , USING VARIABLES TO MODULELARIZE MY CODE, TYPES OF VRAIABLES ,HOW DO U ACCESS VALUES IN A LIST, HOW TO REFERENCE VALUES IN A MAP, PASSING
-VARIABLES AS A FILE  , terraform.tfvars , auto files  , QUESTION :terfrm init -upgrade. , MOVED  BLOCK
+VARIABLES AS A FILE, terraform.tfvars, auto files, QUESTION :terfrm init -upgrade, MOVED  BLOCK
+
+
 
 
 ###in summary ill say we created a data source and then used modules to make it flexible then using variables to modulerize the code , declaring a variable of type map, and
 then using a variable file, 
 
 
-/whenever you are installing a package, you have to make sur eyou an adminstrator or it wont allow you
+               TROUBLESHOOT INSTALLATION
 
-depending on ther version am running the version dert the syntax, though most of them are backward compartibkle, it wii jst give u warning that this has been depricated,u 
+Alexander was able to install it he sent the link in the chat /whenever you are installing a package, you have to make sure you an adminstrator or it wont allow you
+1.50 ...youtube how to install terraform
+another person said she couldnt unzip it
+
+5.20 ... how she did her own using the link he sent , she had to closed the vscode & open it again after installing it on powershell
+6.00 proff.. that is true, when you install a package on a certain terminal especially powershell, you need to close the terminal & reopen it
+if u had your vscode the terminal running and you installed on powershell, u configure it so for it to be recognize on vscode u nid to open anoda terminal or close that 
+terminal & reopen the terminal & once u do that it is going to pick up the path bc u already hv a terminal thats opens, so u just nid to close the terminal, close vscode & 
+reopen it.
+
+8.15
+i downlaoded & extracted & create the path , but cudnt create terminal... terrafrm is still not working
+
+  11.40 *** ALEXANDER said hes is also not working...
+   i installed terrafrm on the terminal bt when i try to run terrafm init, it says the dir has no terfrm configuration files
+so thats where i get stucked...
+
+12.15 prof.. the system does nt lie if it says you dnt hv configuration files then you dnt have the file
+the system is only reporting to you that in the dir there is no configuration file
+
+ 13.20 illustrationL:
+ created a dir called project
+cd ... takes us bk to the home where we see all the directories
+cd/ project 
+terraform init 
+terrafrm initialized in a empty directory, the dir has no configuration files
+the system is only reporting to you that in the dir there is no configuration file
+then he created a file ... test.sh
+terraform init 
+   but we still got terrafrm initialized in a empty directory, the dir has no configuration files
+    **** we still get error bc the file he created is nt .tf 
+ he then created a file .. test.tf
+terafrm read a .tf file but this file doesnt hv any content, it doeesnt hv any plugin bc terfrm doesnt knw wich puggin to download, so its just reporting that 
+ its Initializing the backend
+initializing provider pluggins
+ terrafrm has been successfully initiated
+
+
+          we will see what a bcakend is                   
+16.40   whereev terrafrm operations is going to happen which is basically a local bc it will downlaod the terfrm file here, bt we dnt see any pluggins that hv been downloaded bc
+terfrm doesnt know what pluggins/provider we need to use, so for me to do that i will apssa aprovider blk and am saying i want aws as my provider
+
+ 18.20 let me initiaize terrafrm , once i do that ...
+
+depending on the version am running the version determine the syntax, though most of them are backward compartible, it wii jst give u warning that this has been depricated,u 
 nid to upgrade when it cms to prod u nid to constrin ur version of terfrm so ur code doesnt break
 the syntax of code that was written 5years ago will be dif frm code 
+
+
 
 INTERVIW QUESTION   ................. 54:44
 terrfrm setting blocks 
@@ -22,7 +70,7 @@ the ryt version of trfrm (ver 9), the ryt plugin bc am constraining it  bt if i 
 n when that happens my code may nt be comparible n it wil break n give me error 
 so thats how we use terfrm setting block
 
- when we dnt pass credential we say its goin to use a default prorfile
+ when we dnt pass credential we say its goin to use a default profile
 
 RESOURCE BLK
 we use a resource blk to create anytin we want to create
