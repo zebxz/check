@@ -98,26 +98,71 @@ but if u feel that you want the the latest version then unstall what u hv & rein
 
            **proff will send how to use vscode video
 
- 48.10  class starts
-
-     49.00
-
-
-depending on the version am running the version determine the syntax, though most of them are backward compartible, it wii jst give u warning that this has been depricated,u 
-nid to upgrade when it cms to prod u nid to constrin ur version of terfrm so ur code doesnt break
-the syntax of code that was written 5years ago will be dif frm code 
 
 
 
-INTERVIW QUESTION   ................. 54:44
-terrfrm setting blocks 
- e.g 
-if the code is running in produ n terfrm version is version 1.0, then i nid to constrain the ccode to 0.9 so that my code wil stil run .if i run trfrm init it wil download
-the ryt version of trfrm (ver 9), the ryt plugin bc am constraining it  bt if i leave it open , if i dnt pass the version then init will always download the current version
+
+ 48.10                             CLASS STARTS
+
+49.50 
+Terrrafrm init: initializes our working dir
+whenvere we are running terfrm init
+   terafrm configuration file has to be present in our environment for terrafrm to be able to intialize or download the appriopriate provider
+ 
+Terfrm APPly
+** desired state is determoned by my configuration file, if in the file i hv an ec2 instance that is t2 micro, then that is my desired state
+i desire to hv an ec2 instance that is t2 micro, so terafrm apply will mk changes so that reach the desired state, so that what ever u hv in the configuration file matches
+what is in the real word, matches what is in aws .
+
+51.50
+terrafrm destroy
+when we no longer our resources, if u want to destroy specify infrastructure
+as we go on u realise that you can pass on like cli arguments, you can pass them in the command line to target specific resources that you want to destroy
+
+
+
+            TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE
+          syntax of hw diff versions of terfrm configuration files were written cud be diff based on the version of terrafrm 
+
+                                  INTERVIW QUESTION   ................. 54:44
+HOW DO YOU USE terrfrm setting blocks ( U SHUD BE ABLE to discuss this things abt setting ur rEq version & REQ provider version)
+
+52.00
+We also looked at the language syntax 
+we started by saying terfm has 10 top setting blks
+Depending on the terrafrm version that am running in my env, when i try to run my terfrm code based on hw the configuration files hv been written, bc of the version of terfrm
+am running in my env it may give me errors bc the syntax of hw diff versions of terfrm configuration files were written cud be diff based on the version of terrafrm 
+so if am running the latest version, it may support passing of arguments but mayb the earlier version didnt support this 
+so depending on the version am running, it determines like the syntax, though most of them hv backward compartible, it wil jst give u warning that this has been depricated,
+or u nid to update oru nid to upgrade, 
+
+                                                 IN PRODUCTION 
+but when it cms to prod u nid to constrain ur versions of terfrm so ur code doesnt break
+eg we hv a code/project that was written 5/6 yrs ago, when terfm was verson 0.9 
+when you look at the code syntax, it will look a little diff, if the code is running in prod then i nid to constrain the version of terfrm to 0.9 so that my code will stil run
+if i run terfrm init, it will downlaod the ryt version of terfrm/the pluggin bc am constraining. 
+bt if i leave it open , if i dnt pass the version then init will always download the current version
 n when that happens my code may nt be comparible n it wil break n give me error 
 so thats how we use terfrm setting block
 
- when we dnt pass credential we say its goin to use a default profile
+
+for eg, this illustration ;for aws
+     source  = "hashicorp/aws"
+        version = "~> 3.0"
+
+am constraining it to 3.0 but the latest version is about 5.o
+but bc am constraining it, it will go and look for a an aws plugging/provider that is version 3.0
+
+
+
+
+
+
+56.24
+
+
+    when we dnt pass credential we say its goin to use a default profile
+
 
 RESOURCE BLK
 we use a resource blk to create anytin we want to create
