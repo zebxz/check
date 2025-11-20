@@ -318,6 +318,10 @@ the first command to enable terraform read the files is:
 1)terraform init              ****terfrm init ,, u can run it as many time 
 its used to initialize a working directory containing terraform config files.
 this is the 1st command that shud be run after writing a new conf file.
+TERFRM2 49.50
+whenvere we are running terfrm init
+   terafrm configuration file has to be present in our environment for terrafrm to be able to intialize or download the appriopriate provider
+
 it downloads providers n modules.  ........................................................1:15
 Initializes a working directory containing Terraform configuration files.
 performs
@@ -372,6 +376,11 @@ Terraform performs a refresh and determines what actions are necessary to achiev
 4) Terafrm apply : used to apply the changes to reach the desired state of the configuration
 by default scans the curent dir for d config n applies d changes appriopriately.
 the state file is created when apply is ran the first time
+ trfrm 2
+** desired state is determoned by my configuration file, if in the file i hv an ec2 instance that is t2 micro, then that is my desired state
+i desire to hv an ec2 instance that is t2 micro, so terafrm apply will mk changes so that reach the desired state, so that what ever u hv in the configuration file matches
+what is in the real word, matches what is in aws .
+
 
 5) terraform refresh
 Used to reconcile the state Terraform knows about (via its state file) with the real-world infrastructure
