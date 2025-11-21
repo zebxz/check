@@ -1,0 +1,184 @@
+Govardhana miriyala kannaiah        .. liked by Chinwe Ekeh
+
+DevOps Roadmap
+
+Step 1: Learn Linux and Networking Fundamentals
+Step 2: Learn Bash / Python / Go Scripting
+Step 3: Learn Git + CI/CD (Jenkins, GitHub Actions)
+Step 4: Learn Containers (Docker, ContainerD)
+Step 5: Learn Configuration Management (Ansible)
+Step 6: Breathe
+Step 7: Learn Cloud Platforms (AWS / Azure / GCP)
+Step 8: Learn IaC (Terraform / Pulumi / Opentofu)
+Step 9: Learn Kubernetes (Pods, Services, Deployments....)
+Step 10: Build 
+
+You will make something and it’s called money learning this!
+
+
+
+
+
+Temitayo Charles Akinniranye      ... like by chinwe ekeh
+
+At work, our new client had a straightforward request: “A delivery workflow that keeps development fast, keeps operations predictable, and keeps the platform aligned with
+modern engineering standards”. 
+
+Our job was to translate that into something concrete and dependable end to end. We approached the work in seven stages, each linked to the next so the entire path from laptop
+to production remains consistent.
+
+1: Establishing the platform foundation
+We started by assembling the core components that every application would rely on. Certificate management, secret orchestration, configuration reloads, policy enforcement, 
+ingress routing, and a service mesh were all 
+put in place in a deliberate order so that trust, traffic, policy, and identity were available before workloads ever touched the cluster.
+
+2: Strengthening the developer workflow
+Before code leaves the workstation, pre-commit safeguards help catch credential mistakes. This is where guardrails begin: quick checks, fast feedback, no friction. Developers
+push code with confidence, and the pipeline takes over.
+
+3: CI with depth, not noise
+Once a commit lands, a full suite of checks runs automatically. Static analysis, IaC validation, dependency inspection, full test coverage, dynamic API probing, image 
+hardening, SBOM generation, signing, and vulnerability scanning. Each step contributes a different layer of assurance, and none of them require manual effort.
+
+4: GitOps as the deployment contract
+Our CI jobs update Helm values with new image revisions, open pull requests, and hand control to Git. Argo CD tracks the desired state, compares it with the cluster, and 
+performs progressive updates with automatic rollback when needed. Every change is versioned, reviewed, and observable.
+
+5: Runtime guardrails that work quietly in the background
+As workloads deploy, mesh sidecars provide identity and telemetry. Policies validate workloads against expected patterns. Secrets are pulled from the vault at deployment time,
+never stored in repositories. Config updates propagate automatically. These controls work continuously without adding overhead to the development team.
+
+6: Full observability from the start
+Metrics flow into Prometheus, mesh telemetry surfaces service interactions, logs are shipped to Loki, and Grafana ties it all together. Application metrics, cluster metrics, 
+traffic metrics, and error signals all exist in one place. Troubleshooting is fast because everything is correlated.
+
+7: Efficiency and cost visibility
+Resource analysis tools study how each workload behaves and produce right-sizing recommendations. Cost feedback loops make it clear where capacity is actually being spent. 
+The client now has a transparent view of consumption and can tune as the platform grows.
+
+Seeing this entire workflow come to life was rewarding. The client had a clear picture of what they needed, and we helped turn that vision into a platform that delivers 
+consistently and scales cleanly with their teams.
+
+
+
+
+
+
+
+
+
+vishakha sadhwani
+
+If you’re looking to get hands-on with cloud ~ you must try out these 5 projects
+(covers devops, data, and AI)
+
+1. Automate Application Delivery with CI/CD & GitOps
+Provision infrastructure using Terraform, then implement CI/CD for a K8s backed application.
+
+↳ Tools: Terraform, Docker, Kubernetes, Jenkins, Argo CD for GitOps.
+↳ YouTube Tutorial: https://lnkd.in/di82hhXt
+
+2. Building a Serverless Data Lake and Analytics Platform (Cloud/Data Focus)
+Implement a serverless data lake using AWS services like S3 for storage, Glue for data 
+cataloging and ETL, and Athena for querying
+↳ Tools: AWS S3, Lambda, Athena, Glue
+↳ Youtube: https://lnkd.in/ekAB2_zf
+
+3. Optimize Cloud Costs with Serverless Automation
+Implement serverless functions for automated cost optimization. Design and deploy event-driven cost management strategies.
+
+↳Tools: AWS Stack, S3, Lambda, EKS
+↳Youtube: https://lnkd.in/dSSjTqKM
+
+4. Implementing Observability for Cloud Applications (DevOps Focus)
+Set up monitoring, logging, and tracing to troubleshoot and scale cloud-native applications.
+
+↳ Tools: Prometheus, Grafana, EKS Cluster
+↳ YouTube: https://lnkd.in/e5nZCAA2
+
+5. End-to-End MLOps Pipeline with Vertex AI (DevOps/AI Focus)
+Automate ML workflows using Vertex AI Pipelines from training to deployment and monitoring.
+
+↳ Tools: Vertex AI Pipelines, Model Registry, Endpoints, Cloud Storage, Kubeflow SDK
+↳ YouTube: https://lnkd.in/eiHX-wNk
+↳ GitHub: https://lnkd.in/eXP8-FYt
+
+You know the drill.. projects help you gain experience, even if you’re a novice in this field. You break things, and you learn.
+
+**also don’t just highlight containers or tools. Show the full application lifecycle.
+
+Which one are you working on next?
+
+
+
+
+
+james kariuki
+
+Is CI/CD Becoming Outdated? The Shift to CI/PD Has Already Started
+A lot of engineering teams still believe that once they implement CI/CD, they’ve reached the “modern” software delivery standard. But the industry has moved forward, and there’s a major gap CI/CD no longer covers on its own.
+
+The problem is simple: deploying to production is not the same as releasing value to users.
+
+CI/CD: What Most Teams Do Today
+You build, test, and deploy automatically.
+ As soon as it hits production, every user gets the change.
+The risk is obvious. If there’s a problem, all users feel it instantly. Rollbacks become stressful, customer impact is high, and outages spread fast.
+
+CI/PD: Continuous Progressive Delivery
+This is the evolution of CI/CD. The idea is to separate deploying code from releasing features.
+Deploy code frequently, but release features carefully and in a controlled manner.
+With CI/PD you can:
+ • Roll out to a small percentage of users first
+ • Target specific user groups, internal teams, or premium users
+ • Use feature flags to enable or disable features without redeploying
+ • Run A/B tests and validate value before full rollout
+ • Reduce risk, gather data, and ship more confidently
+
+This is why modern engineering teams are adopting progressive delivery. It’s becoming a standard for safer, data-driven, user-aware releases.
+The Bottom Line
+CI/CD helps you deploy fast.
+ CI/PD helps you deploy fast, test safely, learn, and release intelligently.
+
+I’m currently working on a CI/PD project using Argo Rollouts, Istio, and Prometheus to enable automated progressive delivery and intelligent rollbacks based on real-time metrics. The results are promising, and it’s clear this model is the future of high-quality software delivery.
+
+If you haven’t started exploring CI/PD yet, now is the time. It’s not just about moving fast anymore  it’s about moving fast with control and confidence.
+
+
+
+
+manjunaath S 
+
+🚀 HOW WE MIGRATED 300+ VMs TO AWS WITH ZERO DOWNTIME
+
+Recently completed a large-scale VMware-to-AWS migration for a client. Here's what I achieved:
+
+📊 THE CHALLENGE:
+• 300+ virtual machines on aging VMware infrastructure
+• 24/7 operations requiring zero downtime
+• Strict security and compliance requirements
+• Limited migration window
+
+✅ THE SOLUTION:
+• Phased migration strategy using AWS Migration Hub
+• Implemented hybrid cloud architecture for seamless transition
+• Automated testing and validation at each phase
+• Built disaster recovery and rollback procedures
+
+🎯 THE RESULTS:
+✓ 300+ VMs migrated successfully
+✓ ZERO downtime during migration
+✓ 40% reduction in operational costs
+✓ 99.95% uptime SLA achieved
+✓ Enhanced security with AWS Security Hub & IAM
+
+🔧 TECH STACK:
+AWS (EC2, S3, VPC, CloudWatch), VMware vSphere 7.0, Terraform, CloudFormation, Python automation scripts
+
+💡 KEY LEARNINGS:
+1. Thorough pre-migration assessment is critical
+2. Automated testing saves time and reduces errors
+3. Communication with stakeholders prevents surprises
+4. Always have a rollback plan ready
+
+Are you planning a cloud migration? Let's discuss how I can help make it smooth and risk-free.
