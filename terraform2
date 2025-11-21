@@ -23,7 +23,7 @@ if u had your vscode the terminal running and you installed on powershell, u con
 terminal & reopen the terminal & once u do that it is going to pick up the path bc u already hv a terminal thats opens, so u just nid to close the terminal, close vscode & 
 reopen it.
 
-8.15
+8.15    Choco wasnt recognized, install wasnt recognized
 i downlaoded & extracted & create the path , but cudnt create terminal... terrafrm is still not working
 
   11.40 *** ALEXANDER said hes is also not working...
@@ -121,7 +121,8 @@ as we go on u realise that you can pass on like cli arguments, you can pass them
 
 
 
-            TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE
+
+                    TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE
           syntax of hw diff versions of terfrm configuration files were written cud be diff based on the version of terrafrm 
 
                                   INTERVIW QUESTION   ................. 54:44
@@ -155,19 +156,30 @@ but bc am constraining it, it will go and look for a an aws plugging/provider th
 
 
 
-
-
-
 56.24
-
-
+                      PROVIDER Blk
     when we dnt pass credential we say its goin to use a default profile
+its not necessary to pass a profile as default, if its using default profile, but if its using any other profile then u hv to pass the profile with the name
+also we can pass a region for my profile, & that overrides the region that i set when i did AWS configure
 
 
 RESOURCE BLK
-we use a resource blk to create anytin we want to create
-inorder nt to hardcode the values, we use variables
-and when we ar workin with modules, we see that we v given users the flexibility to pass in their own values
+we use a resource blk to create anytin we want to create any resource
+
+
+VARIABLE BLK
+THis is were we can pass out input into terfrm ,
+so instaed of hardcording values, like this  = "ami-0e5b6b6a9f3db6db8" , which is not reuseable & especially as we will be looking at modules
+hardcoding is not really reuseable bc i hv restricted you that you can only use this AMI , thefore the code is not flexible
+eg, only time you can use this Ami, if i had harded coded my instance as t2 micro, then it means that i  hv restricted that the instance can only use this AMi 
+with a t2 micro type
+but if i mk it flexible by using variables, am giving the user an option to change the varibale, cos a var is smt that can change
+if am using a variable/variable blk, then i can set it like this:
+variable "instance_type" {
+  default     = "t2.micro"    or medium or t3 large ...  whatevr i want , i can change it
+and when we ar workin with modules, we see that we v giving users the flexibility to pass in their own values
+  if i wnt to create a t3large, then i can pass it without affecting or going to modify my code bc all i need to modify is the variable which is an input variable
+
 
 OUTPUT VALUES BLK
 after our resource hs been create an d we wnt to get a n attribute out of the resource then we use an output blk
@@ -175,6 +187,7 @@ we hvc to configure an output, we hv to give it d value
 and the value of our output it uses dot (.) notation
 we hv to reference our (resource type.the resource name.the attribute) 
 e.g aws_instance.instl.public_ip       .... so this is referencing the resource that we interested in.
+
 
 LOCAL BLK  ..........1:09 
 local.name
