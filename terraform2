@@ -369,29 +369,40 @@ so this is hw we can dynamically use datasourec to provision our resources , we 
 d console  to knw wich region i am in bc we knw AMIs AR REGION SPECIFIC Bt if i use  adatasourec it go to what eber region its bein provision n it lways get the aMi fro , 
 AMInthat is specifuc to that ergion and am able to provison my instance
 
-**************** so tahts hw we use  dtata source and data blk
+**************** so thats hw we use  data source and data blk
 if ur asked to get a data source for a VPC , u wnt to get the VPC id , u can use a data source n build filters n it wil go to any particular region n it wil gett d id based
 on the filters u applied 
 
 
 
 
+
 blk 8: modules blk  ..................1:38:48
-modules our code very flexible
-  1) ************ HOW DO WE CREATE MODULES .......... ?/?????
-so we v the main general dir called terrsfrm master class33 and inside this dir
-lets say we hv a dir called test  , this is the dir that has my  tefrm config files 
-bc all my code is in inside this testb dir, so i can use this test dir 
-that is my module to create an ec2 instance bc all my code is packaged in der bt i can creat a neew file called main.tf
-then i can cm to this main (a file in the terrsfrm master class33 dir) and use the key word module
+the key of working with terfrm as infrastructure as a code is the use of modules
+modules make our code very flexible
+
+
+                                    HOW DO WE CREATE MODULES .......... ?/?????
+step1
+      so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a dir called test  
+this is the dir that has my  tefrm config files 
+bc all my code is in inside this test dir, so i can use this test dir 
+so i can use the test dir as my module to create an ec2 instance bc all my code is packaged in der
+step2
+while am inside of the same dir as the test dir, i can create a neew file called main.tf
+then inside this main.tf, i can use the key word module
+
  mdoule " ec2" {     ************ ec2 is the module name
  source = "./test"         the argument that is reQ inside my module is the source, wher is d code/module coming frm ? what is the source of ur module?
-                               so i can sya that my source is this presnt dir bt inside of a dir called test
+                               so i can say that my source is this presnt dir bt inside of a dir called test
 
 to initialize this module i need to be outside the test dir but inside the overall dir terrsfrm master class33
-when i ls in the  terrsfrm master class33 dir, it is goin to see  all the dir and the main.tf file
-so ryt here when i run terfm init, it will see only the main.tf file , it isthe only tf file taht it ssees in this dir, bc its nt goin to read insid eof other directries
+when i ls in the  terrsfrm master class33 dir, 
+it is goin to see  all the dir and the main.tf file
+so ryt here when i run terfm init, it will see only the main.tf file , it isthe only tf file taht it sees in this dir, bc its nt goin to read inside of other directries
 when i run terfrm init, it first initialies the backend and then the moudeles
+
+
 
 ********************************INTERVIEW  QUETSIOM ************
 WHats the purpose of terfrm init???
@@ -399,7 +410,7 @@ firstly, it initializes the backend then
 it initilizies or downloads the modules
 thirdly, the provider
 
-******************* so wher is th emodules???
+                             WHERE IS THE MODULE 
 in the  terrsfrm master class33 dir , we see
  it has created a .terfrm dir and in the dir called modules and providers , cos when we ran terfrm init it downloaded modules and providers pluggins
 we open the module dir , we see it has a module.json file bt its pointin the source is the test dir , ie it sayin the module soure is in the test dir whic is wher our files
@@ -488,7 +499,9 @@ module "vpc" {
 so if i run terfrm plan, it now requires me to enter the value bc hv now mk the value required
 
 
-############## so this is hw we use variableas to modularizeor to make our code as flexible as possible 
+############## so this is hw we use variableas to modularize or to make our code as flexible as possible 
+ 
+
 
 
 QUESTION:  ..... ..........1:58             .... watch 2:06 
@@ -508,6 +521,7 @@ matches ,ders nothing to change or add
 bt if decide to add a like a tag on my vpc, it just means that am modifying my step ,wit that i can run trfrm init, trfrm plan, it sees ders a dif , it refrehes n statae n
 say its now going to modify the vpc , it just updates, it goes to the vpc n put this tag 
    ********** terfrm state list shows hw many resources i hv captured in my state file 
+
 
 
 2)    WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE 
@@ -584,8 +598,14 @@ now once i run trfrm plan , it will retuen my instance asa t2 micro
   ......... the is hw we reference values in a map using the key
 
 
+
+
 **********************  iNPUT Varibale
 declaring a variable but nt providing the default , thereby making it REQ
+
+
+
+
 
 
    OUTPUT  
