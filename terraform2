@@ -201,12 +201,15 @@ eg of attributes we could want is: Arn, public ip, id etc  therefore it will be 
 
 
 LOCAL BLK  ..........1:09 
-local.name
+15.00  local.name   eg as we see the example below: local.business
 we use local blk if we hv long names that we dnt want to repeat writing it in the code , we can define them in my locals blk and then just reference it in my code if this
 is smt that is repeatative bc i may hv concatenating variables  e.g the BD  value is the (variable "vpc_name" and variable "my_env ), so i can jst define a locals blk n just
 referencd it, so that makes my codes mangeable and easy to read bc hv done all my definitions in my local blk and am just referencing local
-so i can put as many values in the local as i want if its a long name i might use inside of my code and then i just reference local
+so i can put as many values in the local as i want if they are long names i might use inside of my code and then i just reference local
 this is hw we use a locals blk
+
+
+                                                          CREATING A LOCAL BLK
 
 
 resource "aws_vpc" "my_vpc" {
@@ -214,11 +217,11 @@ resource "aws_vpc" "my_vpc" {
 
    tags = {
       Name = var.vpc_name
-      Env = var.my_env
-      BD = $(Var.vpc_name)-$(var.my_env)    .... bc this is too long , iil rather reference the locals blk
-      BD = local.business       ... so am referencing this as jst a local, it is frm the locals blk but its a key called business n d value of this takes the whole value 
-     }                                     of this:  "$(var.vpc_name)"-"$(var.my_env)"  , n this value is read frm these variables (variable "vpc_name and variable "my_env)
-   }     BD , ie business division                                                                                  wich wil translate to "my-vpc"_"prod"
+      Env = var.my_env                                     BD is the value of var.vpc_name & var.my_env
+      BD = $(Var.vpc_name)-$(var.my_env)    if i want a business division (BD).... bc this is too long , iil rather define a locals blk, declare it & reference the locals blk
+1.10,40  BD = local.business  ... so am referencing this as jst a local, it is frm the locals blk but its a key called business n d value of this takes the whole value 
+     }                                     of this:  "$(var.vpc_name)"-"$(var.my_env)"  , but this value is read frm these variables (variable "vpc_name and variable "my_env)
+   }                                                                                 wich wil translate to "my-vpc"_"prod"
 
 variable "vpc_name" {
     type = string
@@ -237,6 +240,10 @@ bucket_business = local.business   ( i did this myself based on the github note)
 
 *********************** bc its a long name, i declare it in a locals blk 
 
+
+
+
+ DATA SOURCE
 ########vidoe 3   ########### 15:20 
  we use data sources to get info to return info for us frm an API, IF WE wnt 2 get info frm AWS, mayb frm a vpc, AN INSTANCE, a s3 bucket, this obj we wnt to get info abt,
 first it has to exist,   so if we hv an ec2 instance tht exists we are able to get info abt the instance ,  the id , public addres, its dns 
@@ -250,47 +257,110 @@ if we were  creating an instance, bc we hv a data source dat we are using, we ab
 . we knw that the AMI nids to b an id, so we ar using a data source as it reads data frm that particular AMI source, we wnt it to return an id n as it returns an id we are
 directin paasing it to d resource so d data source gets the infpoo n we pass it as an input to our resource n this is how we use data source to provision our resource 
 #################
-vide2 continues:
-BLK 7: DATA SOURCE     ...... 1:17:35     create a data source for an AMI , we wnt to return a certain AMI 
-first create n name the file and open it and startt56
-YOU start create a data source oR using a data blk with the keyword data, n data block needs 2 labels 
-        data "aws_ami" "amazon_linux" {
-          most_recent = true             .... we can check the date the ami was =created and req for the most recent ............1:21:01
-         owners = ["amazon"] 
 
+
+
+VIDEo 2
+1.17.00   BLK 7: DATA SOURCE
+A data ssource is what can go to AWs and fetch data from you
+
+
+
+
+                                              CREATING/BUILDING A DATA SOURCE TO GET An AMI 'ID'
+Ticket:
+i)Create data source to get an AMi id
+ii) use the data source to create an instance
+
+lets create a data source for an AMi
+ill create another file &call it data.tf
+
+     ...... 1:17:35     create a data source for an AMI , we wnt to return a certain AMI 
+first create n name the file and open it and startt56
+YOU start to create a data source oR using a data blk with the keyword data, n data block needs 2 labels 
+
+
+ 
+                                        HOW TO CHECK AMI ID  IN AMAZON
+1.18.50***** when we go to aws, and look at amis, we are looking at the public registry/ images
+we hv a lot of amis that are in the public registry, in this region , north virginia
+normally, if i want to create an ec2 instance with an amazon linux, normally iil launch the instance afterwhich i hv the amazon linux ami, 
+we can see the ami id, so i want to get the id
+if i copy the id and go bk to the ami catalogue, & paste it in the search, i just want to search for the ami, it will show me/return tha ami
+we see the name, the source, the owner, & the owner alias , its owned by aws, the platform is linux, the root device type is ebs 
+if u click on the ami id, it shows the attribute of the ami
+
+
+1) create the data source
+1.21.00
+        data "aws_ami" "amazon_linux" {   ...we want to return an amazon linux using the data so
+          most_recent = true             .... we can see the date the ami was =created and req for the most recent ............1:21:01
+         owners = ["amazon"]     we want the owner, its owned by amazon, its a list
+
+
+                                                    APPLY OTHER FILTERS eg name
+                                  we hv to put a filter name & a filter value
 
         filter {                  we wnt to filter the AMI bc when we are doing our search, it is goin to return all AMIs that ar owned by amazon n also d most recent
-           name= "name"                                                  so we ar goin to apply filters on the specific AMI that we wnt
-           values = ["al2023-ami-*-kernel-6.1-x86_64"]          ( we can remove the date n put* so it captures all the AMIs) dnt understand what he means
-                                                                       ***its bc we can use this smae data source to get diff AMIs  e.g wen we wnt toget AMI in a diff region
+           name= "name"         we are trying to filter by the AMI name               so we ar goin to apply filters on the specific AMI that we wnt
 
+
+                                     MAKING THE DATA SOURCE DYNAMIC SO THAT IT CAN GET AMIs FROM DIFF REGIONS
+         values = ["al2023-ami-*-kernel-6.1-x86_64"]          ( we can remove the date n put* so it catches all the AMIs)
+                                                                       ***its bc we can use this same data source to get diff AMIs  e.g wen we wnt toget AMI in a diff region
+       
           filter {
              name = "root-device-type"
-             values = ["ebs"] 
+             values = ["ebs"]            this is also a list
 
-when i run terfrm init and terfrm validtawe  and trfrm plna , it will reade the data source n return for me the AMi ID , 
+Ls   .. i see data.tf file
+when i run terfrm init, bc in my data source i hv referenced data_aws, therefore terfrm is sensitive enough to know that the plugging i desire to use is aws bc the data is
+calling aws
+
+
+                                           TROUBLESHOOTING
+and terfrm validate error  ... set of string required
+that means that everything needs to be a list , ie needs to be a list, bc its values
+     initially he used the name like this  "al2023-ami-*-kernel-6.1-x86_64" , then corrected it by adding the calibres ..  ["al2023-ami-*-kernel-6.1-x86_64"]
+and trfrm plan , it will read the data source n return for me the AMi ID , 
 it will run this filters and return an id of an AMI
+  successful.
+so using just the AMi name, "root-device-type", etc, the data source was able to get the ID of the AMI for us.. 
 
-********************how do i now use THIS ID  ????   ... remeber i hvnt gone to AWS to get this iD , hv jst used this data source
+
+
+1.32.20                                      HOW DO I NOW USE THIS ID  ????  
+              
+2) use the AMI ID, gotten above to create an instance
+... remeber i hvnt gone to AWS to get this iD , hv jst used this data source
 LETS SAY I want to create an ec2 instance 
-so i can cereate a resource
-
-  resource "aws_instance" "data_test" {
- ami= data.aws_ami.amazonlinux.id     (.id , bc we nid the id)         ****  instead of me hardcoding the AMI value , i am gon to get vit frm my data vsource
- instance_type = t2.micro                   how do i refernce the data source, attributes frm a data source/resource we alsways use d dot notattion
+so i can create a resource
 
 
-  *********** now when i run init, validtae and plan , it will run the data source , get the id and replace the id for the AMI 
-so i hv dynamically gone to aws n got the MAI and substitute it here
-bc of this i can use thsi data source to get my AMis dynamically
+                                         CREATE AN INSTANCE USING THE AM ID FROM THE DATA SOURCE
 
-this AMI belong to US west 2.,, bc thats my default region 
+  i)resource "aws_instance" "data_test" {        hes just calling it data_test ...meee ie the resource name
+    1.32.20  
+how do we reference the data source/attribute from a resource or data source, we always use the . notation
+ ii)ami= data.aws_ami.amazonlinux.id     (.id , bc we nid the id)         ****  instead of me hardcoding the AMI value , i am gon to get the ami frm my data vsource
+iii) instance_type = t2.micro                                                         so the id is the attribute i want from the data source
+
+  *********** now when i run init, validate and plan , it will run the data source , get the id and replace the id for the AMI 
+so i hv dynamically gone to aws n got the AMI and substitute it here ie in the plan we see 
+bc of this i can use this data source to get my AMis dynamically
+
+
+                         WE DIDNT PASS A REGION SO IT RETURNED AN AMI FROM OUR DEFAULT REGION 
+the AMI we got belong to US west 2.,, bc thats my default region 
+
+
+                       USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION WE STATED IN THE PROVIDER
 if i pass a provider bc in my code i dnt hv a proider n my provider is AWS and pass a region
 *******************  provider = "aws " {
                         region = "us-east-1"
 
-when i run trfrm plan , it wil return an AMI thats ends with 5369 bc of the region , it has used d filter to find the moist recent AMI in thta region bc theyb wil almhv dis filter
-similar name bt is just finding that AMi in d specoific region 
+when i run trfrm plan , it wil return an AMI thats ends with 5369 bc of the region , it has used d filter to find the moist recent AMI in thta region bc theyb wil al hv dis
+filter similar name bt is just finding that AMi in d specoific region 
 so if i change my region , i dnt hv to go on d console to do it, to find that AMi, so now i hv dynamically created it and it has returned for me this AMi and now creating it in 
 US east2
 *********************if i change my region to US west1, am jst changin my region bt i v my dtatsource
@@ -302,6 +372,8 @@ AMInthat is specifuc to that ergion and am able to provison my instance
 **************** so tahts hw we use  dtata source and data blk
 if ur asked to get a data source for a VPC , u wnt to get the VPC id , u can use a data source n build filters n it wil go to any particular region n it wil gett d id based
 on the filters u applied 
+
+
 
 
 blk 8: modules blk  ..................1:38:48
@@ -361,6 +433,8 @@ so i hv my code tacked away bt am calling them now as modules              .....
 
 ****************tk note i didnt run terfrm apply yet*********** I NOTED dis here myself bc l8r on someone aksed if  DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAN
 
+
+
 ############################### MAKING THE VARIABLE FLEXIBLE ***************************
 
 ******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it 
@@ -383,7 +457,9 @@ now i can run terafrm init and trfrm plan , initializes the backend and plan rea
 so am supplying the value of the cidr as the user  in the module and if i edited the vpc file 
 i dnt need to go bk to the  vpc module (main.tf in test dir) to change the values, bt in the vpc file am making evrrytin as required/ or as varibales bt when am calling the
 module , this is when am supplying the value bt i can equally mk it required so that am passing it as run time  ie comment it , bt if i dnt pass the value on the module 
- 
+
+
+
       ##################    USING VARIABLES TO MODULELARIZE MY CODE (when am making my varaiable required)..........................
 
 bt if i dnt pass the value module,1) it is goin to complain that this value is required
