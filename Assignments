@@ -1074,6 +1074,21 @@ Create an ec2 instance named "FirstEC2" in your default region.       ***meee, u
    meee ****objective is to see that we have to pass the AMI region in the provider to avoid getting an error
 Use the ami of an ubuntu instance.
 The instance size needs to be t2.micro
+then initialize, validtae, paln and apply
+
+   ***meee***
+ create a variable & use it to pass the Ami id 
+then initialize, validate, plan & apply.
+
+   **** solution 
+TO CREATE VARIABLE 
+ eg variable for Ami
+then we create the variable with type string and the default value eg t2 medium
+then go bk to the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
+ie :  ami = var.myami
+
+we can also create a variable for instance type and also for subnet
+
 
 b)vpc
 Create a new folder /directory called: vpc-02
@@ -1081,7 +1096,15 @@ Create a VPC named "FirstVPC"
 CIDR range : 192.168.0.0/24
 
 
+
+
+terfrm2
+
 3)  language syntax project 03
+***meee***   i want to do exactly what was done in class 
+Use an output block to get an AMI id,  & for a)ec2 ; create an instance named "FirstEC2", using a variable to pass the AMI id we got Frm the data source to the 
+resource blk
+
 a)ec2
 Create a new folder /directory called ec2-03 inside the Project-03 directory
 Create an ec2 instance named "FirstEC2" in your default region.
@@ -1090,13 +1113,19 @@ The instance size needs to be t2.micro
 Use variables to pass the ami, instance type and instance name to the resource block.
 Use an output block to get the public Ip address of the instance after creation.
 
+
 b)Create a directory called Project-03. Create a directory called vpc-03 inside Project-03.
 While in the vpc-03 directory, Create a VPC named "FirstVPC"
 CIDR range : 192.168.0.0/24
 Use variables to pass the cidr range and VPC name to the VPC resource.
 
 
-4) settings projects
+4) settings 
+project04
+Create an ec2 instance
+Use a script provided below to pass user data to the instance
+Attach an elastic IP to the instance
+
 
 5) variable and data source project
 
