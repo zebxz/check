@@ -459,8 +459,8 @@ tags = {
  Name = "firstEC2"
 
 ***************now in my provider i v only passed 'aws" , i hv nt pass any credential and so the provider is goin to use the default credential bc it has to talk to aws
-also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure bt aws configure default region is US west2, we got our AMI id frm
-US east1 N virginia, so we will get an error when we try to create it as illustrated below
+also i hvnt pased any region here so its going to use my region that i set in aws when i did aws configure & aws configure default region is US west2, bt we got our AMI id 
+frm US east1 N virginia, so we will get an error when we try to create it as illustrated below
 
 
 WATCH IT **********so lets see whats goin to happen  ............****************1:32:50
@@ -493,7 +493,7 @@ although when it ran the plan it says it was ok, it can execute it but apply is 
 
 
      4)           NEED TO PASS REGION IN THE PROVIDER
-to correct the error we will pass our region in the provider
+to correct the error we will pass our region in the provider  ie the region where we got the ami
 region="us-east-1"
 the region we pass wil overide the default region bt we ar stil uising d default credential.
 lets say we wnt to pass a profile (credential)     .... bc its the provider that nids to authenticate
