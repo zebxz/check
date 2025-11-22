@@ -383,12 +383,13 @@ modules make our code very flexible
 
 
                                     HOW DO WE CREATE MODULES .......... ?/?????
-step1
+stepA
       so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a dir called test  
 this is the dir that has my  tefrm config files 
 bc all my code is in inside this test dir, so i can use this test dir 
 so i can use the test dir as my module to create an ec2 instance bc all my code is packaged in der
-step2
+
+stepB
 while am inside of the same dir as the test dir, i can create a neew file called main.tf
 then inside this main.tf, i can use the key word module
 
@@ -412,29 +413,36 @@ thirdly, the provider
 
                              WHERE IS THE MODULE 
 in the  terrsfrm master class33 dir , we see
- it has created a .terfrm dir and in the dir called modules and providers , cos when we ran terfrm init it downloaded modules and providers pluggins
+ it has created a .terfrm dir and in the dir  thers a dir called modules and providers , cos when we ran terfrm init it downloaded modules and providers pluggins
 we open the module dir , we see it has a module.json file bt its pointin the source is the test dir , ie it sayin the module soure is in the test dir whic is wher our files
 are 
-*******now we run terfrm plan , we see itsd initilizing it fr m the module ec2 and its reading that particular datasoure n creating a resource bt its creating it as a module
-n its creatin an instance called data test which is part of our module.so this is hw we reuse values/code. 
+*******now we run terfrm plan , we see its initilizing it frm the module ec2 and its reading that particular datasoure n creating a resource bt its creating it as a module
+n its creatin an instance called 'data test' which is part of our module.so this is hw we reuse values/code. 
 
 we can apckage our code , create our code after we v tested  it , put in a dir n that becomes our moduele
 
-2)~~~~~#####################
-WE CAN CREATE MODULE FOR VPC
-in the overall dir terrsfrm master class33 he created a  dir called vpc  and inside it he ceated a file called main.tf and in the main.tf, he cetaed a resource 
+
+
+2                                     WE CAN CREATE MODULE FOR VPC
+in the overall dir terrsfrm master class33 
+
+a)he created a  dir called vpc  and inside it he ceated a file called main.tf and in the main.tf, he created a resource 
 
 resource "aws_vpc" "vpc" {
      cidr_block = 10.0.0.0/16
 
-now i can go bk to the main.tf file in the test dir and create a module 
+StepB
+now i can go bk to the main.tf file (where we created a module for ec2 above) in the test dir and create a module for vpc
    module "vpc" {
        source = "./vpc"
+
+
 ************ so now i v 2modules i am initializing, i v initialized the ec2 module earlierand now i hv a vpc module , so bc now i v dis i need to run terfrm init
 so anytime u cahnge a module or add a module , u hv run terafrm init bc the module needs to be downloaded, d module nids to be initialized , 
 so bc v added a new module here, this module lives in this vpc dir , inside of this vpc dir i hv my code bt wher am calling d module is on this file (main.tf in test dir)
 am just refering wher my code live 
 
+Step C
 so in my terminal i run terferm init, bt if i just run terfrm plan, it wil say a ERROR, ders a module called vpc is nt installed 
 afer runing trfrm init, i run terfrm plqn 
 now its goin to create for me 2resources
@@ -443,6 +451,7 @@ and also the  ec2 instance
 so i hv my code tacked away bt am calling them now as modules              ......1:51
 
 ****************tk note i didnt run terfrm apply yet*********** I NOTED dis here myself bc l8r on someone aksed if  DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAN
+
 
 
 
@@ -521,6 +530,7 @@ matches ,ders nothing to change or add
 bt if decide to add a like a tag on my vpc, it just means that am modifying my step ,wit that i can run trfrm init, trfrm plan, it sees ders a dif , it refrehes n statae n
 say its now going to modify the vpc , it just updates, it goes to the vpc n put this tag 
    ********** terfrm state list shows hw many resources i hv captured in my state file 
+
 
 
 
@@ -852,6 +862,10 @@ add an instance called resource "aws_instance" "data_test1"
 ***********lets says ur boss ask you to change the name of a certain instance tahst running in production, terfrm is goin to destroy it and recreate it 
 this is what you dnt want to happen 
 this is why we hv a 9th type of block called mOVED BLOCK
+
+
+
+
 
 3:40:20
 **************************  MOVED BLOCK   ,, used to rename our resources
