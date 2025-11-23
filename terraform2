@@ -434,7 +434,9 @@ in the overall dir terrsfrm master class33
 a)he created a dir called vpc and inside it he ceated a file called main.tf (earlier we created a main.tf in the terrafrm master class33 dir )& in the main.tf, he created a
 vpc resource 
 
-             ***we hv 2mian.tf, one in the general dir; terfrm master class33 dir & the other main.tf inside the vpc dir (the vpc dir is a sub dir in the terfrm master dir)
+             ***we hv 2main.tf, one in the general dir; terfrm master class33 dir & the other main.tf inside the vpc dir (the vpc dir is a sub dir in the terfrm master dir)
+                     but if the ec2 resource blk inide test dir is also called main.tf, that means a total of 3 main.tf files
+
 
 resource "aws_vpc" "vpc" {
      cidr_block = 10.0.0.0/16        ***so this is all i want inside this particular module & dis file is inside the vpc dir
@@ -482,29 +484,35 @@ so i hv my code living here (test)tacked  away bt am calling them now as modules
 module) in terrafrm master class33 dir
 
 
-                                INSIDE main.tf in vpc dir
+   1)                            INSIDE moule/main.tf in THE vpc dir
+a)Create a variable for the cidr 
 as it is,it means u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable inside of the module/ vpc, main.tf  in( vpc dir)
 i can create a variable:
 
      variable " cidr " {
            type = string        ( i am making it string and nt passing a defULT value, that way, i am making it  REQuired
 
-
+b) reference the variable
 And then i chnage the info in the vpc resource blk i created earlier   ....     
 cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr , so that u as the user can now supply the value
 
 resource "aws_vpc" "vpc" {
      cidr_block = var.cidr
 
-so i hv referenced the variable 
+**** so i hv referenced the variable 
 bt hv nt supplied the value so that u as the user can now supply the value bt frm this module/ vpc, main.tf  in( vpc dir) , we knw that it xpects  acidr blk 
- so then now i can cm to my mian.tf ((where we called al the moules, terrafrm master class33 dir) and on this module for vpc, i provide the value 
+
+
+                                    WHERE THE USER CAN PASS THE VARIABLE VALUE
+   2)                         INSIDE MAIN.tf , where we called all the modules
+       as the user pass the cidr value:
+so then now i can cm to my mian.tf ((where we called al the modules, terrafrm master class33 dir) and on this module for vpc, i provide the value 
           module "vpc" {
        source = "./vpc"
        cidr = 10.0.0.0/16
 
 
-                                  INSIDE MAIN.tf , where we called all the modules
+
 now i can run terafrm init and trfrm plan , initializes the backend and plan reads the value frm the main.tf, where i called al d modules,in the terrafrm master class33 dir
 so am supplying the value of the cidr as the user in the main.tf where am calling the module and if i edited the main.tf(in terfrm master class dir), am nt goin bk to the 
 vpc main.tf file in the vpc dir
@@ -514,10 +522,9 @@ called all the modules
 
 
 
-                                        USING VARIABLES TO MODULELARIZE MY CODE (when am making my varaiable required)..........................
-
+                                       MAKING VARIBLE REQUIRED/ USING VARIABLES TO MODULELARIZE MY CODE 
 bt if i dnt pass the value Main.tf where i called all the modules
-1) it is goin to complain that this value is required
+ ****** it is goin to complain that this value is required
 so on my main.tf, where i called all the modules, i need to declare it , i nid to declare a variable called cidr    bt still nt provide it (the value)   ****************1:55
          variable  "cidr" {
              type = string
@@ -527,25 +534,28 @@ bt  still complaining  ...... 1:55:27 , ie the codes were nt organized
 
 
                                            TERAFRM FORMAT
-1:55:   \********************    terfrm format
+1:55: 30  \********************    terfrm fmt
 so when i run terfrm format, it reformats your code , so that ur code is well organized the lines and all
 this formtas your code 
 
-now when i run terfrm plan it says missing reQ argument 
-   so in the module vpc  ill 
+now when i run terfrm VALIDATE it says missing reQ argument bc i didnt declare the cidr
+   so in the module vpc ill  declare the cidr ie  cidr = var.cidr
  
 module "vpc" {
        source = "./vpc"
-       cidr = var.cidr       .......  its reading frm the module bt still i hvnt supplied the value so am still making it required
+       cidr = var.cidr       .......  I need to declare the cidr here
+                                       its reading frm the module bt still i hvnt supplied the value so am still making it required
 
   variable  "cidr" {
              type = string
 
 so if i run terfrm plan, it now requires me to enter the value bc hv now mk the value required
-
+So i enter the value: 10.0.0.0/24
 
 ############## so this is hw we use variableas to modularize or to make our code as flexible as possible 
  
+
+
 
 
 
