@@ -523,9 +523,9 @@ called all the modules
 
 
                                        MAKING VARIBLE REQUIRED/ USING VARIABLES TO MODULELARIZE MY CODE 
-bt if i dnt pass the value Main.tf where i called all the modules
+bt if i dnt pass the value in the Main.tf where i called all the modules
  ****** it is goin to complain that this value is required
-so on my main.tf, where i called all the modules, i need to declare it , i nid to declare a variable called cidr    bt still nt provide it (the value)   ****************1:55
+eg; so on my main.tf, where i called all the modules, i need to declare it , i nid to declare a variable called cidr    bt still nt provide it (the value)   ******1:55
          variable  "cidr" {
              type = string
  
@@ -540,12 +540,13 @@ this formtas your code
 
 now when i run terfrm VALIDATE it says missing reQ argument bc i didnt declare the cidr
    so in the module vpc ill  declare the cidr ie  cidr = var.cidr
- 
+
+STEP1;
 module "vpc" {
        source = "./vpc"
        cidr = var.cidr       .......  I need to declare the cidr here
                                        its reading frm the module bt still i hvnt supplied the value so am still making it required
-
+step2
   variable  "cidr" {
              type = string
 
@@ -575,10 +576,11 @@ bc the configuration matches what is ur current actual state, so its checking , 
 matches ,ders nothing to change or add
 bt if decide to add a like a tag on my vpc, it just means that am modifying my step ,wit that i can run trfrm init, trfrm plan, it sees ders a dif , it refrehes n statae n
 say its now going to modify the vpc , it just updates, it goes to the vpc n put this tag 
-   ********** terfrm state list shows hw many resources i hv captured in my state file 
+  
+********** terfrm state list shows hw many resources i hv captured in my state file 
 
 
-
+2;12
 
 2)    WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE 
 
