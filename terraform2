@@ -337,7 +337,7 @@ LETS SAY I want to create an ec2 instance
 so i can create a resource
 
 
-                                         CREATE AN INSTANCE USING AVARIABLE TO PASS THE AM ID FROM THE DATA SOURCE TO THE RESOURCE BLK
+                                    CREATE AN INSTANCE USING A VARIABLE TO PASS THE AM ID FROM THE DATA SOURCE TO THE RESOURCE BLK
 
   i)resource "aws_instance" "data_test" {        hes just calling it data_test ...meee ie the resource name
     1.32.20  
@@ -387,11 +387,14 @@ stepA
       so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a dir called test  
 this is the dir that has my  tefrm config files 
 bc all my code is in inside this test dir, so i can use this test dir 
+
+                                         THIS DIR IS OUR EC2 MODULE
 so i can use the test dir as my module to create an ec2 instance bc all my code is packaged in der
 
-stepB
-while am inside of the same dir as the test dir, i can create a neew file called main.tf
-then inside this main.tf, i can use the key word module
+
+stepB                                      CALL THE EC2 MODULE
+while am inside of the same dir (terrafrm master class33) as the test dir, i can create a neew file called main.tf
+then inside this main.tf, i can (call the module) by using the key word 'module' for ec2
 
  mdoule " ec2" {     ************ ec2 is the module name
  source = "./test"         the argument that is reQ inside my module is the source, wher is d code/module coming frm ? what is the source of ur module?
@@ -419,37 +422,55 @@ are
 *******now we run terfrm plan , we see its initilizing it frm the module ec2 and its reading that particular datasoure n creating a resource bt its creating it as a module
 n its creatin an instance called 'data test' which is part of our module.so this is hw we reuse values/code. 
 
-we can apckage our code , create our code after we v tested  it , put in a dir n that becomes our moduele
+we can apckage our code , create our code after we v tested  it , put in a dir n that becomes our module
 
 
 
+
+1.47.00
 2                                     WE CAN CREATE MODULE FOR VPC
 in the overall dir terrsfrm master class33 
 
-a)he created a  dir called vpc  and inside it he ceated a file called main.tf and in the main.tf, he created a resource 
+a)he created a dir called vpc and inside it he ceated a file called main.tf (earlier we created a main.tf in the terrafrm master class33 dir )& in the main.tf, he created a
+vpc resource 
+
+             ***we hv 2mian.tf, one in the general dir; terfrm master class33 dir & the other main.tf inside the vpc dir (the vpc dir is a sub dir in the terfrm master dir)
 
 resource "aws_vpc" "vpc" {
-     cidr_block = 10.0.0.0/16
-
-StepB
-now i can go bk to the main.tf file (where we created a module for ec2 above) in the test dir and create a module for vpc
-   module "vpc" {
-       source = "./vpc"
+     cidr_block = 10.0.0.0/16        ***so this is all i want inside this particular module & dis file is inside the vpc dir
 
 
-************ so now i v 2modules i am initializing, i v initialized the ec2 module earlierand now i hv a vpc module , so bc now i v dis i need to run terfrm init
+
+
+                                         THIS DIR IS OUR VPC MODULE
+   ****1.47.30... he said the vpc dir is a module to create the vpc
+
+
+StepB                                           CALL THE VPC MODULE
+now i can go bk to the main.tf file (where he used the keyword module to call the ec2 module) terrafrm master class33 & also use the keyword 'module' for vpc, to call the vpc
+module
+
+   module "vpc" {        **we can give it any name
+       source = "./vpc"        **the source of this module is in the pwd, inside of  a dir called vpc
+
+
+                                               
+************ so now i v 2modules i am initializing, i v initialized the ec2 module earlier and now i hv a vpc module , so bc now i v added a new module the vpc, i need to run
+terfrm init
+
+                         RUN TERRAFRM INIT ANYTIME SMT IS ADDED TO A MODULE
 so anytime u cahnge a module or add a module , u hv run terafrm init bc the module needs to be downloaded, d module nids to be initialized , 
 so bc v added a new module here, this module lives in this vpc dir , inside of this vpc dir i hv my code bt wher am calling d module is on this file (main.tf in test dir)
-am just refering wher my code live 
+am just refering wher my code lives
 
 
 Step C
 so in my terminal i run terferm init, bt if i just run terfrm plan, it wil say a ERROR, ders a module called vpc is nt installed 
 afer runing trfrm init, i run terfrm plqn 
 now its goin to create for me 2resources
-the first vpc with cidr  10.0.0.0/16
+the first plan we see is for the vpc with cidr  10.0.0.0/16
 and also the  ec2 instance 
-so i hv my code tacked away bt am calling them now as modules              ......1:51
+so i hv my code living here (test)tacked  away bt am calling them now as modules              ......1:51
 
 ****************tk note i didnt run terfrm apply yet*********** I NOTED dis here myself bc l8r on someone aksed if  DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAN
 
@@ -457,35 +478,47 @@ so i hv my code tacked away bt am calling them now as modules              .....
 
 
                                       MAKING THE VARIABLE FLEXIBLE 
-******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (test dir) as it is,it 
-means u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable insid eof the module/ vpc file 
+******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (where we called al the
+module) in terrafrm master class33 dir
+
+
+                                INSIDE main.tf in vpc dir
+as it is,it means u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable inside of the module/ vpc, main.tf  in( vpc dir)
+i can create a variable:
+
      variable " cidr " {
-           type = string        ( i am making it and string and nt passing a defULT value, that way, i am making it  REQ 
+           type = string        ( i am making it string and nt passing a defULT value, that way, i am making it  REQuired
 
 
-And then i chnage the info in the vpc resource blk i created earlier   ....      cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr , so that u as the user can now 
-                                                                  supply the value
-   resource "aws_vpc" "vpc" {
+And then i chnage the info in the vpc resource blk i created earlier   ....     
+cidr_block = 10.0.0.0/16    to        cidr_block = var.cidr , so that u as the user can now supply the value
+
+resource "aws_vpc" "vpc" {
      cidr_block = var.cidr
 
-bt hv nt supplied the value so that u as the user can now supply the value bt frm this module , we knw that it xpects  acidr blk 
- so then now i can cm to my mian.tf (in the test dir) and on this module i provide the value 
+so i hv referenced the variable 
+bt hv nt supplied the value so that u as the user can now supply the value bt frm this module/ vpc, main.tf  in( vpc dir) , we knw that it xpects  acidr blk 
+ so then now i can cm to my mian.tf ((where we called al the moules, terrafrm master class33 dir) and on this module for vpc, i provide the value 
           module "vpc" {
        source = "./vpc"
        cidr = 10.0.0.0/16
-now i can run terafrm init and trfrm plan , initializes the backend and plan reads the value frm the module vpc 
-so am supplying the value of the cidr as the user  in the module and if i edited the vpc file 
-i dnt need to go bk to the  vpc module (main.tf in test dir) to change the values, bt in the vpc file am making evrrytin as required/ or as varibales bt when am calling the
-module , this is when am supplying the value bt i can equally mk it required so that am passing it as run time  ie comment it , bt if i dnt pass the value on the module 
 
 
+                                  INSIDE MAIN.tf , where we called all the modules
+now i can run terafrm init and trfrm plan , initializes the backend and plan reads the value frm the main.tf, where i called al d modules,in the terrafrm master class33 dir
+so am supplying the value of the cidr as the user in the main.tf where am calling the module and if i edited the main.tf(in terfrm master class dir), am nt goin bk to the 
+vpc main.tf file in the vpc dir
+i dnt need to go bk to the  module/vpc (main.tf in vpc dir) to change the values,bc in the vpc file am making evrrytin as required/ or as varibales bt when am calling the
+module , this is when am supplying the value bt i can equally mk it required so that i pass it as run time  ie comment it , bt if i dnt pass the value on the Main.tf where i
+called all the modules
 
 
 
                                         USING VARIABLES TO MODULELARIZE MY CODE (when am making my varaiable required)..........................
 
-bt if i dnt pass the value module,1) it is goin to complain that this value is required
-so on my module, i need to declare it , i nid to declare a variable called cidr    bt still nt provide it (the value)   ****************1:55
+bt if i dnt pass the value Main.tf where i called all the modules
+1) it is goin to complain that this value is required
+so on my main.tf, where i called all the modules, i need to declare it , i nid to declare a variable called cidr    bt still nt provide it (the value)   ****************1:55
          variable  "cidr" {
              type = string
  
@@ -493,6 +526,7 @@ bt  still complaining  ...... 1:55:27 , ie the codes were nt organized
       *************************************** i stil nid to format it 
 
 
+                                           TERAFRM FORMAT
 1:55:   \********************    terfrm format
 so when i run terfrm format, it reformats your code , so that ur code is well organized the lines and all
 this formtas your code 
@@ -502,7 +536,7 @@ now when i run terfrm plan it says missing reQ argument
  
 module "vpc" {
        source = "./vpc"
-       cidr = var.cidr       .......  its reading frm the module btstill i hvnt supplied the value so am still making it required
+       cidr = var.cidr       .......  its reading frm the module bt still i hvnt supplied the value so am still making it required
 
   variable  "cidr" {
              type = string
