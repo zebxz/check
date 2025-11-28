@@ -760,7 +760,7 @@ now when we talk abt backends we ill also see that if we config a backend whcih 
 2.42.40
 VARIABLE BLOCK
 INStead of harding coding , we can create a variable n reference the variable in my resource , n so its flexible  .............................2:43:45
-
+SO inside the resource blk i can create the variable blk (we will later see refactoring)
 
 ################# TO CREATE VARIABLE 
  eg variable for Ami
@@ -801,19 +801,21 @@ terfrm wil nt plan until i supply these value bc i commented out the variable, i
 ***ONline
              DIFFERENCE BTW OUTPUT BLOCK & DATA SOURCE
 In systems like Terraform, "output" blocks and "data source" blocks have fundamentally different purposes regarding data flow:
-DATA SOURCES bring data into your configuration from external sources, Input: it Fetches data from a provider's API (e.g., AWS, Azure, GCP)into Terraform. **mee, for further
+DATA SOURCES  ***mee... deals with object
+bring data into your configuration from external sources, Input: it Fetches data from a provider's API (e.g., AWS, Azure, GCP)into Terraform. **mee, for further
 activities like configuration eg using a data source to get an AMI from AWS & then use the AM to create a instance (can either reference the data source in the resource blk
 used in creating the instance or u can hardcode ie in the resource blk, just write the Ami id gotten.
 References data for objects that already exist and whose lifecycle is managed elsewhere (manually or by another configuration).
 It is used to read information about existing infrastructure or external data not managed by your current configuration.
 WHILE;
-OUTPUTS send data out from your configuration.Exposes internal data from your Terraform state file outside the configuration
+OUTPUTS    ****meeee... deals with attribute
+send data out from your configuration.Exposes internal data from your Terraform state file outside the configuration
 To expose specific values from your current configuration (usually from resources you've created) to the command line, other modules, or external tools..
 Exposes attributes of managed resources that your current configuration created or modified
 
 
-
-OUTPUT VALUES BLK  ...2 :54:40
+...2 :54:40
+OUTPUT VALUES BLK     ****deals with attribute
 eg 
 After creating an instance & i want to get the public ip, i can use an output blk
 output is a blk that you use to get smt out of a resource you created
@@ -836,7 +838,7 @@ especially when u run pipelines, u dnt wnt trfrm to stop, to interrupt , so that
 ************************** he SKIPPED LOCAL VALUE BLOKS
 
 
-DATA SOURCE 
+DATA SOURCE       ***mee** deals with object
 it starts with the keyword; data
 this has two labels
 then u can passs in filters
