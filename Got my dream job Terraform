@@ -798,6 +798,21 @@ e.g , now, in the variable file, if i comment on the instance type, bt in the ma
 terfrm wil nt plan until i supply these value bc i commented out the variable, i didnt supply the default value, so its now a REQ variable
 
 
+***ONline
+             DIFFERENCE BTW OUTPUT BLOCK & DATA SOURCE
+In systems like Terraform, "output" blocks and "data source" blocks have fundamentally different purposes regarding data flow:
+DATA SOURCES bring data into your configuration from external sources, Input: it Fetches data from a provider's API (e.g., AWS, Azure, GCP)into Terraform. **mee, for further
+activities like configuration eg using a data source to get an AMI from AWS & then use the AM to create a instance (can either reference the data source in the resource blk
+used in creating the instance or u can hardcode ie in the resource blk, just write the Ami id gotten.
+References data for objects that already exist and whose lifecycle is managed elsewhere (manually or by another configuration).
+It is used to read information about existing infrastructure or external data not managed by your current configuration.
+WHILE;
+OUTPUTS send data out from your configuration.Exposes internal data from your Terraform state file outside the configuration
+To expose specific values from your current configuration (usually from resources you've created) to the command line, other modules, or external tools..
+Exposes attributes of managed resources that your current configuration created or modified
+
+
+
 OUTPUT VALUES BLK  ...2 :54:40
 eg 
 After creating an instance & i want to get the public ip, i can use an output blk
