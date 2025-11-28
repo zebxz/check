@@ -331,7 +331,7 @@ so using just the AMi name, "root-device-type", etc, the data source was able to
 1.32.20                                      HOW DO I NOW USE THIS ID  ????  
               
 2) use the AMI ID, gotten above to create an instance
-... remeber i hvnt gone to AWS to get this iD , hv jst used this data source
+... remember i hvnt gone to AWS to get this iD , i jst used this data source
 LETS SAY I want to create an ec2 instance 
 so i can create a resource
 
@@ -444,7 +444,7 @@ resource "aws_vpc" "vpc" {
 
 
                                          THIS DIR IS OUR VPC MODULE
-   ****1.47.30... he said the vpc dir is a module to create the vpc
+   ****1.47.30... he said the vpc dir he created is a module to create the vpc
 
 
 StepB                                           CALL THE VPC MODULE
@@ -581,32 +581,64 @@ say its now going to modify the vpc , it just updates, it goes to the vpc n put 
 ********** terfrm state list shows hw many resources i hv captured in my state file 
 
 
-2;12
+
+
+2;10
 
 2)    WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE 
 
 
+                                                                 VARIABLES
+
   ******************* THIS TAKES us to varaibale types................   2:12
 
-a variable is a 
+a variable is a value that can change, depending on conditions or on information passed to the program.
+Variables are used to store information to be referenced and manipulated in a computer program.
+They also provide a way of labeling data with a descriptive name, so our programs can be understood more clearly by the reader and ourselves.
+It is helpful to think of variables as containers that hold information, so when we are declaring/creating a variable, we are just creating like a place holder. Their sole
+purpose is to label and store data in memory.
+This data can then be used throughout your program, ie i can keep calling the variable whenever i need it, i can keep calling it bc it has stored some information
+
+The following example shows the variable types that are supported by terraform.
+
 
 1) string
-2) numbers , e.g used for security grps 
+Strings are usually represented by a double-quoted sequence of Unicode characters, "like this", If you declare a variable of type string without putting it in the quotation'
+it will give you an error
+
+variable "vpcname" {
+  type    = string         ****declaring it is a 'string'
+  default = "myvpc"
+}
+
+2) numbers , e.g we want to create a security grps & we want to pass the ssh port or https port, we can create a variable
+eg for https port
+
     variable "https" {
-        type = number 
+        type = number        *declaring the variable as type number.
         default = 443
-3) boolean   , true/false  e.g usedfor nat gateway
+
+3) boolean;  Bools are represented by the unquoted symbols true and false.
+represents true/false  e.g creating a nat gateway for vpc
      variable "nat" {
      type  = bool
-     default = true
+     default = true    ,, its either true or fals
+
 
 4) list : represented by a pair of square brackets containing a comma- seperated sequence of values, like ["a", 15, true]
-   e.g a list of instance types ,   .......... i have multiple instance  type i want to choose from
-      variabe "instance" {
-          type = list [string]  .......     for a variable instance type i normally use string
-          default = ["t2micro", "t2 medium", "t3 micro"]
-            
-************************       HOW DO U ACCESS VALUES IN A LIST **************
+   e.g a list of instance types ,   .......... i have multiple instance type i want to choose from
+      
+variabe "instance" {
+  type = list [string] ... i knw that its a list bc if am creating a var for instance type, i normally use string bt what if i hv multiple instance type i wnt to choose frm
+  default = ["t2micro", "t2 medium", "t3 micro"]   u put a default value, default val wil b a list                         (so it wil b a list of string bt a list of string
+  & bc its a list of strings thefere the values that goes inside has to be quoted
+
+
+2.22.20                      USING VARIABLE TYPE LIST
+
+
+
+                                 HOW DO U ACCESS VALUES IN A LIST 
 Values in a list are always accessed by an index and the index in a list always starts wit zero
    e.g       ["t2micro", "t2 medium", "t3 micro"]
          index    0,       1,             2
@@ -668,12 +700,12 @@ declaring a variable but nt providing the default , thereby making it REQ
 
 
    OUTPUT  
-attriibutes we tyr to get out
+attriibutes we try to get out
 
 
 TUPLE
 it has a mixed data type
-ITS LIKE ALIST, IT can contain strings, numbers or othe r  list
+ITS LIKE A  LIST, IT can contain strings, numbers or other  list
 tuple is objects within  a list while an OBJECT is a list within  a map
 
 
