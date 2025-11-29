@@ -765,11 +765,21 @@ for dev env
 dev.tfvars              to provision in the dev env
 region = "us-west-1"
 mytype = "t2.micro"
+                  to deploy:  terfrm plan -var-file=dev.tfvars 
+              it will read & provison a t2.micro
 
 WHILE FOR prod env
 prod.tfvars           to provision in the prod env
 region = "us-east-1"
 mytype = "t2.medium"
+               to deploy:  terfrm plan -var-file=prod.tfvars 
+
+
+2.47.50 we see that the ami's provisioned in the dev and that provisoned in the prod env are diff bc its a diff region, 
+& bc am using a data source & its more flexible, i dnt need to go into aws to get the ami but at the same time am using variables file to supply my values
+earlier when we treated data source we referenced it inside the resource for our instance & we are still using the same resource so thats what he meant by saying we are
+using a data source.
+
 
 
    ************INTERVIEW QUESTION
@@ -779,14 +789,19 @@ ANS:
  first  thing we v learnt is that i can use diff varibales fil;es
 i can use a variAbles taht contains value for my staging , or anoda variables file that contains value for prod env,
  so am supplying this values at run time 
-when trfrm is runningthis values file are beein run bc am passing them on the command line.
-variable files are files that  starts with any name but ends with tf.vars , any file that hs this concvention u v to pas it on the CLI uing -var-file=
+when trfrm is running this values file are been read bc am passing them on the command line.
+variable files are files that  starts with any name but ends with tf.vars , any file that has this concvention u v to pass it on the CLI uing -var-file=
 **************** 2:50
-1)bt if u crtaete a file that starts wit terraform.tfvars  file, this file is automatically loaded u dnt hv to pass it on the command line , it has to start with terferm
-then i can just run terfrm plan without supplying d values then d file wil be automaticaly loaded(normally we wil pas d file name  terafrm apply -var-file=foo.tfvars-var-file=bar.tvars)
 
+
+                                            TERRAFORM.tfvars FILE
+1)bt if u craete a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it on the command line , it has to start with terferm
+then i can just run terfrm plan without supplying d values then d file wil be automaticaly loaded(normally we wil pas d file name  terafrm apply -var-file=foo.tfvars-var-file=bar.tvars)
 so if u hv values u like to be automatically loaded the  u create a trfrm.tfvars , the values are automatically loaded
 
+
+                            AUTO FILE
+                              
 2) auto files   
 e.g test.auto.tfvars
 as long as ther is auto then the file will be automatically loaded
@@ -798,6 +813,7 @@ pipo use to supply the values bc they are making variables reQ so that u can sup
 name, the cidr , the tags and ill ask u create a .tfvars file to supply the values,, that way u acn put ur own tag,name, cidr, and so that is now making ur code flexible, n
 reusable , anyone one can reuse bc they can supply their own values , u hv nt hardcode values within terfrm 
 thats hw we use variable files
+
 
 
  2:55:08  ################# CREATING A VARIABLE THAT HAS A SECRET##################
