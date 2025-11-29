@@ -280,7 +280,7 @@ YOU start to create a data source oR using a data blk with the keyword data, n d
 
 
  
-                                        HOW TO CHECK AMI ID  IN AMAZON
+                                        HOW TO CHECK AMI ID IN AMAZON
 1.18.50***** when we go to aws, and look at amis, we are looking at the public registry/ images
 we hv a lot of amis that are in the public registry, in this region , north virginia
 normally, if i want to create an ec2 instance with an amazon linux, normally iil launch the instance afterwhich i hv the amazon linux ami, 
@@ -476,17 +476,21 @@ so i hv my code living here (test)tacked  away bt am calling them now as modules
 ****************tk note i didnt run terfrm apply yet*********** I NOTED dis here myself bc l8r on someone aksed if  DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAN
 
 
+IN the first video, we created a resource blk for vpc & instead of hardcoding, inside the vpc resource blk or we create a new file & inside it, create a variable for cidr 
+then in the resource blk, we reference the variable
+but now we are using resource blks as modules eg a resource blk for a vpc then we create a main.tf file, where we can call any/all the modules we want & we can make the 
+modules flexible by using variables eg we create a variable for cidr in the vpc resource blk then in the main.tf file, we referenece the variable
 
-
-                                      MAKING THE VARIABLE FLEXIBLE 
+                                    USING A VARIABLE TO MAKE THE MODULE FLEXIBLE 
 ******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (where we called al the
-module) in terrafrm master class33 dir
+module) in terrafrm master class33 dir as it is,it means u are goin to use this cidr  10.0.0.0/16 but
+ if i wanted to mk the cidr flexible, i will use a variable inside of the module/ vpc, main.tf ie inside the vpc resource blk, in( vpc dir) 
 
 
-   1)                            INSIDE moule/main.tf in THE vpc dir
+   1)                            CREATE A VARIABLE FOR CIDR IN module/main.tf (the vpc resource blk)in THE vpc dir
 a)Create a variable for the cidr 
-as it is,it means u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable inside of the module/ vpc, main.tf  in( vpc dir)
-i can create a variable:
+as it is,it means u are goin to use this cidr  10.0.0.0/16 but if i wnted to mk the cidr flexible, i will use a variable inside of the module/ vpc, main.tf ie inside the vpc
+resource blk, in( vpc dir) i can create a variable:
 
      variable " cidr " {
            type = string        ( i am making it string and nt passing a defULT value, that way, i am making it  REQuired
