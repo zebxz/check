@@ -735,25 +735,27 @@ so this is a list within a map
 we can pass them as a file
 
 
-                PASSING VARIABLES AS A FILE    ( we can use a variables file to deploy in multiple env)
+                                  PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing -var-file= 'the file name')
+                             ( we can use a variables file to deploy in multiple env)
 when u dnt want to pass these varaibles within ur configuration , terfrm always gives the option for u to pass them as files
 
 e.g  if u want to pass a varaible as a file on the command line u can use an argument command line optional argument - var-file and reference the file that has ur variables,
 the file has to end with .tfvars
     $ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars
 
-
+ 
 step**************************2:39:30
 1)Create a file called: variables.tfvars
-eg in video1, when we refactored ie seperated the diff level blks; we put the resource blk in a diff file and also put all the variable blk in a diff file 
-so i can create a file that will reference a particular variable frm my variables file .....
+eg in video1, when we refactored ie seperated the diff level blks; we put the resource blk in a diff file and also put all the variable blk in a diff file but then we didnt 
+pass the variable as a file, so now this is the steps to follow to pass the variable as a file
+so this variables.tfvars file, i can use it to reference all/a particular variable frm my variables file .....
    in the variables.tfvars file, ill declare all/the variable i want  eg region
 2)To pass the variables file
    terfrm plan -var-file=variables.tfvars 
 ************this will read frm the variable file n return whats needed 
 So bc i created a file, i can pass it on the command line, these are what is called a variable file
-I Can i hv all my variable required, all the variables i hv declared that am using, i can hv them required, probbaly i dnt supply the value then i can supply it inside the 
-variables.tfvars file.
+I Can i hv all my variable required, all the variables i hv declared that am using, i can hv them required, probbaly i dnt supply the value **i bliv inside the variable blk
+file, but i can then supply it inside the variables.tfvars file.
 by doing so,  we can use a variables file to deploy in multiple env
 
 
@@ -790,42 +792,54 @@ ANS:
 i can use a variAbles taht contains value for my staging , or anoda variables file that contains value for prod env,
  so am supplying this values at run time 
 when trfrm is running this values file are been read bc am passing them on the command line.
-variable files are files that  starts with any name but ends with tf.vars , any file that has this concvention u v to pass it on the CLI uing -var-file=
+variable files are files that  starts with any name but ends with tf.vars , any file that has this convention u v to pass it on the CLI uing -var-file=
 **************** 2:50
 
 
                                             TERRAFORM.tfvars FILE
-1)bt if u craete a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it on the command line , it has to start with terferm
+1)bt if u create a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it (the file name)on the command line , ie to deploy it, you
+just run 'terfrm plan' without supplying the values.... you dnt have to run; 'terfrm plan -var-file=prod.tfvars' 
+it has to start with terferm
 then i can just run terfrm plan without supplying d values then d file wil be automaticaly loaded(normally we wil pas d file name  terafrm apply -var-file=foo.tfvars-var-file=bar.tvars)
-so if u hv values u like to be automatically loaded the  u create a trfrm.tfvars , the values are automatically loaded
+so if u hv values u like to be automatically loaded the u create a trfrm.tfvars , the values are automatically loaded
+
+***meeee, above when we deployed in the diff env it was easily diferentiated bc of their names eg prod.tfvars 
+so when am practicing, ill see if i can use eg 'prod.auto.tfvars',  'dev.auto.tfvars', terraform.dev.tfvars, but if its not possible 
+inorder to easily use/supply the variable values in diff env using the TERRAFORM.tfvars FILE/.auto.tfvars file, 
+ i will use TERRAFORM.tfvars for deploying in dev env then use the .auto.tfvars for prod env
 
 
-                            AUTO FILE
+                                  AUTO FILE
                               
 2) auto files   
 e.g test.auto.tfvars
 as long as ther is auto then the file will be automatically loaded
 
-  ********* bt files without this options, that has a diff name like .tfvars file , then u hv to supply on th CLI as -var-file= bc its a named file 
+  ********* bt files without this options, that has a diff name like prod.tfvars file , then u hv to supply on th CLI as -var-file= bc its a named file 
  auto or terraforms files, are files that are automatic to trfrm 
-as u keep writing codes n keep working, u will see a lot of code , a terrafrm.tfvars file are files that supply only your variables, u wil see this files a lotin code  that 
+as u keep writing codes n keep working, u will see a lot of code , a terrafrm.tfvars file are files that supply only your variables, u wil see this files a lot in code  that 
 pipo use to supply the values bc they are making variables reQ so that u can supply UR OWN values, i can create a module (VPC, ec2) n leave all the variables REQ e.g the 
-name, the cidr , the tags and ill ask u create a .tfvars file to supply the values,, that way u acn put ur own tag,name, cidr, and so that is now making ur code flexible, n
+name, the cidr , the tags and ill ask u create a .tfvars file to supply the values,, that way u can put ur own tag,name, cidr, and so that is now making ur code flexible, n
 reusable , anyone one can reuse bc they can supply their own values , u hv nt hardcode values within terfrm 
 thats hw we use variable files
 
+the last variable you can create , lets say ur creating a variable that has a passwd
 
-
- 2:55:08  ################# CREATING A VARIABLE THAT HAS A SECRET##################
+ 2:55:08                            CREATING A VARIABLE THAT HAS A SECRET##################
     YOU CAN MARK IT AS sensitive =true
 
         variable "mytype" {
           type = string
          sensitive = true
 
-what this does is that , bc when trfrm writes the state fiel evrytin is written in plan text it doesnt encrpyt it 
+what this does is that , bc when trfrm writes the state file evrytin is written in plan text it doesnt encrpyt it 
 everyone can read the state file , 
-so if i want terfrm to mask it i hv to mark it as sensistive that way in the state file, trfrm will not genertae it, u wil nt be able to see it
+so if i was passing a varibale like instance type, its nt encrypted 
+so if i had passed a passwd & hv pass it as a vriable, mayb a database passwd, then terfrm is going to spit it out in the state file & anyone who has access to the state file
+is able to read the secret 
+but if i want terfrm to mask it i hv to mark it as sensistive that way in the state file, trfrm will not genertae it, u wil nt be able to see it bc its marked as sensitive
+so thats how we deal with passwd or inf we deem as sensitive & we dnt wnat them exposed as plain text, we hv to mark them as sensitive
+
 
    49:00
 
