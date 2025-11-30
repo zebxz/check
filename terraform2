@@ -381,7 +381,7 @@ the key of working with terfrm as infrastructure as a code is the use of modules
 modules make our code very flexible
 
 
-                                    HOW DO WE CREATE MODULES .......... ?/?????
+                                    HOW DO WE CREATE CUSTOM MODULES ..........Terfrm also has public modules we can use..3.00
 stepA
       so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a dir called test  
 this is the dir that has my  tefrm config files 
@@ -844,14 +844,14 @@ so thats how we deal with passwd or inf we deem as sensitive & we dnt wnat them 
    49:00
 
 
-
+                                   S3 BUCKET/MODULES
     ##############   QUESTION
-1) on the work env are we prorvided wit these file for a project given to u or u hv to create ur own code  ??
+1) on the work field, are we prorvided wit these file/code for a project given to u or u hv to create ur own code  ??
 
 ANS:
-U as an engr thats why we are learnig trfrm , u may be reQ to write the trfrm code bt its very easy , 1) bc u hv a lot of documentation
-e.g if ur asked to create an s3 bucket , u can type aws_s3_bucket in google , it take su to terfrm registry , it gives u e.g on hw to create an s3 bucket 
-copy it n paste in ur id, ie file ur creating, and i can modifty , e.g its for the dev env
+U as an engr thats why we are learnig trfrm , u may be reQuired to write the trfrm code bt its very easy , 1) bc u hv a lot of documentation
+e.g if ur asked to create an s3 bucket , u can type aws_s3_bucket in google, your trying to create a resource, it take su to terfrm registry , it gives u examples on hw to
+create an s3 bucket copy it n paste in ur id, ie file ur creating, and i can modifty , e.g its for the dev env
 
  EXAMPLE
                             PRIVATE bucket wit tags
@@ -867,28 +867,73 @@ copy it n paste in ur id, ie file ur creating, and i can modifty , e.g its for t
 what else can u pass when ur creating ths bucket ?     so u look at ur argument  click on argument reference and read tru it 
 
 
-********** also what we hv been creating here as we created our modules, these s3 bucket we copied is a moudle
+
+                                  TERFRM PUBLIC MODULES
+********** also what we hv been creating here as we created our modules, these s3 bucket we copied is a module
 we v been trying to create our own modules using resources, theese are called custom modules bt terfrm also has public modules or official modules 
 
 e.g 
 i want to create an instance
-in google, i can type : aws instance module terrafrm  aws instance module terraform and it takes me to the registry an di see an aws instance module that has been created and 
-i can copy it and paste :
+in google, i can type : aws instance module terrafrm or terrafrm-aws-modules-ec2-instance terraform and it takes me to the registry anD i see an aws instance module that has
+been created and i can copy it and paste :
 
   module "ec2-instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"                    
+  source  = "terraform-aws-modules/ec2-instance/aws"   *** we seE the source is frm the terfrm registry, This is the source.             
   version = "5.6.1"
 }                                                    3:05
-              we se the source is frm the terfrm registry, so it wil be downlaoding the this version of module frm the regisrty
+              we seE the source is frm the terfrm registry, This is the source, so it wil be downlaoding the this version of module frm the regisrty
 bt when ur working with modules frm the registry u hv to look below ,,, input : this is like the variable u can pass here, outputs ...., depencies
-scroll down more , ull see for the same instance u can pass ur own values, so u are using the same odule bt passing ur own values
+scroll down more , ull see for the same instance u can pass ur own values, so u are using the same module bt passing ur own values
 when u click on inputs u see what u can pass 
 
 
-   ********* so myab ur firts task mayb to create a module for a vpc , we hv  a new env ,  we are now creatin an HR env, can u craete a vpc to be ddeployed in hat env
-so u as an engr , u nid to knw wher ur resources are , u come to the documemtation and eithr createa ciutom module or use an officIAL TRFRM MODULE frm the registry n use it
+   
+
+3.6.00                        HOW TO USE THE OFFICIAL TERFRM MODULE 
+     ***mee** it already has like a template for 'input', 'output', dependecies', 'resources eg ebs, 
+so if ur using the official terfrm module, eg for instance, just copy the instance reource blk & paste in my own resource file then on the template, eg for inputs, i can see
+all the things that it can input into the instance configuration, so i just read tru the template & see how i can pass the input in my own resource file 
+
+eg1:   on the profie, to create iam instance profile, its set to false, but if i want to create/input it im my instance configuration i will say;
+                           iam instance profile = true 
+
+create_iam_instance_profile bool
+Description: Determines whether an IAM instance profile is created or to use an existing IAM instance profile
+
+Default: false
 
 
+                      OVERRIDING THE DEFAULT VALUE OF THE OFFICIAL MODULE
+eg2: the instance type is set to 't3 micro', so if i run the official module like that, its going to create a 't3 micro, for me  but if i dnt want t3,then in my resource file
+where i pasted the offiicial module, i hv to indicate what i want eg; instance type = t2.medium or i can pass my value as a variable inside my variable file then, then my 
+resource file whre i pasted the official module will read my values from my variable file, That way, it overrides the default value set in the module
+
+instance_type string
+Description: The type of instance to start
+
+Default: "t3.micro"
+
+
+
+  *** so u can find the code in the terfrm registry or most organisations will have their own private registry, mayb git , u may hv modules that hv already been created or 
+********* so myab ur first task mayb to create a module for a vpc , we hv  a new env ,  we are now creatin an HR env, can u craete a vpc to be ddeployed in hat env
+so u as an engr, u nid to knw wher ur resources are, u come to the documemtation and eithr create a custom module as we hv been doing or use an officIAL TRFRM MODULE frm the
+registry n use it
+
+
+
+
+
+
+
+
+**************3;11:15                         QUESTION
+1) FOr the major , minor patches, u said we shud nt constrain it to a particualr version so it can get the particualar patches that are being done 
+so if thers a major cahnge in the configufraion binary ,a major upate e.g fmr 1.5 to 2.00 , hw do i now update my version????????????????
+will the use of * automtaically update the major part of the version
+ 
+ANS:
+lets says the version of our aws provider we'v constrained it to 3
 
 3:10:20
  trfrm is declaractive, thats why i can put anything anywher i want , trefrm will read tru but when u cm to prod env u nid to arganize ur wrk
@@ -896,28 +941,30 @@ like this varaibles needs to go to vraiables file, provider ,ur data source , re
 then we hv to move everycode in its on place
 
 
-**************3;11:15                         QUESTION
-1) FOr the major , minor patches, u said we shud nt constrain it to a particualr version so it can get the particualar patches that are being done 
-so if thers a major cahnge in the configufraion binary ,a major upate e.g fmr 1.5 to 2.00 , hw do i now update my version????????????????
- 
-ANS:
-
-    THE FIRST Time u  run terfrm init terfrm created for us this log file (terraform.lock.hcl) , the log file,it downloaded the versions n it locked them, this is the share
+                                                LOCK.hcl FILE
+    THE FIRST Time u  run terfrm init, terfrm created for us this log file (terraform.lock.hcl) , the log file,it downloaded the versions n it locked them, this is the share
 version of our provider aws, it downloaded the latest version , when subsequently u run terfrm init, it checks the log file, if its stil consistent, u hvnt updated any  
-provider it wnt go bk to donwload the plugins again. it wil reuse that depsncies
+provider it wnt go bk to donwload the plugins again. it wil reuse that dependencies it already downloaded
 
-bt bc v changed the version of my providerto 3.o  bt hv nt changed the logfile bc inside the log file trfrm is reading whats in the log file which is 5.2.4
+eg i just rsn terfrm init & we see it downloaded version 5... v5.42.0, which is the latest version 
+but lets say ur code requires u to lock ur dependencies to may v3., ie we introduce a new configuration that sets my version to 3v & run terfrm init, it wil give me an error
+bc v changed the version of my provider to 3.o  bt hv nt changed the logfile bc inside the lock file trfrm is reading whats in the log file which is 5.2.4 but what am now
+passing as my required provider is 3.o 
 so if i run terfrm init it is goin to fail bc in my package i hv 5.2.4 bt am trying to lock it to 3.0
+bc whenever u run terrafrm init for the first time , terfrm downloads ur dependencies , 
+****therfor if u cahnge ur provider version  or plugging but u hv run terfrm init before, to prevent it from failing u have to upgrade to upgrade ur pluggins ,
 
-******** so whenever u run terrafrm init for the first time , terfrm downloads ur dependencies , therfor if u cahnge ur provider version n run  terfrm init again , it wil
-fail so u have to upgrade to upgrade ur pluggins , s0: run terfrm init -upgrade
+                                         MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION
+s0: run terfrm init -upgrade
 now it will download the version which is 3.0 , so it is upgrading the lock version , so terfrn has made some cahges to the provider dependencies 
-and in my lock file i can see the version is 3.76.1 bt the constraint is 3.0 , so this now becomes the depencies that terfrm is using , s if i run terfrm init as long as v 
-constrain it , it wil nt go bk to download the dependcies again, it will reuse the dependecise
-so this hw we manage our provider pluggindsin term of version , so if terfrm does a change n it changes that , then u just hv to modify the constrian to that particular
+and in my lock file i can see the version is 3.76.1 bt the constraint is 3.0 , so this now becomes the depencies that terfrm is using , sO if i run terfrm init as long as
+v constrain it , it wil nt go bk to download the dependcies again, it will reuse the dependecise
+so this hw we manage our provider plugginds in term of version , so if terfrm does a change n it changes that , then u just hv to modify the constrian to that particular
 vesrion bt u hv to upgrade ur puggins 
 
-2) can i hvae more tahn 1 .tf file under the same folder???  ,,... since we dnt pas the name of the file whaen we run terfrm init ..
+
+
+2) can i hvae more than 1 .tf file under the same folder???  ,,... since we dnt pas the name of the file whaen we run terfrm init ..
 
 ANS: 
 yes , when we refactor , we organize our env and create a file for each e.g resorces file, data file, provider file .. etc 
@@ -925,7 +972,8 @@ yes , when we refactor , we organize our env and create a file for each e.g reso
 i didnt refactor 
 so terfrm is declarative , it doesnt matter the number of files u have, it will reade tru all th efile and create a plan 
 
-3) e.g if u hv a provider aws and mayb mistakenly u created anoda provider thathas azure or gcp 
+
+3) e.g if u hv a provider aws and mayb mistakenly u created anoda provider that has azure or gcp 
 how will terfrm read when u hv like 2 provider file wit diff values in them ????
    ANS:
 
@@ -936,10 +984,13 @@ provider = "aws " {
 provider "azurerm" {}
    ******************* ther are some other arguments am suppose to pass             .......... 3.24.20
 
-  ************* when u run terfrm init , it will initialize the backend and we can look at .terrafrm we see it now downloaded azure pluggins bt we already have aws pluggins
+  ****** when u run terfrm init , it will initialize the backend and we can look at our .terrafrm we see it now downloaded azure pluggins bt we already have aws pluggins
+***meee** then i bliv its then left to you to decide if u want to create your resources using aws or azure bc u now hv dependencies for both providers
 
 
-3) when u map the variables to the prod , stage dev ,, how do we tag the resources so that it matches with the mapping???
+
+                                   CREATING A VARIABLE FOR TAG
+4) when u map the variables to the prod , stage dev ,, how do we tag the resources so that it matches with the mapping???
 
   ANS:
 
@@ -961,14 +1012,16 @@ provider "azurerm" {}
   
    }
 }
-
+                        3.28.40             CREATING A VARIABLE FOR TAG
 varaiable "tags" {
-    type = list(string)      
+    type = list(string)            ** i can create this as a list of string
     default = ["dev", "stage", "prod"]
 }
 
 
-     4) THE Workflow  terrafrom destroy
+
+3.30.50
+     5) THE Workflow terrafrom destroy
 e.g u have 5 ec2 instance in aws and u wnt to specify just one to destroy, how can terrfrm do that
 
 ANS:   ............. 3:30:30
@@ -999,13 +1052,15 @@ it shows me the instance , hw its capturd in the state file  , if u want a speci
 
 otherwise u can run terrafrm show , it shows you the instance and the data source
 
+3.25.30... normally, i like working on one file then after evrytin is sorted out, i can refactor
 
+                                            MOVED BLOCK
 **************  
 LETS SAY I HV A RESOUREC IN MY STATE FILE 
       resource "aws_instance" "data_test"   and i change the name to    resource "aws_instance" "data_test1"
  if i run terfrm plan , it refreshes the state but plans to 
 plan: 1 to add, 0 to change, 1 to destroy.  but why???
-u looknat the plan and u can see its planing to destroy an instance called  resource "aws_instance" "data_test" and 
+u lookn at the plan and u can see its planing to destroy an instance called  resource "aws_instance" "data_test" and 
 add an instance called resource "aws_instance" "data_test1"
 
 ***********lets says ur boss ask you to change the name of a certain instance tahst running in production, terfrm is goin to destroy it and recreate it 
@@ -1041,25 +1096,17 @@ in our case ur asked to change the name but ur not asked to destroy it so how ar
     we can easily use a moved blk to rename our resoures
 
 
-if i needed to move this inside of a module then ican just give it the addres of the module and move the resource
+if i needed to move this inside of a module then ican just give it the addreSs of the module and move the resource
  
 
 
 
-              TRY AN ATTEMPT THIS TASK 
-
+             
     
 
 #############################################################################################################################################
 
 
-################# TO CREATE VARIABLE 
-We create the resource block with the  defaultvalues  (hardcoding)
-e.g resource AMi
-then we create the variable with type string and the default value 
-e.g variable AMi
-then go bk to the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
-ie :  ami = var.myami
 
 
 ********************   how do u mk a variable  REQuired?
