@@ -509,10 +509,24 @@ terraform destroy
 rm -rf .terraform*
 rm -rf terraform.tfstate*
 
+ terrafrm destroy -target=aws_s3_bucket.dev_env      .... to destroy the targeted resource
+
+therfor if u cahnge ur provider version  or plugging but u hv run terfrm init before, to prevent it from failing u have to upgrade to upgrade ur pluggins ,
+
+                                         MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION
+ run terfrm init -upgrade
+therfor if u cahnge ur provider version  or plugging but u hv run terfrm init before, to prevent it from failing u have to upgrade to upgrade ur pluggins ,
 
 
+PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing '-var-file= 'the file name')
+1) Named files
+variable files are files that  starts with any name but ends with 'tf.vars , any file that has this convention u v to pass it on the CLI uing '-var-file=
+eg terfrm plan -var-file=prod.tfvars' 
+ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars)
 
-
-
+****BUT
+2) TERRAFORM.tfvars/ AUTO FILE
+this type of file is automatically loaded u dnt hv to pass it (the file name)on the command line , ie to deploy it, you
+just run 'terfrm plan' without supplying the values.... you dnt have to run; 'terfrm plan -var-file=prod.tfvars' 
 
 
