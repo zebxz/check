@@ -31,6 +31,8 @@ if u had your vscode the terminal running and you installed on powershell, u con
 terminal & reopen the terminal & once u do that it is going to pick up the path bc u already hv a terminal thats opens, so u just nid to close the terminal, close vscode & 
 reopen it.
 
+
+                                EMPTY DIRECTORY ISSUE
 8.15    Choco wasnt recognized, install wasnt recognized
 i downlaoded & extracted & create the path , but cudnt create terminal... terrafrm is still not working
 
@@ -50,6 +52,8 @@ terrafrm initialized in a empty directory, the dir has no configuration files
 the system is only reporting to you that in the dir there is no configuration file
 then he created a file ... test.sh
 terraform init 
+
+                                       NOT A .tf file
    but we still got terrafrm initialized in a empty directory, the dir has no configuration files
     **** we still get error bc the file he created is nt .tf 
  he then created a file .. test.tf
@@ -61,7 +65,7 @@ initializing provider pluggins
 
           we will see what a backend is                   
 16.40  wherever terrafrm operations is going to happen which is basically a local bc it will downlaod the terfrm file here, bt we dnt see any pluggins that hv been downloaded bc
-terfrm doesnt know what pluggins/provider we need to use, so for me to do that i will apssa aprovider blk and am saying i want aws as my provider
+terfrm doesnt know what pluggins/provider we need to use, so for me to do that i will pass aprovider blk and am saying i want aws as my provider
 
  18.20
 let me initiaize terrafrm , once i do that ...
@@ -77,7 +81,7 @@ if u hv a .tf, then it means you are in the right dir but if not then it means y
 
 
         ****watch this
-24.00                          USING VSCODE TO CLONE THE TERFRM REPO THAT HAS A RESOURCE BLOCK FILE
+24.00                              USING VSCODE TO CLONE THE TERFRM REPO THAT HAS A RESOURCE BLOCK FILE
 
   HE DECiced to create a dir or open a folder
 choose to create dir
@@ -317,7 +321,7 @@ when i run terfrm init, bc in my data source i hv referenced data_aws, therefore
 calling aws
 
 
-                                           TROUBLESHOOTING
+                                           TROUBLESHOOTING/Wrong string syntax
 and terfrm validate error  ... set of string required
 that means that everything needs to be a list , ie needs to be a list, bc its values
      initially he used the name like this  "al2023-ami-*-kernel-6.1-x86_64" , then corrected it by adding the calibres ..  ["al2023-ami-*-kernel-6.1-x86_64"]
@@ -353,7 +357,7 @@ bc of this i can use this data source to get my AMis dynamically
 the AMI we got belong to US west 2.,, bc thats my default region 
 
 
-                       USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION WE STATED IN THE PROVIDER
+                    WE DIDNT PASS A REGION SO IT RETURNED AN AMI FROM OUR DEFAULT REGION , USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION WE STATED IN THE PROVIDER
 if i pass a provider bc in my code i dnt hv a proider n my provider is AWS and pass a region
 *******************  provider = "aws " {
                         region = "us-east-1"
@@ -447,7 +451,7 @@ resource "aws_vpc" "vpc" {
    ****1.47.30... he said the vpc dir he created is a module to create the vpc
 
 
-StepB                                           CALL THE VPC MODULE
+StepB                                         CALL THE VPC MODULE
 now i can go bk to the main.tf file (where he used the keyword module to call the ec2 module) terrafrm master class33 & also use the keyword 'module' for vpc, to call the vpc
 module
 
@@ -592,7 +596,7 @@ say its now going to modify the vpc , it just updates, it goes to the vpc n put 
 2)    WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE 
 
 
-                                                                 VARIABLES
+                                                                 VARIABLES/TYPES
 
   ******************* THIS TAKES us to varaibale types................   2:12
 
@@ -629,7 +633,8 @@ represents true/false  e.g creating a nat gateway for vpc
      default = true    ,, its either true or fals
 
 
-4) list : represented by a pair of square brackets containing a comma- seperated sequence of values, like ["a", 15, true]
+4)   list ***uses index
+list : represented by a pair of square brackets containing a comma- seperated sequence of values, like ["a", 15, true]
    e.g a list of instance types ,   .......... i have multiple instance type i want to choose from
       
 variabe "instance" {
@@ -649,6 +654,7 @@ But how do we access the values in the list
 Values in a list are always accessed by an index and the index in a list always starts wit zero, 
 whenever u access value in a list, u always use the index
 
+    ***meee... stage,    dev,          prod
    e.g       ["t2micro", "t2 medium", "t3 micro"]
          index    0,       1,             2
 
@@ -669,7 +675,7 @@ ur selecting the index based on the env.
 
 *************************2:27
 
-5) Map
+5) Map                         ***uses key value pairs
 A map is basically key value pairs, thats what creates a map
 whatever u hav inside tha brackets/calibras, these are key value pairs
 so its is a map
@@ -686,7 +692,7 @@ so hv defined my map, map means i have mapped my env with the type of instance t
 
 
  2:29
-                                 HOW TO READREFERENCE VALUES IN A MAP
+                                 HOW TO READ/REFERENCE VALUES IN A MAP
 ILL Use the square brackets but now instead of the index, bc our map is key value pairs, ill pass the key  ,  e.g dev , then terfrm wil return the value
 2:32.50 Bc i hv declared the variable type is a map, then ill refernece the values in the map by using the key, then terrfrm will return the value 
   
@@ -704,20 +710,27 @@ now once i run trfrm plan , it will return my instance as a t2 micro
 
 
 
+ USING A VARIABLE OF TYPE MAP     ***uses key & value   eg; key=dev & the value=t2 micro
+so u can create a variable of type map , put ur values der, lets says u are creating a module that wil deploy instances both in the stage , dev n prod env n mayb
+the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2 medium, in the prod use a t3 large
+so u can define a var of type map then based on the env u selsct the key, so ur just declaring on evariable , ur reading it frm one variable bt its a variable of type map & 
+ur selecting the key based on the env
 
-**********************  iNPUT Varibale
+
+
+6)NPUT Varibale
 Declaring a variable but nt providing the default value , therfore am making it REQ & thefore it becomes an input variable & ill need to supply the value
 
 
 
-   OUTPUT  
+ 7)  OUTPUT  
 attriibutes we try to get out
 output "vpcid" {
   value = aws_vpc.myvpc.id
 }
 
 
-TUPLE   .. we wont focus on this much
+8)TUPLE   .. we wont focus on this much
 it has a mixed data type
 ITS LIKE A  LIST, IT can contain strings, numbers or other  list
 Lists/tuples are represented by a pair of square brackets containing a comma-separated sequence of values, like ["a", 15, true].
@@ -725,7 +738,7 @@ tuple is objects within  a list while an OBJECT is a list within  a map
 
 
 
-      OBJECT     ......2:37
+  9)    OBJECT     ......2:37
 Its like a map , bt a mix , key value pairs of both strings n numbers , & list bt in the form of a map
 so this is a list within a map
 
@@ -735,19 +748,29 @@ so this is a list within a map
 we can pass them as a file
 
 
-                                  PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing -var-file= 'the file name')
+                                  PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing '-var-file= 'the file name')
                              ( we can use a variables file to deploy in multiple env)
 when u dnt want to pass these varaibles within ur configuration , terfrm always gives the option for u to pass them as files
 
-e.g  if u want to pass a varaible as a file on the command line u can use an argument command line optional argument - var-file and reference the file that has ur variables,
-the file has to end with .tfvars
+***  TYPES OF VARIABLE FILES 
+1) Named files eg prod.tfvars
+2) Unamed  filees eg terrafrm.tfvars or auto files
+
+
+
+1) For named files ie files that didnt start with 'terrafrm or auto'
+eg prod.tfvars 
+
+e.g  if u want to pass a varaible as a file (named file) on the command line u can use an argument command line optional argument - var-file and reference the file that has
+ur variables,the file has to end with .tfvars
     $ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars
 
  
 step**************************2:39:30
 1)Create a file called: variables.tfvars
-eg in video1, when we refactored ie seperated the diff level blks; we put the resource blk in a diff file and also put all the variable blk in a diff file but then we didnt 
-pass the variable as a file, so now this is the steps to follow to pass the variable as a file
+eg in video1, when we refactored ie seperated the diff level blks; we put the resource blk in a diff file and also put all the variable blk in a diff file (I bliv such file 
+is called named fle' as he said below bc the file didnt end with .tfvars OR didnt start with 'terrafrm or auto') but then we didnt pass the variable as a file, so now this
+is the steps to follow to pass the variable as a file
 so this variables.tfvars file, i can use it to reference all/a particular variable frm my variables file .....
    in the variables.tfvars file, ill declare all/the variable i want  eg region
 2)To pass the variables file
@@ -796,7 +819,8 @@ variable files are files that  starts with any name but ends with tf.vars , any 
 **************** 2:50
 
 
-                                            TERRAFORM.tfvars FILE
+    2)       UNNAMED FILES
+TERRAFORM.tfvars FILE
 1)bt if u create a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it (the file name)on the command line , ie to deploy it, you
 just run 'terfrm plan' without supplying the values.... you dnt have to run; 'terfrm plan -var-file=prod.tfvars' 
 it has to start with terferm
@@ -823,6 +847,8 @@ name, the cidr , the tags and ill ask u create a .tfvars file to supply the valu
 reusable , anyone one can reuse bc they can supply their own values , u hv nt hardcode values within terfrm 
 thats hw we use variable files
 
+
+
 the last variable you can create , lets say ur creating a variable that has a passwd
 
  2:55:08                            CREATING A VARIABLE THAT HAS A SECRET##################
@@ -832,7 +858,7 @@ the last variable you can create , lets say ur creating a variable that has a pa
           type = string
          sensitive = true
 
-what this does is that , bc when trfrm writes the state file evrytin is written in plan text it doesnt encrpyt it 
+what this does is that , bc when trfrm writes the state file evrytin is written in plain text it doesnt encrpyt it 
 everyone can read the state file , 
 so if i was passing a varibale like instance type, its nt encrypted 
 so if i had passed a passwd & hv pass it as a vriable, mayb a database passwd, then terfrm is going to spit it out in the state file & anyone who has access to the state file
@@ -935,16 +961,16 @@ will the use of * automtaically update the major part of the version
 ANS:
 lets says the version of our aws provider we'v constrained it to 3
 
-3:10:20
+3:10:20   (ignore,Just a passing statement)
  trfrm is declaractive, thats why i can put anything anywher i want , trefrm will read tru but when u cm to prod env u nid to arganize ur wrk
 like this varaibles needs to go to vraiables file, provider ,ur data source , resources bt i was putin everytin togeda so that u guys can relate bt when we start refactoring 
 then we hv to move everycode in its on place
 
 
-                                                LOCK.hcl FILE
+                                           LOCK.hcl FILE/VERSIONING  (Answer to her question)
     THE FIRST Time u  run terfrm init, terfrm created for us this log file (terraform.lock.hcl) , the log file,it downloaded the versions n it locked them, this is the share
 version of our provider aws, it downloaded the latest version , when subsequently u run terfrm init, it checks the log file, if its stil consistent, u hvnt updated any  
-provider it wnt go bk to donwload the plugins again. it wil reuse that dependencies it already downloaded
+provider (to a diff version) it wnt go bk to donwload the plugins again. it wil reuse that dependencies it already downloaded
 
 eg i just rsn terfrm init & we see it downloaded version 5... v5.42.0, which is the latest version 
 but lets say ur code requires u to lock ur dependencies to may v3., ie we introduce a new configuration that sets my version to 3v & run terfrm init, it wil give me an error
@@ -964,7 +990,7 @@ vesrion bt u hv to upgrade ur puggins
 
 
 
-2) can i hvae more than 1 .tf file under the same folder???  ,,... since we dnt pas the name of the file whaen we run terfrm init ..
+2) can i have more than 1 .tf file under the same folder???  ,,... since we dnt pas the name of the file when we run terfrm init ..
 
 ANS: 
 yes , when we refactor , we organize our env and create a file for each e.g resorces file, data file, provider file .. etc 
@@ -973,6 +999,7 @@ i didnt refactor
 so terfrm is declarative , it doesnt matter the number of files u have, it will reade tru all th efile and create a plan 
 
 
+                                            2 DIFF PROVIDER FILES
 3) e.g if u hv a provider aws and mayb mistakenly u created anoda provider that has azure or gcp 
 how will terfrm read when u hv like 2 provider file wit diff values in them ????
    ANS:
@@ -1012,7 +1039,7 @@ provider "azurerm" {}
   
    }
 }
-                        3.28.40             CREATING A VARIABLE FOR TAG
+                        3.28.40              ***the variable TAG
 varaiable "tags" {
     type = list(string)            ** i can create this as a list of string
     default = ["dev", "stage", "prod"]
@@ -1020,7 +1047,8 @@ varaiable "tags" {
 
 
 
-3.30.50
+
+3.30.50                                                     TERAFRM DESTROY
      5) THE Workflow terrafrom destroy
 e.g u have 5 ec2 instance in aws and u wnt to specify just one to destroy, how can terrfrm do that
 
@@ -1053,6 +1081,7 @@ it shows me the instance , hw its capturd in the state file  , if u want a speci
 otherwise u can run terrafrm show , it shows you the instance and the data source
 
 3.25.30... normally, i like working on one file then after evrytin is sorted out, i can refactor
+
 
                                             MOVED BLOCK
 **************  
