@@ -727,7 +727,82 @@ SOME PEOPLE HV the IDE for their code & their terminal in mobaxterm for exmaple 
 
   ****VIdeo 2
 
+   1)  INTERVIW QUESTION   ................. 54:44
+HOW DO YOU USE terrfrm setting blocks ( U SHUD BE ABLE to discuss this things abt setting ur rEq version & REQ provider version)
 
+
+
+2) INTERVIEW  QUETSIOM 
+WHats the purpose of terfrm init???
+firstly, it initializes the backend then 
+it initilizies or downloads the modules
+thirdly, the provider
+
+3) QUESTION:  ..... ..........1:58             .... watch 2:06 
+1)
+       DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND???
+if you notice, i only run tfrm plan, i didnt run terfrm apply ,I WAS JUST TRYING TO GENERATE THE PLAN BC THIS IS HW WE TEST whether EVRYTIN IS WRKING 
+bt if i created a new resource and run trfrm plan , we can see the plan is to add 1 and destroy 0 
+module.ec2.aws_instance.data_test:Refreshing state  .. THIS MEANS its only refreshing the instance resource we already have 
+# module.vpc.aws_vpc.vpc will be created   ......... this means  this new resource will be created
+terfrm apply 
+ we check the stste file we ssee the resource taht was added 
+
+if i run trfrm apply again .. it says 
+no changes, your infrastucture matches the configuration
+bc the configuration matches what is ur current actual state, so its checking , refreshing what is in ur state file n comparing it wit ur configuratn,so bc it sees everytin 
+matches ,ders nothing to change or add
+
+
+4)  WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE
+TYPES OF VARIABLE
+
+
+5) INTERVIEW QUESTION
+have u ever used trfrm to provisoin in diff env  ??????  ............ HOW do u do it
+Ans:
+1)USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV    ***list uses index;  eg 0= dev;t2 micro, 1=dev;t2 medium, 2,3 etc
+so u can create a variable of type list of strings , put ur values der, lets says u are creating a module that wil deploy instances both in the stage , dev n prod env n mayb
+the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2 medium, in the prod use a t3 large
+so u can define a var with a list then based on the env u selsct the index, so ur just declaring on evariable , ur reading it frm one variable bt its a list of variables n 
+ur selecting the index based on the env.
+***meee..2)
+ 2)USING A VARIABLE OF TYPE MAP     ***uses key & value   eg; key=dev & the value=t2 micro
+so u can create a variable of type map , put ur values der, lets says u are creating a module that wil deploy instances both in the stage , dev n prod env n mayb
+the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2 medium, in the prod use a t3 large
+so u can define a var of type map then based on the env u selsct the key, so ur just declaring on evariable , ur reading it frm one variable bt its a variable of type map & 
+ur selecting the key based on the env.
+
+
+6)  LOCK.hcl FILE/VERSIONING  (Answer to her question)
+    THE FIRST Time u  run terfrm init, terfrm created for us this log file (terraform.lock.hcl) , the log file,it downloaded the versions n it locked them, this is the share
+version of our provider aws, it downloaded the latest version , when subsequently u run terfrm init, it checks the log file, if its stil consistent, u hvnt updated any  
+provider (to a diff version) it wnt go bk to donwload the plugins again. it wil reuse that dependencies it already downloaded
+
+
+7)      MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION
+s0: run terfrm init -upgrade
+now it will download the version which is 3.0 , so it is upgrading the lock version , so terfrn has made some cahges to the provider dependencies 
+and in my lock file i can see the version is 3.76.1 bt the constraint is 3.0 , so this now becomes the depencies that terfrm is using , sO if i run terfrm init as long as
+v constrain it , it wil nt go bk to download the dependcies again, it will reuse the dependecise
+so this hw we manage our provider plugginds in term of version , so if terfrm does a change n it changes that , then u just hv to modify the constrian to that particular
+vesrion bt u hv to upgrade ur puggins 
+
+
+8)            2 DIFF PROVIDER FILES
+3) e.g if u hv a provider aws and mayb mistakenly u created anoda provider that has azure or gcp 
+how will terfrm read when u hv like 2 provider file wit diff values in them ????
+   ANS:
+
+provider = "aws " {
+      region = var.region
+}
+
+provider "azurerm" {}
+   ******************* ther are some other arguments am suppose to pass             .......... 3.24.20
+
+  ****** when u run terfrm init , it will initialize the backend and we can look at our .terrafrm we see it now downloaded azure pluggins bt we already have aws pluggins
+***meee** then i bliv its then left to you to decide if u want to create your resources using aws or azure bc u now hv dependencies for both providers
 
 
 
