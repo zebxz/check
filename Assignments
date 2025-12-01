@@ -1048,6 +1048,7 @@ iluustrate RBAC using EKS  ie create an EKS cluster & use it to illustrate how t
 
 
                                                                 TERRAFORM
+video1
 
 3.12.10
 clone the trfrm codes
@@ -1088,7 +1089,7 @@ then go bk to the resource blk, remove the hardcoding we did ( default values) a
 ie :  ami = var.myami
 
 we can also create a variable for instance type and also for subnet
-
+********when am done refactor my code
 
 b)vpc
 Create a new folder /directory called: vpc-02
@@ -1100,11 +1101,11 @@ CIDR range : 192.168.0.0/24
 
 terfrm2
 
-3)  language syntax project 03
+1)  language syntax project 03
   Practice how to check AMI id attributes in aws
 
 ***meee***   i want to do exactly what was done in class ie use data source to get id, then do the other things the project stated.
-Use an output block to get an AMI id,  & for a)ec2 ; create an instance named "FirstEC2", using a variable to pass the AMI id we got Frm the data source to the 
+Use an output block to get an AMI id ubuntu, then for a)ec2 ; create an instance named "FirstEC2", using a variable to pass the AMI id we got Frm the data source to the 
 resource blk
 
 a)ec2
@@ -1127,13 +1128,43 @@ c) ***meee
 i)create a module for ec2 (first, inside the main dir, i need to create a dir called ec2 (although he said all his config files are inside here bt i didnt see it), so inside 
 the ec2 dir, i may need to create my module/main.tf file & inside it ill create a resource for ec2, hopefully it works
 ii)inside the main dir, create a main.tf, where ill call the modules
-iii) create a module for vpc (first, inside the main dir,i need to create a dir called vpc & inside it create a module/main.tf file & inside the file, create a vpc resource
+iii) create a custom module for vpc (first, inside the main dir,i need to create a dir called vpc & inside it create a module/main.tf file & inside the file, create a vpc 
+resource
 iv)inside the vpc module/main.tf, create a variable for cidr & also reference it & inside the main dir, where we hv the main.tf, wher il call the modules, pass the cidr value
 v) mk the cidr required/USE VARIABLES TO MODULELARIZE MY CODE, ie inside the main.tf wher i call the modules, i nid to declare a variable called cidr bt still nt provide it
 (the value)
 then when i run terfrm plan, it will request for the cidr value & then ill provide it
+vi) create a variable tag
+ ***also create named & unnamed variable files & use it to supply the values for the configuration 
+
+D)   PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing '-var-file= 'the file name')
+TYPES OF VARIABLE FILES TO PASS
+1)Create a Named files eg prod.tfvars
+2) Create a Unamed  files eg terrafrm.tfvars or auto files
 
 
+      E)                            DEPLOY IN DIFF ENV
+***** try this too, deploy to stage/dev/prod  USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV
+so u can create a variable of type list of strings , put ur values der, lets says u are creating a module that wil deploy instances both in the stage , dev n prod env n mayb
+the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2 medium, in the prod use a t3 large
+so u can define a var with a list then based on the env u selsct the index, so ur just declaring on evariable , ur reading it frm one variable bt its a list of variables n 
+ur selecting the index based on the env.
+
+   *** try this too; deploy to stage/dev/prod   USING A VARIABLE OF TYPE MAP     ***uses key & value   eg; key=dev & the value=t2 micro
+so u can create a variable of type map , put ur values der, lets says u are creating a module that wil deploy instances both in the stage , dev n prod env n mayb
+the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2 medium, in the prod use a t3 large
+so u can define a var of type map then based on the env u selsct the key, so ur just declaring on evariable , ur reading it frm one variable bt its a variable of type map & 
+ur selecting the key based on the env
+
+F) Create a variable that has a secret
+G) create a resource for a bucket
+h) use terraform official module to create a resource eg instance
+ I) Terrafrm destroy to destroy a particular resource      
+J) run terfrm init -upgrade  .. try to create a resource with a diff version 
+k) Moved blocks
+
+
+video 3
 4) settings 
 project04
 Create an ec2 instance
