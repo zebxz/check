@@ -976,6 +976,99 @@ Here are 35 real-world issues Iâ€™ve faced in production (and how to fix them) ð
 
 
 
+               TERFRM 1
+    TERRAFROM VERSION
+     ***meee***  Always constrain it to the minor version  "~>1.5", do not include the patch
+e.g    major.minor.patch
+           1.5.5 
+
+
+~ we use this symbol before the version
+e.g "~>1.5"  .. this means that the version of trfrm or this code can run with any version, (again this is symetic versioning) any version like terfrm .5 wit any path version
+version is always in 3digits , major.minor.patch
+the fisrt didgit is the major 
+then minor 
+then patch
+e.g    major.minor.patch
+           1.4.5 
+so may b every 2wks they ar goin to update they value of terfrm, once they update they patch it up , mayb its a security or a bug 
+so it goes frm 1.4.5 to 1.4.6 , 1.4.7
+but lets say the update is a feature 
+1.4.5 to 1.4.6 , 1.4.7 then it becomes 1.5.0 , then the patch wil reset to 0 
+bc if i update a miNor version the patch wil reset to 0
+what if i update a major version , if create a whole newv version/binary of terfrm .... 2.0.0
+this is hw versioning works 
+
+
+                                                 HOW TO USE VERSION
+**************** so when u are placing the rEQ version of terfrm, am constraint it such thaT am saying anytin "~>1.5" including all the patch versions 1.5.1, 1.5.2
+so this a more flexible way
+but if u constrain it to a specific version like  "~>1.5.6" it jst means that if that particualr patch version comes up and its updated ur code might easily break bc uve 
+constrained to a specify version of trfrm , so now bc of that u wil constrain it to the minor version  "~>1.5" so wit that all patch version within this minor version they
+wil be compartible with that, so we use TERRAFRM SETTING blks to set our req version of terfrm
+
+
+
+       TERRAFRM 2
+
+1) TROUBLESHOOT INSTALLATION
+
+Alexander was able to install it he sent the link in the chat /whenever you are installing a package, you have to make sure you an adminstrator or it wont allow you
+1.50 ...youtube how to install terraform
+another person said she couldnt unzip it
+
+5.20 ... how she did her own using the link he sent , she had to closed the vscode & open it again after installing it on powershell
+6.00 proff.. that is true, when you install a package on a certain terminal especially powershell, you need to close the terminal & reopen it
+if u had your vscode the terminal running and you installed on powershell, u configure it so for it to be recognize on vscode u nid to open anoda terminal or close that 
+terminal & reopen the terminal & once u do that it is going to pick up the path bc u already hv a terminal thats opens, so u just nid to close the terminal, close vscode & 
+reopen it.
+
+
+2)                                EMPTY DIRECTORY ISSUE
+8.15    Choco wasnt recognized, install wasnt recognized
+i downlaoded & extracted & create the path , but cudnt create terminal... terrafrm is still not working
+
+  11.40 *** ALEXANDER said hes is also not working...
+   i installed terrafrm on the terminal bt when i try to run terrafm init, it says the dir has no terfrm configuration files
+so thats where i get stucked...
+
+12.15 prof.. the system does nt lie if it says you dnt hv configuration files then you dnt have the file
+the system is only reporting to you that in the dir there is no configuration file
+
+ 13.20 illustration:
+ created a dir called project
+cd ... takes us bk to the home where we see all the directories
+cd/ project 
+terraform init 
+terrafrm initialized in a empty directory, the dir has no configuration files
+the system is only reporting to you that in the dir there is no configuration file
+then he created a file ... test.sh
+terraform init 
+
+    3)                                   NOT A .tf file
+   but we still got terrafrm initialized in a empty directory, the dir has no configuration files
+    **** we still get error bc the file he created is nt .tf 
+ he then created a file .. test.tf
+terafrm read a .tf file but this file doesnt hv any content, it doeesnt hv any plugin bc terfrm doesnt knw wich puggin to download, so its just reporting that 
+ its Initializing the backend
+initializing provider pluggins
+ terrafrm has been successfully initiated
+
+
+4)   TROUBLESHOOTING/Wrong string syntax
+and terfrm validate error  ... set of string required
+that means that everything needs to be a list , ie needs to be a list, bc its values
+     initially he used the name like this  "al2023-ami-*-kernel-6.1-x86_64" , then corrected it by adding the calibres ..  ["al2023-ami-*-kernel-6.1-x86_64"]
+and trfrm plan , it will read the data source n return for me the AMi ID , 
+it will run this filters and return an id of an AMI
+  successful.
+so using just the AMi name, "root-device-type", etc, the data source was able to get the ID of the AMI for us.. 
+
+
+
+5)
+
+
 
 
 
