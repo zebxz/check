@@ -509,7 +509,15 @@ terraform destroy
 rm -rf .terraform*
 rm -rf terraform.tfstate*
 
+terfrm state list
+terfrm state show   .. shows evrytin in the state file
+if u want a specific thing frm the state file  , u run terfrm state show and the resource address
+
+
+terrafrm destroy/ terfrm auto destroy
  terrafrm destroy -target=aws_s3_bucket.dev_env      .... to destroy the targeted resource
+its gives u the destroy plan but if i use auto destroy, it will automatically destroy it
+now its destroyed 
 
 therfor if u cahnge ur provider version  or plugging but u hv run terfrm init before, to prevent it from failing u have to upgrade to upgrade ur pluggins ,
 
