@@ -682,7 +682,7 @@ so its is a map
 
 bt we can declare a variable of type map
     varaiable "inst" {       inst is the name just for reference
-    type = map       .... once i indicate a map" it is goin to open for me  brackets
+    type = map       .... once i indicate a map" it is goin to open for me  brackets   ***i noticed that after we we run terfrm plan, this appears ' (any)'
     default = {              these are the default values
      " dev" = "t2.micro"               the key & the value pair
       "stage" = "t2.medium"
@@ -1059,15 +1059,21 @@ ANS:   ............. 3:30:30
 
 e.g
 terrafrm state list
+no state file found
+so he ran terfrm init , terfrm plan, terfrm apply
+then the s3 bucket resource we configured above was created
+terfrm state list
 data.aws_ami.amazon_linux
 aws_instance.data_test
 aws_s3_bucket.dev_env
- terrafrm destroy -target=aws_s3_bucket.dev_env      .... to destroy the targeted resource
+
+todestroy the bucket:
+terrafrm destroy -target=aws_s3_bucket.dev_env      .... to destroy the targeted resource
 
  its gives u the destroy plan but if i use auto destroy, it will automatically destroy it
 now its destroyed 
-bt if u run trfrm init, trfrm will think i want to recreate it again bc its stil in the configuration file , so if u dnt wnt it ot b recreated
-u can delete it frm ur file or comment it so trefrm doesnt see it
+3.37.35...bt if u run trfrm init, trfrm will think i want to recreate it again bc its stil in the configuration file , so if u dnt wnt it ot b recreated
+u can delete it frm ur resource blk file (file where u hv all ur resources ie if u hv nt refactored)or comment it so trefrm doesnt see it
 
  now ,, terrafrm state ... we hv just this 2 left 
  
@@ -1084,7 +1090,8 @@ otherwise u can run terrafrm show , it shows you the instance and the data sourc
 3.25.30... normally, i like working on one file then after evrytin is sorted out, i can refactor
 
 
-                                            MOVED BLOCK
+                                            MOVED BLOCK (very important)
+   used to rename or move our resources
 **************  
 LETS SAY I HV A RESOUREC IN MY STATE FILE 
       resource "aws_instance" "data_test"   and i change the name to    resource "aws_instance" "data_test1"
@@ -1093,7 +1100,7 @@ plan: 1 to add, 0 to change, 1 to destroy.  but why???
 u lookn at the plan and u can see its planing to destroy an instance called  resource "aws_instance" "data_test" and 
 add an instance called resource "aws_instance" "data_test1"
 
-***********lets says ur boss ask you to change the name of a certain instance tahst running in production, terfrm is goin to destroy it and recreate it 
+***********lets says ur boss ask you to change the name of a certain instance thats running in production, terfrm is goin to destroy it and recreate it 
 this is what you dnt want to happen 
 this is why we hv a 9th type of block called mOVED BLOCK
 
@@ -1103,11 +1110,11 @@ this is why we hv a 9th type of block called mOVED BLOCK
 
 3:40:20
 **************************  MOVED BLOCK   ,, used to rename our resources
-E.G U USED TO Iive at point a  bt moved to point b , so ull go to the post office , u tell thme i used to live here bt now there n give them ur forwarding address
+E.G U USED TO Iive at point a  bt moved to point b , so ull go to the post office , u tell them i used to live here bt now there n give them ur forwarding address
 
 
-in terrfrm , moved block u hv to define wher ur moving frm test  to wher ur moving to test1
-i dnt intend to destroy my instance bt dis same instance used to be called data test bt moving to dtat test1
+in terrfrm , moved block u hv to define wher ur moving frm  ie 'test' to wher ur moving to 'test1'
+i dnt intend to destroy my instance bt dis same instance used to be called 'data test' bt moving to data test1
 so am using moved blk to relocate or rename my instance
 
  moved {
@@ -1142,7 +1149,8 @@ if i needed to move this inside of a module then ican just give it the addreSs o
 ********************   how do u mk a variable  REQuired?
 by not giving a default value
 when we dnt supply a default value, we make it rEQ variable
-e.g , now, in the variable file, if i comment on the instance type, bt in the main file i stil refernce the variable , then the variable becomes a REQ variable
+e.g , now, in the variable file, if i comment on the instance type,(where i passed the value) bt in the main file i stil refernce the variable , then the variable becomes 
+a REQ variable
 
 
 
