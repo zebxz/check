@@ -66,8 +66,12 @@ if we were  creating an instance, bc we hv a data source dat we are using, we ab
 . we knw that the AMI nids to b an id, so we ar using a data source as it reads data frm that particular AMI source, we wnt it to return an id n as it returns an id we are
 directin paasing it to d resource so d data source gets the info n we pass it as an input to our resource n this is how we use data source to provision our resource 
 
-cont.
 
+                          WHAT IS USER DATA
+Student; user data is a bootstrapping tool
+proff; we are using user data for boot strapping, if we hv any info we want to pass onto our instance
+
+                                         
 21:00
 INTERVIEW QUESTION
 1)what is user data????
@@ -76,10 +80,9 @@ we hv a root user whenevr ur instalin a package it wil use a root credential
 2) what is booth straping???
 the root user wil create ur default user and add them to d sudoers grp, that is the process of booth straping
 
-we are using it for boot strapping, if we hv any info we want to pass to our instance
 
 eg; while creating an instance, we can pass a user data ie when the instance is created, i want some softwares to be installed in it
-when u are passing user data, when the instance is boot straping, it wil be bot straping with some permission
+when u are passing user data, when the instance is boot straping, it wil be boot straping with some permission
 when u are boot straping an instance like linx or ubuntu, der wil be a default user who is created, that is an ubuntu user
 but who creates the  ubnuntu user when the instance is creatin,???????????????
 there is root ,
@@ -90,7 +93,7 @@ so when ur boot strapin and ur using user data , the user data wil use root perm
 
 
                                       TERRAFRM ALSO GIVES US THE OPTION OF BOOTSTRAPPING
-whenever we botstrapping an instance 
+whenever we boOtstrapping an instance 
 eg we want to create an instance , in google he type aws_intsance terrfrm 
 When i go to the registry, i see the arguments
 we see d arguments in alphabetical order and we scroll down to  see user data , so i see i can pass in user data as a script,i can pass in as commands 
@@ -116,7 +119,7 @@ i can use a variable and call it  "instance type" .............................2
 then i refer to this variable i created
 
 
-           USER DATA
+              INSTALLING WITH USER DATA
 i have a user data (a bash script) to install httpd , & it will make a dir & echo welcome to landmark into the thml file 
 so this user data becomes my script that will booth strap when the instance starts
 **************    am passing the user data as a file  and the file is in the PWD and its called app1-install.sh"
@@ -128,7 +131,12 @@ WATCH ............32:08   .. whenevr u use data ull pass it as a file, this is a
 in terfrm, it has what is called functions
 if u google terfrm funtions , terfrm has built in functions ,   ther are various function for diff purposse
 you can use dem to manipulate data 
-e.g Max function, lower function, split function, collection funding, coding function, least function,file function 
+
+
+                                  TYPES OF TERRAFRM FUNCTIONS
+ Max function, lower function, split function, collection funding, coding function, least function, file function 
+
+
 file function;
 file reads the contents of a file at a given path and returns them as a a string
 so when u use a file function , u wil nid to give it a path
@@ -155,8 +163,18 @@ and i can hv them side by side & see whats happening in my ide & make my modific
 on my git bash i can continue by running , validate, fmt, plan .
 my data source wil always run first & it returns the AMi id frm us west2& it dynamically passes it as an id bc thats the attribute that i wanted to get
 
-41.07
-lets say u didnt knw what ur doing & u pass the wrong attribute
+
+
+41.07                               TROUBLESHOOTING WRONG ATTRIBUTE
+lets say u didnt knw what ur doing & u pass the wrong attribute eg instead of id , i pass ARN
+Lets check what attribute we can get from an AMI .... 
+in google.. aws_AMI terrfrm, i want the data source
+42.40 .. we see lots of attribute including (image id - ID of the AMi, should be the same as the resource) he said its the same thing
+ so instead of id, i pass arn 
+Lets see if how terfrm will handle it
+terfrm plan 
+we see it returned the Ami, even though we requested for Arn
+
 
 54.13************************ THERE ARE 2Wya we can PASS DATA
 in the example we just illustrated above, we see that it was part of conggiguration, trefrm did provisioning , it provionsioned our instance but not only did it provision it
