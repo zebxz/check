@@ -71,61 +71,92 @@ cont.
 21:00
 INTERVIEW QUESTION
 1)what is user data????
-under whosee/which persmission will the instance b boot straping???  ... it wil use root permission
-we hv a root usre whenevr ur instalin a pasvclkage it wil us ea root credential
+under whose/which persmission will the instance b boot straping???  ... it wil use root permission
+we hv a root user whenevr ur instalin a package it wil use a root credential
 2) what is booth straping???
-the root user wil create ur default user and add them to d sudoers grp,that is the process of booth straping
+the root user wil create ur default user and add them to d sudoers grp, that is the process of booth straping
 
-we are using it for boot strapping, if we hv any nfo we want to pass to our instance
-e,g in creatin an instance when u are passing user dta, when the instance is boot straping, it wil be bot straping with some permission
-whgen u are boot straping an instance like linx or ubuntu, der wiul be a default user who is created, that is an ubuntu user
-but who creats the  ubnuntu user when the instance is creatin,???????????????
-der is root ,
+we are using it for boot strapping, if we hv any info we want to pass to our instance
+
+eg; while creating an instance, we can pass a user data ie when the instance is created, i want some softwares to be installed in it
+when u are passing user data, when the instance is boot straping, it wil be bot straping with some permission
+when u are boot straping an instance like linx or ubuntu, der wil be a default user who is created, that is an ubuntu user
+but who creates the  ubnuntu user when the instance is creatin,???????????????
+there is root ,
 the root user wil create ur default user and add them to d sudoers grp,that is the process of booth straping  so that this ubuntu has
 permission to do what root can do
-so when ur boot strapin naad ur using user data , the user data wil use rot permison, terfrm also gives us that option
+so when ur boot strapin and ur using user data , the user data wil use root permison, terfrm also gives us that option
 *************************  24:30 ...
-whenever we creatin an instance , in google he type aws_intsance terrfrm 
-we see d arguments in alphabetical order and we can see user data , so i see i can pass in user data as a script,i can pass in as commands 
-dat terfrm wil use when its boot straping dat  instance , it is going to create the instance
 
 
+                                      TERRAFRM ALSO GIVES US THE OPTION OF BOOTSTRAPPING
+whenever we botstrapping an instance 
+eg we want to create an instance , in google he type aws_intsance terrfrm 
+When i go to the registry, i see the arguments
+we see d arguments in alphabetical order and we scroll down to  see user data , so i see i can pass in user data as a script,i can pass in as commands 
+dat terfrm wil use when its boot straping dat instance , it is going to create the instance
+
+
+                 INTELLIGIE IDE
 am goin to intro u to anod IDE  i like using called itelligie , its open source    .............. 26:00
 bc of hw it organises my dir n files n am abale to easily look at my files like this
 bt its nt any diff frm vscode
-U CAN STILL Use ur vs code if u hv it , IDE is jst an integrated development env, der are multiple u can wrk with
-as u continuie working u can xperiment n find out the one u prefer
+I always prefer intelige, than vscode just bc of hw intellige has beeen setup
+U CAN STILL Use ur vs code if u hv it , IDE is jst an integrated development env, der are multiple IDEs u can wrk with
+it jst depends on your preference
+as u continuie working u can xperiment on diff IDE n find out the one u prefer Bc they all work & do the sme thing
+intelligie is open source , theres enterprise version but thers community version which is free
 ********* for d sake of dis am goin to continue wit inteligie n put away my vscode bty its nt diff
 
-**********28:20
+**********28:20      ... am looking at my examples here
 i hv a data source for an amazonn linux 
-a rsource for an instance i wnt to create
+a resource for an instance i wnt to create
 am nt hardcoding the value of d AMI, i using a data source to get my AMI
 i can use a variable and call it  "instance type" .............................29.30
 then i refer to this variable i created
-i have a user data (a bash script) to install httpd , make a dir 
+
+
+           USER DATA
+i have a user data (a bash script) to install httpd , & it will make a dir & echo welcome to landmark into the thml file 
 so this user data becomes my script that will booth strap when the instance starts
 **************    am passing the user data as a file  and the file is in the PWD and its called app1-install.sh"
 
 
+
+                                TERRAFRM FUNCTIONS
 WATCH ............32:08   .. whenevr u use data ull pass it as a file, this is a function
 in terfrm, it has what is called functions
 if u google terfrm funtions , terfrm has built in functions ,   ther are various function for diff purposse
 you can use dem to manipulate data 
-e.g file function 
-file reads the contents of a  file at a given path and returns  them as a a string
+e.g Max function, lower function, split function, collection funding, coding function, least function,file function 
+file function;
+file reads the contents of a file at a given path and returns them as a a string
 so when u use a file function , u wil nid to give it a path
 we hv an example below
 > file ("${path.module}/hello.txt")    ...... path.module indicates the file is in the PWD and then the name of the file ur passing
 so the file function will read ("${path.module}/hello.txt") and return the content of that particular file     .....................................34.20
-i also looka t my providers .....
+****now back to his INtellgie ide
+the user script we want to use for installation is in the pwd, if the file was in a diff dir, i just need to give terfrm the path , just specify the path
+but right now ; referring to the resource to create the instance; We see this user data line 
+user_data = file("${path.module}/app1-install.sh")   ... this states that the user data file is in the pwd & the app is called app-install.sh
+& its going to install it as user data
+we can also see my providers .....
 
+
+                            USING MY IDE & GITBASH
 anoda tin i will like to introduce to you guys is that i can open my IDE from here,
-and as u begin to work esp in d industry u wil see that many engr prefrer to hav a terminal,that runs their code 
-
+but as u begin to work esp in d industry u wil see that many engr prefrer to hav a terminal,that runs their code 
+eg u can open ur gitbash , as long as ur in the same dir
 38:00 , watch what he did .........
 remember when u intialize terfrm , u nid to be in the dir where your files are 
+on
+so i am using my terminal ie gitbash to run but am using the IDE to edit my code 
+and i can hv them side by side & see whats happening in my ide & make my modification on my ide bc i am in the same dir
+on my git bash i can continue by running , validate, fmt, plan .
+my data source wil always run first & it returns the AMi id frm us west2& it dynamically passes it as an id bc thats the attribute that i wanted to get
 
+41.07
+lets say u didnt knw what ur doing & u pass the wrong attribute
 
 54.13************************ THERE ARE 2Wya we can PASS DATA
 in the example we just illustrated above, we see that it was part of conggiguration, trefrm did provisioning , it provionsioned our instance but not only did it provision it
