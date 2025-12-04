@@ -765,7 +765,7 @@ eg prod.tfvars
 
 e.g  if u want to pass a varaible as a file (named file) on the command line u can use an argument command line optional argument - var-file and reference the file that has
 ur variables,the file has to end with .tfvars
-    $ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars
+   2.38.50  $ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars
 
  
 step**************************2:39:30
@@ -822,11 +822,12 @@ variable files are files that  starts with any name but ends with tf.vars , any 
 
 
     2)       UNNAMED FILES
-TERRAFORM.tfvars FILE
-1)bt if u create a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it (the file name)on the command line , ie to deploy it, you
+a)TERRAFORM.tfvars FILE
+bt if u create a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it (the file name)on the command line , ie to deploy it, you
 just run 'terfrm plan' without supplying the values.... you dnt have to run; 'terfrm plan -var-file=prod.tfvars' 
 it has to start with terferm
-then i can just run terfrm plan without supplying d values then d file wil be automaticaly loaded(normally we wil pas d file name  terafrm apply -var-file=foo.tfvars-var-file=bar.tvars)
+then i can just run terfrm plan without supplying d values then d file wil be automaticaly loaded(normally we wil pas d file name; ie terfrm plan -var-file=prod.tfvars then
+terafrm apply -var-file=foo.tfvars-var-file=bar.tvars), but for variable files we dnt need to.
 so if u hv values u like to be automatically loaded the u create a trfrm.tfvars , the values are automatically loaded
 
 ***meeee, above when we deployed in the diff env it was easily diferentiated bc of their names eg prod.tfvars 
@@ -837,16 +838,16 @@ inorder to easily use/supply the variable values in diff env using the TERRAFORM
 
                                   AUTO FILE
                               
-2) auto files   
+b) auto files   
 e.g test.auto.tfvars
 as long as ther is auto then the file will be automatically loaded
 
   ********* bt files without this options, that has a diff name like prod.tfvars file , then u hv to supply on th CLI as -var-file= bc its a named file 
  auto or terraforms files, are files that are automatic to trfrm 
-as u keep writing codes n keep working, u will see a lot of code , a terrafrm.tfvars file are files that supply only your variables, u wil see this files a lot in code  that 
-pipo use to supply the values bc they are making variables reQ so that u can supply UR OWN values, i can create a module (VPC, ec2) n leave all the variables REQ e.g the 
-name, the cidr , the tags and ill ask u create a .tfvars file to supply the values,, that way u can put ur own tag,name, cidr, and so that is now making ur code flexible, n
-reusable , anyone one can reuse bc they can supply their own values , u hv nt hardcode values within terfrm 
+as u keep writing codes n keep working, u will see a lot of code , a terrafrm.tfvars file are files that supplies all your variables, u wil see this files a lot in code  
+that pipo use to supply the values bc they are making variables reQ so that u can supply UR OWN values, i can create a module (VPC, ec2) n leave all the variables REQ e.g 
+the name, the cidr , the tags and ill ask u create a .tfvars file to supply the values,, that way u can put ur own tag,name, cidr, and so that is now making ur code flexible,
+and reusable , anyone one can reuse bc they can supply their own values , u hv nt hardcode values within terfrm 
 thats hw we use variable files
 
 
