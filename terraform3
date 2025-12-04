@@ -120,7 +120,8 @@ then i refer to this variable i created
 
 
               INSTALLING WITH USER DATA
-i have a user data (a bash script) to install httpd , & it will make a dir & echo welcome to landmark into the thml file 
+i have a user data (a bash script called app1-install.sh) to install httpd , & it will make a dir & echo welcome to landmark into the html file 
+echo "<h1>Welcome to Landmark Technologies!</h1>" | sudo tee /var/www/html/index.html
 so this user data becomes my script that will booth strap when the instance starts
 **************    am passing the user data as a file  and the file is in the PWD and its called app1-install.sh"
 
@@ -169,15 +170,48 @@ my data source wil always run first & it returns the AMi id frm us west2& it dyn
 lets say u didnt knw what ur doing & u pass the wrong attribute eg instead of id , i pass ARN
 Lets check what attribute we can get from an AMI .... 
 in google.. aws_AMI terrfrm, i want the data source
+but all am interested in is the attribute, what can be returneded it wi
 42.40 .. we see lots of attribute including (image id - ID of the AMi, should be the same as the resource) he said its the same thing
  so instead of id, i pass arn 
 Lets see if how terfrm will handle it
 terfrm plan 
+had to run upgrade because he changed the version
 we see it returned the Ami, even though we requested for Arn
+he also tried with the architecture & it was returned
+               ERROR
+but if i run terfrm apply, its going to fail because the instance expects an id not the Arn or architecture
+so i hv to correct it ot get the AMi id 
+once it creates the instance, its going to bootstrap it with the script & once its the script has been bootstrapped
+it has completed
+we see the id of the user data that it used 
+instance was created in us west2
+49.47
+now he went to the aws console, & we seee the instance is still bootstrapping 
+running all the checks
+once the check is done we can we use either the public dns or public ip to be able to access it
+
+
+
+                     ANALYZING THE INSTALLATION SCRIPT
+#! /bin/bash
+sudo yum update -y
+sudo yum install -y httpd
+sudo systemctl enable httpd
+sudo service httpd start
+echo "<h1>Welcome to Landmark Technologies!</h1>" | sudo tee /var/www/html/index.html
+sudo mkdir /var/www/html/app1
+sudo echo '<!DOCTYPE html> <html><body style ="background-colour:rgb(250,210,210);"><h1>welcome to landmarktechnologies
+sudo curl http://169.254.169.254/latest/dynamic/instance-identity/documet -0 /var/www/html/app1/metadata.html
+
+50.20 he pasted the public ip: on port 80 in the browser and we see .. 35.90.0.113:80
+Welcome to Landmark Technologies 
+ALso, 35.90.0.113/app1/
+
+
 
 
 54.13************************ THERE ARE 2Wya we can PASS DATA
-in the example we just illustrated above, we see that it was part of conggiguration, trefrm did provisioning , it provionsioned our instance but not only did it provision it
+in the example we just illustrated above, we see that it was part of conggiguration, trefrm did provisioning , it provisioned our instance but not only did it provision it
 it also configured  it
 the process of configuration is when ur installing softwRE, 
 SO TRFRM gives us a way that not only can we provison our infrsastruture bt we can also configure it 
