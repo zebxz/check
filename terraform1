@@ -1,5 +1,5 @@
 WHY YOU SHOULD USE TERRAFORM, IAAC, INTRODUTION TO TERRAFORM, INFRASTRUCTURE AS A CODE: CHARACTERISTICS, BENEFITS, 2 FORMAT OF TERRAFORM CONFIGURATION FILES, 
-STEPS TO USE TERRAFORM, ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM, FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT, 
+STEPS TO USE TERRAFORM, ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM, TERAFRM NEEDS YOUR CREDENTIALS INORDER TO ACCESS UR AWS ACCOUNT, 
 HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM, AWS CLI, GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to 
 Access AWS CLI, DEFAULT PROFILE, MULTIPLE PROFILES, WE CAN PASS A PROFILE, WE CANT CREATE A PROFILE ON AWS CONSOLE, HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS
 Diff btw AWS CLI and TERRAFORM CLI, TERRAFORM COMMAND BASICS,  TERRAFORM CONFIGURATION FILES, TERRAFORM WORKFLOW, PROVIDERS, INSTALL EXTENSION, IT HELPS TO AUTO COMPLETE,
@@ -9,7 +9,82 @@ REQUIRED ARGUMENTS, ARGUMENTS REFERENCE, ATTRIBUTE REFERENCE, TERFRM SETTING BLO
 OUTPUT VALUES BLK, DATA SOURCE, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE.
 
 
+Summarized
+1)IAAC: we ar not creating infrasture on the console but instead we ar creating infrasture as a code 
+Terraform is a tool that helps us build our infrasture in a code format so that we no ,longer nid to go on the console to provision our infrasture bc we want THE
+process to be repeatable
+WHY YOU SHOULD USE TERRAFORM
+ Manually creating resources in aws does not allow consistency of the infastructure provisioned if the process needs to be repeated
+an infrastructture that u can create d same tin over n over again, cos if i hv a sysytem that is repeatble then its easy to manage.
 
+2)characteristics  (nothing for me to do in this step)
+files that contain configurations are created n makes it easy to edit and distribute in our scm
+helps avoid undocumented/ ad-hoc configuration changes :anyone can go on the console & mk changes eg add a tag bt its undocument bt wit IAAC , we knw who did what bc its
+documented
+easy to version control
+you can create infrastruture in modular components , u are able to vv the codes in modules
+e.g i can v a vpc as a module, an ec2 instance as a moudle , s3 as a module sn be able to create all dis infrastruture as a module 
+****gives you a template to follow for provisioning
+e.g ur boss ask u to create a vpc in north virginia,, may ders a vpc in california that was created u are able to look at the code , the requimrnet, how thay provision the
+vpc in carlifornia, so that gives u a template, u are able to copy that code or use it for a denmo, as an example of whjat u are creating , so that becomes a template
+benefit
+cost reduction, reduces error bc u look at the code before u deploy, improves infastruture consistency even if u create 5vpcs , the parameter remains the same 
+ eliminates configuratin drift, if i v created an ec2instance based on some parameters i v passed in my code, those are the only attributes that wil be captured on my instance,
+STATE MGT: terraform manages a state file, it creares a state file , is shows exactly what terraform is doing, so when it creates a resource, it creates a file that captures
+evrytin that it has done,it shows u the state of ur infrastructure so u can look at that file n knw hw many resouces u hv 
+
+3)  2 FORMAT OF TERRAFORM CONFIGURATION FILES (nothing for me to do in this step)
+terra uses declarative syntax to describe ur infrastructure
+ 2 format either : HCL langusge or JSON format which is machine readable.
+configuration files that use the HCL format must end wit . tf file extension for terrafrom to be able to read it , if nt terraform wont read it.
+while JSON File format must end with .tf.json file extenson.
+
+4)ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM  (this is where i start; install terfrm & trefrm binary)
+so u hv ur aws account, u nid terraform to create a resource for u in ur account
+so u  will nid to hv terraform binary, ie self-contained executable file that is the Terraform Command Line Interface (CLI), which is why we are downloading it, bt as we v it,
+we nid to give it specifications for what we want it to do in Aws/azure but for it to interact with AWs,first it need to be authenticated/Configure it bc its a 3rd party appl
+ and it wil rely on the inf that u as a user wil provide it with.
+
+5)CONFIGURE AWS CREDENTIALS BY PASSING YOUR AWS CREDENTIALS TO TEFFARM TO SET THE DEFAULT PROFILE; Aws configure  
+    see step 3 of the video file
+
+6) INSTALL EXTENSIONS FOR AUTO COMPLETE
+
+7)TERRAFORM CONFIGURATION LANGUAGE SYNTAX
+TERRAFRM uses top level blks when its provisioning resources , blks can also be template
+Eg; 
+1)terraform setting blk includes: Terfrm version
+2) Terfrm resource blk; we need a resource blk for evrytin we create in terfrm
+resource name, resource type & REsource version, AMI id, subnet id for vpc, if i dnt specify the vpc, it creates it in the default vpc
+3)provider blk;  region, profile  
+after which we run terraform, init/validate/plan/apply.
+ DIFF BTW PROVIDER BLK & RESOURCE BLK
+                   A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & Arguments
+  2.40.40.... terraform block/setting block doesnt have any label
+
+
+8)CREATE A RESOURCE USING RESOURCE BLK: the resource blk includes the provider type eg aws, azure
+Hv to create a dir then create a resource blk from scratch or clone the code repo
+TERFRM WORKFLOW (Initialize,validat,plan,apply) 
+
+
+AMI
+first we knw that AMI are region specific   ***meee** this means that we hav to indicate the region for AWs to understand what region we want the AMi from
+we got our AMI id frm US east1 N virginia  but our default profile value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
+and thats why we get the error, so we hv to pass the region: region="us-east-1"
+does that mean that if we if we pass the default region Us west2, it will provision it there? ... ill try this 
+
+
+ARGUMENTS
+arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
+arguments can be reQ or optional
+
+ATTRIBUTE
+when we create an instance what we get out is called an attribute e.g ip address, instance id
+*************** so when you are defining your blocks to create your resource, we are pasing arguments inside the blocks but once the rsource hv been created we can get 
+atrribute out of it
+
+***************************************************************************************************************
 
 
 19:38   .......................... READUP SCRIPT
@@ -181,6 +256,15 @@ e.g vs code editor..... visual studio code
                                  ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM
 38.00                 TERRaform is a third party application that is hosted/managed by hashicorp
 
+ meee**i bliv we need the terfrm binary/cli bc although we have aws cli, it is native to only aws, therfore; we need a tool eg terfrm that we can use to provision resources 
+on multiple platforms eg aws, azure, gcp, k8 , because its cloud agnostic 
+***** for terfrm to be able to work in aws, we hv to configure it by creating an aws IAM user in Aws then pass the credentials in terfrm inorder to set the default profile 
+of the aws IAM user we created.
+Therfore we are able to use terfrm in aws by configuring terfrm to ie by passing the credentials of the Aws IAM user we created in Aws which then sets the default profile of 
+the user we created 
+so i bliv if we want to use terrafrm with azure as our resource provider, it may be the say process
+
+
 when u wnat to use terraform in ur env (wher wver ur env is)
 so u hv ur aws account, u nid terraform to create a resource for u in ur account
 so u  will nid to hv terraform binary, ie self-contained executable file that is the Terraform Command Line Interface (CLI), which is why we are downloading it, bt as we v it,
@@ -193,10 +277,9 @@ so b4 teraform interacts with aws it wil nid to be authenticated bc it is a 3rd 
 
 
 
-                      FORMS OF CREDENTIALS U CAN GIVE TERRAFORM INORDER TO ACCESS UR AWS ACCOUNT
+                       TERAFRM NEEDS YOUR CREDENTIALS INORDER TO ACCESS UR AWS ACCOUNT
  for me to be able to do anytin in aws i need to v permission/to be authenticated , e.g i nid  access key n secret key thaT auth  me to access the my secret n access key 
-actually nid to v permission to actually create an ec2 instance
-thats hw persmission works in aws
+actually nid to v permission to actually create an ec2 instance thats hw persmission works in aws
 so the same tin applies to terraform, it will need credentiaL that wil enable it to go to AWS and create a resource based on the specification that you have given it
 once its authenticated, it wil retrun for u a plan n say based on specification this is the paln , this is what we ar goin to do ,and once u apprv ethe plan , terraform wil
 go ahead n create ur resource n once that is done, it now has what is called a state file, and it wil keep a copy of ur file(state file) locally so that it wil show u 
@@ -205,7 +288,7 @@ exactly what resources u hv, that will be captured on this file which is called 
 
 
 
-                                         HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM  ............44.30
+  3)                                       HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM  ............44.30
                         ****now we go to aws
        firts , if u are trying to create resources in aws, u must hv an aws account, the same applies to GCP , or azure
 
@@ -213,7 +296,7 @@ exactly what resources u hv, that will be captured on this file which is called 
 In AWS, we need to generate security credentials in the console ie in AWS ..... security credentials  ***me, ie the acess & secret key 
 ***meee, To configure AWS cli, which enables us/the user we created to manage our Aws resources in the command line shell ie remotely, eg in  mobaxterm, we need the
 security credentials, so first create iam user then the security credentials ( access & secret key)
-4i)  cREATE IAM USER
+3i)  cREATE IAM USER
 so to do that, we go to the IAM user n create security credentials wher we create an access key    
  WE all know we can easly go to IAM (Service as IAM ) and we can create n IAM user............................. 46:00
 (and add to admin grp ,when i click on Administrator access , - JSON  , ..... it has allow all actions on all resources), this is an admin permission
@@ -240,15 +323,16 @@ advanced configurations and fine-grained control over resources that might not b
 
 
 
-  4ii)                      GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to Access AWS CLI )
-                   ***I Bliv the AWS CLI is like the interface that allows us run AWS commands so that we can manage our aws resources from the cli in eg mobaxterm
+  3ii)                      GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to Access AWS CLI )
+ **I Bliv the AWS CLI is like the interface that allows us run AWS commands so that we can manage our aws resources remotely in eg mobaxterm/vscode bt u hv to set credentials
+firsts
 to generate security credentials  for this user, click seceurity credentials 
 now  need  create access key (when creating, tick AWS cli , cos i wnt to use the credentials for my cli) n secret key
 now we v the acess key, copy it 
 this user has adminstrative access/credential
 
 next                              AWS CONFIG SETS THE CREDENTIAL & DEFAULT PROFILE
-4iii) SET THE CREDENTIAL    (aws config and pass the access & secret key)
+3iii) SET THE CREDENTIAL    (aws config and pass the access & secret key)
 once u hv ur credentials   
 nxt we set the credentials n this is why we needed to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
 once u hv ur AWS cli, u wil need to configure,  run aws configure so that u set ur crednetial
@@ -451,11 +535,13 @@ Provides an interactive console for evaluating expressions.
 
 illustration
   eg                            CREATE AN AWS INSTANCE BY CREATING & USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
-               ****objective is to see that we have to pass the 'region' where the AMI we got in AWS is found, in the provider to avoid getting an error
+               ****objective is to see that  Ami's are region specific ***meee** so we have to indicate the region for AWs to understand what region we want the AMi from
 
          the steps to follow are:
-1) Terraform version inside terraform setting blk 2) resource name, 3) resource type & REsource version 4) AMI id,  5)AMI id region  6) the VPC  after which we run terraform,
-init/validate/plan/apply.
+1) Terraform version inside terraform setting blk 
+2) Terfrm resource blk; resource name, resource type & REsource version, AMI id, subnet id for vpc
+3)provider blk;  region, profile  
+after which we run terraform, init/validate/plan/apply.
 
 1.28.47
 *************once we strt taliking abt the diff blocks u guys wil understand what it imeans..................
@@ -520,7 +606,7 @@ so when u run apply, it wil first run the plan again/it wil regenerate the plan 
 
                   TROUBLESHOOTING (REGION Needed)
 ************** bt we got an error ...............  ***** reason ...........??
-first we knw that AMI are region specific 
+first we knw that AMI are region specific **meee** this means that we hav to indicate the region for AWs to understand what region we want the AMi from
 we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
 and thats why we get the error
 although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
