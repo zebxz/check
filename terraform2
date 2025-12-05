@@ -4,7 +4,7 @@ WE CAN CREATE MODULE FOR VPC , USING VARIABLES TO MODULELARIZE MY CODE, TYPES OF
 VARIABLES AS A FILE, terraform.tfvars, auto files, QUESTION :terfrm init -upgrade, MOVED  BLOCK
 
 
-TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO THAT HAS A RESOURCE BLOCK FILE,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
+TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
 PROVIDER Blk, RESOURCE BLK, INput VARIABLES BLK, OUTPUT VALUES BLK, CREATING A LOCAL BLK, DATA SOURCE, CREATING/BUILDING A DATA SOURCE TO GET An AMI 'ID', 
 HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax, HOW DO I NOW USE THIS ID, CREATE AN INSTANCE USING A VARIABLE TO PASS THE AM ID FROM 
 THE DATA SOURCE TO THE RESOURCE BLK, WE DIDNT PASS A REGION SO IT RETURNED AN AMI FROM OUR DEFAULT REGION , USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION
@@ -19,11 +19,32 @@ TERAFRM DESTROY, MOVED BLOCK,
 
 
 
+
  NPSSNOV24
 
 ###in summary ill say we created a data source and then used modules to make it flexible then using variables to modulerize the code , declaring a variable of type map, and
 then using a variable file, 
 
+bc we will be writing codes, u need a code editor,we are using vscode or any IDE of your choice (frm video 3, we saw he likes to use his intellegie to edit his code & terminal
+ie gitbash to run) 
+1)CLONE THE CODE
+ HE DECiced to create a dir or open a folder
+choose to create dir
+mkdir class33-terraform
+git clone https://github.com/LandmakTechnology/terraform-master-class-series.git
+
+2)INITIALIZING (other terfrm commands)
+i bliv then initialize the dir & any other directories you will need to create subsequently (must have a configuration file to initialize, cant initialize an empty dir)
+take note:
+ syntax of hw diff versions of terfrm configuration files were written cud be diff based on the version of terrafrm 
+ if am running the latest version, it may support passing of arguments but mayb the earlier version didnt support this 
+though most of them hv backward compartible, it wil jst give u warning that this has been depricated, or u nid to update oru nid to upgrade, 
+3) CONSTRAINING THE TERFRM VERSION
+In the providers blk
+am constraining it to 3.0 but the latest version is about 5.o
+but bc am constraining it, it will go and look for a an aws plugging/provider that is version 3.0
+4)TERFRM BLKS
+We use terfrm blks based on what we want/are creating
 
 
 
