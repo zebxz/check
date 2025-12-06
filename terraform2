@@ -4,19 +4,18 @@ WE CAN CREATE MODULE FOR VPC , USING VARIABLES TO MODULELARIZE MY CODE, TYPES OF
 VARIABLES AS A FILE, terraform.tfvars, auto files, QUESTION :terfrm init -upgrade, MOVED  BLOCK
 
 
-TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
-PROVIDER Blk, RESOURCE BLK, INput VARIABLES BLK, OUTPUT VALUES BLK, CREATING A LOCAL BLK, DATA SOURCE, CREATING/BUILDING A DATA SOURCE TO GET An AMI 'ID', 
-HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax, HOW DO I NOW USE THIS ID, CREATE AN INSTANCE USING A VARIABLE TO PASS THE AM ID FROM 
-THE DATA SOURCE TO THE RESOURCE BLK, WE DIDNT PASS A REGION SO IT RETURNED AN AMI FROM OUR DEFAULT REGION , USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION
-WE STATED IN THE PROVIDER, HOW DO WE CREATE CUSTOM MODULES, THIS DIR IS OUR EC2 MODULE, CALL THE EC2 MODULE, WHERE IS THE MODULE, WE CAN CREATE MODULE FOR VPC, 
+TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO ,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
+PROVIDER Blk, RESOURCE BLK, INput VARIABLES BLK, OUTPUT VALUES BLK, CREATING A LOCAL BLK, DATA SOURCE, CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
+HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax,  2 2WAYS TO CREATE AN INSTANCE USING A VARIABLE TO PASS THE ATTRIBUTE; AM ID FROM THE
+DATA SOURCE TO THE INSTANCE RESOURCE BLK, HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE OR DATA SOURCE
+ HOW DO WE CREATE CUSTOM MODULES, THIS DIR IS OUR EC2 MODULE, CALL THE EC2 MODULE, WHERE IS THE MODULE, WE CAN CREATE MODULE FOR VPC, 
 THIS DIR IS OUR VPC MODULE, CALL THE VPC MODULE, RUN TERRAFRM INIT ANYTIME SMT IS ADDED TO A MODULE, USING A VARIABLE TO MAKE THE MODULE FLEXIBLE, 
  CREATE A VARIABLE FOR CIDR IN module/main.tf, WHERE THE USER CAN PASS THE VARIABLE VALUE, MAKING VARIBLE REQUIRED/ USING VARIABLES TO MODULELARIZE MY CODE, TERAFRM FORMAT,
 VARIABLE FOR CIDR, DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND, WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE, VARIABLES/TYPES, 
 ACCESS VARIABLE TYPE LIST' IN THE RESOURCE BLK, HOW DO U ACCESS VALUES IN A LIST, USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV, HOW TO READ/REFERENCE VALUES IN A MAP,
  PASSING VARIABLES AS A FILE, TERRAFORM.tfvars FILE/AUTO FILE, CREATING A VARIABLE THAT HAS A SECRET, S3 BUCKET/MODULES, TERFRM PUBLIC MODULES, HOW TO USE THE OFFICIAL TERFRM 
 MODULE, OVERRIDING THE DEFAULT VALUE OF THE OFFICIAL MODULE, LOCK.hcl FILE/VERSIONING, MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION, CREATING A VARIABLE FOR TAG, 
-TERAFRM DESTROY, MOVED BLOCK, 
-
+TERAFRM DESTROY, MOVED BLOCK.
 
 
 
@@ -307,7 +306,7 @@ A data ssource is what can go to AWs and fetch data from you
 
 
 
-                                              CREATING/BUILDING A DATA SOURCE TO GET An AMI 'ID'
+                                              CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
 Ticket:
 i)Create data source to get an AMi id
 ii) use the data source to create an instance
@@ -331,12 +330,17 @@ we see the name, the source, the owner, & the owner alias , its owned by aws, th
 if u click on the ami id, it shows the attribute of the ami
 
 
+                                   
 1) create the data source
+ In creating this data source, We can reference it in our resource blk & it can get the ami id from our default region or dynamically from any region we specify in the 
+provider blk
+
 1.21.00
         data "aws_ami" "amazon_linux" {   ...we want to return an amazon linux using the data so
           most_recent = true             .... we can see the date the ami was =created and req for the most recent ............1:21:01
          owners = ["amazon"]     we want the owner, its owned by amazon, its a list
-
+   we can now apply other filters, bc when we are doing our search, it will return all Ami' that are owned by Amazon & the most recent 
+   but we now want to apply filters on the specific Ami's we want.
 
                                                     APPLY OTHER FILTERS eg name
                                   we hv to put a filter name & a filter value
@@ -345,13 +349,19 @@ if u click on the ami id, it shows the attribute of the ami
            name= "name"         we are trying to filter by the AMI name               so we ar goin to apply filters on the specific AMI that we wnt
 
 
-                                     MAKING THE DATA SOURCE DYNAMIC SO THAT IT CAN GET AMIs FROM DIFF REGIONS
-         values = ["al2023-ami-*-kernel-6.1-x86_64"]          ( we can remove the date n put* so it catches all the AMIs)
-                                                                       ***its bc we can use this same data source to get diff AMIs  e.g wen we wnt toget AMI in a diff region
-       
+                                    
+         values = ["al2023-ami-*-kernel-6.1-x86_64"]          ( we can remove the date n put* so it catches all the AMIs), bc we will apply more filters
+                                                         **mee*its bc we can use this same data source to get diff AMIs  e.g wen we wnt to get AMI in a diff region
+                                                                      
           filter {
              name = "root-device-type"
              values = ["ebs"]            this is also a list
+
+
+            filter {
+             name = "architecture"
+             values = ["x86_64"]  
+
 
 Ls   .. i see data.tf file
 when i run terfrm init, bc in my data source i hv referenced data_aws, therefore terfrm is sensitive enough to know that the plugging i desire to use is aws bc the data is
@@ -377,30 +387,37 @@ LETS SAY I want to create an ec2 instance
 so i can create a resource
 
 
-                                    CREATE AN INSTANCE USING A VARIABLE TO PASS THE AM ID FROM THE DATA SOURCE TO THE RESOURCE BLK
+             
+                              2 WAYS TO CREATE AN INSTANCE USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID FROM THE DATA SOURCE TO THE INSTANCE RESOURCE BLK
+1) USING THE DATA SOURCE TO  GET THE AMI iD FOR THE DEFAULT REGION
+WITHOUT USING THE PROVIDER BLK: so we didnt pass a region
 
+                  THE RESOURCE BLK
   i)resource "aws_instance" "data_test" {        hes just calling it data_test ...meee ie the resource name
-    1.32.20  
-how do we reference the data source/attribute from a resource or data source, we always use the . notation
- ii)ami= data.aws_ami.amazonlinux.id     (.id , bc we nid the id)         ****  instead of me hardcoding the AMI value , i am gon to get the ami frm my data vsource
+   
+       1.32.20  HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE OR DATA SOURCE
+    we always use the . notation
+ ii)ami= data.aws_ami.amazonlinux.id     (.id , bc we nid the id)       1.32.0 ****  instead of me hardcoding the AMI value , i am goIn to get the ami frm my data source
 iii) instance_type = t2.micro                                                         so the id is the attribute i want from the data source
 
   *********** now when i run init, validate and plan , it will run the data source , get the id and replace the id for the AMI 
 so i hv dynamically gone to aws n got the AMI and substitute it here ie in the plan we see 
 bc of this i can use this data source to get my AMis dynamically
 
-
-                         WE DIDNT PASS A REGION SO IT RETURNED AN AMI FROM OUR DEFAULT REGION 
+     ***** we didnt pass a region so it returned an AMi from our default region   
 the AMI we got belong to US west 2.,, bc thats my default region 
 
 
-                    WE DIDNT PASS A REGION SO IT RETURNED AN AMI FROM OUR DEFAULT REGION , USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION WE STATED IN THE PROVIDER
-if i pass a provider bc in my code i dnt hv a proider n my provider is AWS and pass a region
+2)   USING THE DATA SOURCE TO DYNAMICALLY GET AMI iD FOR ANY REGION
+USING THE PROVIDER BLK: so we pass a region
+
+                     USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION WE STATED IN THE PROVIDER
+if i pass a provider bc in my code i dnt hv a proVider n my provider is AWS and pass a region
 *******************  provider = "aws " {
                         region = "us-east-1"
 
-when i run trfrm plan , it wil return an AMI thats ends with 5369 bc of the region , it has used d filter to find the moist recent AMI in thta region bc theyb wil al hv dis
-filter similar name bt is just finding that AMi in d specoific region 
+when i run trfrm plan , it wil return an AMI thats ends with 5369 bc of the region we specified, it has used d filter to find the most recent AMI in that region bc they wil
+al hv dis filter, similar name bt is just finding that AMi in d specific region 
 so if i change my region , i dnt hv to go on d console to do it, to find that AMi, so now i hv dynamically created it and it has returned for me this AMi and now creating it in 
 US east2
 *********************if i change my region to US west1, am jst changin my region bt i v my dtatsource
