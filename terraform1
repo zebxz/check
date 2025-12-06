@@ -45,8 +45,9 @@ so u  will nid to hv terraform binary, ie self-contained executable file that is
 we nid to give it specifications for what we want it to do in Aws/azure but for it to interact with AWs,first it need to be authenticated/Configure it bc its a 3rd party appl
  and it wil rely on the inf that u as a user wil provide it with.
 
-5)CONFIGURE AWS CREDENTIALS BY PASSING YOUR AWS CREDENTIALS TO TEFFARM TO SET THE DEFAULT PROFILE; Aws configure  
+5)CONFIGURE AWS CREDENTIALS BY PASSING YOUR AWS CREDENTIALS (of the IAM User)TO TEFFARM TO SET THE DEFAULT PROFILE; Aws configure  
     see step 3 of the video file
+this is important to enable terfrm go into aws & provision resources
 
 6) INSTALL EXTENSIONS FOR AUTO COMPLETE
 
@@ -69,10 +70,13 @@ TERFRM WORKFLOW (Initialize,validat,plan,apply)
 
 
 AMI
-first we knw that AMI are region specific   ***meee** this means that we hav to indicate the region for AWs to understand what region we want the AMi from
-we got our AMI id frm US east1 N virginia  but our default profile value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
+first we knw that AMI are region specific 
+we got our AMI id frm US east1 N virginia  but our default profile value is US west2 , so its trying to provision our resources in US west2 bc we hvnt passed any region
 and thats why we get the error, so we hv to pass the region: region="us-east-1"
-does that mean that if we if we pass the default region Us west2, it will provision it there? ... ill try this 
+
+when creating an instance, the instance resource blk requires an AMi id & as such we must get the Ami id from the default profile region to enable terfrm provison the instance
+and in doing so, we may/may not pass the region bc terfrm understands to provision it in in the default region (can use data source to mk it flexible like in video2)
+however, in this illustration we got the Ami id from a diff region & as such we have to specific the same region in the provider blk
 
 
 ARGUMENTS
@@ -332,6 +336,8 @@ now we v the acess key, copy it
 this user has adminstrative access/credential
 
 next                              AWS CONFIG SETS THE CREDENTIAL & DEFAULT PROFILE
+CONFIGURE AWS CREDENTIALS BY PASSING YOUR AWS CREDENTIALS (of the IAM User)TO TEFFARM TO SET THE DEFAULT PROFILE; Aws configure  
+this is important to enable terfrm go into aws & provision resources
 3iii) SET THE CREDENTIAL    (aws config and pass the access & secret key)
 once u hv ur credentials   
 nxt we set the credentials n this is why we needed to hv AWS cli for most of bc we v been workin in aws,launching instances, loging into AWS, we hv our AWS cli setup  bt
@@ -535,7 +541,10 @@ Provides an interactive console for evaluating expressions.
 
 illustration
   eg                            CREATE AN AWS INSTANCE BY CREATING & USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
-               ****objective is to see that  Ami's are region specific ***meee** so we have to indicate the region for AWs to understand what region we want the AMi from
+     ***objective is to see that  Ami's are region specific ***meee** so if get the ami id from a region other than the default region then we have to indicate the region 
+    **for thiis illustration we copied Ami id frm a region thats not the default region& so  we have to pass the 'region' where the AMI we got in AWS is found, in the provider
+                    blk to avoid getting an error but if we didnt copy an Ami id i bliv it will provision it in the default region; ill check when am practicing
+
 
          the steps to follow are:
 1) Terraform version inside terraform setting blk 
@@ -604,12 +613,17 @@ so when u run apply, it wil first run the plan again/it wil regenerate the plan 
   . yes ...... n it stars creating the instance
 
 
-                  TROUBLESHOOTING (REGION Needed)
+                  TROUBLESHOOTING (REGION Needed)   .. AMI IS REGION SPECIFIC
 ************** bt we got an error ...............  ***** reason ...........??
-first we knw that AMI are region specific **meee** this means that we hav to indicate the region for AWs to understand what region we want the AMi from
+first we knw that AMI are region specific 
 we got our AMI id frm US east1 N virginia  but our default value is US west2 , so its trying to provision our resorces in US west2 bc we hvnt passed any region
 and thats why we get the error
 although when it ran the plan it says it was ok, it can execute it but apply is finding an ivalid AMi ( its nt found) bc we ar in the wrong region
+
+**mee
+when creating an instance, the instance resource blk requires an AMi id & as such we must get the Ami id from the default profile region to enable terfrm provison the instance
+and in doing so, we may/may not pass the region bc terfrm understands to provision it in in the default region (can use data source to mk it flexible like in video2)
+however, in this illustration we got the Ami id from a diff region & as such we have to specific the same region in the provider blk
 
 
  4)               NEED TO PASS REGION IN THE PROVIDER
@@ -643,6 +657,10 @@ so we can comment the profile "#"
 
 
   5)                            TROUBLESHOOTING/ NEED TO SPECIFY THE VPC
+   *** i bliv vpc is also region specific 
+in this illustration, we didnt specify the region so terfrm will provision the vpc in the default vpc but it wasnt possible because
+when we checked our aws account, we dnt hv a default vpc so it could not be provisioned
+
 bc i need to create an ec2 instance and i need to create it in a certain vpc and bc i ddint state which vpc or subnet i wnat to create the ec2 instance
 what happens is that terfrm wil create it in d default vpc bc in my code i didnt specify where i wnt to creaqte it 
 if i go to my vpc in us est1, Virginia, i v 4vpcs bt ders no default vpc, so bc der no default vpc i hv to specify whiv vpc i nid to create this
@@ -914,7 +932,7 @@ In systems like Terraform, "output" blocks and "data source" blocks have fundame
 DATA SOURCES  ***mee... deals with object
 bring data into your configuration from external sources, Input: it Fetches data from a provider's API (e.g., AWS, Azure, GCP)into Terraform. **mee, for further
 activities like configuration eg using a data source to get an AMI from AWS & then use the AM to create a instance (can either reference the data source in the resource blk
-used in creating the instance or u can hardcode ie in the resource blk, just write the Ami id gotten.
+used in creating the instance.
 References data for objects that already exist and whose lifecycle is managed elsewhere (manually or by another configuration).
 It is used to read information about existing infrastructure or external data not managed by your current configuration.
 WHILE;
