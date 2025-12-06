@@ -1,6 +1,6 @@
 WHY YOU SHOULD USE TERRAFORM, IAAC, INTRODUTION TO TERRAFORM, INFRASTRUCTURE AS A CODE: CHARACTERISTICS, BENEFITS, 2 FORMAT OF TERRAFORM CONFIGURATION FILES, 
 STEPS TO USE TERRAFORM, ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM, TERAFRM NEEDS YOUR CREDENTIALS INORDER TO ACCESS UR AWS ACCOUNT, 
-HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/  HOW DO WE PASS CREDENTIALS TO TERRAFORM, AWS CLI, GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to 
+HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/HOW DO WE PASS CREDENTIALS TO TERRAFORM, AWS CLI, GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to 
 Access AWS CLI, DEFAULT PROFILE, MULTIPLE PROFILES, WE CAN PASS A PROFILE, WE CANT CREATE A PROFILE ON AWS CONSOLE, HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS
 Diff btw AWS CLI and TERRAFORM CLI, TERRAFORM COMMAND BASICS,  TERRAFORM CONFIGURATION FILES, TERRAFORM WORKFLOW, PROVIDERS, INSTALL EXTENSION, IT HELPS TO AUTO COMPLETE,
 CREATE AN AWS INSTANCE USING BY CREATING & USING A RESOURCE BLOCK, TROUBLESHOOTING/NEED TO PASS REGION IN THE PROVIDER, TROUBLESHOOTING/ NEED TO SPECIFY THE VPC, 
@@ -235,7 +235,9 @@ automatically when needed.
 
 
 
-                                     STEPS TO USE TERRAFORM 
+                                    3 STEPS TO USE TERRAFORM 
+     ***mee** they include 1) installation of terfrm 2) vscode 3)configure aws credentials on your system/pass the credentials to terfrm inorder to set the default profile
+
  34.10                              Terraform installation script landmark website
 1) TERRAFORM INSTALLATON 
 its very easy to install.
@@ -385,9 +387,10 @@ just mk sure u hv set ur credential b4 u are able to use terraform.
 
 
 
-                                     HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS????
+                                     HOW TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS????
 for us to knw hw to use those credentials, we nid to knw the command basis n need to knw hw to write a teraform configuration so we know wher we can pass our credentials
-
+*** for eg while creating an ec2 instance, we can pass a profile in the providers blk and this overrides the default profile
+there may be other situations that may require us to pass secret/acces keys
 
 
 SOMEBODY QUESTION: 1)
@@ -626,7 +629,7 @@ and in doing so, we may/may not pass the region bc terfrm understands to provisi
 however, in this illustration we got the Ami id from a diff region & as such we have to specific the same region in the provider blk
 
 
- 4)               NEED TO PASS REGION IN THE PROVIDER
+ 4)               NEED TO PASS REGION IN THE PROVIDER   .. 1.50.
 to correct the error we will pass our region in the provider
 region="us-east-1"
 the region we pass wil overide the default region bt we ar stil uising d default credential.
