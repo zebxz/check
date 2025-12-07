@@ -5,15 +5,15 @@
 TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO ,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
 PROVIDER Blk, RESOURCE BLK, INput VARIABLES BLK, OUTPUT VALUES BLK, CREATING A LOCAL BLK, DATA SOURCE, CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
 HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax, USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region
-dynamically)TO THE INSTANCE RESOURCE BLK, HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE/DATA SOURCE
+dynamically)TO THE INSTANCE RESOURCE BLK, HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE/DATA SOURCE, MODULE,
  HOW DO WE CREATE CUSTOM MODULES, THIS DIR IS OUR EC2 MODULE, CALL THE EC2 MODULE, WHERE IS THE MODULE, WE CAN CREATE MODULE FOR VPC, 
 THIS DIR IS OUR VPC MODULE, CALL THE VPC MODULE, RUN TERRAFRM INIT ANYTIME SMT IS ADDED TO A MODULE, USING A VARIABLE TO MAKE THE MODULE FLEXIBLE, 
  CREATE A VARIABLE FOR CIDR IN module/main.tf, WHERE THE USER CAN PASS THE VARIABLE VALUE, MAKING VARIBLE REQUIRED/ USING VARIABLES TO MODULELARIZE MY CODE, TERAFRM FORMAT,
 VARIABLE FOR CIDR, DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND, WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE, VARIABLES/TYPES, 
 ACCESS VARIABLE TYPE LIST' IN THE RESOURCE BLK, HOW DO U ACCESS VALUES IN A LIST, USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV, HOW TO READ/REFERENCE VALUES IN A MAP,
- PASSING VARIABLES AS A FILE, TERRAFORM.tfvars FILE/AUTO FILE, CREATING A VARIABLE THAT HAS A SECRET, S3 BUCKET/MODULES, TERFRM PUBLIC MODULES, HOW TO USE THE OFFICIAL TERFRM 
-MODULE, OVERRIDING THE DEFAULT VALUE OF THE OFFICIAL MODULE, LOCK.hcl FILE/VERSIONING, MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION, CREATING A VARIABLE FOR TAG, 
-TERAFRM DESTROY, MOVED BLOCK.
+ PASSING VARIABLES AS A FILE, TERRAFORM.tfvars FILE/AUTO FILE, CREATING A VARIABLE THAT HAS A SECRET, S3 BUCKET/MODULES, TERFRM PUBLIC MODULES/REGISTRY, HOW TO USE THE
+OFFICIAL TERFRM MODULE, OVERRIDING THE DEFAULT VALUE OF THE OFFICIAL MODULE, LOCK.hcl FILE/VERSIONING, MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION, CREATING A VARIABLE FOR
+TAG, TERAFRM DESTROY, MOVED BLOCK.
 
 
 
@@ -464,6 +464,8 @@ on the filters u applied
 
 
 
+                                         MODULES BLK
+
 
 blk 8: modules blk  ..................1:38:48
 the key of working with terfrm as infrastructure as a code is the use of modules
@@ -473,12 +475,23 @@ modules make our code very flexible
                                     HOW DO WE CREATE CUSTOM MODULES ..........Terfrm also has public modules we can use..3.00
 I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
 So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
-ami/vpc & a file for variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
+ami/vpc & a variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
 the argument variable values
 
  *****  IN the first video, Inside the ec2 instance resource blk we pass all the arguments eg vpc, ami, cidr but now we are using the arguments as MODULES
 
 
+                   STEPS TO CREATE & USE MODULES /MODULE BLK
+A)
+i)Create a sub dir/folder for the module
+ii) inside the main dir create a main.tf file, where we call all the modules, 
+iii)Create a file which contains the resource blk for each of the arguments eg vpc, ec2 instance , these becomes the module & we can call any/all of them in the main.tf file
+iv)to makethe modules flexible, create a variable file for each one, we can pass the variable as a file & also mak ethe variable required
+B)Call the module
+C)initialize
+
+
+illustration:
 
 stepA
       so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a (me the test dir is a sub dir of the main dir) dir called test  
@@ -497,6 +510,8 @@ then inside this main.tf, i can (call the module) by using the key word 'module'
  source = "./test"         the argument that is reQ inside my module is the source, wher is d code/module coming frm ? what is the source of ur module?
                                so i can say that my source is this presnt dir bt inside of a dir called test
 
+
+                      INITIALIZE
 to initialize this module i need to be outside the test dir but inside the overall dir terrsfrm master class33
 when i ls in the  terrsfrm master class33 dir, 
 it is goin to see  all the (sub) dir and the main.tf file
