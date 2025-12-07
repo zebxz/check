@@ -1,12 +1,12 @@
 WHY YOU SHOULD USE TERRAFORM, IAAC, INTRODUTION TO TERRAFORM, INFRASTRUCTURE AS A CODE: CHARACTERISTICS, BENEFITS, 2 FORMAT OF TERRAFORM CONFIGURATION FILES, 
-STEPS TO USE TERRAFORM, ONCE TERRAFROM HAS BEEN INSTALLED, HOW DO U USE TERRAFORM, TERAFRM NEEDS YOUR CREDENTIALS INORDER TO ACCESS UR AWS ACCOUNT, 
+3 STEPS TO START USING TERRAFORM, TERFRM IS A THIRD PARTY APPLICATION, TERAFRM NEEDS YOUR CREDENTIALS INORDER TO ACCESS UR AWS ACCOUNT,
 HOW TO CONFIGURE AWS CREDNETIALS ON YOUR SYSTEM/HOW DO WE PASS CREDENTIALS TO TERRAFORM, AWS CLI, GENERATE SECURITY CREDENTIALS ie THE ACCESS & SECRET KEY WE NEED to 
 Access AWS CLI, DEFAULT PROFILE, MULTIPLE PROFILES, WE CAN PASS A PROFILE, WE CANT CREATE A PROFILE ON AWS CONSOLE, HOW MANY WAYS DOES TERRAFORM ALLOW US TO PASS THOSE CREDENTIALS
 Diff btw AWS CLI and TERRAFORM CLI, TERRAFORM COMMAND BASICS,  TERRAFORM CONFIGURATION FILES, TERRAFORM WORKFLOW, PROVIDERS, INSTALL EXTENSION, IT HELPS TO AUTO COMPLETE,
-CREATE AN AWS INSTANCE USING BY CREATING & USING A RESOURCE BLOCK, TROUBLESHOOTING/NEED TO PASS REGION IN THE PROVIDER, TROUBLESHOOTING/ NEED TO SPECIFY THE VPC, 
-TERRAFORM CONFIGURATION LANGUAGE SYNTAX,  DIFF BTW PROVIDER BLK & RESOURCE BLK, 10 HIGH LEVEL BLOCKS, TEMPLATE, ARGUMENTS, ATTRIBUTE, SO HOW DO THESE BLOCKS WORKS ,
-REQUIRED ARGUMENTS, ARGUMENTS REFERENCE, ATTRIBUTE REFERENCE, TERFRM SETTING BLOCK, TERRAFROM VERSION, HOW TO USE VERSION, BACKEND,TO CREATE VARIABLE, REFACTORING, 
-OUTPUT VALUES BLK, DATA SOURCE, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE.
+CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK  & IAM ID OF ANY REGION (NOT THE DEFAULT REGION), TROUBLESHOOTING/NEED TO PASS REGION OF AMI ID IN THE PROVIDER BLK, 
+TROUBLESHOOTING/ NEED TO SPECIFY THE VPC, TERRAFORM CONFIGURATION LANGUAGE SYNTAX,  DIFF BTW PROVIDER BLK & RESOURCE BLK, 10 HIGH LEVEL BLOCKS, TEMPLATE, ARGUMENTS, ATTRIBUTE,
+HOW DO THESE BLOCKS WORKS ,REQUIRED ARGUMENTS, ARGUMENTS REFERENCE, ATTRIBUTE REFERENCE, TERFRM SETTING BLOCK, TERRAFROM VERSION, HOW TO USE VERSION, BACKEND,
+TO CREATE VARIABLE, REFACTORING, OUTPUT VALUES BLK, DATA SOURCE, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE.
 
 
 
@@ -252,7 +252,7 @@ automatically when needed.
 
 
 
-                                    3 STEPS TO USE TERRAFORM 
+                                    3 STEPS TO START USING TERRAFORM 
      ***mee** they include 1) installation of terfrm 2) vscode 3)configure aws credentials on your system/pass the credentials to terfrm inorder to set the default profile
 
  34.10                              Terraform installation script landmark website
@@ -559,8 +559,10 @@ Provides an interactive console for evaluating expressions.
 
 
 
+
+
 illustration
-  eg                            CREATE AN AWS INSTANCE BY CREATING & USING A RESOURCE BLOCK ... aws instance bc my provider is AWS  
+  eg                            CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK  & IAM ID OF ANY REGION (NOT THE DEFAULT REGION)... aws instance bc my provider is AWS  
      ***objective is to see that  Ami's are region specific ***meee** so if get the ami id from a region other than the default region then we have to indicate the region 
     **for thiis illustration we copied Ami id frm a region thats not the default region& so  we have to pass the 'region' where the AMI we got in AWS is found, in the provider
                     blk to avoid getting an error but if we didnt copy an Ami id i bliv it will provision it in the default region; ill check when am practicing
@@ -646,7 +648,7 @@ and in doing so, we may/may not pass the region bc terfrm understands to provisi
 however, in this illustration we got the Ami id from a diff region & as such we have to specific the same region in the provider blk
 
 
- 4)               NEED TO PASS REGION IN THE PROVIDER   .. 1.50.
+ 4)               NEED TO PASS THE REGION OF THE IAM ID IN THE PROVIDER  BLK .. 1.50.
 to correct the error we will pass our region in the provider
 region="us-east-1"
 the region we pass wil overide the default region bt we ar stil uising d default credential.
@@ -949,14 +951,14 @@ terfrm wil nt plan until i supply these value bc i commented out the variable, i
 ***ONline
              DIFFERENCE BTW OUTPUT BLOCK & DATA SOURCE
 In systems like Terraform, "output" blocks and "data source" blocks have fundamentally different purposes regarding data flow:
-DATA SOURCES  ***mee... deals with object
+DATA SOURCES  ***mee... deals with attribute of an object, this attribute will be used as an input for further configuration
 bring data into your configuration from external sources, Input: it Fetches data from a provider's API (e.g., AWS, Azure, GCP)into Terraform. **mee, for further
 activities like configuration eg using a data source to get an AMI from AWS & then use the AM to create a instance (can either reference the data source in the resource blk
 used in creating the instance.
 References data for objects that already exist and whose lifecycle is managed elsewhere (manually or by another configuration).
 It is used to read information about existing infrastructure or external data not managed by your current configuration.
 WHILE;
-OUTPUTS    ****meeee... deals with attribute
+OUTPUTS    ****meeee... deals with attribute of a resource you create
 send data out from your configuration.Exposes internal data from your Terraform state file outside the configuration
 To expose specific values from your current configuration (usually from resources you've created) to the command line, other modules, or external tools..
 Exposes attributes of managed resources that your current configuration created or modified
@@ -964,7 +966,7 @@ Exposes attributes of managed resources that your current configuration created 
 
 
 ...2 :54:40
-OUTPUT VALUES BLK   ****meeee... deals with attribute  
+OUTPUT VALUES BLK   ****meeee... deals with attribute  of a resource you create
 eg 
 After creating an instance & i want to get the public ip, i can use an output blk
 output is a blk that you use to get smt out of a resource you created
@@ -987,7 +989,7 @@ especially when u run pipelines, u dnt wnt trfrm to stop, to interrupt , so that
 ************************** he SKIPPED LOCAL VALUE BLOKS
 
 
-DATA SOURCE ***mee... deals with object
+DATA SOURCE ***mee...deals with attribute of an object, this attribute will be used as an input for further configuration
 it starts with the keyword; data
 this has two labels
 then u can passs in filters
