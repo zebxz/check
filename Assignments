@@ -1068,28 +1068,38 @@ Install a code editor of your choice - vscode is recommended for this course
 Configure your aws credentials on your local environment
 
 
+          ***FOR THE FOLLOWING TASK, THE DIR WE COLNED THE TERFRM REPO WILL SERVE AS THE MAIN DIR
 2)   command basis project 02
 a)ec2
-Create a new folder /directory called: ec2-02
-Create an ec2 instance named "FirstEC2" in your default region.       ***meee, using resource block
-   meee ****objective is to see that we have to pass the AMI region in the provider to avoid getting an error
+Create a new folder /directory called: ec2-02    ***mee, (there should be a Project-02 directory/folder, this project-02 dir/folder is in the trfrm repo we cloned)
+Create an ec2 instance named "FirstEC2" in your default region  ***mee, but use the ami from any region     ***meee, using a resource block
+**objective is to see that Ami's are region specific *meee** so if get the ami id from a region other than d default region then we hv to indicate d region in d provider blk
 Use the ami of an ubuntu instance.
 The instance size needs to be t2.micro
 then initialize, validtae, paln and apply
 
-   ***meee***
- create a variable & use it to pass the Ami id 
+  ***solution
+a) Create a (sub) new folder/directory called: ec2-02   ... we already hv a main dir ie the terfrm repo we cloned & inside it we hv a 'project-02 dir/folder
+b)create a file called ec2'1
+c)create a provider blk(indicate the region you copied the ami from)
+d)create a resource blk for your instance called 'firstEc2' & copy an ami id from AwS & paste
+
+
+************************************ignore
+  ***meee*** 2.42.40, he informed us about the option of a variable (ill ignore it here bc its included in the next project for video2)
+SO i can create a variable & use it to pass the Ami id to the resource blk
 then initialize, validate, plan & apply.
 
    **** solution 
 TO CREATE VARIABLE 
  eg variable for Ami
 then we create the variable with type string and the default value eg t2 medium
-then go bk to the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
+then in the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
 ie :  ami = var.myami
 
 we can also create a variable for instance type and also for subnet
 ********when am done refactor my code
+********************************************************************
 
 b)vpc
 Create a new folder /directory called: vpc-02
@@ -1098,52 +1108,94 @@ CIDR range : 192.168.0.0/24
 
 
 
+ ***solution
+a) Create a (sub) new folder/directory called: vpc-02
+b)create a file called vpc1 & inside it create a resource blk for vpc called "FirstVPC"
+   it should include the cidr range
+
+
+
+
+
 
 terfrm2
+  ***FOR THE FOLLOWING TASK, THE DIR WE COLNED THE TERFRM REPO WILL SERVE AS THE MAIN DIR
 
 1)  language syntax project 03
-  Practice how to check AMI id attributes in aws
+  ***mee... Practice how to check AMI id attributes in aws
 
-***meee***   i want to do exactly what was done in class ie use data source to get id, then do the other things the project stated.
-Use an output block to get an AMI id ubuntu, then for a)ec2 ; create an instance named "FirstEC2", using a variable to pass the AMI id we got Frm the data source to the 
-resource blk
-
-a)ec2
-Create a new folder /directory called ec2-03 inside the Project-03 directory , if i already hv a main directory then ignore creating a new one
-Create an ec2 instance named "FirstEC2" in your default region.
+a)ec2          
+Create a (mee, ie a sub folder)new folder /directory called ec2-03 inside the Project-03 directory, **me, (this project-03 dir/folder is in the trfrm repo we cloned)
+Create an ec2 instance named "FirstEC2" in your default region.   ***i hv to change the name to '2ndEC2' so it doesnt conflict with the first instance we created above 
 Use the ami of an ubuntu instance.
 The instance size needs to be t2.micro
 Use variables to pass the ami, instance type and instance name to the resource block.
 Use an output block to get the public Ip address of the instance after creation.
 
+ ***  solution
+i)a main dir needs to be created first ( & we already hv this which is the terfrm repo we cloned, there is a project-03 dir inside it) 
+so create the a sub folder called 'ec2-03
+nxt create a file called ec2'2 then create the resource blk for an 'ec2 instance called ''2ndEC2''
+ii)create a variable blk for ami, & instance type & instance name
+then we create the variable with type string and the default values eg the type t2.micro and the ami value
+then in the resource blk, remove the hardcoding we did ( default values) and and reference the variable 
+ie :  ami = var.myami
 
-b)Create a directory called Project-03. Create a directory called vpc-03 inside Project-03.
-While in the vpc-03 directory, Create a VPC named "FirstVPC"
+
+
+b)Create a directory called Project-03. Create a directory called vpc-03 inside Project-03.    **me, (this project-03 dir/folder is in the trfrm repo we cloned)
+While in the vpc-03 directory, Create a VPC named "FirstVPC"  ***i hv to change the name to '2ndVPC' so it doesnt conflict with the first instance we created above 
 CIDR range : 192.168.0.0/24
 Use variables to pass the cidr range and VPC name to the VPC resource.
 
+ ***  solution
+i)a main dir needs to be created first ( & we already hv this which is the terfrm repo we cloned, there is a project-03 dir inside it) 
+so create the sub folder/dir called 'vpc-03
+nxt create a file called vpc2 and inside it create a resource blk for vpc called "2ndVPC", & also pass an argument for the 'cidr range'
+ii)  for the variable:
+ Create a variable for 'cidr' & the vpc name
+then in the vpc resource blk, reference the variable 
+ie :  cidr = var.cidr
 
-c) ***meee 
-   create a main/general dir  eg his own was terfrm class33 dir
-i)create a module for ec2 (first, inside the main dir, i need to create a dir called ec2 (although he said all his config files are inside here bt i didnt see it), so inside 
-the ec2 dir, i may need to create my module/main.tf file & inside it ill create a resource for ec2, hopefully it works
-ii)inside the main dir, create a main.tf, where ill call the modules
-iii) create a custom module for vpc (first, inside the main dir,i need to create a dir called vpc & inside it create a module/main.tf file & inside the file, create a vpc 
-resource
-iv)inside the vpc module/main.tf, create a variable for cidr & also reference it & inside the main dir, where we hv the main.tf, wher il call the modules, pass the cidr value
+
+c)
+***meee***  DATA SOURCE
+i want to do exactly what was done in class ie use data source to get Ami id & pass it into the resource blk for an ec2 instance
+Use a data source to get an AMI id ubuntu, from both the default region & any region & pass it in the resource blk of the instance we create for '2ndEc2'
+then in the resource blk reference the data source inorder to pass the AMI id to the resource blk
+
+
+
+D) ***meee Modules
+   create a main/general dir eg his own was terfrm class33 dir so in this case the term repo we cloned is the main dir
+
+i)inside the main dir, create a main.tf file, where ill call all/any of the modules
+
+ii)create a Custom module for ec2 
+(so bc i already hv my  folder/dir called 'ec2-03 & the file called ec2'2 & which contains my resource blk for the instance '2ndEc2'), then 
+inside the main.tf, where we call all the modules, i can call it as: module "ec2" {        **we can give it any name & source  = "./2ndEc2"  
+to initialize this module i need to be outside the 'ec2-03 dir but inside the overall dir terrsfrm master class33, then run terfm init, it will see only the main.tf file
+
+iii) create a custom module for vpc (so bc i already hv my folder/dir called 'vpc-03 & the file called "VPC2" & which contains my resource blk for the vpc '2ndVPC'), then 
+inside the main.tf, where we call all the modules, i can call it as: module "vpc" {        **we can give it any name & source  = "./2ndVPC" 
+
+iv)inside the vpc module/main.tf, create a variable for cidr & also reference it & inside the main dir; where we hv the main.tf, wher il call the modules, pass the cidr value
+
 v) mk the cidr required/USE VARIABLES TO MODULELARIZE MY CODE, ie inside the main.tf wher i call the modules, i nid to declare a variable called cidr bt still nt provide it
 (the value)
 then when i run terfrm plan, it will request for the cidr value & then ill provide it
 vi) create a variable tag
  ***also create named & unnamed variable files & use it to supply the values for the configuration 
 
-D)   PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing '-var-file= 'the file name')
+
+E)   PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing '-var-file= 'the file name')
 TYPES OF VARIABLE FILES TO PASS
 1)Create a Named files eg prod.tfvars
 2) Create a Unamed  files eg terrafrm.tfvars or auto files
+  ***use these to supply the varialbe values for 'no iv; cidr value
 
 
-      E)                            DEPLOY IN DIFF ENV
+      F)                            DEPLOY IN DIFF ENV
 ***** try this too, deploy to stage/dev/prod  USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV
 so u can create a variable of type list of strings , put ur values der, lets says u are creating a module that wil deploy instances both in the stage , dev n prod env n mayb
 the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2 medium, in the prod use a t3 large
@@ -1156,12 +1208,14 @@ the req is when ur deploying in the stage env use a t2 micr, in the dev use a t2
 so u can define a var of type map then based on the env u selsct the key, so ur just declaring on evariable , ur reading it frm one variable bt its a variable of type map & 
 ur selecting the key based on the env
 
-F) Create a variable that has a secret
-G) create a resource for a bucket
-h) use terraform official module to create a resource eg instance
- I) Terrafrm destroy to destroy a particular resource      
-J) run terfrm init -upgrade  .. try to create a resource with a diff version 
-k) Moved blocks
+G) Create a variable that has a secret
+H) create a resource for a bucket
+I) use terraform official module to create a resource eg instance
+ J) Terrafrm destroy to destroy a particular resource      
+K) run terfrm init -upgrade  .. try to create a resource with a diff version 
+L) Moved blocks
+
+
 
 
 video 3
