@@ -307,7 +307,7 @@ A data ssource is what can go to AWs and fetch data from you
 
 
                                               CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
-       we will further use this data source to 1) input it to create an instance 2)
+       we will further use/refer to this data source to 1) input it to create an instance 2)
 
 Ticket:
 i)Create data source to get an AMi id
@@ -391,6 +391,8 @@ so i can create a resource
 
              
                USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region) TO THE INSTANCE RESOURCE BLK
+   ***we will further use/refer to this resource blk as our ec2 module
+
 1) USING THE DATA SOURCE TO  GET THE AMI iD FOR THE DEFAULT REGION
 WITHOUT USING THE PROVIDER BLK: so we didnt pass a region
 In the reource blk we reference the data source
@@ -444,6 +446,15 @@ modules make our code very flexible
 
 
                                     HOW DO WE CREATE CUSTOM MODULES ..........Terfrm also has public modules we can use..3.00
+I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
+So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
+ami/vpc & a file for variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
+the argument variable values
+
+ *****  IN the first video, Inside the ec2 instance resource blk we pass all the arguments eg vpc, ami, cidr but now we are using the arguments as MODULES
+
+
+
 stepA
       so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a dir called test  
 this is the dir that has my  tefrm config files 
@@ -528,20 +539,18 @@ am just refering wher my code lives
 
 
 Step C
-so in my terminal i run terferm init, bt if i just run terfrm plan, it wil say a ERROR, ders a module called vpc is nt installed 
+so in my terminal i run terfrm init, bt if i just run terfrm plan, it wil say a ERROR, ders a module called vpc is nt installed 
 afer runing trfrm init, i run terfrm plqn 
 now its goin to create for me 2resources
 the first plan we see is for the vpc with cidr  10.0.0.0/16
 and also the  ec2 instance 
-so i hv my code living here (test)tacked  away bt am calling them now as modules              ......1:51
+so i hv my code living here (test)tacked away bt am calling them now as modules              ......1:51
 
-****************tk note i didnt run terfrm apply yet*********** I NOTED dis here myself bc l8r on someone aksed if  DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAN
+****************tk note i didnt run terfrm apply yet***********
+I NOTED dis here myself bc l8r on someone aksed if  DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND??
 
 
-IN the first video, we created a resource blk for vpc & instead of hardcoding, inside the vpc resource blk or we create a new file & inside it, create a variable for cidr 
-then in the resource blk, we reference the variable
-but now we are using resource blks as modules eg a resource blk for a vpc then we create a main.tf file, where we can call any/all the modules we want & we can make the 
-modules flexible by using variables eg we create a variable for cidr in the vpc resource blk then in the main.tf file, we referenece the variable
+
 
                                     USING A VARIABLE TO MAKE THE MODULE FLEXIBLE 
 ******************bt still this module  that am passin here is still nt very flexible bc if i give u this code to use n ur calling the module main.tf (where we called al the
