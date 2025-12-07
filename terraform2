@@ -38,13 +38,16 @@ take note:
  syntax of hw diff versions of terfrm configuration files were written cud be diff based on the version of terrafrm 
  if am running the latest version, it may support passing of arguments but mayb the earlier version didnt support this 
 though most of them hv backward compartible, it wil jst give u warning that this has been depricated, or u nid to update oru nid to upgrade, 
-3) CONSTRAINING THE TERFRM VERSION
+3) CONSTRAINING THE TERFRM VERSION/  TERRAFRM VERSION DERTERMINES/SYNTAX OF THE CONFIGURATION FILE
+       syntax of hw diff versions of terfrm configuration files were written cud be diff based on the version of terrafrm 
 In the providers blk
 am constraining it to 3.0 but the latest version is about 5.o
 but bc am constraining it, it will go and look for a an aws plugging/provider that is version 3.0
-4)TERFRM BLKS
-We use terfrm blks based on what we want/are creating
-
+4)recap; TOP LEVEL BLKS
+We use terfrm blks based on what we want/are creating & we use a resource blk for evry thing we create in terfrm 
+Input/out/local 
+illustration for local & data source/HOW TO CHECK AMI ID IN AMAZON
+5) CREATE A DATA SOURCE & USE IT TO 
 
 
 
@@ -307,17 +310,17 @@ A data ssource is what can go to AWs and fetch data from you
 
 
                                               CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
-       we will further use/refer to this data source to 1) input it to create an instance 2)
+       we will further use/refer to this data source to 1) input it to our instance resource blk & get an ami from our default region & any other region
 
 Ticket:
 i)Create data source to get an AMi id
 ii) use the data source to create an instance
 
-lets create a data source for an AMi
+lets create THE data source for THE AMi attribute
 ill create another file &call it data.tf
 
      ...... 1:17:35     create a data source for an AMI , we wnt to return a certain AMI 
-first create n name the file and open it and startt56
+first create n name the file and open it and start
 YOU start to create a data source oR using a data blk with the keyword data, n data block needs 2 labels 
 
 
