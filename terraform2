@@ -4,8 +4,8 @@
 
 TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO ,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
 PROVIDER Blk, RESOURCE BLK, INput VARIABLES BLK, OUTPUT VALUES BLK, CREATING A LOCAL BLK, DATA SOURCE, CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
-HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax, USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region)
-TO THE INSTANCE RESOURCE BLK, HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE/DATA SOURCE
+HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax, USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region
+dynamically)TO THE INSTANCE RESOURCE BLK, HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE/DATA SOURCE
  HOW DO WE CREATE CUSTOM MODULES, THIS DIR IS OUR EC2 MODULE, CALL THE EC2 MODULE, WHERE IS THE MODULE, WE CAN CREATE MODULE FOR VPC, 
 THIS DIR IS OUR VPC MODULE, CALL THE VPC MODULE, RUN TERRAFRM INIT ANYTIME SMT IS ADDED TO A MODULE, USING A VARIABLE TO MAKE THE MODULE FLEXIBLE, 
  CREATE A VARIABLE FOR CIDR IN module/main.tf, WHERE THE USER CAN PASS THE VARIABLE VALUE, MAKING VARIBLE REQUIRED/ USING VARIABLES TO MODULELARIZE MY CODE, TERAFRM FORMAT,
@@ -23,6 +23,8 @@ TERAFRM DESTROY, MOVED BLOCK.
 
 ###in summary ill say we created a data source and then used modules to make it flexible then using variables to modulerize the code , declaring a variable of type map, and
 then using a variable file, 
+
+SUMMARIZED
 
 bc we will be writing codes, u need a code editor,we are using vscode or any IDE of your choice (frm video 3, we saw he likes to use his intellegie to edit his code & terminal
 ie gitbash to run) 
@@ -47,9 +49,27 @@ but bc am constraining it, it will go and look for a an aws plugging/provider th
 We use terfrm blks based on what we want/are creating & we use a resource blk for evry thing we create in terfrm 
 Input/out/local 
 illustration for local & data source/HOW TO CHECK AMI ID IN AMAZON
-5) CREATE A DATA SOURCE & USE IT TO 
+5) CREATE A DATA SOURCE & USE IT TO PASS THE ATTRIBUTE; AM ID (of the default region or any region dynamically) TO THE INSTANCE RESOURCE BLK
+6) CREATE CUSTOM MODULES & CALL THE MODULE eg vpc module, ec2 instance module
+ Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
+I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
+So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
+ami/vpc & a file for variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
+the argument variable values
+7)TYPES OF VARIABLES; string, list, map, boolean , inpu, output, object etc
+access/reference variables in a list/map in a resource blk , using variable of type list to deploy to diff env
+passing variables as a file 
+  TYPES OF VARIABLE FILES TO PASS
+1) Named files eg prod.tfvars
+2) Unamed  filees eg terrafrm.tfvars or auto files
+8)CREATING A VARIABLE THAT HAS A SECRET
+9)Terfrm public MODULE/registry
 
 
+
+
+
+      ****start
 
 0.59
 whenever ur installling on windows, make sure you are running it as the administrator, open powershell, whenever ur installing a package, you need to be an administrator 
@@ -395,7 +415,7 @@ so i can create a resource
 
 
              
-               USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region) TO THE INSTANCE RESOURCE BLK
+               USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of the default region or any region dynamically) TO THE INSTANCE RESOURCE BLK
    ***we will further use/refer to this resource blk as our ec2 module
 
 1) USING THE DATA SOURCE TO  GET THE AMI iD FOR THE DEFAULT REGION
