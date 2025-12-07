@@ -307,6 +307,8 @@ A data ssource is what can go to AWs and fetch data from you
 
 
                                               CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
+       we will further use this data source to 1) input it to create an instance 2)
+
 Ticket:
 i)Create data source to get an AMi id
 ii) use the data source to create an instance
@@ -388,14 +390,15 @@ so i can create a resource
 
 
              
-                              2 WAYS TO CREATE AN INSTANCE USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID FROM THE DATA SOURCE TO THE INSTANCE RESOURCE BLK
+               USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region) TO THE INSTANCE RESOURCE BLK
 1) USING THE DATA SOURCE TO  GET THE AMI iD FOR THE DEFAULT REGION
 WITHOUT USING THE PROVIDER BLK: so we didnt pass a region
+In the reource blk we reference the data source
 
                   THE RESOURCE BLK
   i)resource "aws_instance" "data_test" {        hes just calling it data_test ...meee ie the resource name
    
-       1.32.20  HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE OR DATA SOURCE
+       1.32.20  HOW DO WE REFERENCE THE DATA SOURCE/ATTRIBUTE FROM A RESOURCE/DATA SOURCE
     we always use the . notation
  ii)ami= data.aws_ami.amazonlinux.id     (.id , bc we nid the id)       1.32.0 ****  instead of me hardcoding the AMI value , i am goIn to get the ami frm my data source
 iii) instance_type = t2.micro                                                         so the id is the attribute i want from the data source
@@ -408,10 +411,11 @@ bc of this i can use this data source to get my AMis dynamically
 the AMI we got belong to US west 2.,, bc thats my default region 
 
 
-2)   USING THE DATA SOURCE TO DYNAMICALLY GET AMI iD FOR ANY REGION
+2)   USING THE DATA SOURCE TO DYNAMICALLY GET AMI iD FROM ANY REGION
 USING THE PROVIDER BLK: so we pass a region
+and In the reource blk we reference the data source
 
-                     USING THE SAME DATA SOURCE TO DYNAMICALLY GET AN AMI FROM A REGION WE STATED IN THE PROVIDER
+
 if i pass a provider bc in my code i dnt hv a proVider n my provider is AWS and pass a region
 *******************  provider = "aws " {
                         region = "us-east-1"
