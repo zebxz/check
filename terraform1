@@ -72,7 +72,7 @@ TERFRM WORKFLOW (Initialize,validat,plan,apply)
 
 
 AMI
-first we knw that AMI are region specific 
+first we knw that AMI are region specific    **video2..15.20.. He said we knw that the AMI nids to b an id
 we got our AMI id frm US east1 N virginia  but our default profile value is US west2 , so its trying to provision our resources in US west2 bc we hvnt passed any region
 and thats why we get the error, so we hv to pass the region: region="us-east-1"
 
@@ -93,10 +93,11 @@ atrribute out of it
 
 
 
-****meee****   DIF BTW THE DEFAULT VALUE VARIABLE & REQ VARIABLE
+****meee****   DIF BTW THE DEFAULT VALUE VARIABLE & REQ VARIABLE & DEFAULT REGION
 when i created  a variable here, i passed a default value.
 A default value is a value we pass inside the variable file
 the purpose of a defualt value means that if no other Value is passed( it is goin to fall bk on the value you passed as a default
+so when we run terfrm plan/apply, the values are automatically loaded from the variable files
 
 2:51:00
 Wht is a REQ variable???
@@ -104,6 +105,10 @@ how do u mk a variable  REQuired?
 by not giving a default value
 when we dnt supply a default value, we make it rEQ variable
 ****ie when we we run trfrm plan/apply, it will require us to input the value
+
+
+DEFAULT REGION
+THis is the region that was selected when creating your IAM user in AWs which becomes your default profile when you configure terfrm withe the AWS credentials
 
 ***************************************************************************************************************
 
@@ -680,7 +685,8 @@ so we can comment the profile "#"
 
   5)                            TROUBLESHOOTING/ NEED TO SPECIFY THE VPC
    *** i bliv vpc is also region specific 
-in this illustration, we didnt specify the region so terfrm will provision the vpc in the default vpc but it wasnt possible because
+in this illustration, we didnt specify the region (i bliv he said if we wnt to use the default profile that has our default region, we dnt need to pass it in the provier blk
+***meee, Normally terfrm will provision the vpc in the default vpc but in this case, it wasnt possible because
 when we checked our aws account, we dnt hv a default vpc so it could not be provisioned
 
 bc i need to create an ec2 instance and i need to create it in a certain vpc and bc i ddint state which vpc or subnet i wnat to create the ec2 instance
