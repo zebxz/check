@@ -311,6 +311,8 @@ A data ssource is what can go to AWs and fetch data from you
 
                                               CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
        we will further use/refer to this data source to 1) input it to our instance resource blk & get an ami from our default region & any other region
+    and  when we get to MODULES; the instance resource blk & its dir will subsequently be used as a module 
+ 
 
 Ticket:
 i)Create data source to get an AMi id
@@ -459,16 +461,16 @@ the argument variable values
 
 
 stepA
-      so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a dir called test  
-this is the dir that has my  tefrm config files 
-bc all my code is in inside this test dir, so i can use this test dir 
+      so we v the main general dir called terrafrm master class33 and inside this dir lets say we hv a (me the test dir is a sub dir of the main dir) dir called test  
+this is the dir that has my (me; ec2 files) tefrm config files 
+bc all my (me, ec2 codes) code is in inside this test dir, so i can use this  test dir 
 
-                                         THIS DIR IS OUR EC2 MODULE
+                                         THIS (sub)DIR IS OUR EC2 MODULE
 so i can use the test dir as my module to create an ec2 instance bc all my code is packaged in der
 
 
 stepB                                      CALL THE EC2 MODULE
-while am inside of the same dir (terrafrm master class33) as the test dir, i can create a neew file called main.tf
+while am inside of the same dir (terrafrm master class33) as the sub' test dir, i can create a neew file called main.tf
 then inside this main.tf, i can (call the module) by using the key word 'module' for ec2
 
  mdoule " ec2" {     ************ ec2 is the module name
@@ -477,8 +479,8 @@ then inside this main.tf, i can (call the module) by using the key word 'module'
 
 to initialize this module i need to be outside the test dir but inside the overall dir terrsfrm master class33
 when i ls in the  terrsfrm master class33 dir, 
-it is goin to see  all the dir and the main.tf file
-so ryt here when i run terfm init, it will see only the main.tf file , it isthe only tf file taht it sees in this dir, bc its nt goin to read inside of other directries
+it is goin to see  all the (sub) dir and the main.tf file
+so ryt here when i run terfm init, it will see only the main.tf file, it is the only tf file taht it sees in this dir, bc its nt goin to read inside of other (sub)directries
 when i run terfrm init, it first initialies the backend and then the moudeles
 
 
@@ -506,8 +508,8 @@ we can apckage our code , create our code after we v tested  it , put in a dir n
 2                                     WE CAN CREATE MODULE FOR VPC
 in the overall dir terrsfrm master class33 
 
-a)he created a dir called vpc and inside it he ceated a file called main.tf (earlier we created a main.tf in the terrafrm master class33 dir )& in the main.tf, he created a
-vpc resource 
+a)he created a dir called vpc and inside it he created a file called main.tf (earlier we created a main.tf in the terafrm master class33 dir )& in the main.tf, he created a
+vpc resource, i bliv we can call the file anything bc that of ec2 file was called 'test'
 
              ***we hv 2main.tf, one in the general dir; terfrm master class33 dir & the other main.tf inside the vpc dir (the vpc dir is a sub dir in the terfrm master dir)
                      but if the ec2 resource blk inide test dir is also called main.tf, that means a total of 3 main.tf files
