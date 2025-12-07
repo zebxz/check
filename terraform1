@@ -53,23 +53,30 @@ this is important to enable terfrm go into aws & provision resources
 
 6) INSTALL EXTENSIONS FOR AUTO COMPLETE
 
-7)TERRAFORM CONFIGURATION LANGUAGE SYNTAX
+7) TERFRM BASIC COMMAND/ WORK FLOW
+Init, vaalidate,plan,apply
+
+8)TERRAFORM CONFIGURATION LANGUAGE SYNTAX/TOP LEVEL BLKS
 TERRAFRM uses top level blks when its provisioning resources , blks can also be template
 Eg; 
-1)terraform setting blk includes: Terfrm version
-2) Terfrm resource blk; we need a resource blk for evrytin we create in terfrm
-resource name, resource type & REsource version, AMI id, subnet id for vpc, if i dnt specify the vpc, it creates it in the default vpc
-3)provider blk;  region, profile  
+a)terraform setting blk includes: Terfrm version
+b)provider blk;  region, profile  
+c) Terfrm resource blk; we need a resource blk for evrytin we create in terfrm
+resource name, resource type & REsource version, AMI id, subnet id for vpc, if i dnt specify my region in the providers blk, it creates it in the default vpc
 after which we run terraform, init/validate/plan/apply.
  DIFF BTW PROVIDER BLK & RESOURCE BLK
                    A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & Arguments
   2.40.40.... terraform block/setting block doesnt have any label
+D) Input variables   E) output blk  F)local values  G)Data source blk   H)Modules blk   I)Moved blk   J)import blk 
 
 
-8)CREATE A RESOURCE USING RESOURCE BLK: the resource blk includes the provider type eg aws, azure
+9)CREATE A RESOURCE USING RESOURCE BLK
 Hv to create a dir then create a resource blk from scratch or clone the code repo
 TERFRM WORKFLOW (Initialize,validat,plan,apply) 
 
+10)HOW TO USE TERFRM VERSION
+
+11)REFACTORING
 
 AMI
 first we knw that AMI are region specific    **video2..15.20.. He said we knw that the AMI nids to b an id
@@ -488,7 +495,7 @@ provider(s) plugins installation,
 the plugins are downloaded in the sub-directory of the present working directory at the path of .terraform/plugins
 
 
-                      PROVIDERS
+                      PROVIDERS eg; Aws,Azure
 what this means is that the when u go to terraform.io n look up registry , u see browse providers , browse module, policy librabries
 providers are what provides the service , e.g we can see aws, alibaba, gcp, etc, all these are providers that i can use wit terraform.
 providers are logical abstractions of an app stream API, they are responsible for understanding API interactions n exposing resources.
