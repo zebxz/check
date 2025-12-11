@@ -241,43 +241,34 @@ Welcome to Landmark Technologies   Ie we are just echoing it into the index.html
 WE run the curl commnad: we curling the address (its a public address) to find meta data of the instance 
 53.27      so we are curling: :  http://169.254.169.254/latest/dynamic/instance-identity/document  &  putting our meta data -o /var/www/html/app1/index.html
     AND Thats why when we acces it we are able to find our meta data: the image id, the instance id, region USwest
-
-***so we have been able to use user data
-
-
-#! /bin/bash
-sudo yum update -y
-sudo yum install -y httpd
-sudo systemctl enable httpd
-sudo service httpd start
-echo "<h1>Welcome to Landmark Technologies!</h1>" | sudo tee /var/www/html/index.html
-sudo mkdir /var/www/html/app1
-sudo echo '<!DOCTYPE html> <html><body style ="background-colour:rgb(250,210,210);"><h1>welcome to landmarktechnologies
-sudo curl http://169.254.169.254/latest/dynamic/instance-identity/documet -0 /var/www/html/app1/metadata.html
+55.55...  this is set, amazon sets, this is the number amazon provides if you want to get any meta data... /169.254.169.254/latest/dynamic/instance-identity/document
+***so we have been able to use/pass user data & bootstrap onto our instance while the instance is creating, & we did it using user data
 
 
 
 
-
-
-54.13************************ THERE ARE 2Wya we can PASS DATA
-in the example we just illustrated above, we see that it was part of conggiguration, trefrm did provisioning , it provisioned our instance but not only did it provision it
+54.13                  THERE ARE 2WAYS we can PASS DATA
+1)CONFIGURATION
+in the example we just illustrated above, we see that it was part of configuration, trefrm did provisioning , it provisioned our instance but not only did it provision it
 it also configured  it
 the process of configuration is when ur installing softwRE, 
 SO TRFRM gives us a way that not only can we provison our infrsastruture bt we can also configure it 
 so this is alos part of config mgt, we can use a script, we can use user data to configure it 
-but as we go on ill show u anoda way wich w ecall PROVISIONERS
-
-so trfrm can also give us a second method in which we can config our infarsture by using PROVIONERS ........................................55:11
+but as we go on ill show u anoda way wich we call PROVISIONERS
+2)PROVISIONERS
+So trfrm can also give us a second method in which we can config our infarsture by using PROVIONERS ........................................55:11
     BUT AS U LOOK TRU documentation  , IT SAys use provisioners as a last resort
-its nt the most recommemde way to do config bc of the nature of ehat provisioners do bc if a provioner fails, it will have to destroy the resource for it to be created again
+its nt the most recommemded way to do config bc of the nature of what provisioners do,
+bc if a provioner fails, it will have to destroy the resource for it to be created again
 thats why provisioners is a last resort
-
-so if u want to do any config on ur instance esp as boot sratping then u cn pass user data
+so if u want to do any config on ur instance esp as bootstraping then u can pass user data as a script
 
 
 
 QUESTION
+57.00   ... HOW DO WE GET THE ARN, HV NEVER SEEN THE ARN AND HOW WE CAN GET IT 
+  THat illustration we did with arn, was just for demo purposes
+
 1)what do we do when we dnt knw the right attribute to pass???
 
 ANS;
