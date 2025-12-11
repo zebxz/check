@@ -221,7 +221,7 @@ but if i run terfrm apply, its going to fail because the instance expects an id 
 so i hv to correct it ot get the AMi id 
 
 
-                               ACCESSING THE INSTANCE & THE DIR & META DATA
+                               ACCESSING THE INSTANCE & THE DIR & HOW TO FIND META DATA OF THE INSTANCE
 once it creates the instance, its going to bootstrap it with the script & once its the script has been bootstrapped
 it has completed
 we see the id of the user data that it used 
@@ -237,9 +237,9 @@ Welcome to Landmark Technologies   Ie we are just echoing it into the index.html
 2) ALso we created a dir, TO ACCESS THE DIR called app1: 35.90.0.113/app1/ , we see: Terrafrm demo Application v1
  <h1>Welcome to Landmark Technologies</h1> <p>Terraform Demo</p> <p>Application Version: V1</p> </body></html>' | sudo tee /var/www/html/app1/index.html
 3)  METADATA.HTML, to return the metadata of of the instance :35.90.0.113/app1/metadata.html 
-
-
-
+    the meta data of the instance can be found at this address, :  http://169.254.169.254/latest/dynamic/instance-identity/document 
+WE run the curl commnad: we curling the address (its a public address) to find meta data of the instance 
+      so we are curling, putting our meta data this  53.28
                      
 #! /bin/bash
 sudo yum update -y
