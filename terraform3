@@ -1,5 +1,5 @@
 
-1.10
+1.10      
 YES you wil need to need to hv a vpc that exists first but if ur nt using custom the it means ur using default and so u dnt need to passa any argument to ur resourec
 trfrm wil place it in the defult vpc
 
@@ -121,7 +121,7 @@ intelligie is open source , theres enterprise version but thers community versio
 
 
 
-                                           STEPS FOR CREATING AN INSTANCE & INSTALLING HTTPD, USING RESOURCE BLK & FILE FUNCTION 
+  STEPS FOR CREATING AN INSTANCE/INSTALL HTTPD USING RESOURCE BLK WITH FILE FUNCTION FOR USER DATA(BOOTSTRAPPING) OF THE HTTPD ..ie user data contains the script to instal httpd 
  we are still using the resource blk to create an instance & inside the resource blk we are using the 'file function' to refer to the 'user data' we are using to install httpd
 
 Step1;      RESOURCE BLK FOR INSTANCE
@@ -239,8 +239,12 @@ Welcome to Landmark Technologies   Ie we are just echoing it into the index.html
 3)  METADATA.HTML, to return the metadata of of the instance :35.90.0.113/app1/metadata.html 
     the meta data of the instance can be found at this address, :  http://169.254.169.254/latest/dynamic/instance-identity/document 
 WE run the curl commnad: we curling the address (its a public address) to find meta data of the instance 
-      so we are curling, putting our meta data this  53.28
-                     
+53.27      so we are curling: :  http://169.254.169.254/latest/dynamic/instance-identity/document  &  putting our meta data -o /var/www/html/app1/index.html
+    AND Thats why when we acces it we are able to find our meta data: the image id, the instance id, region USwest
+
+***so we have been able to use user data
+
+
 #! /bin/bash
 sudo yum update -y
 sudo yum install -y httpd
