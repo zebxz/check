@@ -1,4 +1,4 @@
-
+ 
 AMIs are Region specific ................3:00:14   
 
 my QUESTION: How do you know areas that have default vpc ????????????????
@@ -92,7 +92,10 @@ so when ur boot strapin and ur using user data , the user data wil use root perm
 *************************  24:30 ...
 
 
+
+
                                       TERRAFRM ALSO GIVES US THE OPTION OF BOOTSTRAPPING
+           
 whenever we boOtstrapping an instance 
 eg we want to create an instance , in google he type aws_intsance terrfrm 
 When i go to the registry, i see the arguments
@@ -111,7 +114,15 @@ as u continuie working u can xperiment on diff IDE n find out the one u prefer B
 intelligie is open source , theres enterprise version but thers community version which is free
 ********* for d sake of dis am goin to continue wit inteligie n put away my vscode bty its nt diff
 
-**********28:20      ... am looking at my examples here
+
+
+                                           STEPS FOR CREATING AN INSTANCE & INSTALLING HTTPD, USING RESOURCE BLK & FILE FUNCTION 
+ we are still using the resource blk to create an instance & inside the resource blk we are using the 'file function' to refer to the 'user data' we are using to install httpd
+
+Step1;      RESOURCE BLK FOR INSTANCE
+**********28:20
+creating the instance cont.d
+      ... am looking at my examples here
 i hv a data source for an amazonn linux 
 a resource for an instance i wnt to create
 am nt hardcoding the value of d AMI, i using a data source to get my AMI
@@ -119,15 +130,31 @@ i can use a variable and call it  "instance type" .............................2
 then i refer to this variable i created
 
 
-              INSTALLING WITH USER DATA
-i have a user data (a bash script called app1-install.sh) to install httpd , & it will make a dir & echo welcome to landmark into the html file 
-echo "<h1>Welcome to Landmark Technologies!</h1>" | sudo tee /var/www/html/index.html
+   Step2;           INSTALLING WITH USER DATA.... app1-install.sh
+#! /bin/bash
+# Instance Identity Metadata Reference - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html
+1)sudo yum update -y
+2)sudo yum install -y httpd
+3)sudo systemctl enable httpd
+4)sudo service httpd start
+5)sudo echo '<h1>Welcome to Landmark Technologies</h1>' | sudo tee /var/www/html/index.html
+6)sudo mkdir /var/www/html/app1
+7)sudo echo '<!DOCTYPE html> <html> <body style="background-color:rgb(250, 210, 210);"> <h1>Welcome to Landmark Technologies</h1> <p>Terraform Demo</p> <p>Application Version: V1</p> </body></html>' | sudo tee /var/www/html/app1/index.html
+sudo curl http://169.254.169.254/latest/dynamic/instance-identity/document -o /var/www/html/app1/metadata.html
+
+
+***
+above is the user data (a bash script called app1-install.sh) to install httpd , am starting the service
+5)am ruuning this script to echo welc to landmark in the index.html file: echo "<h1>Welcome to Landmark Technologies!</h1>" | sudo tee /var/www/html/index.html
+6)then ill also make a dir called /app1, in var/www/html
+7)then ill echo a diff colour sayoing wel to landmark application app1, into the index.html file
+8)am also goin to curl the meta data & dump them in the app1, in a part called meta data
 so this user data becomes my script that will booth strap when the instance starts
 **************    am passing the user data as a file  and the file is in the PWD and its called app1-install.sh"
 
 
-
-                                TERRAFRM FUNCTIONS
+Step3;
+  xplantion cont.d                              TERRAFRM FUNCTIONS
 WATCH ............32:08   .. whenevr u use data ull pass it as a file, this is a function
 in terfrm, it has what is called functions
 if u google terfrm funtions , terfrm has built in functions ,   ther are various function for diff purposse
@@ -135,8 +162,9 @@ you can use dem to manipulate data
 
 
                                   TYPES OF TERRAFRM FUNCTIONS
- Max function, lower function, split function, collection funding, coding function, least function, file function 
-
+Numeric function eg; Max, it takes one or more number & returns the gratest frm a set, so i can u use a function like this juts to return number frm a list 
+lower function, split function, collection funding, coding function, least function, file function 
+we can join diff functions
 
 file function;
 file reads the contents of a file at a given path and returns them as a a string
@@ -145,6 +173,8 @@ we hv an example below
 > file ("${path.module}/hello.txt")    ...... path.module indicates the file is in the PWD and then the name of the file ur passing
 so the file function will read ("${path.module}/hello.txt") and return the content of that particular file     .....................................34.20
 ****now back to his INtellgie ide
+
+xplanation cont.d
 the user script we want to use for installation is in the pwd, if the file was in a diff dir, i just need to give terfrm the path , just specify the path
 but right now ; referring to the resource to create the instance; We see this user data line 
 user_data = file("${path.module}/app1-install.sh")   ... this states that the user data file is in the pwd & the app is called app-install.sh
@@ -152,7 +182,8 @@ user_data = file("${path.module}/app1-install.sh")   ... this states that the us
 we can also see my providers .....
 
 
-                            USING MY IDE & GITBASH
+
+                            USING MY IDE & GITBASH  38.25.. tab helps to auto complete
 anoda tin i will like to introduce to you guys is that i can open my IDE from here,
 but as u begin to work esp in d industry u wil see that many engr prefrer to hav a terminal,that runs their code 
 eg u can open ur gitbash , as long as ur in the same dir
@@ -191,6 +222,9 @@ running all the checks
 once the check is done we can we use either the public dns or public ip to be able to access it
 
 
+   48.00
+
+
 
                      ANALYZING THE INSTALLATION SCRIPT
 #! /bin/bash
@@ -224,6 +258,7 @@ its nt the most recommemde way to do config bc of the nature of ehat provisioner
 thats why provisioners is a last resort
 
 so if u want to do any config on ur instance esp as boot sratping then u cn pass user data
+
 
 
 QUESTION
@@ -510,6 +545,8 @@ run tefrm plan and we get an error : invalid for_each argument
 
 ****************** so bc of this we can use a tefrm function to convert our list into a set of strings bc we cant convert to a map bc we dnt hv key value pairs in here.
 
+
+
      CONVERTING LIST INTO SET OF STRING
 we have a function called to set 
 its used to convert a list or a map into a set 
@@ -658,6 +695,8 @@ specifying the region ur datasource shud query or get the data.
    A life cycle defines the life cycle of a resource. as per the resource behaviour , tefrm can do the following:
 create a resource destroy a resource updated resource in place update resource by deleting existing and create new.
 lifecycle is a nested block unde rresource that is used to cutomise that behaviour 
+
+
 
    CUSTOMIZATION THAT ARE AVAILABLE UNDER LIFE CYCLE BLOCK
 A) Create_before_destroy :(Type: Bool)  ... u pass it as a bullion ,, the default nature of trfrm is that it wil destroy a resource then create bt in prod if u dnt wnat 
