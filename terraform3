@@ -27,9 +27,13 @@ wHILE
 output gives us the attribute of an already existing resource
 
 
-
-
-
+USER DATA/BOOTSTRAPPING
+  STEPS FOR CREATING AN INSTANCE/INSTALL HTTPD USING RESOURCE BLK WITH FILE FUNCTION FOR USER DATA(BOOTSTRAPPING) OF THE HTTPD ..ie user data contains the script to instal httpd 
+ANALYZING THE INSTALLATION SCRIPT
+TYPES OF TERRAFRM FUNCTIONS
+USING MY IDE & GITBASH
+ ACCESSING THE INSTANCE & THE DIR & HOW TO FIND META DATA OF THE INSTANCE
+THERE ARE 2WAYS we can PASS DATA (Analyzing & provisioners)
 
 
 ######################################################################  START
@@ -269,26 +273,43 @@ QUESTION
 57.00   ... HOW DO WE GET THE ARN, HV NEVER SEEN THE ARN AND HOW WE CAN GET IT 
   THat illustration we did with arn, was just for demo purposes
 
+
 1)what do we do when we dnt knw the right attribute to pass???
 
 ANS;
-just depend on documnetation whener u are lost or smt isnt clear , like ur nt sure of what  attribute or argument ur suppose to pass
-just cm to d dcoumentation n just look at arguments and attributes
+jst depend on documnetation whener u are lost or smt isnt clear, like ur nt sure of what attribute (ie for what you need to return as an output) or argument ur supose to pass
+just cm to d dcoumentation n just look at arguments and attributes, you will see what is required & whats optional
+eg for a Natgateway, in google type aws_Natgateway and you can see what argument is required
 
-2) we tried to create instance using a file but when we tried to create anoda instance , we realise that it destroys the first instance created, does that mean one file for 
-one instance
+
+2) we tried to create instance using a file but when we tried to create anoda instance and we changed the resource name to mk it unique, we realise that it destroys the first
+instance created, does that mean one file for one instance
+
+***I Think the simple answer he should have given her is, you can use one file but with diff resource blk & diff resource name. or using the same resource name using arguments
+                                                                                                                        as we will see subsequently
 
 ANS;
-THats why we said st the first class that, you can creat as many type of instance as possible but what must be unique is your resource name 
-the name must be unique to trfrm bc trfm keeps a atate file
-when u try to create a 2nd instance wit the sam e resource name , whne trfrm check the statefile n your congiguration file, it doesnt see any diff so it will think u 
-wnat to create the same instance again and so it will destroy the pevious one 
-so lways make sure the name is unique
+THats why we said in the first class that, you can create as many type of instance as possible but what must be unique is your 'resource name' 
+the name must be unique to trfrm bc trfm keeps a state file
+eg terfrm state list .. this list the resources i have
+SCENARIO 1: 2 instance with the same resource name (mee, & you delete or change the previous resource blk to use it to create the 2nd instance)
+when u try to create a 2nd instance wit the same resource name, when trfrm compare the state file (the file trfm stored frm ur previous configuration) n your new congiguration
+file, it doesnt doesnt find the initial configuration file bc u changed/deleted it so it sees that as a drift, my configuration doesnt match my v wall, & so terfrm will try to
+destroy what it was managing before but now doesnt exist, so that it creates the new one 
+eg , if i run terfrm plan, it refreshes the state file, ie the ec2 instance, the pevious one so always make sure the name is unique, this teacher is dull
+***mee, so if you want to use the same resource name, make sure you have the resource blk for each instance
+
+**mee 
+SCENARIO 2: 2 Instance with unique names
+make sure you have the resource blk for each & with their unique names
+
+
 
 when we look at meta data shortly frm now, we will see we can create a resource even with the same name 
-how we can cerate multiple resources even with the sam ename  , how terfrm handles that using meta arguments    ............... 1:10:50
+how we can cerate multiple resources even with the same name  , how terfrm handles that using meta arguments    ............... 1:10:50
 
 1:10 .00 ************* he gave exmaple how to pass a subnet 
+
 
 3) do we need to create the vpc first if we want to create our instance in the customized vpc?
 
@@ -297,9 +318,11 @@ YES you wil need to need to hv a vpc that exists first but if ur nt using custom
 trfrm wil place it in the defult vpc
 
 
+
+
 1:26:41*****************   PASSING A KEY .............. a key need to associate with ur instance  ............... WATCH
 
-first i need to lokk at my provider 
+first i need to look at my provider 
 the provider is in us wwest2
 i neeed to go to my aws console , sign in amd mk sure am in west2
 i need to look at the key pairs i have in that region 
