@@ -300,6 +300,8 @@ eg , if i run terfrm plan, it refreshes the state file, ie the ec2 instance, the
 ***mee, so if you want to use the same resource name, make sure you have the resource blk for each instance
 
 **mee 
+
+SCENARIO 2: 2 THE Same 'resource type' eg 2instance, with the same resource name... terfrm will say duplicate resource
 SCENARIO 2: 2 Instance with unique names
 make sure you have the resource blk for each & with their unique names
 
@@ -374,31 +376,48 @@ that key wit ur instance bc u wil have both ur private key in ur env and it wil 
 
 
 
-                                         .GITGNOIRE FOR CREATING SECRET
+                                     STEPS TO USE THE .GITGNOIRE FOR CREATING SECRET
                                         
 1:354:00  .gitgnoire file for creating a secret
-first i create a variable; can give it any name eg secret , type =string , sensitive =true
-Then create a var.terfrm file 
-and write the secret know only to me  e.g db_password = "landmark123"     terraform apply -var-file=secret.tfvars
+1)first i create a variable & mk it as sensitive; can give it any name eg secret , type =string , sensitive =true
+2)Then create a terfrm.tvars file eg secret.tfvars
+mayb i need to pass a pW for a database & i dnt want it to expose it in my code
+then inside the file ill pss; e.g db_password = "landmark123"     
+3)create gitignoire file
+then inside my manifest (i bliv the folder for all the files ie module,provider,  appinstall.sh, secret.tvars) i create a .gitgnoire file
+inside the gitignoire ill put the secret.tvars 
+meaning i dnt want the secret file to be commited to my repository bc it has my secret, its sensitive
+so whenever am committing the (ec2 instance file) to the repository, i dnt want the secret file to be commited
+when i go to run  terfrm apply : terraform apply -var-file=secret.tfvars
+so am passing it as a command line option
+then when i come to the state file, we see evrryting is plain & if i had passed a sercet u will see it in plain text
+but now bc of my variable i created &nmarked as sensitive, when term create sthe statefile it wont capture/expose the values of the secret as plain text 
+
 but if am working with a team, ur working collaboratively, ur using .gitgnoire (inside  the .gitgnoire file, he refered to the secret file he wrote: secret.tfvars)
-so am passing .gitnoir, if i push this code to you , u will not hv dis file the secret file, so u wont be able to see it
-i creat my variable n mark it as sensitive = true so when trfrm create the statefile its nt going to output the value of d variable, it nt goin to be captured in d statefile 
+so am passing .gitnoire, if i push this code (the .gitignoire)to you , u will not hv dis file the secret file, so u wont be able to see it
+i creat my variable n mark it as sensitive = true so when trfrm create the statefile its nt going to output the value of d variable, its nt goin to be captured in d statefile 
 as plain state , otherwiae anyone who has access to ur statefile are able to see ur secret
-any thing u dnt wnat exposd, u mark it as senesitive n ter frm will nt expose it as an ouput or within ur statefile
+any thing u dnt wnat exposd, u mark it as senesitive n terfrm will nt expose it as an ouput or within ur statefile
+
+
+***1.40.40, reload all from disk.... will show all your files 
 
 
 
      1:44:30 
                          
                                   META ARGUMENTS   ............... REFer to note file in github
-so far w ve been dealing with  Aruments are what we pass into our terrfm resource  when  we wnt to create a resourec or when we wnat to get data, uisng data source , w ecan 
-use argument
+so far w ve been dealing with  Aruments 
+Arguments are what we pass into our terrfm resource  when  we wnt to create a resourec or when we wnat to get data, uisng data source , we can use argument but terfrm also 
+has whats called meta argument
 
-META ARGUMENTS : these are arguments that alter the behaviour of a a resource , they dnt cahneg d resource they only change hw it behaves
+META ARGUMENTS : these are arguments that alter the behaviour of a a resource , they dnt change  d resource they only change hw it behaves
 
 
-INTERVIEW QUESTIONS  , WHta is meta arguments
-meta arguments are what i pass into my terfrm resource to alter the behaviour  of hw the resource behaves
+INTERVIEW QUESTIONS  , WHat is meta arguments
+hv you ever worked with a terfrm argument?
+can you explain to me how you've used depends on or count for each provider life cycle meta argument in your env
+  ANS:meta arguments are what i pass into my terfrm resource to alter the behaviour of hw the resource behaves
 
    ther are 5types
 depends on
@@ -407,16 +426,16 @@ for_each
 provider
 lifecycle
 
-your understanding of hw these wrk wil hekp u to easly wrk wit trefrm bc u can moduleize ur code otr create dependecies, u can reduce ur code to 
-10lines of code bc u hv meta argument that can create resourecs jst based on the conditions that u pass
+your understanding of hw these wrk wil help u to easly wrk wit trefrm bc u can moduleize ur code or create dependecies, u can reduce ur code to 
+10lines of code bc u hv meta argument that can create resourCEs jst based on the conditions that u pass
 
 
 1) depends on:
 trfrm has a feature of identifying resource dependency. this means that tfrm internally knws d sequence in wich d dependant resources needs to be craeted 
-wheras the independent resources are created in parrallel.
+wherEas the independent resources are created in parrallel.
 ie if u have 2resources that are depndent on each other, terfrm internally has a way of identifying wich resource has to be created first b4 the other , 
+This is called implicit dependency
 
-depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
  
 
    INTERVIEW QUESTIONS, 
@@ -429,12 +448,14 @@ of tfrm that identifies which resource nids to be created first
 
 
 EXPLICIT DEPENDENCIES
-this is whne u determine urself manaually the order resources are created 
-this is done by apssing a depend_on meta argumentq
+but sometimes, there are resource you as an engr, now that u understand the use of terrfm, you yourself want to detrmine the order in which resources will be created
+this is when u determine urself manaually the order resources are created 
+this is done by passing a depend_on meta argument
+depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
 
 
-he showed an e.g,
-in our caling resourec file/data block we have a resource for an instance, and a rsorec for a vpc 
+1.51.00   he showed an e.g,
+in our caling resource file/data block we have a resource for an instance, and a rsorec for a vpc 
 terfrm plan and we see the plan is to first create the instance and then the vpc 
 and then terraform apply: we see vpc creating and instance creating 
 lets create a dependency
