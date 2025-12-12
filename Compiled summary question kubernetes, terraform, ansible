@@ -834,3 +834,66 @@ TERRFRM3
 ans: yes
 u can use variable files, files that define what your intention is/what you want to pass
 
+
+1)what do we do when we dnt knw the right attribute to pass???
+
+ANS;
+jst depend on documnetation whener u are lost or smt isnt clear, like ur nt sure of what attribute (ie for what you need to return as an output) or argument ur supose to pass
+just cm to d dcoumentation n just look at arguments and attributes, you will see what is required & whats optional
+eg for a Natgateway, in google type aws_Natgateway and you can see what argument is required
+
+
+2) we tried to create instance using a file but when we tried to create anoda instance and we changed the resource name to mk it unique, we realise that it destroys the first
+instance created, does that mean one file for one instance
+
+***I Think the simple answer he should have given her is, you can use one file but with diff resource blk & diff resource name. or using the same resource name using arguments
+                                                                                                                        as we will see subsequently
+
+ANS;
+THats why we said in the first class that, you can create as many type of instance as possible but what must be unique is your 'resource name' 
+the name must be unique to trfrm bc trfm keeps a state file
+eg terfrm state list .. this list the resources i have
+SCENARIO 1: 2 instance with the same resource name (mee, & you delete or change the previous resource blk to use it to create the 2nd instance)
+when u try to create a 2nd instance wit the same resource name, when trfrm compare the state file (the file trfm stored frm ur previous configuration) n your new congiguration
+file, it doesnt doesnt find the initial configuration file bc u changed/deleted it so it sees that as a drift, my configuration doesnt match my v wall, & so terfrm will try to
+destroy what it was managing before but now doesnt exist, so that it creates the new one 
+eg , if i run terfrm plan, it refreshes the state file, ie the ec2 instance, the pevious one so always make sure the name is unique, this teacher is dull
+***mee, so if you want to use the same resource name, make sure you have the resource blk for each instance
+
+**mee 
+SCENARIO 2: 2 Instance with unique names
+make sure you have the resource blk for each & with their unique names
+
+
+
+when we look at meta data shortly frm now, we will see we can create a resource even with the same name 
+how we can cerate multiple resources even with the same name  , how terfrm handles that using meta arguments    ............... 1:10:50
+
+
+
+
+3) do we need to create the vpc first if we want to create our instance in the customized vpc?
+
+ANS:
+ 1) DEFAULT VPC
+if ur trying to create your inatnace in a region that does nt hv default vpc then ull neeed to specify which vpc u want to place it but if a region has a default & you dnt pass
+a subnet where u want to place the instance, terfm wil place it in the default vpc, any subnet in the default vpc, default vpc wil generally hv public subnet, so it will pick 
+up one of the public subnet in the default vpc &  place the instance there
+2) BUT FOR CUSTOM VPC
+YES you wil need to create the vpc first then place your instance, & we will see hw to do that shortly frm now, create our vpc & use the info frm the vpc to create our instance
+but if ur nt using custom the it means ur using default and so u dnt need to pass any argument to ur resourec trfrm wil place it in the defult vpc
+
+
+INTERVIEW QUESTIONS  , WHat is meta arguments
+hv you ever worked with a terfrm argument?
+can you explain to me how you've used depends on or count for each provider life cycle meta argument in your env
+  ANS:meta arguments are what i pass into my terfrm resource to alter the behaviour of hw the resource behaves
+
+
+  INTERVIEW QUESTIONS, 
+What are implicit dependencies???
+
+ANS:
+THis is a situation wherby terfrm internally identifies d dependencies of resource n therfrore its able to identify which resource to create first, so it is abt dependencies
+so if u dnt pass any depends on argument but tefrm still organizes which arguments needs to be created first then that becomes implicit depencies, its an inbuilt functionality
+of tfrm that identifies which resource nids to be created first 
