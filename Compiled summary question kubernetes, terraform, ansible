@@ -847,28 +847,28 @@ eg for a Natgateway, in google type aws_Natgateway and you can see what argument
 instance created, does that mean one file for one instance
 
 ***I Think the simple answer he should have given her is, you can use one file but with diff resource blk & diff resource name. or using the same resource name using arguments
-                                                                                                                        as we will see subsequently
+                                                                                                                     like count; as we will see subsequently
 
 ANS;
 THats why we said in the first class that, you can create as many type of instance as possible but what must be unique is your 'resource name' 
 the name must be unique to trfrm bc trfm keeps a state file
 eg terfrm state list .. this list the resources i have
-SCENARIO 1: 2 instance with the same resource name (mee, & you delete or change the previous resource blk to use it to create the 2nd instance)
+SCENARIO 1: 2 THE Same 'resource type' eg 2instance, with the same resource name (mee, eg you delete or change the previous resource blk to use it to create the 2nd instance)
 when u try to create a 2nd instance wit the same resource name, when trfrm compare the state file (the file trfm stored frm ur previous configuration) n your new congiguration
 file, it doesnt doesnt find the initial configuration file bc u changed/deleted it so it sees that as a drift, my configuration doesnt match my v wall, & so terfrm will try to
 destroy what it was managing before but now doesnt exist, so that it creates the new one 
-eg , if i run terfrm plan, it refreshes the state file, ie the ec2 instance, the pevious one so always make sure the name is unique, this teacher is dull
-***mee, so if you want to use the same resource name, make sure you have the resource blk for each instance
-
+eg , if i run terfrm plan, it refreshes the state file, ie the ec2 instance, the pevious one so always make sure the name is unique, mee,
 **mee 
-SCENARIO 2: 2 Instance with unique names
-make sure you have the resource blk for each & with their unique names
-
-
+SCENARIO 3:   2 THE SAME RESOURCE TYPE' (eg  2 'ec2Instance') with unique names   ..2.0.7.00 but instead of this we can use 'meta argument; 'count'
+               will work.. just have the 2 seperate resource blks
+1.51.35 .
+ SCENARIO 2:   2 THE Same 'resource type' eg 2instance, with the same resource name  ...(with 2 resource blk) 
+ terfrm will say duplicate resource
+SCENERIO 4:  2 DIFF RESOURCE TYPE  (eg; ec2instance & vPC), with the same name 
+                  will work bc they are diff resources
 
 when we look at meta data shortly frm now, we will see we can create a resource even with the same name 
 how we can cerate multiple resources even with the same name  , how terfrm handles that using meta arguments    ............... 1:10:50
-
 
 
 
