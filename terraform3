@@ -203,7 +203,7 @@ remember when u intialize terfrm , u nid to be in the dir where your files are
 on
 so i am using my terminal ie gitbash to run but am using the IDE to edit my code 
 and i can hv them side by side & see whats happening in my ide & make my modification on my ide bc i am in the same dir
-on my git bash i can continue by running , validate, fmt, plan .
+on my git bash i can continue by running , validate, fmt, plan . 
 my data source wil always run first & it returns the AMi id frm us west2& it dynamically passes it as an id bc thats the attribute that i wanted to get
 
 
@@ -304,37 +304,82 @@ SCENARIO 2: 2 Instance with unique names
 make sure you have the resource blk for each & with their unique names
 
 
-
 when we look at meta data shortly frm now, we will see we can create a resource even with the same name 
 how we can cerate multiple resources even with the same name  , how terfrm handles that using meta arguments    ............... 1:10:50
 
-1:10 .00 ************* he gave exmaple how to pass a subnet 
+
+                                           SUBNET/HOW TO GET SUBNET ID
+1:10 .00 
+We knw that instances are created in subnets, if i dnt specify a specific vpc it will place it in the default vpc, it wil select a subnet in the default vpc & place the instance
+BUT; 
+if i want to place it in a specific subnet then ill go to the documentation & scroll down to ec2 instance 
+so for an instance what argument can i pass, i want to see if i can pass a vpc or a subnet to my ec2 as an argument
+so scroll down  & i see a subnet id, its optional but its a vpc subnet to launch in
+so if i hv a speecific subnet id , i wnat thais to launch in , i can pass thais as an argumet
+then in my resource blk ill pass 'subnet id' & bc its a string, 
+
+
+
+1.14                      TO EGT THE SUBNET ID FOR A CUSTOMIZED REGION/REGION THATS NOT MY DEFAULT REGION
+ First the vpc should have already been created
+so ill go into to AWS, in the vpc i want; ill copy  the subnet id and paste it in my resource blk but thats hardcoding, bc hv gone to the AWS console & pasted it
+terfrm plan, we see it wants to destroy the prvious one, bc we are changing from the previous subnet (default) to this new  subnet(customized) region we want
+
+
+
+      1.19.20               DATA SOURCE TO RETURN SUBNET
+    WE illl need the vpc id or use filters
+but as we go on ull see, that  an easier way, if you are nt creating it in a default vpc then am creating it in a custom vpc & when u craete a custom vpc, u create outputs
+for your subnet, output for vpc id, anything you wnat to get from your vpc, then we ill use those output to become inputs for our resources
+shortly we ill see hw to do that
+in conclusion we can use data sources to return info frm our vpc & use them as input into our resources
+
 
 
 3) do we need to create the vpc first if we want to create our instance in the customized vpc?
 
 ANS:
-YES you wil need to need to hv a vpc that exists first but if ur nt using custom the it means ur using default and so u dnt need to passa any argument to ur resourec
-trfrm wil place it in the defult vpc
+ 1) DEFAULT VPC
+if ur trying to create your inatnace in a region that does nt hv default vpc then ull neeed to specify which vpc u want to place it but if a region has a default & you dnt pass
+a subnet where u want to place the instance, terfm wil place it in the default vpc, any subnet in the default vpc, default vpc wil generally hv public subnet, so it will pick 
+up one of the public subnet in the default vpc &  place the instance there
+2) BUT FOR CUSTOM VPC
+YES you wil need to create the vpc first then place your instance, & we will see hw to do that shortly frm now, create our vpc & use the info frm the vpc to create our instance
+but if ur nt using custom the it means ur using default and so u dnt need to pass any argument to ur resourec trfrm wil place it in the defult vpc
+
+    So we hv seen seen we can usee terfrm to create our instances/resources & use user data to bootstrap our resoure
+also remember once you are done, bc u hv the code, run terfm destroy/ terfrm destroy -auto- approve, so that u dnt incurr charges
 
 
 
 
-1:26:41*****************   PASSING A KEY .............. a key need to associate with ur instance  ............... WATCH
+use a user data
+
+1:26:41        PASSING A KEY .............. a key need to associate with ur instance  ............... WATCH
 
 first i need to look at my provider 
 the provider is in us wwest2
 i neeed to go to my aws console , sign in amd mk sure am in west2
 i need to look at the key pairs i have in that region 
-i look at my documentation, hw do i pass a key , i look at my arguments , scroll down to k
-so always make sure you have that the key exists and the key is in ur env , for e.g in dis case, its west2
+in terfrm registry, i look at my documentation, hw do i pass a key , i look at my arguments , scroll down to aws instance then scroll to argument; key
+so i can either create the key or pass a key name if i hv it, bc i see the argument am suppose to pass called; key_name
+so in my resource blk i pass key_name: 
+so if ur passing a key, always make sure you that the key exists and the key is in ur env , for e.g in dis case, its west2
+if the key is nt in that region, it will say the key cant be found
 
-we will see how we can create our key using the ssh key gen command and u can create the private/public key on ur terminmal n dpass the key to terfrm n terfrm wil associate
+
+                                                 CREATE SSH KEY GEN
+we will see how we can create our key using the ssh key gen command and u can create the private/public key on ur terminmal and pass the key to terfrm n terfrm wil associate
 that key wit ur instance bc u wil have both ur private key in ur env and it wil tk the public key and attach it to ur instance at ceration
 
+
+
+                                         .GITGNOIRE FOR CREATING SECRET
                                         
 1:354:00  .gitgnoire file for creating a secret
-first i create the secret file and write the secret know only to me  e.g db_password = "landmark123"     terraform apply -var-file=secret.tfvars
+first i create a variable; can give it any name eg secret , type =string , sensitive =true
+Then create a var.terfrm file 
+and write the secret know only to me  e.g db_password = "landmark123"     terraform apply -var-file=secret.tfvars
 but if am working with a team, ur working collaboratively, ur using .gitgnoire (inside  the .gitgnoire file, he refered to the secret file he wrote: secret.tfvars)
 so am passing .gitnoir, if i push this code to you , u will not hv dis file the secret file, so u wont be able to see it
 i creat my variable n mark it as sensitive = true so when trfrm create the statefile its nt going to output the value of d variable, it nt goin to be captured in d statefile 
@@ -343,7 +388,7 @@ any thing u dnt wnat exposd, u mark it as senesitive n ter frm will nt expose it
 
 
 
-############  #######################     1:44:30 
+     1:44:30 
                          
                                   META ARGUMENTS   ............... REFer to note file in github
 so far w ve been dealing with  Aruments are what we pass into our terrfm resource  when  we wnt to create a resourec or when we wnat to get data, uisng data source , w ecan 
