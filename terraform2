@@ -9,7 +9,7 @@ dynamically)TO THE INSTANCE RESOURCE BLK, HOW DO WE REFERENCE THE DATA SOURCE/AT
  HOW DO WE CREATE CUSTOM MODULES, THIS DIR IS OUR EC2 MODULE, CALL THE EC2 MODULE, WHERE IS THE MODULE, WE CAN CREATE MODULE FOR VPC, 
 THIS DIR IS OUR VPC MODULE, CALL THE VPC MODULE, RUN TERRAFRM INIT ANYTIME SMT IS ADDED TO A MODULE, USING A VARIABLE TO MAKE THE MODULE FLEXIBLE, 
  CREATE A VARIABLE FOR CIDR IN module/main.tf, WHERE THE USER CAN PASS THE VARIABLE VALUE, MAKING VARIBLE REQUIRED/ USING VARIABLES TO MODULELARIZE MY CODE, TERAFRM FORMAT,
-VARIABLE FOR CIDR, DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND, WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE, VARIABLES/TYPES, 
+VARIABLE FOR CIDR, DOES TERFRM DUPLICATE EACH  TIME WE RUN THE TRFRM COMMAND, WHAT CRITERIA DO YOU LOOK AT TO KNOW THE VARIABLE TYPE TO USE, TYPES OF VARIABLES, 
 ACCESS VARIABLE TYPE LIST' IN THE RESOURCE BLK, HOW DO U ACCESS VALUES IN A LIST, USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV, HOW TO READ/REFERENCE VALUES IN A MAP,
  PASSING VARIABLES AS A FILE, TERRAFORM.tfvars FILE/AUTO FILE, CREATING A VARIABLE THAT HAS A SECRET, S3 BUCKET/MODULES, TERFRM PUBLIC MODULES/REGISTRY, HOW TO USE THE
 OFFICIAL TERFRM MODULE, OVERRIDING THE DEFAULT VALUE OF THE OFFICIAL MODULE, LOCK.hcl FILE/VERSIONING, MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION, CREATING A VARIABLE FOR
@@ -56,7 +56,10 @@ I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGAN
 So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
 ami/vpc & a file for variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
 the argument variable values
-7)TYPES OF VARIABLES; string, list, map, boolean , inpu, output, object etc
+7) VARIABLE:
+a variable is a value that can change, depending on conditions or on information passed to the program.
+Variables are used to store information to be referenced and manipulated in a computer program.
+TYPES OF VARIABLES; string, list, map, boolean , inpu, output, object etc
 access/reference variables in a list/map in a resource blk , using variable of type list to deploy to diff env
 passing variables as a file 
   TYPES OF VARIABLE FILES TO PASS
@@ -704,6 +707,32 @@ say its now going to modify the vpc , it just updates, it goes to the vpc n put 
 
 
                                                                  VARIABLES/TYPES
+**online.. 
+The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing 
+the source code.
+This makes modules reusable across different environments (e.g., development, production). 
+Syntax and Structure
+An input variable is declared using the variable keyword, followed by a local name (label). 
+variable "instance_type" {
+  description = "The type of EC2 instance to deploy"
+  type        = string
+  default     = "t2.micro"
+  sensitive   = false
+
+
+Key Arguments:
+
+The variable block supports several optional arguments: 
+default: A default value for the variable. If a default is provided, the variable is considered optional. If no value is supplied at runtime, the default is used
+type: Specifies the type of value the variable accepts (e.g., string, number, bool, list, map, object). This is highly recommended for type safety and helpful error messages.
+description: A string that explains the purpose of the variable. It helps other users understand what value is expected.
+validation: A nested block that defines custom validation rules beyond the type constraint, ensuring the value meets specific criteria (e.g., a specific format for an AMI ID).
+sensitive: When set to true, Terraform hides the variable's value in the CLI output (plan/apply logs) to protect sensitive information like passwords. The value is still 
+stored in the state file.
+nullable: (Terraform v1.1+) Controls whether the module caller can assign a null value to the variable. 
+In Terraform, the "types" of input variable blocks refer to the type constraints you can apply to the values they accept.
+Terraform supports several built-in types, which are categorized into primitive types and complex types. 
+
 
   ******************* THIS TAKES us to varaibale types................   2:12
 
@@ -717,7 +746,10 @@ This data can then be used throughout your program, ie i can keep calling the va
 The following example shows the variable types that are supported by terraform.
 
 
-1) string
+**online...Primitive Types
+These are single, basic values: string, numbers, & bool.
+  
+1) string      **online;: A sequence of characters, such as "hello" or "ami-12345"
 Strings are usually represented by a double-quoted sequence of Unicode characters, "like this", If you declare a variable of type string without putting it in the quotation'
 it will give you an error
 
@@ -726,7 +758,8 @@ variable "vpcname" {
   default = "myvpc"
 }
 
-2) numbers , e.g we want to create a security grps & we want to pass the ssh port or https port, we can create a variable
+2)   **online:   Any numeric value, including whole numbers (42) and fractional values (3.14).
+numbers , e.g we want to create a security grps & we want to pass the ssh port or https port, we can create a variable
 eg for https port
 
     variable "https" {
@@ -737,8 +770,17 @@ eg for https port
 represents true/false  e.g creating a nat gateway for vpc
      variable "nat" {
      type  = bool
-     default = true    ,, its either true or fals
+     default = true    ,, its either true or false
 
+
+
+
+              ***online
+         Complex Types (Collections and Structural)
+These types group multiple values together:
+Collection Types
+These store collections of values that must all be of the same type:  eg list, map, set.
+ *** set(<TYPE>): An unordered collection of unique values (e.g., ["a", "b", "c"]). 
 
 4)   list ***uses index       video 3***also (meta argument type; count uses index
 list : represented by a pair of square brackets containing a comma- seperated sequence of values, like ["a", 15, true]
@@ -783,7 +825,10 @@ ur selecting the index based on the env.
 
 *************************2:27
 
-5) Map                         ***uses key value pairs
+
+5) MAP:   **Online; A collection of key-value pairs where keys are strings, useful for lookups (e.g., {"westus2" = "Premium_LRS", "eastus" = "Standard_LRS"}).
+
+Map                         ***mee,uses key value pairs
 A map is basically key value pairs, thats what creates a map
 whatever u hav inside tha brackets/calibras, these are key value pairs
 so its is a map
@@ -825,10 +870,18 @@ so u can define a var of type map then based on the env u selsct the key, so ur 
 ur selecting the key based on the env
 
 
+   ***i didnt see input & output as a type of variable online
+  **online;
+The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing 
+the source code
 
 6)NPUT Varibale
 Declaring a variable but nt providing the default value , therfore am making it REQ & thefore it becomes an input variable & ill need to supply the value
+     **based on online info, i bliv what he is referring to as 'input variable' is a 'optional variable'
 
+***online..
+The variable block supports several optional arguments: 
+default: A default value for the variable. If a default is provided, the variable is considered optional. If no value is supplied at runtime, the default is used
 
 
  7)  OUTPUT  
@@ -838,11 +891,17 @@ output "vpcid" {
 }
 
 
+    ***online Structural Types
+These allow grouping related information, even if the attributes are of different types: 
+
 8)TUPLE   .. we wont focus on this much
 it has a mixed data type
 ITS LIKE A  LIST, IT can contain strings, numbers or other  list
 Lists/tuples are represented by a pair of square brackets containing a comma-separated sequence of values, like ["a", 15, true].
 tuple is objects within  a list while an OBJECT is a list within  a map
+
+**online,
+tuple([<TYPE>, ...]): An ordered sequence of values that can be of different types (e.g., ["test", 123, true]). 
 
 
 
@@ -854,6 +913,10 @@ so this is a list within a map
 
 *** all these variables weare passing inside of our configuration but lets say we dnt want to pass the variables within the configuration
 we can pass them as a file
+
+**online... object({<ATTR NAME> = <TYPE>, ...}): A collection of named attributes, each with its own defined type, providing a flexible way to structure data 
+(e.g., object({ name = string, version = number })).
+
 
 
 
