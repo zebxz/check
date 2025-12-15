@@ -6,14 +6,14 @@ Diff btw AWS CLI and TERRAFORM CLI, TERRAFORM COMMAND BASICS,  TERRAFORM CONFIGU
 CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK  & IAM ID OF ANY REGION (NOT THE DEFAULT REGION), TROUBLESHOOTING/NEED TO PASS REGION OF AMI ID IN THE PROVIDER BLK, 
 TROUBLESHOOTING/ NEED TO SPECIFY THE VPC, TERRAFORM CONFIGURATION LANGUAGE SYNTAX,  DIFF BTW PROVIDER BLK & RESOURCE BLK, 10 HIGH LEVEL BLOCKS, TEMPLATE, ARGUMENTS, ATTRIBUTE,
 HOW DO THESE BLOCKS WORKS ,REQUIRED ARGUMENTS, ARGUMENTS REFERENCE, ATTRIBUTE REFERENCE, TERFRM SETTING BLOCK, TERRAFROM VERSION, HOW TO USE VERSION, BACKEND,
-TO CREATE VARIABLE, REFACTORING, OUTPUT VALUES BLK, DATA SOURCE, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE.
+ VARIABLE INTRO, REFACTORING, OUTPUT VALUES BLK, DATA SOURCE, WHAT ARE THE MANDATORY BLKS THAT ARE COMPULSORY TO USE.
 
 
 
 
 SUMMARIZED FOR INTERVIEW
-1)IAAC: we ar not creating infrasture on the console but instead we ar creating infrasture as a code 
-Terraform is a tool that helps us build our infrasture in a code format so that we no ,longer nid to go on the console to provision our infrasture bc we want THE
+1)IAAC: we ar not creating infastructure on the console but instead we ar creating infrasture as a code 
+Terraform is a tool that helps us build our infrasture in a code format so that we no ,longer nid to go on the console to provision our infrasture bc we want the
 process to be repeatable
 WHY YOU SHOULD USE TERRAFORM
  Manually creating resources in aws does not allow consistency of the infastructure provisioned if the process needs to be repeated
@@ -56,9 +56,10 @@ this is important to enable terfrm go into aws & provision resources
 7) TERFRM BASIC COMMAND/ WORK FLOW
 Init, vaalidate,plan,apply
 
-8)TERRAFORM CONFIGURATION LANGUAGE SYNTAX/TOP LEVEL BLKS
+8)TERRAFORM CONFIGURATION LANGUAGE SYNTAX/10 HIGH LEVEL BLKS
    **video2, HOW DO YOU USE terrfrm setting blocks ( U SHUD BE ABLE to discuss this things abt setting ur rEq version & REQ provider version)
-TERRAFRM uses top level blks when its provisioning resources , blks can also be template
+TERRAFRM uses (meee, a combination of either of the) top level blks when its provisioning resources bt we need a resource blk for evrytin we create in terfrm, blks can also
+be template
 Eg; 
 a)terraform setting blk includes: Terfrm version
 b)provider blk;  region, profile  
@@ -68,7 +69,7 @@ after which we run terraform, init/validate/plan/apply.
  DIFF BTW PROVIDER BLK & RESOURCE BLK
                    A provider block has one label eg 'Aws', WHILE a resource block has 2labels 'resource type and resource name & Arguments
   2.40.40.... terraform block/setting block doesnt have any label
-D) Input variables   E) output blk  F)local values  G)Data source blk   H)Modules blk   I)Moved blk   J)import blk 
+D) Input variables ..mee, i bliv this is optional variable   E) output blk  F)local values  G)Data source blk   H)Modules blk   I)Moved blk   J)import blk 
 
 
 9)CREATE A RESOURCE USING RESOURCE BLK
@@ -573,8 +574,10 @@ Provides an interactive console for evaluating expressions.
 
 
 
+             
+                     *****illustration
 
-illustration
+
   eg                            CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK  & IAM ID OF ANY REGION (NOT THE DEFAULT REGION)... aws instance bc my provider is AWS  
 **objective is to see that Ami's are region specific *meee** so if get the ami id from a region other than d default region then we hv to indicate d region in d provider blk
     **for thiis illustration we copied Ami id frm a region thats not the default region& so  we have to pass the 'region' where the AMI we got in AWS is found, in the provider
@@ -793,15 +796,18 @@ we hv 10 high level blocks that tefrm defines
 1) terfrm settings blks > we pass the version of trm we wnt to use, it sets the required version of trfrm 
 2) provider blk: wher we specify our provider , if we wnt to specify our provider then we hv to use a provider blk
 3)resource blk : evrytin we create is cerated using a resource blk, resourecs are what are being created
-4)input varaibles blk: we are passing input into our resource , we wnt to modularize or make our code flexible thefore we use variable  , input in our resource
+4)input variables blk/optional var blk: we are passing input into our resource, we wnt to modularize or make our code flexible thefore we use variable, input in our resource
+AI Overview
+The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing
+the source code. This makes modules reusable across different environments (e.g., development, production
 5) output values blk : these gets the attribute out of the instance/resource
 6)local values blk:
 7)data sources blk: blks we use to query data, e.g earlier we went to aws to find the AMI bt as engineers we can do this dynamically, i dnt hv to go to aws to copy the AMI,
 i can use the data blk, it wil dynmaically or automaticaly go into aws fetch the AMI n bring it bk to me so that i inject it inside my code. so as an engineer, u might find
 that u may never log into aws  to find anytin cos if i need anytin i can use a data source, il hv the data source go to aws and get the info for me, so i may never log into
 aws bc i hv everytin written as code
-8)modules blk: how i can arrange my code so i package it as a module
-9)moved blk: used if i need to migrtae resource frm one name to another
+8)modules blk: how i can arrange my code so i package it as a module **0nline..  Calls and configures child modules, promoting modularity and code reuse in larger projects
+9)moved blk: used if i need to migrate resource frm one name to another
 10) import blk
 
 
@@ -823,7 +829,7 @@ Data sources : I can use a data source called AMi, it will fetch the data for th
 
 
                   ARGUMENTS REFERENCE
- ***when u scroll down for this particular instance, it has Arguments reference
+ ***Still looking at the documentation; when u scroll down for this particular instance, it has Arguments reference
 we also see arguments rEference: these are d tins we can pass in ur ec2 instance when ur creating n they are optional , so u can pass them or nt bt if ur ticket requires
 if the specification req u pass it, then u pass it as its written here in ur configuration
 arguments means they go btw the 2{} calibres
