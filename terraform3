@@ -37,6 +37,10 @@ USING MY IDE & GITBASH
 THERE ARE 2WAYS we can PASS DATA (Analyzing & provisioners)
 
 
+
+
+
+Meta arguments 
 ######################################################################  START
 
 
@@ -438,7 +442,8 @@ wherEas the independent resources are created in parrallel.
 ie if u have 2resources that are depndent on each other, terfrm internally has a way of identifying wich resource has to be created first b4 the other , 
 This is called implicit dependency
 
- 
+
+                                    TYPES OF DEPENDENCIES
 
    INTERVIEW QUESTIONS, 
 What are implicit dependencies???
@@ -630,6 +635,7 @@ ie u removed index 2, so index 3, 4, 5 hv to be reconfigured to make the arrangm
 also count meta data cannot b used with for_each
 
 so bc of that trfrm also has anoda argument called: 
+
 
 
 3)    FOR EACH   ............... THIS is more flexible        ...............2:17
@@ -949,59 +955,10 @@ or ur able to isseu trefrm commands in in ur local env bt what is happening , tr
 
 but for now jst go tru ur  meta argument ,data sources ,  and be comfortable in manipulating data 
 and the exrecise we did today,  atleat it shud hv solididfied ur understanding of how data sourecs works and hw the provider meta araument works
-the bottem lin eis is jsut undersatnd the concept of h weverytin works 
+the bottem line is is just undersatnd the concept of hOW everytin works 
 
 
-        QUETSION 
-1) The diff btw count meta n for each,i noticed that thers an index in the count bt aside frm that is der any othr diff?? Cos it seems they do d same tin, multiple resources
- ANS:
-once we start doing loops which i think i can show u guys on monday, u will see the major dif f
-whenu use count, it wrks on alist bc list, if u knw what is called data type, u can v a list n u can hv a map, a set , all these are data types
- so if u are using count, if its reading frm a list, what will happening is it sequences values frm a lsit whic is 0index , so frm 0, 1,2, 3,4,5
-bt the problem with count i sthat if u cm an remove a valaue frm the middle of the list , which according to count as it sequence, it was suppose 2 b at index1, bt if i 
-remove that value frm d middle of the lsit , what happens is that is going to shift the resource at index2 it moves it to bcome index 1, trfrm does that by destroying d 
-resource that was in index2 so that it shifs it to 1 bc list cnat hv a gap inbetween (it has to run frm 0 to whatever)so thats the downside of count  bt if u remove a value
- frm the top of the list the last eelemt, it wil stil wrk fine bc ur nt modifying anytin frm 0 , d problem is if anytin is taken frm d middle 
-
-thats why for each now becomes more superior bc for each uses a set or a map , so lng as u can convert ur list into a set , then a set is nt index, values in a set are nt
-indexed like frm 0123, values ina set as a data type are refrernced by the name , so if i remove the name fmr the midlde of the list ist only gon tp affect the resource 
-taht has that name bc we are using keys, we are using names, we ar nt using index
-
-2) for each , can we create two,  t2 medium  bc the example we used, we actually t2 micro, t2 medium 
-
-ANS:
-bc as longs it reads frm the list right??
-
-*********he tried to practicalise it bt his system was nt working, his IDE is frozen
-he said just play with it by yourself and see what happens 
-
-
-3) if we used a life cycle to prevent the instance not to be deledte bt if the instance was in that particular vpc , can we delete the vpc
-
-ANS: 
-NO U CAN NEVER DELETE A VPC THAT HAS A RESOUREC IN IT 
-if a vpc has a resoure, it cannot be deleted, if u try to delete it it gives u an error 
-
-
-4) when u were working on meta argument, i saw a place u mentioned abt the element bt u didnt emphasize more on it, bt i was wondering, how does element factor in the count
-or meta argument
-
-ANS:
- there are things i didnt mention bc those are part of trfrm functions, as u realise i ddint cover much on function, an element is a function, we can use a function called 
-element to extact a value  , or lememe jst call it an element to extract an obj frm a list, that is a function that will go and pick a value frm a list
-so u can use a function to get those values frm a list bt  w estill hv  atopic to talk abt tfrrm function , and tahts when we will talk abt loop n all that n thats why i 
-didnt mention it
-
-
-
-so keep practising with thos meta arguments bc 
-once u have a good mastery of them then ur all good to wrk eith terfrm once u knw the backend and all that, u guys shud be gud
-then when we transition to bootcamp we would now igve you more advanced ocncept 
-for now this is jsudt the  foundation of trfrm
-you need to undertsnd the trfrm blocks, the workflow, the backends , n jsut some basic concept for u to b able to run tfrm
-but once w ego tru the bootcamp, we start puting in some advanced concept in trfrm 
-
-
+       
 
 
 
