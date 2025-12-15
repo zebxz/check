@@ -11,6 +11,13 @@ HOW DO THESE BLOCKS WORKS ,REQUIRED ARGUMENTS, ARGUMENTS REFERENCE, ATTRIBUTE RE
 
 
 
+for this video we covered what is IAAC, characteristics, benefits, configuration files & saw how to configure aws credential inorder to set the default user
+terfrm basic command, terfrm work flow, the 10 high level blocks & refactoring
+we also covered how to create a resource blk and understood that AMI & VPC are region specific
+ for illustration.. CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK & IAM ID OF (A CUSTOMIZED REGION) ie ANY REGION (NOT THE DEFAULT REGION)
+
+
+
 SUMMARIZED FOR INTERVIEW
 1)IAAC: we ar not creating infastructure on the console but instead we ar creating infrasture as a code 
 Terraform is a tool that helps us build our infrasture in a code format so that we no ,longer nid to go on the console to provision our infrasture bc we want the
@@ -49,7 +56,7 @@ we nid to give it specifications for what we want it to do in Aws/azure but for 
 
 5)CONFIGURE AWS CREDENTIALS BY PASSING YOUR AWS CREDENTIALS (of the IAM User)TO TEFFARM TO SET THE DEFAULT PROFILE; Aws configure  
     see step 3 of the video file
-this is important to enable terfrm go into aws & provision resources
+this is important to enable terfrm go into aws & provision 
 
 6) INSTALL EXTENSIONS FOR AUTO COMPLETE
  
@@ -74,7 +81,7 @@ D) Input variables ..mee, i bliv this is optional variable   E) output blk  F)lo
 
 
 9)CREATE A RESOURCE USING RESOURCE BLK
-Hv to create a dir then create a resource blk from scratch or clone the code repo
+Hv to create a dir then create a resource blk from scratch or clone the code/configuration file repo
 TERFRM WORKFLOW (Initialize,validat,plan,apply) 
 
 10)HOW TO USE TERFRM VERSION
@@ -121,6 +128,15 @@ DEFAULT REGION
 THis is the region that was selected when creating your IAM user in AWs which becomes your default profile when you configure terfrm withe the AWS credentials
 
 ***************************************************************************************************************
+
+
+
+start
+
+
+
+
+
 
 
 19:38   .......................... READUP SCRIPT
@@ -579,7 +595,7 @@ Provides an interactive console for evaluating expressions.
                      *****illustration
 
 
-  eg                            CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK  & IAM ID OF ANY REGION (NOT THE DEFAULT REGION)... aws instance bc my provider is AWS  
+  eg       CREATE AN AWS INSTANCE BY USING A RESOURCE BLOCK & IAM ID OF (A CUSTOMIZED REGION) ie ANY REGION (NOT THE DEFAULT REGION)... aws instance bc my provider is AWS  
 **objective is to see that Ami's are region specific *meee** so if get the ami id from a region other than d default region then we hv to indicate d region in d provider blk
     **for thiis illustration we copied Ami id frm a region thats not the default region& so  we have to pass the 'region' where the AMI we got in AWS is found, in the provider
                     blk to avoid getting an error but if we didnt copy an Ami id i bliv it will provision it in the default region; ill check when am practicing
