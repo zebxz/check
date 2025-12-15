@@ -747,7 +747,12 @@ terafrm use the top level blks whenever its provisioning infrastructure    .....
 ****online... These blocks can appear at the top level of a configuration file and are separated by blank lines for style and readability. 
 
 2.06.30 e.g 
+
+Tefrm setting blk
+**online.. Configures the behavior of Terraform itself, such as the required Terraform version and the required provider versions.
+
 1) PROVIDER BLOCK
+**online..  Specifies the cloud or SaaS provider (e.g., AWS, Azure, Google Cloud) and its configuration, including authentication credentials and endpoints.
  we hv a name of what the blk is: eg,  provider 
 a certain label :aws 
 a blk wil always be btw this 2calibres{
@@ -755,6 +760,9 @@ a blk wil always be btw this 2calibres{
 in the calibres {} is always a map ., this map are jst key value pairs we ar pasing in der, 
 then nxt 
 2) RESOURCE BLOCK
+***online..  : Describes one or more infrastructure objects (e.g., a virtual machine, a network) that Terraform will manage. 
+It expects two labels: the resource type (e.g., aws_instance) and a local name.
+
 this is called a resoure block bc the block starts with the word: resource  .. resourcev"aws_ instance" "project2ec2"
 a resource blk wil v 2labels , (resource type) and (resource name)
 i) the resource type ( in aws we v dif resourcese.g vpc, inernt gatway,) bt all our resoure in aws wil start wit the keywrd aws_ (aws_vpc) bc its a
