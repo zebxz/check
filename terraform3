@@ -3,6 +3,7 @@
 YES you wil need to need to hv a vpc that exists first but if ur nt using custom the it means ur using default and so u dnt need to passa any argument to ur resourec
 trfrm wil place it in the defult vpc
 
+1.56.25     **** i see vpc capacity is 5..
 
 AMIs are Region specific ................3:00:14   
 
@@ -443,7 +444,7 @@ This is called implicit dependency
 What are implicit dependencies???
 
 ANS:
-THis is a situation wherby terfrm internally identifies d dependencies of resource n therfrore its able to identify which resource to create first, so it is abt dependencies
+THis is a situation whereby terfrm internally identifies d dependencies of resource n therfore its able to identify which resource to create first, so it is abt dependencies
 so if u dnt pass any depends on argument but tefrm still organizes which arguments needs to be created first then that becomes implicit depencies, its an inbuilt functionality
 of tfrm that identifies which resource nids to be created first 
 
@@ -453,6 +454,8 @@ but sometimes, there are resource you as an engr, now that u understand the use 
 this is when u determine urself manaually the order resources are created 
 this is done by passing a depend_on meta argument
 depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
+
+
 
 
                 IMPLICIT  DEPENDENCY ILLUSTRATION
@@ -470,8 +473,10 @@ terfrm destroy,
 they are both been destroyed together
 
 
-1.56.25 vpc capacity is 5..
+1.56.25     **** i see vpc capacity is 5..
 lets create some dependencies
+
+
                                  
 2.00                          EXPLICIT DEPENDENCY ILLUSTRATION
 i want the vpc to depend on the instance, 
@@ -496,6 +501,7 @@ so now once i do that am creating depsndency and terfrm is able to figure out ho
     *********** depends_on meta-argument must be a list of refernces to other resources in the same calling resource.
 
 
+****illustration
                  ec2instance.tf file
 
     resource "aws_instance" "myec2" {             ** the ec2 instance resource blk
@@ -524,7 +530,8 @@ bc its a list u can pass as many resources as u want as long as this particular 
 
 
 
-2) count          *****  this uses an index
+
+2) count   this uses an index  ***** i bliv count is for creating similar resources eg 3 of 't2 micro' instance   ...  ****  video2,  types of variable; list' ***uses index     
 it can be specified in resources as well as modules 
 in trfrm a resource blk actually configures only one infrastructure obj by defaault.
 if we want mutiple resources WITH THE SAME configurations, we can define d count meta-argument  ie we can use count meta argument
@@ -539,7 +546,7 @@ so if i want to create 3instances, ill pass count in my resource blk,
 count requires a whole number and it will create the resourec that number of times
 then to distinquish one instance frm the other, i hv to pass an index, the index corresponds to each resource 
 
-count = 3     ... that is it wil craete the resourec 3times 
+count = 3    ... that is it wil craete the resourec 3times 
    e.g
 
   resource "aws_instance" "myec2" {
@@ -561,10 +568,11 @@ our list always starts with 0 index
 so if i want to create 3 instances 
 count = 0, 1, 2
 
-e.g     ,.... # create four similar EC2 instances
+
+Ticket     ,.... # create 3 similar EC2 instances
 
    resource "aws_instance" "server" {
-  count = 4 
+  count = 3
   ami           = "ami-a1b2c3d4"
   instance_type = "t2.micro"
 
@@ -575,7 +583,10 @@ e.g     ,.... # create four similar EC2 instances
 
 
 
-             ec2instance.tf file  with count illutration
+illustrtaion;
+
+STEP1:
+             ec2instance.tf file  
 resource "aws_instance" "myec2" {
 count = 3
 ami           = data.aws_ami.amzlinux2.id
@@ -585,9 +596,13 @@ tag = {
    "Name" = "EC2Demo-${count.index)"                          ********* with count.index, thats how terfrm wil identify this as multiple/ different resources 
  }
 
+
+STEP2:
 variable "instance_type" {
    type = string
-   default = "t2.micro"
+   default = "t2.micro"           **** t2.micro is the instance type we want
+
+
 
 *****2:09:00
 subsequently when we run terfrm plan, terfrm inputs the index 
@@ -616,6 +631,7 @@ also count meta data cannot b used with for_each
 
 so bc of that trfrm also has anoda argument called: 
 
+
 3)    FOR EACH   ............... THIS is more flexible        ...............2:17
   this accepts a map or set of strings. 
 so if you have a map or a set, then u can use for each,
@@ -626,6 +642,12 @@ each key: the map or set member coresponding to each member
 each value: the map value corressponding to each member.
 
 
+illustration:
+includes step1, step2 & step3...  ***meee, but step3 is required if you are using for each with a list bc you will need 'to set' it bc for each doenst work with a list
+
+
+STEP1: The resource blf or the ec2 instance
+
 e.g resource "aws_instance" "myec2" {
 for each = var.instance_type                    ************* we wnt the instance type to be for each  
 ami           = data.aws_ami.amzlinux2.id
@@ -635,13 +657,16 @@ tag = {                                                               so for eac
    "Name" = "EC2Demo"
  }
 }
-
+                     STEP2:  the variable resource blk
 varaiable "instance_type" {
     type = list(string)             ********** now for each, we have a list of string, .... mico, medium, t3micro 
     default = ["t2.micro", "t2.medium", "t3.micro"]           ************ list of my instance type 
-                                                    bc i hv this list i can use for esch, so for each of this element in the list, trfrm can create for me an instance 
+                                                    bc i hv this list i can use for each, so for each of this element in the list, trfrm can create for me an instance 
                                                         for each of this, hw do i do that????  in the instance resource block, instaed of count, i can use for each 
 
+
+
+                               TROUBLESHOOTING, NEED TO SET(for each doenst work with a list)
 bt we say that for each accepts a map or a set , this variable inatance is a list , for each doenst work with a list 
 ****************************************so  this wont work bc for each works with either a map or a set of strings 
 
@@ -649,10 +674,10 @@ to confirm
 run tefrm plan and we get an error : invalid for_each argument 
 
 ****************** so bc of this we can use a tefrm function to convert our list into a set of strings bc we cant convert to a map bc we dnt hv key value pairs in here.
+thefore; 
 
-
-
-     CONVERTING LIST INTO SET OF STRING
+STEP3: TO SET
+                 CONVERTING LIST INTO SET OF STRING
 we have a function called to set 
 its used to convert a list or a map into a set 
  e.g
@@ -678,9 +703,10 @@ so this is hw we use for each to alter the behaviour of resource or hw tarfrm ha
 
 
 
+
 4) provider     
-specifies wich provider to use for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
-for diffrrntiating those providers, u use an alias field.
+specifies wich provider to be used for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
+for differentiating those providers, u use an alias field.
 the resource then reference the same alias field of the provider as provider.alias to tell wich one to use.
 e.g when i wnt the use the europe region then in my resource i wil specify 
 
@@ -699,10 +725,16 @@ resource "google_compute_instance" "example" {
 
 also another e.g
 i hv a resource for an instance and a resource for a vpc 
-if i want to creste the instance in us east1, then i v defined an alias below
+if i want to create the instance in us east1, then i v defined an alias below
 then in the instance ill define my prorvider as aws.east
 why bc i hv a vpc that wil be created in west
 bt for the instance v pass a provider wit an alias that wil alter wher the resource wil be provisioned
+
+
+
+illustration; **mee, for this, we will see that we will pass an alias in the provider blk & also pass the same alias in the data source
+
+STEP1: Resource blk for the ec2 instance
 
 resource "aws_instance" "myec2" {
  provider = aws.east                     ************* here ill pass the provider
@@ -714,6 +746,7 @@ tag = {
    "Name" = "EC2Demo"
 
 
+STEP2;  VARIable for the instance & vpc
 varaiable "instance_type" {
     type = list(string)
     default = ["t2.micro", "t2.medium"]
@@ -724,6 +757,7 @@ resource "aws_vpc" "myec2" {
      depends_on = {aws_instance.myec2}
 
 
+step3:    provider blk
 provider "aws" {
    alias = "east"
    region = "us-east-1"
@@ -732,7 +766,7 @@ provider "aws" {
     therfore , with this, your vpc wil be in US west bc i hv my provider, it wil tk the default provider 
 but the instance will have an alias so wil be created in east 
 
-*************2:39:10  ............... 
+*************2:39:10  ...............          TROUBLESHOTING AMI ERROR
 run terfrm plan 
 we got error : invalid AMI, not found 
 he said hes nt trying to troubleshoot, hes trying to establish why hes getting that error 
@@ -741,10 +775,13 @@ so it doesnt recognize bc ami,ec2 are region specific thus the error
 
 **************** he said
 right now we are trying to create a resource in us east1,
-we hv used a meta argumet wich alters the behavior , by default the resourdewil be craeted in d default region bt it wil also use thsis data ssource to get our AMI BT 
-BC WE pass a provider, this data source is using d default provider to query that particular data. its trying to find data in us  west bt when it returns that particular
-data, this AMI is nt found in us East1
+we hv used a meta argumet wich alters the behavior, by default the resource wil be created in d default region bt..mee '&' not bt' it wil also use thsis data ssource to get 
+our AMI BT BC WE pass a provider, this data source is using d default provider to query that particular data  **i bliv the particular data is our default region. .its trying
+to find data in us  west bt when it returns that particular data, this AMI is nt found in us East1
 
+
+
+      STEP4                                             PASS PROVIDER ALIAS IN DATA SOURCE
 2:44 :00 ************* so we need to find out can you pass a provider alias in a data source????
 can somebody go to the provider and find out
 so this is your first project at work so how can you pass it?? 
@@ -782,7 +819,7 @@ bt bc v congigure an alias, i wnat my resources to be configured in a diff regio
 so, data source has to go to into us East bt unfortunataely we dnt hv a default vpc in US East 
 ************* so the rectify the issue he changed our alias region to a region that has a default vpc
 in the provider he chnaged the providr alias to US west, region = west-1
-in the data source for instance he cahnged the provider to aws.west
+in the resource blk for instance he cahnged the provider to aws.west
 in the data source for AMI, he changed provider to aws.west
 
 terffrm plan 
@@ -797,6 +834,9 @@ the basic concept is that AMIs are region specific
 default region that your datasource wil try to query the data from , bt if u hv used an alis , if one of ur resource has an alias then ur datasource wil always try to query
 data frm ur defult region that is set in ur default provider bt if u ve an alias, uv configured a provider alias then u hv to pass that in your datasource so that ur 
 specifying the region ur datasource shud query or get the data.
+
+
+
 
 5)  LIFE CYCLE
    A life cycle defines the life cycle of a resource. as per the resource behaviour , tefrm can do the following:
@@ -826,7 +866,7 @@ then we see it first starts to dsetroy and at the same time, its creating
 but we dnt wnat hsi to hpapen in prod  bc ur imnfrasture is been destroy n bc of that downtime
 
 *******************  3:10:00
-A) to prevent thsi in our resource block u can pass a life cycle meta argument
+A) to prevent this  in our resource block u can pass a life cycle meta argument
 
 life cycle{
   create_before_destroy = true
