@@ -828,7 +828,28 @@ a REQ variable
 
 
 
+
 TERRFRM3
+
+
+HAVE YOU ENCOUNTERED ANY ISSUES WORKING WITH TERFRM
+
+2.10 issue cloning repo using vscode
+question mark on directory/s3 bucket (meta argument examples)
+so she had to fork/ edith the name
+
+5.30   it clones but its empty
+said he will reupdate the repo at the end of class but he has already deleted the question mark
+  student confirmed its working now
+
+
+INTERVIEW QUESTION
+1)what is user data????
+under whose/which persmission will the instance b boot straping???  ... it wil use root permission
+we hv a root user whenevr ur instalin a package it wil use a root credential
+2) what is booth straping???
+the root user wil create ur default user and add them to d sudoers grp, that is the process of booth straping
+
 
 1) Have you ever deployed in diff env using the same module
 ans: yes
@@ -897,3 +918,55 @@ ANS:
 THis is a situation wherby terfrm internally identifies d dependencies of resource n therfrore its able to identify which resource to create first, so it is abt dependencies
 so if u dnt pass any depends on argument but tefrm still organizes which arguments needs to be created first then that becomes implicit depencies, its an inbuilt functionality
 of tfrm that identifies which resource nids to be created first 
+
+
+
+ QUETSION 
+1) The diff btw count meta n for each,i noticed that thers an index in the count bt aside frm that is der any othr diff?? Cos it seems they do d same tin, multiple resources
+ ANS:
+once we start doing loops which i think i can show u guys on monday, u will see the major dif f
+whenu use count, it wrks on alist bc list, if u knw what is called data type, u can v a list n u can hv a map, a set , all these are data types
+ so if u are using count, if its reading frm a list, what will happening is it sequences values frm a lsit whic is 0index , so frm 0, 1,2, 3,4,5
+bt the problem with count i sthat if u cm an remove a valaue frm the middle of the list , which according to count as it sequence, it was suppose 2 b at index1, bt if i 
+remove that value frm d middle of the lsit , what happens is that is going to shift the resource at index2 it moves it to bcome index 1, trfrm does that by destroying d 
+resource that was in index2 so that it shifs it to 1 bc list cnat hv a gap inbetween (it has to run frm 0 to whatever)so thats the downside of count  bt if u remove a value
+ frm the top of the list the last eelemt, it wil stil wrk fine bc ur nt modifying anytin frm 0 , d problem is if anytin is taken frm d middle 
+
+thats why for each now becomes more superior bc for each uses a set or a map , so lng as u can convert ur list into a set , then a set is nt index, values in a set are nt
+indexed like frm 0123, values ina set as a data type are refrernced by the name , so if i remove the name fmr the midlde of the list ist only gon tp affect the resource 
+taht has that name bc we are using keys, we are using names, we ar nt using index
+
+2) for each , can we create two,  t2 medium  bc the example we used, we actually t2 micro, t2 medium 
+
+ANS:
+bc as longs it reads frm the list right??
+
+*********he tried to practicalise it bt his system was nt working, his IDE is frozen
+he said just play with it by yourself and see what happens 
+
+
+3) if we used a life cycle to prevent the instance not to be deledte bt if the instance was in that particular vpc , can we delete the vpc
+
+ANS: 
+NO U CAN NEVER DELETE A VPC THAT HAS A RESOUREC IN IT 
+if a vpc has a resoure, it cannot be deleted, if u try to delete it it gives u an error 
+
+
+4) when u were working on meta argument, i saw a place u mentioned abt the element bt u didnt emphasize more on it, bt i was wondering, how does element factor in the count
+or meta argument
+
+ANS:
+ there are things i didnt mention bc those are part of trfrm functions, as u realise i ddint cover much on function, an element is a function, we can use a function called 
+element to extact a value  , or lememe jst call it an element to extract an obj frm a list, that is a function that will go and pick a value frm a list
+so u can use a function to get those values frm a list bt  we still hv  a topic to talk abt tfrrm function , and thats when we will talk abt loop n all that n thats why i 
+didnt mention it
+
+
+
+so keep practising with thos meta arguments bc 
+once u have a good mastery of them then ur all good to wrk eith terfrm once u knw the backend and all that, u guys shud be gud
+then when we transition to bootcamp we would now igve you more advanced ocncept 
+for now this is jsudt the  foundation of trfrm
+you need to undertsnd the trfrm blocks, the workflow, the backends , n jsut some basic concept for u to b able to run tfrm
+but once w ego tru the bootcamp, we start puting in some advanced concept in trfrm 
+
