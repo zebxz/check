@@ -75,6 +75,37 @@ the argument variable values
 
 
 
+Terraform is used for provisioning resources , Terraform is a tool that helps us build our infrasture in a code format & to do that terrafrm uses (meee, a combination of 
+either of the) top level blks when its provisioning resources bt we need a resource blk for evrytin we create in terfrm, blks can also be template.
+ one of the top level block is called 'variable block.To make the code flexible ie to be able to use it in diff env, terfrm uses modules...
+The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing 
+the source code. This makes modules reusable across different environments (e.g., development, production
+The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
+variables; Defines input variables that allow you to parameterize your configuration, making it reusable.
+arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
+arguments can be reQ or optional
+***************************************************
+
+
+                                                      WHAT IS A SOURCE CODE
+***online... Key Aspects of Terraform Source Code
+CONFIGURATION FILES: The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module). These files use a declarative
+syntax to describe the required resources (e.g., virtual machines, networks, databases) and their desired end state, rather than step-by-step instructions for provisioning 
+them.
+MODULES: Terraform configurations are organized into modules, which are reusable, self-contained packages of code. When one module uses resources defined in another, the 
+source argument in a module block specifies the location from which to load the child module's code.
+SOURCE FOR MODULES/PROVISIONERS: The source argument is crucial for telling Terraform where to find the necessary code for modules and providers. Common sources include: 
+Terraform Registry: A public or private repository for sharing and discovering modules and providers (e.g., hashicorp/aws).
+Local file system: Paths to directories within the same project or machine (e.g., ./modules/vpc).
+Version Control Systems (VCS) repositories: URLs pointing to Git, Mercurial, or other repositories (e.g., GitHub, Bitbucket).
+HTTP/S URLs: Direct links to compressed archive files.
+
+
+
+
+
+
+
 
       ****start
 
