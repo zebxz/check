@@ -30,13 +30,23 @@ variables; Defines input variables that allow you to parameterize your configura
 vidoe1: arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
 arguments can be reQ or optional
 
+                                                      WHAT IS A SOURCE CODE
+***online... Key Aspects of Terraform Source Code
+CONFIGURATION FILES: The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module). These files use a declarative
+syntax to describe the required resources (e.g., virtual machines, networks, databases) and their desired end state, rather than step-by-step instructions for provisioning 
+them.
+MODULES: Terraform configurations are organized into modules, which are reusable, self-contained packages of code. When one module uses resources defined in another, the 
+source argument in a module block specifies the location from which to load the child module's code.
+SOURCE FOR MODULES/PROVISIONERS: The source argument is crucial for telling Terraform where to find the necessary code for modules and providers. Common sources include: 
+Terraform Registry: A public or private repository for sharing and discovering modules and providers (e.g., hashicorp/aws).
+Local file system: Paths to directories within the same project or machine (e.g., ./modules/vpc).
+Version Control Systems (VCS) repositories: URLs pointing to Git, Mercurial, or other repositories (e.g., GitHub, Bitbucket).
+HTTP/S URLs: Direct links to compressed archive files.
+
 
 
 
  
-
-
-
 
 
 VIDEO SUMMARIZED....... more elaborated
@@ -48,6 +58,8 @@ AMI id from custom regions and then  to make the codes flexible
 eg; (a resource blk/config file for ec2 instance/vpc & a variable files for each of the argument) & a main.tf 
 file wher we reference/call any of the arguments ^ reference their variable file so we can pass each 'argument variable values) & we have all the config .tf files in a 
 directory (which together form a module).
+Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
+**online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
 3)then we use variables to modulerize the codes to make it reusable, we also saw how to use the types of terform variables like map/list
 & how to reference values in a map, using a variable of type list to deploy in diff env, we also saw how to pass variables as a file the file must end with 'tfvars', pass it 
 on the CLI uing '-var-file= 'the file name', .. when u dnt want to pass these varaibles within ur configuration , terfrm always gives the option for u to pass them as files
@@ -91,8 +103,8 @@ Input/out/local
 illustration for local & data source/HOW TO CHECK AMI ID IN AMAZON
 5) CREATE A DATA SOURCE & USE IT TO PASS THE ATTRIBUTE; AM ID (of the default region or custom/any region dynamically) TO THE INSTANCE RESOURCE BLK
 6) CREATE CUSTOM MODULES & CALL THE MODULE eg vpc module, ec2 instance module
-***online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
- Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
+Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
+**online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
 7) VARIABLE:  **online, Defines input variables that allow you to parameterize your configuration, making it reusable.
 a variable is a value that can change, depending on conditions or on information passed to the program.
 Variables are used to store information to be referenced and manipulated in a computer program.
@@ -104,26 +116,6 @@ passing variables as a file
 2) Unamed  filees eg terrafrm.tfvars or auto files
 8)CREATING A VARIABLE THAT HAS A SECRET
 9)Terfrm public MODULE/registry
-
-
-
-
-
-***************************************************
-
-
-                                                      WHAT IS A SOURCE CODE
-***online... Key Aspects of Terraform Source Code
-CONFIGURATION FILES: The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module). These files use a declarative
-syntax to describe the required resources (e.g., virtual machines, networks, databases) and their desired end state, rather than step-by-step instructions for provisioning 
-them.
-MODULES: Terraform configurations are organized into modules, which are reusable, self-contained packages of code. When one module uses resources defined in another, the 
-source argument in a module block specifies the location from which to load the child module's code.
-SOURCE FOR MODULES/PROVISIONERS: The source argument is crucial for telling Terraform where to find the necessary code for modules and providers. Common sources include: 
-Terraform Registry: A public or private repository for sharing and discovering modules and providers (e.g., hashicorp/aws).
-Local file system: Paths to directories within the same project or machine (e.g., ./modules/vpc).
-Version Control Systems (VCS) repositories: URLs pointing to Git, Mercurial, or other repositories (e.g., GitHub, Bitbucket).
-HTTP/S URLs: Direct links to compressed archive files.
 
 
 
@@ -537,10 +529,13 @@ modules make our code very flexible
 
                                     HOW DO WE CREATE CUSTOM MODULES ..........Terfrm also has public modules we can use..3.00
 I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
-So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
-ami/vpc & a variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
-the argument variable values
-
+ie instead of having all the arguments inside one resource blk/config file, we can create a config .tf file for each of the argument 
+eg; (a resource blk/config file for ec2 instance/vpc & a variable files for each of the argument) & a main.tf 
+file wher we reference/call any of the arguments ^ reference their variable file so we can pass each 'argument variable values) & we have all the config .tf files in a 
+directory (which together form a module).
+Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
+**online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
+ 
  *****  IN the first video, Inside the ec2 instance resource blk we pass all the arguments eg vpc, ami, cidr but now we are using the arguments as MODULES
 
 
