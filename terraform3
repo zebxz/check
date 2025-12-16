@@ -38,7 +38,7 @@ ACCESSING THE INSTANCE & THE DIR & HOW TO FIND META DATA OF THE INSTANCE WE CREA
 HOW DO WE GET THE ARN, HV NEVER SEEN THE ARN AND HOW WE CAN GET IT, SUBNET/HOW TO GET SUBNET ID, TO EGT THE SUBNET ID FOR A CUSTOMIZED REGION/REGION THATS NOT MY DEFAULT REGION
 PASSING A KEY,  CREATE SSH KEY GEN, STEPS TO USE THE .GITGNOIRE FOR CREATING SECRET, META ARGUMENTS/TYPES(Depend on/count/for each/provider),  
 DEPENDS ON/TYPES OF DEPENDENCIES(Implicit/explicit), LIMITATIONS OF COUNT, FOR EACH; TO SET/CONVERTING LIST INTO SET OF STRING, PROVIDER/PASS PROVIDER ALIAS IN DATA SOURCE,
-LIFE CYCLE/CUSTOMIZATION THAT ARE AVAILABLE UNDER LIFE CYCLE BLOCK, 
+LIFE CYCLE/CUSTOMIZATION THAT ARE AVAILABLE UNDER LIFE CYCLE BLOCK, LOCAL BACKEND.
 
 
 
@@ -74,6 +74,7 @@ d)provider : i bliv we need to pass the alias region in the data source bc by de
 specifies wich provider to be used for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
 for differentiating those providers, u use an alias field. and we saw how to pass 'provider alias in a 'data source.
 e)lifecycle
+7)local backend
 
 
 
@@ -896,17 +897,18 @@ b) prevent_destroy: (Type:Bool)
 c) ignore_changes (type list (Attribute Name)
 
 ******************** 3.06:05
-if we ar to chnage our instanec frm t2 micro to t2 medium,
-we knw that when u chnage your instance type or AMI , its like your opearting system , wich maps ur cpu n memeory,that particular instance wil hv to be destroyed, tefrm 
-cannot just update but 
-if its tag, if i change it, trfrm  can modify it , if i run the plan , iil seee trfrm wil try to modify it in place, memaing its updated frm this to this , it doesnt hv
-to destroy the instance
+eg we hv a resource that is t2 micro, if we ar to chnage our instanec frm t2 micro to t2 medium,
+we knw that when u chnage your instance type of an instance or AMI , its like your opearting system , wich maps ur cpu n memeory,that particular instance wil hv to be 
+destroyed, tefrm cannot just update.
+if its tag, eg if i change it, eg tag1 to tag2  trfrm  can modify it , if i run the plan , iil seee trfrm wil try to modify it in 
+place, meaning its updated frm tag1 to tag2 , it doesnt hv to destroy the instance
 
-but if  we ar to chnage our instanec frm t2 micro to t2 medium, and run trfrm plan,
+but if  we ar to chnage our instance frm t2 micro to t2 medium, and run trfrm plan,
 we see plan : 1 to add , 1 to destroy
 trfem apply 
-then we see it first starts to dsetroy and at the same time, its creating
-but we dnt wnat hsi to hpapen in prod  bc ur imnfrasture is been destroy n bc of that downtime
+bc of the default nature of terfrm
+then we see it first starts to destroy and at the same time, its creating
+but we dnt want this to hpapen in prod  bc ur imnfrasture is been destroyed n the instance its trying to craeting hasnt boostraped yet/come online bc of thats a downtime
 
 *******************  3:10:00
 A) to prevent this  in our resource block u can pass a life cycle meta argument
@@ -921,7 +923,7 @@ then destroying multiple times
 and finlayy it took 1sec to destroy and 4ms to create 
 so he said technically thats still a downtime 
 
-************* but at the end of the class,  agirl showe has and it showed created 31sec b4 destroy 43sec
+************* but at the end of the class,  a girl showed hers and it showed created 31sec b4 destroy 43sec
 and prof said yes thats hw its suppose to wrk bt his system has jsut been acting up 
 
 
@@ -948,20 +950,19 @@ YOU can play around and see hw it works
 
 
   that is the main, when u understnad how this meta arguments works then trefrm wil become very easy bc when when we start writing code n we using functions ,
-we using meta argment like e.g for each", we are able to loop over code , we are able to careet multiple resources with few lines of code
+we using meta argment like e.g for each", we are able to loop over code , we are able to create multiple resources with few lines of code
 if i have few lines of code that code is easy to read and miantain , u are less prone to mk errors bc u hv very few lines of code 
-instaed of me writing a 100 lines of code to deploy 10 ec2 instances, i can write 10 line sof code using  meta arguments , using loops n the code can easily be read, it
+instead of me writing a 100 lines of code to deploy 10 ec2 instances, i can write 10 line sof code using  meta arguments , using loops n the code can easily be read, it
 easy to maintain and less prone to errors.
 
-
-what we left for u to know is terfrm backend 
-what we ve ben doing, as we v been writibg and genetaing codes, trfrm has been storing our state file
-this is the stae of our infrasture , it stores this state file in ur pwd 
-this is cllaed a localbackend
+                                                      LOCAL BACKEND
+what we left for u to know is terfrm backend     
+what we ve ben doing, as we v been writing and generaing codes, trfrm has been storing our state file
+this is the state of our infrasture , it stores this state file in ur pwd this is called a localbackend
 a backend is wHer terfm opretaons hv been happening
-and trerm has been downloading our providers here and its stores its state file in ur pwd , wher ur runing trem and it also has a backup of ur statfile inaces ue 
+and trfrmm has been downloading our providers here and its stores its state file in ur pwd , wher ur runing trfrm and it also has a backup of ur statfile incase your 
 mainstate file gets corrupted bt thsis state file are in ur pwd , 
-so this is calle da loacl backend , so sofar we v ben using a local backend
+so this is calle da loacl backend , so so far we v ben using a local backend
 
 
 
@@ -973,26 +974,25 @@ NOW we knw what a loscal backend is ..............
 
 when we meet nxt we will see what a remote backend is 
 we will create an s3 bucket and be able to push our trfrm statefile to  the bucket
-so we will use an s3 bucket a sa remote storage, so it will be consider more like a remote bcakend bc trfrm wil nt read its statefile frm here
+so we will use an s3 bucket as a remote storage, so it will be consider more like a remote bcakend bc trfrm wil nt read its statefile frm here
 when we run tefrm init, it wil initialize the s3 bucket as its backend 
 so thats what we will call it , a remote backend for state storsge 
 and we ll see hw we can secure the s3 busket using diamond or db table as part of our security
-bc when ur collaborating with ur  team member,  the statefile neds to b accesible ,evry team mmeber  neds to hv acces to the state file bc ur working on the same 
-infratsure 
-so thsi statefile nedst to be in a place wher we can collobrate  bt we dnt push our statefile in github or repository
-it needs to b in a secured env and thats why we  aer goin to b usin an s3 bucket
+bc when ur collaborating with ur  team member,  the statefile needs to b accesible ,evry team mmeber needs to hv acces to the state file bc ur working on the same infratsure 
+so this statefile needs to be in a place wher we can collobrate  bt we dnt push our statefile in github or repository
+it needs to b in a secured env and thats why we are goin to b using an s3 bucket
 
-on monday we ll see hw we can use an s3 bucket to store our statefile an dnt jsut taht
+on monday we ll see hw we can use an s3 bucket to store our statefile an dnt just that
 the trfr we v been running, we v been uisng trfrm as an open source
 trfrm in our local env bt we ll also see we hv whats called trfrm cloud
 its more for entrprise bt u can sign up an account, u can hv an account in eneterprise cloud and 
-for rnterprise cloud trfrm operations wil b happing in the trfrm cloud, u ll caete a respo and trfem is able to monitor ur repo 
+for enterprise cloud trfrm operations wil b happing in the trfrm cloud, u ll craete a respo and trfem is able to monitor ur repo 
 or ur able to isseu trefrm commands in in ur local env bt what is happening , trfrm build evertin in terfrm cloud
 
 
 but for now jst go tru ur  meta argument ,data sources ,  and be comfortable in manipulating data 
 and the exrecise we did today,  atleat it shud hv solididfied ur understanding of how data sourecs works and hw the provider meta araument works
-the bottem line is is just undersatnd the concept of hOW everytin works 
+the bottem line is is just understand the concept of hOW everytin works 
 
 
        
