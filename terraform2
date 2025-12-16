@@ -17,15 +17,55 @@ MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION, CREATING A VARIABLE FOR TAG, TERAF
 
 
 
+SUMMARIZED FOR INTERVIEW
+VIDEO1:
+Terraform is used for provisioning resources , Terraform is a tool that helps us build our infrasture in a code format & to do that terrafrm uses (meee, a combination of 
+either of the) top level blks when its provisioning resources bt we need a resource blk for evrytin we create in terfrm, blks can also be template.
+VIDEO2:
+ one of the top level block is called 'variable block.To make the code flexible ie to be able to use it in diff env, terfrm uses modules...
+The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing 
+the source code. This makes modules reusable across different environments (e.g., development, production
+The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
+variables; Defines input variables that allow you to parameterize your configuration, making it reusable.
+vidoe1: arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
+arguments can be reQ or optional
 
 
- NPSSNOV24
 
-###in summary ill say we created a data source and then used modules to make it flexible then using variables to modulerize the code , declaring a variable of type map, and
-then using a variable file, 
 
-SUMMARIZED
+ 
 
+
+
+
+
+VIDEO SUMMARIZED....... more elaborated
+
+###in summary ill say we initialized a dir, cloned our terafrm class lesson repo, the terfrm version was already constrained in the terafrm setting blk from previous class,
+1) Then we created a data source & applied filters to get the default AMI id & input it into our ec2 instance resource blk, the data source was also used to dynamically get the 
+AMI id from custom regions and then  to make the codes flexible 
+2)we converted the codes into modules ie instead of having all the arguments inside one resource blk/config file, we can create a config .tf file for each of the argument 
+eg; (a resource blk/config file for ec2 instance/vpc & a variable files for each of the argument) & a main.tf 
+file wher we reference/call any of the arguments ^ reference their variable file so we can pass each 'argument variable values) & we have all the config .tf files in a 
+directory (which together form a module).
+3)then we use variables to modulerize the codes to make it reusable, we also saw how to use the types of terform variables like map/list
+& how to reference values in a map, using a variable of type list to deploy in diff env, we also saw how to pass variables as a file the file must end with 'tfvars', pass it 
+on the CLI uing '-var-file= 'the file name', .. when u dnt want to pass these varaibles within ur configuration , terfrm always gives the option for u to pass them as files
+we can use a variables file to deploy in multiple env, 
+***  TYPES OF VARIABLE FILES TO PASS
+a) Named files ie files that didnt start with 'terrafrm or auto' eg prod.tfvars
+e.g  if u want to pass a varaible as a file (named file) on the command line u can use an argument command line optional argument - var-file and reference the file that has
+ur variables,the file has to end with .tfvars
+   2.38.50  $ terafrm apply -var-file=foo.tfvars-var-file=bar.tvars
+b) Unamed  files eg terrafrm.tfvars or auto files
+For named files ie files that didnt start with 'terrafrm or auto'eg prod.tfvars 
+bt if u create a file that starts wit terraform.tfvars file, this file is automatically loaded u dnt hv to pass it (the file name)on the command line , ie to deploy it, you
+just run 'terfrm plan' without supplying the values.... you dnt have to run; 'terfrm plan -var-file=prod.tfvars'
+
+finally , we saw creating variable that has a secret and we saw how we to use tefrm public modules, we created an s3 bucket config.tf file.
+
+
+   ***just a SKETCHY SUMMARY...
 bc we will be writing codes, u need a code editor,we are using vscode or any IDE of your choice (frm video 3, we saw he likes to use his intellegie to edit his code & terminal
 ie gitbash to run) 
 1)CLONE THE CODE
@@ -51,11 +91,8 @@ Input/out/local
 illustration for local & data source/HOW TO CHECK AMI ID IN AMAZON
 5) CREATE A DATA SOURCE & USE IT TO PASS THE ATTRIBUTE; AM ID (of the default region or custom/any region dynamically) TO THE INSTANCE RESOURCE BLK
 6) CREATE CUSTOM MODULES & CALL THE MODULE eg vpc module, ec2 instance module
+***online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
  Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
-I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
-So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
-ami/vpc & a file for variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
-the argument variable values
 7) VARIABLE:  **online, Defines input variables that allow you to parameterize your configuration, making it reusable.
 a variable is a value that can change, depending on conditions or on information passed to the program.
 Variables are used to store information to be referenced and manipulated in a computer program.
@@ -67,23 +104,11 @@ passing variables as a file
 2) Unamed  filees eg terrafrm.tfvars or auto files
 8)CREATING A VARIABLE THAT HAS A SECRET
 9)Terfrm public MODULE/registry
-***online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
-I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
-So instead of having all the resource arguments inside one resource blk file, we can create a resource blk file for each of the argument eg; (a resource blk for ec2 instance/
-ami/vpc & a variable files for each of the argument) & a main.tf file where we reference/call any of the arguments as MODULES & also inside the main.tf, we can pass
-the argument variable values
 
 
 
-Terraform is used for provisioning resources , Terraform is a tool that helps us build our infrasture in a code format & to do that terrafrm uses (meee, a combination of 
-either of the) top level blks when its provisioning resources bt we need a resource blk for evrytin we create in terfrm, blks can also be template.
- one of the top level block is called 'variable block.To make the code flexible ie to be able to use it in diff env, terfrm uses modules...
-The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing 
-the source code. This makes modules reusable across different environments (e.g., development, production
-The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
-variables; Defines input variables that allow you to parameterize your configuration, making it reusable.
-arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
-arguments can be reQ or optional
+
+
 ***************************************************
 
 
@@ -954,7 +979,7 @@ we can pass them as a file
 
 
 
-
+                           USING A VARIABLE OF TYPE LIST TO DEPLOY IN DIFF ENV
                                   PASSING VARIABLES AS A FILE  (the file must end with 'tfvars', pass it on the CLI uing '-var-file= 'the file name')
                              ( we can use a variables file to deploy in multiple env)
 when u dnt want to pass these varaibles within ur configuration , terfrm always gives the option for u to pass them as files
