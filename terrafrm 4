@@ -12,12 +12,25 @@ diff btw output and datasource
 https://stackoverflow.com/questions/75246774/difference-between-data-source-and-output-block-in-terraform
 
 
-what is meta data ??
+
+
+
+   ****start
+
+
+i bliv by now uve all configured your env interms of you hv ur ides, cloned ur code & installed terfrm & uve been playing around with terfrm 
+
+
+looking at what we ;ve covered so far, last week we looked at terfrm meta arguments
+so what are some of the meta arguments we've used
+
+
+what is meta arguments ??
 
 tefrm gives you what are called mata arguments
 these are arguments that alter the normal behaviur of our resources 
 by default resources that we create in trfrm has a certain convention/behaior
-the normal convention is that if i declare 1resource block , itwil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin then i can
+the normal convention is that if i declare 1resource block , it wil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin then i can
 pass in an arguemt thta wil manipulate the behavior ... that is what is a mata argument 
 
 WHILE , 
@@ -38,26 +51,30 @@ Tonight we wil continue wit our exploration of teRRAFORM
 
 we'll go over PROVISIONERS AND BACKENDS
 
-PROVISIONERS:
+
+
+                                          PROVISIONERS:
 You can use provisioners to model specific actions on the local machine or on a remote machine  
 in order to prepare servers or other infrastructure objects for service
 
 9:15
-illustration:
+Explanation:
 i have my laptop here , and i want to craete an ec2 instance, in my aws account, i can use trfrm in my laptop to provision the ec2 instance in aws
 i can have a resource blk, run trefrm init, terfrm apply , it wil create the ec2 instance
 ***************** but what if, lets say i have a file in (laptop) my local env and i want it transferred into my ec2 instance once that instance has been created and launchd
-and bootstrapped.
-this now becosmes a process of configuration, am tryin to config this ec2 instance by transfering a file into it , or i want to run a script once the instance has created
+and bootstrapped. this now becosmes a process of configuration, am tryin to config this ec2 instance by transfering a file into it , or i want to run a script once the 
+instance has created
 
-********11:20
+********11:20                         OPTION TO TRANSFER FILES TO THE INSTANCE AFTER IT IS CREATED
 one way we saw we can run a script is by using user data, we can use user data to run a script, that is a porcess of configuraton, this is hw i can configure my instance
-usingtfrm by using user data
+using tfrm by using user data
 but what if i have a script on my local env that am nt passing as user data bt i wnat such that after my instance has created i want to transfer the script into my instance
 then once this script has been transferred run this script on the instance
 so trfrm gives you what is called provisioners, u can use provisioners to do that
 so i have used this process of provisioners to craete my instance bt then am using what we call a provisioner to do what we call configuration
 
+
+                                                   PROVISIONERS ARE OUR LAST RESORT
 ############ when u look at the documentaion, trfrm gives a strong warning that *************** PROVISIONERS ARE OUR LAST RESORT****************
 WHEN ur using provioners, it is recommended that only use them when neccesssary jst bc of the nature of hw provisioners wrk
 onof the things u wil realise as u work with provisioners is that if a provisioner fails e.g  if d script ur trying to install fails then the provisioner wil b deleted
@@ -69,18 +86,18 @@ TYPES OF PROVISIONERS
 1) file provisioner
 The file provisioner copies files or directories from the machine running Terraform to the newly created resource. The file provisioner supports both ssh and winrm
 type connections.
-
 that is :if i have a file on my local env, i can use a file provisoner that will copy the file and tk it to the destination which is the remote machine (the machine that is
 been provioned)
 
 2) LOCAL-EXEC PROVISIONER
-he local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource. See the
+the local-exec provisioner invokes a local executable after a resource is created. 
+This invokes a process on the machine running Terraform, not on the resource. See the
 remote-execprovisioner to run commands on the resource.
 
 Note that even though the resource will be fully created when the provisioner is run, there is no guarantee that it will be in an operable state - for example system 
 services such as sshd may not be started yet on compute resources.
 
-THAT IS:
+Explanaton:
 A local exec basically runs on your local env ,i can run a command on my local env after my remote instance has been craeted
 and we will see exactly what i mean once we use it 
 
@@ -90,12 +107,15 @@ etc.
 To invoke a local process, see the local-exec provisioner instead. The remote-exec provisioner requires a connection and
 supports both ssh and winrm.
 
-THAT IS:
+Explanation:
 it perfroms a task on your remote resource, if am creatin an ec2 instance , i can use a remote exec, i can run commands on the remote instance ie the instance hv jst created
-if i use a remote exec provisioner but for me to be able to run command inside of the instanc e(the remote instance), iil need to connect to it 
+if i use a remote exec provisioner but for me to be able to run command inside of the instance(the remote instance), iil need to connect to it 
 hw do i connect to an instance , il use ssh , iil need to ssh into that particular instance for me to be able to conect to the instance after wich am then able to run either
 my script or command after the connection.
 
+
+    
+16.50 **
 resource "aws_instance" "web" {
   # ...
 
@@ -121,11 +141,13 @@ resource "aws_instance" "web" {
   LETS SEE HOW REMOTE EXEC WORKS
 we have this provisioners file 
 
-    
+
+
+illustration:
                   ************   WE WANT TO CREATE OUR EC2 INSTANCE 
 
 this ec2 instance we will use a data source
-we hv dis data source which is creating an ubuntu server sowe wil use this data source to get our AMI 
+we hv dis data source which is creating an ubuntu server so we wil use this data source to get our AMI 
 
 1) this wil gnerate an AMI for ubnutu
 
