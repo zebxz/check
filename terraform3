@@ -1,53 +1,4 @@
 
-
-1)we started with 'user data' which is a bootstrapping tool, we are using user data for boot strapping, if we hv any info we want to pass onto our instance then into to IDE;
-INtellegie, then an illustion on how to use the resource blk/config file with file function for bootstrapping the user data 
-STEPS FOR CREATING AN INSTANCE/INSTALL HTTPD USING RESOURCE BLK WITH FILE FUNCTION FOR USER DATA(BOOTSTRAPPING) OF THE HTTPD ..ie user data contains the script to instal httpd 
- we are still using the resource blk to create an instance & inside the resource blk we are using the 'file function' to refer to the 'user data' which we are using to 
-install httpd and we analyzed the datails of the installation script/user data & we accessed the instance in google & the dir we created via the installation & we also 
-saw how to find the meta data of the instance we created.Also covered how to use IDE & gitbash together & troubleshooting wrong attribute inputted into a resource blk
-2)we covered intro to terfrm functions and 2ways to pass data(configuration & provisioners) & why its imp for the resource name to be unique or for it to  be the same name, we
- use 'meta arguments'.
-3) how to get default subnet id;We knw that instances are created in subnets, if i dnt specify a specific vpc it will place it in the default vpc, it wil select a subnet in 
-the default vpc & place the instance and how to get the subnet id for a custom region...but First the vpc should have already been created & we then use a data source to return
-the subnet..
-4)how to pass a key...a key need to associate with ur instance  .& intro to generate ssh key 
-5)illustration to use the .gitnoire file to create a secret
-6)meta arguments/types
-a)depends on; trfrm has a feature of identifying resource dependency.
-(implicict dependency; ie this means that tfrm internally knws d sequence in wich d dependant resources needs to be craeted, the resources are created in parallel ie together
-& explicit depencies; one resource has to be created first b4 the other one can be created this is when u determine urself manaually the order resources are created this is
-done by passing a depend_on meta argument)
-b)count :  this uses an index  ***** i bliv count is for creating similar resources eg 3 of 't2 micro' instance   ...  ****  video2,  types of variable; list' ***uses index     
-it can be specified in resources as well as modules ... we also saw the limitation of count; if one resource is removed, it will try to reindex all the incidents instance and it wil delete all and then
-recreate all again therefore we use for each which is more flexible
-c)for_each .. uses 2obj; key&value to identify each member of the for_each block, this accepts a map or set of strings. so if you have a map or a set, then u can use for each
-but bc 'for each' doenst work with a list, we have to use 'TO SET' to convert 'list' into 'set of string.
-d)provider : i bliv we need to pass the alias region in the data source bc by default terfrm will use the default region 
-specifies wich provider to be used for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
-for differentiating those providers, u use an alias field. and we saw how to pass 'provider alias in a 'data source.
-e)lifecycle
-
-
-   THERE ARE 2WAYS we can PASS DATA
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 1.10      
 YES you wil need to need to hv a vpc that exists first but if ur nt using custom the it means ur using default and so u dnt need to passa any argument to ur resourec
 trfrm wil place it in the defult vpc
@@ -94,13 +45,42 @@ LIFE CYCLE/CUSTOMIZATION THAT ARE AVAILABLE UNDER LIFE CYCLE BLOCK,
 
 
 
+summarized video
 
-Meta arguments 
+1)we started with 'user data' which is a bootstrapping tool, we are using user data for boot strapping, if we hv any info we want to pass onto our instance then into to IDE;
+INtellegie, then an illustion on how to use the resource blk/config file with file function for bootstrapping the user data 
+STEPS FOR CREATING AN INSTANCE/INSTALL HTTPD USING RESOURCE BLK WITH FILE FUNCTION FOR USER DATA(BOOTSTRAPPING) OF THE HTTPD ..ie user data contains the script to instal httpd 
+ we are still using the resource blk to create an instance & inside the resource blk we are using the 'file function' to refer to the 'user data' which we are using to 
+install httpd and we analyzed the datails of the installation script/user data & we accessed the instance in google & the dir we created via the installation & we also 
+saw how to find the meta data of the instance we created.Also covered how to use IDE & gitbash together & troubleshooting wrong attribute inputted into a resource blk
+2)we covered intro to terfrm functions and 2ways to pass data(configuration & provisioners) & why its imp for the resource name to be unique or for it to  be the same name, we
+ use 'meta arguments'.
+3) how to get default subnet id;We knw that instances are created in subnets, if i dnt specify a specific vpc it will place it in the default vpc, it wil select a subnet in 
+the default vpc & place the instance and how to get the subnet id for a custom region...but First the vpc should have already been created & we then use a data source to return
+the subnet..
+4)how to pass a key...a key need to associate with ur instance  .& intro to generate ssh key 
+5)illustration to use the .gitnoire file to create a secret
+6)meta arguments/types
+a)depends on; trfrm has a feature of identifying resource dependency.
+(implicict dependency; ie this means that tfrm internally knws d sequence in wich d dependant resources needs to be craeted, the resources are created in parallel ie together
+& explicit depencies; one resource has to be created first b4 the other one can be created this is when u determine urself manaually the order resources are created this is
+done by passing a depend_on meta argument)
+b)count :  this uses an index  ***** i bliv count is for creating similar resources eg 3 of 't2 micro' instance   ...  ****  video2,  types of variable; list' ***uses index     
+it can be specified in resources as well as modules ... we also saw the limitation of count; if one resource is removed, it will try to reindex all the incidents instance and it wil delete all and then
+recreate all again therefore we use for each which is more flexible
+c)for_each .. uses 2obj; key&value to identify each member of the for_each block, this accepts a map or set of strings. so if you have a map or a set, then u can use for each
+but bc 'for each' doenst work with a list, we have to use 'TO SET' to convert 'list' into 'set of string.
+d)provider : i bliv we need to pass the alias region in the data source bc by default terfrm will use the default region 
+specifies wich provider to be used for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
+for differentiating those providers, u use an alias field. and we saw how to pass 'provider alias in a 'data source.
+e)lifecycle
+
+
+
+
+
 ######################################################################  START
 
-
-user data, boot straping, terfrm has built in functions ,THERE ARE 2Wya we can PASS DATA, PROVISIONERS, passing a key ,secret/ .gitgnoire, meta arguments, TYPES OF META 
-ARGUMENTS , IMPLICIT/EXPLICIT Dependencies, converting list to set of string
 
 
 
