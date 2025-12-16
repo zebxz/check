@@ -11,17 +11,31 @@ HOW DO THESE BLOCKS WORKS ,REQUIRED ARGUMENTS, ARGUMENTS REFERENCE, ATTRIBUTE RE
   
 
 SUMMARIZED FOR INTERVIEW
+
 VIDEO1:
 Terraform is used for provisioning resources , Terraform is a tool that helps us build our infrasture in a code format & to do that terrafrm uses (meee, a combination of 
-either of the) top level blks when its provisioning resources bt we need a resource blk for evrytin we create in terfrm, blks can also be template.
+either of the) top level blks when its provisioning resources (eg to create an instance will req a data source blk to get the AMI & input it into the instnace resource blk,
+a variable blk for the instance type/name & a variable of type sensitive for a secret & a .gitignire file wher the secret var file will be referenced) but we need a resource
+blk for evrytin we create in terfrm, blks can also be template.
 VIDEO2:
- one of the top level block is called 'variable block.To make the code flexible ie to be able to use it in diff env, terfrm uses modules...
-The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without changing 
-the source code. This makes modules reusable across different environments (e.g., development, production
+ one of the top level block is called 'variable block. The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module
+ allowing you to customize configurations without changing the source code. This makes modules reusable across different environments.
+WE have diff types of variables like string,numbers, list, map ... we can also pass variables as a file & the files must end with .tvars
+The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
+***ignore The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without
+changing the source code. This makes modules reusable across different environments (e.g., development, production
 The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
 variables; Defines input variables that allow you to parameterize your configuration, making it reusable.
-arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
-arguments can be reQ or optional
+vidoe1: arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
+arguments can be reQ or optional   ... ** ignore 
+
+VIDEO3:
+Terrafrm also gives us the option of bootstrapping (user data) & terfrm has meta arguments which is what i pass into my terfrm resource to alter the behaviour of hw the
+resource behaves eg count, for each, life cycle & depends on where we see dependencies like 
+explicit & implicit ie creating resources in parrarel & explicit ie one resoure depends on the other before it can be created.
+
+VIDEO 4:
+
 
 
 
