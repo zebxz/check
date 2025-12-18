@@ -138,18 +138,17 @@ resource "aws_instance" "web" {
 
 ^^^^^^^^^^^^^^^ 16;00
 
-  LETS SEE HOW REMOTE EXEC WORKS
-we have this provisioners file 
-
-
+                                LETS SEE HOW REMOTE EXEC WORKS
+we have this tefrm provisioners file 
 
 illustration:
-                  ************   WE WANT TO CREATE OUR EC2 INSTANCE 
+                  ************   STEPS TO CREATE OUR EC2 INSTANCE 
 
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server so we wil use this data source to get our AMI 
 
-1) this wil gnerate an AMI for ubnutu
+
+STEP1) DATA SOURCE FOR AMI:   this wil gnerate an AMI for ubnutu
 
 
           data.tf file
@@ -165,7 +164,9 @@ filter {
  filter {
    name = 
 
-2)      ***********  once we get AMI, we are goin to use it in our  (instance) resource block
+
+step2) RESOURCE BLK FOR INSTANCE  ***********  once we get AMI, we are goin to input/use it in our  (instance) resource block
+
 
                      main.tf
 
@@ -178,7 +179,7 @@ key_name         =                                         19:15  so lets try n 
  
 
 
-3)      ##########variable.tf file     (variable for the instance)
+3)   VARiable.tf file     (variable for the instance region/type/key/path/use)
 
 varaiable "region" {
   type      = list(string)
@@ -202,7 +203,7 @@ varaiable "instance_user" {
 
 
 
-
+STEP 4: RESOURCE BLK FOR VPC
 19:15
  ********* AS see above, am passin a subnet id bt d subnet is ,i dnt hv d subnet yet so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here
 n create a module for my vpc, i  now hv a dir here called vpc
@@ -225,6 +226,7 @@ resource "aws_vpc" "main" {
 
 tags = {
    Name = " Demo-vpc"}
+
 
                                   REFACTORING/creating variables
 5)                    ******** then let , REFACTOR this code, ie i can pass this as variables 
