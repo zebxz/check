@@ -142,7 +142,7 @@ resource "aws_instance" "web" {
 we have this tefrm provisioners file 
 
 illustration:
-                  ************   STEPS TO CREATE OUR EC2 INSTANCE 
+                  ************   STEPS TO CREATE OUR EC2 INSTANCE IN A CUSTOM VPC
 
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server so we wil use this data source to get our AMI 
@@ -179,7 +179,7 @@ key_name         =                                         19:15  so lets try n 
  
 
 
-3)   VARiable.tf file     (variable for the instance region/type/key/path/use)
+STEP 3)   VARiable.tf file     (variable for the instance region/type/key/path/use)
 
 varaiable "region" {
   type      = list(string)
@@ -219,7 +219,8 @@ so this will craete my vpc
 so on this vpc he added some tags
 
 
-4)     ********* vpc.tf file
+
+     ********* vpc.tf file                   *****VPC/TAG
 
 resource "aws_vpc" "main" {
    cidr_block = "10.0.0.0/16"
@@ -228,8 +229,8 @@ tags = {
    Name = " Demo-vpc"}
 
 
-                                  REFACTORING/creating variables
-5)                    ******** then let , REFACTOR this code, ie i can pass this as variables 
+                                  REFACTORING/CREATING VARIABLES for VPC  cidr & Tag
+STEP 5)                    ******** then let , REFACTOR this code, ie i can pass this as variables 
 
 
 vpc.tf file
@@ -238,17 +239,17 @@ resource "aws_vpc" "main" {
    cidr_block = "10.0.0.0/16"       
  
 
-tags = {
+tags = {                               
    Name = " Demo-vpc"}
  }
 }
 
-varaiable "cidr" {
+varaiable "cidr" {                  ***variable for cidr
     type  =  "string"
 Default   = "10.0.0.0/16"
 }
 
-varaiable "tags" {
+varaiable "tags" {                  ***variable for tag
     type  =  "string"
 Default   = "Demo-vpc"
 }
@@ -262,7 +263,8 @@ Default   = "Demo-vpc"
    Name = " var.tags"}          ****************** referencing the vpc tag above
 
 
-  6)                                                   PASSING MY PROVIDER 
+
+  STEP 6)                                                   PASSING MY PROVIDER 
   23:08  ************* so have declared 2 varaiables...... 
 
 after have done this, for this particular vpc  i need to pass a provider 
@@ -278,7 +280,7 @@ SO THAT it is easy to read ,
 am making sure i only have resources in one file
 providers in one file, so now ill create a file for providers ........................     25.03
 
-7)      variables.tf file 
+STEP 7)      variables.tf file 
 
 varaiable "cidr" {
     type  =  "string"
@@ -291,7 +293,7 @@ Default   = "Demo-vpc"
 }
 
 
-8)      remove the provider from my vpc and put it on its file
+STEP 8)      remove the provider from my vpc and put it on its file
   provider.tf
 
 provider "aws" {
@@ -308,7 +310,8 @@ now since this vpc is a module on its on, for u to get something out of a module
 there must be an output for you to access the attribute of the module
 right now we are creating this vpc but we do not hv any output, so ders no way of accessing the attributes of the vpc
 
-9)   so for us to be able to access the attributes we will need to craete an output 
+9)             CREATING THE OUTPUT BLK FOR THE VPC id INSIDE THE VPC FILE
+so for us to be able to access the attributes we will need to craete an output 
 
 
 vpc.tf file
@@ -320,7 +323,7 @@ tags = {
    Name = " var.tag"}
  }
 }
-     NO.9
+     NO.9                                 **VPC id, OUTPUT BLK
 output "vpc_id" {                                   ************so this output will return the vpc id 
   value = "aws_vpc.main.id                              so am using an output to access the attribute of that value (an attribute of the vpc)
                                                          so i have to declare this particular output
@@ -343,7 +346,7 @@ tags = {
 output "vpc_id" {                                 
   value = "aws_vpc.main.id 
 
-}    NO.10
+}    NO.10                                   SUBNET RESOURCE BLK
 resource "aws_subnet" "main" {             ****** am creating a reosurce called a subnet,i wnat to craete the subnet inside this vpc,  so ill nid to pass this vpc id
     vpc_id   = aws_vpc.main.id                       (aws_vpc.main.id) this will return the id of the vpc,  so i need a vpc id where the subnet will be created
     cidr_block = "10.0.1.0/24"             ********as we looked at d varaiable, my vpc cidr 10.0.0.0/16, so my subnet cidr has to b a subset of that, so we can leave it at 
@@ -354,7 +357,7 @@ tag = {
  }
 }
 
-11) ***********    again i can pass this as varaiables 
+11) ***********   CREATING VARIABLES for SUBNET Cidr & Tag again  ...... so i can pass this as varaiables 
    now i can create 2variables (this is again refactoring)
 
 varaiable "sub_cidr" {
@@ -462,9 +465,10 @@ how does trfrm achieve explicit dependency   ..... ?    you have to pass a depen
       *********** now that we have this, we can go ahead and create our vpc 
 
 
+
 NO.15                        LOCAL BACKEND 
 
-40:43  in mobaxaterm, watch how he arrived at the vpc dir 
+40:43  in mobaxaterm, watch how he arrived at the vpc dir  by running cd command
 inside vpc dir 
 run terrafrm init   .....  to initialize the backend 
 this backend that is initializing , its downloading pluggins and providers, basically what its doing, its downloading those particular providers pluggins in your local env
@@ -509,12 +513,13 @@ now if u had any sensitive inf bc as we said trfrm wil spit out everytin in plai
 so bc of that we seee that there is no senesitive inf that was passed so we dnt have anything to worry abt the vpc
      so this is our statefile
 
-************* we wnat to get this inf,  we wnt to be able to read this inf and get our id for our subnet inorder for us to provision our ec2 instance 
+************* we want to get this inf,  we wnt to be able to read this inf and get our id for our subnet inorder for us to provision our ec2 instance 
+
 
    NO.18
 48:11       HOW DO WE DO THAT???
 
-          REMOTE STATE DATA SOURCE
+                                             REMOTE STATE DATA SOURCE
  TRFRM gives you an option of a data source, u can use the data source to read a statefile called remote state data source
  CAn go to the documentation:
 The terraform_remote_state data source uses the latest state snapshot from a specified state backend to retrieve the root module output values from some other Terraform 
@@ -524,7 +529,7 @@ configuration.
 
 for example:
 in your work env as an engr u might be asked to provision
-your netwrk will always be to provison first 
+your netwrk will always be to provison first   *** i bliv he means the custom vpc has to already exist in Aws ie your vpc is already set so that you can provison the instance
 so your vpc wil be set, u go to work and your vpc has already been set 
 bc your vpc has been created, ur told can u go and provison an ec2 instance in this particular vpc
 
@@ -536,7 +541,9 @@ so u need to be able to read the statefile inorder for you to return the subnet,
 bc evrytin is on your local env 
 therefore for us to read this statefile, we are going to , he closed the vpc dir 
 
-NO.19
+
+
+NO.19           INSIDE THE DATA SOURCE FILE
 *********51:18   .... opened  .. data.tf file 
        AM using this data source :it is called "terraform_remote_state, 
 this is the name that you must pass, this is the data source that is used to read statefile  
@@ -655,6 +662,9 @@ provisioners  "remote-exec" {
 
  1:04:16
     *********** in this particular case, we are also using what is called a null resource
+
+
+
 
    INTERVIEW QUESTION
  What is a null resource ??
@@ -786,6 +796,8 @@ it can now ssh into it and provision the resources
   create_duration = "180s"
 
   depends_on = [aws_instance.my_elk_instance]
+
+
 
 
 #########################################################################################
