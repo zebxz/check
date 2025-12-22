@@ -35,7 +35,7 @@ the vpc & the subnet had been provisoned
     and create it or it can be created by the networking project team
 2) PROVIDER BLK file
 for vpc 
-3) INSTANCE RESOURCE FILE includes:
+3) INSTANCE RESOURCE FILE (called main.tf)includes:
  resource blk for instance/instance type/Ami/Subnet id/key name
       ***the remote state data source is refferred here (from step no.7)
 4) VPC RESOURCE FILE includes:
@@ -51,6 +51,7 @@ for vpc
 6)  terfrm plan, valaidate, apply
 7) REMOTE STATE DATA SOURCE: 
        *******  refferred inside the EC2Instance resource file
+8)
 
 
 
@@ -117,7 +118,15 @@ video 4:these are arguments that alter the normal behaviur of our resources by d
 the normal convention is that if i declare 1resource block , it wil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin 
 then i can pass in an arguemt that wil manipulate the behavior ... that is what is a meta argument 
 Terfrm also has a remote & local backend
-
+A) LOCAL BACKEND: 
+run terrafrm init   .....  to initialize the backend 
+this backend that is initializing , its downloading pluggins and providers, basically what its doing, its downloading those particular providers pluggins in your local env
+when that is downlaoded in ur local env, this becaomes a local backend 
+B) REMOTE BACKEND: 
+A remote backend (e.g., Amazon S3, Azure Blob Storage, Terraform Cloud) stores the state file in a centralized, remote location. This is the recommended approach for teams 
+because it offers state locking, versioning, and secure storage. 
+When you configure a remote backend, Terraform stops using the local filesystem for state management and uses the specified remote location instead. The configuration for 
+the backend is defined once in the main configuration and then all team members share a single source of truth.
 
 VIDEO 4:
 1)Tefrm uses provisoners but we use this as our last resort because 
