@@ -8,10 +8,10 @@
 DIFF BTW PROVISIONERS & MODULES...
 
 
-using provisioners,    
+using local- exec provisioner,    
 USED DATA SOURCE TO GET AMI, REMOTE STATE DATA SOURCE TO READ THE STATEFILE IN THE LOCAL BACKEND INODER TO GET THE SUBNET ID &TO PROVISION THE INSTANCE IN A CUSTOM VPC
 
-1)we created modules & all the modules were created inside the same dir called provisioner
+1)Inside a dir called provisioner, we created a module called vpc & all these files were created inside the vpc dir 
 2)we use a data source to get the AMI, to input into the instance resource blk, we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers blk for
 vpc & refactored all the codes ie a file for all the resource blk, a file for the vat=riables & a file for the providers blk. inside the vpc dir the variable file for vpc cidr 
 & providers file were created & the vpc dir becomes the vpc module
@@ -115,12 +115,22 @@ resource behaves eg count, for each, life cycle & depends on where we see depend
 depends on the other before it can be created.
 video 4:these are arguments that alter the normal behaviur of our resources by default resources that we create in trfrm has a certain convention/behaior
 the normal convention is that if i declare 1resource block , it wil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin 
-then i can pass in an arguemt that wil manipulate the behavior ... that is what is a mata argument 
+then i can pass in an arguemt that wil manipulate the behavior ... that is what is a meta argument 
 Terfrm also has a remote & local backend
 
 
 VIDEO 4:
-
+1)Tefrm uses provisoners but we use this as our last resort because 
+You can use provisioners to model specific actions on the local machine or on a remote machine in order to prepare servers or other infrastructure objects for service
+we use this as our last resort because if a provisioner fails e.g  if d script ur trying to install fails then the provisioner wil b deleted
+and when this happens , if the provisiner was working on a resource like an ec2 instance , the instance will be deleted and recreated
+THE TYPES INCLUDES:
+A)file provisioner
+B)Local-exec provisioners
+C) remote exec
+2) illustrated with an example to see how local-exec provisoner works
+the illustration included; data source to get the AMI, Remote state data source to read the statefile in the local backend inorder to get the subnet id & to provision the
+instance in a custom vpc
 
 
 
