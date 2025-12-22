@@ -8,7 +8,7 @@ USING LOOP , USING FUNCTION, SLICE FUNCTION  ,, COMPLETE VPC TO CREATE , REMOTE 
  ********** why did you have to go on the console to delete the vpc, when we got an error that vpc maximum exceeded??? 
 you tried to use trfrm to delete it but couldnt then went on the console .. ??? 
 
-diff btw output and datasource
+diff btw output and datasource  
 https://stackoverflow.com/questions/75246774/difference-between-data-source-and-output-block-in-terraform
 
 
@@ -518,6 +518,24 @@ so bc of that we seee that there is no senesitive inf that was passed so we dnt 
 
    NO.18
 48:11       HOW DO WE DO THAT???
+
+
+   ***online..    REMOTE STATE DATA SOURCE
+In Terraform, a remote data source, specifically the built-in terraform_remote_state data source, allows a configuration to retrieve output values from the state file of 
+another, separate Terraform configuration.
+This mechanism facilitates the modularity and decoupling of large infrastructure projects into smaller, manageable components, even when different teams manage them. 
+Purpose and Use Cases
+Sharing Data Between Configurations: A common scenario is when a core infrastructure team manages the network setup (VPC, subnets, security groups) in one configuration,
+and an application team needs those specific VPC and subnet IDs to deploy their application in a separate configuration.
+Modular Infrastructure: It allows you to break down your infrastructure into logically separated parts (e.g., a networking project and a compute project) without managing 
+everything in one large state file.
+Avoiding Hardcoding: Instead of manually copying and pasting IDs or names between projects, the data source dynamically fetches the current values, ensuring consistency and 
+reducing errors. 
+
+How It Works
+To use terraform_remote_state, you must first ensure that the source configuration's state is stored in a remote backend like AWS S3, Azure Blob Storage, or Terraform Cloud. 
+You then define the data source in your current configuration using a data block, specifying the backend and the location of the source state file: 
+
 
                                              REMOTE STATE DATA SOURCE
  TRFRM gives you an option of a data source, u can use the data source to read a statefile called remote state data source
