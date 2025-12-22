@@ -1,11 +1,17 @@
         ************ version dertermines the syntax 
 
 
+
+
+
+
 DIFF BTW PROVISIONERS & MODULES...
 
 
-using provisioners,     GETTING AMI/SUBNET ID TO PROVISION THE INSTANCE IN A CUSTOM VPC
-1)we created modules all the modules inside the same dir called provisioner
+using provisioners,    
+USED DATA SOURCE TO GET AMI, REMOTE STATE DATA SOURCE TO READ THE STATEFILE IN THE LOCAL BACKEND INODER TO GET THE SUBNET ID &TO PROVISION THE INSTANCE IN A CUSTOM VPC
+
+1)we created modules & all the modules were created inside the same dir called provisioner
 2)we use a data source to get the AMI, to input into the instance resource blk, we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers blk for
 vpc & refactored all the codes ie a file for all the resource blk, a file for the vat=riables & a file for the providers blk. inside the vpc dir the variable file for vpc cidr 
 & providers file were created & the vpc dir becomes the vpc module
@@ -13,14 +19,17 @@ vpc & refactored all the codes ie a file for all the resource blk, a file for th
 an output for the subnet & a variable for subnet cidr & tag then refactored ie still in the vpc dir; created a file for the 2outputs & added the variable in the variable file
 4)IMPLICIT dependency; we see that the VPC will be created first bc the subnet needs the VPC id therfore terfrm terfrm will inherently achieve implicit dependency but if we
 wanted explicit dependency then we have to pass 'depends on..
-5)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile 
-     created inside the data source file
+5)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
+     created inside the data source file, we used the remote data source to read the state file & to return the subnet id & input it into the ec2instance resource blk after
+the vpc & the subnet had been provisoned 
+
 
 
 
       Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL these files were created inisde the VPc dir
 1) DATA SOURCE file includes:
-  Data blk for AMI
+   A) Data blk for AMI
+    B) done as step no.7 ie after step 1 to 6... Remote state data source 
   57.08  Remote state data source' to read the subnet from the state file (from the vpc module)
  we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
     and create it or it can be created by the networking project team
@@ -28,25 +37,21 @@ wanted explicit dependency then we have to pass 'depends on..
 for vpc 
 3) INSTANCE RESOURCE FILE includes:
  resource blk for instance/instance type/Ami/Subnet id/key name
-      ***the remote state data source is refferred here
+      ***the remote state data source is refferred here (from step no.7)
 4) VPC RESOURCE FILE includes:
   resource blk for vpc cidr & tag and subnet cidr & tag
-  ******* the variable file is referred here eg: var.sub_cidr"         
+  ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
 4)VARIABLES FILE includes:
-    variable blk for vpc cidr & tag
-   variable blk for subnet cidr & tag
+    A)variable blk for vpc cidr & tag
+    B)variable blk for subnet cidr & tag
     ****referred to inside the vpc file
 5)OUTPUT BLK file includes:
-   attribute for vpc id
-   attribute for subnet id
+    A) Output blk for vpc id
+    B) Output blk for subnet id
 6)  terfrm plan, valaidate, apply
-7) REMOTE STATE DATA SOURCE: so u need to be able to read the statefile inorder for you to return the subnet, to get the attribute that are captured in that particular statefile.
-created inside the data source file 
-       *******  refferred inside the Instance resource file
+7) REMOTE STATE DATA SOURCE: 
+       *******  refferred inside the EC2Instance resource file
 
-initially, when we started to provision the resource, in the ec2instance blk, we didnt indicate the subnet id because we didnt have it yet, but once we provisioned a subnet
-ie creating a subnet blk, we use the terfrm remote state/remote state data source, to get the subnet id from the statefile then refercence the remote data source to input the
-subnet id in the ec2instance resource blk.
 
 
 
