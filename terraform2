@@ -57,7 +57,9 @@ for vpc
 
 
 
-can terfrm remote state be used for a local backend  ???
+can terfrm remote state be used for a local backend  ??? errrrrror ..... i meant REMOTE STATE DATA SOURCE not a remote backend used for a local backend
+***online
+because of the error i made, This explanation explained that remote backend cant be used with the local backend
 No, a Terraform remote state cannot be used with a local backend. The terms "local backend" and "remote state" describe fundamentally different and mutually exclusive 
 mechanisms for storing and managing the terraform.tfstate file. 
 The local backend stores the state file on the local filesystem (terraform.tfstate in the current working directory). It is the default and does not involve any remote 
@@ -67,8 +69,8 @@ because it offers state
 locking, versioning, and secure storage. 
 When you configure a remote backend, Terraform stops using the local filesystem for state management and uses the specified remote location instead. The configuration for the
 backend is defined once in the main configuration and then all team members share a single source of truth. 
-While you can read data from a separate remote state using the terraform_remote_state data source within a configuration that is using a local backend, you cannot have a
-configuration that writes its own state to a remote location while configured to use the "local" backend type. 
+******While you can read data from a separate remote state using the terraform_remote_state data source within a configuration that is using a local backend, you cannot have
+a configuration that writes its own state to a remote location while configured to use the "local" backend type. 
 
 ***************************************************************************
 
