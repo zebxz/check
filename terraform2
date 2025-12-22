@@ -21,9 +21,9 @@ wanted explicit dependency then we have to pass 'depends on..
       Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL these files were created inisde the VPc dir
 1) DATA SOURCE file includes:
   Data blk for AMI
-  57.08  Remote state data source' to read the subnet from the state file (from the vpc module) **I Bliv after its created...
+  57.08  Remote state data source' to read the subnet from the state file (from the vpc module)
  we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
-    and create it
+    and create it or it can be created by the networking project team
 2) PROVIDER BLK file
 for vpc 
 3) INSTANCE RESOURCE FILE includes:
@@ -39,12 +39,33 @@ for vpc
 5)OUTPUT BLK file includes:
    attribute for vpc id
    attribute for subnet id
-6)  terfrm pla, valaidat, apply
+6)  terfrm plan, valaidate, apply
 7) REMOTE STATE DATA SOURCE: so u need to be able to read the statefile inorder for you to return the subnet, to get the attribute that are captured in that particular statefile.
 created inside the data source file 
        *******  refferred inside the Instance resource file
 
+initially, when we started to provision the resource, in the ec2instance blk, we didnt indicate the subnet id because we didnt have it yet, but once we provisioned a subnet
+ie creating a subnet blk, we use the terfrm remote state/remote state data source, to get the subnet id from the statefile then refercence the remote data source to input the
+subnet id in the ec2instance resource blk.
 
+
+
+
+
+can terfrm remote state be used for a local backend  ???
+No, a Terraform remote state cannot be used with a local backend. The terms "local backend" and "remote state" describe fundamentally different and mutually exclusive 
+mechanisms for storing and managing the terraform.tfstate file. 
+The local backend stores the state file on the local filesystem (terraform.tfstate in the current working directory). It is the default and does not involve any remote 
+storage features like collaboration or locking.
+A remote backend (e.g., Amazon S3, Azure Blob Storage, Terraform Cloud) stores the state file in a centralized, remote location. This is the recommended approach for teams 
+because it offers state
+locking, versioning, and secure storage. 
+When you configure a remote backend, Terraform stops using the local filesystem for state management and uses the specified remote location instead. The configuration for the
+backend is defined once in the main configuration and then all team members share a single source of truth. 
+While you can read data from a separate remote state using the terraform_remote_state data source within a configuration that is using a local backend, you cannot have a
+configuration that writes its own state to a remote location while configured to use the "local" backend type. 
+
+***************************************************************************
 
  
 
