@@ -754,7 +754,9 @@ so this is hw we use for each to alter the behaviour of resource or hw tarfrm ha
 
 
 4) provider     
-specifies wich provider to be used for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
+specifies wich provider to be used for a resource. 
+                      USING AN ALIAS REGION
+this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
 for differentiating those providers, u use an alias field.
 the resource then reference the same alias field of the provider as provider.alias to tell wich one to use.
 e.g when i wnt the use the europe region then in my resource i wil specify 
@@ -781,7 +783,13 @@ bt for the instance v pass a provider wit an alias that wil alter wher the resou
 
 
 
-illustration; **mee, for this, we will see that we will pass an alias in the provider blk & also pass the same alias in the data source
+
+illustration;            FOR USING AN ALIAS REGION
+          **mee, for this, we will see that we will pass the alias region in the provider blk & also pass the same alias region in the data source
+ WE had a resource for for an Ec2instance & a resource for a VPC, the vpc was to be provisioned in the default region bt the instance in a custom region which is the alias 
+we had to ensure theres a default vpc in he custom region we want to use bc when u pass the alias region in the data source then the Ami/instance & vpc wil be created in the
+custom/alias region
+             
 
 STEP1: Resource blk for the ec2 instance
 
@@ -826,7 +834,7 @@ so it doesnt recognize bc ami,ec2 are region specific thus the error
 right now we are trying to create a resource in us east1,
 we hv used a meta argumet wich alters the behavior, by default the resource wil be created in d default region bt..mee '&' not bt' it wil also use thsis data ssource to get 
 our AMI BT BC WE pass a provider, this data source is using d default provider to query that particular data  **i bliv the particular data is our default region. .its trying
-to find data in us  west bt when it returns that particular data, this AMI is nt found in us East1
+to find data in us  west bt when it returns that particular data (i bliv west, the default), this AMI is nt found in us East1 ie the AMI is found in the west the deafult region
 
 
 
