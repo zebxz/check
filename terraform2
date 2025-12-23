@@ -32,7 +32,8 @@ an output for the subnet & a variable for subnet cidr & tag then refactored ie s
 wanted explicit dependency then we have to pass 'depends on..
 6)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
      created inside the data source file, we used the remote data source to read the state file & to return the subnet id & input it into the ec2instance resource blk after
-the vpc & the subnet had been provisoned 
+the vpc & the subnet had been provisoned
+7) Created a dir for key & copied the key from aws & pasted it inside the file, which was referenced inside the null resource file
 
 
 
@@ -67,7 +68,11 @@ for vpc .. us west1...  .. i guess the AMI was provisioned in the default region
 8)  terfrm plan, valaidate, apply
 9) REMOTE STATE DATA SOURCE: 
        *******  refferred inside the EC2Instance resource file
-10)   NULL RESOURCE    (not created in the vpc dir)....    we can use it to enable us establish our connection
+10) DIR for KEY    ..    (not created in the vpc dir)
+juts mk sure u copy the content of ur own key and replace it insid eof this dir
+bc now how am referencing it, when u look at your null resource file 
+private_key = path.module}/mykey/elk-instance.pem
+11)   NULL RESOURCE    (not created in the vpc dir)....    we can use it to enable us establish our connection
 depends_on = [time_sleep.wait_for_instance}       *********** the null resource depends on the time sleep (NO.26)
    now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some scrptt, the source is inside 
 this dir called script, i wnt to connect to that instance and transfer this file 
@@ -75,7 +80,7 @@ the first file i want to transfer is elastic search
 the nxt is kibana
 3rd is apache configuration
 4th is inatallation scripts  to install ELK 
-11)ELASTIC IP
+12)ELASTIC IP
 
 
 
