@@ -6,23 +6,31 @@
 
 
 DIFF BTW PROVISIONERS & MODULES...
+Module: is a dir for a resource that contains all the files related to the resource 
+PROVISIONERS: You can use provisioners to model specific actions on the local machine or on a remote machine
+so once my instance has created the provisioner will take over , a/this null resource wil be created to enable us connect to the instance and once we connect it wil transfer 
+this files that ar in my local env to the instance , after whic i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it
+wil run trfrm commands on the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to be run 
 
 
 using local- exec provisioner,    
-USED DATA SOURCE TO GET AMI, &TO PROVISION THE INSTANCE IN A CUSTOM VPC
+USED DATA SOURCE TO GET AMI, & TO PROVISION THE INSTANCE IN A CUSTOM VPC
 THE illustration includes; using a REMOTE STATE DATA SOURCE TO READ THE STATEFILE IN THE LOCAL BACKEND INODER TO GET THE SUBNET ID & input the id into the ec2instance blk,
-we pass a key, 
+we pass a key, security grp, elastic ip, null resource to create a connection & transfer files to the remote instance we created.
+
 
 1)Inside a dir called provisioner, we created a module called vpc & all the files related to the vpc were created inside the vpc dir 
   but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
-2)we use a data source to get the AMI, to input into the instance resource blk, we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers blk for
-vpc & refactored all the codes ie a file for all the resource blk, a file for the vat=riables & a file for the providers blk. inside the vpc dir the variable file for vpc cidr 
-& providers file were created & the vpc dir becomes the vpc module
-3)after that, inside the vpc file we created an output blk to get the Vpc id (attribute)& input it into the instance reosurce blk & created a resource blk for the subnet & also 
+2)we use a data source to get the AMI, to input into the instance resource blk, & a variables file for the region, a blk for instance type, a blk for key, a blk for path,
+blk for instance user /security grp with an explicit depends on.. bc the instance depends on it, so it has to be created first/elastic ip bc we dnt want the ip to change
+3)we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers 
+blk for vpc & refactored all the codes ie a file for all the resource blk, a file for the variables & a file for the providers blk. inside the vpc dir the variable file 
+for vpc cidr & providers file were created & the vpc dir becomes the vpc module
+4)after that, inside the vpc file we created an output blk to get the Vpc id (attribute)& input it into the instance reosurce blk & created a resource blk for the subnet & also 
 an output for the subnet & a variable for subnet cidr & tag then refactored ie still in the vpc dir; created a file for the 2outputs & added the variable in the variable file
-4)IMPLICIT dependency; we see that the VPC will be created first bc the subnet needs the VPC id therfore terfrm terfrm will inherently achieve implicit dependency but if we
+5)IMPLICIT dependency; we see that the VPC will be created first bc the subnet needs the VPC id therfore terfrm terfrm will inherently achieve implicit dependency but if we
 wanted explicit dependency then we have to pass 'depends on..
-5)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
+6)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
      created inside the data source file, we used the remote data source to read the state file & to return the subnet id & input it into the ec2instance resource blk after
 the vpc & the subnet had been provisoned 
 
@@ -39,26 +47,35 @@ the vpc & the subnet had been provisoned
  we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
     and create it or it can be created by the networking project team 
 2) INSTANCE RESOURCE FILE (called main.tf)includes:
- resource blk for instance which includes these arguments: instance type/Ami/Subnet id/key name
+ resource blk for instance which includes these arguments: instance type/Ami/Subnet id/key name/security grp/elastic ip
+          the instance type is a list and we saw how to reference it ie choose the particular instance type we want
       ***the remote state data source is refferred here (from step no.9)
 3)VARIABLES FILE includes:
    variables blk for region, blk for instance type, blk for key, blk for path, blk for instance user
-4) PROVIDER BLK file
+4) PROVIDER BLK file   .. (created in the vpc dir as part of the vpc module)
 for vpc .. us west1...  .. i guess the AMI was provisioned in the default region bc we didnt specify a provider blk for the region
-5) VPC RESOURCE FILE includes:
+5) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module)
   resource blk for vpc cidr & tag and subnet cidr & tag
   ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
-6)VARIABLES FILE includes:
+6)VARIABLES FILE includes:  (created in the vpc dir as part of the vpc module)
     A)variable blk for vpc cidr & tag
     B)variable blk for subnet cidr & tag
     ****referred to inside the vpc file
-7)OUTPUT BLK file includes:
+7)OUTPUT BLK file includes:  (created in the vpc dir as part of the vpc module)
     A) Output blk for vpc id
     B) Output blk for subnet id
 8)  terfrm plan, valaidate, apply
 9) REMOTE STATE DATA SOURCE: 
        *******  refferred inside the EC2Instance resource file
-10)
+10)   NULL RESOURCE    (not created in the vpc dir)....    we can use it to enable us establish our connection
+depends_on = [time_sleep.wait_for_instance}       *********** the null resource depends on the time sleep (NO.26)
+   now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some scrptt, the source is inside 
+this dir called script, i wnt to connect to that instance and transfer this file 
+the first file i want to transfer is elastic search
+the nxt is kibana
+3rd is apache configuration
+4th is inatallation scripts  to install ELK 
+11)ELASTIC IP
 
 
 
@@ -149,9 +166,15 @@ B)Local-exec provisioners: This invokes a local executable after a resource is c
      A local exec basically runs on your local env ,i can run a command on my local env after my remote instance has been craeted
 C) remote exec  : The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, 
 bootstrap into a cluster, etc
+Explanation:
+it perfroms a task on your remote resource, if am creatin an ec2 instance , i can use a remote exec, i can run commands on the remote instance ie the instance hv jst created
+if i use a remote exec provisioner but for me to be able to run command inside of the instance(the remote instance), iil need to connect to it 
+hw do i connect to an instance , il use ssh , iil need to ssh into that particular instance for me to be able to conect to the instance after wich am then able to run either
+my script or command after the connection.
 2) illustrated with an example to see how local-exec provisoner works
 the illustration included; data source to get the AMI, Remote state data source to read the statefile in the local backend inorder to get the subnet id & to provision the
 instance in a custom vpc
+
 
 
 
