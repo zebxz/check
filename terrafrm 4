@@ -171,7 +171,7 @@ step2) RESOURCE BLK FOR INSTANCE  ***********  once we get AMI, we are goin to i
                      main.tf
 
 resource "aws_instance" "my_ekl_instance" {
-ami           = data.aws_ami.amzlinux2.id                             *** am reading my instance type frm  a variabale
+ami           = data.aws_ami.ubuntu.id                             *** am reading my instance type frm  a variabale
 instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
 subnet_id        =data.taerraform_remote_state.                ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet
 key_name         =                                         19:15  so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
@@ -229,7 +229,7 @@ tags = {
    Name = " Demo-vpc"}
 
 
-                                  REFACTORING/CREATING VARIABLES for VPC  cidr & Tag
+                                  REFACTORING/CREATING VARIABLES for VPC cidr & Tag
 STEP 5)                    ******** then let , REFACTOR this code, ie i can pass this as variables 
 
 
@@ -470,7 +470,7 @@ NO.15                        LOCAL BACKEND
 
 40:43  in mobaxaterm, watch how he arrived at the vpc dir  by running cd command
 inside vpc dir 
-run terrafrm init   .....  to initialize the backend 
+run terrafrm init   .....  to initialize the backend  
 this backend that is initializing , its downloading pluggins and providers, basically what its doing, its downloading those particular providers pluggins in your local env
 when that is downlaoded in ur local env, this becaomes a local backend 
 inside of my vpc we see that it created for us this .terrafrm dir, it downloaded frm the registry, harshicop registry, it downloaded your aws provider, that is the version
