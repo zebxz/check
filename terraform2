@@ -9,9 +9,12 @@ DIFF BTW PROVISIONERS & MODULES...
 
 
 using local- exec provisioner,    
-USED DATA SOURCE TO GET AMI, REMOTE STATE DATA SOURCE TO READ THE STATEFILE IN THE LOCAL BACKEND INODER TO GET THE SUBNET ID &TO PROVISION THE INSTANCE IN A CUSTOM VPC
+USED DATA SOURCE TO GET AMI, &TO PROVISION THE INSTANCE IN A CUSTOM VPC
+THE illustration includes; using a REMOTE STATE DATA SOURCE TO READ THE STATEFILE IN THE LOCAL BACKEND INODER TO GET THE SUBNET ID & input the id into the ec2instance blk,
+we pass a key, 
 
-1)Inside a dir called provisioner, we created a module called vpc & all these files were created inside the vpc dir 
+1)Inside a dir called provisioner, we created a module called vpc & all the files related to the vpc were created inside the vpc dir 
+  but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
 2)we use a data source to get the AMI, to input into the instance resource blk, we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers blk for
 vpc & refactored all the codes ie a file for all the resource blk, a file for the vat=riables & a file for the providers blk. inside the vpc dir the variable file for vpc cidr 
 & providers file were created & the vpc dir becomes the vpc module
@@ -26,32 +29,36 @@ the vpc & the subnet had been provisoned
 
 
 
-      Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL these files were created inisde the VPc dir
+                     STEPS SIMPLIFIED
+      Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL the files related to the vpc were created inisde the VPc dir
+     but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
 1) DATA SOURCE file includes:
    A) Data blk for AMI
-    B) done as step no.7 ie after step 1 to 6... Remote state data source 
+    B) done as step no.9 ie after step 1 to 8... Remote state data source 
   57.08  Remote state data source' to read the subnet from the state file (from the vpc module)
  we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
     and create it or it can be created by the networking project team
 2) PROVIDER BLK file
 for vpc 
 3) INSTANCE RESOURCE FILE (called main.tf)includes:
- resource blk for instance/instance type/Ami/Subnet id/key name
-      ***the remote state data source is refferred here (from step no.7)
-4) VPC RESOURCE FILE includes:
+ resource blk for instance which includes these arguments: instance type/Ami/Subnet id/key name
+      ***the remote state data source is refferred here (from step no.9)
+4)VARIABLES FILE includes:
+   variables blk for region, blk for instance type, blk for key, blk for path, blk for instance user
+5) VPC RESOURCE FILE includes:
   resource blk for vpc cidr & tag and subnet cidr & tag
   ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
-4)VARIABLES FILE includes:
+6)VARIABLES FILE includes:
     A)variable blk for vpc cidr & tag
     B)variable blk for subnet cidr & tag
     ****referred to inside the vpc file
-5)OUTPUT BLK file includes:
+7)OUTPUT BLK file includes:
     A) Output blk for vpc id
     B) Output blk for subnet id
-6)  terfrm plan, valaidate, apply
-7) REMOTE STATE DATA SOURCE: 
+8)  terfrm plan, valaidate, apply
+9) REMOTE STATE DATA SOURCE: 
        *******  refferred inside the EC2Instance resource file
-8)
+10)
 
 
 
@@ -122,7 +129,7 @@ A) LOCAL BACKEND:
 run terrafrm init   .....  to initialize the backend 
 this backend that is initializing , its downloading pluggins and providers, basically what its doing, its downloading those particular providers pluggins in your local env
 when that is downlaoded in ur local env, this becaomes a local backend 
-B) REMOTE BACKEND: 
+B) REMOTE BACKEND: ***Online
 A remote backend (e.g., Amazon S3, Azure Blob Storage, Terraform Cloud) stores the state file in a centralized, remote location. This is the recommended approach for teams 
 because it offers state locking, versioning, and secure storage. 
 When you configure a remote backend, Terraform stops using the local filesystem for state management and uses the specified remote location instead. The configuration for 
@@ -170,10 +177,10 @@ VIDEO SUMMARIZED....... more elaborated
 ###in summary ill say we initialized a dir, cloned our terafrm class lesson repo, the terfrm version was already constrained in the terafrm setting blk from previous class,
 1) Then we created a data source & applied filters to get the default AMI id & input it into our ec2 instance resource blk, the data source was also used to dynamically get the 
 AMI id from custom regions and then  to make the codes flexible 
-2)we converted the codes into modules ie instead of having all the arguments inside one resource blk/config file, we can create a config .tf file for each of the argument 
-eg; (a resource blk/config file for ec2 instance/vpc & a variable files for each of the argument) & a main.tf 
-file wher we reference/call any of the arguments ^ reference their variable file so we can pass each 'argument variable values) & we have all the config .tf files in a 
-directory (which together form a module).
+2)we converted the codes into modules ieie instead of having all the resources inside one resource blk/config file, we can create a sub dir for each resource & each dir wil
+contain config .tf files related to the resource. We have all the config .tf files  for each resource in a directory (which together forms a module for the resource) . 
+eg;(an EC2 sub dir containing a config.tf file for the ec2 instance resource blk & a variable files containing variable blks for each of the EC2instance argument) & a main.tf 
+file wher we reference/call any of the modules & their arguments, ie we reference the variables so we can pass each 'argument variable values)
 Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
 **online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
 3)then we use variables to modulerize the codes to make it reusable, we also saw variable syntax/structure & how to use the types of terform variables like map/list
@@ -646,11 +653,11 @@ modules make our code very flexible
 
 
                                     HOW DO WE CREATE CUSTOM MODULES ..........Terfrm also has public modules we can use..3.00
-I BLIV REFERRING TO YOUR RESOURCE BLK ARGUMENTS AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
-ie instead of having all the arguments inside one resource blk/config file, we can create a config .tf file for each of the argument 
-eg; (a resource blk/config file for ec2 instance/vpc & a variable files for each of the argument) & a main.tf 
-file wher we reference/call any of the arguments ^ reference their variable file so we can pass each 'argument variable values) & we have all the config .tf files in a 
-directory (which together form a module).
+I BLIV REFERRING TO YOUR RESOURCES AS MODULES HELPS MAKE EVRY ORGANIZED & EASY TO ACCESS
+ie instead of having all the resources inside one resource blk/config file, we can create a sub dir for each resource & each dir wil contain config .tf files related to the
+resource. We have all the config .tf files  for each resource in a directory (which together forms a module for the resource) . 
+eg;(an EC2 sub dir containing a config.tf file for the ec2 instance resource blk & a variable files containing variable blks for each of the EC2instance argument) & a main.tf 
+file wher we reference/call any of the modules & their arguments, ie we reference the variables so we can pass each 'argument variable values)
 Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
 **online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
  
@@ -659,11 +666,12 @@ Run terfrm init anytime something is added to a module/use variables to make mod
 
            ***mee....        STEPS TO CREATE & USE MODULES /MODULE BLK
 A)     **i called the; terrsfrm master class33 dir, the main dir.
-i)Create a sub dir/folder for the module ..its a sub folder/dir bc he said; ls in the terrsfrm master class33 dir, it is goin to see  all the (mee;sub) dir &the main.tf file
-ii) inside the main dir create a main.tf file, where we call all the modules, 
-iii)Create a file which contains the resource blk for each of the arguments eg vpc, ec2 instance , these becomes the module & we can call any/all of them in the main.tf file
-iv)to makethe modules flexible, create a variable file for each one, we can pass the variable as a file & also mak ethe variable required
-B)Call the module
+i)inside the main dir create a main.tf file, where we call all the modules, 
+ii)Inside the main dir, Create a sub dir/folder for the each module, eg EC2 module, vpc module..its a sub folder/dir bc he said; ls in the terrsfrm master class33 dir, it 
+is goin to see  all the (mee;sub) dir &the main.tf file
+iii)Inside the sub dir, Create a config.tf file which contains the resource blk for that particular resource, the dir becomes the module 
+iv)to make the modules flexible, create a variable file which will contain the arguments, we can pass the variable as a file & also make the variable required
+B)Inside the main.tf file, call any of the modules & their arguments, ie we reference the variables so we can pass each 'argument variable values)
 C)initialize
 
 
@@ -680,7 +688,7 @@ so i can use the test dir as my module to create an ec2 instance bc all my code 
 
 stepB                                      CALL THE EC2 MODULE
 while am inside of the same dir (terrafrm master class33) as the sub' test dir, i can create a neew file called main.tf
-then inside this main.tf, i can (call the module) by using the key word 'module' for ec2
+then inside this main.tf, i can (call the modules) eg to call the ec2 module, i can use the key word; ' module  "ec2
 
  mdoule " ec2" {     ************ ec2 is the module name
  source = "./test"         the argument that is reQ inside my module is the source, wher is d code/module coming frm ? what is the source of ur module?
