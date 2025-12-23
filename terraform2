@@ -37,14 +37,14 @@ the vpc & the subnet had been provisoned
     B) done as step no.9 ie after step 1 to 8... Remote state data source 
   57.08  Remote state data source' to read the subnet from the state file (from the vpc module)
  we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
-    and create it or it can be created by the networking project team
-2) PROVIDER BLK file
-for vpc 
-3) INSTANCE RESOURCE FILE (called main.tf)includes:
+    and create it or it can be created by the networking project team 
+2) INSTANCE RESOURCE FILE (called main.tf)includes:
  resource blk for instance which includes these arguments: instance type/Ami/Subnet id/key name
       ***the remote state data source is refferred here (from step no.9)
-4)VARIABLES FILE includes:
+3)VARIABLES FILE includes:
    variables blk for region, blk for instance type, blk for key, blk for path, blk for instance user
+4) PROVIDER BLK file
+for vpc .. us west1...  .. i guess the AMI was provisioned in the default region bc we didnt specify a provider blk for the region
 5) VPC RESOURCE FILE includes:
   resource blk for vpc cidr & tag and subnet cidr & tag
   ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
@@ -118,9 +118,11 @@ vidoe1: arguments are parameters u pass inside of a resource blk like an AMI, in
 arguments can be reQ or optional   ... ** ignore 
 
 VIDEO3:
-Terrafrm also gives us the option of bootstrapping (user data) & terfrm has meta arguments which is what i pass into my terfrm resource to alter the behaviour of hw the
+1)Terrafrm also gives us the option of bootstrapping (user data) & terfrm has meta arguments which is what i pass into my terfrm resource to alter the behaviour of hw the
 resource behaves eg count, for each, life cycle & depends on where we see dependencies like explicit & implicit ie creating resources in parrarel & explicit ie one resoure
 depends on the other before it can be created.
+2) Using an Alias Region : **online,most commonly to provision resources across different regions or accounts. The alias acts as a unique identifier for each non-default
+provider instance. 
 video 4:these are arguments that alter the normal behaviur of our resources by default resources that we create in trfrm has a certain convention/behaior
 the normal convention is that if i declare 1resource block , it wil cratea 1 resource bt if i want to reuse d same code to create multiple resources of d same tin 
 then i can pass in an arguemt that wil manipulate the behavior ... that is what is a meta argument 
@@ -176,8 +178,8 @@ VIDEO SUMMARIZED....... more elaborated
 
 ###in summary ill say we initialized a dir, cloned our terafrm class lesson repo, the terfrm version was already constrained in the terafrm setting blk from previous class,
 1) Then we created a data source & applied filters to get the default AMI id & input it into our ec2 instance resource blk, the data source was also used to dynamically get the 
-AMI id from custom regions and then  to make the codes flexible 
-2)we converted the codes into modules ieie instead of having all the resources inside one resource blk/config file, we can create a sub dir for each resource & each dir wil
+AMI id from custom regions and then to make the codes flexible 
+2)we converted the codes into modules ie instead of having all the resources inside one resource blk/config file, we can create a sub dir for each resource & each dir wil
 contain config .tf files related to the resource. We have all the config .tf files  for each resource in a directory (which together forms a module for the resource) . 
 eg;(an EC2 sub dir containing a config.tf file for the ec2 instance resource blk & a variable files containing variable blks for each of the EC2instance argument) & a main.tf 
 file wher we reference/call any of the modules & their arguments, ie we reference the variables so we can pass each 'argument variable values)
@@ -226,7 +228,8 @@ but bc am constraining it, it will go and look for a an aws plugging/provider th
 We use terfrm blks based on what we want/are creating & we use a resource blk for evry thing we create in terfrm 
 Input/out/local 
 illustration for local & data source/HOW TO CHECK AMI ID IN AMAZON
-5) CREATE A DATA SOURCE & USE IT TO PASS THE ATTRIBUTE; AM ID (of the default region or custom/any region dynamically) TO THE INSTANCE RESOURCE BLK
+5) CREATE A DATA SOURCE & USE IT TO PASS THE ATTRIBUTE; AM ID (of the default region or custom/any region dynamically) TO THE INSTANCE RESOURCE BLK, **meee, although we got
+AMI from a custom region, we didnt need an alias bc we were not creating resources across mult-regions as we will later see in video3 
 6) CREATE CUSTOM MODULES & CALL THE MODULE eg vpc module, ec2 instance module
 Run terfrm init anytime something is added to a module/use variables to make module flexible/make variable required
 **online...  module Calls and configures child modules, promoting modularity and code reuse in larger projects
