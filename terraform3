@@ -1,6 +1,6 @@
 
 1.10       
-YES you wil need to need to hv a vpc that exists first but if ur nt using custom the it means ur using default and so u dnt need to passa any argument to ur resourec
+YES you wil need to need to hv a vpc that exists first but if ur nt using custom vpc then it means ur using default and so u dnt need to passa any argument to ur resourec
 trfrm wil place it in the defult vpc
 
 1.56.25     **** i see vpc capacity is 5..
@@ -76,9 +76,11 @@ recreate all again therefore we use for each which is more flexible
 c)for_each .. uses 2obj; key&value to identify each member of the for_each block, this accepts a map or set of strings. so if you have a map or a set, then u can use for each
 but bc 'for each' doenst work with a list, we have to use 'TO SET' to convert 'list' into 'set of string.
 d)provider :  
-specifies wich provider to be used for a reosure. this is useful when u are using  multiple providers wich is usually used when u are creating multi-region resources.
+specifies wich provider to be used for a reosure. this is useful when u are using multiple providers wich is usually used when u are creating multi-region resources.
 for differentiating those providers, u use an alias field. and we saw how to pass 'provider alias in a 'data source.
-ALIAS REGION :i bliv we need to pass the alias region in the data source in order to avoid getting error bc by default terfrm will use the default region 
+ALIAS REGION :i bliv when using an Alias region for an AMI gotten wit a data source then you have to pass the ALias in the data source like he did in the example bc by default 
+tfrm will use the default region so if you declare an ALias region other than the default region in the provider then you hv to pass the alias region as well in the data source
+we need to pass the alias region in the data source in order to avoid getting error bc by default terfrm will use the default region 
 e)lifecycle
 7)local backend
 
@@ -786,11 +788,19 @@ bt for the instance v pass a provider wit an alias that wil alter wher the resou
 
 
 illustration;            FOR USING AN ALIAS REGION
-          **mee, for this, we will see that we will pass the alias region in the provider blk & also pass the same alias region in the data source
- WE had a resource for for an Ec2instance & a resource for a VPC, the vpc was to be provisioned in the default region bt the instance in a custom region which is the alias 
+         1) **mee, for this, we will see that we will pass the alias region in the provider blk & also pass the same alias region in the data source
+ 2)we also saw that the VPC & the AMI will be provisioned in the same alias region (east) even though the vpc was scheduled in the default region (west) & there has to be a 
+    default vpc in the alias region 
+WE had a resource for an Ec2instance & a resource for a VPC, the vpc was to be provisioned in the default region bt the instance in a custom region which is the alias 
 we had to ensure theres a default vpc in he custom region we want to use bc when u pass the alias region in the data source then the Ami/instance & vpc wil be created in the
 custom/alias region
-             
+
+
+                           ****meee, .........WHY WE USE ALIAS
+eg, we could have previously used this cofig file to provision resource in the default region & now we want to use the same file in a custom region, so we have to use 'alias'
+& in doing so, if we used a data source to get the AMI then we have to pass the alias region in the data source as well.
+
+
 
 STEP1: Resource blk for the ec2 instance
 
