@@ -19,6 +19,8 @@ THE illustration includes; using a REMOTE STATE DATA SOURCE TO READ THE STATEFIL
 in the instance blk we pass a key, security grp, elastic ip,  & create a  dir for the key, create a null resource file to create a connection & transfer files to the remote
 instance we created.
 
+     **i realised that ... ***online; the region specified in the provider blk applies to all the resources
+       for i also understand that the AMI & the vpc mustt be created in the same region but to use an AMI from US east to provision in Us West then u hv to use copy command
 
 1)Inside a dir called provisioner, we created a module called vpc & all the files related to the vpc were created inside the vpc dir 
   but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
@@ -55,7 +57,7 @@ the vpc & the subnet had been provisoned
 3)VARIABLES FILE includes:
    variables blk for region, blk for instance type, blk for key, blk for path, blk for instance user
 4) PROVIDER BLK file   .. (created in the vpc dir as part of the vpc module)
-for vpc .. us west1...  .. i guess the AMI was provisioned in the default region bc we didnt specify a provider blk for the region
+for vpc .. us west1...  ..  ****online; the region specified in the provider blk applies to all the resources, so i bliv thats why he didnt create for the AMI
 5) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module)
   resource blk for vpc cidr & tag and subnet cidr & tag
   ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
