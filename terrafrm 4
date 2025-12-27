@@ -142,7 +142,7 @@ resource "aws_instance" "web" {
 we have this tefrm provisioners file 
 
 illustration:
-                  ************   STEPS TO CREATE OUR EC2 INSTANCE IN A CUSTOM VPC
+                  ************   STEPS TO CREATE OUR EC2 INSTANCE IN A CUSTOM VPC, USE A NULL RESOURCE TO ESTABLISH CONNECTION & USE PROVISIONERS TO INSTALL ELK 
 
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server so we wil use this data source to get our AMI 
@@ -631,6 +631,9 @@ public ip bc we dnt wnat the ip to change so we are creating an elastic ip
 resource "aws_eip" "ip" {
   instance = aws_instance.my_elk_instance.id     ....this is the instance id we are associating it with 
 
+                
+                                             BACKEND
+
 ******** A backend is basically where terfm operates from, wher trfrm coammnds are executed frm, wit this particualr backend, we hv backend on our env so therefrer  
 this is what is called a local backend , we are goin to refernce this in our code also we ar goin to have a provisiner, once we create that instance
 
@@ -688,14 +691,13 @@ provisioners  "remote-exec" {
 this is just a place holder, its a dormy/empty resource, it doesnt create anything.. bt we can use it to enable us establish our connection n we ar connecting to this 
 particular inastance we are creating :aws_eip.ip.public_ip
 
-now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some scrptt, the source is inside 
+now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some script, the source is inside 
 this dir called script, i wnt to connect to that instance and transfer this file 
-the first file i want to transfer is elastic search
-the nxt is kibana
-3rd is apache configuration
-4th is inatallation scripts  to install ELK 
 
-              
+
+
+
+                                        THE SCRIPT DIR CONTAINING FILES THAT WILL BE TRANSFERRED TO THE INSTANCE AFTER ITS CREATED
               INLINE    ************* Explanation of the scripts we are transferring to the instance 
 
 BUT the destination, its been transferred into an instance in a temporary dir, (tmp/kibana.yml) wit those particular names, so the names wil nt change, so once my instance
@@ -772,11 +774,17 @@ NO.21 .....  contd
  am also creating a security grp 
 ill expalin to you whats goin on here
 
+
       sg.tf
+***meee.... FILE FOR SECURITY GRP includes:    ***  the file is referred inside the instance resource blk(main.tf)
+  A) a locals block defining ingress config
+ B) a security grp blk
+  C) an ingress blk ***here we referred the locals blk
 
 
-bt here we are jst creating a security grp and we are creating it dynamically using for each , s
-o this for each we hv created a locals blocks here n on the local block, we have declared an ingress config , which is a list, 
+1.13.24
+bt here we are jst creating a security grp and we are creating it dynamically using  a meta argument:'for each' , 
+SO this 'for each' we hv created a 'LOCALS BLOCK' here n on the local block, we have declared an ingress config , which is a list, 
 everytin is inside of this bracket, it is a list and inside the list we hv put whta we need to pass for elastic serach, the cidr blocks, the port, the protocol n description
 and what we need to put for logstash and kibana as a map
 so this is a list of maps , u see all these calibre,  this is a list of maps 
@@ -813,6 +821,7 @@ it can now ssh into it and provision the resources
   create_duration = "180s"
 
   depends_on = [aws_instance.my_elk_instance]
+
 
 
 
@@ -965,6 +974,8 @@ then in the resource blk )main.tf) , we pass the key : stage  and it will reyurn
     ********** so i can use terraform console to test my expressions before i actually commit my code bc i want to know what its gonna return
   with thi sma able to evaluate/check my function
 
+
+
    1:47:00
 ALso,                          USING A LOOP   (showing you how to use functions)
 
@@ -1052,7 +1063,7 @@ OR u can pass it as : file = mykey/ansible
 
   ***************all these are the same 
 
-   ********* but according to the syntax, harshicop configuration lanuguage they prefer to use this, path to the module (path.module) then the location wher rthe file is 
+   ********* but according to the syntax, harshicop configuration lanuguage they prefer to use this, path to the module (path.module) then the location where the file is 
 /mykey/elk-instance.pem"
 
 
