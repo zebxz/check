@@ -174,7 +174,6 @@ step2) RESOURCE BLK FOR INSTANCE  ***********  once we get AMI, we are goin to i
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.ubuntu.id                             *** am reading my instance type frm  a variabale
 instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
-instance type = var.Map["stage"]        ****check; he changed the variable type to map **see how to call it.....  1.42.58
 subnet_id        =data.taerraform_remote_state.                ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet
 key_name         =                                         19:15  so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
                                                                                                       module for my vpc
@@ -187,15 +186,9 @@ varaiable "region" {          *** he took this out.... 1.40.14
   type      = list(string)
   default   = ["us-west1", "us-west-2", "us-east-1"]
 }
-varaiable "myInstance" {           
+varaiable "myInstance" {                    ***check; for how to reference values in a map, for variable for instance,1.42.58    
     type = list{string}
     default = ["t2.micro", "t2.medium"]
-}
-varaiable "map" {              ***he added this, ... 1.40.14
-    type = map{string}
-    default = {
-     "dev= "t2.micro"
-     "stage= t2.medium"
 }
 varaiable "my_key" {
     type     = list(string)
@@ -594,7 +587,7 @@ main.tf  (the same file as NO.2 above)
 
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
-instance type = var.Map["stage"]     **see how to to call it 1.42.58                                                 we are passing the subnet id:
+instance type = var.myInstance[1]                ***check; for how to reference values in a map, for variable for instance,1.42.58           we are passing the subnet id:                                                                                     
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id       **** my subnet id wil b read frm the remote state data source (vpc) n in the statfile, am      
 key_name         = var. my_key                                      interested in d output, we always refer an output by its name (subnet_id) then trfm wil return the value
                                                                          so we are reading this subnet frm the statefile (frm our vpc module)
@@ -602,6 +595,7 @@ key_name         = var. my_key                                      interested i
        ********* we are creating our resource inside of a custom vpc, our netwrk already exists 
   so we are creating this instance inside of this subnet id 
 
+ ***check; variable for instance for how to reference values in a map: var.Map["stage"] .... 1.42.58 
 
 
 NO.20
@@ -612,7 +606,7 @@ again as we said last time, whatever key you pass needs to exist in the particul
 
     resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
-instance type = var.myInstance [1]        ***check; variable for instance type was changed to map: var.Map["stage"] .... 1.42.58                                           
+instance type = var.myInstance [1]        ***check; variable for instance for how to reference values in a map: var.Map["stage"] .... 1.42.58                                           
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
 key_name         = var. my_key                         *************** key we are passing 
 
@@ -960,21 +954,22 @@ env then u can send it
 so thats the 2ways that you can send it , either generate it on the console manually then just copy the name , download the .pem key, download it on your env then u can do 
 that or you can dynamically use this resource to generate the key 
 
- 
+
+
 2)  1:41:00
        QUestion on referencing values in a map 
 
- in this variable file, he changed the dfault to a map     *** so i hv done the correction above
+ To answer the question, in this variable file, he changed the instance variable type to a map    
       varaiable "map" {
     type = map(string)
     default = [
       "dev" = "t2-micro"
       "stage" = "t2-medium" 
 
-then in the resource blk )main.tf) , we pass the key : stage  and it will reyurn the value 
+then in the resource blk )main.tf) , we pass the key : stage  and it will return the value 
 
                        
-                                   TERRAFORM CONSOLE
+                                  USING THE TERRAFORM CONSOLE TO FIRST CONFIRM YOUR CODE
 
 ************how you can easily confirm that in terafrm there is what is called terrafrm console
        once you run that it gives a prompt >, helps you to quickly test to know what the output are 
@@ -993,7 +988,7 @@ then in the resource blk )main.tf) , we pass the key : stage  and it will reyurn
 
 
    1:47:00
-ALso,                          USING A LOOP   (showing you how to use functions)
+ALso,                          USING A LOOP/USING FUNCTIONS  (showing you how to use functions)
 
                               (main.tf)
          resource "aws_instance" "my_ekl_instance" {
@@ -1039,7 +1034,7 @@ therefore, this function evaluates to t2.medium
    *******so am just showing you that we can use a function to convert
 this is been proactive as an engr to mk sure in future if someone who isnt an expert is e.g creating an s3 bucket name and we knw that by convwntion AWS doesnt allow capital
 letteers in s3 bucket names and your instance type need to be lower, doesnt allow capital letters so bc of that u become proactive and making sure that whatever a user 
-passes you are using a function to convert, so eben if thay pass a capital, you code will nt fail becauase am using a function to ensure that i collapse it/convert it to
+passes you are using a function to convert, so even if thay pass a capital, you code will nt fail becauase am using a function to ensure that i collapse it/convert it to
 lower so that once its converted its goin to read and pass the code
  thats exactly what this function was doing
 
