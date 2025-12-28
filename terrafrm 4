@@ -137,7 +137,6 @@ resource "aws_instance" "web" {
 
  
 ^^^^^^^^^^^^^^^ 16;00
-
                                 LETS SEE HOW REMOTE EXEC WORKS
 we have this tefrm provisioners file 
 
@@ -165,6 +164,8 @@ filter {
    name = 
 
 
+
+
 step2) RESOURCE BLK FOR INSTANCE  ***********  once we get AMI, we are goin to input/use it in our  (instance) resource block
 
 
@@ -173,6 +174,7 @@ step2) RESOURCE BLK FOR INSTANCE  ***********  once we get AMI, we are goin to i
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.ubuntu.id                             *** am reading my instance type frm  a variabale
 instance type = var.myInstance                          **i can use what we call camal casing (he changed d i in instance to I and he changed it in the var file too)
+instance type = var.Map["stage"]        ****check; he changed the variable type to map **see how to call it.....  1.42.58
 subnet_id        =data.taerraform_remote_state.                ********* am passin a subnet id bt d subnet is , i dnt hv d subnet yet
 key_name         =                                         19:15  so lets try n create d vpc first, so bc am in dis provisoner lets create anoda dir here n create a 
                                                                                                       module for my vpc
@@ -181,13 +183,19 @@ key_name         =                                         19:15  so lets try n 
 
 STEP 3)   VARiable.tf file     (variable for the instance region/type/key/path/use)
 
-varaiable "region" {
+varaiable "region" {          *** he took this out.... 1.40.14
   type      = list(string)
   default   = ["us-west1", "us-west-2", "us-east-1"]
 }
-varaiable "myInstance" {
-    type = list(string)
+varaiable "myInstance" {           
+    type = list{string}
     default = ["t2.micro", "t2.medium"]
+}
+varaiable "map" {              ***he added this, ... 1.40.14
+    type = map{string}
+    default = {
+     "dev= "t2.micro"
+     "stage= t2.medium"
 }
 varaiable "my_key" {
     type     = list(string)
@@ -586,13 +594,15 @@ main.tf  (the same file as NO.2 above)
 
 resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
-instance type = var.myInstance                                                      we are passing the subnet id:
+instance type = var.Map["stage"]     **see how to to call it 1.42.58                                                 we are passing the subnet id:
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id       **** my subnet id wil b read frm the remote state data source (vpc) n in the statfile, am      
 key_name         = var. my_key                                      interested in d output, we always refer an output by its name (subnet_id) then trfm wil return the value
                                                                          so we are reading this subnet frm the statefile (frm our vpc module)
 
        ********* we are creating our resource inside of a custom vpc, our netwrk already exists 
   so we are creating this instance inside of this subnet id 
+
+
 
 NO.20
 ***********now we are also passing a key 
@@ -602,7 +612,7 @@ again as we said last time, whatever key you pass needs to exist in the particul
 
     resource "aws_instance" "my_ekl_instance" {
 ami           = data.aws_ami.amzlinux2.id                            
-instance type = var.myInstance [1]                                                 
+instance type = var.myInstance [1]        ***check; variable for instance type was changed to map: var.Map["stage"] .... 1.42.58                                           
 subnet_id        =data.taerraform_remote_state.vpc.outputs.subnet_id            
 key_name         = var. my_key                         *************** key we are passing 
 
@@ -610,7 +620,7 @@ key_name         = var. my_key                         *************** key we ar
 
 58:30 **************Also in NO.3 above (variable file), WE have a list of default values (t2 micro, t2 medium)
     if  we are to create a t2 medium, how can we reference it???
-by indexing it, we are reading it frm a list:
+by indexing it, we are reading it frm a list:       ***check; variable for instance type was changed to map: var.Map["stage"] .... 1.42.58        
 
 
 NO.21
@@ -804,10 +814,10 @@ so thats on the security grp
       1:14:36
 NO.26
   ***********    tIME SLEEP
-time slip is a resource that jsut runs time, its jsut like a counter,its jst counting down,i know taht when i create my instance, my instance wil take some time to bootstrap
+time slip is a resource that jsut runs time, its jsut like a counter,its jst counting down,i know that when i create my instance, my instance wil take some time to bootstrap
 for ssh connection to be available, if i run terfrm once my instance is created, if i try to ssh into it chances are the ssh might nt b up and so my connection wil fail so
 bc of that am passing a time sleep resource just to wait for the instance to bootstrap first
-hv passed 180s , this is abt 3minuutes, so once i start it this time sleep depends on the instance ie onsce the instance is careted then the time sleep wil run
+hv passed 180s , this is abt 3minuutes, so once i start it this time sleep depends on the instance ie onsce the instance is created then the time sleep wil run
 have passed an explicit dependency , it depends on my instance , 
 bt for the connection to happen, the null resourece depends on the time sleep 
 so it means am ORDERING HOW  terfrm is goin to create the resources so it just means the instance wil be created first
@@ -842,7 +852,9 @@ trfrm validate
 trfrm format   .... now all my codes hv been reformatted correctly 
 trfrm plan 
 
-the first thing that happens is the datasource , terAfrm remote state ,
+                                           
+                                                          THE ORDER BY WHICH THE RESOUCES WERE CREATED
+the first thing that happens is the datasource , terafrm remote state ,
 it goes and read the state file of the vpc
 data.terrafrom_remote_state.vpc: Reading
 then
@@ -888,7 +900,7 @@ tefrm plan
 terfrm apply
 
 the first tin is creating ur instance bc w specifically passsed our depsndecy
-then the time sleep bc it despend son the instance, it wil tk abt 3mins to provision
+then the time sleep bc it despends on the instance, it wil tk abt 3mins to provision
 bt the API can create in parallel bc it doesnt hv any dependencies
 bt the API needs the instance id and thats an implicit dependency
 right now the time to slepe is happeing 
@@ -900,6 +912,10 @@ once that is done the null resource will start proviosning
 bc the null resource depends on the timesleep , so the timesleep has to create first
 after that creates the null resource will create 
 it will do an ssh connection and transfer our files and start the configuration 
+so right now what we are doing is provioning but once the null resource connects we now start doing configuration
+
+
+Contd                              USING PROVISIONERS FOR CONFIGURATION
 so right now what we are doing is provioning but once the null resource connects we now start doing configuration
 we are configuring our instance by installing kiban, ELK, elatic serach on that particular instance
 w eare using terfrm , we are using it with proviisoners 
@@ -913,8 +929,8 @@ NO.27b
 ******** we have error : EIP
 
 1:35:00    
-                                           QUESTION
-1)i was facinated on how you did the.pemkey cos i was wondering how we wil go and chabge the key bt thi sis really good
+                                           QUESTION   SSH KEY
+1)i was facinated on how you did the.pemkey cos i was wondering how we wil go and change the key bt this is really good
 my quetsion is do we first go and create the key manually from our console is that what u did or is there a way we can automatically get the key pairs
 
 ANS:
@@ -948,7 +964,7 @@ that or you can dynamically use this resource to generate the key
 2)  1:41:00
        QUestion on referencing values in a map 
 
- in this variable file, he change dthe dfault to a map 
+ in this variable file, he changed the dfault to a map     *** so i hv done the correction above
       varaiable "map" {
     type = map(string)
     default = [
