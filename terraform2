@@ -53,7 +53,7 @@ the host for the connection is an ELASTIC IP so that the ip doesnt change
 
 
 
-                     STEPS SIMPLIFIED
+                   THE PROVISIONING STEPS SIMPLIFIED
       Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL the files related to the vpc were created inisde the VPc dir
      but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
 1) DATA SOURCE file Called data.tf (CREATED IN THE MAIN DIR) includes:
@@ -72,7 +72,7 @@ the host for the connection is an ELASTIC IP so that the ip doesnt change
   same region as the vpc region   
 5) PROVIDER BLK file   .. (created in the vpc dir as part of the vpc module)
 for vpc .. us west1...  ..  ****online; the region specified in the provider blk applies to all the resources, so i bliv thats why he didnt create for the AMI/instance
-6) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module)
+6) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module)  ** bc of errors; this vpc dir was replaced with a new vpc dir no.17
   resource blk for vpc cidr & tag and subnet cidr & tag
   ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
 7)VARIABLES FILE includes:  (created in the vpc dir as part of the vpc module)
@@ -87,7 +87,7 @@ for vpc .. us west1...  ..  ****online; the region specified in the provider blk
        *******  refferred inside the EC2Instance resource file
 
     ***** THE FOLLOWING FILES WERE CREATED IN THE MAIN DIR AS THE VPC DIR BUT NOT INSIDE THE VPC DIR
-11) FILE for KEY    ..    (not created in the vpc dir)
+11) FILE for KEY    ..      ****you wil use a resource called a key pair, i got this frm the question on SSH KEY
 juts mk sure u copy the content of ur own key and replace it insid eof this dir
 bc now how am referencing it, when u look at your null resource file 
 private_key = path.module}/mykey/elk-instance.pem
@@ -130,7 +130,17 @@ this script once it
 its goin to output the public and private ip of the instance 
 This file is diff from  the vpc file for vpc output
 
-16)
+16) FILE FOR TIME SLEEP
+have passed an explicit dependency , it depends on my instance , 
+bt for the connection to happen, the null resourece depends on the time sleep 
+
+***NOW in our envwe have seen hw everytin is been configured, lets now create our resource
+then in mobaxterm 
+cd to the tf-file-provisioner 
+terrafrm init/trfrm validate/trfrm format/trfrm plan 
+ERror
+
+ 17) CREATING NEW FILES TO CORRECT THE ERRORS
 
 
 
