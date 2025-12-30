@@ -20,7 +20,7 @@ https://stackoverflow.com/questions/75246774/difference-between-data-source-and-
 
 i bliv by now uve all configured your env interms of you hv ur ides, cloned ur code & installed terfrm & uve been playing around with terfrm 
 
-
+ 
 looking at what we ;ve covered so far, last week we looked at terfrm meta arguments
 so what are some of the meta arguments we've used
 
@@ -570,7 +570,7 @@ then i can give it any name, it doesnt matter, this is just a name (vpc) that wi
 
  ****** so if am calling this remote state called vpc, bc its goin to read the staefile of my vpc
 
-data "terraform_remote_state" "vpc" {
+data "terraform_remote_state" "vpc" {       *** he created a new vpc dir (my-vpc) so ill change the path 'vpc' to 'my-vpc'
   backend = "local"                                ********* the type of backend am using is local 
   config = {                                       what is the configuration ******** config here is the path, i need to tell tefrm the path wher to find that statefile
        path    = "../vpc/terraform.tfstate"         ******** the data.tf is here , bc the vpc dir/file is in the same dir as the data.tf file , am goin to give it a path
@@ -723,6 +723,8 @@ this script once it
 ****** this script once its transferred into the instance, the provisioner will run the script inside of that to be able to provison my ELK env
 1:09:03
 *****
+
+                                      THE KEY EXPLAINED
 i have my .pemkey compied here in his (#mykey file ), that wil be used for connection 
 and obviously when ur using this code u hv to replace this key with ur own key or the code will nt wrk 
 the key also exists on my AWS account... juts mk sure u copy the content of ur own key and replace it insid eof this dir
@@ -1042,11 +1044,12 @@ lower so that once its converted its goin to read and pass the code
 1:57:20
   *********** contd  from
   NO.27b
-******** we have error : EIP
+******** we have error : EIP    ... ie elastic ip
 ************* during our break now illmodify my vpc code , ill share my screen but it basically wont be recorded
 bc i just created a basic vpc bt runing terfrm apply we got an error, 
 it looks like it needs an AN for a network for the vpc to attach, so am going to add more code to give us a more complte vpc
 then once we do that we will us ethe same datasource to create our instance
+
 
 
    QUESTION
@@ -1060,6 +1063,7 @@ then once we do that we will us ethe same datasource to create our instance
  private_key = file    ("${path.module}/mykey/elk-instance.pem"}      ************ we are using a file , when you read at the function, u hv to give it a path to where the
                                                                     file is, it has to be either relative or absolute path, file function wil nt extrapolate like variables
                                                                  so u hav eto give it either relative or absolute path 
+
 
 
         WHAT IS THE part.module 
@@ -1165,7 +1169,7 @@ resource "aws_internet_gateway" "igw" {
 when u look at what a slice functions does, it reads
 when you give it an input like a variable and you give it like the starting index, i wnat it to start from index[0] when i give it a list then what is the end index?
 so that slice is smt similar to 
-e.g
+e.g                                                     SLICE
  i have a pile of multiple elements, so frm the slice perspective, i just want to get a slice of this pile
 i hv 9 cidr blks , now am making this flexible bc i want to get a slice of the cidr blocks, i dnt want to hv to use all cidr 
 so am saying begining from the first slice on index 0 to a certain count , mayb i want 2, so frm o to 2nd slice
@@ -1433,18 +1437,22 @@ my-vpc cd  ../vpc               cd and go to vpc
 outputs.tf   provider.tf     terrafrm.tfstate varaibles.tf       ****** so i seee i have the state file , so lll destroy it cos they are in the same region
 vpc terrafrm destroy -auto-approve
 
+
+                                               VPC CANT BE DESTROYED WITH RESOURCE INSIDE IT
    ***** somebody aked yetserday, can we destroy a vpc with a resource in it ??
 lets find out 
 we created a vpc and once it was created  we already created an instance in the vpc , so are we able to destroy it
 so once it resfreshes the state, it starts destroying that one subnet 
 its saying its still destroying 
-uwil find out that it wil continue goin that way until it times out bc u are trying to destroy a subnet bc it has a resources in it 
+u wil find out that it wil continue goin that way until it times out bc u are trying to destroy a subnet bc it has a resources in it 
 so it will nt allow you 
 so even on the console it will give you an error , u cant destroy it 
 bc of time ill just stop the process, bt if u hv time u can try it, u can wait as long as you wnat, it wil nt destroy 
 unless i destroy my instance first
 ill just inter route , contrl c 
 
+
+                                       TROUBLESHOOTING PATH TO FILE
 we can see  error:
 this subnet has dependencies and cannot be deleted
 
@@ -1496,6 +1504,7 @@ and the subnet wil read it frm that remote data source
 the output is called public and we will select the first one [0]
 so bc this instance already exists 
 
+                                                TROUBLESHOOTING SUBNETS
    ******** ERROR :
  subnet can only be created in us west 1a and us west ic 
 so he went back to the variable file and changed it aagain 
@@ -1528,6 +1537,8 @@ bc init only initializes the backend and the provider, so i can run trfrm plan
 when i do that it willrefresh the state  and while thats happening somethings will be replaced
 1) the EIP has been tainted
 
+
+
        INTERVIEW QUESTION
 
 What is tainting in terfrm
@@ -1547,7 +1558,7 @@ this is the public subnet we selected [0] (we indidcated we were interested in )
   ******* ** terraform apply -auto-approve 
    
    once we approve it its goin to destroy that resource first, 
-remeber if we wanted w ecould pass a life cycle meta argument
+remeber if we wanted we could pass a life cycle meta argument
 we can say we want to prevent destroy or we want to create before destroy
 so what that would hav edone, it would first create our new instance before it destroys the other one
 but now its destroying that instance first then create a new instance
@@ -1562,7 +1573,9 @@ its installig kibana now in our instance
      ask your questions and ill explain whats goin on 
 
 
-            ************ QUESTION
+            ************ QUESTION 
+REMOVE WHAT YOU DNT WANT TERFRM TO RECREATE FROM THE CONFIGURATION FILE
+
 1) if there are situations wher i have to go to the console to delete a resource, how does that impact the statefile ???
    ANS: 
    Remember when you run terfrm plan , terfrm wil always compare your configuration, this is your desired state, this is what i desire to have
@@ -1613,7 +1626,7 @@ just rely on terfrm plan to check that what your intending to do is captured in 
 
 
 2:53:37
-        ########### explanation contd ...
+        ########### NULL RESOURCE  EXPLAINED  contd ...
 
    so right here we used provisiners thats as far as i can go and using a null resource it did a connection and once it did that, it transferred some files,did ssh connection
 it transfered these files, (null resource) kibana, apache then the script then transfering the files, it did a remote exec afyer that we atraed running these scripts thats
@@ -1630,6 +1643,7 @@ kibana is reading frm elastic search  it getes its metric
 #this is the urls of the Elasticsearch instances to use for all your queries 
 elasticsearch.hosts: [https://localhost:9200]
 
+                                     TROUBLESHOOTING/ ACCESING KIBANA DASHBOARD
   2:55:49 ******** 
 so if i go on my aws console now , i should have an instance t2.medium running
 its created in availabilty zone us west 1c, it ha sthat sg
@@ -1662,10 +1676,11 @@ so u can cfeate a dashboard that will show u evertin , so frm this metrics you c
 
 
 ###### the point is we hv been able to use terfrm to do configuration and we hv been able to craete our instance
-we hv been abl eto use provisoners, we v used nt just file provisoners,  we v also used remote exec provisoners to actually run our script
-whne u look at all this we v seen that our terfrm statefile is also in this local env , it jsut mena that we also using a remote backend here
+we hv been able to use provisoners, we v used nt just file provisoners,  we v also used remote exec provisoners to actually run our script
+whne u look at all this we v seen that our terfrm statefile is also in this local env , it jsut means that we also using a local backend here
 
-   *********** 3:11:26
+                                              REMOTE BACKEND
+   *********** 3:11:26    
 what if we wnated to use a remote backend ??
  we wil go to where our provider file (prorvider.tf) and pass a backend that is remote 
 when u pass a backend that is remote, this is like an S3 bucket so bc when we run terfrm init the firts tin that normally hapens is it initializes the backend 
@@ -1675,6 +1690,8 @@ so i can go to my AWs console and i can look for S3
    *******  3:12:43
 do i have an S3 bucket in this particular region, the region wher i created .... ? created what
 
+
+                        S3 BUCKET EXPLAINED
 i have a bucket her called landmark automation, now becsuas i have that 
 so i wnat to store my statefile inside of this bucket instaed of my local env, for collaboration
 so for me to do that therfore , ill need to configure a remote backend 
@@ -1689,11 +1706,14 @@ then the region is US west2
 so here am using a remote backend which is s3
 
 ******************************** 3:13:43
-   NO.32
 
+
+                                     MIGRATE THE EC2instance STATE FILE FROM LOCAL BACKEND TO REMOTE BACKEND 
+   NO.32
+              
        in provider,tf 
 
-  ( provider.tf     from NO.25 )  not the provider.tf for my-vpc that he subsequently created in NO.30
+  ( provider.tf     from NO.25 )  not the provider.tf for EC2 Instance that he subsequently created in NO.30
 
 terraform {
   required_version = "~>  1.0 "
@@ -1706,8 +1726,8 @@ terraform {
                                                           **************   so here am using a remote backend which is s3
  backend "s3" {                                            ************  am pasing my backend inside of my terfrmblock, this is where we pass our backend 
    bucket  = "landmark-automation-kenmak"
-   key   =  "elk/terraform.tfstate"            ******* and the key is judt a path, its a dir
-   region = "us-west-2"
+   key   =  "elk/terraform.tfstate"            ******* and the key is just a path, its a dir i want to create inside of the bucket where i want to store my state file
+   region = "us-west-2"                        this is the region where the bucket exists
  }
 
 provider "aws" {
@@ -1715,7 +1735,7 @@ provider "aws" {
 }
 
 
-
+                                 MIGRATE THE VPC STATE FILE FROM LOCAL BACKEND TO REMOTE BACKEND & DESTROY THE PREVIOUS VPC OF THE LOCAL BACKEND
 **********3:14:52
 because initially i had this infarstruture created using a local backend now i want to migrate my state to a remote backend so how do i do that???
 
@@ -1751,6 +1771,8 @@ now this statefile is now in a distributed env so when am working with you w ear
 local env then u wil nt have accse to it , so bc w ewrk in a collaborated env which is distributed 
 so we always use S3 bucket for our state storage which is a distributed env
 
+
+
     INTERVIEW QUETSION
 How do you work with terfrm in a distributed env , IN A COllaboartive env
  
@@ -1768,7 +1790,7 @@ we sue s3 for stste storage , we use it as our backend , wherby evertin that we 
    2 tf=file-provisoner terraform destroy .auto.approve
 
 ***************** 
-   i cant destroy my vpc bc my instance exist in the vpc but i can dsetroy this bcthe statefile is diff 
+   again as i did a demo, i cant go & destroy my vpc right now bc my instance exist in the vpc but i can destroy this bc the statefiles are diff 
 the statefile for my instance is remote its in my s3 but the ststefile for my vpc am using local 
 
 3:21:33
@@ -1829,9 +1851,9 @@ so hv migrtaed my statefile for my-vpc here
 
      HOW CAN I READ A STATEFILE THAT IS IN AN s3 bucket ???????
 
-i wnat to create my resource , my instance in my (local env) but this statefile (my-vpc) is in s3 bucket
+i wnat to create my resource , my instance but this statefile is in s3 bucket
  so how do you read that
- .... again we use the same principle , we use the smae data source (data.tf)
+ .... again we use the same principle , we use the same data source (data.tf)
 but then our backend is not local 
 
  3:25:23  ************** 
@@ -1866,15 +1888,20 @@ so this is how we use backends in  our infrastructure
 
   ********** so just remember that befoer u initialize terfrm u will need to have that backend 
 
-   ###########  some time  you might think why cant i create an S3 bucket using terfrm  ???
+
+                        HOW TO CREATE AN S3 BUCKET THEN USE IT AS THE REMOTE BACKEND
+   ###########  some time  you might think why cant i now create an S3 bucket using terfrm  ???
 yes you can do that 
-however, if it is in the same module ( wit the illustration he was giving wit the cursor, i bliv we wil run the command to create s3 bucket in provider.tf file) what will 
-happens is that bc once u run init ,initilizing needs to initialize the backednd first before you create it, so what u may want to do is you may want to create your instance
-but first in the (provider.tf file) comment out your backend as s3 (ie the s3 bucket backend) then run the code using a local backend so that your s3 bucket is created once 
-the bucket is created then you can uncomment and comment your backend with the name of the bucket you just created , with the path , then your terfrm will initilize inside
-of the bucket you ve created but as long as the bucket exists when you are running terfrm init then it is goin to initilize that bucket as your bucket
+however, if it is in the same module what will happens is that bc once u run init ,initilizing needs to initialize the backednd first before 
+you create it (i bliv he means the backend needs to be in existence  3.13) , so what u may want to do is you need to create your instance but first in the (provider.tf file) 
+comment out your (backend  's3' , i bliv thats the backend blk) then run the code using a local backend so that your s3 bucket is created (i bliv that means der has to 
+be a blk to create the s3 bucket) once the bucket is created then you can uncomment (the backend blk) and comment your backend with the name of the bucket you just created ,
+with the path , then your terfrm will initilize inside of the bucket you ve created but as long as the bucket exists when you are running terfrm
+init then it is goin to initilize that bucket as your bucket
 so thats how we do 
 
+
+                             STATE LOCKING/LOCKING THE STATE FILE
 3:28:57
  ******* then there is what we call state looking
 thats one concept that nxt time we meet, ill be taking abt that 
@@ -1886,9 +1913,9 @@ so we always use what is called dynamond db table to lock our ststefile in the s
 
 ********** so this is a concept that we wll look at when nxt we meet ...
 
-
+                                       PULLING STATE FILE
        QUESTION 
-1) IN the event that i start working in a cop and the have their statefile in the backend, an di wnat to start working in collaboration with th eother team, 
+1) IN the event that i start working in a cop and the have their statefile in the backend, and i wnat to start working in collaboration with th eother team, 
 how do i migrate it to my own local env so that i can work with the statefile that is already in existence
 
    ANS:
