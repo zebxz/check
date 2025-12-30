@@ -53,7 +53,7 @@ the host for the connection is an ELASTIC IP so that the ip doesnt change
 
 
 
-                   THE PROVISIONING STEPS SIMPLIFIED
+                   THE PROVISIONING STEPS I SIMPLIFIED
       Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL the files related to the vpc were created inisde the VPc dir
      but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
 1) DATA SOURCE file Called data.tf (CREATED IN THE MAIN DIR) includes:
@@ -68,29 +68,32 @@ the host for the connection is an ELASTIC IP so that the ip doesnt change
       ***the remote state data source is refferred here (from step no.9)
 3)VARIABLES FILE (CREATED IN THE MAIN DIR) includes:
    variables blk for region, blk for instance type, blk for key, blk for path, blk for instance user
-4)PROVIDER BLK file for AMI/instance :      ***initially i didnt knw he created a provider blk for the AMI/instance bc he created it l8r & so i had to google as seen @no.5
+4)PROVIDER BLK file for AMI/instance (CREATED IN THE MAIN DIR): **initialy didnt knw he created a provider blk for D AMI/instance bc he created it l8r & so i had to google as seen @no.5
   same region as the vpc region   
-5) PROVIDER BLK file   .. (created in the vpc dir as part of the vpc module)
-for vpc .. us west1...  ..  ****online; the region specified in the provider blk applies to all the resources, so i bliv thats why he didnt create for the AMI/instance
-6) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module)  ** bc of errors; this vpc dir was replaced with a new vpc dir no.17
+the provider block includes 
+  S3 bucket ....3.13.00 , he added the s3 bucket to illustrate local backend 
+
+5) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module). IGNORE this DIR **1.57, bc of errors; this vpc dir was replaced with a new vpc dir no.17
   resource blk for vpc cidr & tag and subnet cidr & tag
   ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
-7)VARIABLES FILE includes:  (created in the vpc dir as part of the vpc module)
+6)VARIABLES FILE includes:  (created in the vpc dir as part of the vpc module)
     A)variable blk for vpc cidr & tag
     B)variable blk for subnet cidr & tag
     ****referred to inside the vpc file
+7) PROVIDER BLK file   .. (created in the vpc dir as part of the vpc module)
+for vpc .. us west1...  ..  ****online; the region specified in the provider blk applies to all the resources, so i bliv thats why he didnt create for the AMI/instance
 8)OUTPUT BLK file includes:  (created in the vpc dir as part of the vpc module)
     A) Output blk for vpc id
     B) Output blk for subnet id
-9)  terfrm plan, valaidate, apply
+9)  terfrm plan, validate, apply
 10) REMOTE STATE DATA SOURCE: 
        *******  refferred inside the EC2Instance resource file
 
     ***** THE FOLLOWING FILES WERE CREATED IN THE MAIN DIR AS THE VPC DIR BUT NOT INSIDE THE VPC DIR
 11) FILE for KEY    ..      ****you wil use a resource called a key pair, i got this frm the question on SSH KEY
 juts mk sure u copy the content of ur own key and replace it insid eof this dir
-bc now how am referencing it, when u look at your null resource file 
-private_key = path.module}/mykey/elk-instance.pem
+bc now how am referencing it, **mee,using the file function.....  when u look at your null resource file 
+private_key =  ("${path.module}/mykey/elk-instance.pem"}
 12) FILE FOR SECURITY GRP includes:    ***  the file is referred inside the instance resource blk(main.tf)
   A) a locals block defining ingress config
 created the file dynamically using a meta argument:'for each' , 
@@ -113,7 +116,7 @@ the nxt is kibana
 3rd is apache configuration
 4th is inatallation scripts  to install ELK  
 
-*******  afer whic i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it wil run trfrm commands on 
+*******  after which i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it wil run trfrm commands on 
 the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to be run 
 so i wnat to give executable permison to that script then i wnat modify some chracters using some set commands inside of the script
 then i wnat to run the script
@@ -140,12 +143,18 @@ cd to the tf-file-provisioner
 terrafrm init/trfrm validate/trfrm format/trfrm plan 
 ERror
 
- 17) CREATING NEW FILES TO CORRECT THE ERRORS
+ 17) CREATING NEW A NEW VPC DIR ... to correct the ERRORS bc the first vpc dir he created was to create a basic vpc  but error because an EIP/Elastic ip was required
+      the dir includes file for provider, file for variables & file for output 
+   A) provider file includes s3 bucket   ...3.21.50, he added the s3 bucket to illustrate migrating the vpc from local bkend that was used previously to a remote backend ie 
+using the s3 bucket  & to show that the vpc can be destroyed ..(he run destroyed then started the migration & terfrm init & when when we check the previously state file is empty
+      you have to run terfrm init so that it can initialize & dowload the pluggings.. 
+    B) variables file includes many more arguments than the previous variable file 
+        eg NAT gateway, route tables
 
+18) REMOTE BACKEND
+       Migrating resources from a local backend to a remote backend
 
-
-
-
+ 19)  STATE LOCKING/LOCKING THE STATE FILE
 
 
 
