@@ -549,11 +549,49 @@ file is, it has to be either relative or absolute path, file function wil nt ext
 
 
 
+thers a terfr command to taint a resource
+  terraform taint 
+terraform taint aws_instance.my_instance              .... so if youv created such an instance ,its in your statefile ,bt u wnat to terminate it or to dstroy it 
+you can taint it, tainting just means u acn just mark it for destruction and when nxt you run terfrm aply, it wil automatically terminate it bc the resource is tainted
+ 
+
+
+ terraform state pull ......... QUESTION 
+1) IN the event that i start working in a cop and the have their statefile in the backend, and i wnat to start working in collaboration with th eother team, 
+how do i migrate it to my own local env so that i can work with the statefile that is already in existence
+
+   ANS:
+that will not be the case because once you pull it , we only have 1 ststefile  
+normally they prevent you form pulling unless you are pulling it and pushing it back
+but theres a command for that :
+ terraform state pull
+
+ ********  it pulled our stsefile and you can tell by the lineage number , it doesnt change 
+******* so if i wanted to inspect the ststefile, like what is there , then i can easily do a state pull
+ then look at it, work on it then i can do a state push to push it back but i think its asking for a path  or u can use -force
 
 
 
+ but basically you can use terfform state commands  
+      terrafrm state -h
+it shows you the sub commands, how to manipulate terfrrm state
+ the state commands are only used when you are working with a statefile, but the statefile is very sensitive so you need to know what your doing bc if u mess up/corrupt 
+the staefile then your entire infrastructure is corrupted bc the ststefile can no longer be used to compare what is desired and what is present
+therefore thats why if you want to do anything on the statefile use the state commands , you dnt go on the statefile itself and try to edit/change it
+if i need to remove a data source instaed of goin on the statefile to delete it ill use a state remove
+
+subcommands;
+list
+mv
+pull
+push
+replace-provider
+rm
+show
 
 
+  *** STATE LOCKING/LOCKING THE STATE FILE
+dynamond db table to lock our ststefile in the s3 bucket
 
 
 
