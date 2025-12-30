@@ -996,11 +996,115 @@ OR u can pass it as : file = mykey/ansible
 
 
 
+What is tainting in terfrm
+
+   ANS:
+this is marking a resource for destruction
+when a resource needs to be destroyed in terrafrm, you taint it 
+when its tainted, during the next apply , this particular resource will be destroyed
+
+ ************ so our EIP has been tainted therefore it must be replaced 
 
 
 
 
+  ************ QUESTION 
+REMOVE WHAT YOU DNT WANT TERFRM TO RECREATE FROM THE CONFIGURATION FILE
+
+1) if there are situations wher i have to go to the console to delete a resource, how does that impact the statefile ???
+   ANS: 
+   Remember when you run terfrm plan , terfrm wil always compare your configuration, this is your desired state, this is what i desire to have
+then it goes to aws and looks at your actuall state
+so when my desired state say i need to have an instance here bc i hv it in my configuration but when it goes to aws it doesnt find the instance bc i deleted it 
+then terfrm wil see that as a decrepracy , a drift, so it will recreate it so that this always matches what is actual 
+so if you run apply once you deleted it as long as its still in your configuration file terfm wil go and recreate it
+so if you dnt want whatever u deleted, if dnt want it here then remove the configuration file bc this is your desired state
+
+2) is there a function/argument  or the moment we change mayb an argument, it could just taint the former one 
+
+  ANS:
+ thers a terfr command to taint a resource
+  terraform taint 
+terraform taint aws_instance.my_instance              .... so if youv created such an instance ,its in your statefile ,bt u wnat to terminate it or to dstroy it 
+you can taint it, tainting just means u acn just mark it for destruction and when nxt you run terfrm aply, it wil automatically terminate it bc the resource is tainted
+ 
+
+
+3) am asking bc when i look at the template, sometimes it awes me, in our working env do we have some template that we can be modifying or we hv to write the code all the 
+time
+
+   ANS:     2:49:00
+I did say it might look overwhelming but as you keep working at it especially if u rely on documentation
+trfrm is very easy to work with bc ther are templates, ther are modules, u go to the documentation you copy and you paste and you just modify
+you will be asked to create modules, custom modules , so custom modules you can use the official module to copy examples bt ur customizing them menaing your makiing them
+to suit your env, your changing the names , the variables , the regions, changing hw users are interacting with that, bt the base code ur basically reusing it
+in terfrm thers smt we call dry , like dnt repeat youself, terfrm supports that concept wherby we use modules so that our code is reuseable
+like now how hv created this vpc here, hv create it as a module so i dnt anticipate  that whenever i wnat a vpc anytime that i will go back and rewrite this code, like 
+what i did , i copied this code form somewher else bc i had already wirtten that so am just reusing the code and you will see a lot of that
+so craete your infrastructure as modules and just reuse them , just make changes as as you deem fit and just reuse them
+
+
+4) AM still confused as to how the documentation works , like how do we access all the documentations just to pick it back up when we are doing our work in the real world??
+
+5) before WE apply our code is there a way to check our work,like a test run or thers like a backend checkover our work before we do terfrm apply n hv it show up on our 
+ instance as for d real world work
+
+  ANS:
+   and thats why you see evrytime am runing trfrm plan, what does the do??
+if u have configuration , before u create anything u wnat to check the plan, is this what you wnat? this is the test that your doing, you generating a plan
+terfm wil generate for u a plan and the plan will ask you, is this what you wnat to do , 
+in most of the cases you will jsut be runing trfrm plan, bc you dnt have to everytime run the pipeline bc once you apply it means you are goin to trigger a bill
+most time u can do a local plan to see if your configuration is valid, once the plan exists success and u check the plan and its good then u can go ahead and run apply
+just rely on terfrm plan to check that what your intending to do is captured in the plan before you run apply 
 
 
 
+
+    QUESTION
+1) whats basicaly the function of the dashboard, is it for monitoring the app??  APN, app performance monitoring 
+
+   ANS:  3:09
+yes for monitoring it 
+right here you can monitor diff ,like right now its me metrics based on the OP that is running on 
+so if i wnat host name , type, its giving me that,  am running this on a linux , platform its ubnuntu the sever its giving me that 
+
+so u can cfeate a dashboard that will show u evertin , so frm this metrics you can create a dashboard that wil be able to display those metrics 
+
+
+   INTERVIEW QUETSION
+How do you work with terfrm in a distributed env , IN A COllaboartive env
+ 
+    ANS:
+we sue s3 for stste storage , we use it as our backend , wherby evertin that we do , we run here (our local env), its been captured in the s3 bucket 
+
+
+
+                                  PULLING STATE FILE
+       QUESTION 
+1) IN the event that i start working in a cop and the have their statefile in the backend, and i wnat to start working in collaboration with th eother team, 
+how do i migrate it to my own local env so that i can work with the statefile that is already in existence
+
+   ANS:
+that will not be the case because once you pull it , we only have 1 ststefile  
+normally they prevent you form pulling unless you are pulling it and pushing it back
+but theres a command for that :
+ terraform state pull
+
+ ********  it pulled our stsefile and you can tell by the lineage number , it doesnt change 
+
+******** so if i wanted to inspect the ststefile, like what is there , then i can easily do a state pull
+ then look at it, work on it then i can do a state push to push it back but i think its asking for a path  or u can use -force
+
+  ##### but basically you can use terfform state commands  
+      terrafrm state -h
+it shows you the sub commands, how to manipulate terfrrm state
+ the state commands are only used when you are working with a statefile, but the statefile is very sensitive so you need to know what your doing bc if u mess up/corrupt 
+the staefile then your entire infrastructure is corrupted bc the ststefile can no longer be used to compare what is desired and what is present
+therefore thats why if you want to do anything on the statefile use the state commands , you dnt go on the statefile itself and try to edit/change it
+if i need to remove a data source instaed of goin on the statefile to delete it ill use a state remove
+
+
+
+  ***STATE LOCKING/LOCKING THE STATE FILE
+dynamond db table to lock our ststefile in the s3 bucket
 
