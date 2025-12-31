@@ -1,183 +1,6 @@
         ************ version dertermines the syntax 
 
 
-
-
-
-
-DIFF BTW PROVISIONERS & MODULES...
-Module: is a dir for a resource that contains all the files related to the resource 
-PROVISIONERS: You can use provisioners to model specific actions on the local machine or on a remote machine
-so once my instance has created the provisioner will take over , a/this null resource wil be created to enable us connect to the instance and once we connect it wil transfer 
-this files that ar in my local env to the instance , after whic i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it
-wil run trfrm commands on the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to be run 
-
-
-DIFF BTW DATA SOURCE & REMOTE STATE DATA SOURCE
-In Terraform, a data source is a general mechanism to read data from various sources (cloud providers, external APIs, etc.), 
-while a terraform_remote_state data source is a
-specific, built-in data source used solely to read outputs from other independently managed Terraform state files
-The terraform_remote_state data source is specifically designed for inter-configuration communication when you break a large infrastructure into smaller, linked root modules. 
-
-
-
-ILLUSTRATION;
-
-using local- exec provisioner,    
-USED DATA SOURCE TO GET AMI, & TO PROVISION THE INSTANCE IN A CUSTOM VPC & USE A NULL RESOURCE TO EST CONNECTION & PROVISIONERS TO INSTALL ELK IN OUR ENV
-THE illustration includes; using a REMOTE STATE DATA SOURCE TO READ THE STATEFILE IN THE LOCAL BACKEND INODER TO GET THE SUBNET ID & input the id into the ec2instance blk,
-in the instance blk we pass a key, security grp, elastic ip,  & create a  dir for the key, create a null resource file to create a connection & transfer files to the remote
-instance we created to install ELK in our env.
-
-     **i realised that ... ***online; the region specified in the provider blk applies to all the resources
-       for i also understand that the AMI & the vpc mustt be created in the same region but to use an AMI from US east to provision in Us West then u hv to use copy command
-
-1)Inside a dir called provisioner, we created a module called vpc & all the files related to the vpc were created inside the vpc dir 
-  but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
-2)we use a data source to get the AMI, to input into the instance resource blk, & a variables file for the region, a blk for instance type, a blk for key, a blk for path,
-blk for instance user /security grp with an explicit depends on.. bc the instance depends on it, so it has to be created first/elastic ip bc we dnt want the ip to change
-3)we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers 
-blk for vpc & refactored all the codes ie a file for all the resource blk, a file for the variables & a file for the providers blk. inside the vpc dir the variable file 
-for vpc cidr & providers file were created & the vpc dir becomes the vpc module
-4)after that, inside the vpc file we created an output blk to get the Vpc id (attribute)& input it into the instance reosurce blk & created a resource blk for the subnet & also 
-an output for the subnet & a variable for subnet cidr & tag then refactored ie still in the vpc dir; created a file for the 2outputs & added the variable in the variable file
-5)IMPLICIT dependency; we see that the VPC will be created first bc the subnet needs the VPC id therfore terfrm terfrm will inherently achieve implicit dependency but if we
-wanted explicit dependency then we have to pass 'depends on..
-6)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
-created inside the data source file, we used the remote data source to read the output of the state file & to return the subnet id & input/interpolated it into the ec2instance
-resource blk  after the vpc & the subnet had been provisoned 
-7) Created a dir for key & copied the key from aws & pasted it inside the file, which was referenced inside the null resource file
-8) NULL RESOURCE  we can use it to enable us establish our connection after which we want to provision, we wnt to transfer a/some files we hv inside the script dir 
-the host for the connection is an ELASTIC IP so that the ip doesnt change
-
-
-
-
-                   THE PROVISIONING STEPS I SIMPLIFIED
-      Had a dir called provisioners & inside it created a sub dir called VPC (ie vpc module) & ALL the files related to the vpc were created inisde the VPc dir
-     but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
-1) DATA SOURCE file Called data.tf (CREATED IN THE MAIN DIR) includes:
-   A) Data blk for AMI
-    B) done as step no.10 ie after step 1 to 9.. Remote state data source, i bliv step8 doesnt hv to be done for me to add step9, he probably did step 8 bc he was illustrating
-  57.08  Remote state data source' to read the subnet from the state file (from the vpc module)
- we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
-    and create it or it can be created by the networking project team 
-2) INSTANCE RESOURCE FILE (called main.tf, CREATED IN THE MAIN DIR) includes:
- resource blk for instance which includes these arguments: instance type/Ami/Subnet id/key name/security grp no.12/elastic ip
-          the instance type is a list and we saw how to reference it ie choose the particular instance type we want
-      ***the remote state data source is refferred here (from step no.9)
-3)VARIABLES FILE (CREATED IN THE MAIN DIR) includes:
-   variables blk for region, blk for instance type, blk for key, blk for path, blk for instance user
-4)PROVIDER BLK file for AMI/instance (CREATED IN THE MAIN DIR): **initialy didnt knw he created a provider blk for D AMI/instance bc he created it l8r & so i had to google as seen @no.5
-  same region as the vpc region   
-the provider block includes 
-  S3 bucket ....3.13.00 , he added the s3 bucket to illustrate local backend 
-
-5) VPC RESOURCE FILE includes: (created in the vpc dir as part of the vpc module). IGNORE this DIR **1.57, bc of errors; this vpc dir was replaced with a new vpc dir no.17
-  resource blk for vpc cidr & tag and subnet cidr & tag
-  ******* the variable file is referred here eg: var.sub_cidr" & var.vpc_cidr      
-6)VARIABLES FILE includes:  (created in the vpc dir as part of the vpc module)
-    A)variable blk for vpc cidr & tag
-    B)variable blk for subnet cidr & tag
-    ****referred to inside the vpc file
-7) PROVIDER BLK file   .. (created in the vpc dir as part of the vpc module)
-for vpc .. us west1...  ..  ****online; the region specified in the provider blk applies to all the resources, so i bliv thats why he didnt create for the AMI/instance
-8)OUTPUT BLK file includes:  (created in the vpc dir as part of the vpc module)
-    A) Output blk for vpc id
-    B) Output blk for subnet id
-9)  terfrm plan, validate, apply
-10) REMOTE STATE DATA SOURCE: 
-       *******  refferred inside the EC2Instance resource file
-
-    ***** THE FOLLOWING FILES WERE CREATED IN THE MAIN DIR AS THE VPC DIR BUT NOT INSIDE THE VPC DIR
-11) FILE for KEY    ..      ****you wil use a resource called a key pair, i got this frm the question on SSH KEY
-juts mk sure u copy the content of ur own key and replace it insid eof this dir
-bc now how am referencing it, **mee,using the file function.....  when u look at your null resource file 
-private_key =  ("${path.module}/mykey/elk-instance.pem"}
-12) FILE FOR SECURITY GRP includes:    ***  the file is referred inside the instance resource blk(main.tf)
-  A) a locals block defining ingress config
-created the file dynamically using a meta argument:'for each' , 
-SO this 'for each' we hv created a 'LOCALS BLOCK' & on the local block, we have declared an ingress config , which is a list of maps, 
-we hv put what we need to pass for elastic serach/kibana/logstash/ssh port, the cidr blocks, the port, the protocol n description
-so for each of this map it is goin to loop through using the local.ingres 
-as it loops through the description of the content will be this ingress which is calling this for ecah but we need the value (each.value, each.key)
-
-  B) a security grp blk
-  C) an ingress blk ***here we referred the locals blk
-
-13)   NULL RESOURCE    (not created in the vpc dir)....    we can use it to enable us establish our connection
-the host for the connection is an elastic ip so that the ip doesnt change
-depends_on = [time_sleep.wait_for_instance}       *********** the null resource depends on the time sleep (NO.26)
- 14) FILE for script
-now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some scrptt, the source is 
-inside this dir called script, i wnt to connect to that instance and transfer this file 
-the first file i want to transfer is elastic search
-the nxt is kibana
-3rd is apache configuration
-4th is inatallation scripts  to install ELK  
-
-*******  after which i wil use an remote exec provisiober , this is a provisioner that now runs commands on ur remote swerver, it wil run trfrm commands on 
-the remote server, am goin to pass inline and LIline , basically just means the commands i wnat to be run 
-so i wnat to give executable permison to that script then i wnat modify some chracters using some set commands inside of the script
-then i wnat to run the script
-once i run that particular script, this script 
-it will do apt update
-it will install elastic search, start it and we can access sit on port 9200
-install logstash
-kibana and start it 
-install metricbeat n start the service            *************1:07:00
-then it will start the service of logstash
-this script once it 
-
-15) FILE FOR OUTPUT
-its goin to output the public and private ip of the instance 
-This file is diff from  the vpc file for vpc output
-
-16) FILE FOR TIME SLEEP
-have passed an explicit dependency , it depends on my instance , 
-bt for the connection to happen, the null resourece depends on the time sleep 
-
-***NOW in our envwe have seen hw everytin is been configured, lets now create our resource
-then in mobaxterm 
-cd to the tf-file-provisioner 
-terrafrm init/trfrm validate/trfrm format/trfrm plan 
-ERror
-
- 17) CREATING NEW A NEW VPC DIR ... to correct the ERRORS bc the first vpc dir he created was to create a basic vpc  but error because an EIP/Elastic ip was required
-      the dir includes file for provider, file for variables & file for output 
-   A) provider file includes s3 bucket   ...3.21.50, he added the s3 bucket to illustrate migrating the vpc from local bkend that was used previously to a remote backend ie 
-using the s3 bucket  & to show that the vpc can be destroyed ..(he run destroyed then started the migration & terfrm init & when when we check the previously state file is empty
-      you have to run terfrm init so that it can initialize & dowload the pluggings.. 
-    B) variables file includes many more arguments than the previous variable file 
-        eg NAT gateway, route tables
-
-18) REMOTE BACKEND
-       Migrating resources from a local backend to a remote backend
-
- 19)  STATE LOCKING/LOCKING THE STATE FILE
-
-
-
-
-can terfrm remote state be used for a local backend  ??? errrrrror ..... i meant REMOTE STATE DATA SOURCE not a remote backend used for a local backend
-***online
-because of the error i made, This explanation explained that remote backend cant be used with the local backend
-No, a Terraform remote state cannot be used with a local backend. The terms "local backend" and "remote state" describe fundamentally different and mutually exclusive 
-mechanisms for storing and managing the terraform.tfstate file. 
-The local backend stores the state file on the local filesystem (terraform.tfstate in the current working directory). It is the default and does not involve any remote 
-storage features like collaboration or locking.
-A remote backend (e.g., Amazon S3, Azure Blob Storage, Terraform Cloud) stores the state file in a centralized, remote location. This is the recommended approach for teams 
-because it offers state
-locking, versioning, and secure storage. 
-When you configure a remote backend, Terraform stops using the local filesystem for state management and uses the specified remote location instead. The configuration for the
-backend is defined once in the main configuration and then all team members share a single source of truth. 
-******While you can read data from a separate remote state using the terraform_remote_state data source within a configuration that is using a local backend, you cannot have
-a configuration that writes its own state to a remote location while configured to use the "local" backend type. 
-
-***************************************************************************
-
- 
-
 TROUBLESHOOT INSTALLATION, USING VSCODE TO CLONE THE TERFRM REPO ,  TERRAFRM VERSION DERTERMINES/ SYNTAX OF THE CONFIGURATION FILE, IN PRODUCTION,
 PROVIDER Blk, RESOURCE BLK, INput VARIABLES BLK, OUTPUT VALUES BLK, CREATING A LOCAL BLK, DATA SOURCE, CREATING/BUILDING A DATA SOURCE TO GET An ATTRIBUTE; AMI 'ID'
 HOW TO CHECK AMI ID IN AMAZON, APPLY OTHER FILTERS, TROUBLESHOOTING/Wrong string syntax, USING THE DATA SOURCE TO PASS THE ATTRIBUTE; AM ID (of default region or any region
@@ -190,6 +13,8 @@ KEY ARGUMENTS, TYPES OF VARIABLES, ACCESS VARIABLE TYPE LIST' IN THE RESOURCE BL
 HOW TO READ/REFERENCE VALUES IN A MAP, PASSING VARIABLES AS A FILE, TERRAFORM.tfvars FILE/AUTO FILE, CREATING A VARIABLE THAT HAS A SECRET, S3 BUCKET/MODULES, TERFRM PUBLIC
 MODULES/REGISTRY, HOW TO USE THE OFFICIAL TERFRM MODULE, OVERRIDING THE DEFAULT VALUE OF THE OFFICIAL MODULE, LOCK.hcl FILE/VERSIONING, 
 MANAGING/UPGRADING PROVIDER PLUGGINS/VERSION, CREATING A VARIABLE FOR TAG, TERAFRM DESTROY, MOVED BLOCK.
+
+
 
 
 
@@ -251,8 +76,11 @@ if i use a remote exec provisioner but for me to be able to run command inside o
 hw do i connect to an instance , il use ssh , iil need to ssh into that particular instance for me to be able to conect to the instance after wich am then able to run either
 my script or command after the connection.
 2) illustrated with an example to see how local-exec provisoner works
-the illustration included; data source to get the AMI, Remote state data source to read the statefile in the local backend inorder to get the subnet id & to provision the
-instance in a custom vpc
+the illustration included; Use data source to get the AMI from a custom region & the vpc in the same region, using a REMOTE STATE DATA SOURCE TO READ THE STATE FILE IN THE
+LOCAL BACKEND INODER TO GET THE SUBNET ID & input the id into the ec2instance blk, in the instance blk we pass a key, security grp, elastic ip & create a file for the key;use
+part.module to refer the path to the key file, create a null resource file to create a connection & use file provisioner to transfer files to the remote instance we created to
+install ELK, kibanana, beat in our env. & run command using remote exec. we also used local backend to store the state file & migrated the state file from the local backend to
+the remote backend.
 
 
 
