@@ -6,14 +6,33 @@ you tried to use trfrm to delete it but couldnt then went on the console .. ???
 
 diff btw output and datasource  
 https://stackoverflow.com/questions/75246774/difference-between-data-source-and-output-block-in-terraform
- 
 
 
 
 
+***********************************
 
-THE ILLUSTRATION SUMMARIZED;   this illustration is Basically a compilation of everything we did seperately from video1 to video3
-using local- exec provisioner/inline & File provisioner 
+DIFF BTW META ARUMENTS & ARUMENTS/ATTRIBUTES/MODULES, PROVISIONERS/ PROVISIONERS ARE OUR LAST RESORT, TYPES OF PROVISIONERS, LETS SEE HOW REMOTE EXEC WORKS/FILE PROVISIONER;
+
+ILLUSTRATION: this illustration is Basically a compilation of everything we did from video1 to video3 then video4 was just about provisoners 
+using local- exec provisioner/inline  TO RUN COMMAND & File provisioner FOR INSTALLATION 
+THE PROVISIONING ILLUSTARTION STEPS,
+
+THE ORDER BY WHICH THE RESOUCES WERE CREATED,  USING PROVISIONERS FOR CONFIGURATION, QUESTION   SSH KEY, USING THE TERRAFORM CONSOLE TO FIRST CONFIRM YOUR CODE, 
+USING A LOOP/USING FUNCTIONS, WHAT IS THE part.module, VPC CANT BE DESTROYED WITH RESOURCE INSIDE IT, TROUBLESHOOTING PATH TO FILE, TROUBLESHOOTING SUBNETS, 
+NOW WE WNAT TO READ THIS STATEFILE, What is tainting in terfrm, REMOVE WHAT YOU DNT WANT TERFRM TO RECREATE FROM THE CONFIGURATION FILE, NULL RESOURCE  EXPLAINED, 
+TROUBLESHOOTING/ ACCESING KIBANA DASHBOARD,  REMOTE BACKEND, S3 BUCKET EXPLAINED, MIGRATE THE EC2instance STATE FILE FROM LOCAL BACKEND TO REMOTE BACKEND, 
+MIGRATE THE VPC STATE FILE FROM LOCAL BACKEND TO REMOTE BACKEND & DESTROY THE PREVIOUS VPC OF THE LOCAL BACKEND, HOW CAN I READ A STATEFILE THAT IS IN AN s3 bucket,
+HOW TO CREATE AN S3 BUCKET THEN USE IT AS THE REMOTE BACKEND, STATE LOCKING/LOCKING THE STATE FILE,  PULLING STATE FILE, 
+
+*******************
+
+
+
+
+THE ILLUSTRATION SUMMARIZED; this illustration is Basically a compilation of everything we did from video1 to video3 then video4 was just about provisoners 
+using local- exec provisioner/inline  TO RUN COMMAND & File provisioner FOR INSTALLATION 
+
 USE DATA SOURCE TO GET AMIFORM A CUSTOM REGION & THE VPC IN THE SMAE REGION, USING A REMOTE STATE DATA SOURCE TO READ THE STATE FILE IN THE LOCAL BACKEND INORDER TO GET 
 THE SUBNET ID & INPUT THE ID INTO THE EC2INSTANCE BLK, IN THE INSTANCE BLK WE referenced the KEY VARiable blk A KEY, SECURITY GRP, ELASTIC IP, CREATE A FILE FOR THE KEY; IN
 THE NULL RESOURCE WE USE PART.MODULE TO PASS THE PATH TO THE KEY FILE , CREATE A NULL RESOURCE FILE TO CREATE A CONNECTION & USE FILE PROVISIONER TO TRANSFER FILES TO THE 
@@ -26,29 +45,7 @@ STATE FILE/RESOURCES FROM THE LOCAL BACKEND TO THE REMOTE BACKEND
        & i also understand that the AMI & the vpc mustt be created in the same region but to use an AMI from US east to provision in Us West then u hv to use copy command
 
 
-
-THE PROVISIONING STEPS
-1)Inside a dir called provisioner, we created a module called vpc & all the files related to the vpc were created inside the vpc dir 
-  but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
-fblk for instance user /security grp with an explicit depends on.. bc the instance depends on it, so it has to be created first/elastic ip bc we dnt want the ip to change
-3)we created a resource blk for Vpc, created a variable blk for cidr& tag, created providers 
-blk for vpc & refactored all the codes ie a file for all the resource blk, a file for the variables & a file for the providers blk. inside the vpc dir the variable file 
-for vpc cidr & providers file were created & the vpc dir becomes the vpc module
-4)after that, inside the vpc file we created an output blk to get the Vpc id (attribute)& input it into the instance reosurce blk & created a resource blk for the subnet & also 
-an output for the subnet & a variable for subnet cidr & tag then refactored ie still in the vpc dir; created a file for the 2outputs & added the variable in the variable file
-5)IMPLICIT dependency; we see that the VPC will be created first bc the subnet needs the VPC id therfore terfrm terfrm will inherently achieve implicit dependency but if we
-wanted explicit dependency then we have to pass 'depends on..
-6)  REMOTE STATE DATA SOURCE:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
-created inside the data source file, we used the remote data source to read the output of the state file & to return the subnet id & input/interpolated it into the ec2instance
-resource blk  after the vpc & the subnet had been provisoned 
-7) Created a File for key & copied the key from aws & pasted it inside the file, which was referenced inside the null resource file
-8) NULL RESOURCE we can use it to enable us establish our connection after which we want to provision, we wnt to transfer a/some files we hv inside the script dir 
-the host for the connection is an ELASTIC IP so that the ip doesnt change
-
-
-
-
-                   THE PROVISIONING STEPS I ELABORATED MORE
+                  
       Had a dir called provisioners & inside it created a sub dir called 'VPC' (ie vpc module) & ALL the files related to the vpc were created inisde the VPc dir
      but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
 
@@ -56,6 +53,9 @@ the host for the connection is an ELASTIC IP so that the ip doesnt change
 we had created a vpc but because the vpc was very basic the only thing we created was basically vpc with one subnet 
   bc of one subnet it was failing (reQ EIP)so i went ahead and updated my ccode to give us a more complte vpc, so he created the new vpc dir with NAT gateway, EIP, etc
 
+
+
+THE PROVISIONING ILLUSTRATION STEPS:
 
 1) DATA SOURCE file Called data.tf (CREATED IN THE MAIN DIR) includes:
    A) Data blk for AMI
@@ -65,6 +65,7 @@ we had created a vpc but because the vpc was very basic the only thing we create
     and create it or it can be created by the networking project team 
 2) INSTANCE RESOURCE FILE (called main.tf, CREATED IN THE MAIN DIR) includes:
  resource blk for instance which includes these arguments: instance type/Ami/Subnet id/key name/security grp no.12/elastic ip
+                        security grp with an explicit depends on.. bc the instance depends on it, so it has to be created first/elastic ip bc we dnt want the ip to change
           the instance type is a list and we saw how to reference it ie choose the particular instance type we want
       ***the remote state data source is refferred here (from step no.9)
 3)VARIABLES FILE (CREATED IN THE MAIN DIR) includes:
@@ -86,12 +87,18 @@ for vpc .. us west1...  ..  ****online; the region specified in the provider blk
 8)OUTPUT BLK file includes:  (created in the vpc dir as part of the vpc module)
     A) Output blk for vpc id
     B) Output blk for subnet id
+    ****IMPLICIT dependency; we see that the VPC will be created first bc the subnet needs the VPC id therfore terfrm terfrm will inherently achieve implicit dependency but
+if we wanted explicit dependency then we have to pass 'depends on..
 9)  terfrm plan, validate, apply
 10) REMOTE STATE DATA SOURCE: 
        *******  refferred inside the EC2Instance resource file
+:TRFRM gives you an option of a data source, u can use the data source to read a statefile in our local backend
+created inside the data source file, we used the remote data source to read the output of the state file & to return the subnet id & input/interpolated it into the ec2instance
+resource blk  after the vpc & the subnet had been provisoned 
 
     ***** THE FOLLOWING FILES WERE CREATED IN THE MAIN DIR AS THE VPC DIR BUT NOT INSIDE THE VPC DIR
 11) FILE for KEY    ..      ****you wil use a resource called a key pair, i got this frm the question on SSH KEY
+Created a File for key & copied the key from aws & pasted it inside the file, which was referenced inside the null resource file
 juts mk sure u copy the content of ur own key and replace it insid eof this dir
 bc now how am referencing it, **mee,using the file function.....  when u look at your null resource file 
 private_key =  ("${path.module}/mykey/elk-instance.pem"}
@@ -109,6 +116,10 @@ as it loops through the description of the content will be this ingress which is
 13)   NULL RESOURCE    (not created in the vpc dir)....    we can use it to enable us establish our connection
 the host for the connection is an elastic ip so that the ip doesnt change
 depends_on = [time_sleep.wait_for_instance}       *********** the null resource depends on the time sleep (NO.26)
+
+we can use it to enable us establish our connection after which we want to provision, we wnt to transfer a/some files we hv inside the script dir 
+the host for the connection is an ELASTIC IP so that the ip doesnt change
+
  14) FILE for THE INSTALLATION SCRIPTS
 now when ur creatin g this particular instance, once we hv connection with it, we want to provision, we wnt to transfer a/some file , we hv some scrptt, the source is 
 inside this dir called script, i wnt to connect to that instance and transfer this file 
@@ -156,6 +167,8 @@ using the s3 bucket  & to show that the vpc can be destroyed ..(he run destroyed
        Migrating resources/State file from a local backend to a remote backend
 
  19)  STATE LOCKING/LOCKING THE STATE FILE
+
+
 
 
 
