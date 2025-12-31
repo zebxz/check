@@ -50,8 +50,12 @@ the host for the connection is an ELASTIC IP so that the ip doesnt change
 
                    THE PROVISIONING STEPS I ELABORATED MORE
       Had a dir called provisioners & inside it created a sub dir called 'VPC' (ie vpc module) & ALL the files related to the vpc were created inisde the VPc dir
-          ***IGNORE STEP.. 5,6,7,8 the files included in the 'vpc' dir, whic was replace with 'my-vpc' dir  step17. 
      but for the ec2 instance files, he didnt create a module for them like we did in video2 where we had a dir called 'test' as the ec2instance module  
+
+          ***IGNORE STEP.. 5,6,7,8 the files included in the 'vpc' dir, whic was replace with 'my-vpc' dir  step17.
+we had created a vpc but because the vpc was very basic the only thing we created was basically vpc with one subnet 
+  bc of one subnet it was failing (reQ EIP)so i went ahead and updated my ccode to give us a more complte vpc, so he created the new vpc dir with NAT gateway, EIP, etc
+
 
 1) DATA SOURCE file Called data.tf (CREATED IN THE MAIN DIR) includes:
    A) Data blk for AMI
@@ -328,6 +332,7 @@ we have this tefrm provisioners file
 
 illustration:
                   ************   STEPS TO CREATE OUR EC2 INSTANCE IN A CUSTOM VPC, USE A NULL RESOURCE TO ESTABLISH CONNECTION & USE PROVISIONERS TO INSTALL ELK 
+             ***ignore step 4,5,6,7,8, & 13 inside the 'vpc' dir, it was replaced with step 28 new vpc dir calle 'my-vpc'
 
 this ec2 instance we will use a data source
 we hv dis data source which is creating an ubuntu server so we wil use this data source to get our AMI 
