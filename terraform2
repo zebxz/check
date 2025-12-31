@@ -25,17 +25,25 @@ either of the) top level blks when its provisioning resources (eg to create an i
 a variable blk for the instance type/name & a variable of type sensitive for a secret & a .gitignire file wher the secret var file will be referenced) but we need a resource
 blk for evrytin we create in terfrm, blks can also be template.
 
+
 VIDEO2:
- one of the top level block is called 'variable block. The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module
+MODULES: Terraform configurations are organized into modules, which are reusable, self-contained packages of code. When one module uses resources defined in another, the 
+source argument in a module block specifies the location from which to load the child module's code.
+SOURCE FOR MODULES/PROVISIONERS: The source argument is crucial for telling Terraform where to find the necessary code for modules and providers. Common sources include: 
+ Terraform Registry, Local file system, Version Control Systems (VCS) repositories: URLs pointing to Git, Mercurial, or other repositories (e.g., GitHub, Bitbucket).
+HTTP/S URLs
+
+one of the top level block is called 'variable block. The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module
  allowing you to customize configurations without changing the source code. This makes modules reusable across different environments.
 WE have diff TYPES OF VARIABLES like string,numbers, list, map ... we can also pass variables as a file & the files must end with .tvars
 The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
 ***ignore The Terraform variable block is used to define input variables, which serve as parameters for a Terraform module, allowing you to customize configurations without
 changing the source code. This makes modules reusable across different environments (e.g., development, production
 The primary form of Terraform source code is the collection of .tf files in a directory (which together form a module)
-variables; Defines input variables that allow you to parameterize your configuration, making it reusable.
+VARIABLES; Defines input variables that allow you to parameterize your configuration, making it reusable.
 vidoe1: arguments are parameters u pass inside of a resource blk like an AMI, instance type, subnet id , secrity grp,,   these are argument
 arguments can be reQ or optional   ... ** ignore 
+
 
 VIDEO3:
 1)Terrafrm also gives us the option of bootstrapping (user data) & terfrm has meta arguments
@@ -79,8 +87,8 @@ my script or command after the connection.
 the illustration included; Use data source to get the AMI from a custom region & the vpc in the same region, using a REMOTE STATE DATA SOURCE TO READ THE STATE FILE IN THE
 LOCAL BACKEND INODER TO GET THE SUBNET ID & input the id into the ec2instance blk, in the instance blk we pass a key, security grp, elastic ip & create a file for the key;use
 part.module to refer the path to the key file, create a null resource file to create a connection & use file provisioner to transfer files to the remote instance we created to
-install ELK, kibanana, beat in our env. & run command using remote exec. we also used local backend to store the state file & migrated the state file from the local backend to
-the remote backend.
+install ELK, kibanana, beat in our env & run command using remote exec. we also used local backend to store the state file & migrated the state file/Resources from the local
+backend to the remote backend.
 
 
 
@@ -101,7 +109,10 @@ HTTP/S URLs: Direct links to compressed archive files.
 
 
 
+
+
  
+
 
 
 VIDEO SUMMARIZED....... more elaborated
