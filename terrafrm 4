@@ -12,7 +12,7 @@ https://stackoverflow.com/questions/75246774/difference-between-data-source-and-
 
 
 
-THE ILLUSTRATION SUMMARIZED;
+THE ILLUSTRATION SUMMARIZED;   this illustration is Basically a compilation of everything we did seperately from video1 to video3
 using local- exec provisioner/inline & File provisioner 
 USE DATA SOURCE TO GET AMIFORM A CUSTOM REGION & THE VPC IN THE SMAE REGION, USING A REMOTE STATE DATA SOURCE TO READ THE STATE FILE IN THE LOCAL BACKEND INORDER TO GET 
 THE SUBNET ID & INPUT THE ID INTO THE EC2INSTANCE BLK, IN THE INSTANCE BLK WE referenced the KEY VARiable blk A KEY, SECURITY GRP, ELASTIC IP, CREATE A FILE FOR THE KEY; IN
@@ -59,7 +59,7 @@ we had created a vpc but because the vpc was very basic the only thing we create
 
 1) DATA SOURCE file Called data.tf (CREATED IN THE MAIN DIR) includes:
    A) Data blk for AMI
-    B) done as step no.10 ie after step 1 to 9.. Remote state data source, i bliv step8 doesnt hv to be done for me to add step9, he probably did step 8 bc he was illustrating
+ B) done as step no.10 ie after step 1 to 9..'Remote state data source', i bliv step8 doesnt hv to be done for me to add step9, he probably did step 8 bc he was illustrating
   57.08  Remote state data source' to read the subnet from the state file (from the vpc module)
  we are creating our resource inside of a custom vpc bc our netwrk already exists ** i bliv by ntwrk he means the cutsom vpc already exists in AWs if nt we hv to go to to AWS
     and create it or it can be created by the networking project team 
@@ -214,7 +214,7 @@ i bliv by now uve all configured your env interms of you hv ur ides, cloned ur c
 looking at what we ;ve covered so far, last week we looked at terfrm meta arguments
 so what are some of the meta arguments we've used
 
-
+                                    DIFF BTW META ARUMENTS & ARUMENTS, ATTRIBUTES, MODULES
 what is meta arguments ??
 
 tefrm gives you what are called mata arguments
@@ -240,6 +240,7 @@ so u can use a module blk to actually create resources
 Tonight we wil continue wit our exploration of teRRAFORM
 
 we'll go over PROVISIONERS AND BACKENDS
+
 
 
 
@@ -328,7 +329,7 @@ resource "aws_instance" "web" {
  
 ^^^^^^^^^^^^^^^ 16;00
                                 LETS SEE HOW REMOTE EXEC WORKS
-we have this tefrm provisioners file 
+we have this tefrm provisioners file  **ie file provisioner
 
 illustration:
                   ************   STEPS TO CREATE OUR EC2 INSTANCE IN A CUSTOM VPC, USE A NULL RESOURCE TO ESTABLISH CONNECTION & USE PROVISIONERS TO INSTALL ELK 
