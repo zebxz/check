@@ -205,7 +205,7 @@ configuration then you can introduce a configuration mgt tool as ansible
 
 
    17:32                                         INSTALLATION
-                                         Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
+                           Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
 
      HOW DO YOU INSTALL ANSIBLE
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/02-Installation.md
@@ -241,7 +241,7 @@ Using compile file       **** download / use a complie file     ****  https://do
 ******* 21:44              PREREQUISITE/ INSTALLING ANSIBLE 
 
  ###########  Installing Ansible on Ubuntu
-
+           SCRIPT TO BE USED AS AS USER DATA FOR THE INSTALLATION
   $ sudo adduser ansible                   ***** 1st u need to create a user who willl install ansible, this user will install the ansible software
   $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible       ********* we add him to sudoers group , for sudo right bc he will be installing packages
   $ sudo su - ansible                                      ****** switch user to ansible 
@@ -265,11 +265,12 @@ seeking to connect with a user in the remote
     if i install ansible in the control as a user called Ken, then my default user in the remote that ansible will be looking to connect with will be a user called ken
 bc that becomes the default user in ansible , this is how We can install ansible on ubuntu
 
-
+    *******am creating both ubuntu and redhat server for host
 
 ##############  Ansible installation on REDHAT EC2                  the same when installing on redhat
            thiS script will use pip bc its goin to use yum to install python and pip , then il use pip to install ansible as the user bc hv done sudo -su as the user
 
+SCRIPT TO BE USED AS AS USER DATA FOR THE INSTALLATION
   $ sudo useradd ansible 
   $ sudo hostname ansible 
   $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible 
@@ -311,7 +312,7 @@ authentictaion
 
 
 
-  NO.3   ************    AUTOMATING/ USING TERRAFORM FOR THE INSTALLATION
+  NO.3   ************    AUTOMATING THE INSTALLATION USING TERRAFORM/USER DATA
  
   30:50 ######## lets go ahead with the Installation
 so again as i said , at this stage we wil be using automation
@@ -327,18 +328,21 @@ thers also another data to get our redhat bc am creating both ubuntu and redhat 
   this ubuntu server the AMi is using a data source which is for  ubuntu 
 the instance type am passing it as a variable , looking at the variable file it is t2.micro (default)
 for user data am pasing a script, d same script that i showed your guys to instal asnible on that particular ec2 instance , so am using that same particular script (NO.2) for
-installing ansible on that ec2 insatnce (the script is the file we hv called ansible-install-ubuntu)
+installing ansible on that ec2 instance (the script is the file we hv called ansible-install-ubuntu)
  
 ********* 32:53 bt apart frm that, i also have anoda script which i will talk to you guys abt 
-  apart fr m that script, i have 2 scripts that i want to provison, i wnat to configure my instance with 
+  apart fr m that script, i have 2 scripts that i want to provision, i wnat to configure my instance with 
 
+
+                  SCRIPT FOR THE CONTROLL NODE (script called ec2.tf: Contains part Bi & Bii)
+              PASSING 2 DIFF SCRIPTS AS USER DATA; 1ST SCRIPT TO INSTALL ANSIBLE & USING "template_cloudinit_config" FOR THE 2ND SCRIPT TO INSTALL VSCODE
 .......... Bi)           control node 
    #resource block
 resource "aws_instance" "ubuntu" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.my_instance_type
-  #user_data     = file("${path.module}/ansible-install-ubuntu.sh")
-  user_data = data.template_cloudinit_config.user-data.rendered
+  ami           = data.aws_ami.ubuntu.id                    **referencing the data sourec file for the ami
+  instance_type = var.my_instance_type                       ***referencing the variable file/block for the instance type
+  #user_data     = file("${path.module}/ansible-install-ubuntu.sh")      **referening the Ansible installation script
+  user_data = data.template_cloudinit_config.user-data.rendered           **referening the vscode installation script
 
   key_name = var.my_key
 
@@ -357,15 +361,17 @@ resource "aws_instance" "ubuntu" {
   33:16   USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE
 
     INTERVIEW QUESTION
-How can you pass 2scripts as user data ???? 
+How can you pass 2scripts as user data on an instance ???? 
 
 ANS:
 
  because of how very flexible terfrm is, it gives you that opportunity to do that through what is called a datasource called :
-
+this data source is called:
     "template_cloudinit_config"    , its a template that you can use , he called it (name) 'user-data'
 
-......... Bii) part of  ec2.tf
+
+......... Bii)  ec2.tf  ...continues
+                         DATA BLOCK TO INSTALL THE 2 DIFF SCRIPTS
 
   data "template_cloudinit_config" "user-data" {
   part {
@@ -378,6 +384,7 @@ ANS:
                                                                   so that when we start writing playbooks, we can actually write playbks and run them at the same time
    instead of us vi ing, writing play bks on our ide here then copying , then goin to the ubuntu an vi , create a file and do all that  .... 
  so am installing this vscode inside of my ubuntu , so thats the script that am using, the script is called (vscode -install.sh)
+
 
   35:00
       #######  C)                       #(vscode -install.sh)
@@ -409,14 +416,15 @@ now for the host, those that we are goin to manage, like our host
 am also creating 2ubuntu instances and am creating them as the ones we will use as nodes to manage, as our managed nodes
 and am using count meta argument , and the name and the type .. this is a meta argument that we knw 
 and on this insatnces am using user data but on this user data, am just passing a file
-    
- ....... Biii)   ec2.tf
+
+
+ ....... Biii)   ec2.tf  ...continues
 }
 
 resource "aws_instance" "ubuntu-hosts" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.my_instance_type
-  user_data     = file("${path.module}/create_ansible_user.sh")    *******this file is to create a user, am creating d ansible user inside of my host 
+  user_data     = file("${path.module}/create_ansible_user.sh")    ***referencing the file is to create a user, am creating d ansible user inside of my host 
   key_name      = var.my_key                                                                  script name:(create ansible user)
   count         = 2
   tags = {
@@ -425,11 +433,11 @@ resource "aws_instance" "ubuntu-hosts" {
   }
 
 
-    ## ## D
-    create ansible user
+    ## ## D  
+    THE SCRIPT TO CREATE 2 INSTANCES FOR THE REMOTE HOST & ANSIBLE USER  & ENABLING PW AUTHENTICATION DYNAMICALLY ... (Script referred to in Biii above...
 
 THIS file is to create a user, am creating d ansible user inside of my host am also enabling PW authentication dynamically 
-am running a script to enable PW authenticataion, to chngae it fmr no to yes in the etc ssh sshd_config
+am running a script to enable PW authenticataion, to change it frm no to yes in the etc ssh sshd_config
 then am goin to start the service
 
    #!/bin/bash
@@ -449,13 +457,14 @@ create a user enable PW authentication and all that
 AM also creating a redhat
 am using a redhat AMI
 the instance type is the same 
-but in this redhat am just ceatimng a user same user as this (Biii) bc i wnat to be ablr to manage both ubuntu and redhat 
+but in this redhat am just creating a user same user as this (Biii) bc i wnat to be able to manage both ubuntu and redhat 
 so Biii and Biv are my manged nodes while  Bi) is the control node 
 ******* my control node am installing ansible and am installing vscode on them 
  and Bii) is my data block to run the 2scripts (to install ansible and vscode) 
-  
-......... Biv)
 
+
+......... Biv)
+                 SCRIPT FOR THE REDHAT CONTROLLER
 }
     resource "aws_instance" "rhel-hosts" {
   ami           = data.aws_ami.rhel.id
