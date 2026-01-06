@@ -586,20 +586,20 @@ so you download the private key but the public key remains inside of your instan
 
 
 ********* 48:22              
-     N0.4 continues
+     N0.4 continues             CONNECTING TO THE REMOTE HOST UBUNTU SERVER
 
 so when we go to our ansible-ubuntu and try to connect (click connect) the ill use ssh client then copy the ssh command
 back in the IDE, ill split my terminal 
 cd into downloads bc thats wher my key was downloaded   ***I bliv theis download dir is the download folder we hv on our computer, i guess using ubuntu or mac we can access it bc 
 then il paste the ssh command                                                                                                         the operating system is linux       
-am trying to conncet to this instance for the first time
+am trying to connect to this instance for the first time
 my env is linux bc am using a mac , mac is linux
 so am trying to connect a linux sys to a linux sys
 lets see what will happen 
  after pasting the command, its asking , are you sure you want to continue connecting yes/no
 once i type yes , enter
 now am connected
-it did conncet me bc i alrady change the permission of the key 
+it did conncet me bc i already change the permission of the key 
 so if ur doing it for the firts time it wil give you an error that your key is open 
 so whwn your connecting a linux to linux then you need to change the permission of the key to  400
 you need to use change mode 400 the your key name  (chmod 400 key-name)
@@ -628,7 +628,7 @@ https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction
 
    ansible has what is called a default dir :
 
- Ansible Directory Structure
+                          ANSIBLE DIRECTORY STRUCTURE
 
 The default ansible home directory is /etc/ansible
 This directory will consist of:
@@ -636,7 +636,7 @@ a) ansible.cfg
 b) hosts
 c) roles
 
-
+                                        HOME OF ANSIBLE /etc/ansible
 if i run 
 ansible@ip-172-31-17-108: $   pwd
 /home/anasible                                ** am in the home of ansible
@@ -644,7 +644,7 @@ bc i did su -ansible, i exited the home of ubuntu and now am in the home of ansi
 now been in the home of anasible , the default home of ansible is   /etc/ansible
 lets cd  
 ansible@ip-172-31-17-108: $  cd /etc/ansible
-ansible@ip-172-31-17-108: /etc/ansible  ls
+ansible@ip-172-31-17-108: /etc/ansible  ls                  TO SEE THE 3 ENTITIES IN ANSIBLE HOME
 anisible.cfg   hosts  roles                      ********* 2files and a dir called called role 
 
 
@@ -654,20 +654,22 @@ if you are to cd into   /etc/ansible, what do you expect to see if you have work
   ANS:
 
 in the etc ansible, this is the dafault ansible home, ansible lives in /etc/ansible, this is default
-in the /etc/ansible, you will seee what is called anisible.cfg, this sis the ansible config file, everything ansible does, it has to read this configuration file 
+in the /etc/ansible, you will seee what is called anisible.cfg, this is the ansible config file, everything ansible does, it has to read this configuration file 
 this is the dafault :anisible.cfg 
-default meaning you can create anoda file and override this, you can ceate anod aconfiguartion file and override this bc this is default
-apart it has a hsot file
-this is wher we put the ip address of the host that we are trying ot mange 
-so if i wnat to manage like the 2 or 3 uvuntu servers it just mean iil g o to the hhost file and do an entry inside o fthe host file , once that is done ansible wil be reading
+default meaning you can create anoda file and override this, you can create another configuartion file and override this bc this is default
+apart it has a hostt file
+this is wher we put the ip address of the host that we are trying to manage 
+so if i wnat to manage like the 2 or 3 ubuntu servers it just mean iil go to the host file and do an entry inside of the host file , once that is done ansible wil be reading
 the host file to know which servers it has to configure
+
+
 
      ROLES
 we hv a dir called roles 
 as we will be talking abt playbooks but smt higher than playbooks, we can actually craete roles
-role sare like modules that u can custom create ans call them as needed, so u can create what is called roels
-i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call the role inside  ofmy playbk and jenkins will be installe d
-so i dnt hv to re write my playbook with all the place ( idnt undestand)
+roles are like modules that u can custom create anD call them as needed, so u can create what is called roels
+i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call the role inside  of my playbk and jenkins will be installed
+so i dnt hv to rewrite my playbook with all the place ( idnt undestand)
 i can write a role once and call the role to do my configurtaion
 so all the roles will live inside of the roles dir 
 but these are the 3 entities that you expect to find in the ansible home 
@@ -679,13 +681,16 @@ Default ansible configuration file
 
 The default location is: /etc/ansible/ansible.cfg, in which we can make various settings like location of inventory file, host_key_checking as False
 
-****** it is one in which you can make various changes like wher your inventory is wher your host file is , u can make all those cahnges insid ethe configuration file 
+****** it is one in which you can make various changes like wher your inventory is wher your host file is , u can make all those changes inside the configuration file 
+
 
      HOST
 when you trying to log into your instance for the first time like you saw, it wil always ask you do you wnat to add this server like it checks the authenticity and you hv 
-to accept and seay yesso thats we call host key checking
+to accept and say yes so thats we call host key checking
 so by default host key checking has been set to true meaning evrytime ansible makes a conection/ a sever makes a connection, you have to confirm that you wnat to but
 that is not what we want in automation, in automation we dnt wnat the process to be interrupted, we want the process to go on automatically 
+
+                AUTOMATING HOST KEY CHECKING
 we will go into the ansible config file and turn the host key checking to false so that our server/automation dosent staop to ask us to confirm 
 so all that is done in the ansible config file
  
@@ -694,28 +699,30 @@ so all that is done in the ansible config file
         $ export ANSIBLE_HOST_KEY_CHECKING=false
 
 
-contd     ....... 58:00
+contd     ....... 58:00                         CREATING ANSIBLE CONFIGURATION FILE IN A DIFF LOCATION
 **********  Default ansible configuration file
 
 But we can define ansible configuration file in different location and for this there is a priority for this files.
 ********** so we can create a diff ansible config, this is just a default loctaion:/etc/ansible but we can create it in a diff location 
 You can generate ansible.cfg by running the command $ ansible-config init --disabled > ansible.cfg
 
+
   WHATS THE PRIORITY THAT ANSIBLE LOOKS AT
-********** whenyour craeteing , the priority that ansible looks at 
+********** when your creating , the priority that ansible looks at 
 
 Locations with priority(starting from top to bottom):
-                                                                  1st
+
+                                                                  1st creating an env variable:ANSIBLE_CONFIG
 ANSIBLE_CONFIG environment variable            ********** if you can set an env var and point it to d ansible config (disabled > ansible.cfg) as a configuration file like 
                                                              that, then it tk precedence, env variable always takes precedence over everytin else 
                                                                              
 ./ansible.cfg from the current directory    ****** 2nd , if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
     thefor wil al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
-its configuartion, also if i move to prod, i can acreta anoda configuartion file for ansible that has a diff configuration bc this is a diff env within that dir and this is 
+its configuartion, also if i move to prod, i can create anoda configuartion file for ansible that has a diff configuration bc this is a diff env within that dir and this is 
 wher ansible will read 
                                                        59:23 
-~/.ansible.cfg file present in home directory       ********* 3rd,  if it doesnt find the config file in the current dir it will at the home of the user, anywhere in the 
-home of that particualar user, does it have an ansible.cfg file if its presnt then thats where ist going to get its configuration
+~/.ansible.cfg file present in home directory       ********* 3rd,  if it doesnt find the config file in the current dir it will look at the home of the user, anywhere in the 
+home of that particular user, does it have an ansible.cfg file if its presnt then thats where ist going to get its configuration
 
 
 /etc/ansible/ansible.cfg default ansible.cfg file.   ***** finally, if it doesnt find it in the 3rd location, then it goes to the default location: /etc/ansible/ansible.cfg
@@ -724,7 +731,8 @@ Ansible will only use the configuration settings from the file which is found in
 
 It will not look for the settings in the higher sequence files if the setting is not present in the file which is chosen for deployment
 ie it will nt look for settings here /etc/ansible/ansible.cfg if you have a file here ~/.ansible.cfg,  its always reads whats closest to it 
-so this is how we use ansiblein various envs   ...........1:01:24
+so this is how we use ansible in various envs   ...........1:01:24
+
 
 
      INTERVIEW QUESTION
@@ -738,10 +746,12 @@ What is the precedence or priority of ansible when its searching for the configu
 and if not it goes to the 
 default : /etc/ansible/ansible.cfg
 
+
                                 HOST KEY CHECKING
 
-           host_key_checking = False                                 *****1:02:22
-                     or                          ****export an env var called ** and set it to false with this ansible wil nt ask you to confirm the authenticity of this var
+      DISABLE THIS FEATURE INSIDE THE ANSIBLE CONFIG FILE  
+    host_key_checking = False                                 *****1:02:22
+                              OR                         ****export an env var called ** and set it to false with this ansible wil nt ask you to confirm the authenticity of this var
         $ export ANSIBLE_HOST_KEY_CHECKING=false
 
 
@@ -758,7 +768,10 @@ as you see almost everythin has been commented out bc they are default, they hv 
 e.g lets say i hv my inventory right here but its pointing to  /etc/ansible/hosts
 
 
-    #some basic default values 
+                   EXAMPLE OF A CONFIGURATION FILE
+
+1.02...
+       #some basic default values       ** AS you can see everytin has beeen comanted out bc the values are set to default
 #inventory     = /etc/ansible/hosts
 this is wher my inventory is, this is where ill put the list of the servers i want to configure, ill put it inside of the host file, but if i want to create this inventory
 somewher else, e.g i want the hsot file to be insid eof my pwd, then ill need to cm to this configuration file and comment this:
@@ -780,9 +793,11 @@ by default it is true but for it not to check then uncomment this so that the ho
 smt that you will need to do for automation other wise, your ansible playbook will stop bc it will be wiating  for you to confirm if u want to continue or not. .. 
 
 
+
+
    QUESTION
 1) FRM WHAT YOU SHOWED US TODAY U USE Ansible to provision the conrol and nodes server , my quation is can anisble also deploy in servers that already exist that you dnt hv
-to provison an dhow do you do that???
+to provison and how do you do that???
 
   ANS:
 YES AND WE WILL SEE HOW TO DO THAT, all that ansible needs is an ip address 
