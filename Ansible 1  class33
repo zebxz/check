@@ -12,12 +12,40 @@ Task Automation  , we can automate task just by using ansible
 IT Orchestration
 
 
+******Online....
 DIFF BTW terrafrom & kubernetes and ansible
 Terraform, Kubernetes, and Ansible are distinct tools used for different stages of cloud automation: Terraform provisions the underlying infrastructure, Ansible configures
 the software on that infrastructure, and Kubernetes orchestrates the deployment and management of containerized applications within the provisioned infrastructure. 
-************************************
 
 
+Core Differences BTW ANSIBLE  & KUBERNETES
+Feature 	              Ansible Setup	                                                             Kubernetes Setup
+1)Primary Purpose	Automates system configuration, software installation,                     Automates the deployment, scaling, and management of containerized applications.
+                  and infrastructure provisioning (e.g., setting up servers).	
+
+2)Architecture	Agentless; operates over SSH or WinRM to push changes to                       Agent-based (using kubelet agents on worker nodes) with a central control
+                    target machines.                                                                  plane.
+
+3)Operational	Procedural/declarative (YAML Playbooks define tasks to run sequentially).	Purely declarative (YAML/JSON manifests define the desired state, which 
+ Model                                                                                                 Kubernetes maintains automatically).
+
+
+4)Lifecycle	Focuses on initial setup and periodic 	                                     Focuses on continuous runtime management, health checks, 
+                  configurationupdates ("pushes changes to hosts")                                     self-healing, and auto-scaling.
+
+5)Use Case	Best for setting up physical/virtual servers, managing	                      Best for running microservice-based, containerized applications 
+          non-containerized applications, and provisioning the Kubernetes cluster itself.                           at scale in dynamic, distributed environments.
+
+
+                                   HOW THEY WORK TOGETHER
+It is common to use both tools in a modern DevOps environment, leveraging their respective strengths: 
+Ansible is often used first to automate the provisioning of the underlying servers and the installation and configuration of the Kubernetes cluster itself.
+Kubernetes then takes over the ongoing management, scaling, and health monitoring of the containerized applications running inside that cluster.
+Ansible modules and collections for Kubernetes (like the Ansible Kubernetes Collection) allow Ansible to manage Kubernetes resources directly, bridging operational gaps. 
+
+******************************************************
+
+START
 
 
 ANSIBLE INTRODUCTION, types of config tools, INSTALLATION, PREREQUISITE, TERAFRM SCRIPT TO CREATE RESOURCE, USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE, 
@@ -114,12 +142,19 @@ this is how ansible does
 The pushed programs/modules will be executed on remote server by Ansible over SSH and removes them when finished.
 Unlike Puppet or Chef it doesn’t use an agent on the remote host, Instead Ansible uses SSH. It is agentless.
 It’s written in Python which needs to be installed on the remote host.
-This means that you don’t have to setup a client server environment before using Ansible
+This means that you don’t have to setup a client server environment before using Ansible ...( i bliv this is diff frm kub where you have to setup worker nodes)
+
+13.11
+  ******* bc ansible is written in python thefrore python needs to be installed on your remote node bc ansible runs on python so the firtsthing is python needs to be 
+installed on the remote node for ansible to wrk , so this means you dnt ned to setup a client server env before before using ansible 
+all you need to do is setup your ansible server then inside of your configuration file which we call the host file , you just need to pass the ip address of the 
+particular server that you wnat to patch or configure then ansible will take care of that so you dnt have to do any setup on these particular servers
+so thats basically how ansible works
 
 
 
                               OTHER CONFIGURATION MGT TOOLS
-
+11.27
 
    INTERVIEW QUESTION
  what other configurtaion mgt tools do you know ??
@@ -129,21 +164,20 @@ ANS:
 this two uses agent on the remote host while ansible uses a push mechanism and thats why ansible stands out 
 ansible pushes modules so its your controller that initiates, it pushes out modules so it doesnt need agents in your seververs
 unlike puppet and chef that need an agent bc the use a pull module and bc they use a pull mechanism as such you have to install a puppet agent of a chet agent inside of 
-each node bc it is the agent that will initiate that particular push bc your controller will be pulling. it uses a pull mechansim when it does the configuration
+each node bc it is the agent that will initiate that particular push bc your controller will be pulling (i bliv he meant the controler will be activating the pul by the agents
+it uses a pull mechansim when it does the configuration
 so ansible stand sout bc it doesnt need an agent , it uses a push mechanism as such its agentless 
 
-
-  ******* bc ansible is written in python thefrore python needs to be installed on your remote node bc ansible runs on python so the firtsthing is python needs to be 
-installed on the remote node for ansible to wrk , so this menas you dnt ned to setup a client server env before before using ansible 
-all you need to do is setup your ansible server then inside of your configuration file which w ecall the host file , you just need to pass the ip address of the 
-particular server that you wnat to patch or confgure then ansible will take care of that so you dnt have to do any setup on these particular servers
-so thats basicllay how ansible works
+***online...
+ Ansible uses SSH/WinRM to push configurations, while Chef/Puppet use agents that pull configurations from a master server, requiring more setup but providing continuous state enforcement. 
 
 
 
 
 
-    INTERVIEW QUESTIONS 
+
+
+   INTERVIEW QUESTIONS 
 
 Benefits of using Ansible
 
