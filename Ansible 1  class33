@@ -1,3 +1,6 @@
+17.30  .... for maco s, the operating system is linux , if you have mac then you can run ansible directly frm your mac bc thats a linux env
+
+
 LINUX, SCRIPTING, GIT , MAVEN, TOMCAT/NGNIX TOMCAT, SONAR, NEXUS, JENKINS, AWS, DOCKER, K8, K8/HELM, TERRAFORM, ANSIBLE; agentless,it uses ssh, bt (puppet or chef; uses agent)
          this two uses agent on the remote host while ansible uses a push mechanism and thats why ansible stands out 
 
@@ -142,7 +145,7 @@ this is how ansible does
 The pushed programs/modules will be executed on remote server by Ansible over SSH and removes them when finished.
 Unlike Puppet or Chef it doesn’t use an agent on the remote host, Instead Ansible uses SSH. It is agentless.
 It’s written in Python which needs to be installed on the remote host.
-This means that you don’t have to setup a client server environment before using Ansible ...( i bliv this is diff frm kub where you have to setup worker nodes)
+This means that you don’t have to setup a client server environment before using Ansible ...( i bliv this is diff frm kub where you have to setup Agents/worker nodes)
 
 13.11
   ******* bc ansible is written in python thefrore python needs to be installed on your remote node bc ansible runs on python so the firtsthing is python needs to be 
@@ -182,11 +185,11 @@ so ansible stand sout bc it doesnt need an agent , it uses a push mechanism as s
 Benefits of using Ansible
 
 It is a free open -source Automation tool and simple to use.
-Uses existing OpenSSH for connection ,    modt o THE servers taht we provison already hv open ssh configure so ansible jsut uses thsi  for it to do configuration
-Agent-less – No need to install any agent on Ansible Clients/Nodes
+It Uses existing OpenSSH for connection ,    most of THE servers that we provision already hv open ssh configure so ansible jsut uses this  for it to do configuration
+Agent-less –                             No need to install any agent on Ansible Clients/Nodes
 Python/YAML based                        .... playbooks are written in yaml language n yaml are very easy, so ansible is easy to use 
 Highly flexible and versatile in configuration management of systems.
-Large number of ready to use modules for system management  ,  ansible community and redhat they hv a whole lot of module thst sre resdy to be ued
+Large number of ready to use modules for system management  ,  ansible community and redhat they hv a whole lot of module that are ready to be used
                                 so u dnt need to create or re write anything just use the existing module, we hv a lot of modules that comes preloaded when u install ansible
 Custom modules can be added if needed        
 
@@ -198,13 +201,18 @@ so if your wroking for a coy that doesnt use ansible yet and you wnat to convinc
 configuration then you can introduce a configuration mgt tool as ansible 
 
 
-   17:32 
+
+
+
+   17:32                                         INSTALLATION
+                                         Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
+
      HOW DO YOU INSTALL ANSIBLE
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/02-Installation.md
 
    Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
- this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whethr windows 
-so  a conrol node cannot be windows but tonight installation we will be installing it on a redhat 
+ this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
+so  a control node cannot be windows but tonight installation we will be installing it on a redhat 
 for maco s, the operating system is linux , if you have mac then you can run ansible directly frm your mac bc thats a linux env
 but on windows laptop, you cant directly run ansible on ur windows server u hv to create an ec2 instance or what is called a windows subsistence of linux,  wsl , mayb ubuntu
 or contos os then you can for sure install ansible and run lt locally 
@@ -219,15 +227,18 @@ Ansible can be installed in three ways:
 Using yum or apt       ******** if ur installing on ec2 instance
 Using pip              ****** package manger for python
 Using compile file       **** download / use a complie file     ****  https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html 
-                                in the link u can see hw w e ar able to install ansible
+                                in the link u can see hw we ar able to install ansible
 
 
 
    ****** we are installing ansible on ubuntu , meaning it will be our control node 
 
 
+
+                           STEPS FOR ANSIBLE INSTALLATION
+....
   NO.1
-******* 21:44              PREREQUISITE TO INSTALL ANSIBLE 
+******* 21:44              PREREQUISITE/ INSTALLING ANSIBLE 
 
  ###########  Installing Ansible on Ubuntu
 
@@ -238,21 +249,26 @@ Using compile file       **** download / use a complie file     ****  https://do
   $ sudo apt install ansible -y                                                                                 ansible who ansible will be expecting to connect with 
        
 
-                                   ****** if hv installed this user a sansible and hv installed ansible sfware as an ansible user then when am making an ssh connection by
-     default ansible my in my control node wil be looking for a user in the remote node called ansible 
+
+                   **meee, THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE 
+                                   ****** if hv installed this user as ansible and hv installed ansible sfware as an ansible user then when am making an ssh connection by
+     default ansible in my control node wil be looking for a user in the remote node called ansible 
 ########thats smt u really need to pay attention to and understand how it works ############
+
+
+                            WE SSH/CONNECT TO THE DEFAULT USER IN THE REMOTE HOST \\(the software;Ansible wil be looking for the default user to connect)
          a user who installs the sfware, it is the default user that ansible expects in the remote host bc when u do ssh connection , do so ssh to a aspecific home of a user
 e.g thet why we do ssh ,then ec2 @ a certain ip  OR ssh you pass the key, then u do ubuntu @ we are always trying to do ssh to a certain user, default user
   ********* then for ansible if we hv install ansible as an ansible user then this ansible user becomes the default user that when you do ssh ,anible here(control) will be
 seeking to connect with a user in the remote 
 25:41
     if i install ansible in the control as a user called Ken, then my default user in the remote that ansible will be looking to connect with will be a user called ken
-bc that becomes the default user in ansible , this is how e can install ansible on ubuntu
+bc that becomes the default user in ansible , this is how We can install ansible on ubuntu
 
 
 
-##############  Ansible installation on REDHAT EC2                  the same when installin on redhat
-           thi script will use pip bc its goin to use yaum to install python and pip , then il use pip to install ansible as the user bc hv done sudo -su a sthe user
+##############  Ansible installation on REDHAT EC2                  the same when installing on redhat
+           thiS script will use pip bc its goin to use yum to install python and pip , then il use pip to install ansible as the user bc hv done sudo -su as the user
 
   $ sudo useradd ansible 
   $ sudo hostname ansible 
@@ -264,10 +280,11 @@ bc that becomes the default user in ansible , this is how e can install ansible 
   $ pip3 install ansible --user
 
 
-   26:46 ***** 
-          then once have installed asible thers a script here for our remote nodes , then rmember the default user ansible wil be looking for is a user called asnible
+   26:46 *****                           IN THE REMOTE NODES THE DEFAULT USER DOES THE INSTALLATION/PATCH WORK
+          then once have installed ansible thers a script here for our remote nodes , then rmember the default user ansible wil be looking for is a user called asnible
 it means on my remote node, i need to have a user called ansible that am setting as the default so that when asnible pushes the module, it is pushing to home of this
-ansible and it is this ansidible user in the remote node that will do the installation/patch work 
+ansible and it is this ansible user in the remote node that will do the installation/patch work 
+
 
 NO2.
 ###### Script to add user, password and enable password authentication
@@ -280,19 +297,21 @@ $ sudo sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthenticati
 $ sudo service sshd restart
 
 
- 28:45 ******in summary, bc hv installed ansible in the controller as asnsible , bc hv installed as uer there as ansible , i need to create aa user in the remote called ansible
-this is the suer that ansible in the controler wil be pushing this remote nodes to 
+                                      WE HAVE TO CREATE THE SAME USER (name) IN THE REMOTE NODE
+ 28:45 ******in summary, bc hv installed ansible in the controller as ansible , bc hv installed a suer there as ansible , i need to create a user in the remote called ansible
+this is the user that ansible in the controler wil be pushing this remote nodes to 
 the system with the remote node has to hv PW authentication enabled bc if this is a linux sysytem,(the remote node sys) linux sys by default has been designed to communicate 
 using ssh keys and therfror PW authentictaion by default has been set to false, ur nt allowe dto use a PW , bt sinec we are creating a user in the remote sys, for you to be 
 able to transfer a key, you will need to transfer a key (aagin ull see when we cm to authentication) to a particular user bt ull need to use a PW for the key to be transferd
 
-*****29:52
+*****29:52                                        TRANSFER KEY TO USER IN THE REMOTE NODE FOR PASSWDLESS AUTHENTICATION
     Right now am goin thru the overview, so once you guys get the big picture we will go into the actuall installation
 so the reason why we nid the ansible user in the remote node sys is so that we can transfer a key to them, after wich we can do ssh without a PW, wich we will see passwordless
 authentictaion 
 
 
-  NO.3   ************       INSTALLATION
+
+  NO.3   ************    AUTOMATING/ USING TERRAFORM FOR THE INSTALLATION
  
   30:50 ######## lets go ahead with the Installation
 so again as i said , at this stage we wil be using automation
