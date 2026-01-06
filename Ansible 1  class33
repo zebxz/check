@@ -1,12 +1,18 @@
 LINUX, scripting, git , maven, tomat/ngnix tomcat, sonar, nexus, jenkins , aws, docker, k8, k8/helm, terraform, ansible agentless,it uses ssh, bt (puppet or chef; uses agent) 
 In our env, we use LINUX OS for file,process,package,security mgt, GIT FOR VERSIONING, MAVEN FOR BUILD, jenkins for integration;automates the end to end process, AWS our 
-cloud resources/provider, DOCKER for Containerization, KUBERNETES FOR OCHESTRATION MGT, TERRAFORM Iac for provisioning infastructure using code, ANSIBLE for Configuration mgt
+cloud resources/provider, DOCKER for Containerization, KUBERNETES FOR CONTAINER OCHESTRATION MGT; for managing & scaling containerized appl, TERRAFORM Iac for provisioning 
+infastructure using code, ANSIBLE for Configuration mgt & provisioning tool for infastructure.
 eg: U already hv an instance running bt ur suppose to instal some software inside of it, that process of instaling that paticular software is what is called configuration mgt
 Ansible will be helpful to perform:
 Configuration Management
 Application Deployment  e.g we can use it to deploy in k8, we can write a playbook that we can use to deploy in k8
 Task Automation  , we can automate task just by using ansible 
 IT Orchestration
+
+
+DIFF BTW terrafrom & kubernetes and ansible
+Terraform, Kubernetes, and Ansible are distinct tools used for different stages of cloud automation: Terraform provisions the underlying infrastructure, Ansible configures
+the software on that infrastructure, and Kubernetes orchestrates the deployment and management of containerized applications within the provisioned infrastructure. 
 ************************************
 
 
@@ -82,7 +88,7 @@ Task Automation  , we can automate task just by using ansible
 IT Orchestration
 
 
-    How Ansible works
+                                                 HOW ANSIBLE WORKS
  **mee; control node, ansible controller : this is the server wherby you hv installed your ansible software on this ec2 instance
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
 thru ssh connection am able to control this multiple servers frm my control node
@@ -107,6 +113,7 @@ The pushed programs/modules will be executed on remote server by Ansible over SS
 Unlike Puppet or Chef it doesn’t use an agent on the remote host, Instead Ansible uses SSH. It is agentless.
 It’s written in Python which needs to be installed on the remote host.
 This means that you don’t have to setup a client server environment before using Ansible
+
 
 
                               OTHER CONFIGURATION MGT TOOLS
