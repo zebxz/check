@@ -1108,3 +1108,136 @@ if i need to remove a data source instaed of goin on the statefile to delete it 
   ***STATE LOCKING/LOCKING THE STATE FILE
 dynamond db table to lock our ststefile in the s3 bucket
 
+
+
+                                          ANSIBLE
+
+INTERVIEW QUESTION
+ what other configurtaion mgt tools do you know ??
+
+ANS: 
+ Apart from ansible, puppet , chef is also a configuration magt tool 
+this two uses agent on the remote host while ansible uses a push mechanism and thats why ansible stands out 
+ansible pushes modules so its your controller that initiates, it pushes out modules so it doesnt need agents in your seververs
+unlike puppet and chef that need an agent bc the use a pull module an dbc they use a pull mechanism as such you have to install a puppet agent of a chet agent inside of 
+each node bc it is the agent that will initiate that particular push bc your controller will be pulling. it uses a pull mechansim when it does the configuration
+so ansible stand sout bc it doesnt need an agen , it uses a push mechanism as such its agentless 
+
+
+
+   INTERVIEW QUESTIONS 
+
+Benefits of using Ansible
+
+It is a free open -source Automation tool and simple to use.
+It Uses existing OpenSSH for connection ,    most of THE servers that we provision already hv open ssh configure so ansible jsut uses this  for it to do configuration
+Agent-less –                             No need to install any agent on Ansible Clients/Nodes
+Python/YAML based                        .... playbooks are written in yaml language n yaml are very easy, so ansible is easy to use 
+Highly flexible and versatile in configuration management of systems.
+Large number of ready to use modules for system management  ,  ansible community and redhat they hv a whole lot of module that are ready to be used
+                                so u dnt need to create or re write anything just use the existing module, we hv a lot of modules that comes preloaded when u install ansible
+Custom modules can be added if needed        
+
+
+**** just knw what ansible is, knw how it works, once you knw how it works you are able to present this in an interview , you are able to easily talk abt ansible just
+based on this and the benefits
+
+so if your wroking for a coy that doesnt use ansible yet and you wnat to convince them , may they are alwys patching servers, alwasy sshing into servers manually to do
+configuration then you can introduce a configuration mgt tool as ansible 
+
+
+
+ USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE
+
+    INTERVIEW QUESTION
+How can you pass 2scripts as user data on an instance ???? 
+
+ANS:
+
+ because of how very flexible terfrm is, it gives you that opportunity to do that through what is called a datasource called :
+this data source is called:
+    "template_cloudinit_config"    , its a template that you can use , he called it (name) 'user-data'
+
+
+
+ INTERVIEW QUESTION
+if you are to cd into   /etc/ansible, what do you expect to see if you have worked with ansible what do you expect to see in that dir 
+
+  ANS:
+
+in the etc ansible, this is the dafault ansible home, ansible lives in /etc/ansible, this is default
+in the /etc/ansible, you will seee what is called anisible.cfg, this is the ansible config file, everything ansible does, it has to read this configuration file 
+this is the dafault :anisible.cfg 
+default meaning you can create anoda file and override this, you can create another configuartion file and override this bc this is default
+apart it has a hostt file
+this is wher we put the ip address of the host that we are trying to manage 
+so if i wnat to manage like the 2 or 3 ubuntu servers it just mean iil go to the host file and do an entry inside of the host file , once that is done ansible wil be reading
+the host file to know which servers it has to configure
+
+
+
+
+  INTERVIEW QUESTION
+What is the precedence or priority of ansible when its searching for the configurtaion file 
+
+ ANS : 
+
+1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
+2nd:  ./ansible.cfg         pwd dir 
+3rd:  ./ansible.cfg         home  of that particulr user 
+and if not it goes to the 
+default : /etc/ansible/ansible.cfg
+
+
+                                HOST KEY CHECKING/AUTOMATING HOST KEY CHECKING
+1)DISABLE THIS FEATURE INSIDE THE ANSIBLE CONFIG FILE
+     
+           host_key_checking = False                                 *****1:02:22
+                     or                          ****export an env var called ** and set it to false with this ansible wil nt ask you to confirm the authenticity of this var
+2)      $ export ANSIBLE_HOST_KEY_CHECKING=false
+
+
+
+  QUESTION
+1) FRM WHAT YOU SHOWED US TODAY U USE Ansible to provision the conrol and nodes server , my quation is can anisble also deploy in servers that already exist that you dnt hv
+to provison and how do you do that???
+
+  ANS:
+YES AND WE WILL SEE HOW TO DO THAT, all that ansible needs is an ip address 
+
+2)in creatin the control and managed nodes, i knw we added the user to the sudoers grp, is there any sg that you are creating in the background for any other connctions
+mayb for other applictaions
+
+ANS:    NO
+ THE only sg that comes by default is ssh , ansible only needs ssh 
+
+
+3)why do we output does attributes , do you have any use cases?? 
+  ANS:
+i outputted these ip addresses bc i wnat to configure my host file, in my host file i need ip addresses, i dnt wnat to go on the aws console to try and copy those addresses,
+i can dynamically get them here like reading an output so am just trying to avoid goin to AWS
+and this is smt you will find as engrs u wanna mk life easy for yourself, if terfrm can do the wrk for u let it do the work for you
+i dnt have to log into aws to try and copy the ip address fo rthe diff instances bt i can just create an output and get my ips here so when i, go to create my host file 
+and thats why i put this screen right here,(host file screen) i say ill need it ,ill just copy my ip adress for my ansible host n remote ,ill just copy n put in my host file
+
+
+
+  lets tk a braek now , when we cm bk at 9, we ll see hw we can configure our managed nodes using the PW and using ssh keys and probbaly be able to run the command 
+
+
+
+
+####################   1:21:00 
+vidoe 3
+
+   so whenevre we rn ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
+so whener we run ansile, it wil look for the config file based on the priorities, it wil check if we pass env variable , if its nt there it wil check the pwd
+so if i created a playbk where my ansible.cfg is , ansible wil use the file to read the configuration thats the priority, if it doest find it it wil go to the home of the
+user and then the default 
+
+
+****** so this is what the ansible configuration structure is
+haven said that, lets go now to configure our remote node /managed nodes
+
+
+
