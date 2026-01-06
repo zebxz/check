@@ -1,4 +1,9 @@
-17.30  .... for maco s, the operating system is linux , if you have mac then you can run ansible directly frm your mac bc thats a linux env
+17.30  .... for maco os, the operating system is linux , if you have mac then you can run ansible directly frm your mac bc thats a linux env
+
+48.22.. i bliv this is one of the reasons we cant use windows
+cd into downloads bc thats wher my key was downloaded   ***I bliv theis download dir is the download folder we hv on our computer, i guess using ubuntu or mac we can access it bc 
+then il paste the ssh command                                                                                                         the operating system is linux     
+
 
 
 LINUX, SCRIPTING, GIT , MAVEN, TOMCAT/NGNIX TOMCAT, SONAR, NEXUS, JENKINS, AWS, DOCKER, K8, K8/HELM, TERRAFORM, ANSIBLE; agentless,it uses ssh, bt (puppet or chef; uses agent)
@@ -344,8 +349,7 @@ resource "aws_instance" "ubuntu" {
   #user_data     = file("${path.module}/ansible-install-ubuntu.sh")      **referening the Ansible installation script
   user_data = data.template_cloudinit_config.user-data.rendered           **referening the vscode installation script
 
-  key_name = var.my_key
-
+  key_name = var.my_key                          ***meeee.... referencing the key variable block in the variable file
   tags = {
     "Name" = "Ansible-Ubuntu"
   }
@@ -497,7 +501,7 @@ also for the redhat
 thats why when u do an output if you havant passed this list [+] , it will say the instance you are trying to access has 3 or more attributes and its attribute has to be
 accessed at a specific instance, this is what it means, 
 so whenevr you are trying to output you need to pass {} and put in either 0 or 1 , a specific instance 
-but fo rthis redhat resource blk, i only have one count , so i can eith put 0 or a splar or wildcat *, it wil just return the ip of whatever instance is there
+but for this redhat resource blk, i only have one count , so i can eith put 0 or a splar or wildcat *, it wil just return the ip of whatever instance is there
 
    
    ******  am also getting the private ip 
@@ -529,9 +533,9 @@ NO.4)
 WITH That, i have my terafrm  set
 
 now in the IDE terminal (like mobaxterm )
-am inside of the terrafrm files (i bliv dir)
+am inside of the terrafrm files (i bliv a dir call terrfm filea)
 if i ls i see all the files 
-so  let me run terfrm init
+******  so  let me run terfrm init
 this is the first command you are to run 
 you can run init as many times a spossible , it initializes your backend 
 
@@ -555,6 +559,7 @@ we see 4 instances that has just been created running
 4) My-ubuntu-0              ********* created Ansible user
 
 
+
 ################# H)         ASSOCIATE/CREATE A KEY
 
    ******47:06
@@ -571,6 +576,8 @@ and in the variables.tf  (G)
   default = "ansible-key"            ******** the key name is ansible-key , this is the key that uve created (shud hv already created)in your aws console
 }
 
+
+                                      WE DOWNLOAD THE PRIVATE KEY BUT THE PUBLIC KEY REMAINS IN AWS
   in his aws key pairs
 i created the key, i donwloaded the .pem keybut this key here is the public key that always remains in AWS, that is installed inside of ec2 instance when you provisoin
 so you download the private key but the public key remains inside of your instance and that show authentiaction happens 
@@ -578,13 +585,13 @@ so you download the private key but the public key remains inside of your instan
 
 
 
-********* 48:22
+********* 48:22              
      N0.4 continues
 
 so when we go to our ansible-ubuntu and try to connect (click connect) the ill use ssh client then copy the ssh command
 back in the IDE, ill split my terminal 
-cd into downloads bc thats wher my key was downloaded
-then il paste the ssh command 
+cd into downloads bc thats wher my key was downloaded   ***I bliv theis download dir is the download folder we hv on our computer, i guess using ubuntu or mac we can access it bc 
+then il paste the ssh command                                                                                                         the operating system is linux       
 am trying to conncet to this instance for the first time
 my env is linux bc am using a mac , mac is linux
 so am trying to connect a linux sys to a linux sys
@@ -608,9 +615,12 @@ meaning that ansible was installed inside of my server
 so ansible has ben installed inside of here, i hv my user, my first script, i first created the user then installed ansible as an ansible user
 now with this if i run the command ansible, i see that anasible has been installed in my env
 
+
+
 ******* 52:05
 ONCE UVE DONE THE INSTALLATION of ansible there is what we  call an ANSIBLE_config_file
   A configuration file 
+
 
    WHAT IS ANSIBLE configuration file 
 
@@ -715,6 +725,7 @@ Ansible will only use the configuration settings from the file which is found in
 It will not look for the settings in the higher sequence files if the setting is not present in the file which is chosen for deployment
 ie it will nt look for settings here /etc/ansible/ansible.cfg if you have a file here ~/.ansible.cfg,  its always reads whats closest to it 
 so this is how we use ansiblein various envs   ...........1:01:24
+
 
      INTERVIEW QUESTION
 What is the precedence or priority of ansible when its searching for the configurtaion file 
