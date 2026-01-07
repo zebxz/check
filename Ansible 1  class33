@@ -206,7 +206,7 @@ so ansible stand sout bc it doesnt need an agent , it uses a push mechanism as s
 
    INTERVIEW QUESTIONS 
 
-Benefits of using Ansible
+  BENEFITS OF USING ANSIBLE
 
 It is a free open -source Automation tool and simple to use.
 It Uses existing OpenSSH for connection ,    most of THE servers that we provision already hv open ssh configure so ansible jsut uses this  for it to do configuration
@@ -230,13 +230,18 @@ configuration then you can introduce a configuration mgt tool as ansible
 
    17:32                                         INSTALLATION
                            Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
+ this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
+so a control node cannot be windows
+25.35**am creating both ubuntu and redhat server for remote host,  **** but ansible is installed only on ubuntu
+
+
 
      HOW DO YOU INSTALL ANSIBLE
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/02-Installation.md
 
    Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
  this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
-so  a control node cannot be windows but tonight installation we will be installing it on a redhat 
+so a control node cannot be windows but tonight installation we will be installing it on a redhat 
 for maco s, the operating system is linux , if you have mac then you can run ansible directly frm your mac bc thats a linux env
 but on windows laptop, you cant directly run ansible on ur windows server u hv to create an ec2 instance or what is called a windows subsistence of linux,  wsl , mayb ubuntu
 or contos os then you can for sure install ansible and run lt locally 
@@ -291,10 +296,11 @@ bc that becomes the default user in ansible , this is how We can install ansible
 
     *******am creating both ubuntu and redhat server for host
 
+
 ##############  Ansible installation on REDHAT EC2                  the same when installing on redhat
            thiS script will use pip bc its goin to use yum to install python and pip , then il use pip to install ansible as the user bc hv done sudo -su as the user
 
-SCRIPT TO BE USED AS AS USER DATA FOR THE INSTALLATION
+SCRIPT TO BE USED AS AS USER DATA FOR THE INSTALLATION 
   $ sudo useradd ansible 
   $ sudo hostname ansible 
   $ echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible 
@@ -336,8 +342,7 @@ authentictaion
 
 
 
-  NO.3   ************    AUTOMATING THE INSTALLATION USING TERRAFORM/USER DATA
- 
+  NO.3   ************   THE AUTOMATION PROCESS USING TERRFORM & SOME HIGH LEVEL BLOCKS/THE USER DATA
   30:50 ######## lets go ahead with the Installation
 so again as i said , at this stage we wil be using automation
 so inside of this Ansible dir, i provided for you some terfrm code , we will use trfrm to easily create our resources
@@ -358,7 +363,7 @@ installing ansible on that ec2 instance (the script is the file we hv called ans
   apart fr m that script, i have 2 scripts that i want to provision, i wnat to configure my instance with 
 
 
-                  SCRIPT FOR THE CONTROLL NODE (script called ec2.tf: Contains part Bi & Bii)
+                  SCRIPT FOR THE UBUNTU CONTROLL NODE (script called ec2.tf: Contains part Bi & Bii)
               PASSING 2 DIFF SCRIPTS AS USER DATA; 1ST SCRIPT TO INSTALL ANSIBLE & USING "template_cloudinit_config" FOR THE 2ND SCRIPT TO INSTALL VSCODE
 .......... Bi)           control node 
    #resource block
@@ -487,7 +492,7 @@ so Biii and Biv are my manged nodes while  Bi) is the control node
 
 
 ......... Biv)
-                 SCRIPT FOR THE REDHAT CONTROLLER
+                 SCRIPT FOR THE REDHAT REMOTE HOST
 }
     resource "aws_instance" "rhel-hosts" {
   ami           = data.aws_ami.rhel.id
@@ -605,7 +610,7 @@ so you download the private key but the public key remains inside of your instan
 
 
 ********* 48:22              
-     N0.4 continues             CONNECTING TO THE REMOTE HOST UBUNTU SERVER
+     N0.4 continues             CONNECTING TO THE CONTROLLER UBUNTU SERVER
 
 so when we go to our ansible-ubuntu and try to connect (click connect) the ill use ssh client then copy the ssh command
 back in the IDE, ill split my terminal 
