@@ -510,9 +510,69 @@ TO SEE THE 3 ENTITIES IN ANSIBLE HOME, ROLES, HOST/AUTOMATING HOST KEY CHECKING,
 EXAMPLE OF A CONFIGURATION FILE
 
 
+1)this videos covered conecpts of ansible, Ansible is an open-source configuration Management, deployment and provisioning Automation tool maintained by Redhat
+control node, ansible controller : this is the server wherby you hv installed your ansible software on this ec2 instance
+Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
+thru ssh connection am able to control this multiple servers frm my control node
+wil use the file module to create that file accoridng to the specifictaion, once it creates the file it deletes the module and once it accomplishes that task , it marks that
+task a complete and then it deletes the module, this is how ansible does 
+
+******* bc ansible is written in python thefrore python needs to be installed on your remote node bc ansible runs on python so the firtsthing is python needs to be 
+installed on the remote node for ansible to wrk , so this means you dnt ned to setup a client server env before before using ansible 
+all you need to do is setup your ansible server then inside of your configuration file which we call the host file , you just need to pass the ip address of the 
+particular server that you wnat to patch or configure then ansible will take care of that so you dnt have to do any setup on these particular servers
+so thats basically how ansible works
+
+2) OTHER CONFIGURATION MGT TOOLS
+Apart from ansible, puppet , chef is also a configuration mgt tool 
+this two uses agent on the remote host; they use a pull mechanism as such you have to install a puppet agent of a chet agent inside of 
+each node bc it is the agent that will initiate that particular push ...i bliv he meant the controler will be activating the pull done by the agents
+while ansible uses a push mechanism and thats why ansible stands out 
 
 
+  3)BENEFITS OF USING ANSIBLE
 
+It is a free open -source Automation tool and simple to use.
+It Uses existing OpenSSH for connection ,    most of THE servers that we provision already hv open ssh configure so ansible jsut uses this  for it to do configuration
+Agent-less –                             No need to install any agent on Ansible Clients/Nodes
+Python/YAML based                        .... playbooks are written in yaml language n yaml are very easy, so ansible is easy to use 
+Highly flexible and versatile in configuration management of systems.
+Large number of ready to use modules for system management  ,  ansible community and redhat they hv a whole lot of module that are ready to be used
+                                so u dnt need to create or re write anything just use the existing module, we hv a lot of modules that comes preloaded when u install ansible
+Custom modules can be added if needed        
+
+
+  4) INSTALLATION
+we used a userdata/script to install it on both ubuntu (controller & 2 remote & one Redhat )
+THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE
+WE SSH/CONNECT TO THE DEFAULT USER IN THE REMOTE HOST \\(the software we installed;Ansible wil be looking for the default user to connect)
+ if i install ansible in the control as a user called Ken, then my default user in the remote that ansible will be looking to connect with will be a user called ken
+bc that becomes the default user in ansible , this is how We can install ansible on ubuntu
+WE HAVE TO CREATE THE SAME USER (name) IN THE REMOTE NODE, & we can transfer key to user in the remote node for passwdless authentication
+we automated the installation process using terraform & some high level blocks/the user data
+Created a data block USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE
+PASSING 2 DIFF SCRIPTS AS USER DATA; 1ST SCRIPT TO INSTALL ANSIBLE & USING "template_cloudinit_config" FOR THE 2ND SCRIPT TO INSTALL VSCODE
+ we connected TO THE CONTROLLER UBUNTU SERVER
+
+
+   5)     Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
+ this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
+so a control node cannot be windows
+25.35**am creating both ubuntu and redhat server for remote host,  **** but ansible is installed only on ubuntu
+
+Ansible is python based and therefore the control node and the managed nodes need to have python2 or python3 installed on them.
+******* the good news is that most of our system already cm with python installed bt also ansible once it connects to a system, if python isnt already installed,its goin to
+install python basically 
+
+6)Ansible can be installed in three ways:
+
+Using yum or apt       ******** if ur installing on ec2 instance
+Using pip              ****** package manger for python
+Using compile file       **** download / use a complie file     ****  https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html 
+                                in the link u can see hw we ar able to install ansible
+
+
+7)Ansible configuration file 
 
 
 
