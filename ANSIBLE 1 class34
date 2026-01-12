@@ -112,10 +112,14 @@ aws:
 Infrastructure as a code - IaaC:              ******************************************* 23 n:00
    Terraform    (we are basically talking abt how to manage our resources in aws)  - HCL   
    CloudFormation - Json and Yaml   language
+
+
+   3 METHODS FOR PROVISIONING RESOURCES
  provisioning resources/ How to create ec2 instances   and other resources in aws?   
   - 1. console  
   - 2. CLI   
 
+                                             UISNG TERFRM COMMANDS
 to create instance:
        aws ec2 run-instances --image-id ami-xxxxxxxx --count 1 \
         --instance-type t2.micro --key-name MyKeyPair \
@@ -136,11 +140,14 @@ to start, stopt and terminate:
        aws ec2 stop-instances --instance-ids  i-01d0055cc3ba70952
        aws ec2 start-instances --instance-ids i-01d0055cc3ba70952
        aws ec2 terminate-instances --instance-ids i-01d0055cc3ba70952
+   
+ 
+   *****************you can search in google to get all the cli commands
 
-you can search in google to get all the cli commands
+45:08 ************************  the good tin is that if you are getting it wrong, making errors, on the cli, it tells you what to do 
 
-45:08 **********************************************  the good tin is that if you are getting it wrong, making errors, on the cli, it tells you what to do 
 
+     ****MEeeeeee    CLI COMMANDS ARE CUMMBERSOME SO WE USE IAC
 if you manged infrastructure like this there are so many commands, this commands are not saved in any files so it is cumbersome to mg8 your infrastruture be it CLI OR console
 
 
@@ -149,6 +156,9 @@ if you manged infrastructure like this there are so many commands, this commands
 Examples of Infrastructure resources / services:
 ************* lets see how easy that infrastruture is
 
+
+
+                          DIAGRAMMATIC ILLUSTRATION OF CREATING NATGATEWAY IN THE PUBLIC SUBNET
 55:00 ****************************************  using diagram to explain( we can create Nat gateway in the public subnet which wil give internet access to the private subnet)
                                                                                 so it has to be placed wher ther is internet wich is the public subnet
     - 3. Files/HCL /
@@ -176,6 +186,8 @@ resource "aws_vpc" "vpc1" {
 
 ********************************************************
 
+
+                                             CAT THE TERRAFRM STATE FILE
 1:25:26 ************** if i wnat to see the resources which i created , cat the terrafrm statefile
 so can you see that with the help of the state file i can mange all my resources, the resources can be manged here directly from the statefile
 to destroy a particular resource  .... - target=aws_vpc.vpc name
@@ -183,6 +195,8 @@ to destroy a particular resource  .... - target=aws_vpc.vpc name
 and if we execute terraform apply --auto-approve, it recreates the vpc destroyed , our vpc2
 
 
+
+                                                 DESTROYING A RESOURCE
 ********** 1:30:22 
 Another way to destroy a particular resource is to put a  comment  on the resource , /* and at the end */
 e.g to destroy vpc2 :
@@ -214,6 +228,8 @@ how can terfrm control a resource that it didnt create
 so we hv looked at terfrm, when it comes to terfrm we hv options
 
 
+
+                                     USING THE IMPORT BLK TERRAFRM MANAGES A RESOURCE IT DIDNT CREATE 
 so is it possible for terfrm to manage  a resource it didnt create and which option will that be ???  ...  yes
 
 
@@ -286,7 +302,9 @@ remote backend/s3
 dev-vars.tf /test-vars.tf / prod-vars.tf / prod.tfvars  
 blocks   
 vpc.tf
+                                     
 
+                                                USING THE IMPORT BLK TERRAFRM MANAGES A RESOURCE IT DIDNT CREATE 
 when u look at terfrm u realise that any tefrm code is a module n we can write the code making use of variables
 e.g we maintain 3 Environments = Dev           /UAT /      PROD  
 therfore in each of this env we nid to provision resources
@@ -309,14 +327,7 @@ modules = vpc/eks/ec2/s3/ecs/route53/etc.
 so if u hv modules like this,all i need is i can use a var.tf file ie a variable file and deploy resources to esch env depending on what is defined in that env variable file
 
 e.g u need to create an instance for each of this env
-we maintain 3 Environments = Dev           /UAT /      PROD  
-        .tfvar InstanceType  t2.meduim  t2.2xlarge   m4.5xlarge     
-so the variable says for  dev = t2 medium, for UAT = t2.2xlarge   , for prod = m4.5xlarge
-so with the same module, (that blcok of code is called module) so with the smae module, i can launch resources like this
-this is infrastructure
-
- **********1:53:45
-
+we maintain 3 Environments = Dev           /UAT /      PROD                                                                                                                                                                                         
 we have remote backend
 
 when you create resources in aws , they are stored in the terfrm staatefile, bt in our env 
