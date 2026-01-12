@@ -498,7 +498,8 @@ HOW TO CREATE AN S3 BUCKET THEN USE IT AS THE REMOTE BACKEND, STATE LOCKING/LOCK
 
 VIDEO1;  CLASS33
 Core Differences BTW ANSIBLE  & KUBERNETES, HOW THEY WORK TOGETHER, ANSIBLE CONFIGURATION MGT TOOL, ANSIBLE CONCEPTS TO COVER, WHAT IS ANSIBLE, HOW ANSIBLE WORKS, 
-OTHER CONFIGURATION MGT TOOLS, BENEFITS OF USING ANSIBLE, INSTALLATION ON UBUNTU & REDHAT, STEPS FOR ANSIBLE INSTALLATION/ PREREQUISITE,  SCRIPT TO BE USED AS AS USER DATA FOR
+OTHER CONFIGURATION MGT TOOLS, BENEFITS OF USING ANSIBLE, USES OF ANSIBLE, ANSIBLE USE SSH PLUGGING TO CONNECT TO LINUX HOST & WINRM FOR HOST ON WINDOWS
+INSTALLATION ON UBUNTU & REDHAT, STEPS FOR ANSIBLE INSTALLATION/ PREREQUISITE,  SCRIPT TO BE USED AS AS USER DATA FOR
 THE INSTALLATION ON UBUNTU, THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE, WE SSH/CONNECT TO THE DEFAULT USER IN THE REMOTE HOST,  IN THE REMOTE NODES THE DEFAULT
 USER DOES THE INSTALLATION/PATCH WORK, Script to add user, password and enable password authentication,  WE HAVE TO CREATE THE SAME USER (name) IN THE REMOTE NODE,
 TRANSFER KEY TO USER IN THE REMOTE NODE FOR PASSWDLESS AUTHENTICATION, THE AUTOMATION PROCESS USING TERRFORM & SOME HIGH LEVEL BLOCKS/THE USER DATA, 
@@ -518,111 +519,10 @@ USING THE IMPORT BLK TERRAFRM MANAGES A RESOURCE IT DIDNT CREATE, WHY WE NEED A 
 
 
 
+VIDEO 2
 
 
 
-1)this videos covered conecpts of ansible, Ansible is an open-source configuration Management, deployment and provisioning Automation tool maintained by Redhat
-control node, ansible controller : this is the server wherby you hv installed your ansible software on this ec2 instance
-Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
-thru ssh connection am able to control this multiple servers frm my control node
-wil use the file module to create that file accoridng to the specifictaion, once it creates the file it deletes the module and once it accomplishes that task , it marks that
-task a complete and then it deletes the module, this is how ansible does 
-
-******* bc ansible is written in python thefrore python needs to be installed on your remote node bc ansible runs on python so the firtsthing is python needs to be 
-installed on the remote node for ansible to wrk , so this means you dnt ned to setup a client server env before before using ansible 
-all you need to do is setup your ansible server then inside of your configuration file which we call the host file , you just need to pass the ip address of the 
-particular server that you wnat to patch or configure then ansible will take care of that so you dnt have to do any setup on these particular servers
-so thats basically how ansible works
-
-2) OTHER CONFIGURATION MGT TOOLS
-Apart from ansible, puppet , chef is also a configuration mgt tool 
-this two uses agent on the remote host; they use a pull mechanism as such you have to install a puppet agent of a chet agent inside of 
-each node bc it is the agent that will initiate that particular push ...i bliv he meant the controler will be activating the pull done by the agents
-while ansible uses a push mechanism and thats why ansible stands out 
-
-
-  3)BENEFITS OF USING ANSIBLE
-
-It is a free open -source Automation tool and simple to use.
-It Uses existing OpenSSH for connection ,    most of THE servers that we provision already hv open ssh configure so ansible jsut uses this  for it to do configuration
-Agent-less –                             No need to install any agent on Ansible Clients/Nodes
-Python/YAML based                        .... playbooks are written in yaml language n yaml are very easy, so ansible is easy to use 
-Highly flexible and versatile in configuration management of systems.
-Large number of ready to use modules for system management  ,  ansible community and redhat they hv a whole lot of module that are ready to be used
-                                so u dnt need to create or re write anything just use the existing module, we hv a lot of modules that comes preloaded when u install ansible
-Custom modules can be added if needed        
-
-
-  4) INSTALLATION
-we used a userdata/script to install it on both ubuntu (controller & 2 remote & one Redhat )
-THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE
-WE SSH/CONNECT TO THE DEFAULT USER IN THE REMOTE HOST \\(the software we installed;Ansible wil be looking for the default user to connect)
- if i install ansible in the control as a user called Ken, then my default user in the remote that ansible will be looking to connect with will be a user called ken
-bc that becomes the default user in ansible , this is how We can install ansible on ubuntu
-WE HAVE TO CREATE THE SAME USER (name) IN THE REMOTE NODE, & we can transfer key to user in the remote node for passwdless authentication
-we automated the installation process using terraform & some high level blocks/the user data
-Created a data block USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE
-PASSING 2 DIFF SCRIPTS AS USER DATA; 1ST SCRIPT TO INSTALL ANSIBLE & USING "template_cloudinit_config" FOR THE 2ND SCRIPT TO INSTALL VSCODE
- we connected TO THE CONTROLLER UBUNTU SERVER
-
-
-   5)     Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
- this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
-so a control node cannot be windows
-25.35**am creating both ubuntu and redhat server for remote host,  **** but ansible is installed only on ubuntu
-
-Ansible is python based and therefore the control node and the managed nodes need to have python2 or python3 installed on them.
-******* the good news is that most of our system already cm with python installed bt also ansible once it connects to a system, if python isnt already installed,its goin to
-install python basically 
-
-6)Ansible can be installed in three ways:
-
-Using yum or apt       ******** if ur installing on ec2 instance
-Using pip              ****** package manger for python
-Using compile file       **** download / use a complie file     ****  https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html 
-                                in the link u can see hw we ar able to install ansible
-
-
-7)ANSIBLE DIRECTORY STRUCTURE/ANSIBLE CONFIGURATION FILE 
-https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
-
-
-                          ANSIBLE DIRECTORY STRUCTURE
-
-ansible has what is called a default dir/The default ansible home directory is /etc/ansible
-This directory will consist of:
-a) ansible.cfg               ***ansible config file
-b) hosts                 ***a host file
-so by default host key checking has been set to true meaning evrytime ansible makes a conection/ a sever makes a connection, you have to confirm that you wnat to but
-that is not what we want in automation, in automation we dnt wnat the process to be interrupted, we want the process to go on automatically 
-c) roles           *** a dir called roles
-roles are like modules that u can custom create anD call them as needed, so u can create what is called roles so ....all the roles will live inside of the roles dir 
-i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call the role inside  of my playbk and jenkins will be installed
-
-if i run 
-ansible@ip-172-31-17-108: $   pwd
-/home/anasible                                ** am in the home of ansible
-bc i did su -ansible, i exited the home of ubuntu and now am in the home of ansible 
-now been in the home of anasible , the default home of ansible is   /etc/ansible
-lets cd  
-ansible@ip-172-31-17-108: $  cd /etc/ansible
-ansible@ip-172-31-17-108: /etc/ansible  ls                  TO SEE THE 3 ENTITIES IN ANSIBLE HOME
-anisible.cfg   hosts  roles                      ********* 2files and a dir called called role 
-
-
-
-8)What is the precedence or priority of ansible when its searching for the configurtaion file 
-
- ANS : 
-
-1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
-2nd:  ./ansible.cfg         pwd dir 
-3rd:  ./ansible.cfg         home  of that particulr user 
-and if not it goes to the 
-default : /etc/ansible/ansible.cfg
- if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
-    thefor wil al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
-its configuartion
 
 
 
