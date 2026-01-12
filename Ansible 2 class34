@@ -1,4 +1,6 @@
-Configuration Management, USES OF ANSIBLE,ansible installation, CREATING ANSIBLE CONFIGURATION FILE, CREATING THE ANSIBLE HOST FILE, AUTOMATING TASK, ANSIBLE COMMANDS, 
+CONFIGURATION MGT TOOLS, USES OF ANSIBLE, ANSIBLE USE SSH PLUGGING TO CONNECT TO LINUX HOST & WINRM FOR HOST ON WINDOWS, ansible installation on LINUX/UBUNTU,
+2 DIFF INSTALLATION SCRIPTS, CREATING ANSIBLE CONFIGURATION FILE, CREATING THE ANSIBLE HOST FILE, ADDING A HOST TO THE HOST FILE, AUTOMATING TASK/COMMENTING ON THE HOST KEY 
+CHECKING, ANSIBLE COMMANDS
 connection timed out , port22 need to be open,
 Puppet&chef and their playbooks are called cookbooks
 
@@ -37,6 +39,8 @@ with the help of ansible, we can push configuration to the servers and the confi
 ansible can perfrorm severaltask , it can group our servers, file mgt, user mgt, etc ,, bt first ansible needes to conect to the host(servers) and for it to do that , it 
 wil depend on the host 
 e.g windows host will be treated diff frm linux host
+
+                ANSIBLE USE SSH PLUGGING TO CONNECT TO LINUX HOST & WINRM FOR HOST ON WINDOWS
 it will use ssh pluggin to connect to linux host and for host on windows it will use winrm
 Servers:
     UsersMGT
@@ -115,6 +119,7 @@ so we hv installed ansible
 
 script2
 ****************** this all we would hv done to hv ansible installed  bt since we used python p, we used option1 
+       ***meeeee.... Using pip              ****** package manger for python installation
 
 #2 Ansible installation in ubuntu using apt repo
 Ansible installation in ubuntu
@@ -125,6 +130,7 @@ Ansible installation in ubuntu
  sudo apt install ansible  -y 
 
 ***************************************
+
 
 CREATING ANSIBLE CONFIGURATION FILE
 *********** 49:14
@@ -168,6 +174,8 @@ realised the host file is empty
 
 **********1:1:20
 
+                                                 ADDING A HOST TO THE HOST FILE
+
 recreating host file (ie adding a host to the host file) DUE to the error above 
 [web]
 54.175.72.219 ansible_user=ec2-user ansible_ssh_private_key_file=/tmp/class35.pem
@@ -184,7 +192,7 @@ are you sure you want to continue ........... yes
 but to automate this 
 
 
- 1:09:14         ************ AUTOMATING TASK
+ 1:09:14         ************ AUTOMATING TASK/COMMENTING ON THE HOST KEY CHECKING
 
 Because ansible should be able to run while you are sleeping 
 
@@ -213,6 +221,7 @@ ansible all -m ping
 sucess
 success
 
+                                           ANSIBLE COMMANDS
 
 1. Ansible commands:  
     ansible hosts -m module -a "df -f"
