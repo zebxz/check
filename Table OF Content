@@ -496,7 +496,7 @@ HOW TO CREATE AN S3 BUCKET THEN USE IT AS THE REMOTE BACKEND, STATE LOCKING/LOCK
 
                          ANSIBLE
 
-VIDEO1
+VIDEO1;  CLASS33
 Core Differences BTW ANSIBLE  & KUBERNETES, HOW THEY WORK TOGETHER, ANSIBLE CONFIGURATION MGT TOOL, ANSIBLE CONCEPTS TO COVER, WHAT IS ANSIBLE, HOW ANSIBLE WORKS, 
 OTHER CONFIGURATION MGT TOOLS, BENEFITS OF USING ANSIBLE, INSTALLATION ON UBUNTU & REDHAT, STEPS FOR ANSIBLE INSTALLATION/ PREREQUISITE,  SCRIPT TO BE USED AS AS USER DATA FOR
 THE INSTALLATION ON UBUNTU, THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE, WE SSH/CONNECT TO THE DEFAULT USER IN THE REMOTE HOST,  IN THE REMOTE NODES THE DEFAULT
@@ -508,6 +508,18 @@ THE SCRIPT TO CREATE 2 INSTANCES FOR THE REMOTE HOST & ANSIBLE USER & ENABLING P
  WE DOWNLOAD THE PRIVATE KEY BUT THE PUBLIC KEY REMAINS IN AWS, CONNECTING TO THE CONTROLLER UBUNTU SERVER,  ANSIBLE DIRECTORY STRUCTURE,HOME OF ANSIBLE /etc/ansible,
 TO SEE THE 3 ENTITIES IN ANSIBLE HOME, ROLES, HOST/AUTOMATING HOST KEY CHECKING, CREATING ANSIBLE CONFIGURATION FILE IN A DIFF LOCATION,WHATS THE PRIORITY THAT ANSIBLE LOOKS AT,
 EXAMPLE OF A CONFIGURATION FILE
+
+
+VIDEO1;  CLASS34
+  RECAP,  3 METHODS FOR PROVISIONING RESOURCES, CREATING NATGATEWAY IN THE PUBLIC SUBNET, CLI COMMANDS ARE CUMMBERSOME SO WE USE IAC,
+DIAGRAMMATIC ILLUSTRATION OF CREATING NATGATEWAY IN THE PUBLIC SUBNET,  CAT THE TERRAFRM STATE FILE, DESTROYING A RESOURCE,
+USING THE IMPORT BLK TERRAFRM MANAGES A RESOURCE IT DIDNT CREATE, USING THE IMPORT BLK TERRAFRM MANAGES A RESOURCE IT DIDNT CREATE,
+ WHY WE NEED A REMOTE BACKEND/LOCKING THE BACKEND.V
+
+
+
+
+
 
 
 1)this videos covered conecpts of ansible, Ansible is an open-source configuration Management, deployment and provisioning Automation tool maintained by Redhat
@@ -572,9 +584,27 @@ Using compile file       **** download / use a complie file     ****  https://do
                                 in the link u can see hw we ar able to install ansible
 
 
-7)Ansible configuration file 
+7)ANSIBLE CONFIGURATION FILE 
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
 
 
+                          ANSIBLE DIRECTORY STRUCTURE
+
+ansible has what is called a default dir/The default ansible home directory is /etc/ansible
+This directory will consist of:
+a) ansible.cfg
+b) hosts
+c) roles
+
+if i run 
+ansible@ip-172-31-17-108: $   pwd
+/home/anasible                                ** am in the home of ansible
+bc i did su -ansible, i exited the home of ubuntu and now am in the home of ansible 
+now been in the home of anasible , the default home of ansible is   /etc/ansible
+lets cd  
+ansible@ip-172-31-17-108: $  cd /etc/ansible
+ansible@ip-172-31-17-108: /etc/ansible  ls                  TO SEE THE 3 ENTITIES IN ANSIBLE HOME
+anisible.cfg   hosts  roles                      ********* 2files and a dir called called role 
 
 
 
