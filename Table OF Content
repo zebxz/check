@@ -583,7 +583,7 @@ Using compile file       **** download / use a complie file     ****  https://do
                                 in the link u can see hw we ar able to install ansible
 
 
-7)ANSIBLE CONFIGURATION FILE 
+7)ANSIBLE DIRECTORY STRUCTURE/ANSIBLE CONFIGURATION FILE 
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
 
 
@@ -591,9 +591,13 @@ https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction
 
 ansible has what is called a default dir/The default ansible home directory is /etc/ansible
 This directory will consist of:
-a) ansible.cfg
-b) hosts
-c) roles
+a) ansible.cfg               ***ansible config file
+b) hosts                 ***a host file
+so by default host key checking has been set to true meaning evrytime ansible makes a conection/ a sever makes a connection, you have to confirm that you wnat to but
+that is not what we want in automation, in automation we dnt wnat the process to be interrupted, we want the process to go on automatically 
+c) roles           *** a dir called roles
+roles are like modules that u can custom create anD call them as needed, so u can create what is called roles so ....all the roles will live inside of the roles dir 
+i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call the role inside  of my playbk and jenkins will be installed
 
 if i run 
 ansible@ip-172-31-17-108: $   pwd
@@ -607,7 +611,18 @@ anisible.cfg   hosts  roles                      ********* 2files and a dir call
 
 
 
+8)What is the precedence or priority of ansible when its searching for the configurtaion file 
 
+ ANS : 
+
+1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
+2nd:  ./ansible.cfg         pwd dir 
+3rd:  ./ansible.cfg         home  of that particulr user 
+and if not it goes to the 
+default : /etc/ansible/ansible.cfg
+ if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
+    thefor wil al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
+its configuartion
 
 
 
