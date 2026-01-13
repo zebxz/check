@@ -23,7 +23,7 @@ USING A LOOP/USING FUNCTIONS, WHAT IS THE part.module, VPC CANT BE DESTROYED WIT
 NOW WE WNAT TO READ THIS STATEFILE, What is tainting in terfrm, REMOVE WHAT YOU DNT WANT TERFRM TO RECREATE FROM THE CONFIGURATION FILE, NULL RESOURCE  EXPLAINED, 
 TROUBLESHOOTING/ ACCESING KIBANA DASHBOARD,  REMOTE BACKEND, S3 BUCKET EXPLAINED, MIGRATE THE EC2instance STATE FILE FROM LOCAL BACKEND TO REMOTE BACKEND, 
 MIGRATE THE VPC STATE FILE FROM LOCAL BACKEND TO REMOTE BACKEND & DESTROY THE PREVIOUS VPC OF THE LOCAL BACKEND, HOW CAN I READ A STATEFILE THAT IS IN AN s3 bucket,
-HOW TO CREATE AN S3 BUCKET THEN USE IT AS THE REMOTE BACKEND, STATE LOCKING/LOCKING THE STATE FILE,  PULLING STATE FILE, 
+HOW TO CREATE AN S3 BUCKET THEN USE IT AS THE REMOTE BACKEND, STATE LOCKING/LOCKING THE STATE FILE,  PULLING STATE FILE, PUTTING LOCK ON THE STATE FILE USING DYNAMOND DB
 
 *******************
 
@@ -2172,8 +2172,45 @@ been some things the vpc should have been configured with while it was been crea
 I think he used the word migrtating bc the subnet id will change given that we created a new vpc
 
 
+QUESTION: VIDEO 2;ANsible  .... PUTTING LOCK ON THE STATE FILE USING DYNAMOND DB
+
+3) hOW do 2 or more engrs work on the same repo without causing a clash , in git we have branches , is it the same in terrafrm
+ANS:
+in your office you mayb be asked to create a module e.g for a vpc then someone else is given a ticket to also work on the same vpce.g enable login or  the flow logs
+it means you both wil clone the same repo , your doing yours he doing yours , when both of you are done , u wil commit he code, depsnding on who commited first the other
+person may need to rebase bc now the commit has moved, we stated on the smae commit, w eboth clone frm the main but now bc we hv multiple commit that has come in, it just 
+mean that my commit is behind, my main branch has already moved ahead, the commits have moved( am goin tru thsi bc u guys usnderstand hw git work) so it just mean that il
+need to rebase my branch before i match my cod e, once i do that w eare colaboarting the that particular repo, now if we are running pipelines, as we run the pipelines the
+pipeline wil be bulding our vpc, id changes have happened then those cahnges are goin to be effected, but now the issues comes whne we are running terfrm commands at the same 
+time
+
+    *********24:49
+ if we are doin in a pipeline then how pipelines hv been set up is pipeline has beeen queued, thers a queue 2piplines will nt run at the same time, once i commit and i do my
+push if anoda engr is also pushing at the same time what the pipeline, the CI will do is it will queue the jobs and queing the jobs just means that whover committed the job 
+first that pilpline is goin to run, and how it runs is bc am running terfrm, it is goin to put a lock on the state file. this is wher we are talking abt using dynamond DB to 
+lock our statefile  and our tstefileis in the s3 bucket, the lock ensuresatha t no other terfrm activity can tk place on that statefile apart from the activity that this 
+pipeline is running , so once this psieline is done and the statefile has been updated, it realease the lock and then anoda job can be submeitted
+thast what happens terfrm alwsy puts a lock
+for us bc we are running it on our local env we hv to configure that lock, we hv to create/configure a dynamond DB thta we will use to lock our ststefile in the s3 bucket
+to prevent 2engrs or more running terfrm workflow  on the statefile at the sametime.
+
+********26:28
+if u are using terfrm cloud, its done automatically, trfrm cloud wil lock the statefile anytime your doing trfrm workflow so you can only have 1 wrkflow running, after the job 
+the lock is is done the lock is taken off , the statefile is unlocked for any other workflow to run
+
+27:00
+###### but all this will become clearer when you go furtehr, right now as long a you just understand the basic trffrm concepts, the blocks , the workflow ,jst basic functions
+so that you can create a resorce/ data source then that is sufficient, it becomes the building blk for u to build onto that b4 u start thinking of more advanced concept in 
+terfrm
+
 
 #################################################################################
+
+
+
+
+
+
     ANNOUNCEMENT
 2:04:30 
 prof said python will be covered during bootcamp
