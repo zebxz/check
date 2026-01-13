@@ -2,10 +2,11 @@
 VIDEO STopped at 2:44 , i bliv thats wher he start with adhoc commands 
 so i had to start with profs video Ansible1, for class 34 )  ********* the video started agsin so i continued with it, although i had already gone tru with vide01&2 class34
 
-RECAP, REMOTE DEVELOPMENT, INSTALLING VSCODE, TERRARY OPERATOR, local exec provisioner, CONNECTED TO ANSIBLE SERVER IN VSCODE, HOST KEY CHECKING, /etc/passwd file 
-Configuring managed nodes, ? TERRARY OPERATOR  -m option,CREATING THE HOST LIST, establishing an ssh connection,-k option ,creatING ANOTHER USER (MARK), COMMUNICATING WITH
-THE USER mark, -u option, HOST AND GROUP VARIABLES,ANSIBLE FACT, (PINPONG),SPECIFYING A USER TO CONNECT TO IN THE HOST FILE, GROUP VARIABLES, host level precedence,
-CREATING A fILE ON THE MANAGED HOST, ITEM POTENCY, PASSWORDLESS AUTHENTICATION USING SSH-KEY, ADHOC COMMANDS, MODULES.
+RECAP, REMOTE DEVELOPMENT/CONFIGURING VSCODE TO CONNECT TO THE REMOTE HOST, INSTALLING VSCODE, PASSED A VARIABLE 'os' TERRARY OPERATOR, local exec provisioner, CONNECTED TO
+ANSIBLE SERVER IN VSCODE, HOST KEY CHECKING, etc/passwd file Configuring managed nodes, ? TERRARY OPERATOR  -m option,CREATING THE HOST LIST, establishing an ssh connection,
+-k option ,creatING ANOTHER USER (MARK),COMMUNICATING WITH THE USER mark, -u option, HOST AND GROUP VARIABLES,ANSIBLE FACT, (PINPONG),SPECIFYING A USER TO CONNECT TO IN THE
+HOST FILE, GROUP VARIABLES, host level precedence, CREATING A fILE ON THE MANAGED HOST, ITEM POTENCY, PASSWORDLESS AUTHENTICATION USING SSH-KEY, ADHOC COMMANDS, MODULES.
+
 
 REMIND Myself what is dynamond  ???????
 
@@ -18,14 +19,17 @@ while creating a dir , state = directory
 
 
  summary,
-  for remote development
-in the configuration file in vscode, we configured our ssh so that we can connect to a remote host, you can connect to an ec2 instance and for that to happen, we passed
-vscode installation script & script.sh (dnt knw why we hv 2diff scripts to install vscode)
+1) 53.00..  REMOTE DEVELOPMENT/CONFIGURING VSCODE TO CONNECT TO THE REMOTE HOST,
+INorder to connect to the Remote-SSH: open ssh configuration file (option) in vscode, we configured our ssh; we passed the host name, the  anasible user, so that we can 
+connect to the remote host, ie you can connect to an ec2 instance and for that to happen, we also passed vscode installation script & script.sh 
 then,
 
   59:18********* my summary from  NO.2 to  NO.4
 we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
-using script.sh also in the variables file; we passed a variable that enables us select the os we wantt to configure 
+using script.sh 
+
+2)TERRARY OPERATOR :  its what always evaluates the condition based on what we select as our 'OS' 
+in the variables file; we passed a variable that enables us select the 'os' we want to configure 
 if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
 ? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
 our selection in the variable)
@@ -35,90 +39,7 @@ resource "null_resource" "vscode-config" {
 
    
 
-2:30 
-in the real world 
-it wil be a diff scenario that will REQ you to use that basic understaning 
-e.g they may say we hv a k8 cl8 that is runing in aws we nid to get a the cluster certificate form that cl8 bc we need it somewhere, if given that task so how wil you do it??
 
-ANS: 
-so now bc you understand the concept of, if you have a resource that exists you can get inf/attribute frm that resource, so u knw that i can use a data source, i can employ a 
-data source that can specifically go into my eks cluster and return for me the certificate, so nmw thats a concept you understand so now you go to the documentation to see if
-you have a datasource that acn access your k8 cluster and when it accesses what can it return, how many attributes can it return
-again you just look at the documentation, if you use a datasource for eks cluster it will show you the tins that it can return, the inf it can get, so now when you have that 
-concept you are goin to employ a data source to get all the inf that you need
-
-but as we go further into the bootcamp everytin will be clearer the concept will solidify , and everything will make more sense
-
-   ************6:00    importance of boot camp
-
-preparation for transitioning into the bootcamp
-cv  and linkedin preparation 
-focused on project base so that everyting youv been doing al these concept is solididfied whereby you are doing projects
-and we have other advanced concept thay you will be able to tour
-helping you prepare for interviews, how your suppose to response
-
-
-            QUESTION
-1)  CAN WE create our resources in global instaed of regions and having issues,??
-
-ANS:     ..NO
-when your configuring you cant use global, we use a default , you must pass a region
-e.g you want to create an ec2 instance , can you create that using the global option , it needs to be created in a specific region bc it needs to be created in a vpc
-so the reason why we hv to pass a default is just incase in our configuration we are not specifying a region atleast aws is proactive to mk sure that your resource will be 
-created somewhere, so thats why you hv to set that default region bc resources, most of the resources in aws are region based, we hv very limite global services like IAM
-thats why when you go to create a user or a role it doesnt ask you for a region , S3 bucket is a global service bc you can access it frm any region but howeevr, when u go to 
-create a bucket youhv to specify a region , bc most of the service are region specific so your reQ to pass a default region so that when a region is nt set in your 
-configuration then either terfrm or whatever appli your using wil fall back on a region that has been set as a default
-so thats why we cannot global aws configure set globally, we must have a region 
-
-
-14:00
-2) dnt understand how you use count.index and slice in the previous video 
-ANS:
-we use count index whenever we hv count set 
-ITS a meta argumnet which alters the behaiour of how a resource works
-when you look at the element function ,that is the first element that we are passing to count, element function  wil always return a number 
-when you look at the documentation its just goin to select an item fmr a list , so we are combing those functions
-e.g
-i hv 10 elemebts in a list and now am using a slice function so am goin to implore that slice function on this list, it has 10 things and i need a slice of 3, or i need to 
-slice it so that i get 4 elemet out of the list so ill give the first like a 0, so it menas the slice wil count frm the first elemet to and count 4slices and return taht to 
-me so that wil be the value of the count
-*********i can also slice frm the middle but say ill say the first slice/elent is 3, so it is goin to start frm 3 and count the 4 elements , 4,5,6,7 , so it will take that
-port as the slice and return it to count
-
-*********** the whole reason why we use count and (it becomes clearer in the both camp) we wnat to make our code more flexible, we dnt wnat to hard code values, we want such
-that am nt harding coding anything, by putting a value as 2 or 3 on the count bc when i do that i have basically hardcoded it but i want that value of count to be detr by 
-mayb d number of subnet so if i hv 5avaialbilty zones then i want the slice to be 5, if i have 3 availabity zones then i want the lsice to be 2 bc its dependent on something
-else.
-
-3) hOW do 2 or more engrs work on the same repo without causing a clash , in git we have branches , is it the same in terrafrm
-ANS:
-in your office you mayb be asked to create a module e.g for a vpc then someone else is given a ticket to also work on the same vpce.g enable login or  the flow logs
-it means you both wil clone the same repo , your doing yours he doing yours , when both of you are done , u wil commit he code, depsnding on who commited first the other
-person may need to rebase bc now the commit has moved, we stated on the smae commit, w eboth clone frm the main but now bc we hv multiple commit that has come in, it just 
-mean that my commit is behind, my main branch has already moved ahead, the commits have moved( am goin tru thsi bc u guys usnderstand hw git work) so it just mean that il
-need to rebase my branch before i match my cod e, once i do that w eare colaboarting the that particular repo, now if we are running pipelines, as we run the pipelines the
-pipeline wil be bulding our vpc, id changes have happened then those cahnges are goin to be effected, but now the issues comes whne we are running terfrm commands at the same 
-time
-
-    *********24:49
- if we are doin in a pipeline then how pipelines hv been set up is pipeline has beeen queued, thers a queue 2piplines will nt run at the same time, once i commit and i do my
-push if anoda engr is also pushing at the same time what the pipeline, the CI will do is it will queue the jobs and queing the jobs just means that whover committed the job 
-first that pilpline is goin to run, and how it runs is bc am running terfrm, it is goin to put a lock on the state file. this is wher we are talking abt using dynamond DB to 
-lock our statefile  and our tstefileis in the s3 bucket, the lock ensuresatha t no other terfrm activity can tk place on that statefile apart from the activity that this 
-pipeline is running , so once this psieline is done and the statefile has been updated, it realease the lock and then anoda job can be submeitted
-thast what happens terfrm alwsy puts a lock
-for us bc we are running it on our local env we hv to configure that lock, we hv to create/configure a dynamond DB thta we will use to lock our ststefile in the s3 bucket
-to prevent 2engrs or more running terfrm workflow  on the statefile at the sametime.
-
-********26:28
-if u are using terfrm cloud, its done automatically, trfrm cloud wil lock the statefile anytime your doing trfrm workflow so you can only have 1 wrkflow running, after the job 
-the lock is is done the lock is taken off , the statefile is unlocked for any other workflow to run
-
-27:00
-###### but all this will become clearer when you go furtehr, right now as long a you just understand the basic trffrm concepts, the blocks , the workflow ,jst basic functions
-so that you can create a resorce/ data source then that is sufficient, it becomes the building blk for u to build onto that b4 u start thinking of more advanced concept in 
-terfrm
 
                       RECAP FROM ansible 1
 continuation frm 1st video
@@ -127,27 +48,26 @@ continuation frm 1st video
 
 38:00 .. using mail delivery to xplain the pushing of programmes frm the controller to the home of the user in the host/remote nodes
 
-QUESTION...........  43:20
 
-i knw that for terfrm, thers cloud formation that works only for aws but for anasible if i want to wrk with windows, is there a particular one ican choose frm chef & puppet
 
-ANS:
-thers linux subsistence you can use if you want to wrk with windows 
-i probably think chef and puppet only works on windows, am nt very sure but i can find out n let you knw
+                USING SCRIPT TO CONFIGURE REMOTE DEVELOPMENT/CONNECTING TO THE REMOTE HOST USING VSCODE
+*****this is a script that does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into the ubutu server to
+create our playbk they run the playbk, so instead of using that we can use our vscode 
 
 
 *********** 52:00   in data "template_cloudinit_config" "user-data" ,   we passed 2scripts
 the 2nd script is to configure the vscode  
 content      = file("${path.module}/vscode-install.sh")
 i did dis automation so that when we start writing playbooks it wil be easier for you guys
-this is a script that dose remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into the ubutu server to create
+this is a script that does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into the ubutu server to create
 our playbk they run the playbk, so instead of using that we can use our vscode 
 
 
-##### A)                                REMOTE DEVELOPMENT
+##### A)                               
 ******52:23
-opens the vscode:
-if you opens the vscode, and look at the seeting comand pallet thers a remote host, you can connect to a remote host, you can connect to an ec2 instance but b4 you connect 
+opens the vscode to show us:  
+if you opens the vscode, (if u watched the vscode configuration video i sent) in your vscode  if u look at the setting comand pallet thers a remote host, you can connect to
+a remote host, you can connect to an ec2 instance but b4 you connect 
 to that remote host, you need to configure it,you need to configure your ssh so that ... # ### your configuring smt like this:
 
 Host ansible:
@@ -165,7 +85,8 @@ hw it works
 
                                      INSTALLING VSCODE
 
-  why do we hv 2diff scripts to insatll vscode (script.sh and vscode-install.sh )   ?????
+  why do we hv 2diff scripts to install vscode (script.sh and vscode-install.sh )   ?????
+i bliv vscode-install.sh will install vscode WHILE script.sh will configure the vscode for the remote development
 
 NO.1)                         ####script.sh
    #!/bin/bash
@@ -203,6 +124,7 @@ Host ${user}
 '@
 
 ********* 57:05
+
 NO.3)
 *********in our variable file i pased a variable called "os"
 
@@ -227,17 +149,7 @@ so am saying , this  var.os == "windows" ? , is it equals to windows, if this is
 then if it is nt then your interpreter wil be bash, 
 so this ? is called a itenery operator, it always evaluates, its a bullion variable, it always evalustes either true or false
 
- summary,
-  for remote development
-in the configuration file in vscode, we configured our ssh so that we can connect to a remote host, you can connect to an ec2 instance and for that to happen, we passed
-vscode installation script & script.sh (dnt knw why we hv 2diff scripts to install vscode)
-then,
-          summary frm NO.2 to NO.4
-we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
-using script.sh also in the variables file; we passed a variable that enables us select the os we wantt to configure 
-if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
-? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
-our selection in the variable)
+
 
                                       null resource.tf  (local exec provisioner)
    
