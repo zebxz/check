@@ -26,17 +26,33 @@ connect to the remote host, ie you can connect to an ec2 instance and for that t
 once you pass the host name, etc inside of your ssh config file (in vscode)then you are able to directly use your vscode code to do remote host, to login to that ec2 
 instance and write your code, create your files , write your play book and run them on your termiinal, so this is what we call remote development
 
+2) "template_cloudinit_config"
  59:18********* my summary from  NO.2 to  NO.4
 we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
 using script.sh/
 
-2)TERRARY OPERATOR :  its what always evaluates the condition based on what we select as our 'OS' 
+3)TERRARY OPERATOR :  its what always evaluates the condition based on what we select as our 'OS' 
 in the variables file; we passed a variable that enables us select the 'os' we want to configure 
 if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
 ? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
 our selection in the variable)
 
-   
+ 4) CONFIGURING OUR MANAGED NODES
+ https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
+
+  /etc/passwd file 
+to find the users that hv been created i can check on the  etc passwd file.
+cat /etc/passwd
+we see one of the users called ansible
+5)            Ansible Engine uses SSH Connection to connect and work with Manage nodes.
+We can create SSH Connection in two ways:
+a) Password Authentication
+b) Password-less Authentication(This is with SSH Keys)
+Provide the managed Nodes IP/FQDN in inventory file on Ansible Engine.
+Test the connectivity by running:
+$ ansible all -m ping
+
+
 
 
 
@@ -340,6 +356,7 @@ NO.6)                                CONFIGURING OUR MANAGED NODES
  #############  haven said that, lets go now to configure our remote node /managed nodes
 for us to configure thses managed nodes:
 
+
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
 
   Configuring managed nodes.
@@ -363,6 +380,11 @@ to ensure our key permissonis set to 400 w eare ableto ssh into that server and 
 we are able to test to see if ansible has been created 
 now ansible uses ssh , we can create ssh connection in 2 ways 
 
+/etc/passwd file 
+
+to find the users that hv been created i can check on the  etc passwd file.
+cat /etc/passwd
+we see one of the users called ansible
 7)            Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 
 We can create SSH Connection in two ways:
@@ -581,7 +603,9 @@ so am trying to use ssh to connect to my remote host
 
   *********** so looking at managing remote host, we can use password authentictaion, pass a -u option but then i aLso eed to pass a -k option so that it prompts me for a PW 
 
-                                      
+
+
+
    7Avii)                                    HOST AND GROUP VARIABLE
 
 1:46:51   ***************
