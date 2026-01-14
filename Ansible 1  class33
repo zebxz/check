@@ -105,18 +105,25 @@ Custom modules can be added if needed
 
   4) INSTALLATION
 we used a userdata/script to install it on both ubuntu (controller & 2 remote & one Redhat )
+
 THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE
 WE SSH/CONNECT TO THE DEFAULT USER IN THE REMOTE HOST \\(the software we installed;Ansible wil be looking for the default user to connect)
  if i install ansible in the control as a user called Ken, then my default user in the remote that ansible will be looking to connect with will be a user called ken
 bc that becomes the default user in ansible , this is how We can install ansible on ubuntu
 WE HAVE TO CREATE THE SAME USER (name) IN THE REMOTE NODE, & we can transfer key to user in the remote node for passwdless authentication
 we automated the installation process using terraform & some high level blocks/the user data
-Created a data block USING 2 DIFF SCRIPT AS USER DATA ON AN INSTANCE
-PASSING 2 DIFF SCRIPTS AS USER DATA; 1ST SCRIPT TO INSTALL ANSIBLE & USING "template_cloudinit_config" FOR THE 2ND SCRIPT TO INSTALL VSCODE
+
+
+5) INSTANCE RESOURCE BLK /ec2.tf file  USING  "template_cloudinit_config"
+A)In the resource blk; for user data we passed the script to "create ansible user, which will also pass the user passwd & enable PW authentication.
+***we will use this password when we establish an SSH Connection using the password option as illustrated in video2
+                  this script changes PW authentication from no to yes.
+B)Created a data block USING  "template_cloudinit_config" for 2 DIFF SCRIPT / USER DATA ON AN INSTANCE
+ 1ST SCRIPT TO INSTALL ANSIBLE ,THE 2ND SCRIPT TO INSTALL VSCODE
  we connected TO THE CONTROLLER UBUNTU SERVER
 
 
-   5)     Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
+   6)     Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
  this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
 so a control node cannot be windows
 25.35**am creating both ubuntu and redhat server for remote host,  **** but ansible is installed only on ubuntu
@@ -125,7 +132,7 @@ Ansible is python based and therefore the control node and the managed nodes nee
 ******* the good news is that most of our system already cm with python installed bt also ansible once it connects to a system, if python isnt already installed,its goin to
 install python basically 
 
-6)Ansible can be installed in three ways:
+7)Ansible can be installed in three ways:
 
 Using yum or apt       ******** if ur installing on ec2 instance
 Using pip              ****** package manger for python
@@ -133,7 +140,7 @@ Using compile file       **** download / use a complie file     ****  https://do
                                 in the link u can see hw we ar able to install ansible
 
 
-7)ANSIBLE DIRECTORY STRUCTURE/ANSIBLE CONFIGURATION FILE 
+8)ANSIBLE DIRECTORY STRUCTURE/ANSIBLE CONFIGURATION FILE 
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
 
 
@@ -161,7 +168,7 @@ anisible.cfg   hosts  roles                      ********* 2files and a dir call
 
 
 
-8)What is the precedence or priority of ansible when its searching for the configurtaion file 
+9)What is the precedence or priority of ansible when its searching for the configurtaion file 
 
  ANS : 
 
@@ -438,6 +445,8 @@ PIP, on the other hand, is a language-specific package manager used exclusively 
        
 
 
+
+
                    **meee, THE DEFAULT USER IS THE USER I CREATE TO INSTALL ANSIBLE 
                                    ****** if hv installed this user as ansible and hv installed ansible sfware as an ansible user then when am making an ssh connection by
      default ansible in my control node wil be looking for a user in the remote node called ansible 
@@ -478,6 +487,8 @@ ansible and it is this ansible user in the remote node that will do the installa
 
 NO2.
 ###### Script to add user, password and enable password authentication
+             ****we will use this password when we establish an SSH Connection using the password option as illustrated in video2
+                  this script changes PW authentication from no to yes.
 
 #!/bin/bash
 $ sudo useradd -d /home/ansible -s /bin/bash -m ansible    ********  it is pushing to home of this ansible and it is this ansidible user in the remote node
