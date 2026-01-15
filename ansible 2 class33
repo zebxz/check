@@ -1,6 +1,3 @@
-NPSSJAN14
-
-
 
 VIDEO STopped at 2:44 , i bliv thats wher he start with adhoc commands 
 so i had to start with profs video Ansible1, for class 34 )  ********* the video started agsin so i continued with it, although i had already gone tru with vide01&2 class34
@@ -40,14 +37,17 @@ if i select linux in d variable (NO.3) then in the null resource, using local ex
 ? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
 our selection in the variable)
 
- 4) CONFIGURING OUR MANAGED NODES
+ 4) CONFIGURING OUR MANAGED NODES 
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
 
+A)THE CREATED USERS
+in the instance resource blk/ec2.tf file, we passed a script to "create users"
   /etc/passwd file 
 to find the users that hv been created i can check on the  etc passwd file.
 cat /etc/passwd
 we see one of the users called ansible
-5)            Ansible Engine uses SSH Connection to connect and work with Manage nodes.
+
+B)            Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 We can create SSH Connection in two ways:
 a) Password Authentication
 b) Password-less Authentication(This is with SSH Keys)
@@ -55,29 +55,37 @@ Provide the managed Nodes IP/FQDN in inventory file on Ansible Engine.
 Test the connectivity by running:
 $ ansible all -m ping
 
-6)-M  option    (passing a ping module)
+C) -M  option    (passing a ping module)
 
 -m is an option  you pass when you want to pass a module 
 then the module we wnat to pass is a ping module , this is what we use to test for connectivity 
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
 
- 7Aii)    CREATING THE HOST LIST
+ D)    CREATING THE HOST LIST & PING THE HOST/SERVERS
 we created a host list & est an ssh connection
-in the host file we entered these particular hosts into our host file 
+in the host file, we created 2 groups (DB for the 2ubuntu servers & web for the redhat server) we entered the particulars of the hosts ie the private ip of the host servers
+we created in video 1
+we used the private ips so that whenevr he shuts down his instances  he doesnt have to come in here to change the ips bc the ips changed
+TO ping the servers: 
+ansible@ip-172-31-27-28:  $ ansible all -m ping       
+i hv just typed yes for the first server, i need to type yes 3times
  bt as i do that bc i hv 3severs in my inventory its trying to reach my inventory but its failing 
-host added, permission denied
-so we see that while am trying to reach my instances it sdenying me bc by default ansible wil alwasy try to commusing ssh keys bt we havnt exchanged any sssh key 
+
+
+Di) BY DEFAULT ANSIBLE TRIES TO COMMUNICATE USING SSH KEYS
+so we see that while am trying to reach my instances its denying me bc by default ansible wil alwasy try to commusing ssh keys bt we havnt exchanged any sssh key 
 so hw then can we connect to this user
-we knw that we created a user and we gave the usr a PW, so for us to comm to this ansible  on eof the things i sthat we ll hv to run ping command bt for us to comm we v to
+we knw that we created a user and we gave the usr a PW, so for us to comm to this ansible  one of the things is that we ll hv to run ping command bt for us to comm we v to
+ Pass the -k option
 
                                                           
-              ESTABLISHING AN SSH CONNECTION
-7Aiii)
-                                        (-k option) 
-
-*********** pass a -k option (small k) 
-we pass this bc it prompts us for an ssh PW
-
+ E) pass a (-k option) (small k) FOR PW SSH CONNECTION/AUTHENTICATION
+      we pass this bc it prompts us for an ssh PW
+   ***   In the resource blk; for user data we passed the script to "create ansible user, which will also pass the user passwd & enable PW authentication.
+                          
+Remeber i created a user in my script , created on this instances, the script that i ran had a user called ansible that was created in the servers
+so bc the user has a pw therfr i can mak a ssh connection using a PW 
+we had enabled PW authentication, we had changed it to yes frm our script.
 
 
 
@@ -581,16 +589,17 @@ retype password   : mark
 ansible@ip172-31-19-131     $ cat /etc/passwd
 now i hv a user called mark
 
+
+
+                                     HOW TO VERIFY IF YOU ARE IN THE CONTROL NODE .. RUN : anisble
    lets say i want to comm with anoda user oda than the anisble default user 
 
-ansible@ip172-31-19-131     $ exit
+illustration:
+ansible@ip172-31-19-131     $ exit  .. ... we exit from the user mark
 
-how can i tell once i run anisble 
-password: ansible 
-i see ansible software insatalled here
 
-if i ssh 
-  ansible@ip-172-31-27-28:  $ 172.31.19.131
+if i ssh  back to into mark
+  ansible@ip-172-31-27-28:  ssh 172.31.19.131
 password :ansible 
 welcom to bnuntu
 
