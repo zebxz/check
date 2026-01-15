@@ -605,7 +605,31 @@ bc i did 'su -ansible, i exited the home of ubuntu and now am in the home of ans
 
 
 VIDEO2; CLass 33
-                                          ESTABLISHING AN SSH CONNECTION
+
+TO ping all the servers: 
+ansible@ip-172-31-27-28:  $ ansible all -m ping 
+
+TO PING THE SERVERS in a particular grp:  group name: web
+ansible@ip-172-31-27-28:  $ ansible web -m ping 
+
+COMMUNICATING WITH THE USER mark    -u  option  (user)
+   ansible@ip-172-31-27-28   ansible db -m ping -u mark -k 
+ hv nt exchange any key with mark so i hv to pass a - k option 
+
+
+                             CREATING A USER
+LETS create the user called mark
+ ansible@ip172-31-19-131  $ sudo adduser mark
+ new passwrd
+retype password   : mark
+   
+ansible@ip172-31-19-131     $ cat /etc/passwd
+now i hv a user called mark
+
+
+
+
+                                          ESTABLISHING A PASSWORD SSH CONNECTION
          (-k option)       
 
 *********** pass a -k option (small k) 
@@ -613,6 +637,20 @@ we pass this bc it prompts us for an ssh PW
 
   ansible@ip-172-31-27-28:  $ ansible all -k ping 
 ssh password  : ansible , you cant see it i typed it 
+
+
+CREATING HOST VARIABLE & SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
+ 172.31.27.37  ansible_ssh_pass=ansible
+172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark
+
+
+TO CREATE A FILE 
+$ ansible all -m file -a "path=test.txt state=touch"   **** command is 'touch' & the file name is 'test'
+-a , means what argument am i passing, i want to create a file, am using -m to specify its a file module then what are the arguments,
+
+PASSWORD-LESS  Authentication(This is with SSH Keys)
+ ansible@ip-172-31-27-28: ssh-keygen
+key is generated
 
 
 
