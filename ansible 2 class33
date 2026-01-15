@@ -95,8 +95,32 @@ ansible@ip-172-31-27-28   ansible db -m ping -u mark -k
  hv nt exchange any key with mark so i hv to pass a - k option 
 
 
+F) HOST  VARIABLE
+For Automation which is convenient, instaed of me passing these options on the command line,i can pass the ssh PW within the host file  ie  a host variable 
+ am passing the This on the host level, am passing host variable within the host file  so that i dnt hv to keep pasiing them on the cl
+
+FI)   WE CAN ALSO CREATE GROUP VARIABLES
+    [db:vars]
+    ansible_ssh_user=sammy
+    ansible_ssh_pass=abc123
+
+Fii) SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
+You can also connect using a different user by specifying the user & the user PW in the hosts file.
+
+
+
+
+ANSIBLE FACT       (pingpong, meaning success)
+
+this hostfile is still the password for ansible and when ansible goes ther its looking to see if ansible has been installed in those servers
+   'discovered_interpreter_python": /usr/binpython3
+it uses what is called a module called anible fact, it goes and FINDS the interpreter there, it discovers python is availabeland thefroe it says ping pong meaning it is a 
+success
+
 F)  HOW TO VERIFY IF YOU ARE IN THE CONTROL NODE .. RUN : anisble
    lets say i want to comm with anoda user oda than the anisble default user 
+
+
 
 
 
@@ -787,18 +811,20 @@ if variables are defined at host level, it takes precedence over varaibles defin
 
 
 7Axii)   for example 
-
+     ***host variable
      172.31.27.37 
      172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark  
 
+
+*****grp variable
    [db:vars]
     ansible_ssh_user=ansible   
 
    if i ping 
 ansible@ip-172-31-27-28   ansible db -m ping
 
-     172.31.27.37  success            ********* the group level varibale is successful
-172.31.19.131   sucesss        ********        The host level connection is successful
+     172.31.27.37  success            ********* i bliv this is also successful bc all the host servers have the same PW: ansible
+172.31.19.131   sucesss        ******** meee,   The specified user connection on the host level is successful
 
 
      7Axii)
