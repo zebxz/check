@@ -11,12 +11,12 @@ COMMANDS, MODULES.
 
 REMIND Myself what is dynamond  ???????
 
-##########################  we knw that host variable has the hightest priority
+1.53.0 ##########  we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
 
-module
-for creating a file, state = to touch
-while creating a dir , state = directory
+
+
+      ****in cont.. frm video1;
 
 
  summary,
@@ -29,8 +29,8 @@ connect to the remote host, ie you can connect to an ec2 instance and for that t
 
 2) "template_cloudinit_config"
  59:18********* my summary from  NO.2 to  NO.4
-we are passing 2scripts in userdata in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data & the 2scripts is to install vscode
-using script.sh/
+we are passing 2scripts( userdata) in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data to pass the 2scripts is to instal ubuntu
+using ansible-install-ubuntu.sh & to install vscode using vscode-install.sh
 
 3)TERRARY OPERATOR :  its what always evaluates the condition based on what we select as our 'OS' 
 in the variables file; we passed a variable that enables us select the 'os' we want to configure 
@@ -184,8 +184,11 @@ hw it works
 
   why do we hv 2diff scripts to install vscode (script.sh and vscode-install.sh )   ?????
 i bliv vscode-install.sh will install vscode WHILE script.sh will configure the vscode for the remote development
+and this configuration enables the configuration we did in the vscode in configuration file which is inside vscode & that way can directly use your vscode code to do remote
+host, to login to the ec2instance and write your code, create your files , write your play book and run them on your termiinal, & thats what we call remote development
 
-NO.1)                         ####script.sh
+
+NO.1)                         ####script.sh  ***meee, script to configure vscode & its referred to inside the null resource WHILE vscode-install.sh is referred in ec2 block
    #!/bin/bash
 
 sudo mkdir /home/ansible/.ssh/                                      ***********  it needs to mk a dir in the home of ansible
