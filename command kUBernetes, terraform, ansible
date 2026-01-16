@@ -644,9 +644,13 @@ CREATING HOST VARIABLE & SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
 172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark
 
 
-TO CREATE A FILE 
+                             TO CREATE A FILE 
+module
 $ ansible all -m file -a "path=test.txt state=touch"   **** command is 'touch' & the file name is 'test'
 -a , means what argument am i passing, i want to create a file, am using -m to specify its a file module then what are the arguments,
+
+while creating a dir , state = directory
+
 
 PASSWORD-LESS  Authentication(This is with SSH Keys)
  ansible@ip-172-31-27-28: ssh-keygen
@@ -654,7 +658,47 @@ key is generated
 
 
 
-ViDEO 2;Class34
+ ADHOC COMMAND
+
+This command will only have two parameters,
+the group / target of a host that you want to perform the task and
+the Ansible module to run.
+
+
+this is default
+********** ALL ansible command , for you to invoke wll start with the key word ansble
+ansible all -m ping -u  
+but the parameters thatu  are passing is your target which is your group (db, bc i hv a grp called db i  created in my host file), it could be an ip address or & the module (ping)
+ansible 172.19.16.16    -    ** i could pass an ip addresss , that becomes my target 
+ansible 172.19.16.16    -m ping                   *********** i can  passa amodule, mayb i wnat to ping that server 
+ansible 172.19.16.16 -m  file     ***************   i can pass a file module
+ansible 172.19.16.16  -m yum                  *********** mayb i want to install a package, i acn use a yum module
+these are the 2parameters that an adhoc command expects 
+
+all these are modules that we will see shortly, we will see what mosule sare 
+but those are the 2 expected parameters
+
+
+The basic syntax of an Ad-hoc command is:
+$ ansible [ -i inventory_file ] server1:server2:Group1:Group2 -m [-a arguments]
+
+bc now am nt using the default host , am using an inventory, a file that  has ip adresses of the server
+or i can pass them like this, seperate them with semi colums  ; server1:server2:Group1:Group2 -m [-a arguments
+-m  is for my module 
+
+ARGUMENTS
+- a is  for argument  , this just means if i passs a module like a file  what do i want to do, i can pass some commands 
+so arguments are commands am passing on that particular module 
+
+
+To list all available modules:
+$ ansible-doc -l
+,, we can see all the modules you can use/reference inside of the doc
+a lot of modules to do diff things
+
+
+
+                  ViDEO 2;Class34
 1. Ansible commands:  
     ansible hosts -m module -a "df -f"
       -m=modules
