@@ -2,8 +2,11 @@
 
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
 ie from the controller node server/ec2 instance where you hv installed your ansible software & after i have that i can hv multiple remote nodes, i can hv other ec2 
-instances/servers m able to control this multiple servers frm my control node thru ssh connection 
-
+instances/servers m able to control this multiple servers frm my control node thru ssh connection once its connected
+it pushes your ansible modules inside of the servers that its controling, once that is done, the module wil perfrom a task, lets say i want to create a file inside 
+of this so i can use ansible to go insid ef this ec2 istance n create a file so its goin to use a file module, it wil push the file module over ssh , once its moved , ansible 
+wil use the file module to create that file accoridng to the specifictaion, once it creates the file it deletes the module and once it accomplishes that task , it marks that
+task a complete and then it deletes the module   . 
 
 
 VIDEO STopped at 2:44 , i bliv thats wher he start with adhoc commands 
