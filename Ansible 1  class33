@@ -122,12 +122,19 @@ contains;
 A)Script to create ansible user; for user data we passed the script to "create ansible user, which will also pass the user passwd & enable PW authentication.
 ***we will use this password when we establish an SSH Connection using the password option as illustrated in video2
                   this script changes PW authentication from no to yes.
-B)Created a data block USING  "template_cloudinit_config" for 2 DIFF SCRIPT / USER DATA ON AN INSTANCE
+B)Instance Resource blk to create 2 ubutu host servers & another resource blk to create 1 Redhat host server
+C)Created a data block USING  "template_cloudinit_config" for 2 DIFF SCRIPT / USER DATA ON AN INSTANCE
  1ST SCRIPT TO INSTALL ANSIBLE ,THE 2ND SCRIPT TO INSTALL VSCODE
  then we connected TO THE CONTROLLER UBUNTU SERVER
 
+6) OUTPUT BLK 
+   To output the public ip of the instances & the private ip of the Redhat server host
+although inside the host file, he used the private ip so that whenevr he shuts down his instances he doesnt have to come in the hsodt file to change the ips bc the ips changed
 
-   6)     Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
+7)VARIABLES BLK
+includes: 
+
+ 8)Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
  this means that the control node has to be either linux or unix for ansible to be installed once it is isnstalled, it can controll the remote nodes whether windows 
 so a control node cannot be windows
 25.35**am creating both ubuntu and redhat server for remote host,  **** but ansible is installed only on ubuntu
@@ -136,7 +143,7 @@ Ansible is python based and therefore the control node and the managed nodes nee
 ******* the good news is that most of our system already cm with python installed bt also ansible once it connects to a system, if python isnt already installed,its goin to
 install python basically 
 
-7)Ansible can be installed in three ways:
+9)Ansible can be installed in three ways:
 
 Using yum or apt       ******** if ur installing on ec2 instance
 Using pip              ****** package manger for python
@@ -144,7 +151,7 @@ Using compile file       **** download / use a complie file     ****  https://do
                                 in the link u can see hw we ar able to install ansible
 
 
-8)ANSIBLE DIRECTORY STRUCTURE/ANSIBLE CONFIGURATION FILE 
+10)ANSIBLE DIRECTORY STRUCTURE/ANSIBLE CONFIGURATION FILE 
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/01-Introduction/03-Ansible_config_file.md
 
 
@@ -172,7 +179,7 @@ anisible.cfg   hosts  roles                      ********* 2files and a dir call
 
 
 
-9)What is the precedence or priority of ansible when its searching for the configurtaion file 
+11)What is the precedence or priority of ansible when its searching for the configurtaion file 
 
  ANS : 
 
@@ -184,6 +191,31 @@ default : /etc/ansible/ansible.cfg
  if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
     thefor wil al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
 its configuartion
+
+
+VIDEO 2; CLASS34
+
+                    USES OF ANSIBLE
+
+with the help of ansible, we can push configuration to the servers and the configuration can perform diff tasks
+ansible can perfrorm severaltask , it can group our servers, file mgt, user mgt, etc ,, bt first ansible needes to conect to the host(servers) and for it to do that , it 
+wil depend on the host 
+e.g windows host will be treated diff frm linux host
+
+                ANSIBLE USE SSH PLUGGING TO CONNECT TO LINUX HOST & WINRM FOR HOST ON WINDOWS
+it will use ssh pluggin to connect to linux host and for host on windows it will use winrm
+Servers:
+    UsersMGT
+    FilesMGT
+    ServicesMGT
+    PackagesMGT
+    deployments, manage,
+    build, test and configure apps 
+Ansible is an open source AGENTLESS :
+  Configuration Management tool, 
+  deployment tool and/or  
+  provisioning tool maintained by Redhat
+
 *************************************************************************************
 
 
@@ -544,8 +576,8 @@ installing ansible on that ec2 instance (the script is the file we hv called ans
 resource "aws_instance" "ubuntu" {
   ami           = data.aws_ami.ubuntu.id                    **referencing the data sourec file for the ami
   instance_type = var.my_instance_type                       ***referencing the variable file/block for the instance type
-  #user_data     = file("${path.module}/ansible-install-ubuntu.sh")      **referening the Ansible installation script
-  user_data = data.template_cloudinit_config.user-data.rendered           **referening the vscode installation script
+  #user_data     = file("${path.module}/ansible-install-ubuntu.sh")  referening the Ansible installation script bt commented out bc we using ata.template_cloudinit_config.user-data.rendered 
+  user_data = data.template_cloudinit_config.user-data.rendered           **referening the ansible installed on ubuntu script & vscode installation script
 
   key_name = var.my_key                          ***meeee.... referencing the key variable block in the variable file
   tags = {
