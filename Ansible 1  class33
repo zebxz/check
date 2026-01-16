@@ -41,9 +41,28 @@ Kubernetes orchestrates containerized applications (deployment, scaling), while 
 processes) across servers, often used together to set up and manage the underlying nodes that Kubernetes runs on, with Ansible handling setup and Kubernetes managing the apps
 inside.  
 
+https://www.google.com/search?q=difference+between+ansible+and+terraform&oq=diff+btw+ansible+and+&gs_lcrp=EgZjaHJvbWUqCQgBEAAYDRiABDIGCAAQRRg5MgkIARAAGA0YgAQyCQgCEAAYDRiABDIJCAMQABgNGIAEMgkIBBAAGA0YgAQyCQgFEAAYDRiABDIJCAYQABgNGIAEMgkIBxAAGA0YgAQyCQgIEAAYDRiABDIJCAkQABgNGIAE0gEIODU1MmowajeoAgiwAgHxBQrNjYhtP4O3&sourceid=chrome&ie=UTF-8
+Key Use Cases
+Use Terraform for:
+Building, changing, and versioning cloud infrastructure across multiple cloud providers (AWS, Azure, GCP, etc.).
+Managing the full lifecycle of infrastructure components (creation, updates, and destruction).
+Handling complex, interconnected systems, ensuring that all dependencies are provisioned in the correct order.
+Containerized solutions like Kubernetes cluster management.
+
+
+Use Ansible for:
+Automating system configurations such as software installation, file management, and user accounts on existing servers.
+Application deployment onto provisioned servers.
+Automating tasks across various domains, including network devices (routers, switches) and security systems.
+Managing configurations on both cloud and on-premises infrastructure. 
+
 Terraform, Kubernetes, and Ansible are distinct tools used for different stages of cloud automation: Terraform provisions the underlying infrastructure, Ansible configures
 the software on that infrastructure, and Kubernetes orchestrates the deployment and management of containerized applications within the provisioned infrastructure. 
 
+Better Together
+While they can perform some similar tasks, the best practice is often to use them together to leverage their respective strengths. A common workflow involves using Terraform
+to provision the foundational infrastructure (e.g., virtual machines
+and networking), and then using Ansible to perform post-deployment configuration, such as installing specific software and deploying applications onto those machines. 
 
 
 Core Differences BTW ANSIBLE  & KUBERNETES
