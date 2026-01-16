@@ -1354,6 +1354,39 @@ terfrm
 
 
 
+ WHAT IS ADHOC COMMAND 
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/03-adhoc-commands
+An Ad-Hoc command is a one-liner ansible command that performs one task on the target host(s)/group(s).
+
+Unlike playbooks — which consist of collections of tasks that can be reused — ad hoc commands are tasks that you don’t perform frequently,
+such as restarting a service or retrieving information about the remote systems that Ansible manages 
+
+This command will only have two parameters,
+the group / target of a host that you want to perform the task and
+the Ansible module to run.
+eg:
+ansible 172.19.16.16    -    ** i could pass an ip addresss , that becomes my target 
+ansible 172.19.16.16    -m ping                   *********** i can  passa amodule, mayb i wnat to ping that server 
+
+
+
+
+  MODULES
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/04-Ansible%20modules/Type_module.md
+
+They are the main building blocks of Ansible and are basically reusable scripts that are used by Ansible Ad-hoc and playbooks.
+These are small programs that do some work on the server.
+E.G  we hv a module called ping 
+this is a small program, this is an ansible program that is written in ptyhon
+
+Ansible comes with a number of reusable modules.
+it is synonmous to modules on tefrm registry, u can all a vpc module, an ec2 module, u can reuse them as many times AS POSSIBLE
+it has already been written, so you only need to referene them and it will be called frm the registry
+so its the sam ething that hasppens here 
+
+
+
+
   TERRARY OPERATOR
 
 how do you mk your script, your interpreter you hv to select it here, based on your selection, the ? is called itinerery,terrary operator, its what always evaluates the
@@ -1397,6 +1430,7 @@ why do you need PW authentication enabled on your ansible remote node when your 
 
    ANS:
 so that you are able to transfer the key , able to transfer your ssh key, public key, we wll need that PW
+
 
 
 
