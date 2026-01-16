@@ -30,10 +30,20 @@ Task Automation  , we can automate task just by using ansible
 IT Orchestration
 
 
+
+
+
+
 ******Online....
 DIFF BTW terrafrom & kubernetes and ansible
+Think of Ansible as building the house (servers/VMs) and Kubernetes as managing the inhabitants (containers) within that house.
+Kubernetes orchestrates containerized applications (deployment, scaling), while Ansible automates infrastructure tasks (configuration management, provisioning, general IT
+processes) across servers, often used together to set up and manage the underlying nodes that Kubernetes runs on, with Ansible handling setup and Kubernetes managing the apps
+inside.  
+
 Terraform, Kubernetes, and Ansible are distinct tools used for different stages of cloud automation: Terraform provisions the underlying infrastructure, Ansible configures
 the software on that infrastructure, and Kubernetes orchestrates the deployment and management of containerized applications within the provisioned infrastructure. 
+
 
 
 Core Differences BTW ANSIBLE  & KUBERNETES
@@ -68,9 +78,45 @@ Ansible modules and collections for Kubernetes (like the Ansible Kubernetes Coll
 
 
 
+WHat i understand so far DIFF BTW VIRTUAL MACHINES & CLOUD INSTANCES
+Virtual machine & cloud instance are similar bc cloud instance are also virtual machines the diff is cloud instance a virtual machine hosted and managed by a third-party cloud
+provider and accessed over the internet. 
+https://aws.amazon.com/compare/the-difference-between-containers-and-virtual-machines/#:~:text=Virtual%20machine%20image%20files%20are,How%20they%20work
+
+Virtual Machine (VM)
+A virtual machine is a software-based, isolated computer that emulates a physical machine with its own operating system and hardware resources (CPU, memory, storage). 
+Technology: VMs are created using a hypervisor, which is a software layer that sits on top of physical hardware (or on a host OS) and manages the allocation of
+resources to multiple isolated virtual environments.
+Deployment: Traditionally, virtualization is used in on-premises data centers to consolidate multiple workloads onto a single physical server, maximizing hardware 
+utilization
+
+*****WHILE:
+Cloud Instance
+A cloud instance (also known as a cloud server or by provider-specific names like Amazon EC2 instance, Azure Virtual Machine, or Google Compute Engine instance)
+is a virtual machine hosted and managed by a third-party cloud provider and accessed over the internet. 
+Service Model: Cloud instances are part of a broader "cloud computing" model, which includes features like self-service access, automation, dynamic scaling, and a
+pay-as-you-go billing model.
+Management: The cloud provider manages the physical infrastructure and hypervisor, allowing users to focus solely on the VM's operating system and applications
 
 
 
+DIFF BTW CONTAINERS & VIRTUAL MACHINES
+I bliv for containers you dont need to create ec2 instances or install softwares, you just need a container D or runtime or container engine to create packages but for virtual
+machines you have to create an ec2 instance if your resources are in the cloud and you can also install softwares in virtual machines
+
+CONTAINER
+Container technology involves building self-sufficient software packages that perform consistently, regardless of the machines they run on. Software developers create and 
+deploy container images—files containing the necessary information to run the application. Container images are read-only and cannot be altered by the computer system.
+VIRTUAL MACHINE
+Virtual machine technology involves installing virtualization software on a physical server or computer. The physical computer is called the host computer and the virtual 
+machine is called the guest. You can configure and update the guest operating system and its applications as necessary without affecting the host operating system.
+
+Core technology
+Virtual machines use hypervisors that communicate between the guest operating system and the host operating system. The hypervisor coordinates resource sharing, so the
+virtual machine runs in isolation alongside several others on the same hardware.
+
+Containers, on the other hand, use a container engine or container runtime. This is software that acts as an intermediary agent between the containers and the operating system,
+providing and managing system resources that the application needs. Docker is the most popular open-source container engine.
 
 
 
