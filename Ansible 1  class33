@@ -118,12 +118,13 @@ we automated the installation process using terraform & some high level blocks/t
 
 
 5) INSTANCE RESOURCE BLK /ec2.tf file  USING  "template_cloudinit_config"
-A)In the resource blk; for user data we passed the script to "create ansible user, which will also pass the user passwd & enable PW authentication.
+contains;
+A)Script to create ansible user; for user data we passed the script to "create ansible user, which will also pass the user passwd & enable PW authentication.
 ***we will use this password when we establish an SSH Connection using the password option as illustrated in video2
                   this script changes PW authentication from no to yes.
 B)Created a data block USING  "template_cloudinit_config" for 2 DIFF SCRIPT / USER DATA ON AN INSTANCE
  1ST SCRIPT TO INSTALL ANSIBLE ,THE 2ND SCRIPT TO INSTALL VSCODE
- we connected TO THE CONTROLLER UBUNTU SERVER
+ then we connected TO THE CONTROLLER UBUNTU SERVER
 
 
    6)     Ansible is designed to run on Unix/Linux systems, therefore Windows systems aren’t supported for the control node.
