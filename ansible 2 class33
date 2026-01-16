@@ -27,18 +27,25 @@ INorder to connect to the Remote-SSH: open ssh configuration file (option) in vs
 connect to the remote host, ie you can connect to an ec2 instance and for that to happen, we also passed vscode installation script & script.sh to configure vscode
 
 
-2) "template_cloudinit_config"
+2) "template_cloudinit_config" referred to in the ec2 instance block 
  59:18********* my summary from  NO.2 to  NO.4
-we are passing 2scripts( userdata) in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data to pass the 2scripts is to instal ubuntu
+we are passing 2scripts(userdata) in the resource blk for our instance (ec2.tf) so we using :"template_cloudinit_config" "user-data to pass the 2scripts its to instal ubuntu
 using ansible-install-ubuntu.sh & to install vscode using vscode-install.sh
 
-3)TERRARY OPERATOR :  its what always evaluates the condition based on what we select as our 'OS' 
+3)NULL RESOURCE
+WE referred to script.sh which will configure the vscode
+this script configures the vscode eg it needs to mk a dir in the home of ansible and so on,  so with this configuration & the configuration
+we did in the vscode in configuration file which is inside vscode, we can directly use your vscode code to do remote host, to login to 
+the ec2instance and write your code, create your files , write your play book and run them on your termiinal, & thats what we call remote development
+
+
+4)TERRARY OPERATOR :  its what always evaluates the condition based on what we select as our 'OS' 
 in the variables file; we passed a variable that enables us select the 'os' we want to configure 
 if i select linux in d variable (NO.3) then in the null resource, using local exec provisoner d template for var.os becomes templatefile("${ var.os == linux and therfore the
 ? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
 our selection in the variable)
 
- 4) CONFIGURING OUR MANAGED NODES 
+ 5) CONFIGURING OUR MANAGED NODES 
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
 
 A)THE CREATED USERS
@@ -55,7 +62,7 @@ then the module we wnat to pass is a ping module , this is what we use to test f
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
    ALSO; - a module, to create a file
 
- 5)    Ansible Engine uses SSH Connection to connect and work with Manage nodes.
+ 6)    Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 We can create SSH Connection in two ways:
 a) Password Authentication
 b) Password-less Authentication(This is with SSH Keys)
@@ -82,7 +89,7 @@ we knw that we created a user and we gave the usr a PW, so for us to comm to thi
  Pass the -k option
 
                                                           
- 5a) pass a (-k option) (small k) FOR PW SSH CONNECTION/AUTHENTICATION  ...  we also need the PW to be able to transfer the ssh key/public key
+ 6a) pass a (-k option) (small k) FOR PW SSH CONNECTION/AUTHENTICATION  ...  we also need the PW to be able to transfer the ssh key/public key
 
       we pass this bc it prompts us for an ssh PW
    ***   In the resource blk; for user data we passed the script to "create ansible user, which will also pass the user passwd & enable PW authentication.
@@ -92,33 +99,33 @@ so bc the user has a pw therfr i can mak a ssh connection using a PW
 we had enabled PW authentication, we had changed it to yes frm our script.
 
 
-  5ai)  -u  option  (user)
+  6ai)  -u  option  (user)
 WE ALSO CREATED A USER & COMMUNICATED WITH THE USER mark   
 ansible@ip-172-31-27-28   ansible db -m ping -u mark -k 
  hv nt exchange any key with mark so i hv to pass a - k option 
 
 
-5aii) HOST  VARIABLE
+6aii) HOST  VARIABLE
 For Automation which is convenient, instaed of me passing these options on the command line,i can pass the ssh PW within the host file  ie  a host variable 
  am passing the This on the host level, am passing host variable within the host file  so that i dnt hv to keep pasiing them on the cl
 
-5aiii)   WE CAN ALSO CREATE GROUP VARIABLES
+6aiii)   WE CAN ALSO CREATE GROUP VARIABLES
     [db:vars]
     ansible_ssh_user=sammy
     ansible_ssh_pass=abc123
 
-5iv) SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
+6iv) SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
 You can also connect using a different user by specifying the user & the user PW in the hosts file.
 
 
-5b) Password-less Authentication(This is with SSH Keys)
+6b) Password-less Authentication(This is with SSH Keys)
  1st you need to generate an ssh ,it needs to be generated in the home of ansible, eneure you are in the home of ansible and your generating it on your ansible 
 control server then transfer the key to the remote host ie the 3 host servers we created, We can also copy the key to a specific user
 bc ansible is the default user, i can ssh-copy-id then the private ip of the remote server
 
 
 
-ANSIBLE FACT       (pingpong, meaning success)
+7)ANSIBLE FACT       (pingpong, meaning success)
 
 this hostfile is still the password for ansible and when ansible goes ther its looking to see if ansible has been installed in those servers
    'discovered_interpreter_python": /usr/binpython3
@@ -128,7 +135,7 @@ success
   ITEM POTENCY
 Item potency of ansible, ansible will not recreate what it has already created
 
-F)  HOW TO VERIFY IF YOU ARE IN THE CONTROL NODE .. RUN : anisble
+8)  HOW TO VERIFY IF YOU ARE IN THE CONTROL NODE .. RUN : anisble
    lets say i want to comm with anoda user oda than the anisble default user 
 
 
