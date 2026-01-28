@@ -74,7 +74,8 @@ so we hv used ping to test our connection, we are using -m option whenever we wn
 
  6)    Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 We can create SSH Connection in two ways:
-a) Password Authentication
+a) Password Authentication 
+(-K Option)  if i dnt pass the -k option it wil by default try to connect using the ssh keys
 b) Password-less Authentication(This is with SSH Keys)
 Provide the managed Nodes IP/FQDN in inventory file on Ansible Engine.
 Test the connectivity by running:
@@ -526,7 +527,9 @@ cat /etc/passwd
 we see one of the users called ansible
 7)            Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 
-We can create SSH Connection in two ways:
+
+
+                        WE CAN CREATE SSH CONNECTION IN TWO WAYS:
 
 a) Password Authentication
 b) Password-less Authentication(This is with SSH Keys)
@@ -613,9 +616,10 @@ we knw that we created a user and we gave the usr a PW, so for us to comm to thi
 
 
 
-                                                           ESTABLISHING AN SSH CONNECTION
+                                                           ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION
 7Aiii)
-                                        (-k option) 
+                          (-k option)  **if i dnt pass the -k option it wil by default try to connect using the ssh keys
+
 
 *********** pass a -k option (small k) 
 we pass this bc it prompts us for an ssh PW
@@ -669,7 +673,7 @@ let me ssh into this instance 172-31-19-131
            ansible@ip-172-31-27-28:  $ ssh 172-31-19-131   
            ansible@ip172-31-19-131's password  :  ansible 
 
-welcome to ubnuntu 
+welcome to ubuntu 
 
 so hv logged dinto this instance 
  ansible@ip172-31-19-131: $ cat /etc/passwd
@@ -873,7 +877,7 @@ ansible@ip-172-31-27-28   ansible db -m ping
 
  
 7Axi)                                         
-HOST LEVEL PRECEDENCE
+                    HOST LEVEL PRECEDENCE
 
 ##########################  we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
@@ -1017,7 +1021,10 @@ bc i define output, i can run terfrm output and it will show my output
 password:ansible                                               **********  now it is trying to make a connection but bc ansible has a PW, i need to enter a PW 
                                  now it makes a ssh connect and transfers the key 
 
-    7Bii)                                       LOGIN WITHOUT PASSWORD
+
+THE 2nd OPTION TO EST AN SSH CONNECTION:
+
+    7Bii)                                      PASSWORDLESS AUTHENTICATION (THIS IS WITH SSH KEYS)
 
 now try logging into the machine 
 now i can try logging in using ssh just with the ip 
