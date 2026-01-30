@@ -21,21 +21,21 @@ REMIND Myself what is dynamond  ???????
 
 
 
-
-
+During the ansible installation, we configure vscode for remote development
+Once ansible have been installed and the host/remote nodes created 
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
-ie from the controller node server/ec2 instance where you hv installed your ansible software & after i have that i can hv multiple remote nodes, i can hv other ec2 
-instances/servers m able to control this multiple servers frm my control node thru ssh connection once its connected
+ie from the controller node server/ec2 instance where you hv installed your ansible software & after that, i also have multiple host/remote nodes, i can hv other ec2 
+instances/servers am able to control this multiple servers frm my control node thru ssh connection once its connected
 it pushes your ansible modules inside of the servers that its controling, once that is done, the module wil perfrom a task, lets say i want to create a file inside 
-of this so i can use ansible to go insid ef this ec2 istance n create a file so its goin to use a file module, it wil push the file module over ssh , once its moved , ansible 
-wil use the file module to create that file accoridng to the specifictaion, once it creates the file it deletes the module and once it accomplishes that task , it marks that
-task a complete and then it deletes the module   . 
+of this so i can use ansible to go inside of this ec2 istance n create a file so its goin to use a file module, it wil push the file module over ssh , once its moved ,ansible 
+wil use the file module to create that file according to the specifictaion, once it creates the file and once it accomplishes that task ,it marks that task a complete and then
+it deletes the module   . 
 
 we used the diff modules eg the ping module  we pass the -M option to pass a module, 
-we created a host list/file where we added the ip addresses of the remote hosts we created during the installation
+we created a host list/file where we added the ip addresses of the  hosts/remote nodes we created during the installation
 we eatablished an ssh connection using both;
 a)password authentication & passing the -k option which prompts to input a PW, if we dnt pass -k option, it wil by default try to connect using the ssh keys
-and ALSO USED passwordless authentication
+b)and ALSO USED passwordless authentication ie using ssh keys
 
 we saw how to verify if you are in the control node by running ; ansible
 
@@ -49,10 +49,16 @@ we saw how to verify if you are in the control node by running ; ansible
 
  summary,
 1) 53.00..  REMOTE DEVELOPMENT/CONFIGURING VSCODE TO CONNECT TO THE REMOTE HOST,
+Inside the vscode:
 Once you pass the host name, etc inside of your ssh config file(this file is in vscode)then you are able to directly use your vscode code to do remote host, to login to that
 ec2 instance and write your code, create your files , write your play book and run them on your termiinal, so this is what we call remote development
 INorder to connect to the Remote-SSH: open ssh configuration file (option) in vscode, we configured our ssh; we passed the host name, the  anasible user, so that we can 
-connect to the remote host, ie you can connect to an ec2 instance and for that to happen, we also passed vscode installation script & script.sh to configure vscode
+connect to the remote host, ie you can connect to an ec2 instance and for that to happen, we also passed vscode installation script, we also passed script.sh to configure
+vscode
+
+Also during the installation, we configured vscode for remote development, 2 scripts were were used for vscode (script.sh to install & vscode-install.sh to configure) 
+this script 'script.sh" does remote development, whereby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into
+the ubutu server to create our playbk they run the playbk, so instead of using that we can use our vscode 
 
 
 2) "template_cloudinit_config" referred to in the ec2 instance block 
@@ -63,7 +69,7 @@ b)to install vscode using vscode-install.sh
 
 3)NULL RESOURCE
 WE referred to script.sh which will configure the vscode
-this script configures the vscode eg it needs to mk a dir in the home of ansible and so on,  so with this configuration & the configuration
+this script configures the vscode eg it needs to mk a dir in the home of ansible and so on,  so with the configuration
 we did in the vscode in configuration file which is inside vscode, we can directly use your vscode code to do remote host, to login to 
 the ec2instance and write your code, create your files , write your play book and run them on your termiinal, & thats what we call remote development
 
@@ -234,11 +240,11 @@ continuation frm 1st video
 
 
                 USING SCRIPT TO CONFIGURE REMOTE DEVELOPMENT/CONNECTING TO THE REMOTE HOST USING VSCODE
-*****this is a script that does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into the ubutu server to
-create our playbk they run the playbk, so instead of using that we can use our vscode 
+*****this script 'vscode-install.sh" does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into
+the ubutu server to create our playbk they run the playbk, so instead of doing that we can use our vscode 
 
 
-*********** 52:00   in data "template_cloudinit_config" "user-data" ,   we passed 2scripts
+*********** 52:00   in data "template_cloudinit_config" "user-data" ,   we passed 2scripts (script.sh & vscode-install.sh)
 the 2nd script is to configure the vscode  
 content      = file("${path.module}/vscode-install.sh")
 i did dis automation so that when we start writing playbooks it wil be easier for you guys
@@ -262,7 +268,7 @@ Host ansible:
 
 ******* for this to happen we passed the vscode installation script:
  vscode-install.sh
-this the script thats goin to install and configure vscode
+this the script thats goin to install and configure vscode   **i bliv he meant the script.sh will configure vscode
 but apart frm that,we hv this (another) script:script.sh  this is the script that will configure vscode, this is d script that will install vscode and ill show you shortly
 hw it works 
 
@@ -432,7 +438,7 @@ showing deleted
 so he pasted the in the class channel
 
 
- 5i)                           DYNAMICALLY CONNECTED TO ANSIBLE HOST IN VSCODE
+ 5i)                            DYNAMICALLY CONNECTED TO ANSIBLE HOST IN VSCODE & CAN CREATE THE PLAYBKS IN THE HOST DUE TO THE INSTALLATION AUTOMATION
 
 1:11:38   ***********************
 ok so this is what i wanted us to see that because of the automation that  i had, it has dynamically add the ansible Host and we can see the ip adresses 54.218.139.205
