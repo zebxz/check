@@ -176,14 +176,22 @@ we can also specify the user to connect to in the host file
 
 1.53.0 ##########  we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
+meee, ie the servers on the host var will run with the conditions/passwd associated with the host var 
+
+in this instance, we had servers in the host var & also the grp var 
+then ; ansible db -m ping
+he also created a file 
 
 
 
 6aiii)   WE CAN ALSO CREATE GROUP VARIABLES
+this is created in the host file & we can delete the host variables once we create the grp varaible
     [db:vars]
     ansible_ssh_user=sammy
     ansible_ssh_pass=abc123       ********** so we are saying for this grp of servers the ssh PW is this 
 
+ ansible db -m ping
+its will use the grp level variable, bc we pased the var inside the host file
 
  ******** now i can delete the host variable 7Avii) bc we ar ultilizing the grp variable 
    
@@ -943,17 +951,18 @@ ansible@ip-172-31-27-28: $ cd/etc/ansible
 
    and in the file 
 
+db
+172.31.27.37 
+172.31.19.131  
+
 [db:vars]
     ansible_ssh_user=ansible               ********** so we are saying for this grp of servers the ssh PW is this 
 
 
- ******** now i can delete the host variable 7Avii) bc we ar ultilizing the grp variable 
+ ******** now i can delete the host variable  (db) 7Avii) bc we ar ultilizing the grp variable 
    
 
-[db]
- 172.31.27.37  
-172.31.19.131   
-*********************************
+
 if i ping 
 ansible@ip-172-31-27-28   ansible db -m ping 
 
