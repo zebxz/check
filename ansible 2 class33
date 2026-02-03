@@ -8,12 +8,12 @@ so i had to start with profs video Ansible1, for class 34 )
 
 USING SCRIPT TO CONFIGURE REMOTE DEVELOPMENT/CONNECTING TO THE REMOTE HOST USING VSCODE, INSTALLING VSCODE, TERRARY OPERATOR, 
 DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY CONNECTED TO ANSIBLE HOST IN VSCODE & WE CAN CREATE THE PLAYBKS IN THE HOST INSTEAD OF THE VSCODE 
-HOST KEY CHECKING, CONFIGURING OUR MANAGED NODES, CREATING THE HOST LIST, WE CAN CREATE SSH CONNECTION IN TWO WAYS;password & passwordless authentication ie using ssh keys, 
-a)ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION, CREATING ANOTHER USER   (mark), HOW TO VERIFY IF YOU ARE IN THE CONTROL NODE .. RUN : anisble, 
-COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, ANSIBLE FACT (pingpong, meaning success), SPECIFYING A USER TO CONNECT TO IN THE HOST FILE, GROUP VARIABLES, 
-HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT CREATING, b) Password-less Authentication (Using SSH_Keys),TRANSFER THE PUBLIC/SSH KEY TO THE REMOTE HOST
-SSH COPY ID, LOGIN WITHOUT PASSWORD, USING SSH & IP address, TRANSFERS KEY TO 2ND UBNUtu USER, TRANSFERS KEY TO REDHAT USER, COPYING THE KEY TO A SPECIFIC USER, 
-ADHOC COMMANDS, WHAT IS ADHOC COMMAND, MODULES, TYPES OF MODULES;command,shell,file,copy,fetch,apt,service,user module,setup module, debug module.
+HOST KEY CHECKING, CONFIGURING OUR MANAGED NODES, CREATING THE HOST LIST/GROUPS, WE CAN CREATE SSH CONNECTION IN 2WAYS;password & paswdless authentication ie using ssh keys, 
+a)ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS, CREATING ANOTHER USER(mark), HOW TO VERIFY IF YOU ARE IN THE CONTROL 
+NODE .. RUN : anisble, COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, ANSIBLE FACT (pingpong, meaning success), SPECIFYING A USER TO CONNECT TO IN THE HOST FILE,
+GROUP VARIABLES, HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT CREATING, b) Password-less Authentication (Using SSH_Keys),TRANSFER THE PUBLIC/SSH KEY
+TO THE REMOTE HOST SSH COPY ID, LOGIN WITHOUT PASSWORD, USING SSH & IP address, TRANSFERS KEY TO 2ND UBNUtu USER, TRANSFERS KEY TO REDHAT USER, COPYING THE KEY TO A SPECIFIC
+USER, ADHOC COMMANDS, WHAT IS ADHOC COMMAND, MODULES, TYPES OF MODULES;command,shell,file,copy,fetch,apt,service,user module,setup module, debug module.
 copy: a)From ansible control node to remote node/ b) From one location in remote node to another location in remote node
 Fetch: a)Will copy the files with a directory structure; ansible all -m fetch -a "src=./hosts dest=./"  b)To fetch the file without a directory structure, use the flat=yes option
 
@@ -121,13 +121,13 @@ Test the connectivity by running:
 $ ansible all -m ping
 
 
- C)    CREATING THE HOST LIST & PING THE HOST/SERVERS
+ C)    CREATING THE HOST LIST/GROUPS (eg; web & db) & PING THE HOST/SERVERS
 we created a host list & est an ssh connection
 in the host file, we created 2 groups (DB for the 2ubuntu servers & web for the redhat server) we entered the particulars of the hosts ie the private ip of the host servers
 we created in video 1
 we used the private ips so that whenevr he shuts down his instances  he doesnt have to come in here to change the ips bc the ips changed
 TO ping the servers: 
-ansible@ip-172-31-27-28:  $ ansible all -m ping       
+ansible@ip-172-31-27-28:  $ ansible all -m ping , This wil work to connect with ssh key  bt with PW we used; ansible all -k ping    
 i hv just typed yes for the first server, i need to type yes 3times
  bt as i do that bc i hv 3severs in my inventory its trying to reach my inventory but its failing 
 
@@ -184,8 +184,15 @@ he also created a file
 
 
 
+When we have both host var & grp var, the hsot var takes precedence bc both the host var & grp var are declared inside the same host file & we use the same same command ie
+ping all (ansible db -m ping)
+so when the command is run the var on the host level takes precedence
+
+
+
 6aiii)   WE CAN ALSO CREATE GROUP VARIABLES
-this is created in the host file & we can delete the host variables once we create the grp varaible
+   but we knw that host variable has the hightest priority
+
     [db:vars]
     ansible_ssh_user=sammy
     ansible_ssh_pass=abc123       ********** so we are saying for this grp of servers the ssh PW is this 
@@ -690,6 +697,8 @@ we cd
  ansible@ip-172-31-27-28: $ cd/etc/ansible
  ansible@ip-172-31-27-28: $  vi host 
 it will give you examples of hw u nid to mk your entries into this particular files                  ********* 1:31:30
+
+                         USING THE REMOTE SERVERS IN GROUPS IN THE HOST FILE
 he scrolled down to create a grp called DB
 he used his private ips do that whenevr he shuts down his instances  he doesnt have to come in here to change the ips bc the ips changed
 he also created anoda grp called web
@@ -736,7 +745,7 @@ ANS:
 
      
 
-  ************ 1:37:40
+  ************ 1:37:40                       CONNECTING TO A PARTICULAR GROUP OF SERVERS
 wit this hv been able to pass my PW and v been able to connect to my server
 if i need to coonect to the web, just to the web grp  so i can pass ansible and just pass web
 
