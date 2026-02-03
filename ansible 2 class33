@@ -161,6 +161,10 @@ CREATING VARIABLES IN THE HOST FILE
 when we use variable in the host file, it helps us pass the ssh PW inside the host file then we run the ping all command on the cl
 Also inside the host file, we can define the specific user we want to connect to
 
+DIFF BTW HOST VARIABLE & GRP VARIABLE
+     ***meeee, the host variable  is created with the server ip adress, then the user name  & the ssh password BUT for grop var we use only the user name & the ssh password
+
+
 
 6aii) HOST  VARIABLE
 For Automation which is convenient, instead of me passing these options on the command line,i can pass the ssh PW within the host file ie a host variable 
@@ -172,7 +176,7 @@ For Automation which is convenient, instead of me passing these options on the c
 
 then on the command line we can run: ansible db -m ping
 
-we can also specify the user to connect to in the host file
+we can also specify the user to connect to in the host file/CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO
 [db]
  172.31.27.37  ansible_ssh_pass=ansible
 172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark          * so now we are specifying that anytime we want to mk a conection to this instance the user needs to be 
@@ -196,7 +200,9 @@ so when the command is run the var on the host level takes precedence
 
 
 6aiii)   WE CAN ALSO CREATE GROUP VARIABLES
-   but we knw that host variable has the hightest priority
+but also ansible gives us what is called group variables 
+so instaed of duplicating this and writing this on evry host file,     ; 172.31.27.37  ansible_ssh_pass=ansible
+we can create a group variable    ***meeee using only the username & ssh PW
 
     [db:vars]
     ansible_ssh_user=sammy
@@ -865,6 +871,10 @@ so am trying to use ssh to connect to my remote host
 when we use variable in the host file, it helps us pass the ssh PW inside the host file then we run the ping all command on the cl
 Also inside the host file, we can define the specific user we want to connect to
 
+DIFF BTW HOST VARIABLE & GRP VARIABLE
+     ***meeee, the host variable  is created with the server ip adress, then the user name  & the ssh password BUT for grop var we use only the user name & the ssh password
+
+
 
 
    7Avii)                                    HOST AND GROUP VARIABLE
@@ -922,7 +932,7 @@ failed                                                  ** bc i havent passed a 
 
 7Aix)
 ************
-                           SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
+                                    CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO/SPECIFYING A USER TO CONNECT TO AT THE HOST LEVEL
 
 1:51:11  
 
@@ -949,8 +959,8 @@ then save
 
    this is what is called a host variable 
 but also ansible gives us what is called group variables 
-so instaed os duplicating this and writing this on evry host file,     ; 172.31.27.37  ansible_ssh_pass=ansible
-we can create a group variable 
+so instaed of duplicating this and writing this on evry host file,     ; 172.31.27.37  ansible_ssh_pass=ansible
+we can create a group variable   **meeeeee, using only the username & ssh PW
 
 
 1;52:55
@@ -970,15 +980,15 @@ ansible@ip-172-31-27-28: $ cd/etc/ansible
 
    and in the file 
 
-db
+db            ***so we can delete this (host var) bc we are using the grp level var
 172.31.27.37 
 172.31.19.131  
 
-[db:vars]
-    ansible_ssh_user=ansible               ********** so we are saying for this grp of servers the ssh PW is this 
+[db:vars]                 *** this is the group var we want to use
+    ansible_ssh_user=ansible               ********** so we are saying for this grp of servers (in the db group)the ssh PW is this 
 
 
- ******** now i can delete the host variable  (db) 7Avii) bc we ar ultilizing the grp variable 
+ ******** now i can delete the host variable  (db) bc we ar ultilizing the grp variable 
    
 
 
@@ -991,29 +1001,36 @@ ansible@ip-172-31-27-28   ansible db -m ping
  
 7Axi)                                         
                     HOST LEVEL PRECEDENCE
+ **meeeeeee, This is a situation where we have both host var & group var defined in the host file, the var defined at the host level takes precedence
 
-##########################  we knw that host variable has the hightest priority
+ we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
+we will see that the server (172.31.19.131)specified at the host level connects first, but in the illustration for group var & host var 172.31.19.131, didnt connect first
 
 
 7Axii)   for example 
      ***host variable
      172.31.27.37 
-     172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark  
+     172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark     *** variable defined at host level
 
 
 *****grp variable
    [db:vars]
-    ansible_ssh_user=ansible   
+    ansible_ssh_user=ansible           ***var defined at group level
 
    if i ping 
 ansible@ip-172-31-27-28   ansible db -m ping
 
-     172.31.27.37  success            ********* i bliv this is also successful bc all the host servers have the same PW: ansible
+we see the server (172.31.19.131)specified at the host level connects first, but in the illustration for group var & host var 172.31.19.131, didnt connect first
 172.31.19.131   sucesss        ******** meee,   The specified user connection on the host level is successful
+     172.31.27.37  success            ********* this is connected on the group level
 
 
-     7Axii)
+
+     7Axii)              CREATING A FILE TO CONFIRM THE HOST LEVEL PRIORITY
+we will see a file was created in the home of ansible user (ansible) whose var was defined at the grp level & also in the home of Mark whose var was defined at the host var 
+***i bliv it also created it in the home of Mark bc we defined mark at the host level if not the file will be created only in the home of ansible user
+  ill practice this ie ill create group variable then create a file & see if the file is created in the home of mark & the ansible user or only in the home of ansible user
 
 ****** we can test that by creating a file by using a file module
 
