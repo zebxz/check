@@ -157,11 +157,16 @@ we also established ssh connection withour passowrd ie using ssh keys
 
 
 
-6aii) HOST  VARIABLE
-For Automation which is convenient, instead of me passing these options on the command line,i can pass the ssh PW within the host file  ie  a host variable 
- am passing the This on the host level, am passing host variable within the host file  so that i dnt hv to keep pasiing them on the cl
+CREATING VARIABLES IN THE HOST FILE
+when we use variable in the host file, it helps us pass the ssh PW inside the host file then we run the ping all command on the cl
+Also inside the host file, we can define the specific user we want to connect to
 
-[db]       host variable 
+
+6aii) HOST  VARIABLE
+For Automation which is convenient, instead of me passing these options on the command line,i can pass the ssh PW within the host file ie a host variable 
+ am passing the This on the host level, am passing host variable within the host file so that i dnt hv to keep pasiing them on the cl
+
+[db]  ****host variable 
  172.31.27.37  ansible_ssh_pass=ansible  ... so we pass this inside the host file
 172.31.19.131   ansible_ssh_pass=ansible
 
@@ -854,6 +859,11 @@ so am trying to use ssh to connect to my remote host
 
   *********** so looking at managing remote host, we can use password authentictaion, pass a -u option but then i aLso eed to pass a -k option so that it prompts me for a PW 
 
+
+
+    **meeeeeee      CREATING VARIABLES IN THE HOST FILE
+when we use variable in the host file, it helps us pass the ssh PW inside the host file then we run the ping all command on the cl
+Also inside the host file, we can define the specific user we want to connect to
 
 
 
