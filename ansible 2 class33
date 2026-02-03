@@ -177,6 +177,7 @@ For Automation which is convenient, instead of me passing these options on the c
 then on the command line we can run: ansible db -m ping
 
 we can also specify the user to connect to in the host file/CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO
+You can also connect using a different user by specifying the user & the user PW in the hosts file.
 [db]
  172.31.27.37  ansible_ssh_pass=ansible
 172.31.19.131   ansible_ssh_pass=mark ansible_ssh_user=mark          * so now we are specifying that anytime we want to mk a conection to this instance the user needs to be 
@@ -187,36 +188,45 @@ we can also specify the user to connect to in the host file/CREATING A USER VARI
 if variables are defined at host level, it takes precedence over varaibles defined at group level
 meee, ie the servers on the host var will run with the conditions/passwd associated with the host var 
 
-in this instance, we had servers in the host var & also the grp var 
-then ; ansible db -m ping
-he also created a file 
+6aii)
+ HOST LEVEL PRECEDENCE
+ **meeeeeee, This is a situation where we have both host var & group var defined in the host file, the var defined at the host level takes precedence
+bc both the hostt var & the group var are defined inside the same host file, & its the same ping all command (ansible db -m ping) that will be used on the cl, the var at the 
+host level connects first/ takes precedence eg even if the ansible user which is the default user belongs to the grp var, we will see that the servers at the host level will
+have the same privelleges like the ansible user like the illustration below where we craeted a file.
 
 
 
-When we have both host var & grp var, the hsot var takes precedence bc both the host var & grp var are declared inside the same host file & we use the same same command ie
-ping all (ansible db -m ping)
-so when the command is run the var on the host level takes precedence
+CREATING A FILE TO CONFIRM THE HOST LEVEL PRIORITY
+we will see a file was created in the home of ansible user (ansible) whose var was defined at the grp level & also in the home of Mark whose var was defined at the host var 
+***i bliv it also created it in the home of Mark bc we defined mark at the host level if not the file will be created only in the home of ansible user
+  ill practice this ie ill create group variable then create a file & see if the file is created in the home of mark & the ansible user or only in the home of ansible user
 
 
 
-6aiii)   WE CAN ALSO CREATE GROUP VARIABLES
+6aiv)   WE CAN ALSO CREATE GROUP VARIABLES
 but also ansible gives us what is called group variables 
 so instaed of duplicating this and writing this on evry host file,     ; 172.31.27.37  ansible_ssh_pass=ansible
 we can create a group variable    ***meeee using only the username & ssh PW
 
+Example
     [db:vars]
     ansible_ssh_user=sammy
-    ansible_ssh_pass=abc123       ********** so we are saying for this grp of servers the ssh PW is this 
+    ansible_ssh_pass=abc123       
+
+
+db            ***so we can delete this (host var) bc we are using the grp level var
+172.31.27.37 
+172.31.19.131  
+
+[db:vars]                 *** this is the group var we want to use
+    ansible_ssh_user=ansible               ********** so we are saying for this grp of servers (in the db group)the ssh PW is this 
 
  ansible db -m ping
 its will use the grp level variable, bc we pased the var inside the host file
 
  ******** now i can delete the host variable 7Avii) bc we ar ultilizing the grp variable 
    
-
-
-6iv) SPECIFYING A USER TO CONNECT TO IN THE HOST FILE
-You can also connect using a different user by specifying the user & the user PW in the hosts file.
 
 
 6b) Password-less Authentication(This is with SSH Keys)
@@ -709,7 +719,7 @@ we cd
  ansible@ip-172-31-27-28: $  vi host 
 it will give you examples of hw u nid to mk your entries into this particular files                  ********* 1:31:30
 
-                         USING THE REMOTE SERVERS IN GROUPS IN THE HOST FILE
+                         PUTTING THE REMOTE SERVERS IN GROUPS IN THE HOST FILE
 he scrolled down to create a grp called DB
 he used his private ips do that whenevr he shuts down his instances  he doesnt have to come in here to change the ips bc the ips changed
 he also created anoda grp called web
@@ -1002,6 +1012,9 @@ ansible@ip-172-31-27-28   ansible db -m ping
 7Axi)                                         
                     HOST LEVEL PRECEDENCE
  **meeeeeee, This is a situation where we have both host var & group var defined in the host file, the var defined at the host level takes precedence
+bc both the hostt var & the group var are defined inside the same host file, & its the same ping all command (ansible db -m ping) that will be used on the cl, the var at the 
+host level connects first/ takes precedence eg even if the ansible user which is the default user belongs to the grp var, we will see that the servers at the host level will
+have the same privelleges like the ansible user like the illustration below where we craeted a file.
 
  we knw that host variable has the hightest priority
 if variables are defined at host level, it takes precedence over varaibles defined at group level
