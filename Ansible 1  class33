@@ -166,6 +166,30 @@ in the windows system because the ansible control node uses ssh  plugging to con
 To use windows as a control node you must use a Windows Subsystem for Linux (WSL),
 we can use ubuntu control node to control/manage hostS on any OS ie whether ubutu host or window host
 
+VIDEO 2; CLASS34
+
+                    USES OF ANSIBLE
+
+with the help of ansible, we can push configuration to the servers and the configuration can perform diff tasks
+ansible can perfrorm severaltask , it can group our servers, file mgt, user mgt, etc ,, bt first ansible needes to conect to the host(servers) and for it to do that , it 
+wil depend on the host 
+e.g windows host will be treated diff frm linux host
+
+                ANSIBLE USE SSH PLUGGING TO CONNECT TO LINUX HOST & WINRM FOR HOST ON WINDOWS
+it will use ssh pluggin to connect to linux host and for host on windows it will use winrm
+Servers:
+    UsersMGT
+    FilesMGT
+    ServicesMGT
+    PackagesMGT
+    deployments, manage,
+    build, test and configure apps 
+Ansible is an open source AGENTLESS :
+  Configuration Management tool, 
+  deployment tool and/or  
+  provisioning tool maintained by Redhat
+
+
 2) ANSIBLE DIRECTORY STRUCTURE; includes 
 A)the host: also called the inventory, this is where the host servers are added using the ip address & i bliv its where we change the host checking frm true to false for automation
 B)Ansible config file : 
@@ -174,18 +198,20 @@ roles are like modules that u can custom create anD call them as needed, so u ca
 i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call the role inside  of my playbk and jenkins will be installed
 
 3)THE PRECEDENCE/PRIORITY ANSIBLE USES WHEN SEARCHING FOR THE CONFIG FILE
+Because ansible has the option of creating the config file in a diff location other than the default location, so when searching for the file it follows an order of precedence
+
 1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
 2nd:  ./ansible.cfg         pwd dir 
 3rd:  ./ansible.cfg         home  of that particulr user 
 and if not it goes to the 
 default : /etc/ansible/ansible.cfg
  if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
-    thefor wil al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
+    thefor with al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
 its configuartion
 
-ANSIBLE2
-so the default ansible configuration file is found in this location, in which we can make various settings like locating of our inventory file or host key checking
-so any type of configuration that we want to set for ansible we will do it in the ansible config file , ansible.cfg 
+ANSIBLE2                               DEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION                                      
+so the default ansible configuration file is found in this location '/etc/ansible/ansible.cfg., in which we can make various settings like locating of our inventory file or
+host key checking so any type of configuration that we want to set for ansible we will do it in the ansible config file , ansible.cfg 
 but this configuration file we can put it any where as long as we reference it bc when you run ansible, the first tin is ansible will read the configuration
  ***** 
 1:21:00
@@ -317,28 +343,7 @@ default : /etc/ansible/ansible.cfg
 its configuartion
 
 
-VIDEO 2; CLASS34
 
-                    USES OF ANSIBLE
-
-with the help of ansible, we can push configuration to the servers and the configuration can perform diff tasks
-ansible can perfrorm severaltask , it can group our servers, file mgt, user mgt, etc ,, bt first ansible needes to conect to the host(servers) and for it to do that , it 
-wil depend on the host 
-e.g windows host will be treated diff frm linux host
-
-                ANSIBLE USE SSH PLUGGING TO CONNECT TO LINUX HOST & WINRM FOR HOST ON WINDOWS
-it will use ssh pluggin to connect to linux host and for host on windows it will use winrm
-Servers:
-    UsersMGT
-    FilesMGT
-    ServicesMGT
-    PackagesMGT
-    deployments, manage,
-    build, test and configure apps 
-Ansible is an open source AGENTLESS :
-  Configuration Management tool, 
-  deployment tool and/or  
-  provisioning tool maintained by Redhat
 
 *************************************************************************************
 
@@ -1107,6 +1112,8 @@ so this is how we use ansible in various envs   ...........1:01:24
 What is the precedence or priority of ansible when its searching for the configurtaion file 
 
  ANS : 
+***meee.. 
+Because ansible has the option of creating the config file in a diff location other than the default location, so when searching for the file it follows an order of precedence
 
 1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
 2nd:  ./ansible.cfg         pwd dir 
