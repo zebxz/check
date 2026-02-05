@@ -50,13 +50,18 @@ b)and ALSO USED passwordless authentication ie using ssh keys
 6)WE also created another user (Mark & his paswd) was created in the db grp & we connected to him using the password, we specified the user by using the -U option
  ansible db -m ping -u mark -k   ... -K, to be prompted for a password
 
-7)we also established ssh connection withour passowrd ie using ssh keys
+7)we also established ssh connection withour passowrd ie using ssh keys (**meeee, exchanging the public key with the private key)
+
+
+WHAT IS ADHOC COMMAND 
+An Ad-Hoc command is a one-liner ansible command that performs one task on the target host(s)/group(s).
+ad hoc commands are tasks that you don’t perform frequently, such as restarting a service or retrieving information about the remote systems that Ansible manages.
 
 
 
 
-      ****in cont.. frm video1;
-
+     
+      video 2 is in cont.. frm video1;
 
  summary,
 1) 53.00..  REMOTE DEVELOPMENT/CONFIGURING VSCODE TO CONNECT TO THE REMOTE HOST,
@@ -302,6 +307,13 @@ command,shell,file,copy,fetch,apt,service,user module,setup module, debug module
 copy: a)From ansible control node to remote node/ b) From one location in remote node to another location in remote node
 Fetch: a)Will copy the files with a directory structure; ansible all -m fetch -a "src=./hosts dest=./"  b)To fetch the file without a directory structure, use the flat=yes option
 
+
+WHAT IS ADHOC COMMAND 
+An Ad-Hoc command is a one-liner ansible command that performs one task on the target host(s)/group(s).
+ad hoc commands are tasks that you don’t perform frequently, such as restarting a service or retrieving information about the remote systems that Ansible manages.
+This command will only have two parameters,
+the group / target of a host that you want to perform the task and
+the Ansible module to run.
 
 
 
@@ -1310,7 +1322,8 @@ this is an adhoc command
          WHAT IS ADHOC COMMAND 
 An Ad-Hoc command is a one-liner ansible command that performs one task on the target host(s)/group(s).
 
-Unlike playbooks — which consist of collections of tasks that can be reused — ad hoc commands are tasks that you don’t perform frequently, such as restarting a service or retrieving information about the remote systems that Ansible manages.
+Unlike playbooks — which consist of collections of tasks that can be reused — ad hoc commands are tasks that you don’t perform frequently, such as restarting a service or
+retrieving information about the remote systems that Ansible manages.
 
 ********** This command will only have two parameters,
 the group / target of a host that you want to perform the task and
