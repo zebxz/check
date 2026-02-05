@@ -6,10 +6,10 @@ so i had to start with profs video Ansible1, for class 34 )
 
 
 
-USING SCRIPT TO CONFIGURE REMOTE DEVELOPMENT/CONNECTING TO THE REMOTE HOST USING VSCODE, INSTALLING VSCODE, TERRARY OPERATOR, 
-DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY CONNECTED TO ANSIBLE HOST IN VSCODE & WE CAN CREATE THE PLAYBKS IN THE HOST INSTEAD OF THE VSCODE 
-HOST KEY CHECKING,  DEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED NODES, CREATING THE HOST LIST/GROUPS, 
-WE CAN CREATE SSH CONNECTION IN 2WAYS;password & paswdless authentication ie using ssh keys, 
+USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT, CONNECTING TO THE REMOTE HOST USING VSCODE, INSTALLING VSCODE,APPLYING OUR CODE/SCRIPT, OUR KEY IS REFERENCED
+IN THE NULL FILE, TERRARY OPERATOR, DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY CONNECTED TO ANSIBLE HOST IN VSCODE & WE CAN CREATE THE PLAYBKS IN THE HOST INSTEAD OF 
+THE VSCODE HOST KEY CHECKING,  DEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED NODES, CREATING THE HOST LIST/GROUPS, 
+WE CAN CREATE SSH CONNECTION IN 2WAYS;password & paswdless authentication ie using ssh keys,  LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE
 a)ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS, CREATING ANOTHER USER(mark), HOW TO VERIFY IF YOU ARE IN THE CONTROL 
 NODE .. RUN : anisble, COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, ANSIBLE FACT (pingpong, meaning success), CREATING A USER VARIABLE AT THE HOST LEVEL TO
 CONNECT TO, GROUP VARIABLES, HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT CREATING, b) Password-less Authentication (Using SSH_Keys),TRANSFER THE
@@ -26,6 +26,7 @@ REMIND Myself what is dynamond  ???????
 SIMPLIFIED SUMMARY
 
 1)During the ansible installation, we configure vscode for remote development
+the first part was to install & configure vscode & the 2nd was to input the 'host ansible info' in vscode inorder to connect to the remote host & write playbooks
 Due to the installation automation(i bliv all the scripts used during the installation;script to create remote servers, vscode instalation/script.sh, create ansible user.sh,
 in the ec2 blk) we dynamically connected to ansible host in vscode & we can create the file/playbooks in the host instead of the vscode then using gitbash
 We also automated host key checking so that we are not prompted to confirm yes everytime 
@@ -64,17 +65,21 @@ ad hoc commands are tasks that you don’t perform frequently, such as restartin
       video 2 is in cont.. frm video1;
 
  summary,
-1) 53.00..  REMOTE DEVELOPMENT/CONFIGURING VSCODE TO CONNECT TO THE REMOTE HOST,
+1) 53.00..  USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT
 Due to the installation automation(i bliv all the scripts used during the installation;script to create remote servers, vscode instalation/script.sh, create ansible user.sh,
-in the ec2 blk) we dynamically connected to ansible host in vscode & we can create the file/playbooks in the host instead of the vscode then using gitbash
+in the ec2 blk) we dynamically connected to ansible host in vscode & we can create the file/ write playbooks in the host instead of the vscode then using gitbash
 
-Inside the vscode:
+CONNECTING TO THE REMOTE HOST USING VSCODE
+Inside the vscode:    this is done after the vscode installation & configuration
 Once you pass the host name, etc inside of your ssh config file(this file is in vscode)then you are able to directly use your vscode code to do remote host, to login to that
 ec2 instance and write your code, create your files , write your play book and run them on your termiinal, so this is what we call remote development
 INorder to connect to the Remote-SSH: open ssh configuration file (option) in vscode, we configured our ssh; we passed the host name, the  anasible user, so that we can 
 connect to the remote host, ie you can connect to an ec2 instance and for that to happen, we also passed vscode installation script & script.sh to configure vscode
 
-Also during the installation, we configured vscode for remote development, 2 scripts were were used for vscode (script.sh to install & vscode-install.sh to configure) 
+                            2PARTS OF THE REMOTE DEVELOPMENT
+Also during the installation, we configured vscode for remote development, the first part was to install & configure vscode & the 2nd was to input the 'host ansible info' in 
+vscode inorder to connect to the remote host & write playbooks
+2 scripts were were used for vscode (script.sh to install & vscode-install.sh to configure) 
 this script 'script.sh" does remote development, whereby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into
 the ubutu server to create our playbk they run the playbk, so instead of using that we can use our vscode 
 
@@ -333,10 +338,11 @@ continuation frm 1st video
 38:00 .. using mail delivery to xplain the pushing of programmes frm the controller to the home of the user in the host/remote nodes
 
 
-
-                USING SCRIPT TO CONFIGURE REMOTE DEVELOPMENT/CONNECTING TO THE REMOTE HOST USING VSCODE
+                                      
+                USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT 
 *****this script 'vscode-install.sh" does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into
 the ubutu server to create our playbk they run the playbk, so instead of doing that we can use our vscode 
+
 
 
 *********** 52:00   in data "template_cloudinit_config" "user-data" ,   we passed 2scripts (script.sh & vscode-install.sh)
@@ -347,7 +353,11 @@ this is a script that does remote development, wherby you need to bc our ansible
 our playbk they run the playbk, so instead of using that we can use our vscode 
 
 
-##### A)                               
+
+A)      CONNECTING TO THE REMOTE HOST USING VSCODE
+
+#####    **mee,for the remote development,After the installation & configuration of vscode, we need to input the 'host ansible info' for the ssh congfiguration 
+                            to be able to create files & write playbook as will be sen in video3
 ******52:23
 opens the vscode to show us:  
 if you opens the vscode, (if u watched the vscode configuration video i sent) in your vscode  if u look at the setting comand pallet thers a remote host, you can connect to
@@ -482,12 +492,14 @@ resource "time_sleep" "wait_for_instance" {
 }
 
 
-
-  5)    APPLYING OUR CODE   (to configure 1 to 4 above)
-**********59:50
-
+                              OUR KEY IS REFERENCED IN THE NULL FILE
 mk sure your key is available in your env , bc for e.g  we referenced our key in the null file, the resource blk for our instance ec2.tf 
 
+
+  5)    APPLYING OUR CODE/SCRIPTS   (to configure 1 to 4 above)
+**********59:50
+
+                                              
    terafrm files  ls 
 i have all those files there so ill run 
    terraform files   terrafrom init
@@ -496,9 +508,14 @@ terfrm plan
 Enter value:linux          this variablw we made it rEQ so that you can choose what operating system your using , am using a mac computer, the os is linux so il enter linux
                            if your uisng select windows so its able to setup your vscode for you 
 
+
+
+                               HE REMOVED THE SSH CONFIGURATION IN VSCODE
 *********1:02:23
 in vscode, he opened the config file and removed The vscode ssh configuration  in A) above 
-he said he wants to configure the vscode so that he can directly ssh into in server 
+he said he wants to configure the vscode so that he can directly ssh into in server .. 
+**** it was removed bc we will add it after the vscode installation & configuration
+ **in video3, he added the info back bc we needed it for ssh configuration inorder to write playbook 
 
    **** 
  terfrm plan
@@ -707,7 +724,10 @@ note that the implicit localhost does not match 'all'          **** bc i inside 
                                                                        the list is empty, says only localhost is available so let me use it as my inventory 
 so now ill pass local host 
 ansible@ip-172-31-27-28:  $ ansible localhost -m ping
-     succsess                              ******* so ansible has been able to ping the local host, its been able to ping itself, so this means that ansible is able to 
+ success
+
+                                                LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE
+                                   ******* so ansible has been able to ping the local host, its been able to ping itself, so this means that ansible is able to 
                                      configure the server that its installed on/running on, this shows hw powerful ansible is, cos it can configure other servers n also the 
                                          server that its running on bc local host is the server that is running ansible
 
