@@ -35,13 +35,14 @@ yes i want to recall the last command but am adding sudo to it, these are linux 
 
 what command do you use to find your present working dir?  
 ANS : pwd
-now if i ask you to find your pwd, i dnt expect you to write a script, to put that insid eof a script bc its a one line command, its a command that u can directly execute on ur CLI
+now if i ask you to find your pwd, i dnt expect you to write a script, to put that inside of a script bc its a one line command, its a command that u can directly execute on
+ur CLI
 BUT if you have a multiple/series of commands that you want to execute then you can put them in a script 
 so thats what an adhoc command is and we do that bc its smt that we dnt execute often 
 adhoc command is a one line command and its smt we dnt execute often but if we hv multiplr command that we always run all the time then 
-it is best practice to put multiple commands in a sript and  its less prone to error and all the time you run the script, you are runing the same command so its less prone to
-error if you execute it as a script as oppose to u typing 10 commands bk to bk on the cli, you are prone to make mistakes
-so for one line you can run it directly on the cli but for multiple commands u put it in a script thats waht automation is about 
+it is best practice to put multiple commands in a sript( **me,playbk) and its less prone to error and all the time you run the script, you are runing the same command so its
+less prone to error if you execute it as a script as oppose to u typing 10 commands bk to bk on the cli, you are prone to make mistakes
+so for one line you can run it directly on the cli but for multiple commands u put it in a script thats what automation is about 
 
 
 so for ansible we hv adhoc commands but if we hv multiple commands that we want to pass tru ansible then we can write a play bk 
@@ -51,6 +52,8 @@ referring to video3 class33 ************ 1:05
 
 
 ***********13:06         ................ STARTS
+
+               APPLYING THE CODE AGAIN LIKE FROM PREVIOUS CLASS
 
 i hv my config files so ill 
 trfrm init
@@ -85,10 +88,13 @@ so we first ssh into our that instance  (using the public ip): 54.185.247.171
 after which we configure our host file
 in aws click conncet, he copied the ssh command for the instance  54.185.247.171
 
-19:23******* 
+
+19:23*******                                     STILL USING THE IDE
 again am doing this still on my terminal (terfrm IDE) but hv already provisIoned dit in my vscode 
 so i can stilluse my vscode to do it, and ill show you when we write playbks 
 
+
+                                                STEPS TO SSHING INTO ANSIBLE SERVER
 #### 1) 
 but for now ill just ssh in 
 splits his terminal
@@ -103,7 +109,7 @@ so ill
 ubuntu@ip-172-31-28-203: $ sudo su - ansible 
 
 now am in my ansible server
-ansible@ip-172-31-28-203: $ ansible aa -m ping   ... .. said  he meant to type all but its seeing it that he wants to ping the group
+ansible@ip-172-31-28-203: $ ansible all -m ping   ... .. said  he meant to type all but its seeing it that he wants to ping the group
 provided host list is empty, only localhost is available 
 ansible@ip-172-31-28-203: $ ansible localhost -m ping 
 success
@@ -122,6 +128,7 @@ so basically hes doing the same thing WE Already did in video2
 #### 4)
 
 to disable key host checking (we need to change to false)
+                                                              GENERATING THE Ansible.cfg file
 ansible@ip-172-31-28-203: $  vi /etc/ansible.cfg
 as we see evrytin is commented out , it is bc evrytin is ruuning by default , they are default setting, default just means ansible config is in the etc/ansible  bt if u want 
 to see the actual file run this command and it will generate for you your actual file ansible-config init --disabled -t all > ansible.cfg
@@ -134,14 +141,16 @@ ansible.cfg                                          ****** ok it created it in 
 ansible@ip-172-31-28-203: $  cat ansible.cfg
 we see the configfile and most of the tins hv been commented
 
- 
+
+
+
 31:35 ****************************  FORKS 
 we hv what is called forks
-its like how many servers ansible can confiure ta once ie in parrarrel
+its like how many servers ansible can confiure at once ie in parrarrel
 
 
 INTERVIEW QUSETION
-can you configur your ansible so that it execute task on remote host in series , ie one hsot after another
+can you configur your ansible so that it execute task on remote host in series , ie one host after another
 
 ANS:
 yes you can do that by setting your forks number to 1 so that ist only executing task on one SERVER AT A TIME 
@@ -171,7 +180,7 @@ so hv configured my remote hoste to be managed remotelessly
 key 
 
 
-38:21                  contd frm video2
+38:21                  contd frm video2                         USING THE APT/YUM MODULE FOR INSTALLATION
 **************** back to ansible modules
 
 6) (Apt)  yum Module
@@ -188,12 +197,15 @@ $ ansible db -m apt -a "name=nginx state=present" -b
 41:05 ***** 
 
 we need root priviledge to install a package  and  apt or yum will be used interchangeably  e.g yum for redhat and apt for ubuntu (debiem package manager) 
-so we use a command called "become" to excalate our priviledges or a " -b " option , -b just means you wnat escalate the priviledges, w ewnt to use sudo prividege
+so we use a command called "become" to excalate our priviledges or a " -b " option , -b just means you wnat escalate the priviledges, we wnt to use sudo prividege
 
 ansible@ip-172-31-28-203: $ $ ansible all -m yum -a "name=apache2 state=present" --b
-failled for the first ubuntu server
+failed for the first ubuntu server
 failed for the 2nd ubuntu server
 also failed for the redhat server     *********** bc it couldnt find apache tool
+
+
+              TROUBLESHOOTING ; Apache not part of yum repo
 
 *********  yes when we are working with yum module, apache tool is nt part of the yum repo, instead you need to install httpd 
 httpd is the same package but its the package thats in the yum repository  bc were trying to install a package(apache) thats not part of yum repository
@@ -225,13 +237,9 @@ change is false                                         ********* this is called
 success for the 2nd ubuntu server
 But  failed for the redhat server  
 
-   INTERVIEW QUESTION
-WHAT is idem potency 
-
-ANS:
-Anisble does not reinstall  a package thats already insatlled or run a task that has already been completed 
 
 
+  
 ###  6iII)
 ***************************** ABSENT 
  to remove the package ill say state is absent 
