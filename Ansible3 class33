@@ -54,6 +54,7 @@ referring to video3 class33 ************ 1:05
 ***********13:06         ................ STARTS
 
                APPLYING THE CODE AGAIN LIKE FROM PREVIOUS CLASS
+                       (he probably destroyed evrything at the end of last class)
 
 i hv my config files so ill 
 trfrm init
@@ -128,7 +129,7 @@ so basically hes doing the same thing WE Already did in video2
 #### 4)
 
 to disable key host checking (we need to change to false)
-                                                              GENERATING THE Ansible.cfg file
+                                                              GENERATING THE Ansible.cfg file IN ANSIBLE CONTROL SERVER
 ansible@ip-172-31-28-203: $  vi /etc/ansible.cfg
 as we see evrytin is commented out , it is bc evrytin is ruuning by default , they are default setting, default just means ansible config is in the etc/ansible  bt if u want 
 to see the actual file run this command and it will generate for you your actual file ansible-config init --disabled -t all > ansible.cfg
@@ -179,10 +180,12 @@ ansible@ip-172-31-28-203: $ ssh-copy 172.21.92
 so hv configured my remote hoste to be managed remotelessly
 key 
 
-
+ 
+                                                               
 38:21                  contd frm video2                         USING THE APT/YUM MODULE TO INSTALL PACKAGE MANAGERS
 **************** back to ansible modules
 
+                            WE can also use variables for apt/yum module during installion as can be seen below in setup module
 6) (Apt)  yum Module
 
 Used to install a package in the ansible client.
@@ -411,6 +414,7 @@ also i can look at
 ansible _distribution : redhat                   ******** and we will be using this variables
 i can say that i want to configure instances whose ansible distribution is redhat
 
+
 eg                                        USING VARIABLES FOR APT/YUM MODULE
 when i was running the command that we were installing httpd or apache, i would hv passed a variable and say install apache if ansible distribution is debiem bt install 
 httpd if ansible distribution is erdhat 
@@ -453,7 +457,7 @@ You are diasbling the setup module
 
 10)
 ###### Debug module
-Executes only on the local host to display some information- message or variable value.
+Executes only on the local host (mee..ansible control node)to display some information- message or variable value.
 
 We do not need ssh connectivity or password for a debug module. When using the debug module, the arguments will either be
 - msg = to display a message
@@ -553,7 +557,7 @@ ungrouped
 ********* these are some of the basic modules that w eneed to knw , bt again as we lookde, ANSIBLE has a ton of modules that are there, public modules taht are there that
 you can use 
 
-
+                              ISSUSES WITH OPENSSL
 
 ###### complaint
 am trying to run the openssl its nt working, i copied the command diresctly frm the scripte
@@ -575,6 +579,8 @@ dynamic inventories if i hv 50servers ders no way ill go into the 50 serevers to
 dnt need to configure my host file, instaed ill use a script taht wil go into aws , even if its 100servers, based on the script am using it goes and and get all the servers
 ips and return it as an inventories then ansible will just use that as an inventory to go and do your configuration
 
+
+                                            CUSTOM AMIs
 but what ull do here, esp in your prod env goin forward, most companies wil use what is called custom AMIs, ie an AMI that hv created bc am using it for a coy, this AMI will
 be managed by ansible b4 i craete the AMAI, i already exchange the key i pass in the key, the ssh key, you load it with all the software b4 you craete an instance for it
 so when i introduce ansible to mg8 it i dnt nid to worry abt ssh keys anymore bc this custome AMI alraedy has a user called ansible baked in, a pecific key has already been 
@@ -627,7 +633,7 @@ Playbooks are designed to be human-readable and are developed in a basic text la
 
 ###
 11a)
-  Playbook syntax
+                            PLAYBOOK SYNTAX
 
 Playbooks are expressed in YAML format with a minimum of syntax.
 A playbook is composed of one or more ‘plays’ in an ordered list.
@@ -638,6 +644,7 @@ Playbooks with multiple ‘plays’ can orchestrate multi-machine deployments, r
 on your network infrastructure, and so on. (ie if u hv multiple play u can hv dif target, one play targeting db instances, the other web instances bc each play wil hv diff
 arguments, it will v a host and it will hv task   *********** 1:53:20
 
+                                                    EACH PLAY DEFINES 2 THINGS
 At a minimum, each play defines two things:
 the managed nodes to target, using a pattern
 at least one task to execute (and this task wil hv  a module, ie what are you trying to do in this particular node) 
@@ -646,11 +653,14 @@ at least one task to execute (and this task wil hv  a module, ie what are you tr
 ie, so a playbk can hv multiple play, evry play wil hv some task, task will use a module, each task calls a module, task belongs to a play, a play belongs to a playbk, so i
 can hv a playbk with 5plays then this diff plays are executing task on diff host bt those task each of them wil be calling  a module 
 
+
                                       INTERVIEW QUESTION
 1) What programming lang can you write???
    
 ANS:     YAML
 when you writing playbk, its written in yaml so ull hv an experience writing YAML language
+
+
 
  2) whats the diffERNECES btw ansible and terfrm 
 ANS:
@@ -668,7 +678,7 @@ thats one of the key differences when it comes to our automation tools
 
 ####
 11b)
-  Ansible task execution
+                                   ANSIBLE TASK EXECUTION
 
 By default, Ansible executes each task in order, one at a time, against all machines matched by the host pattern.
 
@@ -692,7 +702,7 @@ Modules that behave this way are often called ‘idempotent.’ Whether you run 
 11c)
 #####
 
-Yaml basics
+                          YAML BASICS
 
 For Ansible, nearly every YAML file starts with a list.
 Each item in the list is a list of key/value pairs, commonly called a “hash” or a “dictionary”.
@@ -711,7 +721,7 @@ example:
 ...
 
 
-11d)
+11d)                      DICTIONARY
 #######
 
 A dictionary is represented in a simple key: value form (the colon must be followed by a space):
@@ -729,7 +739,7 @@ Sample playbook
 ---
  - name: sonarqube playbook
    hosts: sonarqube                             ********* need to define who the host are 
-   become: yes                              **** we ll see why am putting it there, become is yes, just like when we are passing it on a command line we said we pass a CLI flag 
+   become: yes                           **** we ll see why am putting it there, become is yes, just like when we are passing it on a command line we said we pass a CLI flag 
    tasks:
  - name: install java
    yum:
@@ -754,14 +764,20 @@ Sample playbook
 
 ##12)
 
-2:00:28                                                REMOTE DEVELOPMENT
+
+
+
+2:00:28                                                REMOTE DEVELOPMENT/ THE SECOND PART; SSH CONFIGURATION
 ****************** 
 TO STARt writing our playbk lets go to our vscode
 
-  so this is my vscode that i have configured,my configured file  already has my ansible host name and my key
+  so this is my vscode that i have configured,my configured file already has my ansible host name and my key
 so i want to do what is called remote development
 so bc it has already been configured like this , now again you dnt have to use that automation that we did
 ******** 2:00:05
+
+                                       MANUAL REMOTE CONFIGURATION
+               ***meeee, If the automated configuration didnt work for you 
 all you hv to do is copy, go into your configure file and just add this  :
 host ansible                                         2:03:29******* this is what will be used for ssh configuration
    HostName: 54:185:247:171
@@ -769,7 +785,7 @@ host ansible                                         2:03:29******* this is what
    identifyfile: ~?downloads/elks-instance.pem
 
  ull need to run this script in the link below, once you login in, you will need to follow this procedure here bc if u do jst the config above, ansible wil nt own the home
-the home will stilll be owned by root, so you can ssh into your ansible control machine
+the home will stilll be owned by root, so you can ssh into your ansible control machine & run the script in the 'remote-config' its in this github repo
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/remote-config.md
 
 2:03:00
@@ -782,7 +798,7 @@ also the /etc/ansible , if it deosnt , ansible wont hv right to write to this di
 ####
 12a)
 
-2:04:00
+2:04:00                             CONNECT TO HOST IN THE VSCODE TO START WRITING PLAYBOOKS
 ********* so now in my vscode , click connect to host which is ansible
 are you sure you want to continue :yes
 i can open , and am opening it in the home of ansible dir  /home/ansible/
@@ -1128,6 +1144,10 @@ so if i wantit displayed to me i need to capture it using a register, i need to 
 display that register, the result that i captured in that task and now giving me what my memeory info is for my instance
 
 ****** so that is the uptime and httpd.yml 
+
+
+
+
 
 
    2:41:11                               USING CONDITIONS
