@@ -1216,6 +1216,12 @@ the host file to know which servers it has to configure
 
   INTERVIEW QUESTION
 What is the precedence or priority of ansible when its searching for the configurtaion file 
+mee... 
+Because ansible has the option of creating the config file in a diff location other than the default location, so when searching for the file it follows an order of precedence
+
+ bc whenevre we run ansible, the 1st tin is ansible will read the configuration file it wil look for the config file based on the priorities, it wil check if we pass env 
+variable/mee..reference it, if its nt there it wil check the pwd so if i created a playbk where my ansible.cfg is , ansible wil use the file to read the configuration thats 
+the priority, if it doest find it it wil go to the home of the user and then the default 
 
  ANS : 
 
@@ -1224,6 +1230,10 @@ What is the precedence or priority of ansible when its searching for the configu
 3rd:  ./ansible.cfg         home  of that particulr user 
 and if not it goes to the 
 default : /etc/ansible/ansible.cfg
+
+ if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at to read d configuration
+    thefor with al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will 
+get its configuartion
 
 
                                 HOST KEY CHECKING/AUTOMATING HOST KEY CHECKING
@@ -1459,6 +1469,21 @@ why do you need PW authentication enabled on your ansible remote node when your 
 so that you are able to transfer the key , able to transfer your ssh key, public key, we wll need that PW
 
 
+  INTERVIEW QUESTION
+default home of ansible is /etc/ansible 
+
+This directory will consist of:
+a) ansible.cfg
+b) hosts    and 
+c) roles dir
+
+  bc whenevre we run ansible, the 1st tin is ansible will read the configuration file & ansible has the option of creating the file in other locations other than the default
+location, & so whenever we run ansile,
+it wil look for the config file based on the priorities, it wil check if we pass env variable/mee..reference it, if its nt there it wil check the pwd
+so if i created a playbk where my ansible.cfg is , ansible wil use the file to read the configuration thats the priority, if it doest find it it wil go to the home of the
+user and then the default 
+
+
 
 
 
@@ -1488,10 +1513,11 @@ bc it cloud alcostic meaning you can use the same code across multiple cloud jus
 
 
 
+
 VIDEO 3, CLASS 33
 
 INTERVIEW QUSETION
-can you configur your ansible so that it execute task on remote host in series , ie one host after another
+can you configure your ansible so that it execute task on remote host in series , ie one host after another
 
 ANS:
 yes you can do that by setting your forks number to 1 so that ist only executing task on one SERVER AT A TIME 
@@ -1509,19 +1535,55 @@ Anisble does not reinstall  a package thats already insatlled or run a task that
 
 
 
+ QUESTION
+1) when u did the ssg ken gen, you configured for 3servers, what if you want to do it for 50 servers , is that what you will do for all 50?
+also when you created a user you first created a PW, but to do it for 50 users, is ther a way to do it in bulk
+
+ANS:
+you can hv a script that can loop tru your invnetory , bt ryt now we v been do in it maunally bc we nid to understand the concept, bt as we go further Tomao we wil look at 
+dynamic inventories if i hv 50servers ders no way ill go into the 50 serevers to get the inventories, the i[p addresses  so i can configure it, with dynamic invnetory, i 
+dnt need to configure my host file, instaed ill use a script taht wil go into aws , even if its 100servers, based on the script am using it goes and and get all the servers
+ips and return it as an inventories then ansible will just use that as an inventory to go and do your configuration
 
 
-####################   1:21:00 
-vidoe 3
+                                            CUSTOM AMIs
+but what ull do here, esp in your prod env goin forward, most companies wil use what is called custom AMIs, ie an AMI that hv created bc am using it for a coy, this AMI will
+be managed by ansible b4 i craete the AMAI, i already exchange the key i pass in the key, the ssh key, you load it with all the software b4 you craete an instance for it
+so when i introduce ansible to mg8 it i dnt nid to worry abt ssh keys anymore bc this custome AMI alraedy has a user called ansible baked in, a pecific key has already been 
+exchanged so my ansible usser is already set so ill create ec2 instances based on this AMi, i can spin up a 100 instances based on this AMi.when i use that AMI , it will 
+already hv been configured to be maintained by ansible but if i just hv insatnces that exists in aws then we ll see hw i can use dynamic inventory script that wil go into aws 
+search tru d region, get all d inastnces and return that as an inventory then ansible wil use the ip addreses and go out and just do configuration.
 
-   so whenevre we rn ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
-so whener we run ansile, it wil look for the config file based on the priorities, it wil check if we pass env variable , if its nt there it wil check the pwd
-so if i created a playbk where my ansible.cfg is , ansible wil use the file to read the configuration thats the priority, if it doest find it it wil go to the home of the
-user and then the default 
+*** 1:43:20
+then for users, u can use loops , loop tru instances, if i hv maultiple packages that i need to install, i can use like foreloops that will loop tru all the variables that i 
+hv, it will loop tru all the packages and one by one & those wil be installed & the same thing again for users,we can set a foreloop so that it  loops tru all our inventories
+and for each server its configuring a user
+
+as we go tru play bks and roles then things will start to mk more sense bt now we are focusing on the conept and the basics of hw actually things works
 
 
-****** so this is what the ansible configuration structure is
-haven said that, lets go now to configure our remote node /managed nodes
+
+
+     INTERVIEW QUESTION
+1) What programming lang can you write???
+   
+ANS:     YAML
+when you writing playbk, its written in yaml so ull hv an experience writing YAML language
+
+
+
+ 2) whats the diffERNECES btw ansible and terfrm 
+ANS:
+
+ansible wil run frm top to bottom, that concept we say that ansible is procedural , it follows a certain procedure ,frm top to bottom so you hv to order the task 
+so when a task fails ansible will stop, if it encounters smt that fails your play will stop and it will stop right der bc it runs frm top to bottom
+
+whereas
+terrafrm is declarative, is nt procedural, it doesnt matter hw the files are organized, doesnt matter hw u put the mainfest files in a dir, bc ist declarative, it will read
+everytin firt then create  a plan , so it doesn tmatter the order of the files 
+thats one of the key differences when it comes to our automation tools
+
+
 
 
 
