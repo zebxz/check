@@ -180,7 +180,7 @@ so hv configured my remote hoste to be managed remotelessly
 key 
 
 
-38:21                  contd frm video2                         USING THE APT/YUM MODULE FOR INSTALLATION
+38:21                  contd frm video2                         USING THE APT/YUM MODULE TO INSTALL PACKAGE MANAGERS
 **************** back to ansible modules
 
 6) (Apt)  yum Module
@@ -239,12 +239,12 @@ But  failed for the redhat server
 
 
 
-  
+                                  REMOVING A PACKAGE
 ###  6iII)
 ***************************** ABSENT 
  to remove the package ill say state is absent 
 
-  ansible@ip-172-31-28-203: $ $ ansible all -m aptm -a "name=apache2 state=absent" -b
+  ansible@ip-172-31-28-203: $ $ ansible all -m apt -a "name=apache2 state=absent" -b
 
 chnage is true                            ***********   pacakge has been removed 
   succes for the first ubuntu server
@@ -281,7 +281,9 @@ we can install ngnix and we can start it by using a service module
 #### 
    7) Service Module
 
-You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the connecting user.
+You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user
+has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the 
+connecting user.
 
 $ ansible all -i inventory -m service -a "name=nginx state=restarted" --become -K
 
@@ -397,6 +399,9 @@ there are lots of info it returns , its called gathering fact
 *********eg 
 ansible architecture" x86_64
 some of the facts returned are like variables that can be accessesed and we wil see hw to do that
+
+
+                             USING THE SETUP MODULE & VARIABLES
 if i wanted to,i can use a variable to find the architecture of my server, i can use it as a filter
 therfor i can use my setup module and call these variables
 ill say if ansible architecture"  is  x86_64 , i can pass condition like that 
@@ -405,7 +410,8 @@ then ansible will go out bc of the setup module, it will look for servers or hos
 also i can look at 
 ansible _distribution : redhat                   ******** and we will be using this variables
 i can say that i want to configure instances whose ansible distribution is redhat
-eg 
+
+eg                                        USING VARIABLES FOR APT/YUM MODULE
 when i was running the command that we were installing httpd or apache, i would hv passed a variable and say install apache if ansible distribution is debiem bt install 
 httpd if ansible distribution is erdhat 
 so the satup module will go out and check all your servers then whatevr dustribution it returns if the distribution is redhat its goin to install httpd , if the distribution
@@ -432,12 +438,13 @@ ansible@ip-172.31.28.203: $ ansible web -m setup -a "gather_subset=min"
  so it wont print out evrytin , just the most inportant, like a summary of all the vraiables you  can use reference
 
 
+                DISABLING SETUP MODULE
 ******** we can disable this setup madule by passing  a flag called gather facts = false 
 we will see hw to do that in playbks 
 
 
           INTERVIEW QUESTION
-whan you  pass an option like :gather facts= to false what module are you disabling
+when you  pass an option like :gather facts= to false what module are you disabling
 
 ANS: 
 You are diasbling the setup module
@@ -587,6 +594,10 @@ as we go tru play bks and roles then things will start to mk more sense bt now w
 
 11)   
   ###  
+
+
+
+
                                                ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom
 
    ie, hv captured it as a code so am able to reuse it , this an eg of having infrasture,conifguration as a code,i hv my playbk wher i hv my configuration n i can reuse it
