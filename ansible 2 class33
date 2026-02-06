@@ -23,7 +23,7 @@ Fetch: a)Will copy the files with a directory structure; ansible all -m fetch -a
 REMIND Myself what is dynamond  ???????
 
 
-SIMPLIFIED SUMMARY
+SIMPLIFIED SUMMARY/steps of video2
 
 1)During the ansible installation, we configure vscode for remote development
 the first part was to install & configure vscode & the 2nd was to input the 'host ansible info' in vscode inorder to connect to the remote host & write playbooks
@@ -32,7 +32,7 @@ in the ec2 blk) we dynamically connected to ansible host in vscode & we can crea
 We also automated host key checking so that we are not prompted to confirm yes everytime 
 to find the users that hv been created i can check on the  etc passwd file. cat /etc/passwd
 
-2)Once ansible have been installed and the host/remote nodes created, we have to configure the managed nodes
+2)Once ansible have been installed and the host/remote nodes created, We ssh into the ansible control server afterwhich we have to configure the managed nodes
 To check if ansible has been installed we run; ansible & to verify if you are in the control node by running ; ansible
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
 ie from the controller node server/ec2 instance where you hv installed your ansible software & after that, i also have multiple host/remote nodes, i can hv other ec2 
@@ -44,7 +44,7 @@ it deletes the module   .
 
 3)we used the diff modules eg the ping module  we pass the -M option to pass a module, 
 4)we created a host list/file where we added the ip addresses of the  hosts/remote nodes we created during the installation
-5)we eatablished an ssh connection using both;
+5)we eatablished an ssh connection to the host/remote servers using both;
 a)password authentication & passing the -k option which prompts to input a PW, if we dnt pass -k option, it wil by default try to connect using the ssh keys
 b)and ALSO USED passwordless authentication ie using ssh keys
 
@@ -53,6 +53,9 @@ b)and ALSO USED passwordless authentication ie using ssh keys
 
 7)we also established ssh connection withour passowrd ie using ssh keys (**meeee, exchanging the public key with the private key)
 
+8)we created host variable & group variable & illustrated host variable precedence by using the file module to create a file & saw that although the command was at grp level
+the file was created in the home of both the host variable user & the home of the grp variable user which was ansible
+we also introduced other ansible modules
 
 WHAT IS ADHOC COMMAND 
 An Ad-Hoc command is a one-liner ansible command that performs one task on the target host(s)/group(s).
@@ -60,7 +63,7 @@ ad hoc commands are tasks that you don’t perform frequently, such as restartin
 
 
 
-
+  
      
       video 2 is in cont.. frm video1;
 
@@ -104,6 +107,15 @@ if i select linux in d variable (NO.3) then in the null resource, using local ex
 ? itineray  indicates it as false & so the interpreter wil be bash then it will run d linux scripts (the templates for linux or windows will be used dynamically based on
 our selection in the variable)
 
+
+
+5) AFTER RUNNING ALL THE CODES/SCRIPTS, WE SSH INTO THE ANSIBLE SERVER
+                                                            *********LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE        
+so ansible has been able to ping the local host, its been able to ping itself, so this means that ansible is able to 
+configure the server that its installed on/running on, this shows hw powerful ansible is, cos it can configure other servers n also the 
+server that its running on bc local host is the server that is running ansible
+
+
  5) CONFIGURING OUR MANAGED NODES 
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
 
@@ -122,6 +134,7 @@ then the module we wnat to pass is a ping module , this is what we use to test f
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
    ALSO; - a module, to create a file
 
+
  6)    Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 We can create SSH Connection in two ways:
 a) Password Authentication 
@@ -130,6 +143,7 @@ b) Password-less Authentication(This is with SSH Keys)
 Provide the managed Nodes IP/FQDN in inventory file on Ansible Engine.
 Test the connectivity by running:
 $ ansible all -m ping
+
 
 
  C)    CREATING THE HOST LIST/GROUPS (eg; web & db) & PING THE HOST/SERVERS
