@@ -11,8 +11,11 @@ so he pasted the in the class channel
 
 
 
-USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT, CONNECTING TO THE REMOTE HOST USING VSCODE, INSTALLING VSCODE,APPLYING OUR CODE/SCRIPT, OUR KEY IS REFERENCED
-IN THE NULL FILE, TERRARY OPERATOR, DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST(CONTROL)IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE
+
+USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT, 
+EXPLAINING THE CONFIGURATION THAT IS ENABLED/INPUTTED INSIDE THE CONFIGURATION FILE IN VSCODE FOR REMOTE DEVELOPMENT DURING THE AUTOMATED INSTALLATION,
+INSTALLING VSCODE & CONFIGURING VSCODE FOR REMOTE DEVELOPMENT, APPLYING OUR CODE/SCRIPT, OUR KEY IS REFERENCED IN THE NULL FILE, TERRARY OPERATOR, 
+DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST(CONTROL)IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE
 &EXECUTE THE PLAYBKS, CREATING PLAYBOOK IN THE CONTROL SERVER IN VSCODE, HOST KEY CHECKING,NDEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED
 NODES, CREATING THE HOST LIST/GROUPS, WE CAN CREATE SSH CONNECTION IN 2WAYS;password & PSSWDLess authentication ie using ssh keys,  LOCAL HOST IS THE SERVER THAT IS RUNNING
 ANSIBLE
@@ -374,22 +377,23 @@ continuation frm 1st video
 
 
                                       
-                USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT 
-*****this script 'vscode-install.sh" does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into
-the ubutu server to create our playbk they run the playbk, so instead of doing that we can use our vscode 
+ A)               USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT 
+*****this script 'script.sh" does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into
+the ubutu server to create our playbk they run the playbk, so instead of doing that we can use our vscode **mee, for remote development ie automating the whole sshing process
 
 
 
 *********** 52:00   in data "template_cloudinit_config" "user-data" ,   we passed 2scripts (script.sh & vscode-install.sh)
-the 2nd script is to configure the vscode  
+ script.sh is to configure the vscode  
 content      = file("${path.module}/vscode-install.sh")
 i did dis automation so that when we start writing playbooks it wil be easier for you guys
 this is a script that does remote development, wherby you need to bc our ansible is on ubuntu, we need to ssh into the ubuntu server then vi into the ubutu server to create
-our playbk they run the playbk, so instead of using that we can use our vscode 
+our playbk they run the playbk, so instead of using that we can use our vscode **mee, for remote development ie automating the whole sshing process 
 
 
 
-A)      CONNECTING TO THE HOST ie ansible control server USING VSCODE
+B)      
+EXPLAINING THE CONFIGURATION THAT IS ENABLED/INPUTTED INSIDE THE CONFIGURATION FILE IN VSCODE FOR REMOTE DEVELOPMENT DURING THE AUTOMATED INSTALLATION
 
 #####    **mee,for the remote development,After the installation & configuration of vscode, we need to input the 'host ansible info' for the ssh congfiguration 
                             to be able to create files & write playbook as will be sen in video3
@@ -412,12 +416,14 @@ this the script thats goin to install and configure vscode   **i bliv he meant t
 but apart frm that,we hv this (another) script:script.sh  this is the script that will configure vscode, this is d script that will install vscode and ill show you shortly
 hw it works 
 
-                                     INSTALLING VSCODE
+
+C)                                     INSTALLING VSCODE & CONFIGURING VSCODE FOR REMOTE DEVELOPMENT
 
   why do we hv 2diff scripts to install vscode (script.sh and vscode-install.sh )   ?????
 i bliv vscode-install.sh will install vscode WHILE script.sh will configure the vscode for the remote development
-and this configuration enables the configuration we did in the vscode in configuration file which is inside vscode & that way can directly use your vscode code to do remote
-host, to login to the ec2instance and write your code, create your files , write your play book and run them on your termiinal, & thats what we call remote development
+and this configuration ENABLES/mee..inputs the configuration we did in the vscode in configuration file which is inside vscode & that way can directly use your vscode code
+to do remote host, to login to the ec2instance and write your code, create your files , write your play book and run them on your termiinal, & thats what we call remote
+development
 
 
 NO.1)                         ####script.sh  ***meee, script to configure vscode & its referred to inside the null resource WHILE vscode-install.sh is referred in ec2 block
