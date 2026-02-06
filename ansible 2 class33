@@ -7,8 +7,8 @@ so i had to start with profs video Ansible1, for class 34 )
 
 
 USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT, CONNECTING TO THE REMOTE HOST USING VSCODE, INSTALLING VSCODE,APPLYING OUR CODE/SCRIPT, OUR KEY IS REFERENCED
-IN THE NULL FILE, TERRARY OPERATOR, DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE &
-EXECUTE THE PLAYBKS, CREATING PLAYBOOK IN THE CONTROL SERVER IN VSCODE, HOST KEY CHECKING,  DEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED
+IN THE NULL FILE, TERRARY OPERATOR, DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST(CONTROL)IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE
+&EXECUTE THE PLAYBKS, CREATING PLAYBOOK IN THE CONTROL SERVER IN VSCODE, HOST KEY CHECKING,NDEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED
 NODES, CREATING THE HOST LIST/GROUPS, WE CAN CREATE SSH CONNECTION IN 2WAYS;password & PSSWDLess authentication ie using ssh keys,  LOCAL HOST IS THE SERVER THAT IS RUNNING
 ANSIBLE
 a)ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS, CREATING ANOTHER USER(mark), HOW TO VERIFY IF YOU ARE IN THE CONTROL 
@@ -26,19 +26,21 @@ REMIND Myself what is dynamond  ???????
 
 SIMPLIFIED SUMMARY/steps of video2
 
-1) AUTOMATED REMOTE DEVELOPMENT TO DYNAMICALLY SSH INTO THE ANSIBLE SERVER IN VSCODE & WRITE PLAYBOOKS 
+1) AUTOMATED REMOTE DEVELOPMENT TO DYNAMICALLY ADD THE HOST (ie ansible control server) IN VSCODE & SSH INTO THE ANSIBLE CONTROL SERVER TO WRITE PLAYBOOKS 
 using script, we automated ansible installation, vscode installation & vscode was configured for remote development
-this configuration will input the 'host ansible info' in vscode, which helps us dynamically ssh into ansible server after which we can connect to host & write playbooks
-instead of the vscode then using gitbash. 
+this configuration will dynamically add the host server ie ansible control server & input the 'host ansible info' in vscode, which helps us dynamically ssh into ansible server
+after which we can connect to host & write playbooks instead of the using vscode to ONLY write playbooks then using gitbash to ssh into the ansible control server to create a
+vi, paste & execute 
 BUT
-if the automation doesnt work, we also have the option of manually configuring vscode to ssh into the ansible server in video3
+if the automation doesnt work, we also have the option of manually configuring vscode to ssh into the ansible server which will reQ manually inputing the 'host ansible info'
+in the configuration file in vscode & other steps needed to make ansible own the ssk key as stated in video3
 
 We also automated host key checking so that we are not prompted to confirm yes everytime 
 to find the users that hv been created i can check on the  etc passwd file. cat /etc/passwd
 
   
                   AUTOMATED REMOTE DEVELOPMENT TO USE IDE/Gitbash (NOT VSCODE)
-2)Usinf the script which automated Once ansible have been installed and the host/remote nodes created, We ssh into the ansible control server afterwhich we have to configure the managed nodes
+2)Using the script which automated Once ansible have been installed and the host/remote nodes created, We ssh into the ansible control server afterwhich we have to configure the managed nodes
 To check if ansible has been installed we run; ansible & to verify if you are in the control node by running ; ansible
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
 ie from the controller node server/ec2 instance where you hv installed your ansible software & after that, i also have multiple host/remote nodes, i can hv other ec2 
@@ -374,7 +376,7 @@ our playbk they run the playbk, so instead of using that we can use our vscode
 
 
 
-A)      CONNECTING TO THE REMOTE HOST USING VSCODE
+A)      CONNECTING TO THE HOST ie ansible control server USING VSCODE
 
 #####    **mee,for the remote development,After the installation & configuration of vscode, we need to input the 'host ansible info' for the ssh congfiguration 
                             to be able to create files & write playbook as will be sen in video3
@@ -570,11 +572,11 @@ showing deleted
 so he pasted the in the class channel
 
 
- 5i)    DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE & EXECUTE THE PLAYBKS 
+ 5i)    DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST(CONTROL) IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE & EXECUTE THE PLAYBKS 
     ****meee, 
- bc in the vscode we hv dynamically added the host servers, & ssh into the ansible control server, we hv all our servers in the 
-vscode so we can write our playbooks & execute them in the vscode instead of using the vscode to ONLY write the play book then use gitbash to ssh into ansible, create a vi
-& paste your code inside there inorder to excecute it
+ bc in the vscode we hv dynamically added the host ie ansible control sever, & ssh into the ansible control server, 
+so we can write our playbooks & execute them in the vscode instead of using the vscode to ONLY write the play book then use gitbash to ssh into ansible control server,creat 
+a vi & paste your code inside there inorder to excecute it
     
 1:11:38   ***********************
 ok so this is what i wanted us to see that because of the automation that  i had, it has dynamically add the ansible Host and we can see the ip adresses 54.218.139.205
