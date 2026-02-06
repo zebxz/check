@@ -200,27 +200,32 @@ i can crate as role to config tomcat, jenkins and whwnever i need it i jsut call
 3)THE PRECEDENCE/PRIORITY ANSIBLE USES WHEN SEARCHING FOR THE CONFIG FILE
 Because ansible has the option of creating the config file in a diff location other than the default location, so when searching for the file it follows an order of precedence
 
+1:21:00
+bc whenevre we run ansible, the 1st tin is ansible will read the configuration file location, it wil look for the config file based on the priorities,
+
 1ST : ANSIBLE_CONFIG        env varibale.,, this takes priority , if not seen it goes to 
 2nd:  ./ansible.cfg         pwd dir 
 3rd:  ./ansible.cfg         home  of that particulr user 
 and if not it goes to the 
 default : /etc/ansible/ansible.cfg
- if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at for to read d configuration
-    thefor with al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will get
-its configuartion
+ if u have ./ansible.cfg, in your pwd , then its the file ansible will be looking at to read d configuration
+    thefor with al that, it just means that if am working on the dev env, i can create a  dev ansible.cfg for the dev env within my working dir and thats wher ansible will 
+get its configuartion
 
 ANSIBLE2                               DEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION                                      
 so the default ansible configuration file is found in this location '/etc/ansible/ansible.cfg., in which we can make various settings like locating of our inventory file or
-host key checking so any type of configuration that we want to set for ansible we will do it in the ansible config file , ansible.cfg 
+host key checking so any type of configuration that we want to set for ansible we will do it in the ansible config file; ansible.cfg 
 but this configuration file we can put it any where as long as we reference it bc when you run ansible, the first tin is ansible will read the configuration
  ***** 
-1:21:00
 
-   bc whenevre we run ansible, the 1st tin is ansible will read the configuration file , we can the define the configuartaion file in diff locations with the given priority
-so whener we run ansile, it wil look for the config file based on the priorities,
 
+
+                      WHEN GOING THROUGH THE FILES IN THE PROJECT REPOSITORY
 ***mee, when going through the files in the project respository, if i can easily understand what the file is for by searching for where it is connected to 
 eg; we can search in the ec2 resource blk the 'userdata script used to create the users & their PW' & variables file are connected there
+
+
+
 
 
 
