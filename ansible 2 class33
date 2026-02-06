@@ -25,13 +25,18 @@ REMIND Myself what is dynamond  ???????
 
 SIMPLIFIED SUMMARY/steps of video2
 
-1)During the ansible installation, we configure vscode for remote development
-the first part was to install & configure vscode & the 2nd was to input the 'host ansible info' in vscode inorder to connect to the remote host & write playbooks
-Due to the installation automation(i bliv all the scripts used during the installation;script to create remote servers, vscode instalation/script.sh, create ansible user.sh,
-in the ec2 blk) we dynamically connected to ansible host in vscode & we can create the file/playbooks in the host instead of the vscode then using gitbash
+1) AUTOMATED REMOTE DEVELOPMENT TO DYNAMICALLY SSH INTO THE ANSIBLE SERVER IN VSCODE & WRITE PLAYBOOKS 
+using script, we automated the ansible installation, vscode installation & vscode was configured for remote development
+this configuration will input the 'host ansible info' in vscode, which helps us dynamically ssh into ansible server after which we can connect to host & write playbooks
+instead of the vscode then using gitbash. 
+BUT
+if the automation doesnt work, we also have the option of 
+
 We also automated host key checking so that we are not prompted to confirm yes everytime 
 to find the users that hv been created i can check on the  etc passwd file. cat /etc/passwd
 
+  
+                  AUROMATED REMOTE DEVELOPMENT TO USE IDE/Gitbash (NOT VSCODE)
 2)Once ansible have been installed and the host/remote nodes created, We ssh into the ansible control server afterwhich we have to configure the managed nodes
 To check if ansible has been installed we run; ansible & to verify if you are in the control node by running ; ansible
 Ansible works by connecting to remote nodes (hosts) and pushing out small programs, called “Ansible modules” to them.
