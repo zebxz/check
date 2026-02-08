@@ -170,6 +170,16 @@ Test the connectivity by running:
 $ ansible all -m ping
 
 
+Class34
+2:0946
+there are 3 ways you can connect to a server for ansible to manage
+1) private key
+2) password 
+3) the default option which is the default user with ansible with the public key exported ie you can access ansible without the key and that access is goin to be automated
+
+
+
+
 
  C)    CREATING THE HOST LIST/GROUPS (eg; web & db) & PING THE REMOTE/HOST/SERVERS
 we created a host list & est an ssh connection
@@ -180,6 +190,12 @@ TO ping the servers:
 ansible@ip-172-31-27-28:  $ ansible all -m ping , This wil work to connect with ssh key  bt with PW we used; ansible all -k ping    
 i hv just typed yes for the first server, i need to type yes 3times
  bt as i do that bc i hv 3severs in my inventory its trying to reach my inventory but its failing 
+
+class34... 2:10:00
+************** 
+ansible needs to make a record of all the servers that its managing , which is in the ansible host file and the host file can be custom or default
+using a default , passing a -i is optional  but for custom ts mandatory 
+
 
 
 D) BY DEFAULT ANSIBLE TRIES TO COMMUNICATE USING SSH KEYS
