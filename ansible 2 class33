@@ -54,6 +54,8 @@ it pushes your ansible modules inside of the servers that its controling, once t
 of this so i can use ansible to go inside of this ec2 istance n create a file so its goin to use a file module, it wil push the file module over ssh , once its moved ,ansible 
 wil use the file module to create that file according to the specifictaion, once it creates the file and once it accomplishes that task ,it marks that task a complete and then
 it deletes the module   . 
+ansible modules are python scripts that can be invoked in a playbook
+
 
 3)we used the diff modules eg the ping module  we pass the -M option to pass a module, 
 4)we created a host list/file where we added the ip addresses of the  hosts/remote nodes we created during the installation
@@ -131,7 +133,9 @@ our selection in the variable)
                    THINGS TO DO AFTER ANSIBLE HAS BEEN INSTALLED IN THE CONTROL SERVER & THE REMOTE/HOST SERVERS CREATED
 
 5) AFTER RUNNING ALL THE CODES/SCRIPTS,WE CONFIRM ANSIBLE HAS BEEN INSTALLED BY RUNNING THE COMMAND ; ansible & ping the local host ie ansible
-                                                            *********LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE        
+
+CLASS34 .... ansible can manage itselt, we can run any task in this server
+              *********LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE        
 so ansible has been able to ping the local host, its been able to ping itself, so this means that ansible is able to 
 configure the server that its installed on/running on, this shows hw powerful ansible is, cos it can configure other servers n also the 
 server that its running on bc local host is the server that is running ansible
@@ -167,7 +171,7 @@ $ ansible all -m ping
 
 
 
- C)    CREATING THE HOST LIST/GROUPS (eg; web & db) & PING THE HOST/SERVERS
+ C)    CREATING THE HOST LIST/GROUPS (eg; web & db) & PING THE REMOTE/HOST/SERVERS
 we created a host list & est an ssh connection
 in the host file, we created 2 groups (DB for the 2ubuntu servers & web for the redhat server) we entered the particulars of the hosts ie the private ip of the host servers
 we created in video 1
@@ -331,6 +335,11 @@ so whener we run ansile, it wil look for the config file based on the priorities
 
 13)   MODULES
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/04-Ansible%20modules/Type_module.md
+
+CLASS34: ansible modules are python scripts that can be invoked in a playbook
+when it comes to bash shell scripting, there are a lot of work that needs to be done but when it comes to ansible, those job has already been done and they hv been modulized
+into what is called ansible module
+
 
 They are the main building blocks of Ansible and are basically reusable scripts that are used by Ansible Ad-hoc and playbooks.
 These are small programs that do some work on the server.
