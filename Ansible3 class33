@@ -1204,7 +1204,7 @@ ill run it now with my setup as false
 failed 
 
 
-                            USING CONDITIONS GATHERING FACTS HAS TO BE TRUE
+                            USING CONDITIONS GATHERING FACTS HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND
 ******* bc hv disabled gather facts its telling me the conditional check ansible distribution failed (in my understanding, the condition is relying on the gathered facts  
 the ansible distributionos bc it failed the condition couldnt execute
 error while evaluating the distribution
@@ -1251,7 +1251,7 @@ and you can build in more logics so that ansible will use the logics you build i
 
 
 
-                            HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false
+                            HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND
 ####  eg
  i need to find the os distribution and os name of my host, then in that case ill need to run a shell script or shell command which will cat the etc/os release to find what
 my os distribution is , ill need to find the uname, pass a shell script/command, then as i do that am registering the os distribution and when am running the uname am also
@@ -1468,7 +1468,7 @@ whenever a file doesnt change it means the file doesnt have variables that will 
  so copy module is only used on ststic, a file does not change bt if a file has a variable that needs to be read at runtime then copy module will fail thats why we will
 use a template module 
 
-#########  so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run 
+#########  so we use template module when you are copying the dynamic files, file that change, meaning a file that has a variable that run 
 eg
   am missing a file , (ginger2, right here)
 bt if i can just show you an example , if i was installing tomcat
@@ -1529,6 +1529,12 @@ bt if i can just show you an example , if i was installing tomcat
                connectionTimeout="20000"
                redirectPort="8443" />
 
+
+***online ...  JINJA2 TEMPLATE
+Jinja2 is a popular, fast, and expressive templating engine for Python used to create dynamic HTML, XML, or other markup formats by replacing placeholders with actual data. 
+It enables features like loops, if-else conditions,template inheritance, and filters to separate logic from presentation, making it essential for web frameworks like Flask
+and automation tools like Ansible
+
    
 3:06:00
 *********** where is the tomcat port configured inside of my tomcat??
@@ -1554,6 +1560,8 @@ variables so am able to mange variables in one location just by declaring vars: 
 this is the tomcat url that hv also passed as a varaible, bc in the download part (using get url,) am just calling the tomcat url as a variable and its replacing the REQ 
 tomact version 
 
+
+                WE HAVE A PROJECT THAT WILL REPLACE THE USER, CHANGE THE PW & SETUP USERS
 
 ******** lets run this playbk
 it might tk a while bc am updating everything java 
@@ -1619,6 +1627,8 @@ bc hv passed them as vars_prompt, so evryting here becomes a varaible bc hv used
 
 
 *********** 3:18:02
+
+
 
                                             LOOPS    ( without_loop.yml)
 
