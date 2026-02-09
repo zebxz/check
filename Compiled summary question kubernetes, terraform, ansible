@@ -1514,6 +1514,7 @@ bc it cloud alcostic meaning you can use the same code across multiple cloud jus
 
 
 
+
 VIDEO 3, CLASS 33
 
 INTERVIEW QUSETION
@@ -1584,6 +1585,47 @@ everytin firt then create  a plan , so it doesn tmatter the order of the files
 thats one of the key differences when it comes to our automation tools
 
 
+vIDEO3, Class 33
 
+My xperince in ansible includes writting and maintaining ansible playbks, and the playbks that hv written comprises of 1 to 8
+
+
+IQ: How can specific tasks be runned in a playbooks?
+1. ansible-playbook apache.yml  --step
+2. assign tags to tasks 
+  ansible-playbook apache.yml --tags 'install, start'   *********** 41:00      to run A SPecific task in a playbk
+  ansible-playbook apache.yml --tags 'copy'
+How can tasks/handlers be skipped in an playbooks?  :    ********  to skip task
+  ansible-playbook apache.yml  --skip-tags 'install,start'
+
+What is the difference between tasks and handlers?:
+Tasks are executed by default from top to bottom.
+Some tasks has to notify handlers. 
+Handler will be executed only if the tasks changes.
+
+Difference b/w copy and template module? :  
+  template module copy both static and dynamic file content 
+  copy modules copies only static file content 
+
+Which module does gather_facts uses? setup module
+We can refer variables in ansible-playbook using this ginger template -- {{ varName }}  
+
+
+
+what is verbose mode in ansible? -v -vv -vvv
+ansible-palybook apache.yml -v
+ansible kops -m command -a "free -m" -vvv      **********
+you can run ansible command in verbose mose, it will give you a lot of content like call logs   ******** 59.24
+so if ur trying to troubleshoot a problem in ansible, u can run it in verbose mode, it will display logs 
+
+
+what can we do to fix a problem wher we want to copy a file but it doesnt allow and as a result other task is nt executed
+ANS:
+we pass ignore error= true
+
+we can also run -vvv
+ansible-playbook tag.yml -e "index=dEVOPS"  -vvv
+it will give us more info about the problem 
+it will troubleshoot your ansible playbk
 
 
