@@ -222,8 +222,15 @@ ansible@ip-172-31-27-28   ansible db -m ping -u mark -k
 we also established ssh connection withour passowrd ie using ssh keys
 
 
+class34 
+Variables:
+  1. runtime variables 
+  2. playbook variables 
+  3. host_vars variables 
+  4. group_vars variables
 
-CREATING VARIABLES IN THE HOST FILE
+
+6aii)   CREATING VARIABLES IN THE HOST FILE
 when we use variable in the host file, it helps us pass the ssh PW inside the host file then we run the ping all command on the cl
 Also inside the host file, we can define the specific user we want to connect to
 
@@ -232,7 +239,7 @@ DIFF BTW HOST VARIABLE & GRP VARIABLE
 
 
 
-6aii) HOST  VARIABLE
+ HOST  VARIABLE
 For Automation which is convenient, instead of me passing these options on the command line,i can pass the ssh PW within the host file ie a host variable 
  am passing the This on the host level, am passing host variable within the host file so that i dnt hv to keep pasiing them on the cl
 
@@ -254,7 +261,8 @@ You can also connect using a different user by specifying the user & the user PW
 if variables are defined at host level, it takes precedence over varaibles defined at group level
 meee, ie the servers on the host var will run with the conditions/passwd associated with the host var 
 
-6aii)
+
+6aiii)
  HOST LEVEL PRECEDENCE
  **meeeeeee, This is a situation where we have both host var & group var defined in the host file, the var defined at the host level takes precedence
 bc both the hostt var & the group var are defined inside the same host file, & its the same ping all command (ansible db -m ping) that will be used on the cl, the var at the 
