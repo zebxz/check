@@ -97,6 +97,7 @@ Playbooks
 5. Ansible galaxy   
 6. Inventory = static and dynamic 
 
+
 1. Ansible commands:  
     ansible hosts -m module -a "df -f"
       -m=modules
@@ -184,20 +185,35 @@ ansible dk -m apt -a "name=docker.io state=present"
 1:04:10
  ####################  
 
-we can use ansible to achieve this task 
-theres a command called the ansible module
+
+
+we can use playbooks to achieve this task  ....  TICKET: Create 3 appservers using terraform. 
+we already looked at adhoc commands but before i get to the ticket                      
+theres a module called the command module
 command module is a default module in ansible 
 
-instead of using shell i can use command 
-ansible web -m command -a "df -h" -i hosts 
 
+  ******** Ansible modules: are python scripts that can be invoke in playbooks 
+   modules = ping / shell / command / apt / yum / copy 
+
+eg
+instead of using shell i can use command 
+ansible web -m command -a "df -h" -i myhosts 
+
+so when u are running ansible ahhoc commands 
+you have 'ansible', the name of the host (web), you hv (-m), the name of the module you want to use, a' the argument then -i, where your host file is 
+the default ansible host file is 'etc/ansible/hosts'
 ******
+
 The default modules are:
   command and setups modules 
-ansible web -m command -a "df -h" -i myhosts
-ansible web -a "df -h" -i hosts  
+i can use the command module : ansible web -m command -a "df -h" -i myhosts
+OR 
+i Can use only the arguments and it will still work:
+ansible web -a "df -h" -i myhosts  
 
-2. Ansible modules: written python scripts that can be invoke in playbooks  
+
+2.Ansible modules: written python scripts that can be invoke in playbooks  
     ping / :
        ansible all -m ping
     command / :
@@ -222,15 +238,19 @@ copy :
       ansible docker -m apt -a "name=docker.i state=present"
 
 
+
 ************1:20:14                                    ALL THE MODULES AVAILABLE
 
-  ansible-doc -l
+  ansible-doc -l | grep docker  ** to see ansible module that relates to docker
+  ansible-doc -l | grep k8s       **for kubernetes
+
+on google
   https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 these are the doumetations about modules, so if you dnt want to use command line, you can use the console 
 
 
-   *********** this didnt work 
-***********************************************
+  **1.39.45 *********** he tried to create namespace, but this didnt work 
+
 
 1:24:40                                           CREATING A NAME SPACE
 ****************
@@ -253,19 +273,20 @@ user.yml
     ping                                       *********** ping module to test connection
 - hosts: db
   become: true   
-  tasks:
+  tasks:                                    *** a playbk can have many tasks
   - name: install apache
     yum: name=httpd state=present   
   - name: start apache  
     service: name=httpd state=started      
 - hosts: k8s
-  tasks: 
+  tasks:                                   ***1.39.45.....    this failed
   - name: Create a k8s namespace
     kubernetes.core.k8s:
       name: testing
       api_version: v1
       kind: Namespace
       state: present
+
 
 
 **********   1:41:00
@@ -483,7 +504,7 @@ Playbook composition:
   7. variables
   8. roles   
 
-my xperince in ansible includes writting and maintaining ansible playbks, and the playbks that hv written comprises of 1 to 8
+My xperince in ansible includes writting and maintaining ansible playbks, and the playbks that hv written comprises of 1 to 8
 
 
 
@@ -565,9 +586,9 @@ so the more logs you want , the more the number of v you can add
 
 
 1:03:07
-************ this is where integrating ansible with k8 and jenkins is very powerful 
+************ this is whY integrating ansible with k8 and jenkins is very powerful 
 
-what can we do to fix a problem wher we want to copy a file but it doesnt allow and as a result other task is nt executed
+what can we do/useto fix a problem wher we want to copy a file but it doesnt allow and as a result other task is nt executed
 ANS:
 we pass ignore error= true
 
