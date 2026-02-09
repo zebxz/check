@@ -1,4 +1,4 @@
-
+ 
 
    ###################################################################    STARTS
 
@@ -724,7 +724,7 @@ All members of a list are lines beginning at the same indentation level starting
 
 
 example:
-         a list always has "-"
+         a list always has "---"
  ---
 # A list of tasty fruits - Apple
   - Orange
@@ -814,8 +814,10 @@ also the /etc/ansible , if it deosnt , ansible wont hv right to write to this di
 ********* so now in my vscode , click connect to host which is ansible
 are you sure you want to continue :yes
 i can open , and am opening it in the home of ansible dir  /home/ansible/... *****mee,this is the dir created in the config file & ansible owns it just as we defined
-am now in the home of ansible
+am now in the home of ansible                                                       i bliv that is the first dir afterwhich other dirs or files can be created
 i hv my ansible config file that i created
+
+                                  CREATED A DIR (ANSIBLE)
 now in the home of ansible, i can create a dir, call it ansible
 if i open a new terminal, ill see i hv a dir called ansible
 
@@ -825,7 +827,7 @@ ansible@ip-172-31-28-203: cd ansible
 ansible@ip-172-31-28-203: git clone https://github.com/LandmakTechnology/Ansible-mc-series.git
 
 ##
-12b)                            CLONIGN THE ANSIBLE SERIES
+12b)                            CLONING THE ANSIBLE SERIES REPO
 
 cloning my entire ansible series      ***** watch 2:07:00
 now if i go to my ansible dir illl see that i hv all these one of whcih is my dir called playbooks
@@ -841,7 +843,7 @@ but b4 we do that lets learn how to write a simple playbk
 12c)
 
 2:08:50                
-**********
+**********                 CREATING ANOTHER DIR (testing)
 ill create anoda dir inside of this dir, ill call it testing
 it wasnt working on th up part of the vscode 
 HE Just deccide to do it on the vscode terminal
@@ -855,7 +857,7 @@ we are writing a yaml file so the extension has to be YAML
 
 now we are in the yaml file 
 
-###
+###                                     HOW TO WIRTE PLAYBOOK
 13)
                    **** 2:11:00     this is hw to write a playbook                ***** ******* (watch, although i wrote evryin out)
 https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/05-Playbooks/playbook.md
@@ -877,14 +879,14 @@ so hv written a play without a name , hv jsut wirtten it like that,
 
 
 ###
-13a)
+13a)                                                  RUN THE PLAYBOOK
 
                To run ansible playbook
         ansible playbook-i inventory_file playbook.yaml
 
 ******** back to vscode terminal:
 
-ansible@ip-172-31-28-203:~/testings ls
+ansible@ip-172-31-28-203:~/testings ls                            WHEN TO USE -i, inventory option
 testing.yaml
 ansible@ip-172-31-28-203:~/testings ansible-playbook test.yaml
 ******* when you look at this playbk, we are not passing any inventory, our default inventory is in the host, thas the default so bc we already hv a default, we dnt nid to
@@ -913,6 +915,9 @@ Explaining the result     .....  2:17:00
 the play is jsut showing db, 
 then we only passed just one task apt but in the result we hv 2task that ran
 the 1st task is named as gathering facts, its your setup module
+
+
+                  ALTHOUGH THE PLAYBK HAD ONE TASK BUT WE SEE 2TASKS THAT RAN ie the setup default module
 remember we said default module, your setup module will run to gather facts
 it has gone to the inventory, it has found that the db grp ha sthese 2instances , these aour inventories
 so it has gathered facts, it has found out facts abt these
@@ -927,7 +932,7 @@ so we see it was able to run
 
 ####
 13C)
-                                            MODIFYING THE PLAYBK
+                                            MODIFYING THE PLAYBK TO GIVE IT A NAME
 ********  2:18:19
 for this particular play, our playbk  here doesnt have a name but we can modify it so we give it a name
 
@@ -953,7 +958,7 @@ and it ran from top to bottom
  2:24:14
 ######
 13D)          
-*******************       DISABLING MODULE
+*******************       DISABLING THE SETUP MODULE
 
 
 ---
@@ -996,6 +1001,7 @@ may want to use for automation
 lets say after installing this i want to use another module to start it , so i can add anoda task and i has to be n the same lavel/line with the previous task
 
 
+                           ADDING A SERVICE MODULE TO THE PLAYBOOK
    A service module can also be included to start apache with become on task level as follows;
 ---
  - name: Install apache2
@@ -1033,7 +1039,7 @@ PLAY RECAP
 failed 
 
 
-###                                using  become on a host
+###                                 USING BECOME ON THE HOST LEVEL INORDER TO REDUCE LINES OF CODE
 13f)
 
 ************** to reduce lines of code instead of passing become twice, on a task level (13e) thereby duplicating it , if all my task require sudo rights then i can pass it
@@ -1073,7 +1079,7 @@ inside of our playbooks here ILL Just walk you through  (first play.yml)
 ...
 
 #####
-13h)
+13h)                            PLAYBOOK TO INSTALL HTTPD ON A WEB REPO/SAMPLE PLAYBOOKS
 ******* so inside this ansible dir, i have multiple playbooks,  to install like httpd on a web repo 
 
 #ansible all -m yum -a "name=httpd state=present" -b
@@ -1142,6 +1148,7 @@ if i want to chaeck my uptime
       #var: "results"
 
 
+               CAPTURING INFO INSIDE A VAR CALLED RESULTS & USE THE DEBUG MODULE TO DISPLAY THE RESULT
 i need to capture that info inside of a variable called results, am using the key word register meaning its goin to capture the info once it runs that bc if i run it as a
 playbk its nt goin to display the info for me here bc the module wil just do the work and it just gives me a summary that everythin has been changed bt if i wan to see d 
 result then i need to capture those result using what is called a register and am capturing it in a variable called result then i us ethe debug module to display that result
