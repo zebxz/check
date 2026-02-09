@@ -14,12 +14,13 @@ INSTALLING VSCODE & CONFIGURING VSCODE FOR REMOTE DEVELOPMENT, APPLYING OUR CODE
 DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST(CONTROL)IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE
 &EXECUTE THE PLAYBKS, CREATING PLAYBOOK IN THE CONTROL SERVER IN VSCODE, HOST KEY CHECKING,NDEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED
 NODES, CREATING THE HOST LIST/GROUPS, WE CAN CREATE SSH CONNECTION IN 2WAYS;password & PSSWDLess authentication ie using ssh keys,  LOCAL HOST IS THE SERVER THAT IS RUNNING
-ANSIBLE
-a)ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS, CREATING ANOTHER USER(mark), HOW TO VERIFY IF YOU ARE IN THE CONTROL 
-NODE .. RUN : anisble, COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, ANSIBLE FACT (pingpong, meaning success), CREATING A USER VARIABLE AT THE HOST LEVEL TO
-CONNECT TO, GROUP VARIABLES, HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT CREATING, b) Password-less Authentication (Using SSH_Keys),TRANSFER THE
-PUBLIC/SSH KEY TO THE REMOTE HOST SSH COPY ID, LOGIN WITHOUT PASSWD, USING SSH & IP aDdress, TRANSFERS KEY TO 2ND UBNUtu USER, TRANSFERS KEY TO REDHAT USER, COPYING THE KEY
-TO A SPECIFIC USER, ADHOC COMMANDS, WHAT IS ADHOC COMMAND, MODULES, TYPES OF MODULES;command,shell,file,copy,fetch,apt,service,user module,setup module, debug module.
+ANSIBLE 
+a)ESTABLISHING AN SSH CONNECTION TO ALL THE SERVERS USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS, CREATING ANOTHER USER(mark), HOW TO VERIFY IF YOU
+ARE IN THE CONTROL NODE .. RUN : anisble, COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, CREATING PW FOR THE HOST FILE VARIABLE, ANSIBLE FACT (pingpong, meaning
+success), CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO, GROUP VARIABLES, HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT CREATING,
+b) Password-less Authentication (Using SSH_Keys),TRANSFER THE PUBLIC/SSH KEY TO THE REMOTE HOST SSH COPY ID, LOGIN WITHOUT PASSWD, USING SSH & IP aDdress, TRANSFERS KEY TO 
+2ND UBNUtu USER, TRANSFERS KEY TO REDHAT USER, COPYING THE KEY TO A SPECIFIC USER, ADHOC COMMANDS, WHAT IS ADHOC COMMAND, MODULES, TYPES OF MODULES;command,shell,file,copy,
+fetch,apt,service,user module,setup module, debug module.
 copy: a)From ansible control node to remote node/ b) From one location in remote node to another location in remote node
 Fetch: a)Will copy the files with a directory structure; ansible all -m fetch -a "src=./hosts dest=./"  b)To fetch the file without a directory structure, use the flat=yes option
 
@@ -130,9 +131,22 @@ if i select linux in d variable (NO.3) then in the null resource, using local ex
 our selection in the variable)
 
 
-                   THINGS TO DO AFTER ANSIBLE HAS BEEN INSTALLED IN THE CONTROL SERVER & THE REMOTE/HOST SERVERS CREATED
+   5)                THINGS TO DO AFTER ANSIBLE HAS BEEN INSTALLED IN THE CONTROL SERVER & THE REMOTE/HOST SERVERS CREATED
 
-5) AFTER RUNNING ALL THE CODES/SCRIPTS,WE CONFIRM ANSIBLE HAS BEEN INSTALLED BY RUNNING THE COMMAND ; ansible & ping the local host ie ansible
+Configuring managed nodes.
+ https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
+
+Launch/select required no of servers (managed nodes)
+Use a key-pair to associate with your servers.
+Log into your ansible control node using the key.pem that was downloaded
+Make sure that you change the key permissions to 400
+   $ chmod 400 ansible-key.pem
+   $ ssh -i "ansible-key.pem" ubuntu@ec2-54-151-14-195.us-west-1.compute.amazonaws.com
+   $ sudo su - ansible
+   $ ansible
+
+A) AFTER RUNNING ALL THE CODES/SCRIPTS,WE CONFIRM ANSIBLE HAS BEEN INSTALLED/WE ARE IN THE CONTROL SERVER BY RUNNING THE COMMAND ; ansible' , change the key permission,
+ping the local host ie ansible
 
 CLASS34 .... ansible can manage itselt, we can run any task in this server
               *********LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE        
@@ -141,10 +155,7 @@ configure the server that its installed on/running on, this shows hw powerful an
 server that its running on bc local host is the server that is running ansible
 
 
- 5) CONFIGURING OUR MANAGED NODES 
- https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
-
-A)THE CREATED USERS
+i)THE CREATED USERS we created during the automated installation
 in the instance resource blk/ec2.tf file, we passed a script to "create users"
   /etc/passwd file 
 to find the users that hv been created i can check on the  etc passwd file.
@@ -152,15 +163,18 @@ cat /etc/passwd
 we see one of the users called ansible
 
 
-B)  -M  option    (passing a ping module)
-
+ii)  -M  option    (passing a ping module)
 -m is an option  you pass when you want to pass a module 
 then the module we wnat to pass is a ping module , this is what we use to test for connectivity 
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
    ALSO; - a module, to create a file
 
 
- 6)    Ansible Engine uses SSH Connection to connect and work with Manage nodes.
+      B) CONFIGURING OUR MANAGED NODES 
+
+After the installaion of the servers 
+
+Ansible Engine uses SSH Connection to connect and work with Manage nodes.
 We can create SSH Connection in two ways:
 a) Password Authentication 
 (-K Option)  if i dnt pass the -k option it wil by default try to connect using the ssh keys
@@ -176,8 +190,6 @@ there are 3 ways you can connect to a server for ansible to manage
 1) private key
 2) password 
 3) the default option which is the default user with ansible with the public key exported ie you can access ansible without the key and that access is goin to be automated
-
-
 
 
 
@@ -855,7 +867,7 @@ we knw that we created a user and we gave the usr a PW, so for us to comm to thi
 
 
 
-                                                           ESTABLISHING AN SSH CONNECTION USING PW AUTHENTICATION
+                                                           ESTABLISHING AN SSH CONNECTION TO ALL THE HOST SERVERS USING PW AUTHENTICATION
 7Aiii)
                           (-k option)  **if i dnt pass the -k option it wil by default try to connect using the ssh keys
 
@@ -1011,7 +1023,7 @@ so instaed of me passing these options on the command line,i can pass the ssh PW
 
 
         Host variables
-
+                                        CREATING PW FOR THE HOST FILE VARIABLE
 If were run the ping command on all servers, we will get permission denied on the servers that need a password to authenticate.
 Instead of that, we can provide the password in the host file
 This is at a host level or host level variable.
