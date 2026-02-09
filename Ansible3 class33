@@ -1169,7 +1169,7 @@ display that register, the result that i captured in that task and now giving me
 
 
 
-   2:41:11                               USING CONDITIONS
+   2:41:11                               USING CONDITIONS TO INSTALL HTTPD OR APACHE
 ###
 13k)
 
@@ -1203,8 +1203,10 @@ ill run it now with my setup as false
   ansible@ip-172-31-28-203:~/testings ansible-playbook install_httpd.yml
 failed 
 
+
+                            USING CONDITIONS GATHERING FACTS HAS TO BE TRUE
 ******* bc hv disabled gather facts its telling me the conditional check ansible distribution failed (in my understanding, the condition is relying on the gathered facts  
-the nasible distributionos bc it failed the condition couldnt execute)
+the ansible distributionos bc it failed the condition couldnt execute
 error while evaluating the distribution
 ansible distribution is undefined
 
@@ -1234,7 +1236,7 @@ PLAY RECAP
 
 
 
-  ******* first task, to install httpd, it skipping bc it gathered facts on all 3servers bt found out that the 1st 2 are ubuntu , therfrore the task skipped it only 
+  ******* first task, to install httpd, it skipping bc it gathered facts on all 3servers bt found out that the 1st 2 are ubuntu , therfore the task skipped it only 
 installed on what is nt ubuntu which is redhat 
 
 for the 2nd task, it did the reseverse
@@ -1248,7 +1250,14 @@ this process has been automated
 and you can build in more logics so that ansible will use the logics you build in to mk decisions on wheter to install a package or not
 
 
-#### 
+
+                            HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false
+####  eg
+ i need to find the os distribution and os name of my host, then in that case ill need to run a shell script or shell command which will cat the etc/os release to find what
+my os distribution is , ill need to find the uname, pass a shell script/command, then as i do that am registering the os distribution and when am running the uname am also
+registering the os, then ill use the debug module to display that msg, d os distribution and also the os name 
+so if hv disabled gather facts then ill need to run this shell command to be able to get my distribution and os
+
 13l)
 
   2:47:00  ************* /without_facts.yml
@@ -1268,13 +1277,6 @@ and you can build in more logics so that ansible will use the logics you build i
       msg:
        - "The os distribution name is: {{os_dist.stdout}}"
        - "The os name: {{os_name.stdout}}"
-
-
-eg
- i need to find the os distribution and os name of my host, then in that case ill need to run a shell script or shell command which will cat the etc/os release to find what
-my os distribution is , ill need to find the uname, pass a shell script/command, then as i do that am registering the os distribution and when am running the uname am also
-registering the os, then ill use the debug module to display that msg, d os distribution and also the os name 
-so if hv disabled gather facts then ill need to run this shell command to be able to get my distribution and os
 
 
      ansible@ip-172-31-28-203:~/testings ansible-playbook without_facts.yml
@@ -1314,8 +1316,9 @@ why the script failed to run bc gather script was false and so it failed)
 but if i was to use gather facts then this is how short my playbk will be bc it will find the facts for me and i dnt need to run any commands, i can just use a debug module
 just to call that a particular variable bc this particular variable already exists in my setup so am just reading this particualer variable 
 
+
 ####
-13m)
+13m)                      WHEN GATHERING FACTS is TRUE, ill playbook will be shorten
 
 ANother script   :  with_gatherfacts.yml
 
@@ -1346,11 +1349,14 @@ we see it gather facts
 #########  lets looks at handlers
 
 
-2:52:00                          ********** this needs to be xplained again
+2:52:00                          
    INTERVIEW QUESTION
 the first playbook that i ran to install httpd, we see that we we installed httpd then we started it, 
 now the 2task are dependent on each other , installation had to be executed before "start" is executed, if the first state is absent the 2nd task will fail 
 so bc the task are dependent on each other then we can create dependencies, ansible gives you a way of creating dependencies btw task & for the dependencies we can use handlers
+
+
+
 
 
 ###########
@@ -1388,7 +1394,7 @@ these are just like ordinary task but the diff is handlers are only executed whe
           name: httpd
           state: started      
 
-****   i need to pass a name for the httpd and here its start httpd, instead of putting 2nd task as a task, ill put a handler/s, in the former task ill passa notifier/ 
+****   i need to pass a name for the httpd and here its start httpd, instead of putting 2nd task as a task, ill put a handler/s, in the 1st/former task ill passa notifier/ 
 notify & i also need to pass the name, what is this task notifying?? its notifying the name of the handler: start httpd, so the 2names must be the same, so the notifier
 notifies the handler , this happens whenevre you hv a change in this task it wil trigger the handler if ders no change in the task the handler wont be triggerd
 
@@ -1447,8 +1453,9 @@ PLAY RECAP  ....... ok
 
 
 
-###                TEMPLATE MODULE 
 
+###                TEMPLATE MODULE 
+                  so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run
 13o)
 
 if i wanted to install the httpd 
@@ -1627,7 +1634,7 @@ but basically that playbk once you look at it, update the url, it is goin to ins
 
 
 
-  i wnat to install pip, tree, vim,
+  i want to install pip, tree, vim,
 if i hv more packages, it just means ill just keep writing but this becomes a very long playbk
 so instaed of writing all these long lines of code, i can use a loop, 
  
