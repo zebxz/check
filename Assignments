@@ -1250,14 +1250,48 @@ VIDEO4:
 9) no project
 
 
+ANSIBLE 2
+
+1)use terfrm to provision 4 servers (3ubuntu & 1redhat) in Aws & Ansible to install ansible in one of the servers (so this becomes the control server)
+ & verify its the control server by running the command 'ansible', change the key permission & ping the local host ie ansible
+2)configure the remote/host servers 2ubuntu & 1 redhat  ie 'ping all' but you need the inventory ie host file otherwise it says its empty, so create the host file
+3)create the host file by creating 2 groups (db & web)& add the ip adddress of the remote/host servers then 'ping all'
+4)establish an ssh connection to all the servers by using PW authentication & also connect to any of the grp of servers eg; ansible web -m ping 
+5)Using apt module, install apache package manager on all the host servers (both db & web), we applied the -b root priviledge.
+6)using yum module, we installed httpd package manger was installed on the web grp 
+7) using service module, ngnix was installed on the db grp  
+8)created user mark & his PW in the db grp & communicate with him
+9)using the setup module:
+ansible web -m setup                    ****** it will return info abt this redhat server
+some of the facts returned are like variables that can be accessesed and we wil see hw to do that
+10)create variables in the host file & create the PW
+Create a user variable at the host level to connect to the user
+create a group variable
+
+11)PRcatice host level priority
+  CREATING A FILE TO CONFIRM THE HOST LEVEL PRIORITY
+we will see a file was created in the home of ansible user (ansible) whose var was defined at the grp level & also in the home of Mark whose var was defined at the host var 
+***i bliv it also created it in the home of Mark bc we defined mark at the host level if not the file will be created only in the home of ansible user
+  ill practice this ie ill create group variable then create a file & see if the file is created in the home of mark & the ansible user or only in the home of ansible user
+
+12) Establish connection using ssh keys ( have to reove the variables in the host file) 
+    In the control serevr, in the home of ansible generate ssh keys
+  using the ssh copy command, transfer the key to the default user in the 2 ubuntu remote/host servers
+ping all : ansible all -m ping
+
+
+
 ANSIBLE 3
 
+1) use the user module to create user in the db grp & encrypt the PW using openssl
 1) use a playbook with 'gathering facts' true to apache httpd
 2) inorder to reduce the code lines like in no;1, use become on the host level 'gathering facts' true to apache httpd
 1) DISable setup module: use a playbook with 'gathering facts' as false  & run a shell script/command to gather the os diatribution to install httpd
 2) use condition in your play to install httpd or apache   ie the condition should define the parameters for which ansible will either install apache or httpd
 5)using handlers & without declaring become at host level, install & start httpd
 2) use a template module/jinja2 templating to install tomcat
+LLOOK OUT FOR THIS PROJECT:
+we have a project that will replace the user, change the PW  & setup user
 
 
 
