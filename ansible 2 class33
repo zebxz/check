@@ -1,4 +1,4 @@
-
+b
 
 VIDEO STopped at 2:44 , i bliv thats wher he start with adhoc commands 
 so i had to start with profs video Ansible1, for class 34 )  
@@ -11,16 +11,17 @@ so i had to start with profs video Ansible1, for class 34 )
 USING SCRIPT TO AUTOMATE THE CONFIGURATION OF REMOTE DEVELOPMENT, 
 EXPLAINING THE CONFIGURATION THAT IS ENABLED/INPUTTED INSIDE THE CONFIGURATION FILE IN VSCODE FOR REMOTE DEVELOPMENT DURING THE AUTOMATED INSTALLATION,
 INSTALLING VSCODE & CONFIGURING VSCODE FOR REMOTE DEVELOPMENT, APPLYING OUR CODE/SCRIPT, OUR KEY IS REFERENCED IN THE NULL FILE, TERRARY OPERATOR, 
-DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE HOST(CONTROL)IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE
-&EXECUTE THE PLAYBKS, CREATING PLAYBOOK IN THE CONTROL SERVER IN VSCODE, HOST KEY CHECKING,NDEFAULT ANASIBLE.cfg or ANSIBLE CONFIGURATION FILE LOCATION, CONFIGURING OUR MANAGED
-NODES, CREATING THE HOST LIST/GROUPS, WE CAN CREATE SSH CONNECTION IN 2WAYS;password & PSSWDLess authentication ie using ssh keys,  LOCAL HOST IS THE SERVER THAT IS RUNNING
-ANSIBLE 
-a)ESTABLISHING AN SSH CONNECTION TO ALL THE SERVERS USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS, CREATING ANOTHER USER(mark), HOW TO VERIFY IF YOU
-ARE IN THE CONTROL NODE .. RUN : anisble, COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, CREATING PW FOR THE HOST FILE VARIABLE, ANSIBLE FACT (pingpong, meaning
-success), CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO, GROUP VARIABLES, HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT CREATING,
-b) Password-less Authentication (Using SSH_Keys),TRANSFER THE PUBLIC/SSH KEY TO THE REMOTE HOST SSH COPY ID, LOGIN WITHOUT PASSWD, USING SSH & IP aDdress, TRANSFERS KEY TO 
-2ND UBNUtu USER, TRANSFERS KEY TO REDHAT USER, COPYING THE KEY TO A SPECIFIC USER, ADHOC COMMANDS, WHAT IS ADHOC COMMAND, MODULES, TYPES OF MODULES;command,shell,file,copy,
-fetch,apt,service,user module,setup module, debug module.
+DUE TO THE INSTALLATION AUTOMATION WE DYNAMICALLY ADDED THE ANSIBLE CONTROL SERVER IN VSCODE & SSH INTO THE CONTROL SERVER WHERE WE CAN WRITE & EXECUTE THE PLAYBKS, 
+SO WE CAN CREATE PLAYBOOK IN THE CONTROL SERVER IN VSCODE, MANUALLY SSH INTO THE CONTROL SERVER IN IDE/HOST KEY CHECKING, DEFAULT ANASIBLE.cfg/ANSIBLE CONFIGURATION FILE 
+LOCATION, CONFIGURING OUR MANAGED NODES ie ssh connection, CREATING THE HOST LIST/GROUPS SO WE CAN TEST THE CONNECTIVITY & ping all, 
+LOCAL HOST IS THE SERVER THAT IS RUNNING ANSIBLE, WE CAN CREATE SSH CONNECTION IN 2WAYS; password & PSSWDLess authentication ie using ssh keys, 
+a)ESTABLISHING AN SSH CONNECTION TO ALL THE SERVERS USING PW AUTHENTICATION, CONNECTING TO A PARTICULAR GROUP OF SERVERS IN THE HOST FILE, CREATING ANOTHER USER(mark), HOW TO
+VERIFY IF YOU ARE IN THE CONTROL NODE .. RUN : anisble, COMMUNICATING WITH THE USER mark, HOST AND GROUP VARIABLE, CREATING PW FOR THE HOST FILE VARIABLE, ANSIBLE FACT 
+(pingpong, meaning success), CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO, GROUP VARIABLES, HOST LEVEL PRECEDENCE, ITEM POTENCY, TROUBLESHOOTING NUL RESOURCE NOT 
+CREATING,
+b) Password-less Authentication (Using SSH_Keys), GENERATE SSH KEY IN THE CONTROL SERVER,TRANSFER THE PUBLIC/SSH KEY TO THE REMOTE HOST SSH COPY ID, LOGIN WITHOUT PASSWD,
+USING SSH & IP aDdress, TRANSFERS KEY TO 2ND UBNUtu USER, TRANSFERS KEY TO REDHAT USER, COPYING THE KEY TO A SPECIFIC USER, ADHOC COMMANDS, WHAT IS ADHOC COMMAND, MODULES, 
+TYPES OF MODULES;command,shell,file,copy,fetch,apt,service,user module,setup module, debug module.
 copy: a)From ansible control node to remote node/ b) From one location in remote node to another location in remote node
 Fetch: a)Will copy the files with a directory structure; ansible all -m fetch -a "src=./hosts dest=./"  b)To fetch the file without a directory structure, use the flat=yes option
 
@@ -193,7 +194,7 @@ there are 3 ways you can connect to a server for ansible to manage
 
 
 
- C)    CREATING THE HOST LIST/GROUPS (eg; web & db) & PING THE REMOTE/HOST/SERVERS
+ C)    CREATING THE HOST LIST/GROUPS (eg; web & db) SO WE CAN CREATE AN SSH PW CONNECTION & PING all
 we created a host list & est an ssh connection
 in the host file, we created 2 groups (DB for the 2ubuntu servers & web for the redhat server) we entered the particulars of the hosts ie the private ip of the host servers
 we created in video 1
@@ -652,7 +653,7 @@ the user is ansible and it has dynamically added the key , my key is in my downl
 so now my vscode has been configured am able to connect to that particular instance but we wont use it tonight , we will use it so i can easily connect 
 click on connect in vscode and hes connected to ansible
 
-                                    CREATING PLAYBOOK IN THE CONTROL SERVER IN VSCODE
+                                     SO  WE CAN WRITE PLAYBOOK IN THE CONTROL SERVER IN VSCODE
  it has now log me inside the home of the home ansible control server and inside this home of ansible i can create a file
 he created text.txt
   so we will use this when we are writing our playbk
@@ -686,7 +687,7 @@ ssh into the ansible srver am doin it maually
 cd into downloads cos thats where his key is 
 paste the ssh link
 
-                                          HOST KEY CHECKING
+                                     MANUALLY SSH INTO THE CONTROL SERVER IN IDE/HOST KEY CHECKING
 host key checking : are you sure you want to continue connecting
 anytime you want to connect to a linux server or instance you wil be asked if you wnat to continue checking
 we dont wnat this in automation
@@ -737,13 +738,13 @@ user and then the default
 ****** so this is what the ansible configuration structure is
 
  
-NO.6)                                CONFIGURING OUR MANAGED NODES
+NO.6)                                CONFIGURING OUR MANAGED NODES ... *
+**MEE, ie first we hv to test the connectivity by ping all (Hv to create the host list to ping all) the create an ssh connection by either using PW or ssh keys ie without PW
 
  #############  haven said that, lets go now to configure our remote node /managed nodes
 for us to configure thses managed nodes:
-
-
  https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/02-Configuring%20managed%20nodes/Managed-nodes_configuration.md
+
 
   Configuring managed nodes.
 
@@ -775,6 +776,7 @@ we see one of the users called ansible
 
 
 
+Ansible Engine uses SSH Connection to connect and work with Manage nodes.
                         WE CAN CREATE SSH CONNECTION IN TWO WAYS:
 
 a) Password Authentication
@@ -825,7 +827,7 @@ ansible@ip-172-31-27-28:  $ ansible localhost -m ping
                                          server that its running on bc local host is the server that is running ansible
 
 
- 7Aii)    CREATING THE HOST LIST
+ 7Aii)    CREATING THE HOST LIST SO WE CAN TEST THE CONNECTIVITY & PING ALL
 
 1:29:44
 so we hv used ping to test our connection, we are using -m option whenever we wnt to specify a module 
@@ -847,7 +849,8 @@ we cd
  ansible@ip-172-31-27-28: $  vi host 
 it will give you examples of hw u nid to mk your entries into this particular files                  ********* 1:31:30
 
-                         PUTTING THE REMOTE SERVERS IN GROUPS IN THE HOST FILE
+
+                         PUTTING THE MANGAED/REMOTE SERVERS IN GROUPS IN THE HOST FILE
 he scrolled down to create a grp called DB
 he used his private ips do that whenevr he shuts down his instances  he doesnt have to come in here to change the ips bc the ips changed
 he also created anoda grp called web
@@ -867,7 +870,7 @@ we knw that we created a user and we gave the usr a PW, so for us to comm to thi
 
 
 
-                                                           ESTABLISHING AN SSH CONNECTION TO ALL THE HOST SERVERS USING PW AUTHENTICATION
+                                                           ESTABLISHING AN SSH CONNECTION TO ALL THE MANAGED/HOST SERVERS USING PW AUTHENTICATION
 7Aiii)
                           (-k option)  **if i dnt pass the -k option it wil by default try to connect using the ssh keys
 
@@ -894,7 +897,7 @@ ANS:
 
      
 
-  ************ 1:37:40                       CONNECTING TO A PARTICULAR GROUP OF SERVERS
+  ************ 1:37:40                       CONNECTING TO A PARTICULAR GROUP OF SERVERS IN THE HOST FILE
 wit this hv been able to pass my PW and v been able to connect to my server
 if i need to coonect to the web, just to the web grp  so i can pass ansible and just pass web
 
@@ -934,7 +937,7 @@ i see i only hv a user called ansible
 
 7Aiv)
 
-1:40:54                                 CREATING ANOTHER USER   (mark)
+1:40:54                                 CREATING ANOTHER USER   (mark) In db GROUP
 ****************
 LETS create the user called mark
 
@@ -1070,7 +1073,7 @@ failed                                                  ** bc i havent passed a 
 
 7Aix)
 ************
-                                    CREATING A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO/SPECIFYING A USER TO CONNECT TO AT THE HOST LEVEL
+                                 IN THE HOST FILE CREATE A USER VARIABLE AT THE HOST LEVEL TO CONNECT TO/SPECIFYING A USER TO CONNECT TO AT THE HOST LEVEL
 
 1:51:11  
 
@@ -1251,6 +1254,7 @@ so ill vi  into my hostfile and remove the variables
 ansible@ip-172-31-27-28: $ cd/etc/ansible
  ansible@ip-172-31-27-28: $  vi host
 
+                                           GENERATE SSH KEY IN THE CONTROL SERVER
 
 to do it passwordless
  ******* 1st you need to generate an ssh ,it needs to be generated in the home of ansible, eneure you are in the home of ansible and your generating it on your ansible 
