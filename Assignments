@@ -1254,17 +1254,19 @@ ANSIBLE 2
 
 1)use terfrm to provision 4 servers (3ubuntu & 1redhat) in Aws & Ansible to install ansible in one of the servers (so this becomes the control server)
  & verify its the control server by running the command 'ansible', change the key permission & ping the local host ie ansible
-2)configure the remote/host servers 2ubuntu & 1 redhat  ie 'ping all' but you need the inventory ie host file otherwise it says its empty, so create the host file
-3)create the host file by creating 2 groups (db & web)& add the ip adddress of the remote/host servers then 'ping all'
-4)establish an ssh connection to all the servers by using PW authentication & also connect to any of the grp of servers eg; ansible web -m ping 
-5)Using apt module, install apache package manager on all the host servers (both db & web), we applied the -b root priviledge.
-6)using yum module, we installed httpd package manger was installed on the web grp 
-7) using service module, ngnix was installed on the db grp  
-8)created user mark & his PW in the db grp & communicate with him
-9)using the setup module:
+2)configure the managed nodes/remote/host servers 2ubuntu & 1 redhat ie 
+A) TEST CONNECTIVITY  ie 'ping all' bt you need the inventory ie host file otherwise it says its empty,so create the host file
+create the host file by creating 2 groups (db & web)& add the ip adddress of the remote/host servers then 'ping all'
+B)establish an ssh connection to all the servers by using PW authentication/ssh keys ie no PW... assigned in no.12 below.
+also connect to any of the grp of servers in the host list eg; ansible web -m ping 
+3)Using apt module, install apache package manager on all the host servers (both db & web), we applied the -b root priviledge.
+4)using yum module, we installed httpd package manger was installed on the web grp 
+5) using service module, ngnix was installed on the db grp  
+6)created user mark & his PW in the db grp & communicate with him
+7)using the setup module:
 ansible web -m setup                    ****** it will return info abt this redhat server
 some of the facts returned are like variables that can be accessesed and we wil see hw to do that
-10)create variables in the host file & create the PW
+8)create variables in the host file & create the PW
 Create a user variable at the host level to connect to the user
 create a group variable
 
@@ -1283,14 +1285,15 @@ ping all : ansible all -m ping
 
 ANSIBLE 3
 
-1) use the user module to create user in the db grp & encrypt the PW using openssl
-1) use a playbook with 'gathering facts' true to apache httpd
-2) inorder to reduce the code lines like in no;1, use become on the host level 'gathering facts' true to apache httpd
-1) DISable setup module: use a playbook with 'gathering facts' as false  & run a shell script/command to gather the os diatribution to install httpd
-2) use condition in your play to install httpd or apache   ie the condition should define the parameters for which ansible will either install apache or httpd
-5)using handlers & without declaring become at host level, install & start httpd
-2) use a template module/jinja2 templating to install tomcat
-LLOOK OUT FOR THIS PROJECT:
+1)Automate ansible installation & vscode installation/configuration for remote development
+2) use the user module to create user in the db grp & encrypt the PW using openssl
+3) use a playbook with 'gathering facts' true to apache httpd
+4) inorder to reduce the code lines like in no;1, use become on the host level 'gathering facts' true to apache httpd
+5) DISable setup module: use a playbook with 'gathering facts' as false  & run a shell script/command to gather the os diatribution to install httpd
+6) use condition in your play to install httpd or apache   ie the condition should define the parameters for which ansible will either install apache or httpd
+7)using handlers & without declaring become at host level, install & start httpd
+8) use a template module/jinja2 templating to install tomcat
+LOOK OUT FOR THIS PROJECT:
 we have a project that will replace the user, change the PW  & setup user
 
 
