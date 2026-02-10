@@ -1,25 +1,11 @@
- 
-
-   ###################################################################    STARTS
-
-meaning of 
-os familily, distribution family,  os name   ????
-
 how is disribution name RED  but
 os is linux
-
-13n)
-2.52.00 needs to be explained well
-
-
-FORKS, HOST KEY GEN, PASSWORDLESSLY, APT/YUM MODULE, ROOT PRIVILEDGES, IDEMPOTENCY, ABSENT, USER MODULE, ENCRYPTION , SUDO !!, SETUP MODULE, ANSIBLE PLAYBOOK, PLAYBK SYNTAX,
-YAML BASICS, LIST, DICTIONARY, Ansible task execution, REMOTE DEVELOPMENT, CLONING THE ANSIBLE SERIES REPO, HOW TO WRITE PlAYBOOK, RUN PLAYBOOK, MODIFY PLAYBOOK, DISABLE
-MODULE
 
 != , is not 
 
 ********* WE HV 2 DEFAULT MODULES : Command module and setup module
 
+          APT vs YUM
 httpd is a package manager for yum (redhat) while apache or debiem is a package manager for apt (ubuntu) linux
 
                              OPEN SSL
@@ -33,6 +19,10 @@ yes i want to recall the last command but am adding sudo to it, these are linux 
 58:16   *******we created the user in the control node but we had to ssh into the remote node(home of ansible to see the encryted PW of the user we created in /etc/shadow  ?
 
 
+  ADHOC COMMANDS vs PLAYBOOKS
+so for ansible we hv adhoc commands but if we hv multiple commands that we want to pass tru ansible then we can write a play bk 
+
+
 what command do you use to find your present working dir?  
 ANS : pwd
 now if i ask you to find your pwd, i dnt expect you to write a script, to put that inside of a script bc its a one line command, its a command that u can directly execute on
@@ -44,9 +34,7 @@ it is best practice to put multiple commands in a sript( **me,playbk) and its le
 less prone to error if you execute it as a script as oppose to u typing 10 commands bk to bk on the cli, you are prone to make mistakes
 so for one line you can run it directly on the cli but for multiple commands u put it in a script thats what automation is about 
 
-
-so for ansible we hv adhoc commands but if we hv multiple commands that we want to pass tru ansible then we can write a play bk 
-
+ 
 anytime we want to create a file , we use the file module
 referring to video3 class33 ************ 1:05
 
@@ -54,15 +42,27 @@ referring to video3 class33 ************ 1:05
 
 
 
+APPLYING THE CODE AGAIN LIKE FROM PREVIOUS CLASS, STILL USING THE IDE/NOT VSCODE YET, STEPS TO SSHING INTO ANSIBLE SERVER, GENERATING THE Ansible.cfg file IN ANSIBLE CONTROL SERVER, FORKS, USING THE APT/YUM MODULE TO INSTALL PACKAGE MANAGERS,  ROOT PRIVILEDGES   "-b",  TROUBLESHOOTING ; Apache not part of yum repo, IDEM POTENCY, 
+ REMOVING A PACKAGE, USING YUM, SERVICE MODULE, USER MODULE, ENCRYPTION , SUDO !!, CREATING A uSER & ENCRYPTING THE PASSWD USING OPENSSL, SETUP MODULE, 
+USING THE SETUP MODULE & VARIABLES, USING VARIABLES FOR APT/YUM MODULE, DISABLING SETUP MODULE, DEBUG MODULE,  ISSUSES WITH OPENSSL, CUSTOM AMIs, 
+ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom, PLAYBOOK SYNTAX, EACH PLAY DEFINES 2 THINGS, ANSIBLE TASK EXECUTION, YAML BASICS, LIST, DICTIONARY, 
+REMOTE DEVELOPMENT/ THE SECOND PART; SSH CONFIGURATION, MANUAL REMOTE CONFIGURATION, CONNECT TO HOST **mee, ie the control server ec2instance IN THE VSCODE TO START WRITING PLAYBOOKS, CREATED A DIR (ANSIBLE) TO CLONE THE ansible series repo, CLONING THE ANSIBLE SERIES REPO, CREATING ANOTHER DIR (testing)to WRITE FILES/PLAYBOOKS, HOW TO WIRTE PLAYBOOK, RUN THE PLAYBOOK, ALTHOUGH THE PLAYBK HAD ONE TASK BUT WE SEE 2TASKS THAT RAN ie the setup default module, MODIFYING THE PLAYBK TO GIVE IT A NAME, 
+DISABLING THE SETUP MODULE, ADDING A SERVICE MODULE TO THE PLAYBOOK, USING BECOME ON THE HOST LEVEL INORDER TO REDUCE LINES OF CODE, EXPLAINING MORE PLAYBOOKS, 
+PLAYBOOK TO INSTALL HTTPD ON A WEB REPO/SAMPLE PLAYBOOKS, CAPTURING INFO INSIDE A VAR CALLED RESULTS & USE THE DEBUG MODULE TO DISPLAY THE RESULT, 
+USING CONDITIONS TO INSTALL HTTPD OR APACHE, USING CONDITIONS GATHERING FACTS HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND, 
+HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND, WHEN GATHERING FACTS is TRUE, ill playbook will be shorten, WHAT ARE HANDLERS,
+TEMPLATE MODULE/JINJA2, WE HAVE A PROJECT THAT WILL REPLACE THE USER/CHANGE THE PW & SETUP USERS, LOOPS .
+
+
+2:08:20
+***** he said Emeka made some changes on that , can yous end that script to everyone for those using windows, Emeka made modification on the script it is going work for you..
+
 
 
 
 
 
 ***********13:06         ................ STARTS
-
-2:08:20
-***** he said Emeka made some changes on that , can yous end that script to everyone for those using windows, Emeka made modification on the script it is going work for you..
 
 
                APPLYING THE CODE AGAIN LIKE FROM PREVIOUS CLASS
@@ -107,7 +107,7 @@ again am doing this still on my terminal (terfrm IDE) but hv already provisIoned
 so i can stilluse my vscode to do it, and ill show you when we write playbks 
 
 
-                                                STEPS TO SSHING INTO ANSIBLE SERVER
+                                               MANUALLY SSH INTO THE CONTROL SERVER IN IDE (NO host key checking bc we changed it to false in the previous video)
 #### 1) 
 but for now ill just ssh in 
 splits his terminal
@@ -779,7 +779,7 @@ Sample playbook
  
 
 
-2:00:28                                                REMOTE DEVELOPMENT/ THE SECOND PART; SSH CONFIGURATION
+2:00:28                                                REMOTE DEVELOPMENT(AUTOMATED DURING INSTALLATION FOR SSH CONFIGURATION)
 ****************** 
 TO STARt writing our playbk lets go to our vscode
 
