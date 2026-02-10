@@ -1619,6 +1619,30 @@ so bc the task are dependent on each other then we can create dependencies, ansi
 
 
 
+ QUESTION
+1) you said playbook is procedural  so is it realy necesssary  for us to use handler to notify the next process if it would run anyway??
+
+    ANS: 
+Yes, as we look at what handlers do, they only run when notifed bc if lets say ders no change in the httpd, its already running, ders no need to run this task (handler part
+so ansible shud just go ahead and run the nxt play, ders no need to run this task if its nt necessary so this is just a way of cleaning up our playbk so that task only runs
+when necessary and therfore handlers is a way of doin that, creating depencendies btw task and they will run run if they are notified, if there is a change then handler is
+notified if ders no change then thers no need for it to run 
+
+
+
+### just go over playbooks bc this is the really key of ansible, ie you knowing how to write  a playbk and executing using the diff modules
+and if you go to interview you can say that you hv experience, you use diff modules to do config 
+you v used like cariable to craete conditions so u are able to write a playbk that if you hv a fleet of 100instances but some of them windows and some are linux bt u just 
+want to patch ununtu servers or you hv multiple patches for ubuntu , windows and redhat, so you can hv a playbk that uses condition it says 
+if its a windows server then this is the patch ur to apply and vice versa, then your using the same playbk but with conditions then ur just running one playbk and ansible is
+goin out into all your servers and bc of the gathering facts, it finds out on its own which server is what,if its windows then it applies the appriopriate patch vice versa
+thats what automation is then u dnt hv to be logging into servers, this is my windows then running commands there
+
+so as an engr, you sit bk tk your coffee and let ansible do the work for you  but the task is you to understand how to write the playbk, how to create the conditions , hw to
+create depencies, when to run what, you can automate so that it runs on a schedule and those things are now like some advanced concept of ansible 
+by the end of your bootcamp then u guys wll be expert in automation, now combining terfrm and ansible 
+
+
 
 
 vIDEO3b, Class 34, v
