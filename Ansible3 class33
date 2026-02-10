@@ -102,7 +102,7 @@ after which we configure our host file
 in aws click conncet, he copied the ssh command for the instance  54.185.247.171
 
 
-19:23*******                                     STILL USING THE IDE
+19:23*******                                     STILL USING THE IDE/NOT VSCODE YET
 again am doing this still on my terminal (terfrm IDE) but hv already provisIoned dit in my vscode 
 so i can stilluse my vscode to do it, and ill show you when we write playbks 
 
@@ -294,7 +294,7 @@ we can use a service module if we need to start our appl
 we can install ngnix and we can start it by using a service module
 
 #### 
-   7) Service Module
+   7) SERVICE MODULE
 
 You can use the service module to manage services running on the remote nodes managed by Ansible. This will require extended system privileges, so make sure your remote user
 has sudo permissions and you include the --become option to use Ansible’s privilege escalation system. Using -K will prompt you to provide the sudo password for the 
@@ -330,9 +330,9 @@ now the service has been stopped
 
 56:18
 
-############ 8)
+############ 8) USER MODULE
 
-8) User Module
+
 Used to create user accounts.  (TO create users, but you wil first craete an encrypted pW for the user)
 Create a password encryption
 Generate the password from your local environment
@@ -348,7 +348,7 @@ permission denied
 we see the list  of paswords
 we see ansible pW was encrpted, so pW are stored as encrypted in /etc/shadow file
 
-eg                         CREATING A uSER
+eg                         CREATING A uSER & ENCRYPTING THE PASSWD USING OPENSSL
 
  ansible@ip-172-31-28-203: $ openssl passwd -crypt mark
 unknown                                                           ********** he said openssl isnt installed
@@ -382,7 +382,7 @@ mark: psv/alszgssq                         encrypted but to login as mark , ill 
 
 
 ####                           
-9)   Setup module
+9)   SETUP MODULE
 This is a default module and is used to gather facts about the hosts.  egused to go to the host to gather facts, to find out wheter python has been installed, to find out
 what package manager this server uses..... this is also a default module
 
@@ -467,8 +467,8 @@ You are diasbling the setup module
 
 
 
-10)
-###### Debug module
+10)   DEBUG MODULE
+######
 Executes only on the local host (mee..ansible control node)to display some information- message or variable value.
 
 We do not need ssh connectivity or password for a debug module. When using the debug module, the arguments will either be
@@ -723,7 +723,7 @@ All YAML files can optionally begin with --- and end with ... . This is part of 
 All members of a list are lines beginning at the same indentation level starting with a "- " (a dash and a space):
 
 
-example:
+example:    LIST
          a list always has "---"
  ---
 # A list of tasty fruits - Apple
@@ -817,7 +817,7 @@ i can open , and am opening it in the home of ansible dir  /home/ansible/... ***
 am now in the home of ansible                                                       i bliv that is the first dir afterwhich other dirs or files can be created
 i hv my ansible config file that i created
 
-                                  CREATED A DIR (ANSIBLE)
+                                  CREATED A DIR (ANSIBLE) TO CLONE THE ansible series repo
 now in the home of ansible, i can create a dir, call it ansible
 if i open a new terminal, ill see i hv a dir called ansible
 
@@ -1454,7 +1454,7 @@ PLAY RECAP  ....... ok
 
 
 
-###                TEMPLATE MODULE 
+###                TEMPLATE MODULE/JINJA2
                   so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run
 13o)
 
