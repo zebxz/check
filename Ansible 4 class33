@@ -39,7 +39,7 @@ configure, so it will have a host.
 but also on the bare minimum it will have atleast one task, a task will have a module bc modules are small programes ansible use to do configuration
 if you have a task for ansible to do, you need to give it a module , like what program is it goiin to use 
 if the task is to install a package then you need to give it a module that installs packages
-if its to copy or transfr a file you can use a file module
+if its to copy or transfer a file you can use a file module
 if its to copy data that are changes/dynamic its a file that has variables and these variables will be read at runtime then we dnt use a copy module rather ansible rEQs you to
 use a template
 A template is just a mode whereby things can be put in so when u use a template module its a module that will copy dynamic data
@@ -89,9 +89,9 @@ but when we say include task its giving us a range of information, the name of t
 so include is giving us more task
 again we wil see more diff btw include and import
 u ll use include when you want to include tasks that have variables ie task that change
-2) so we use import when we are using it on static data ie does not chaage
-
-
+2)so we use import when we are using it on static data ie does not change ie we cant use import while passing a variable, video3, we use copy module when copying static file 
+3) 38.31... include task is used for dynamic data, ie we can use include task while passing a variable 
+       video 3... so we use template module when you are copying the dynamic files
 
 31.14
 ***************
@@ -103,7 +103,13 @@ i reduce it furtehr by been able to use thses as varibales so it pulls the right
 
 
 
-#### 3)               USING IMPORT TASK & PASSING A VARIABLE IN A PLAYBOOK TO REDUCE NUMBER OF LINES
+#### 3)      32.25      USING IMPORT WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR DATA THAT DOES NOT CHANGE
+34.25
+ran the script  but failed
+error
+ when using import you cannot use variables ,you cannot hv data that is changing bc this variable {{ansible_os_family}}is suppose to be substituted when the playbk is running
+so we use import when we are using it on static data ie does not change
+
 32:25
 ***************
 so because am passing a variable, i can rewrite this playbk
@@ -122,11 +128,15 @@ so because am passing a variable, i can rewrite this playbk
 so now am reducing my playbk frm  (No.2) to (NO.3), ie reducing it to just 2lines bc am now passing/using a variable
 
 #######################################################################################################################################
+
+
+             HOW TO GET PREDEFINED & INBUILT VARIABLES USING SETUP MODULE
 (1:27:29, further xplanation for kelvins question) if u pass smt inside the calibres, its a variable 
 so we hv some predefined variables or inbuilt variables 
 an ansible os family is an inbuilt varaiable
 but hw do we knw
 ansible web -m setup                                    ****** am running my setup module 
+
 once i run this , it will go to my server/host and it wil return info abt the server, which icludes predefined variables that i can access
  ansible_processor_cores        **** i can access this info bc its a filter
 to access this i can pass it as a variable  - import_tasks: install_webserver_{{ ansible_processor_cores}}.yml
@@ -137,6 +147,9 @@ e.g
 when i go tru this file, to the part of the ansible os family, it says RedHat, 
 so when i was writing my code, i specifically wrote one of the file to be RedHat:install_webserver_RedHat.yml ,exact name as defined in d setup file:bc i want to substitute 
 this name ansible os family, i want ansible to find this name, os family , is goin to find it as REdhat, then it will substitute it with the exact name 
+
+
+                        DEFINED VARIABLES MISSPELT ISSUE
 but if i had changed the name , even just by misspeling it e.g instead of RedHat, i said Redhat, it wil fail bc it wont find it 
 so am using my setup to look tru the instance, the remote host, so when it reads all the variables, it sees that there is an os family,  then bc in my defination am using a 
 variable, its goin to substitute the variable {{ansible_os_family}}., with the right info in the setup
@@ -153,7 +166,7 @@ QUESTION
 is there a command to pass so that capital for the RedHat stays correct
 ANS:
 we hv what is called build in or already predefined variables that you cant change bc these are already values that come with your system
-so if its RedHat that show the variable has already been defined, so w ecant alter it to make it case insensitive
+so if its RedHat that show the variable has already been defined, so we cant alter it to make it case insensitive
 i dnt think there is a way to do it , but you as an engr, you can use ur scripting so that you can mayb give it multiple options
 am just thinking of ways cud do it
 you cud say mayb if the name is this or this then it shud still work, get that particular name but then its now  prone to error bc what if you hv 2files that hv diff 
@@ -169,7 +182,7 @@ am sure theres a way around it but as of now we just stick at what we have
 
 ###3A)                                               
 
-34.24/ 36.12                                         USING IMPORT WHILE PASSING A VARIABLE    
+34.24/ 36.12                     USING IMPORT WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR DATA THAT DOES NOT CHANGE
                                                 Running the s(install_import.yaml)          
  ran the script  but failed
 error
