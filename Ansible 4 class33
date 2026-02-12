@@ -1,3 +1,7 @@
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main
+
+
+
 PLAYBOOK, IMPORT TASK, INCLUDE TASK, FUNDAMENTAL DIFF BTW  import task and INCLUDE TASK, PASSING A VARIABLES, USING IMPORT WHILE PASSING A VARIABLE, USING INCLUDE WHILE
 PASSING A VARIABLE/DYNAMICALLY, ANSIBLE ROLES, ROLE DIRECTORY STRUCTUR, CREATNG A ROLE FOR A PLAYBOOK /CONVERTING THE PLAYBOOK (httpd) TO A ROLE, CONFIGURING THE ROLE, MY 
 NEW ROLE BK, CREATING A USER ROLE, SUMMARY OF HOW TO CREATE ROLES., 3 WAYS TO USE ROLES  
@@ -81,7 +85,7 @@ except i want it to disable it  then i have to indicate it as false
 
   ##2i)
       
-       FUNDAMENTAL DIFF BTW  import task and INCLUDE TASK 
+       FUNDAMENTAL DIFF BTW using import task and INCLUDE TASK in a playbook
 1)When we use import task it just says
 chANGed : 172.31.24.167
 but when we say include task its giving us a range of information, the name of the task that is included
@@ -89,9 +93,8 @@ but when we say include task its giving us a range of information, the name of t
 so include is giving us more task
 again we wil see more diff btw include and import
 u ll use include when you want to include tasks that have variables ie task that change
-2)so we use import when we are using it on static data ie does not change ie we cant use import while passing a variable, video3, we use copy module when copying static file 
-3) 38.31... include task is used for dynamic data, ie we can use include task while passing a variable 
-       video 3... so we use template module when you are copying the dynamic files
+2)so we use import when we are using it on static data ie does not change ie we cant use import while passing a variable, video3; we use copy module when copying static file 
+3)Include task is used for dynamic data, ie we can use include task while passing a variable, video 3; so we use template module when you are copying the dynamic files
 
 31.14
 ***************
@@ -251,7 +254,7 @@ After you initialize the role, cd into the various directories and vi into the m
 
 ###### 5)
 
-                   ROLE DIRECTORY STRUCTURE    
+                   ROLE DIRECTORY STRUCTURE & CONTENT
 ***** when a role is created, it gives you a directory structure, which will hv all these 8 directories & each dir must hv a main.yml file 
 
  
@@ -277,7 +280,9 @@ templates/main.yml - templates that the role deploys.
 
 meta/main.yml - metadata for the role, including role dependencies.
 
-                                               ADDING FILES IN THE DIRECTORIES
+
+
+                                             IMPORTING/ADDING FILES & REFERRING TO THE FILES IN THE ROLE DIRECTORIES
 1:22:31
 ********* we hv seen these examples below while creating a ROLE 
 You can also add other YAML files in some directories. For example, you can place platform-specific tasks in separate files and refer to them in the tasks/main.yml file:
@@ -301,6 +306,8 @@ You can also add other YAML files in some directories. For example, you can plac
   ansible.builtin.apt:
   name: "apache2"
   state: present
+
+                                       2 LOCATIONS FOR ANSIBLE ROLES
 By default, Ansible looks for roles in two locations:
 
 In a directory called roles/, relative to the playbook file in /etc/ansible/roles
@@ -312,7 +319,8 @@ In a directory called roles/, relative to the playbook file in /etc/ansible/role
 49.54   
                                                        EXAMPLE 1
 
-                                         CREATNG A ROLE FOR A PLAYBOOK /CONVERTING THE PLAYBOOK (httpd) TO A ROLE
+                                         CREATNG A CUSTOM ROLE FOR 'HTTPD' 
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles
 
 he cd into our ansible roles 
 cd  07-Ansible\ roles/     , now he wants to create a role for httpd
@@ -326,13 +334,14 @@ after installation
 ill run tree httpd
 now i see what the directory structure of my httpd looks like 
 
-######### 5ii)                                CONFIGURING THE ROLE  eg adding Handlers & notifiers
+
+######### 5ii)                                CONFIGURING THE ROLE FOR HTTPD USING THE HTTPD PLAYBOOK & ADDING HANDLERS & NOTIFIERS
 
 52.24
 ************  now we nid to configure this role 
 for eg
-he  went bk to his playbk and  copied the httpd.yml playbk and pasted it in the Ansible roles dir (pasting it created the playbk file automatically there )
-  but now he added notifiers and handlers 
+he  went bk to his playbk and copied the httpd.yml playbk we already had and pasted it in the Ansible roles(dir ie I bliv he copied the httpd file & split up the parts)
+(pasting it created the playbk file automatically there )  but now he added notifiers and handlers 
 
     - name: httpd
    hosts: web
@@ -350,8 +359,8 @@ he  went bk to his playbk and  copied the httpd.yml playbk and pasted it in the 
        name: httpd
        state: started
 
-
-******* now ill copy the task aspect n in the httpd dir ill paste in tasks(main.yml)file
+                                        SPLITTING THE PLAYBOOK ie PUTTING THE DIFF PARTS OF THE PLAYBOOK IN THE RIGHT DIRECTORY
+******* Now ill copy the task aspect n in the httpd dir ill paste in tasks(main.yml)file
 ensure its well indented
 if i had up to 3 task, ill put all 3 in here too                                         ****** 57.34
 also for the handlers part , ill copy it and paste in in the handlers (main.yml) file
@@ -362,17 +371,19 @@ so hv created my role for httpd and i now create my (role)playbook
                                     
 
 
-59.14          ###5iii)                              MY NEW (ROLE)PLAYBOOK (Httpd.yml)
+59.14          ###5iii)                              THE(ROLE)PLAYBOOK (Httpd.yml)
 ******** 
- for this remaining part, (which is my playbk) ill change tasks to roles and remove(name)  and add just httpd bc thats the role i created
+ for this remaining part, (which is my playbk) ill change tasks to roles and remove(name) and add just httpd bc thats the role i created
   
 - name: install httpd using roles
    hosts: web
    become: yes
    roles:
    - httpd                              ******** the role we created when we initialized
-    
 
+
+
+                                            RUN THE HTTPD ROLE PLAYBOOK
 so i can go to my playbook, httpd,yml
 ********** now i can run my playbook
 bt this playbk is using a role, its calling a role, this role  has 1task and a handler 
@@ -388,10 +399,12 @@ RECAP
 
     ****** so we see i hv cretaed this role n now its reusesable bc its nt tied to any playbk am just calling the role
 
-                                  
+
+
                     EXAMPLE2
 
-#####  5iv)           CREATING A USER ROLE
+#####  5iv)           CREATING A ROLE TO ADD A USER IN WEBSERVER
+                  https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles/user_add
                     (for this role, i didnt have to paste the httpd.yml file again bc we already craeted a copy of the file when we copied and pasted the file in 5111)
 
 1:03:48
@@ -399,6 +412,7 @@ RECAP
 we also see a role to create a user
 he had already created the role to add a user earlier
 it is goin to create a grp using a grp module   (1.11.40)
+**meeee... as seen in the task dir of the add_user role
 
 ***** 
 groups: 
@@ -407,7 +421,7 @@ groups:
 bc i hv a notifer in the task, it means i have a handler                                    ***meee... theres a handler file in ansible series repo
 opening the handler(main), its just to restart
 i also hv variables,and in the vars( main.yml) i hv the variables defined there in         ***meee... theres a vars file in ansible series repo.. eg host2: tomcat_worker 
-in my task i passed variables uername and user grp                                           ***meee... theres a task file in ansible series repo
+in my task i passed variables uername and user grp                                           ***meee... theres a task file in 
 
 1:07:26
 ########## 
@@ -442,18 +456,24 @@ we see a grp called engrs that was just created
 
 
 ******** so when we look at the tasks (main.yml) file , 
-we created a grp and it wa spassed as a variables so we are making it easy so if hv defined/created a role, i just need to use varaibles
+we created a grp and it was passed as a variables so we are making it easy so if hv defined/created a role, i just need to use varaibles
 and am making this flexible, so bc am using variables, this task is reuseable bc i can create as many users as i want, i just need to change the variables
   it is goin to create a grp using a grp module
 
+
                                                               USING SHELL MODULE TO PASS USER TO SUDOERS FILE
-1:12:35   ********      am using a shell module to pass the ussr i just created into the sudoers file
+1:12:35   ********      am using a shell module to pass the user i just created into the sudoers file
 
 
 
 **********                              
-so i hv a user module that i can use, user_add
+so i hv a user module that i can use, user_add     ***I Bliv he meant role
 i have a update_repos to update repositories
+
+
+                       EXPLAINING THE TOMCAT ROLE IN THE REPO
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles/tomcat
+
 i hv a role to create tomcat
 apart from the task, 
 i have a templates bc ill be passisng dynamic data, i wnat to add tomcat users, i wnat to pass the tomcat roles and PW 
@@ -483,7 +503,7 @@ and after we hv cahnged all these, we will notify our handler to start tomcat
 
 
 
-                         SUMMARY OF HOW TO CREATE ROLES 
+                         SUMMARY OF THE STEPS TO CREATE A ROLE
 1:20.00
 **** it might seem as a lot of info , like its going over your head but just start by creating a simple role
 create the role, intialize it , break down your playbk,didvide the task and wherever u created ur role, once u initialize it,go ot ur role, openn the dir, then just copy all
@@ -509,7 +529,7 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
 
 
 1)  example 
- what we did in    5iii)     MY NEW ROLES PLAYBOOK  (Httpd.yml)
+ what we did in    5iii)     THE HTTPD ROLE PLAYBOOK  (Httpd.yml)
   - name: install httpd using roles
    hosts: web
    become: yes
@@ -528,6 +548,8 @@ At the tasks level with import_role: You can reuse roles statically anywhere in 
 
 3) or i can import roles ,, so i can say either include or import,
 but remember, we saw the limitation of when we import (if am using import,the data shud be static, but if dynamic ill use include)
+
+
 
   5v)                                
  #########                                           EXAMPLE 3
@@ -590,6 +612,8 @@ then he went to the terfrm terminal (local env) that has the output , copied the
 
 welcome to landmark Ansible Automation from, {172.31.24.167}       ***** This is your ansible hostname 
 
+
+
 SUMMARY:
 inside my template (index.html.j2), i passed it as a variable, so the variable "ansible hostname" was dynamically pulled bc i put the html, we hv a default index html that
 runs but i replaced it,i substituted, i removed the default one and now i put my custom index.html, and that custom i passed it as a template but i had a variable , so this
@@ -613,7 +637,9 @@ Tasks
 but bc its dynamic thats why we are using a template module, its goin to tk that file &transfer it into user, share, httpd ,no index and its goin to replace that index.html
 before  and that will be the destination and the values will be dynamically replaced
 
-                                 
+
+
+
                                                     QUESTION
 
 
