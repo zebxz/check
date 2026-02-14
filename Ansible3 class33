@@ -366,7 +366,7 @@ my os distribution is, then ill use the debug module to display that msg.
 15)
 WHEN GATHERING FACTS is TRUE, the playbook will be shorten ***meeee.,, bc we dont have the shell script part
 
-16)   WHAT ARE HANDLERS
+16)   WHAT ARE HANDLERS/USING HANDLERS IN A PLAYBOOK
 these are just like ordinary task but the diff is handlers are only executed when notified, when there is a change 
 handlers only work when notified and thats hw we create depencies btw task, you can use an handler 
 
@@ -375,7 +375,7 @@ so for the 2nd task, i need to pass a name for the httpd and here its start http
 the notifier notifies the handler , this happens whenevre you hv a change in this task it wil trigger the handler if ders no change in the task the handler wont be triggerd
 
 
-17)     TEMPLATE MODULE/JINJA.2 ... illustrated with installing tomcat using jinja2 template to replace server.xml
+17)  USING TEMPLATE MODULE/JINJA.2 IN A PLAYBOOK TO INSTALL TOMCAT... illustrated with installing tomcat using jinja2 template to replace server.xml
   so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run 
 
 
@@ -450,18 +450,18 @@ HE rewrote the command into a playbk
 10) although we didnt add tThe SETup module in the task, it will always run except it is disable .... gather_facts: false      ***** thatis do not run the setup module
     Added service module to the playbook
 
-11)    USING BECOME ON THE HOST LEVEL INORDER TO REDUCE LINES OF CODE
+11)    USING BECOME ON THE HOST LEVEL INORDER TO REDUCE LINES OF CODE IN THE PLAYBOOK
    bc its now at a host level, all tasks are running with sudo right, priviledge excalation bc become has been passed on a host level rather than having to pass
 becomes for each the several tasks we hv
 
 12)  PLAYBOOK TO INSTALL HTTPD ON A WEB REPO/SAMPLE PLAYBOOKS
 
-13) CAPTURING INFO INSIDE A VAR CALLED RESULTS & USE THE DEBUG MODULE TO DISPLAY THE RESULT
+13) CAPTURING INFO INSIDE A VAR CALLED 'RESULTS' & USE THE DEBUG MODULE TO DISPLAY THE RESULT
 
 14) CONDITIONS
 15) RUN A SHELL SCRIPT TO SUCCESSFULLY RUN PLAYBOOKS WHEN GATHER FACT IS false
-16) WHAT ARE HANDLERS
-17) TEMPLATE MODULE/JINJA.2
+16) WHAT ARE HANDLERS/ USING HANDLERS IN A PLAYBOOK
+17) USING TEMPLATE MODULE/JINJA.2 IN A PLAYBOOK TO INSTALL TOMCAT
 18) LOOPS
 
 ******************************************************************************
@@ -497,18 +497,19 @@ referring to video3 class33 ************ 1:05
 
 APPLYING THE CODE AGAIN LIKE FROM PREVIOUS CLASS, STILL USING THE IDE/NOT VSCODE YET, MANUALLY SSH INTO THE CONTROL SERVER IN IDE, GENERATING THE Ansible.cfg file IN ANSIBLE
 CONTROL SERVER, FORKS, USING THE APT/YUM MODULE TO INSTALL PACKAGE MANAGERS,  ROOT PRIVILEDGES   "-b",  TROUBLESHOOTING; Apache not part of yum repo, IDEM POTENCY, 
- REMOVING A PACKAGE, USING YUM, SERVICE MODULE, USER MODULE, SUDO !!, CREATING A uSER & ENCRYPTING THE PASSWD USING OPENSSL, SETUP MODULE, 
+REMOVING A PACKAGE, USING YUM, SERVICE MODULE, USER MODULE, SUDO !!, CREATING A uSER & ENCRYPTING THE PASSWD USING OPENSSL, SETUP MODULE, 
 USING THE SETUP MODULE & VARIABLES, USING VARIABLES FOR APT/YUM MODULE, DISABLING SETUP MODULE, DEBUG MODULE,  ISSUSES WITH OPENSSL, CUSTOM AMIs, 
 ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom, PLAYBOOK SYNTAX, EACH PLAY DEFINES 2 THINGS, ANSIBLE TASK EXECUTION, YAML BASICS, LIST, DICTIONARY, 
 REMOTE DEVELOPMENT(AUTOMATED DURING INSTALLATION FOR SSH CONFIGURATION), MANUAL REMOTE CONFIGURATION, CONNECT TO HOST **mee, ie the control server ec2instance IN THE VSCODE
-HOW TO START WRITING PLAYBOOKS, REWRITE COMMAND INTO PLAYBOOK, CREATED A DIR (ANSIBLE) TO CLONE THE ansible series repo, CLONING THE ANSIBLE SERIES REPO, CREATING ANOTHER DIR
-(testing)to WRITE FILES/PLAYBOOKS, 
+HOW TO START WRITING PLAYBOOKS, REWRITE COMMAND INTO PLAYBOOK, CREATED A DIR (ANSIBLE) TO CLONE THE ansible series repo, CLONING THE ANSIBLE SERIES REPO, CREATING ANOTHER
+DIR(testing)to WRITE FILES/PLAYBOOKS, 
 HOW TO WIRTE PLAYBOOK, RUN THE PLAYBOOK, ALTHOUGH THE PLAYBK HAD ONE TASK BUT WE SEE 2TASKS THAT RAN ie the setup default module, MODIFYING THE PLAYBK TO GIVE IT A NAME, 
 DISABLING THE SETUP MODULE, ADDING A SERVICE MODULE TO THE PLAYBOOK, USING BECOME ON THE HOST LEVEL INORDER TO REDUCE LINES OF CODE, EXPLAINING MORE PLAYBOOKS, 
 PLAYBOOK TO INSTALL HTTPD ON A WEB REPO/SAMPLE PLAYBOOKS, CAPTURING INFO INSIDE A VAR CALLED RESULTS & USE THE DEBUG MODULE TO DISPLAY THE RESULT, 
-USING CONDITIONS TO INSTALL HTTPD OR APACHE, USING CONDITIONS GATHERING FACTS HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND, 
- HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND, WHEN GATHERING FACTS is TRUE, ill playbook will be shorten, WHAT ARE HANDLERS,
- TEMPLATE MODULE/JINJA2, WE HAVE A PROJECT THAT WILL REPLACE THE USER, CHANGE THE PW & SETUP USERS, LOOPS .
+USING CONDITIONS IN A PLAYBOOK TO INSTALL HTTPD OR APACHE, USING CONDITIONS GATHERING FACTS HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND, 
+ HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND, WHEN GATHERING FACTS is TRUE, ill playbook will be shorten, WHAT ARE HANDLERS/
+USING HANDLERS IN A PLAYBOOK, TEMPLATE MODULE/USING TEMPLATE MODULE/JINJA2 IN A PLAYBOOK TO INSTALL TOMCAT, WE HAVE A PROJECT THAT WILL REPLACE THE USER, CHANGE THE PW & SET
+UP USERS, LOOPS .
 
 
 
@@ -1607,7 +1608,7 @@ if i want to chaeck my uptime
       #var: "results"
 
 
-               CAPTURING INFO INSIDE A VAR CALLED RESULTS & USE THE DEBUG MODULE TO DISPLAY THE RESULT
+               CAPTURING INFO INSIDE A VAR CALLED 'RESULTS' & USE THE DEBUG MODULE TO DISPLAY THE RESULT
 i need to capture that info inside of a variable called results, am using the key word register meaning its goin to capture the info once it runs that bc if i run it as a
 playbk its nt goin to display the info for me here bc the module wil just do the work and it just gives me a summary that everythin has been changed bt if i wan to see d 
 result then i need to capture those result using what is called a register and am capturing it in a variable called result then i us ethe debug module to display that result
@@ -1628,7 +1629,7 @@ display that register, the result that i captured in that task and now giving me
 
 
 
-   2:41:11                               USING CONDITIONS TO INSTALL HTTPD OR APACHE
+   2:41:11                               USING CONDITIONS  IN A PLAYBOOK TO INSTALL HTTPD OR APACHE
 ###
 13k)
 
@@ -1819,7 +1820,7 @@ so bc the task are dependent on each other then we can create dependencies, ansi
 
 
 ###########
-     13n)        WHAT ARE HANDLERS
+     13n)        WHAT ARE HANDLERS      ***meee, USING HANDLERS IN A PLAYBOOK
 these are just like ordinary task but the diff is handlers are only executed when notified, when there is a change 
 
 ---
@@ -1912,8 +1913,8 @@ PLAY RECAP  ....... ok
 
 
 
-
-###                TEMPLATE MODULE/JINJA2
+               
+###                    USING TEMPLATE MODULE/JINJA2 IN A PLAY BOOK TO INSTALL TOMCAT
                   so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run
 13o)
 
