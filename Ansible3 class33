@@ -376,6 +376,7 @@ the notifier notifies the handler , this happens whenevre you hv a change in thi
 
 
 17)  USING TEMPLATE MODULE/JINJA.2 IN A PLAYBOOK TO INSTALL TOMCAT... illustrated with installing tomcat using jinja2 template to replace server.xml
+    ***MEE, TEmplate is a type of file module
   so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run 
 
 
@@ -462,6 +463,8 @@ becomes for each the several tasks we hv
 15) RUN A SHELL SCRIPT TO SUCCESSFULLY RUN PLAYBOOKS WHEN GATHER FACT IS false
 16) WHAT ARE HANDLERS/ USING HANDLERS IN A PLAYBOOK
 17) USING TEMPLATE MODULE/JINJA.2 IN A PLAYBOOK TO INSTALL TOMCAT
+    ***MEE, TEmplate is a type of file module
+
 18) LOOPS
 
 ******************************************************************************
@@ -1914,7 +1917,8 @@ PLAY RECAP  ....... ok
 
 
                
-###                    USING TEMPLATE MODULE/JINJA2 IN A PLAY BOOK TO INSTALL TOMCAT
+###                    USING VARIABLE & TEMPLATE MODULE/JINJA2 IN A PLAY BOOK TO INSTALL TOMCAT
+                  ***MEE, TEmplate is a type of file module
                   so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run
 13o)
 
@@ -1935,8 +1939,16 @@ bt if i can just show you an example , if i was installing tomcat
 
 
   ******  3:02:52
-   this is a playbk to install tomcat
 
+     ***Meee,.. 
+1)Tomcat playbook link:
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/05-Playbooks/04-Template%20module/Install_tomcat.yml
+2)Ther should be a variable link  ie for 'vars file', which has all the configuration/url declared to install java, JRE & the version of 
+tomcat was put in calibres {{req_tomcat_ver.split('.')[0]}}, ie it is also a variable 
+  this is the var link for 'roles' https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/07-Ansible%20roles/tomcat/vars/main.yml
+
+
+this is a playbk to install tomcat:        ***meee, a playbook with vars & template module
 
   ---
   - name: Install and configure tomcat
@@ -1997,7 +2009,7 @@ and automation tools like Ansible
 
    
 3:06:00
-*********** where is the tomcat port configured inside of my tomcat??
+*********** where is the tomcat port configured inside of my tomcat??      ***meee... inside server.xml
 so i need to find out where this tomcat is actually configured so inside of my tomcat i hv  what we call the server.xml  
 so i can copy a server.xml frm a tomacat
 when i look at the particular server.xml
@@ -2011,14 +2023,27 @@ module will nt be able to interpolate the value ,
 copy module will just copy the file as it is and just transfer it bt bc i want to dynamically read values as the file is been copied then ill use a template module 
 (install_tomcat.yml)
 
+
 ***** so for this template module am installing tomcat bt i hv to replace, i hv to get this file server.xml and i need to replace it in the confg dir cos thats wher that
-server.xml is                ******* i bliv the 2 files is the server.xml & the dynamic file (ginger) we now hv inside the server.xml file , the giner is an xtension file
+server.xml is, the giner is an xtension file
 so what am doing is that am just replacing the file ,i hv an exact copy of the file but am using a template to go and replace those 2files bc when it replaces it, it wil 
 replace it with this file( install_tomcat.yml) that has a diff port bc am pasing my tomcat port as a variable that is now goin to be passed inside of the server.xml file 
 and now that port insid eof the instance will be 8095,instaed of 8090 ,so am using this template module to be able to install  tomcat so everything has been passed as 
 variables so am able to mange variables in one location just by declaring vars: there ,then once that is declared
 this is the tomcat url that hv also passed as a varaible, bc in the download part (using get url,) am just calling the tomcat url as a variable and its replacing the REQ 
 tomact version 
+
+***meeee....summary
+these are what was included in the playbook
+1)ginger template
+he said ;... using a template to replace the 2file, i bliv he means bc a server.xml file is used for configuring tomcat & so he used a ginger template to copy & replace the
+server.xml file but inside the ginger template file ie our customized server.xml, he passed the tomcat port as a variable bc he wants to dynamically change it & this varaible
+comes from the (install_tomcat.yml)file, therefore he used only the ginger template to replace the 2 files ie the server.xml file & the(install_tomcat.yml) file which has the
+tomcat port number.
+ 2)Variable
+'vars file', which has all the configuration/url declared to install java, JRE & the version of 
+tomcat was put in calibres {{req_tomcat_ver.split('.')[0]}}, ie it is also a variable 
+
 
 
                 WE HAVE A PROJECT THAT WILL REPLACE THE USER, CHANGE THE PW & SETUP USERS
