@@ -340,7 +340,8 @@ now i see what the directory structure of my httpd looks like
 52.24
 ************  now we nid to configure this role 
 for eg
-he  went bk to his playbk and copied the httpd.yml playbk we already had and pasted it in the Ansible roles(dir ie I bliv he copied the httpd file & split up the parts)
+he  went bk to his playbk and copied the httpd.yml playbk we already had in the playbooks section of the Ansible repo and pasted it in the Ansible roles dir, abi httpd roles
+( ie I bliv he copied the httpd file afterwhich he splits up the parts as stated below)
 (pasting it created the playbk file automatically there )  but now he added notifiers and handlers 
 
     - name: httpd
@@ -471,7 +472,7 @@ so i hv a user module that i can use, user_add     ***I Bliv he meant role
 i have a update_repos to update repositories
 
 
-                       EXPLAINING THE TOMCAT ROLE IN THE REPO
+                        THE TOMCAT ROLE WITH VARIABLE & TEMPLATE MODULE/JINJA2 WHICH WILL ADD USER & PW  
 https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles/tomcat
 
 i hv a role to create tomcat
@@ -485,6 +486,8 @@ you look at your vars dir (main.yml), in there i hv all my variables for tomcat 
 the  tomcat port  and am changing that port in the server.xml and bc its a ginger template , i ends with .j2 
 these are template files, all templates file  we use what is called ginger templating 
 is a file that that accepts variables, its a dynamic file , a ginger2 file
+
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles/tomcat/templates
 1:17:12
 ********** in the server.xml.j2, in the connector port segment, hv passed tomcat port as a variable inside the caliibrase
 it is a varaiable bc it is goin to be read at runtime 
@@ -513,6 +516,7 @@ if u hv any files, static files that you wnat to copy, i wnat to trasnfer a file
 change, go to the files dir ,paste that file in the files dir, this will hold static files/content if i have a copy module.
 if i hv files that are dynamic, ie files that wil change during execution then put them inside of the template, cos template support dynamic values
 thats how you can easily create a role
+
 
 
 ### 6)
@@ -557,6 +561,8 @@ but remember, we saw the limitation of when we import (if am using import,the da
                               CREATING A ROLE (that has a template) 
 1:33:17          making an example using the Template module (httpd.yml), in our github
                        CREATING A ROLE USING  the template module httpd playbook
+
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/05-Playbooks/04-Template%20module/httpd.yml
 ******  
 ---
  - hosts: web
@@ -570,7 +576,7 @@ but remember, we saw the limitation of when we import (if am using import,the da
  #Tasks
    -template:
   src: index.html.j2
-  dest: /usr/share/httpd/no index/index.html
+  dest: /usr/share/httpd/noindex/index.html
 notify:
 
 he created the httpd1.yml file then copied and pasted the template module , so the httpd1.yml is now our role playbook
@@ -580,6 +586,7 @@ now having gotten the role structure,
 **********the task module goes into the task (main.yml) dir, handlers goes to handler(main.yml) but the file: index.html.j2, needs to exist inside the template dir
 inside the template ill create a file 
 i can call  the file: index.html.j2  bt its a jinger2 template bc it has dynamic data
+https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/05-Playbooks/04-Template%20module/index.html.j2
 
 inside it i can put content like:                                       ****** i bliv insid ethe index.html, ansible hostname is a defined variable
 welcome to landmark Ansible Automation from, then i can pass a varible {ansible_hostname}         ****** this wil return the ip address of the insatnce, an ansible hostname
