@@ -517,7 +517,7 @@ referring to video3 class33 ************ 1:05
 APPLYING THE CODE AGAIN LIKE FROM PREVIOUS CLASS, STILL USING THE IDE/NOT VSCODE YET, MANUALLY SSH INTO THE CONTROL SERVER IN IDE, GENERATING THE Ansible.cfg file IN ANSIBLE
 CONTROL SERVER, FORKS, USING THE APT/YUM MODULE TO INSTALL PACKAGE MANAGERS,  ROOT PRIVILEDGES   "-b",  TROUBLESHOOTING; Apache not part of yum repo, IDEM POTENCY, 
 REMOVING A PACKAGE, USING YUM, SERVICE MODULE, USER MODULE, SUDO !!, CREATING A uSER & ENCRYPTING THE PASSWD USING OPENSSL, SETUP MODULE, 
-USING THE SETUP MODULE & VARIABLES, USING VARIABLES FOR APT/YUM MODULE, DISABLING SETUP MODULE, DEBUG MODULE,  ISSUSES WITH OPENSSL, CUSTOM AMIs, 
+USING THE SETUP MODULE & VARIABLES, USING VARIABLES FOR APT/YUM MODULE, DISABLING SETUP MODULE, DEBUG MODULE, ISSUSES WITH OPENSSL, CUSTOM AMIs, 
 ANSIBLE PLAYBOOKS (are written in YAML) task run frm top to bottom, PLAYBOOK SYNTAX, EACH PLAY DEFINES 2 THINGS, ANSIBLE TASK EXECUTION, YAML BASICS, LIST, DICTIONARY, 
 REMOTE DEVELOPMENT(AUTOMATED DURING INSTALLATION FOR SSH CONFIGURATION), MANUAL REMOTE CONFIGURATION, CONNECT TO HOST **mee, ie the control server ec2instance IN THE VSCODE
 HOW TO START WRITING PLAYBOOKS, REWRITE COMMAND INTO PLAYBOOK, CREATED A DIR (ANSIBLE) TO CLONE THE ansible series repo, CLONING THE ANSIBLE SERIES REPO, CREATING ANOTHER
@@ -526,9 +526,9 @@ HOW TO WIRTE PLAYBOOK, RUN THE PLAYBOOK, ALTHOUGH THE PLAYBK HAD ONE TASK BUT WE
 DISABLING THE SETUP MODULE, ADDING A SERVICE MODULE TO THE PLAYBOOK, USING BECOME ON THE HOST LEVEL INORDER TO REDUCE LINES OF CODE IN THE PLAYBK, EXPLAINING MORE PLAYBOOKS, 
 PLAYBOOK TO INSTALL HTTPD ON A WEB/MORE SAMPLE PLAYBOOKS, CAPTURING INFO INSIDE A VAR CALLED 'RESULTS' & USE THE DEBUG MODULE TO DISPLAY THE RESULT, 
  USING A PLAYBOOK WITH 'CONDITIONS' TO INSTALL HTTPD OR APACHE, USING 'CONDITIONS' IN A PLAYBOOK, THEN GATHERING FACTS HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND, 
- HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND, WHEN GATHERING FACTS is TRUE, ill playbook will be shorten, WHAT ARE HANDLERS/
+ HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND, WHEN GATHERING FACTS is TRUE, THE playbook will be shorten, WHAT ARE HANDLERS/
 A PLAYBOOK WITH 'HANDLERS/NOTIFIERS, USING A PLAYBK WITH 'VARIABLE' & 'TEMPLATE MODULE/JINJA'2 TO INSTALL TOMCAT, WE HAVE A PROJECT THAT WILL REPLACE THE USER CHANGE THE PW &
-& SETUP USERS; done in video4, LOOPS .
+& SETUP USERS; done in video4, JINJA2 TEMPLATE, LOOPS .
 
 
 
@@ -1648,7 +1648,7 @@ display that register, the result that i captured in that task and now giving me
 
 
 
-   2:41:11                               USING CONDITIONS  IN A PLAYBOOK TO INSTALL HTTPD OR APACHE
+   2:41:11                               USING A PLAYBOOK WITH CONDITIONS TO INSTALL HTTPD OR APACHE
 ###
 13k)
 
@@ -1683,7 +1683,7 @@ ill run it now with my setup as false
 failed 
 
 
-                            USING CONDITIONS GATHERING FACTS HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND
+                            USING CONDITIONS IN A PLAYBK, THEN 'GATHERING FACTS' HAS TO BE TRUE OR RUN A SHELL SCRIPT/COMMAND
 ******* bc hv disabled gather facts its telling me the conditional check ansible distribution failed (in my understanding, the condition is relying on the gathered facts  
 the ansible distributionos bc it failed the condition couldnt execute
 error while evaluating the distribution
@@ -1730,7 +1730,7 @@ and you can build in more logics so that ansible will use the logics you build i
 
 
 
-                            HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN GATHER FACT IS false BY RUNNING A SHELL SCRIPT/COMMAND
+                            HOW TO SUCCESSFUL RUN PLAYBOOKS WHEN 'GATHER FACT' IS false BY RUNNING A SHELL SCRIPT/COMMAND
 ####  eg
  i need to find the os distribution and os name of my host, then in that case ill need to run a shell script or shell command which will cat the etc/os release to find what
 my os distribution is , ill need to find the uname, pass a shell script/command, then as i do that am registering the os distribution and when am running the uname am also
@@ -1797,7 +1797,7 @@ just to call that a particular variable bc this particular variable already exis
 
 
 ####
-13m)                      WHEN GATHERING FACTS is TRUE, ill playbook will be shorten
+13m)                      WHEN 'GATHERING FACTS' is TRUE,THE playbook will be shorten
 
 ANother script   :  with_gatherfacts.yml
 
@@ -1839,7 +1839,7 @@ so bc the task are dependent on each other then we can create dependencies, ansi
 
 
 ###########
-     13n)        WHAT ARE HANDLERS      ***meee, USING HANDLERS IN A PLAYBOOK
+     13n)        WHAT ARE HANDLERS      ***meee, USING A PLAYBOOK WITH HANDLERS & NOTIFIERS
 these are just like ordinary task but the diff is handlers are only executed when notified, when there is a change 
 
 ---
@@ -1932,9 +1932,15 @@ PLAY RECAP  ....... ok
 
 
 
+                                           TEMPLATE MODULE
+***MEE, TEmplate is a type of file module
+ so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run 
+Video 4; these are template files, all templates file  we use what is called ginger templating 
+is a file that that accepts variables, its a dynamic file , a ginger2 file
+
                
-###                    USING VARIABLE & TEMPLATE MODULE/JINJA2 IN A PLAY BOOK TO INSTALL TOMCAT ***explained better in video 4
-                  ***MEE, TEmplate is a type of file module
+###                    USING A PLAY BOOK WITH 'VARIABLE' & 'TEMPLATE MODULE/JINJA2' IN TO INSTALL TOMCAT ***explained better in video 4
+                  
                   so we use template module when you are copying the dynamic files, file that change, meaining a file that has a variable that run
 13o)
 
@@ -2062,7 +2068,7 @@ tomcat was put in calibres {{req_tomcat_ver.split('.')[0]}}, ie it is also a var
 
 
 
-                WE HAVE A PROJECT THAT WILL REPLACE THE USER, CHANGE THE PW & SETUP USERS
+                WE HAVE A PROJECT THAT WILL REPLACE THE USER, CHANGE THE PW & SETUP USERS... resolved in video4
 
 ******** lets run this playbk
 it might tk a while bc am updating everything java 
