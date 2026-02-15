@@ -1306,13 +1306,13 @@ we have a project that will replace the user, change the PW  & setup user
      install_multiple_pkgs.yaml
 2) USING A PLAYBOOK WITH IMPORT & INCLUDE TO INSTALL MULTIPLE PACKAGES  .***meee, creating reuseable task using 'import_task' or 'include_task
      install_multiple_pkgs_with _import_and_include.yaml
-3)USING IMPORT_TASK WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR STATIC DATA ie THAT DOES NOT CHANGE ..file to use...  install_import.yaml
+3)USING IMPORT_TASK WHILE PASSING A DYNAMIC VARIABLE  ILL FAIL/IMPORT IS USED FOR STATIC DATA ie THAT DOES NOT CHANGE ..file to use...  install_import.yaml
         we are Passing a variable to get the {{ansible_os_family}}  this is an inbuilt variable, it will be substituted at run time so it is dynamic therfore it will fail
 an ansible os family is an inbuilt varaiable
 but hw do we knw
 ansible web -m setup                                    ****** am running my setup module 
 
-4)USING INCLUDE_task WHILE PASSING A VARIABLE  (install_multiple-pkgs_with_include_tasks.yaml)
+4)USING INCLUDE_task WHILE PASSING A DYNAMIC VARIABLE  (install_multiple-pkgs_with_include_tasks.yaml)
 script ran succsessfully 
 
 5)CREATNG A PLAYBOOK WITH A CUSTOM ROLE TO INSTALL 'HTTPD' IN THE WEBSERVER
