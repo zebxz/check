@@ -1,7 +1,13 @@
 
 VIDEO 4 SUMMARIZED FOR INTERVIEW 
 
-1)FUNDAMENTAL DIFF BTW using import task and INCLUDE TASK in a playbook
+
+1)  **i bliv this is a simple playbook
+USING A PLAYBOOK WITH IMPORT & INCLUDE TO INSTALL MULTIPLE PACKAGES  .***meee, creating reuseable task using 'import_task' or 'include_task
+     install_multiple_pkgs_with _import_and_include.yaml
+
+
+2)FUNDAMENTAL DIFF BTW using import task and INCLUDE TASK in a playbook
 i)When we use import task it just says
 chANGed : 172.31.24.167
 but when we say include task its giving us a range of information, the name of the task that is included
@@ -14,8 +20,11 @@ iii)include task is used for dynamic data, ie we can use include task while pass
 
 
 
+3)USING IMPORT_TASK WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR STATIC DATA ie THAT DOES NOT CHANGE
+     we are Passing a variable to get the {{ansible_os_family}}  this is an inbuilt variable, it will be substituted at run time so it is dynamic therfore it will fail
 
-2)PREDEFINED/INBUILT VARIABLE USING SETUP MODULE
+
+4)PREDEFINED/INBUILT VARIABLE USING SETUP MODULE
  if u pass smt inside the calibres, its a variable 
 so we hv some predefined variables or inbuilt variables 
 an ansible os family is an inbuilt varaiable
@@ -25,11 +34,16 @@ once i run this , it will go to my server/host and it wil return info abt the se
  ansible_processor_cores        **** i can access this info bc its a filter
 to access this i can pass it as a variable  - import_tasks: install_webserver_{{ ansible_processor_cores}}.yml
 
+i) DEFINED VARIABLES MISSPELT ISSUE
+but if i had changed the name , even just by misspeling it e.g instead of RedHat, i said Redhat, it wil fail bc it wont find it 
+so am using my setup to look tru the instance, the remote host, so when it reads all the variables, it sees that there is an os family,  then bc in my defination am using a 
+variable, its goin to substitute the variable {{ansible_os_family}}., with the right info in the setup
+
 
 ******** so we hv seen that we can create reuseable tasks but ansible actually gives us a better way to reuse our tasks and these are called roles 
 
 
-3) ANSIBLE ROLES
+5) ANSIBLE ROLES
 **2.02.21..   but if i hv those 2 roles but smt in role1 fails then the playbk will fail bc ansible is procedural
           *****meee... We can call more than one role in a playbook
           
@@ -39,7 +53,7 @@ After you group your content in roles, you can easily reuse them and share them 
 
 
 
-4)ROLE DIRECTORY STRUCTURE & CONTENT
+6)ROLE DIRECTORY STRUCTURE & CONTENT
 ***** when a role is created, it gives you a directory structure, which will hv all these 8 directories & each dir must hv a main.yml file 
 
  
@@ -66,7 +80,7 @@ templates/main.yml - templates that the role deploys.
 meta/main.yml - metadata for the role, including role dependencies
 
 
-5)   IMPORTANCE OF ANSIBLE ROLES
+7)   IMPORTANCE OF ANSIBLE ROLES
 
 Ansible roles are crucial because they provide a structured, reusable, and modular way to manage complex automation, transforming lengthy, unmanageable playbooks
 into smaller, specialized bundles of tasks, files, and variables. By enabling code reusability, improving maintainability, and standardizing project layouts, roles make
@@ -85,7 +99,7 @@ Common use cases include automating software installations, server configuration
 
 
  
-6)ANSIBLE GALAXY TO GOOGLE ALREADY CREATED ROLES
+8)ANSIBLE GALAXY TO GOOGLE ALREADY CREATED ROLES
 45.43          if i go to google & type ansible galaxy, there are roles that hv already been created, the roles are online
 *********    eg if i want to  create a role for prometheus and i just run the command without offline, its goin to download or intialize a role that is online 
 so if i want to create a custom role i need to pass _offline 
@@ -98,7 +112,7 @@ After you initialize the role, cd into the various directories and vi into the m
 
 
 
-7)CREATING A PLAYBOOK WITH A CUSTOM HTTPD ROLE (THE ROLE DIRECTORIES) TO INSTALL HTTPD IN THE WEBSERVER
+9)CREATING A PLAYBOOK WITH A CUSTOM HTTPD ROLE (THE ROLE DIRECTORIES) TO INSTALL HTTPD IN THE WEBSERVER
 BY using the create a role command, he created & initialized a role 'httpd', the role came with all the 8 directories & he configured the role by using an existing playbook (to install httpd) he pasted the playbk in the Ansible roles dir & added handlers & notifiers to it. 
 Next he split up the playbook ie putting the diff parts of the playbk in the right
 directories. eg  for the handlers part , ill copy it and paste in in the handlers (main.yml) file.
@@ -106,14 +120,14 @@ directories. eg  for the handlers part , ill copy it and paste in in the handler
  i)THE main.tf file IN THE TASK DIR OF THE ROLE TO INSTALL (Httpd.yml)
  After the splitting, the top part of the httpd.yml file, he copied & Pasted in the main.tf in the task dir, he changed task to roles & replaced name with httpd then run the role playbook
 
-8) CREATING A ROLE TO ADD A USER IN THE WEBSERVER
+10) CREATING A ROLE TO ADD A USER IN THE WEBSERVER
 He created the role to add user & it is goin to create a grp using a grp module as seen in the main.tf file in the task dir of the add_user role
 using a shell module to pass the user i just created into the sudoers file
 then in the top part of the httpd.yml file in main.tf of the task dir,  he added the'user_add' role he created 
 then run the role playbook
 
 
-9)A PLAYBOOK WITH A ROLE, 'VARIABLE' & 'TEMPLATE MODULE/JINJA2' TO DYNAMICALLY REPLACE VALUES & TO ADD A USER/PW  & INSTALL TOMCAT
+11)A PLAYBOOK WITH A ROLE, 'VARIABLE' & 'TEMPLATE MODULE/JINJA2' TO DYNAMICALLY REPLACE VALUES & TO ADD A USER/PW  & INSTALL TOMCAT
 in continuation with video3; 
 
 i)IN THE TEMPLATE DIR WE HAVE (context.xml.j2, server.xml.j2,tomcat-users.xml.j2)
@@ -147,7 +161,7 @@ and after we hv cahnged all these, we will notify our handler to start tomcat
 
 
 
-10)STATIC AND DYNAMIC INVENTORY:
+12)STATIC AND DYNAMIC INVENTORY:
 
 A static inventory file is a plain text file containing a list of managed hosts (just like the hostfile list we configured) or remote nodes whose numbers and IP addresses 
 remain fairly constant.
@@ -159,7 +173,7 @@ my inventory will change bc the pluggin will find and additioanl instances)
 it will also chnage so that it gets the right ip)
 
 
- 11) CONFIGURE DYNAMIC INVENTORY FOR AWS UISNG A SCRIPT
+ 13) CONFIGURE DYNAMIC INVENTORY FOR AWS UISNG A SCRIPT
   1) Script
 
 Search for the ec2.py script.                    ***** we hv a python script , but to use it u need to install  boto/boto3 -SDK
@@ -192,7 +206,7 @@ so click actions, security then modify role.
 
 
 
-12)ANSIBLE VAULT
+14)ANSIBLE VAULT
 but ill send you a video on ansible vault , abt 10minutes 
 abt ansible vault its just commands in which you run
 ill send you a short video on hw to use ansible vault
@@ -201,7 +215,7 @@ Its just smt that we need to knw abt how do we encrypt our playbk, we can use an
 
 
 
-13)PROJECT/CUSTOM AMI
+15)PROJECT/CUSTOM AMI
 ########### so for yoU guys what ill like you to do for your project is 
 use this inventory but create a custom AMi
 what i mean is go tru the process to mk passwordless authentication just with one server
@@ -326,6 +340,7 @@ but instead of me running it like this i can break down this playbk, bc am still
 
 
                                USING A PLAYBOOK WITH IMPORT & INCLUDE TO INSTALL MULTIPLE PACKAGES
+                          ***meee, creating reuseable task using 'import_task' or 'include_task'
 #####2)
 24:45               install_multiple_pkgs_with _import_and_include.yaml
 
@@ -363,7 +378,8 @@ i reduce it furtehr by been able to use thses as varibales so it pulls the right
 
 
 
-#### 3)      32.25      USING IMPORT WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR STATIC DATA ie THAT DOES NOT CHANGE
+#### 3)      32.25      USING IMPORT_TASK WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR STATIC DATA ie THAT DOES NOT CHANGE
+       we are Passing a variable to get the {{ansible_os_family}} , this is an inbuilt variable, it will be substituted at run time so it is dynamic, therfore it will fail
 34.25
 ran the script  but failed
 error
@@ -442,7 +458,7 @@ am sure theres a way around it but as of now we just stick at what we have
 
 ###3A)                                               
 
-34.24/ 36.12                     USING IMPORT WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR DATA THAT DOES NOT CHANGE
+34.24/ 36.12                     USING IMPORT_task WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR DATA THAT DOES NOT CHANGE
                                                 Running the s(install_import.yaml)          
  ran the script  but failed
 error
@@ -453,7 +469,7 @@ so we use import when we are using it on static data ie does not change
 ##### 3B)
 38.31                                      DYNAMICALLY
       
-                         USING INCLUDE WHILE PASSING A VARIABLE  (install_multiple-pkgs_with_include_tasks.yaml)
+                         USING INCLUDE_task WHILE PASSING A VARIABLE  (install_multiple-pkgs_with_include_tasks.yaml)
 script ran succsessfully 
 
 so we see how include can be used 
