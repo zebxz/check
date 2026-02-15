@@ -1250,6 +1250,8 @@ VIDEO4:
 9) no project
 
 
+
+
 ANSIBLE 2
 
 1)use terfrm ie .tf files, to provision 4 servers (3ubuntu & 1redhat) in Aws & Ansible to install ansible in one of the servers (so this becomes the control server)
@@ -1295,6 +1297,59 @@ ANSIBLE 3
 8) use a template module/jinja2 templating to install tomcat
 LOOK OUT FOR THIS PROJECT:
 we have a project that will replace the user, change the PW  & setup user
+
+
+
+    ANSIBLE 4
+
+1) I bliv for this is a simple playbk..... using 'conditions' install multiple packages
+     install_multiple_pkgs.yaml
+2) USING A PLAYBOOK WITH IMPORT & INCLUDE TO INSTALL MULTIPLE PACKAGES  .***meee, creating reuseable task using 'import_task' or 'include_task
+     install_multiple_pkgs_with _import_and_include.yaml
+3)USING IMPORT_TASK WHILE PASSING A VARIABLE  WILL FAIL/IMPORT IS USED FOR STATIC DATA ie THAT DOES NOT CHANGE ..file to use...  install_import.yaml
+        we are Passing a variable to get the {{ansible_os_family}}  this is an inbuilt variable, it will be substituted at run time so it is dynamic therfore it will fail
+an ansible os family is an inbuilt varaiable
+but hw do we knw
+ansible web -m setup                                    ****** am running my setup module 
+
+4)USING INCLUDE_task WHILE PASSING A VARIABLE  (install_multiple-pkgs_with_include_tasks.yaml)
+script ran succsessfully 
+
+5)CREATNG A PLAYBOOK WITH A CUSTOM ROLE TO INSTALL 'HTTPD' IN THE WEBSERVER
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles
+
+6)CONFIGURING THE PLAYBK WITH ROLE TO INSTALL HTTPD ie ADDING HANDLERS & NOTIFIERS
+7)CREATING A PLAYBOOK WITH A ROLE TO ADD A USER IN WEBSERVER
+                  https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles/user_add
+   USING SHELL MODULE TO PASS 'USER' TO SUDOERS FILE
+8) A PLAYBOOK WITH A ROLE, 'VARIABLE' & 'TEMPLATE MODULE/JINJA2' TO DYNAMICALLY REPLACE VALUES & TO ADD A USER/PW  & INSTALL TOMCAT
+https://github.com/LandmakTechnology/Ansible-mc-series/tree/main/07-Ansible%20roles/tomcat
+    IN THE TEMPLATE DIR OF THE ROLE WE HAVE (context.xml.j2, server.xml.j2,tomcat-users.xml.j2)
+
+9) A PLAYBOOK WITH A ROLE, 'VARIABLES' & 'TEMPLATE MODULE/JINJA2' TO DYNAMICALLY REPLACE VALUES  & INSTALL HTTPD
+   https://github.com/LandmakTechnology/Ansible-mc-series/blob/main/05-Playbooks/04-Template%20module/httpd.yml
+
+10) CONFIGURE DYNAMIC INVENTORY FOR AWS UISNG A SCRIPT OR AWS INVENTORY PLUGGIN
+   Using aws inventory pluggin will include:
+A) Requirements
+Install python3-boto3
+sudo apt-get update -y
+sudo apt-get install -y python3-boto3
+Install plugin
+   $ ansible-galaxy collection install amazon.aws
+B) CONFIGURING AN (aws_ec2.yaml) INVENTORY PLUGGIN 
+C)CONFIGURING ANSIBLE.cfg FOR DYNAMIC INVENTORY
+i)CREATE IAM ROLE TO MAKE API CALLS TO THE SERVERS
+ii)USING THE SECURED METHOD ie CREATING KEYS bc IAM IS NOT WORKING
+ iii)CREATING CUSTOM AMI
+
+11)   PROJECT
+
+
+
+
+
+
 
 
 
