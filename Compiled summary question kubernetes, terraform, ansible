@@ -1142,6 +1142,184 @@ terfrm
 
 
 
+   *******Terfrm/Ansible Nov26
+
+
+     EXPLAIN YOUR EXPERIENCE USING TERRAFORM
+1:10:39                                
+********** our env is heavy on aws 
+HV USED AWS to provision resources in aws :
+
+AWS:
+   ec2-instances  \ VPC / EKS  / S3  / ETC.  
+  my experience in terfrm is nt just provivisng ec2 instances , i hv also :
+installing terraform on windows and linux systems 
+hv been able to mg8 terfm workflow
+    define scope / 
+    init / 
+    writing & modifying terraform scripts [ vars.tf main.tf modules]   
+
+1:13:53  ********* u can pnly initialize in a dir where you hv terfrm code/file
+
+************* 1:18:37nn
+
+2. Ansible  is a Configuration Management tool  
+for e.g w ehv 5clusters we are managing 
+we can use ansible to mg8 this configuration
+
+    appServers = 50    ,,, without ansible yo will be deploying the application manually one after the other on the 50 app servers bt with the help of ansible w can automate
+    webservers = 40  
+    dbservers  = 44 
+    kubernetes = 5  
+
+******1:25:50    apart frm ssh pluggin, anisble can also use winrm plugging to connect to the windws server and ssh for the linux servers
+********* 1.27.28   fr ansible, we can mg8 our k8 cluster 
+
+    deployment of applications in the 50 appServers 
+    commissioning the 50 appServers 
+    securing the  50 appServers
+    installing tomcat in the 50 appServers
+
+Ansible control server is able to mg8 all the servers
+
+tasks that ansible can perform/run on its hosts:( all these fall under configuration)
+    FileMGT  
+    userMGT  
+    deployment  
+    securityMGT  
+    system monitoring  
+    patching  
+    packageMGT  
+
+
+How to perform the tasks and ansible workflow:
+   modules 
+   playbooks:
+     variables  
+     plays   
+     tasks  
+     handlers   
+     modules [ yum / copy / service / template / apt / package / shell ] 
+               command / setup / systemd / 
+
+
+
+
+
+
+
+
+QUESTION
+
+1)import commnad is used to bring in infrastructure that was not created by terraform to the mgt of terraform
+
+2)we can create resources/ servers using the console or commands
+
+
+1:57:00
+3)******** she validated but when she applied there was an error
+
+*** 1:57:40
+2:01:00
+
+4)i did a virtual machine on my system and i had several nodes bt bc i was running it on a vm and all my ip addresses were assigned dynamically when i shut down the vm and 
+restrted it i noticed that the controller node cud no longer reach out to the other nodes probably bc th eip addresses hv chnaged and there were so many errors so i had to
+destroy it start all over again
+
+ANS
+for the k8s wher did you launch your k8s servers was it on the vm or they were deployed from aws cloud???
+No i deployed on my hyperv on my laptop
+
+ANS:
+when u deploy on hyperv on your laptop you are nt deploying how the class is deployed thats the first thingbc we are nt deploying using hyper v bc hyperv and virtualiztion
+technology most coy hv moved into cloud computing and if u ha dto deploy in the cloud, the mgt is easier, the complication is not as much as whne you either virtual box, vm 
+ware hypervisor to deploy your virtual machines and then use them to create a cl8
+
+**** i will come bk to this 
+
+5) am not here to teach you all the options for destroy THE reason you are been taught terrafrm is how have you applied terraform in your env
+
+
+destroy options :
+  terraform destroy --auto-approve  
+  terraform destroy --target local_file.test      
+  terraform destroy --target aws_instance.web         
+
+the question is How have you applied terraform in your environment/landmark??? 
+thats the interview question 
+the interview question is not how many options do we hv for terfrm destroy, that has no business to do with you
+you cud hv so many options for terfrm dsetroy but what hv done in my env hv not been able to look at those options 
+these are the options hv been able to see
+
+
+2:04:50
+***********
+
+6)  what else can we output in terfrm, apart from ip addresses and if there are templates we can use to put out those things that need ot be outputed
+
+ANS:
+when you run your trfm command there are times that we need to get some result frm the trfrm command and and if we need to get those result, theose result can only be gotten
+frm the output block
+
+eg
+if you create an ec2instance  what are some meta data abt the ec2 instance, what info can we get as meta data, meta abt data
+you can create an instace and decide to output the id of the instance 
+
+output block:
+   create ec2-instances :
+      metadata = 
+        ipAddresses
+        az/ami/dns/
+        Instance ID
+
+
+we can also output :
+   vpc : vpc-id  / cidr block   
+   eks cluster:
+     kubeconfig    :: we can output this bc we this to be able to get authenticated to get access and mg8 the cluster
+
+contd NO4
+********** kubernetes vm  .. u see all my servers i stopped started immediately i started them, 
+so the issue you were having is bc of the vm , hyperv 
+
+
+7)  would you say the info we hv in linux is enough in the curri to say we hv studied linux adminstration  ??
+
+ANS:
+     what we hv for linux which includes the command and bash shell scripting is sufficient for the tinz we need to use in terms of working as a devops engr
+bc again you ar ent been trained to work as a traditional linux adminstrator
+secondly most systems are now in the cloud and their mgt is now in the cloud computing side of things so the commands that we hv covered and the ones we will continue to
+cover is sufficient for you to work effectively as a devops engr
+
+********** well i was just asking cos i saw a job and they were playing empasis on linux system adminstrator as part of the devops tin so thats why i was asking, if its
+enough to say we hv got that training 
+
+ANS: YES please its enough
+
+
+8) FILE MIGRATION;
+how to migrate from onprem to aws , i saw it in a job vacancy as well
+
+ANS: 
+yes for you to migrate, you knw when we did aws like in s3 we were able to move files frm onprem to aws via an s3 bucket  , 
+so u can use an s3 to copy file nad that is data migration, we can us es3 bucket and we can also use other vol concepts  to migrtae files 
+and ther are equally other mgrtaion options that are available which we are goin to be seeing as we get into bootcamp
+
+
+9) my question is on terfrm, if for example you hv 2 projects, project 1 and project2 
+and for project1 uv developed the variables the data source and all the tvalues, so when am working with project2, is there a way i can refer to those data files and 
+variables or i hv to copy them to th eproject2
+
+ANS:
+The fact is if you understand how to clone right bc whatever project you are working on you can store them in a scm like github so if my project1 is in github, i can clone
+that project1 or i can just create a branch and i use branching concept to be able to modify the code for project2 bc if u create a branch all the code in, lets assume 
+project 1 bransch will be in project2 branch, so all you hv to do is change certain values parametres and apply then and your good to go 
+and thats why we say that terfrm is very good bc it can be versioned controlled
+
+
+
+
+
 
 
 
