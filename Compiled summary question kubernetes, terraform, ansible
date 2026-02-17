@@ -1864,13 +1864,13 @@ but its always that once you do your work your peers or manager has to approve n
 merged bc u cannot approve your own work, someone else has to and for that to ahppen they hv to look at what uv done 
 
 the main is what is in prod so ur creating a branch out of your main & if its just a hot fix,u do ur modification/changes and do your pull reQ which is tour requeting for 
-your hotfix to be merged back into main cos your just modifying, it was a bug or smt so you create a pull REq , ur peer or peers will look at it if its approved , you obviusly 
+your hotfix to be merged back into main cos your just modifying, it was a bug or smt so you create a pull REq , ur peer or peers will look at it if its approved ,you obviusly 
 once you create an hotfix branch as you creater apull REq A PIPELINE WILL RUN TO ENUSRE THAT DOES WHTAT SSUPPOSE TO DO , once it passes and its approved then u can merge 
 directly into the main and that resolve the issue that was running in production
 
 
 
-   Proff:  what are the limitation of the command module
+   Proff ken:  what are the limitation of the command module
 The Ansible command module directly executes commands on remote servers, offering high security but lacking intelligence. It cannot use shell features like pipes (|), 
 redirects (>), or environment variables. Critically, it is not "idempotent"—it runs every time, never knowing if the system is already configured, and cannot handle 
 complex logic or verify results. 
@@ -1885,5 +1885,22 @@ Best Used Rarely: It is considered poor practice to use it for complex tasks bec
 
 When to use it: Only for simple commands where no shell features (pipes, variables) are required, such as triggering a specific binary. For anything more complex, use the 
 shell module or dedicated modules like apt, yum, or file. 
+
+
+CLASS 34
+
+prof diff btw task and handler 
+task is executed in the playbook chronlogically frm top to bottom, also task notifies handlers while 
+handlers is a task that can only be executed if there are changes in a particular task 
+
+
+1:01:57
+Diff btw copy and template module?
+Template module copy both static and dynamic file content
+copy modules copies only static file content
+
+WHICH module does gather_facts uses?   >>>>>>>> setup module 
+
+WHICH template do we use for referring variables ??   >>>>>>>>  ginger template -- {{ variable }} variable name
 
 
