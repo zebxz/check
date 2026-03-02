@@ -329,7 +329,86 @@ Eks & also provisoned by terraform
 you were talking about terfrm statefile
 
                           TERRRAFORM STATEFILE
-In my env we use terfrm for infrastructure as a code 
+In our env this is how we mg8 terfrm infastructure, we are using terfrm as infastructure as a code since we hv a team of engrs working together our statefil
+we hv backed up our statefile using s3 backends & we are equally using KMS; key mgt service to encrypt it at rest in addition to thet we are using DB dynamod table to lock the 
+statefile such that no 2 infastructure engrs can access the statefile at the same time because if they do it wil cause infastructure inconsistency & thats not what we want
+you know if we break our infastructure that could result to serious issue since we are managing critical applications and security is inherent in everything that we do
+
+
+                                 HOW YOU PRESENT YOUR FACTS MATTERS
+ how you present those facts at the end of the day bc its the presentation that will provoke the diff, that is to say that at any time of your conversation, its true you want 
+to remove your best joker & thats why at times i start with the most complicated tool
+
+so as you rightly said i work for landmark, we are managing java based enterprise & web applications for fintech & ecommerce client
+this applications have  a multi-tier infastructure, where we hv LB layer layer ,application layer or LB layer tier , application tier & database tier that is how this appl is 
+structured so in the frontend we have configured DNS since we are using Aws services as well, we hv configured DNS record such that our endusers will not be trying to access 
+our appl using our lb dns name, that will not make any sense, so we hv configured a host name in route 53 so when endusers type app.com, its pointing to our lb
+and like you rightly said our load bal will talk to our appl & our appl will then talk to our databases
+it is also imp to note that our appls are running in k8 clusters, so we hv mg8d & self mg8d clusters that we hv configured in our env
+particularly we hv EKS, AWS elas k8 service, so in this appl , in configuring our entire env security is inhenrent, thats a very strong point you are telling them.
+also let we walk you tru how our pipelines are configured beecause evrything is automated using a jenkins joooooob
+
+so u are saying this u are very relaxed, i mean you hv some pauses in your presentation...
+
+so in our jenkins pipeline job, we hv several jobs, we have a job where jenkins deploy directly to k8 cluster
+we hv a job where jenkins build, ship to ansible & ansible manages the deployment, all those have been configured
+in this jenkins job, immediately developers commit code to github, it is imp to note that security again is inherent
+and before code are commited particularly to our master branch, it must go through a pool request so evrything has been configured as such because of security
+but once that code is commited, we hv connfigured build triggers using github webhook number1
+pullSCM number2 & build periodically depending on the job
+because job like database backup, what we need is build periodically, that is what we hv configured
+so once thers a commit in github, a jenkins job is been triggerd, jenkins pulls the new version of the code bc any commit id is a new version of the code
+so jenkins is pulling the new version of the code & since our Project are java based, we are using maven for a build
+so jenkins is integrated with maven to execute a clean package goal, where the code will be validated, cmpiled , test cases run & if it passes packages are created
+now those packages created the nxt thing that will happen is that, u knw bc of hw sensitive our appls are, software quality is our top priority, we hv introduced sonarqube for
+code quality
+
+thers this question they keep asking & the reason is bc people dont explain sonarqube correctly
+
+    SO you are say that you use sonarqube, for sonarqube what is your bench mark
+so you are infroming them that because of the critical nature of our appl, sonarqure will execute code quality report
+no.1 code quality, there should be no bug in the code, no security vunerabilties bc if there is hackers can hack the appl and if there are nay duplicate lines it must not 
+exceed 5% and code covearge must be above 90%, that is what we have defined
+in some other projects code coverage can be 80% & it is acceptable but since we are managing fintech client code coverage must not go below 90% that is what is happening
+once  the sonarqube report is executed & everyting is ok, the next thing that happens is that our artifacts are uploaded into nexus
+this is necessary to ensure that if theres any disaster we can always go back & retrieve our artifacts so nexus is acting as our maven remote repository for our projects
+once artifacts are uploaded into nexus 
+the next thing that we do is to perfrom addditional testing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
