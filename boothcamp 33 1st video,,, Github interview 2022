@@ -282,7 +282,49 @@ you can be able to explain yourself frm end to end nt only on jenkins bt on any 
 
 
                    GITHUB INTERVIEW 2022
+9.39... minimun run instruction
 
+In our env in landmark tecknologies, we maintain a minimum of 3branches;
+dev, stage & master branch 
+code from the deve branch we deploy it to the deve env
+Code from the staging branch we deployed to the staging env 
+code from the prod env we deployed to production
+
+   No code is deployed to production directly, 
+ & any commit that developers do done in the master branch is done via a pull req whereby other team memebers will review it & ensure that everything is as expected before 
+it is commited in the master branch
+
+thats the base line for you to talk about your git best strategy
+
+the 2nd point is
+if thers any bugs in the code & it got to be fixed, we always a hotfix branch frm the master & once the bug is remove, developers write the code  & everything is now 
+intergrated via the master branch, we will delete the bugfix branch that was created
+similarly if our client wants us to dev a particular feature, we create a new branch called the feature branch from the master & develop
+
+
+  bc of the nature of our appl, to track all the versioning, when we are trying to commit code from one branch to another, we use the git rebase command over the git merge command
+
+
+
+
+                                       DOCKER BEST PRACTICES
+first we make use of alpine image as much as possible because its light weight comapred to other linux images
+Also in our docker file we ensure that we make use of minimun run instructions because each run instruction creates a layer that can actually increase the size of our image & 
+we want our image to be light weight and as such we make use of minimum run instruction
+Also in our CMD & entry point instruction, we ensure that we actually make use of executable format rather than writing them in the shell format bc when running them in shell#
+format they run as a child process & as such they can be killed unnoticed.
+
+proff
+in addiction to that, we scan our base image for any vulunerabity & SQS injections & any other issues
+
+
+
+11.33                          WANTS TO EXPLAIN  WHAT HE UNDERSTANDS  FOR EKS/ TERRAFRM /ANSIBLE CONNECTION
+in our env we actually managing a multi tier appl & as such we use terfm to provison all our resources, vpc, ec2 by making use of modules & also our k8 cluster are using
+Eks & also provisoned by terraform 
+
+
+25.38
 
 
 
