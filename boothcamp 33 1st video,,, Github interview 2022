@@ -328,7 +328,8 @@ Eks & also provisoned by terraform
 24..12 .. proff,   You are not telling them what you think, you are telling them what you do 
 you were talking about terfrm statefile
 
-                          TERRRAFORM STATEFILE
+                         
+                                              TERRRAFORM STATEFILE
 In our env this is how we mg8 terfrm infastructure, we are using terfrm as infastructure as a code since we hv a team of engrs working together our statefil
 we hv backed up our statefile using s3 backends & we are equally using KMS; key mgt service to encrypt it at rest in addition to thet we are using DB dynamod table to lock the 
 statefile such that no 2 infastructure engrs can access the statefile at the same time because if they do it wil cause infastructure inconsistency & thats not what we want
@@ -338,6 +339,9 @@ you know if we break our infastructure that could result to serious issue since 
                                  HOW YOU PRESENT YOUR FACTS MATTERS
  how you present those facts at the end of the day bc its the presentation that will provoke the diff, that is to say that at any time of your conversation, its true you want 
 to remove your best joker & thats why at times i start with the most complicated tool
+
+
+                                              APPLICATION LAYERS
 
 so as you rightly said i work for landmark, we are managing java based enterprise & web applications for fintech & ecommerce client
 this applications have  a multi-tier infastructure, where we hv LB layer layer ,application layer or LB layer tier , application tier & database tier that is how this appl is 
@@ -349,6 +353,8 @@ particularly we hv EKS, AWS elas k8 service, so in this appl , in configuring ou
 also let we walk you tru how our pipelines are configured beecause evrything is automated using a jenkins joooooob
 
 so u are saying this u are very relaxed, i mean you hv some pauses in your presentation...
+
+                               JENKINS PIPELINE
 
 so in our jenkins pipeline job, we hv several jobs, we have a job where jenkins deploy directly to k8 cluster
 we hv a job where jenkins build, ship to ansible & ansible manages the deployment, all those have been configured
@@ -363,6 +369,8 @@ so jenkins is integrated with maven to execute a clean package goal, where the c
 now those packages created the nxt thing that will happen is that, u knw bc of hw sensitive our appls are, software quality is our top priority, we hv introduced sonarqube for
 code quality
 
+
+                                        SONARQUBE
 thers this question they keep asking & the reason is bc people dont explain sonarqube correctly
 
     SO you are say that you use sonarqube, for sonarqube what is your bench mark
@@ -372,15 +380,61 @@ exceed 5% and code covearge must be above 90%, that is what we have defined
 in some other projects code coverage can be 80% & it is acceptable but since we are managing fintech client code coverage must not go below 90% that is what is happening
 once  the sonarqube report is executed & everyting is ok, the next thing that happens is that our artifacts are uploaded into nexus
 this is necessary to ensure that if theres any disaster we can always go back & retrieve our artifacts so nexus is acting as our maven remote repository for our projects
-once artifacts are uploaded into nexus 
-the next thing that we do is to perfrom addditional testing
+Thats whats happening... once artifacts are uploaded into nexus 
+the next thing that we do is to perfrom addditional testing bc at this stage its build & Release so we want to run some other testing like functional testing ie this new 
+version of the code does it perform well ? we wnat to chech how it functions
+we go into regressional testing, you may nt even explain it, u just say we are going to perfrom additional test like functional testng & regression testing, load testing & 
+penetration testing if evrything is ok & al the test passes & we are sactisfied now the code is ready to be deployed to produdction
 
 
+                         DOCKER
+in doing that there are 2ways in some of our project jenkins will now with the help of a docker file dockerize the appl & a docker image is created
+and even at that level we have made it such that our docker file will pull somes images which is the base image & bc the base image can be a tomacat  or jboss
+but before its pulled we have to run docker scan to scan image to ensure that the base image we want to COPY OUR CODE into is free from vulnerabilities, sk injections & any 
+issues so at that level we are going to dockerize our appl and once its dockerized, the appl is now pushed to our image registery which are in dockerhub, nexus
+so from the image registry, jenkins will trigger another playbook , pls not even playbook
+our jenkins job will now deploy to a kubernetes server, & take note that the jenkins integration is done using pluggins & with all of this we have deployed our application 
+to production & since it is 3tier enduser will talk to the appl using the lb but the lb is pointing to a dns name , a host name; app.com
 
 
+                                           NGNIX INGRESS
+and as you rightly said since some of these appls are microservices we are configuring an ingress, nginx ingress
+Because with the help of nginx ingress we can configure ssl termination which implies endusers will access the appl from an https protocol number 1
+number2.. we configure ssl termination & ssl redirect 
+and in addition to that nginx ingress provides an additional layer of security and it is imp to note as i said earlier on our entire infastruture we are very high/heavy on 
+security
+
+                                      TYPES OF SECURITY WE HAVE AT DIFF LEVELS/TOOL
+so that is how all of this configured & at the level of the jenkins pipeline, we have security like:
+RBAC, we have project based authoriztion, we equally use Aws iam  to ensure that our env is secured, 36.39
+we also use LDAP integration tO ensure our env is completely secured and at the level of our k8 cluster security as well is very heavy
+thats why we use namespaces concept to restrict who can have access because there are developers/team members who can never have access to the kube system namespace
+thats the namespace that controls your entire cluster, the kube system
+and we create namespaces and restrict certain users to function only in those name space with the help of role, & role binding, cluster role binding we can achieve all of this
 
 
+and in terms of our overall infastructure most of our servers are running in private subnet so when we use terfrm 
+so we use infastructure as a code; terfrm to provision this infastructure & we have our frontend lbs running in the public subnet
+our entire infastructure runs in private subnet reasons been that we want to ensure high security, so thats how all of that is done
+so in our vpc settings we use NACL for security at the subnet level
+we equally have security groups, we have WA... 38.34
 
+
+IN some of the projects recently, we also have a scenario where when jenkins have done evrything & the testing is perfromed jenkins then ships the artifacts into an ansible 
+server for deployment
+so what ansible does is that from jenkins job, jenkins will trigger a set of ansible playbooks which will dockerize, push the images into diff docker image registry which are 
+private registry because we are heavy on security
+so from jenkins server playbooks will be deployed where ansible will be deploying the appls to target environments
+theerfore in our environment there are 7 key concepts we hv on our checklist 
+we want to achieve automation
+so we ahve continous development
+integration
+testing
+delivery
+deployment
+monitoring and security  because security goes with monitoring
+
+40.35
 
 
 
