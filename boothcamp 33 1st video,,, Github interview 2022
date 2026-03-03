@@ -571,12 +571,31 @@ why bc if you just create 200 servers bc you anticipate to hv 2million users in 
 
 
 
+1.01
+QUESTION
+   when we are provisioning this, we've specified the amt of instances when we are trying to provision this 
+
+ans; yes
+this was already defined
+explaing the terfrm script in github, with the scaling desired state max & min  ... you can edit this file to any desired number you want
+
+     BUT FAG WAS NOT CONFIGURED IN THIS FILE
+He said but we hv another where fag is con
 
 
+                       CLUSTER AUTO SCALING
+1.05.30   .. but for the cl8 to scale you need to deploy CAS
 
-
-
-
+   1.07.00
+but for kops , we dnt deploy autoscaler 
+yes
+It is automatic bc when you use kops , kops deploys using cloud formation
+when you do kops create cl8, in the backend, thers a cloud formation stack that is running
+like this new class, am goin to start with what is applicable immediately bc i realized most comapnies use kops & Eks now
+so as you execute kops create cl8, its runs cloud formation template in the backend 
+know that cloud formation is iaac, the same thing that terfrm does, cloud formation will do 
+and the cloud formation template will create autoscalers, lb as matter of fact it creates wverything for you, everything is created
+so kops & eks is competing but eks got more funtionality than kops
 
 
 
