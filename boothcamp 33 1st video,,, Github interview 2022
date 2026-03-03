@@ -386,6 +386,13 @@ version of the code does it perform well ? we wnat to chech how it functions
 we go into regressional testing, you may nt even explain it, u just say we are going to perfrom additional test like functional testng & regression testing, load testing & 
 penetration testing if evrything is ok & al the test passes & we are sactisfied now the code is ready to be deployed to produdction
 
+                     WHAT IS YOUR BENCHMARK &  HOW DID YOU ARRIVE AT YOUR BENCH MARK
+ 45.24 So you have explained already in your exposea & informed them that you are managging critical appls so your benchmark is 90%, code coverage must be covered by 90%
+that is your benchmark so in sonarqube server you have established your quality profiles, quality gate & you have set some rules & in all of those you have defined your bench
+mark.
+49.00 we arrive on this benchmark base on the nature of our appl
+we are managing crital apl for a fintech cleint, we cant afford to make any mistake, thats how we arrive at the benchmark
+
 
                          DOCKER
 in doing that there are 2ways in some of our project jenkins will now with the help of a docker file dockerize the appl & a docker image is created
@@ -425,16 +432,103 @@ server for deployment
 so what ansible does is that from jenkins job, jenkins will trigger a set of ansible playbooks which will dockerize, push the images into diff docker image registry which are 
 private registry because we are heavy on security
 so from jenkins server playbooks will be deployed where ansible will be deploying the appls to target environments
-theerfore in our environment there are 7 key concepts we hv on our checklist 
+therfore in our environment there are 7 key concepts we hv on our checklist 
 we want to achieve automation
-so we ahve continous development
-integration
-testing
-delivery
-deployment
-monitoring and security  because security goes with monitoring
+so we have continous development
+continous integration
+continous testing
+continous delivery
+continous deployment
+continous monitoring and continous security because security goes with monitoring
 
-40.35
+
+40.20
+                          AND HOW DO YOU MONITOR YOUR ENV
+
+                                        PROMETHEUS & GRAFANA  ***deployed with helm chart
+You already explained the fact that when our appl are running since we have microservices because what we are deploying are federated microservices for our fintech client
+so we are making use of prometheus and grafana those once are equally deployed in our env using helm chart
+so once we deploy prmethus & grafana, what happens is that in promethus thers an alert manager & we have defined alerting rules like if cpu goes below 45% theres going to be
+an alert, if it goes above 75% an alert will be triggered & this is because we want to prevent problems from occurring, an emails will be sent
+secondly, we have configured latency such that within 10 millisecs endusers should acces our appl, if our latency goes above what we have configured, alert will be triggered
+the alert manager will be triggered
+if our memory is low ie if we are low on memory the alert will be trigerred & whatever is happening in our cluster we are using grafana
+so in grafana promethus is the data source
+Grafana is used for visualization
+you can use promethus & grafana & grafana with many other stuffs, there are many things that grafana can display in metrix
+so grafana is a visualization open source monitoring tool, it needs data from a source 
+In this case the the data source of grafana is promethus because whatever is happening in our k8 cluster, promethus have note expoter to scrap all those data, kube state metrix
+& the promethus server itself & it equally have a time series database so all of this infromation is captured within the proemthus deployment
+So now in grafana, prometheus server becomes the datasource for grafana, so whatever is happening in our cluster, grafana will display it in a nice dashboard
+so we can know even before our end client notice that thers a problem, the grafana dashboard should be able to display it to us that smt is about to go wrong 
+& we get it fixed before our users are even aware, so we are deploying promethus & grafana in our env
+so if anything is happening in the cl8 it can be visualized because we are heavy on security and as such we need to monito the applications
+
+One more things we need to know how the appl is behaving ie what is happening because these are federated microservices generating a lot of log files so how do we manage that
+
+
+                         ELASTIC STACK   ***deployed with helm chart
+We are using elastic stack, which is elastic search fibric & kubana & we are deploying elastic search using helm chart that will help us for log aggregation & data analytics 
+we are able to know how our appl behave with ease because we are using such a tool.
+
+
+
+              HOW MANY DEVELOPERS DO YOU WORK WITH
+In landmark you are working in a team of 13, & there are 6 developers
+and these 6 developers are distributed in diff geo locations, some in the US , some in Canada & some in India.
+
+
+ HOW DO EACH OF THEM COMMIT THEIR CODE
+For them to commit code in github, we have created a project repository where all of them can commit code into the repository in github  
+they gain access using ssh keys & token, there are 2things that they use because in most env, ssh is more automated than PASWD
+once you forward your ssh key into github, you realize that 
+thers a bash shell script that we even wrote when we did git, the bash shell script will take the token of a specific developer & create an ssh key for that developer
+but since that token is created defining what the developer can do because we are heavy on security
+becasue when a PAT is created in github, you define what the token can do & anyone the token is assigned to will not be ablre to do anything more then what was defined in the 
+token
+so we use personal acces token & ssh keys for developers to be able to commit code in our project repository
+its also imp to note that none of these developers can commit code directly to the master branch, every commit in the master branch goes through a pull request
+
+             HOW DO THEY ACCESS HEIR GITHUB
+They access github via personal access token & ssh keys 
+so they mostly make use of the ssh url because we have 2 url ; we have ssh & https for every repository you create in github
+
+                  HOW MANY BRANCHES DO YOU HAVE IN GIT
+We have about 5 branches
+the dev, the stage, the master, the feature & the bugfix branch, those are the minimun branches that we maintain in our github repository
+
+
+                 HOW DO YOU DEPLOY YOUR APPL IS JUST ONCE OR CONTINOUS 
+
+In landmark, most of the appl we do deployment every sunday, weekends that is when we do our deployments
+and we have equally configured a con job, however when that deployment is taking place most of the engrs will need to watch it
+in real time right, hv watch my watch my wife for eg when they hv deployment at times it goes at 8pm after work, engr sare going to wait till then
+even though the system is automated they want to watch, bc while you are deploying you can pause your deployment
+as a matter of fact am goung to be introducing those particular concept in this class bc i start k8 today with them
+So in deployment assuming you were deploying & you notice smt, you can pause the deployent, get it fixed & you resume deployment
+At the point of deployment, we may still have to scan our images, remember when you do kubectl apply, it will pull images frm where they are kept nexus, etc & deploy your appl
+but if the images hv become vulnerable, so while that process is ongoing you may want to scan that image & if you realise there are now vulnerability, you hv to pause the 
+deployment & get the stuff fixed before you resume deployment.
+
+**** so we deploy appl weekly & the process is continous deployment because its connected to a jnekins job, k8 & jenkins integration
+
+
+
+   SAY YOU CREATE A GAME & NOW ONLY 3 PEOPLE ARE USING IT BUT YOU ARE GOING TO HAVE LIKE 3MILLION USERS TOMORROW, HOW WOULD YOU CREATE THE INFASTRUCTURE
+Thank you so much for this question
+
+52.50 In our env Most of the appl we manage it have rapidly grown over a short period of time 
+we are deploying our applications in k8 clusters, we have implemented the use of EKs , with EKS , we are provisioning EKS using
+
+** now sharing his screen 
+
+
+
+
+
+
+
+
 
 
 
