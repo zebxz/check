@@ -519,16 +519,54 @@ Thank you so much for this question
 
 52.50 In our env Most of the appl we manage it have rapidly grown over a short period of time 
 we are deploying our applications in k8 clusters, we have implemented the use of EKs , with EKS , we are provisioning EKS using
+55.15 The answer to this question got to do with scaling, if you have 3 users today but today 30million users, you can achieve that using scaling
+you are telling them that we have provisoned our cl8 using eks & the adv with this is that it comes with some other services like scaling
+we can scale both at the cl8 level & AT THE POD LEVEL SO FOR that purpose we  are going to deploy our appl in this type of of a cl8 where we can scale via HPA, & CAS, cls8 auto
+scaling, so in that case with the inscreas in users our appl have been configured to scale even in the flag
+out of this there is smt EKS equally provide EKS has serevrless fagging & with this we will not even need to bother abt scaling because AWs will take care of that for us
+if we have only one user, it is going to be scaling in the flag for us so all those 2options is very possible
+and if this appl need databases we will equally ensure that our database will equally scale with multiple read replicas
 
+
+                       CONTENT DELIVERY
+And in accesing this appl, we can now have stuff like cloud front for content delivery so that if users are trying to acces this application from diff location, what will you
+configure?  elastic cash, cloud front & CDN, content delivery
+
+
+
+                           EKS CLUSTER USING TERFRM SCRIPT IN GITHUB REPO
 ** now sharing his screen 
+ hes provisioning an eks cluster 
+in configuring the eks cl8 he is using terfrm 
+the trfm script is already found in our git repo which he cloned 
+he created the user called eks
 
 
 
+            WHEN YOU HAVE A SPIKE IN THE CPU USAGE HOW WILL YOU CHECK THAT MEMORRY? , WHAT LINUX COMMAND WILL YOU USE
+58.06 
+ when you have you appls running & thers a spike in cpu, like cpu has gone to 80%plus
+the first command to run is the 'top command
+it gives the processes running & the resources been ultilized
+the spike in cpu may be as a result of a particular process that is consuming your cpu
+so look at the nature of the process & you may have to stop the process 
+eg you are executing multiple command, so which of them is consuming your cpu & to what extend
+so that is one way you can get that particular issue resloved
+and if its a zombie process, like a process that has nothing to do, just kill the process
 
 
-
-
-
+                      59.15                 YOUR EXPERIENCE IN TERFRM
+i just installed a k8 cl8 using terfrm script
+Am not sure I expalined this project, your experience in terfrm 
+because this cl8 is a fully managed production ready cl8
+we see the node created using the cl8
+and IT has Created multi iam resources as well
+also it created an auto scaler that has a launch template & launch configurtaion
+desired is 2, max is 4
+so if u have an appl where only 3users will access it & u need just 2 server , you can put there 2 & edit max to even 200
+and as your users are expandng thats how your infastructure is expanding in the flag 
+with this you can save money, you wont spend too much money 
+why bc if you just create 200 servers bc you anticipate to hv 2million users in the future, ypou will be paying for 2million severs when u dnt need them now
 
 
 
