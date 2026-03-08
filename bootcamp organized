@@ -208,8 +208,90 @@ yes thats bc nt everyone has the time set aside for all resources ther, we will 
 
 
 
+                               ( JENKINS PROBLEM) 
 
-                                 NEXUS
+
+53:00    problems arise everyday  , so u must not only get things fixed bc it happened when you werea junior engr , it cud happen while ur a director, while your a 
+the vice president for engineering , cos u hv a jnr. IT or devops engr, a devops engr a senior devops engr, a devops manager, a devops director or vice president for engineering
+wont u encounter a problem, problems dont arise just bc of one junior engr made it happen  .... NO 
+
+ther can be a problem wher the server is down , lets assume your master server  for k8 is down , if our docker build server is down for conatineroztaion
+what will happen if ther are some changes in API version and you are trying to use old manifest files , how will you fix such a problem. ther are many probelms that can arise
+in your env
+ther could be a problem wher pods are not running , we cud hv reosurces problem , we hv induffficient resources, so our srever cannot support a higher level of application 
+deployment thats a big problem 
+explain this problem and tell us how you fixed it 
+
+
+55:28   ,, said he was using jenkins to do a build but was always having a fail
+
+proff:
+    if theres a problem ,you dnt just first dive into your pom.xml file
+the first thing is to check the logs, if we are building in jenkins, thats what we call console output 
+u go to the console output and try to identify what cud be the cause of the problem, if the cause of the problem will need that i get into pom.xml to check then il do that 
+if the cause is for you to talk to dvelopers to inform them to check their code , it cannot runbc the compilers they hv defined is the wrong compilers they shud check
+their pluggins , the pluggins defined in pom.xml are not th epluggins the job neeeds to run , so they shud wrk on it and define the correct pluggins , 
+so if theres a problem check the logs 
+
+
+
+58:00
+    Thank you for this question
+
+in my env i am incharge of manging artifacts , and as part of my job, i set up my nexus artifactory  by creating a nexus serevr, ensuring that nexus is fully installed, 
+ensure thats its running as expected, i create artifactories, repositories in nexus n i use the artifcatory  repository url to modify my project file which is pom.xml,
+this wil permit us to upload artifacts into this artifcatories, when we build frm the development branch, artifacts are uploaded into the nexus releases repository .. 59:00
+when we build form the master or the relaese branch, artifacts are uploaded into the release repository
+i was tasked to upload some artifacts into the release repository and i realised for some reason i kept getting build fail and when i checked the logs i realised i was using 
+the wrong version in my pom.xml, instaed of ensuring that the versioning is tagged to releases it was tagged to snapshot, so i quickly went to my pom.xml modified the version
+used the corret version which was snapshot and once i had to rebuld again via my pipeline that failure never existed because it was now uploading artifacts into the snapshot
+repository that was expected.
+
+
+
+         
+
+                         your jenkins pipeline
+
+thank you for that question, i work as a devops engr for over 6yrs
+my basic task is to create automated piplelines where we are able to build appli, test and deploy them in their respestive env
+and we use jenkins bc it comes with all its automated features , so we use jenkins to automate the entire process and my piplrine strats frm me setting up my architecture
+all what is needed as a a requirement and based on our requirement we hv jenkins ., its required thats wher everytin is automated, we hv git and github is required when it 
+comes to devloping and versioning application
+in our env we are managing java projects so we are building with maven and maven is part of the pipeline and we run maven as a jenkins slave and as a result, we enusre that 
+maven is one of my  jenkins slave, so in the jenkins slave architecture, am attaching a slave called maven , once that happens the next thing that goes into the pipeline 
+gets to do with code quality analysis and we are using sonarqube so i ensure my sonarqube srever is setup and running and once that happens i integrate sonarqube with jenkins 
+and the integration happens using the project file , pom.xml, i equally intergrate sonarqube with nexus for artifacts to be uploaded, the automated process of uploading 
+artifacts into nexus, i integrate jenkins with docker, the reason i do that is bc we mg8 conatinerize appli, micro service applications , this ensures the appli has been 
+well packged , we hv to dpeloy the appli and we are using docker so we containerize the sppli by creating docker images and shipping them to dockerhub, so once that proces
+is done, we are now ready to deploy our applictaion and in the first deployment we deploy to a user acceptance  testing env for the user to be able to appreciate the quality
+of sofware developed on their behalf , if the client is happy they sign a doc called a signup doc to agrree that he wants us to dpeloy to production and that proces sof 
+deploying to production frm UAT via a manual approval is what is called continous delivery . 
+in some few of our projects we dnt need manual approval , everything is automated and thats continuos deployment
+so this is my expeience as far as th ejnkins pipeline is concerned
+
+as part of my job, i write pipeline scripts, i write jenkins file , i also modify existing jenkins file to be able to have this entire end to end process automated
+you cud walk them tru your jenkins pipeline like that 
+you cud also go ahead and tell them that ..:
+its imp to note that jenkins is able to integrate with all the components highlighted bc of the fact that jenkins can extend its functionalities tru pluggins 
+
+
+   ********** you can also go ahead and talk up to that once the application is deployed, the nxt tin is to ensure the appl is monitored, is  observed, on our jenkins pipeline
+we also hv a contnous monitoring job that is deployed once the appl are running ....  chris asked why he didnt add monitoring ( with promethus n grafana, newrelics)
+proff said we can also add it as well.. 
+
+
+    i was going tru the vidoes
+1:41:00     we can scan our images, containers, application before we actually pull them for deployment  , we use some  tools like sleek, trivy, whitehouse for vulnerability
+
+                   ****** whats the difference btw this scanning tools and sonarqube
+sonarqube scan code that are in github, the raw code, while the tools are tools that scan images for vulnerability , docker images..... thats the difference
+
+
+
+
+
+                                         NEXUS
  WALK US THROUGH YOUR ARTIFACTS MG8 WITH NEXUS 
 
    cAN YOU USE THE ANSWER TO THIS QUestion as a project your working on 
@@ -248,6 +330,29 @@ jar/war/ear , npm ie for node js applictaion, dockerimages
 
 
                                     SONARQUBE
+bootcamp dec26 2023 class33
+
+           ( ROLL BACKS, due to no code quality software )
+we had a serious issue with one of our client where we managed a fintech appl, we kept having multiple rollbacks 
+we will deploy the appl but the client will call back informing us that smt was wrong, there were multiple rolbacks , i was tasked to invetsigate what was the problem bc 
+that doesnt give a good image abt our software cy, so i began researching, the build was successful, deployment has happend but thers still rollback
+then i realise that in our pipeline, something was missing on the pipeline, a code quality checker, there was no tool that was been use to check for code quality to ensure 
+that the applicatons we rae deploying ra deployed form quality sofware that the no. of testcases that developers are writing are commesorat to the no. of code that they are 
+developer , so when i realised that was the problem , i immediately explained that to our team in one of our sprint review meeting and i instantly recommended that we shud
+use sonarqube bc in my research that sonarqube will be a very good code quality checker and that was the problem we were facing and the recommendation was to use sonarqube 
+so we use sonarqube .
+
+and i was tasked again to know how sonarqube can be fully deployed in our env  and thats how i came up with the white paper on sonarqube setup in our env and frm that paper
+i learned the steps on how to get sonarqube installed , whcih is very simple, u go to the sonarqube site, u download the latest version of the sonqrqube software via the wget
+command and extract it and start sonar ,  sonar.sh start 
+sonar starts,and once that is done we can now access it via the browser and frm ther we can now modify our project fie under the properties tag, we modify it with our sonarqube
+aerver login credential details and frm ther sonarqube is now part of our pipeline, jenkins integrate with sonarqube for code quality analysis , we introduce sonarqube , we
+strated setting up our own benchmark for code quality and as such today we dnt hv huge incidents where we hv to be rolling back on deployments bc before any deployment is done
+we expect that the codes hv been qualified , its deployed from quality software, that is the problem we hv faced in our env and thats how we fixed it 
+
+
+*********** this problem cud be explained form a diff angle
+our answer cud be abt k8, which problem hv you faced in k8 and how did you fix it so pls take note, its very important
 
 
 
