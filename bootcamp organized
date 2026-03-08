@@ -170,7 +170,24 @@ it is worth noting at the moment am managing our aws services with the help of t
 
 
 
-Git
+                                                 GIT
+bootcamp dec26 2023 class33
+
+QUESTION 
+are we going to be pushing and deploying these codes , also developers are going to be using diff terminals or if they are already using github wil they be obligated to use gitbash bc its a by product of github
+ANS;
+gitbash is a git terminal that can be uased to preocess git processes frm end to end & run git commands, to install git inur env is to install gitbash
+if ur using windows u can use a package manager to install git like yum or apt for ubuntu
+we are trying to manage tasks as if we are developers, trying to perform the functions of developers
+now what will developers be doing & what wil devops engr do at work?
+developers wil be using git for version to write code, using github to push their code for collabortaion
+however, as devops engr, most of our work will be on git bc we will be cretaing stufffs like teams & adding memebers, creating repositories when we hv a project, & if need be creating organisations.
+that is the work of devops engr, we are nt going to be writing codes, but there are other kinds of codes which we are goin to be writing which we will see eventually
+they wnt be hard core coding, its going to be more of like diff scripting languages like bash shell , we hv a git hub repository with a lot of bash shell which you can just modify.
+and when we fet to k8, we are going to do k8 manifest files, writing files that are used to deploy app in k8
+when we get to docker we will write docker files, when we get to ansible we will write ansible play books, those play books will be committe dto our github account
+
+
 
 
 
@@ -192,8 +209,48 @@ yes thats bc nt everyone has the time set aside for all resources ther, we will 
 
 
 
+                                 NEXUS
+ WALK US THROUGH YOUR ARTIFACTS MG8 WITH NEXUS 
+
+   cAN YOU USE THE ANSWER TO THIS QUestion as a project your working on 
+like tell us a project you are managing at the moment
+
+
+ANS:
+
+My project at the moment for the past 6nmths, i hv been tasked, am basically incharge of managing our artifacts 
+
+is that a serious task to mg8 artcifacts 
+
+what is the mg8 of artifacts ?? what does it involve 
+walk me tru your artifacts management with nexux
+
+45:40
+thank you very much for that question
+when it comes to artifacts, its very imp in the software development lifecycle and the way artifacts are managed bc artifacts are deployable  packages
+packages that  appl servers  can understand, can interpret , thats what artifacts are all about
+
+so in our env we use nexus to mg8 artifacts alongside our build servers which is jenkins on our pipeine 
+so when artifacts acre created those artifacts are uploaded into nexux
+so as part of my task, hv been able to setup a nexus server 
+and in our env i was tasked to setup a nexus server on a redhat9 instance, i have done that before on REDhat8 and 7 instances , where ill donwload the software of nexus
+and ill extract the software , when that happen, i hv nexus running on my pipeline , one hv installed nexus i ensure that nexus has started, its running afterwhic i go to 
+the nexus url , nexus accounr and i create repositories/artifactories wherewher artifacts can be uploaded into and generally i create both snapshot repositories releases 
+and releases repositories, the repositories is where il upload my artifacts into 
+again for the artifacts to be creaed, it rQuires dependencies, it requires pluggins , so hv equally used nexus as my maven proxy refactory where artifacts are not directly
+gotten frm the maven central repository , that is to say pluggins and depencies for us to be able to create artifacts can only be gotten into our build srver via the proxy
+server which runs in neuxs
+its also worth explaning that hv equally been able to upload diff classes of artifacts including:
+jar/war/ear , npm ie for node js applictaion, dockerimages 
+
+
+
+
 
                                     SONARQUBE
+
+
+
 
 
 
@@ -232,9 +289,66 @@ we qually use :
 we use use ﻿﻿Use alpine images bc they are light weight
 
 
-****** 1:24:37 
-  because we hv folks working as application support specialist OR application support engineers , 
+****** because we hv folks working as application support specialist OR application support engineers , 
 as an application support , this could be your job, managing containerized application
+
+
+
+****bootcamp dec26 2023 class33
+your explanation when it comes to migration from monolecthic archited applications to micro services 
+
+ how is your appl designed?? , what is the design of your application, in terms of architecture how is it designed
+so we hv either a monolecthic design or a micro service design , 
+fo a designed tha is monolized, u are working with an appl and all the components or modules are running as a sinle block of code so developers are working on an appl for 
+e-commerce or ebay, that appl can permit a user to log into an ebay account, register , create a cart, select items, make payment etc...this is an appl
+how is it designed, it cud either hv a micro service design or monolecthic design wher we hv a single block of code such that the same block of code will permit u to access
+ebay, register , etc  thats a monolecthic design or aplication
+
+PROBLEMS OF MONOLETHIC ....................... 20;11
+if thers a spike  eg if 10million people are registering but only 1million is making payment, we will hv to scale up both the entire appl even though only 1m is making payment
+so thers a lot of waste with resource usage in monolethic design 
+also micro service appli are light weight but monelethic are larger and thats a problem
+
+***** so that takes us to micro service applications, in our environment, we hv legacy appl that are running as monolectic which as a devops engr we are now decoupling 
+monoletic appl into micro services 
+
+WHY DO WE NEED TO DO THIS  ? 
+Again, we can run ., what we do is that if we hv an ecommerce appl, ebay.com/ebay.war we can break it down into smaller modules, where login is diff registration is adiff
+so if thers a spike when it comes to registration, we will scale just registion .... we are goin to be runing this individual micro services as containers
+we hv containers for registerin, container for ordering, container for cart, etc so if thers a spike for login, we increase the no. of login containers that we want so we
+increase the no. of replicas for login , we dnt hv to increase that of payment bc we are running isolated micro services we hv been able to decouple our application .. 
+
+
+24:50 
+    hOW DO WE DECOPLE THE APPLICATION  ? 
+
+as a devops engr its nt my job to code bc if an appl runs as a micro service or monolectic, it depends on how the codes were written n its the software engr/developers that 
+write the code
+so in the meeting we sit n infrm them we hv to decouple our ecommerce appli bc it has issues running it as a micro service eg
+scaling issues, coding issues, develpment issues, security issues
+so we hv meeting  with your team and inform the developers start wokring on decoupling the appl, it now becomes their job
+
+  so experience
+
+  TELL US YOUR XPERIENCE WHEN IT COMES TO MONONOLECTIC OR MICRO SERVICE APPLI
+
+thank u for that question, 
+
+in our env we mg8 federated micro service applications and for a while now we've principally been working on mirco service applications, hv been working on micro service 
+applications that is easy to scale , it optimize the use of resources, it has higher level of security etc however, we equally hv some legacy appl in our env that we hv been 
+able to successfully decouple them into micro services bc of the adv that comes with micro services 
+
+
+
+               IS THERE ANY DISADV THAT COMES WITH  microservices
+
+YES, for example the ntwrking within microservices , for example, how do you ensure that login container communicate registeration, registration with cart , how do u ensure 
+that once ur done with ur cart  u click on pay now n payment is effected n u can place ur order, so that becommes a communication issue, netwrking issue 
+how do we solve that ??????? 
+in k8 we solve that via service discovery, we use the service name to permit containers or services to comm with each other so one service can carry out dns resolution to 
+a grp of pods , n again we jst dnt do that we realise that thers a service match/mesh, hw we can enure that these services effectively commu with each other seamlessly that is
+pat of k8
+
 
 
 
@@ -242,9 +356,68 @@ as an application support , this could be your job, managing containerized appli
 
                                 KUBERNETES
 
-***** CONTAINER MGT WITH K8 
- bootcamp dec19
+bootcamp dec26 2023 class33
 
+********  XPLAIN THE K8 ARCHITECTURE
+
+k8 is a grp of servers that are working together to be able to ochestrate containerize applications, its made up of a control plane & worker node, the control planee comes with
+components line the API server which is the main adminstrative point and the entry point into the cl8 & it does generally authentication & authoriztion & it ensures that whatevr
+Req GETS into the cl8 is been made by an authorized & authenticated individual, apart of the API server, we hv the etcd that persists data in the cl8, it acts as a database ,
+whatevr reQ is been made by whoever engr that inf is stored and persisted in the etcd and frm there we also hv the scheduler, which is incharge of scheduling  eg if ports are
+been REQuested to be scheduled the sheduler will schedule that considering the nodes that hv available resources for such a port to be hosted and if thers any other constrain
+all the constraint are been factored in
+we also hv the controler managers that is able to ensure that at all times we hv a  number of nodes running , pods running , deplyments are runing as expected
+we also hv the worker nodes comes with the kublets which is the pry node agent, we equally hv the kube proxy, which is incharge of netwrk 
+also the container run time, there are diff types of container run time that you can use, docker used to be one of them , also container-D, container runtime is any software in 
+your node that is able to create and start containers bc k8 is all abt managing containerized appl n in our env we use containerD as our container run time, we cud hv as well 
+choosen other run time but we are using containerD
+
+Also the k8 architecture is such that calls are made into the cl8 and that happens using the k8 client like kubectl or k8 UI form there we can mk certain API calls either to 
+create containers, namespaces, security like RBAC and for any of these to happen, authentication must happen via the kube config file
+
+so thats the k8 architecture
+
+
+
+ SETTING UP A CL8 USING KOPS 
+   Walk me tru your kops kubernetes cluster setup
+
+thnk u so much fo rthis question 
+Kops is a software that permits us to deploy a production ready k8 cl8 in aws and other platforms
+    ******* this is a generic definition, u hv to narrow down your explanantion to your environment 
+
+in our env we hv setup our kops cl8 server using ubuntu   (( bc it doesnt mean that its only ubnuntu server that u can deploy kops on ) 
+in my env i have been tasked to setup a kops cl8 on an ubuntu server. and for that to happen, the kops software needs permission to be able to create the entire cl8  ie 
+the worker n the master node in aws, such that when we run the command:
+
+ kops create cluster --$NAME
+
+this will create worker node and master node 
+creates VPC with all components
+it creates auto saclling group (ASG) for workernodes and masternodes
+creates ELB for the apiServer
+Creates launch templates for workernode and masternode
+creates dynamic storage classes
+it uses s3 as a kopstatestore   ie kops state store is in S3
+
+kops server needs to be authorised to be able to create and mg8 all these services 
+and it is imp to note that the reason we call kops a production ready cl8 is that once it is deployed, it comes with other aws services like vpc, asg, ec2instance, ebs vol,
+launch tmeplate, it can equally come with other storage category like efs, and S3 
+
+
+but for this to be executed successfully kops needs to be authorized and this authorization can be defined using 2things : 
+we need authoriz\tion and authentication using IAM in aws
+
+what else do we hv for IAM apart from users,  we hv 
+IAM = user/ roles/ groups/ policy           ****** so with the help of IAM, we can create an IAM user and attach the required policy that will permit kops to create all 
+of this and attach it to our kops server and once that happens we are able to deploy our kops cl8 with relatve use
+so we hv to create an iam suer , then attach the creadentials like the access code and secret access code to permit the resources to be created when we run kops create
+
+
+
+***** bootcamp dec19
+CONTAINER MGT WITH K8 
+ 
 writing and modifying k8 manifest files
  and we use this file to deploy, expose and scale our application
 managing the k8 infrastructure/architecture which consist of controlplane, workernodes,
@@ -307,7 +480,7 @@ if the junior engr try to resolve  it and they cannot, the ticket is forwarded t
 
 
 
- **********MANAGING K8 CLUSTER AND EKS USING TERFRM                                 
+ MANAGING K8 CLUSTER AND EKS USING TERFRM                                 
 
 thank you so much mr steve, i hv managed several projects bt most recently, i was tasked to mg8 a k8 cluster and eks cl8 using terafrm
 or AMAZON eks cl8 using you can use either terrfrm, console, CLI 
@@ -356,6 +529,7 @@ this could be your only project , as a matter of fact
 
 
 
+
                                          TERRAFORM
 bootcamp dec19
 
@@ -392,3 +566,49 @@ migrating /importing  fully to IAC with terraform
 
 
                          ANSIBLE
+
+
+
+
+
+
+
+**********************************************************************************
+**** you can be hired as a devops enginer but does platform engr
+Devops Master Program
+﻿﻿﻿Devops Engineer
+﻿﻿﻿DevSecOps Engineen
+﻿﻿Cloud EnGINEERer and OR
+﻿﻿﻿AWS Coud Engineer.
+﻿﻿﻿Platlorm Engineer
+infrastructure EnGineer
+﻿﻿﻿Kubernentes Engineer or 
+﻿﻿﻿Sr. IT Recruiter.
+﻿﻿﻿Technical Project manager
+scrum master
+﻿﻿﻿﻿build and Release engineer
+﻿﻿﻿﻿Site Reliability Engineer (SRE)
+cloud solution architect
+﻿﻿﻿﻿Aws solution architect
+AWS certified DEveloper
+Devops trainer/instructor
+﻿﻿﻿﻿ContainerIzation Specialist
+﻿﻿﻿﻿AUTOMATION ENGINEER
+﻿﻿﻿﻿Security Devops engineer
+﻿﻿﻿Continous integration/continous deployment (CI/CD) specialist
+ Cloud Security engineer
+﻿﻿﻿﻿devops consultant
+﻿﻿﻿﻿Cloud Operations Specialist
+serverless engineer
+Multi-cloud Specialist
+AWS certified Data analytics specialist
+AWS lot Developer
+cloud cost optimization Analyst
+president/vice president for application support
+
+
+
+
+  ******DevSecOps morning devotion Dec22 2023 ..... for duties of the various role
+
+
