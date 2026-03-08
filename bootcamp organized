@@ -1,1 +1,378 @@
+interview question bootcamp dec19
+3. how are java web applications deployed?                     :
+        1. tomcat or JBoss server   
+        2. as docker containers using docker   
+        3. as containers using kubernetes   
 
+
+3. what problems have you faced in $tool and how did you resolve them
+   explain a problem you faced in your project and the steps you took to resolve it.  
+
+4. walk-in through your jenkins pipelines
+
+5. explain the kubernetes architecture  
+
+6. explain the terraform workflow
+
+7. walk us through how you implement a fault tolerance kubernetes deploy
+
+8. explain your experience and problems faced and fixed in:
+    1. multi-tier application deployment 
+    2. open source technologies
+    3. Linux systems / Maven / sonarqube / kubernetes / ansible / terraform / aws /  
+
+
+Explain the process of what happens when an end user types google.com ?
+How do you migrate from on prem to AWS?
+
+
+These are also points you can expand on 
+
+   - managing and granting access into aws services  
+   - deploying aws services using terraform   
+   - migrating monolithic to microservices architecture
+   - Setting up a kubernetes cluster using KOPS
+   - managing artifacts using nexus  
+   - writing and modifying ansible playbooks & roles for 
+     fileMGT/userMGT/packageMGT/deploymentMGT/securityMGT
+   - writing and modifying dockerfile, docker-compose files
+     creating and sharing docker images using best pactices  
+   - writing and modifying Jenkinsfiles and Jenkins shares libraries
+   - deploying APM tools like NeWRelic, Prometheus/Grafana using helm
+   - preparing detail documentations 
+   - morning devotion   
+
+
+******************************************************************************************************************
+
+
+
+
+
+he said you should answer the question using landmark morning devotion template
+
+
+
+A)    proff                                           EXPLANATION ON SOME TOOLS WE HAVE USED
+33:50 
+Thank you again for this question, am always very exicted to present myself as n engr
+i hv over 10 yrs experience working in IT and over 7yrs majoring on devops and cloud computing , manging applications, securing applications and ensuring that applications are
+accessible by endusers with relative ease, thats what hv been involved in
+
+and go further to through some light on some of the technologies that you have used 
+
+in realisng my job, hv used diff technology, diff tools, and diff software, diff technologies  to be able to realise the type of projects that i and am team offer to our clients
+and that includes, using the linux infrastructure and also aoutomation tools like jenkins, and with the help of jenkins, we hv a project we call in our env jenkins k8 
+integration, this is a very key project bc with this project as i said i work in a team, am in a team of abt 15persons, we hv developers, qa , DEVOPS engrs that are part of 
+the team and what happens is that we hv devlopers constantly developing the appl and onec the appl is developed, new version of the appl are constantly been realised and whenevr
+tehrs a new realised we ensure its immediately tajen to the cx and this is done by the help of the jenkins git and github integration where jenkins and github hv been configured
+to be able to automate the realisation of most of this processes such that when thers a new commit in git, jenkins will automaitclly pull the new version of the code and a 
+build will be triggered
+
+***** 36.50
+its a generic diagram, and its something u shud be able to explain over time 
+this is morning devotion apparently, devops automation video
+
+                                                      JAVA BASED PROJECT
+****** explaning the diagram
+
+B)
+and again it is worth mentioning here that we work on java projects and as a result ill talk more on the java based tool that we are using eg,once jenkins pulls the latest
+version of the  appl, jenkins is immediatellly connecting with maven and once that happens maven and maven is able to do a build
+it is worth mentioning that our maven env is configured such that our depencies of our project is securly obtained for the project to executed and as such we hv configured
+maven as a slave to jekins , so in our mavne jenkins env, maven is a slave, maven been a slave we hv equally ensure dthat all the project depencies neeede for maven to do 
+a build a gotten via a proxy repository meaning our build server doesnt go to the internet to directly get depencies and pluggin to do a build and the reason is bc in env
+security is inherent so its very imp to mention that
+also when maven is foing a build, ther are some things maven is looking at ,bc we execute the mvn package goal, in this goal maven will first validate the file structure and 
+the code that ensure that devlopers hv done a great job in presentation of the project ,maven will equally compile the java classics and this classic will be converting/combining
+java code in bycode that the java virtual machine can easily understand so compilation goes into effect and it is worth mentioning that once that takes place successfully, unit
+test cases are bein run and if the test gives us a pass then maven will do a build.
+
+so this is all about maven and what maven helps us to ahieve in our automated pipeline jobs
+
+
+40.00
+once artifacts are created, our major conecrn is to ensure that our clients are satisfied, so in our env we are very keen abt quality
+we hv a tool we use for code quality called sonarqube and in sonarqube we hv created a bench mark for all our project which states that code coverage for eg  must be atleast
+99% bc the appl we manage are fintech appl and we dnt make provison for any type of failure so we hv code coverage and we equally ensure that we dnt hv code smell in our 
+benchmark, we ensure that our duplictaions, duplicate lines is less than 5%, so ll of that has been setup as a benchmark when it comes to code quality, so we hv used quality
+gate snad profiles to create our baenchmark so once sonarqube runs sonaqube analysis, sonarqube is actually comapring actual result frm standared/expected result 
+so if the actual result is as expectd which imples that code coverage for eg execeds 90% it means that the software devloped by developers has met a cerstain minmum 
+quality xpectation and once that happens we are goin to proceed bt if it fails then our pipeline breaks at that point and an email will be forwarded to developers informing 
+them of the problem that occurred and it shud be resolved b4 we can proceed
+
+but if the code quality was successful, this meeans we hv met our quality benchmark and we are ready to deploy our appl to the lcient env bt b4 this deployment takes place
+ther aer a few things that we always consider :
+the first , we need to ensure that our artifacts/ deployable pacakages are well manged and backedup so we upload into a distribution mgt env , into an artifactoyr called
+nexus , so we use nexus as our artifactory repository and once that happens we are now ready for deplyment 
+so first we deploy our appl to a test env , in this env  what are we checking, we are ensuring that this appl works as expected and meets the general threshold, so we firts 
+deploy in the user testing env once the appl works effectively and we are sactified then our pipeline will trigger a production env deployment and for appl to be deployed in 
+the prod env, ther a few factors that are considered:
+additional testing is perfromed in the test env like perforamnce tesing, security testing, penetration testing, regression testing after all this and we are sure, now our 
+client will hv to agrree that this is what they expect from us so they sign a white document agreeing to the performance of the apppl and onec that is doen we now deploy
+the appl to the client env and in deploying this appl we ensure that the client env is secured enough
+
+so this is the  end to end deployment of our appl, when it comes to deplyment
+so this is what happens in rela time 
+
+
+C)
+45:00
+
+this is another explanation i did in class34
+
+where is deployment taking place
+we see deployment is taking place in UAT , UAT deploymen,  this env you realise additional testing like performance, penetraion,etc and the client has
+to confirmif hes happy can we conclude and say that the deal is done
+if the client is happy, we hv 2 possibilities either we go tru continous deployment and auto approve then we deploy to production bt this only happen in 
+our inhouse/internal project our intrenal project, most of the time we go with continous delivery where thers a manual approval, the cleint signs and 
+agrre that this is what is expected  b4 the appl is dpeloyed to production
+
+
+46:07
+still in our pipeline, if thers a problem, we hv a system of tracking that problem and ensuring that the problem is fixed still within the pipeline 
+
+so how do we achive that , 
+how do we deploy to production:
+in production we are deploying using docker and k8, we are  containerising and we are managing containers, the appl are running, the cx is happy, bt smt could go wrong
+so how do we manage a situation where the appl stop function or nt function as expected
+we hv an appl perfromance monitroing job which we deploy in our jenkins pipeline and what the job does is that it monitors how our appl is performing and if smt is going 
+wrong we are immediately notified and if smt is going wrong we are immediately notified and in our env we use newrelic, we also use promethus to cahieve this process and if
+smt goes wrong, the support team is contacted , ticket are created and the team goes ahead to resolve the issue ,and we use jira for ticketing and bug tracking  and conflux 
+for documentation.
+
+if your able to present that end to end we call that the morning devotion, its just a line with the very first video
+then you wnat ot present a big picture and thats why attimes in the interview, you ask the interview panel pls do you want me to give you a detailed analysis of our entire 
+project or you wnat me to give a brief summary 
+if they wnat a detailed analysis then your presenting the detailed diagram explained above
+
+
+*****************************************************************************
+
+
+
+
+
+AWS
+bootcamp dec19
+
+   MANAGING AWS SERVICES 
+Thank you again for that question, my name is ceceilia
+basically in my env we manage a lot of projects bt my task presently is to mg8 our resources in aws and to ensure that only authorized persons are granted access into our 
+aws env, thats my experience
+it is worth noting that the services we are exploiting in aws at the moment include:
+eks cl8
+virtual provate cloud and all its component like route table, vpc, subnet , am managing them 
+i equally mg8 ebs , efs, s3 bucket for my org
+i equally mg8 elastic clod compute ec2, IAM , i grant and deny access
+it is worth noting at the moment am managing our aws services with the help of terrafrm which is very imp
+
+
+
+
+Git
+
+
+
+
+JENKINS
+ bootcamp dec19
+    INTEGRATING JENKINS WITH DOCKER
+we havent seen any docker jenkins integration, tru the videos we hvnt see that , jenkins with docker, and its important in micro service application
+
+thers a video in the legacy channel that does jenkins k8 Docker intergration that covers docker, Should be among the first videos 
+however for u to intergrate docker with jenkins with docker its easy, just install docker in your jenkis server thats all and make sure that you add jenkins user to docker
+group so that can run docker command without any sudo request
+
+3.15.15
+you mentioned last wk that thers a lot of resource in the legacy channel n you will let us know which ones to use
+ANS
+yes thats bc nt everyone has the time set aside for all resources ther, we will forward one more video to the new group but for now just ultilize everthing thing there
+
+
+
+
+
+ SONARQUBE
+
+
+
+                             DOCKER
+ bootcamp dec19
+
+
+               I CONTAINERIZE APPLICATION USING ODCKER
+
+   I am basically an application support specialist in my env and my task is heavy on docker and k8
+am:
+﻿﻿orchestrating/managing containerised applications using kubernetes
+﻿﻿container mgt using docker and kubernetes
+﻿﻿I'm task to install docker and kubernetes in ubuntu platforms ie (ubuntu servers), and other platforms like windows , mac
+apart from installing
+I containerised applications by:
+﻿﻿writing and modifying dockerfiles using coy guidelines and best practices
+﻿﻿use ONLY Official images for base images
+﻿﻿Reduce the number of RUN keyword to create light weight images because it add layers to your image and the final image size.
+﻿﻿use executable form over shell form for CMD, ENTRYPOINT & RUN Instructions, why? because exeecutable permits our appl process to run as parent process & so it cant be killed
+unnoticed bt the shell format willl cause our appl to run as the child process and it can be killed unnoticed.
+﻿﻿Use alpine images as much as possible
+﻿﻿scan images before use
+Use a dockerignore file. for changes we dnt want to be captured by docker
+creating and sharing images in registry - dockerhub/nexus
+
+
+
+******* thank you very much in my env am currently working on docker, my job is to create images, share them in the image registry,
+distribute them so that we can deploy the appl using a container ochestra which in our env we use k8
+so as part of my job i ensure that docker files are written or modified and in doing that we use only official images for base image, 
+﻿﻿Reduce the number of RUN keyword to create light weight images because it add layers to your image and the final image size.
+and for that to take place, we use the & & seperator 
+we qually use :
+﻿﻿use executable form over shell form for CMD, ENTRYPOINT & RUN Instructions, why? because exeecutable permits our appl process to run as parent process & so it cant be killed
+we use use ﻿﻿Use alpine images bc they are light weight
+
+
+****** 1:24:37 
+  because we hv folks working as application support specialist OR application support engineers , 
+as an application support , this could be your job, managing containerized application
+
+
+
+
+
+                                KUBERNETES
+
+***** CONTAINER MGT WITH K8 
+ bootcamp dec19
+
+writing and modifying k8 manifest files
+ and we use this file to deploy, expose and scale our application
+managing the k8 infrastructure/architecture which consist of controlplane, workernodes,
+whcih include deploying k8 cl8, setting up a multi-nodes self managed k8s using kubeadm, kops
+have also  done the same again using smt diff: setting -up a multi-nodes managed k8s using eks 
+
+there are 2things in k8:
+managing the cluster and managing the applications that are running in the cluster, 
+those are 2diff task, they are independent task
+so your task could just be managing the cluster, mk sure they are running as expected
+to mg8 the cl8 is a ticket on its own, so your job could just be to be managing the cl8, to mk sur ethe cl8 is running as expected
+you could be task just to set up the cluster, managing the cluster
+or to be managing application mgt
+
+   FOR MANAGING APPLICATION
+ HOW DO WE DEPLOY APPLICATION
+
+application mgt:
+1. deploying stateless applications using controllergers like 
+deployment,RS, CM,Secrets /
+2. deploying stateful applications using controllergers statefulsets,
+RS, CM,Secrets, PV, PVC, SC,
+3. deploying monitoring applications like Prometheus/Grafana, EFK DS, RS, deployments, CM,
+Secrets,PV, PVC,SC,
+4) using helm package manager to deploy and manage application
+5)exposing applications to endUsers
+using serviceDiscovery whcih include
+ClusterIP(for exposing withing the clister)/NodePort for exposing externanally / LB ( for external exposure of appl)/ ExternalName (to access appl that are runing outside 
+the cluster) / ingress /NetworkPolicy    .....  this is application performance monitoring 
+
+1:43:40
+network policy : i can create a netwrk policy that says that it can receive traffic frm the java webapp bt traffic cannot flow out 
+ingress: traffic that can flow in 
+egress: traffic that can flow out
+
+
+********************************  so you can talk about either of the options listed above 
+1:45:15 
+ but the fact is coy sare searching for somebody that has a wider experirence thats why when we talk abt monring devotion, we talk about everything 
+that extends how you can be considered for that role 
+
+
+so if you have done it once, experience is the ability to repeat the task with relative ease
+
+
+
+ **********MANAGING K8 CLUSTER AND EKS USING TERFRM                                 
+
+thank you so much mr steve, i hv managed several projects bt most recently, i was tasked to mg8 a k8 cluster and eks cl8 using terafrm
+or AMAZON eks cl8 using you can use either terrfrm, console, CLI 
+
+this is a project hv been tasked to mg8 , and when it comes to this project in particular, our env is heavy on k8 and most most recently we decide to go
+for a managed k8 solution and AMAZON eks was our choice and with the help of eks, i hv been able to dpeloy k8 cl8 that comes along side other aws
+services/resources like virtual private cloud like vpc , vpc and its components include: subnets, route table, internetgateway, nat gateways
+other aws services we hv ec2 instances , server, serverless farget, ebs, RDS ;relational databases, s3 so all of this can be deployed alongside your k8 cl8
+we also hv auto sclaing grps ,launch template LT, launch configuration LC, ELB, most important for security we hv IAM 
+
+IT is important for us to knw that an eks cl8 is a mnaged solution/service which implies it gives us enough time to mg8 our appl rtaher than mg8 the 
+infratstructure on which our appl is running on  and generally our infratructure is k8.
+so if i deploy my appl shud i be more bothered on my appl or if k8 is working or not ,of course i shud be bothered abt my appl
+for that to happen, we are using eks which is managed k8 solution and it also comes with other aaws services like listed above 
+
+so hv been able to setup my k8 using an eks cl8 , i hv used both the console to achieve that process,hv used CLI, but most recently v deployed my eks cl8 
+using terraform this i did by modified our existing module for eks, we hv an existing module terrfrm module for eks, i modifies this module and ensured 
+that all the componnets that needed to be created was part of the module and once that took place, it now became a very simple terfrm process with terfafrm
+init, terfrm format, terfrm validate , terfrm planterfrm plan informs us if our infrastructure will be created or destroyed so with terfrm plan we can see
+the resources that willl be created and in this case it will tell us that we are creating an eks cl8, and the cl8 will be created in a particular vpc, the 
+number of subnet in the vpc, both public and private , it alos infoems us that some
+nodes will also be created, so node groups are been deployed and once we are sactisfied with the plan, we hv terfm apply
+
+tefrm apply will create the resources and once the eks cl8 is created, we hv an output, terfrm output, this output for eg will display for some very useful imfo and in this
+case the info we get is our kube config file, so the output gives us the kube config file and this file is needed ot access our eks cl8
+
+so with the help of terfrm modules hv been able to configure the eks cl8 in our env  as a matter of fact the module has become an easy solution for us to
+redeploy the  cl8 and worth noting again is that once our resource are created uisng terfrm , trefrm at all time can present to us the state of our 
+infratsrure using terfrm state.tf file
+
+this file at all times will inform us on the resources that we hv, everthin is captured in the statefile, all the resources managed by terfrm is listed in 
+the terfrm statefile
+
+so this is part of the prject am currently working on , am conatantly working in a env wher we are very heavy on terfrm as a matter of fact IAC has become 
+our new language bc of its advances
+it can be version controlled,
+it is reusable
+it is very fast
+it is less prone to error compared to console and CLI
+
+SO U SHUD BE ABLE TO EXPLAIN THIS AS YOUR PROJECT AND your done with it,
+this could be your only project , as a matter of fact 
+
+
+
+
+
+
+                                         TERRAFORM
+bootcamp dec19
+
+
+ PROVISIONING RESOURCES USING TERAFORM
+1:02
+
+you can also say in my environment, i provison resources using console, CLI, bc most of the time all the options will be usd interchangeably in an actual env
+so i provison and mg8 resources using the console and CLI and most importantly IAC with terrafrm 
+
+so this cna be your project when asked describe the project you are currently working on 
+
+o00k1:03:50
+******** WHAT DO I DO WHEN IT COMES TO TERFRM
+
+1) i write and modify terfrm modules/script
+2) i also mg8 the terrafrm workflow in my env
+ which includes :
+trefmr validate, apply, plan ,terfmr import, destroy  terfrnm refreshk
+3) i make use of modules and variables to create reuseable codes
+4) with the same terfrm script, i provision resources in dev/test/prod.....  so i can provision resources in multiple env
+
+if i create a new vpc in the console, i can use terfrm import to bring it into my env
+while 
+if my demoserver is changed from t2.micro to t2,xlarge  in the console , i run terafrm refresh  to enforce the chnage and the demoserver will refresh automaticlaly
+
+           TO VERIFY IF THE VPC WAS CREATED
+verify: cat terraformstate/ terraform show / console
+
+
+ WE can also talk about 
+migrating /importing  fully to IAC with terraform
+
+
+
+                         ANSIBLE
