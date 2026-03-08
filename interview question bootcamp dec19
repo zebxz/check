@@ -9,7 +9,7 @@ he said you should answer the question using landmark morning devotion template
 
 
 
-A)                                               EXPLANATION ON SOME TOOLS WE HAVE USED
+A)    proff                                           EXPLANATION ON SOME TOOLS WE HAVE USED
 33:50 
 Thank you again for this question, am always very exicted to present myself as n engr
 i hv over 10 yrs experience working in IT and over 7yrs majoring on devops and cloud computing , manging applications, securing applications and ensuring that applications are
@@ -78,11 +78,11 @@ C)
 this is another explanation i did in class34
 
 where is deployment taking place
-we see deployment is taking place in UAT , UAT deploymen,  this env you realise additional testing like performance, penetraion,etc and the client has to confirmif hes happy
-can we conclude and say that the deal is done
-if the client is happy, we hv 2 possibilities either we go tru continous deployment and auto approve then we deploy to production bt this only happen in our inhouse/internal 
-project our intrenal projevt, most of the time we go with continous delivery where thers a manual approval, the cleint signs and agrre that this is ehat is expected  b4 the 
-appl is dpeloyed to production
+we see deployment is taking place in UAT , UAT deploymen,  this env you realise additional testing like performance, penetraion,etc and the client has
+to confirmif hes happy can we conclude and say that the deal is done
+if the client is happy, we hv 2 possibilities either we go tru continous deployment and auto approve then we deploy to production bt this only happen in 
+our inhouse/internal project our intrenal project, most of the time we go with continous delivery where thers a manual approval, the cleint signs and 
+agrre that this is what is expected  b4 the appl is dpeloyed to production
 
 
 46:07
@@ -113,44 +113,45 @@ if they wnat a detailed analysis then your presenting the detailed diagram expla
 D)
 ************
 thank you so much mr steve, i hv managed several projects bt most recently, i was tasked to mg8 a k8 cluster and eks cl8 using terafrm
-or AMAZON eks cl8 using :
-you can use either terrfrm, console, CLI 
+or AMAZON eks cl8 using you can use either terrfrm, console, CLI 
 
-this is a project hv been tasked to mg8 , and when it comes to this project in particular, our env is heavy on k8 and most most recently we decide to go for a managed 
-k8 solution and AMAZON eks was our choice and with the help of eks, i hv been able to dpeloy k8 cl8 that comes along side other aws services/resources
-like virtual private cloud like vpc , vpc and its components include: subnets, route table, internetgateway, nat gateways
+this is a project hv been tasked to mg8 , and when it comes to this project in particular, our env is heavy on k8 and most most recently we decide to go
+for a managed k8 solution and AMAZON eks was our choice and with the help of eks, i hv been able to dpeloy k8 cl8 that comes along side other aws
+services/resources like virtual private cloud like vpc , vpc and its components include: subnets, route table, internetgateway, nat gateways
 other aws services we hv ec2 instances , server, serverless farget, ebs, RDS ;relational databases, s3 so all of this can be deployed alongside your k8 cl8
 we also hv auto sclaing grps ,launch template LT, launch configuration LC, ELB, most important for security we hv IAM 
 
-IT is important for us to knw that an eks cl8 is a mnaged solution/service which implies it gives us enough time to mg8 our appl rtaher than mg8 the infratstructure on which our
-appl is running on  and generally our infratructure is k8.
+IT is important for us to knw that an eks cl8 is a mnaged solution/service which implies it gives us enough time to mg8 our appl rtaher than mg8 the 
+infratstructure on which our appl is running on  and generally our infratructure is k8.
 so if i deploy my appl shud i be more bothered on my appl or if k8 is working or not ,of course i shud be bothered abt my appl
 for that to happen, we are using eks which is managed k8 solution and it also comes with other aaws services like listed above 
 
-so hv been able to setup my k8 using an eks cl8 , i hv used both the console to achieve that process,hv used CLI, but most recently v deployed my eks cl8 using terraform
-this i did by modified our existing module for eks, we hv an existing module terrfrm module for eks, i modifies this module and ensured that all the componnets that needed to 
-be created was part of the module and once that took place, it now became a very simple terfrm process with terfafrm init, terfrm format, terfrm validate , terfrm plan
-terfrm plan informs us if our infrastructure will be created or destroyed so with terfrm plan we can see the resources that willl be created and in this case it will tell
-us that we are creating an eks cl8, and the cl8 will be created in a particular vpc, the number of subnet in the vpc, both public and private , it alos infoems us that some
+so hv been able to setup my k8 using an eks cl8 , i hv used both the console to achieve that process,hv used CLI, but most recently v deployed my eks cl8 
+using terraform this i did by modified our existing module for eks, we hv an existing module terrfrm module for eks, i modifies this module and ensured 
+that all the componnets that needed to be created was part of the module and once that took place, it now became a very simple terfrm process with terfafrm
+init, terfrm format, terfrm validate , terfrm planterfrm plan informs us if our infrastructure will be created or destroyed so with terfrm plan we can see
+the resources that willl be created and in this case it will tell us that we are creating an eks cl8, and the cl8 will be created in a particular vpc, the 
+number of subnet in the vpc, both public and private , it alos infoems us that some
 nodes will also be created, so node groups are been deployed and once we are sactisfied with the plan, we hv terfm apply
 
 tefrm apply will create the resources and once the eks cl8 is created, we hv an output, terfrm output, this output for eg will display for some very useful imfo and in this
 case the info we get is our kube config file, so the output gives us the kube config file and this file is needed ot access our eks cl8
 
-so with the help of terfrm modules hv been able to configure the eks cl8 in our env  as a matter of fact the module has become an easy solution for us to redeploy the  cl8
-and worth noting again is that once our resource are created uisng terfrm , trefrm at all time can present to us the state of our infratsrure using terfrm state.tf file
+so with the help of terfrm modules hv been able to configure the eks cl8 in our env  as a matter of fact the module has become an easy solution for us to
+redeploy the  cl8 and worth noting again is that once our resource are created uisng terfrm , trefrm at all time can present to us the state of our 
+infratsrure using terfrm state.tf file
 
-this file at all times will inform us on the resources that we hv, everthin is captured in the statefile, all the resources managed by terfrm is listed in the terfrm
-statefile
+this file at all times will inform us on the resources that we hv, everthin is captured in the statefile, all the resources managed by terfrm is listed in 
+the terfrm statefile
 
-so this is part of the prject am currently working on , am conatantly working in a env wher we are very heavy on terfrm as a matter of fact IAC has become our new 
-lmnaguage bc of its advances
+so this is part of the prject am currently working on , am conatantly working in a env wher we are very heavy on terfrm as a matter of fact IAC has become 
+our new language bc of its advances
 it can be version controlled,
 it is reusable
 it is very fast
 it is less prone to error compared to console and CLI
 
-SO U SHUD BE ABLE TO EXPLAIN THIS A SYOUR PROJECT AND your done withit,
+SO U SHUD BE ABLE TO EXPLAIN THIS AS YOUR PROJECT AND your done with it,
 this could be your only project , as a matter of fact 
 
 
@@ -283,14 +284,14 @@ using  vscode IDE
 
 
 I)
-******  2:10:27
+****** 
 
-i work a sthe application specilist and i am the escalation problem for every failed issue/ application running in our cluster,
+i work as the application specilist and i am the escalation problem for every failed issue/ application running in our cluster,
 if the junior engr try to resolve  it and they cannot, the ticket is forwarded to me to get it fixed, it could just be syntax issues
 
  f. Troubleshooting kubernetes related problems
-     - Node = failed nodes /CPU/mem/ OOM Killed / 
-     - pod  = pods pending / slow starting pod / wrong image/imageTag
+     - Node = failed nodes bc our node can be running on low resources like;/CPU/mem/ OOM;out of memory queue/ Killed / 
+     - pod  = pods pending /slow starting pod/ wrong image, bc k8 is simply managing containers&containers are runing frm docker image/or wrong imageTag
      -        short lifecycle / not a controllerMger
      - manifest problem:
         POD labels not matching controllerMgers selectors  
@@ -301,7 +302,7 @@ if the junior engr try to resolve  it and they cannot, the ticket is forwarded t
 
    
 
-J)                         
+J)       2:10:27                   
 
                    MANAGING AWS SERVICES 
 Thank you again for that question, my name is ceceilia
@@ -309,7 +310,7 @@ basically in my env we manage a lot of projects bt my task presently is to mg8 o
 aws env, thats my experience
 it is worth noting that the services we are exploiting in aws at the moment include:
 eks cl8
-virtyal provate cloud and all its component like route table, vpc, subnet , am managing them 
+virtual provate cloud and all its component like route table, vpc, subnet , am managing them 
 i equally mg8 ebs , efs, s3 bucket for my org
 i equally mg8 elastic clod compute ec2, IAM , i grant and deny access
 it is worth noting at the moment am managing our aws services with the help of terrafrm which is very imp 
@@ -342,7 +343,7 @@ These are also points you can expand on
 you can work as : surprising the jobs are used interchnageably
                    you can be hired as a devops enginer but does platform engr
 
-Devons Master Program
+Devops Master Program
 ﻿﻿﻿Devops Engineer
 ﻿﻿﻿DevSecOps Engineen
 ﻿﻿Cloud EnGINEERer and OR
