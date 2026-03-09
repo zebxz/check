@@ -157,7 +157,7 @@ once again thank you for this opportunity and i cant wait to see where the futur
 
 
 36:10
-Thank you vrey much my name is .. am a devops engr and hv over 8years of exp in IT and technical compentency in delivering high quality solutions that meets the biz 
+Thank you very much my name is .. am a devops engr and hv over 8years of exp in IT and technical compentency in delivering high quality solutions that meets the biz 
 requirements of our customers and i manage and provision highly available and fault tolorance infratsructure using terafrm and i automate this process and support & uptimize
 deployment by building CI/CD pipelines , i aslo work with developers to support the software development lifecycle and ensuring that we hv quality assurance and audit and the
 best practices are followed tru all our processes
@@ -198,6 +198,7 @@ bliv am going to be one of the best fit that you expect as far as this roll is c
 
 
 How do you fit in the picture of this role in our company?   ????  you want to highlight some of your soft skills 
+
 Am a team player, have been able to work with my team to achieve a lot in my current project, am very good when it comes to documentation, communication,
  am an active student, i am an active atudent, as a matter of fact i consider myself a life long student because as an engr there are lots of stuffs fix
 you fix today but the same formular will not work tomorrow, so as an engr am constantly researching & studying so i see myself as a life long student & am
@@ -417,10 +418,23 @@ project or you wnat me to give a brief summary
 if they wnat a detailed analysis then your presenting the detailed diagram explained above
 
 
+
+Github interview 2022
+  APPLICATION LAYERS
+
+so as you rightly said i work for landmark, we are managing java based enterprise & web applications for fintech & ecommerce client
+this applications have  a multi-tier infastructure, where we hv LB layer layer ,application layer or LB layer tier , application tier & database tier that is how this appl is 
+structured so in the frontend we have configured DNS since we are using Aws services as well, we hv configured DNS record such that our endusers will not be trying to access 
+our appl using our lb dns name, that will not make any sense, so we hv configured a host name in route 53 so when endusers type app.com, its pointing to our lb
+and like you rightly said our load bal will talk to our appl & our appl will then talk to our databases
+it is also imp to note that our appls are running in k8 clusters, so we hv mg8d & self mg8d clusters that we hv configured in our env
+particularly we hv EKS, AWS elas k8 service, so in this appl , in configuring our entire env security is inhenrent, thats a very strong point you are telling them.
+also let we walk you tru how our pipelines are configured beecause evrything is automated using a jenkins joooooob
+
+so u are saying this u are very relaxed, i mean you hv some pauses in your presentation...
 *****************************************************************************
 
 
-How do you fit in the picture of this role in our company
 
 
 
@@ -772,6 +786,58 @@ you can be able to explain yourself frm end to end nt only on jenkins bt on any 
 
 
 
+ JENKINS PIPELINE
+Github interview 2022
+
+so in our jenkins pipeline job, we hv several jobs, we have a job where jenkins deploy directly to k8 cluster
+we hv a job where jenkins build, ship to ansible & ansible manages the deployment, all those have been configured
+in this jenkins job, immediately developers commit code to github, it is imp to note that security again is inherent
+and before code are commited particularly to our master branch, it must go through a pool request so evrything has been configured as such because of security
+but once that code is commited, we hv connfigured build triggers using github webhook number1
+pullSCM number2 & build periodically depending on the job
+because job like database backup, what we need is build periodically, that is what we hv configured
+so once thers a commit in github, a jenkins job is been triggerd, jenkins pulls the new version of the code bc any commit id is a new version of the code
+so jenkins is pulling the new version of the code & since our Project are java based, we are using maven for a build
+so jenkins is integrated with maven to execute a clean package goal, where the code will be validated, cmpiled , test cases run & if it passes packages are created
+now those packages created the nxt thing that will happen is that, u knw bc of hw sensitive our appls are, software quality is our top priority, we hv introduced sonarqube for
+code quality
+
+
+  TYPES OF SECURITY WE HAVE AT DIFF LEVELS/TOOL
+so that is how all of this configured & at the level of the jenkins pipeline, we have security like:
+RBAC, we have project based authoriztion, we equally use Aws iam  to ensure that our env is secured, 36.39
+we also use LDAP integration tO ensure our env is completely secured and at the level of our k8 cluster security as well is very heavy
+thats why we use namespaces concept to restrict who can have access because there are developers/team members who can never have access to the kube system namespace
+thats the namespace that controls your entire cluster, the kube system
+and we create namespaces and restrict certain users to function only in those name space with the help of role, & role binding, cluster role binding we can achieve all of this
+
+
+and in terms of our overall infastructure most of our servers are running in private subnet so when we use terfrm 
+so we use infastructure as a code; terfrm to provision this infastructure & we have our frontend lbs running in the public subnet
+our entire infastructure runs in private subnet reasons been that we want to ensure high security, so thats how all of that is done
+so in our vpc settings we use NACL for security at the subnet level
+we equally have security groups, we have WA... 38.34
+
+
+IN some of the projects recently, we also have a scenario where when jenkins have done evrything & the testing is perfromed jenkins then ships the artifacts into an ansible 
+server for deployment
+so what ansible does is that from jenkins job, jenkins will trigger a set of ansible playbooks which will dockerize, push the images into diff docker image registry which are 
+private registry because we are heavy on security
+so from jenkins server playbooks will be deployed where ansible will be deploying the appls to target environments
+therfore in our environment there are 7 key concepts we hv on our checklist 
+we want to achieve automation
+so we have continous development
+continous integration
+continous testing
+continous delivery
+continous deployment
+continous monitoring and continous security because security goes with monitoring
+
+
+****************************************************************************************************************************************
+
+
+
 
 
                                          NEXUS
@@ -838,13 +904,52 @@ we expect that the codes hv been qualified , its deployed from quality software,
 our answer cud be abt k8, which problem hv you faced in k8 and how did you fix it so pls take note, its very important
 
 
+Github interview 2022
+ SONARQUBE
+thers this question they keep asking & the reason is bc people dont explain sonarqube correctly
+
+    SO you are say that you use sonarqube, for sonarqube what is your bench mark
+so you are infroming them that because of the critical nature of our appl, sonarqure will execute code quality report
+no.1 code quality, there should be no bug in the code, no security vunerabilties bc if there is hackers can hack the appl and if there are nay duplicate lines it must not 
+exceed 5% and code covearge must be above 90%, that is what we have defined
+in some other projects code coverage can be 80% & it is acceptable but since we are managing fintech client code coverage must not go below 90% that is what is happening
+once  the sonarqube report is executed & everyting is ok, the next thing that happens is that our artifacts are uploaded into nexus
+this is necessary to ensure that if theres any disaster we can always go back & retrieve our artifacts so nexus is acting as our maven remote repository for our projects
+Thats whats happening... once artifacts are uploaded into nexus 
+the next thing that we do is to perfrom addditional testing bc at this stage its build & Release so we want to run some other testing like functional testing ie this new 
+version of the code does it perform well ? we wnat to chech how it functions
+we go into regressional testing, you may nt even explain it, u just say we are going to perfrom additional test like functional testng & regression testing, load testing & 
+penetration testing if evrything is ok & al the test passes & we are sactisfied now the code is ready to be deployed to produdction
+
+
+                     WHAT IS YOUR BENCHMARK &  HOW DID YOU ARRIVE AT YOUR BENCH MARK
+ 45.24 So you have explained already in your exposea & informed them that you are managging critical appls so your benchmark is 90%, code coverage must be covered by 90%
+that is your benchmark so in sonarqube server you have established your quality profiles, quality gate & you have set some rules & in all of those you have defined your bench
+mark.
+49.00 we arrive on this benchmark base on the nature of our appl
+we are managing crital apl for a fintech cleint, we cant afford to make any mistake, thats how we arrive at the benchmark
+
+******************************************************************************************************************************
 
 
 
 
-                                   DOCKER
+                                   DOCKER 
+ ****** Github interview 2022
 
-Morning Devotion dec15 model answers
+ DOCKER BEST PRACTICES
+first we make use of alpine image as much as possible because its light weight comapred to other linux images
+Also in our docker file we ensure that we make use of minimun run instructions because each run instruction creates a layer that can actually increase the size of our image & 
+we want our image to be light weight and as such we make use of minimum run instruction
+Also in our CMD & entry point instruction, we ensure that we actually make use of executable format rather than writing them in the shell format bc when running them in shell#
+format they run as a child process & as such they can be killed unnoticed.
+
+proff
+in addiction to that, we scan our base image for any vulunerabity & SQS injections & any other issues
+
+
+
+***** Morning Devotion dec15 model answers
 
  i could be tasked: at the moment, my only job is containerization with docker , you knw that can be your only job in the coy, creating containers, conterization of appl, 
 using docker , thats my only job 
@@ -961,6 +1066,25 @@ a grp of pods , n again we jst dnt do that we realise that thers a service match
 pat of k8
 
 
+Github interview 2022
+DOCKER
+in doing that there are 2ways in some of our project jenkins will now with the help of a docker file dockerize the appl & a docker image is created
+and even at that level we have made it such that our docker file will pull somes images which is the base image & bc the base image can be a tomacat  or jboss
+but before its pulled we have to run docker scan to scan image to ensure that the base image we want to COPY OUR CODE into is free from vulnerabilities, sk injections & any 
+issues so at that level we are going to dockerize our appl and once its dockerized, the appl is now pushed to our image registery which are in dockerhub, nexus
+so from the image registry, jenkins will trigger another playbook , pls not even playbook
+our jenkins job will now deploy to a kubernetes server, & take note that the jenkins integration is done using pluggins & with all of this we have deployed our application 
+to production & since it is 3tier enduser will talk to the appl using the lb but the lb is pointing to a dns name , a host name; app.com
+
+
+                                           NGNIX INGRESS
+and as you rightly said since some of these appls are microservices we are configuring an ingress, nginx ingress
+Because with the help of nginx ingress we can configure ssl termination which implies endusers will access the appl from an https protocol number 1
+number2.. we configure ssl termination & ssl redirect 
+and in addition to that nginx ingress provides an additional layer of security and it is imp to note as i said earlier on our entire infastruture we are very high/heavy on 
+security
+
+*********************************************************************************************
 
 
 
@@ -1143,13 +1267,22 @@ it is less prone to error compared to console and CLI
 SO U SHUD BE ABLE TO EXPLAIN THIS AS YOUR PROJECT AND your done with it,
 this could be your only project , as a matter of fact 
 
-
+***************************************************************************************
 
 
 
 
 
                                          TERRAFORM
+ Github interview 2022
+  TERRRAFORM STATEFILE
+In our env this is how we mg8 terfrm infastructure, we are using terfrm as infastructure as a code since we hv a team of engrs working together our statefil
+we hv backed up our statefile using s3 backends & we are equally using KMS; key mgt service to encrypt it at rest in addition to thet we are using DB dynamod table to lock the 
+statefile such that no 2 infastructure engrs can access the statefile at the same time because if they do it wil cause infastructure inconsistency & thats not what we want
+you know if we break our infastructure that could result to serious issue since we are managing critical applications and security is inherent in everything that we do
+
+
+
 
 Morning Devotion dec15 model answers
 
@@ -1207,11 +1340,44 @@ verify: cat terraformstate/ terraform show / console
  WE can also talk about 
 migrating /importing  fully to IAC with terraform
 
+****************************************************************************************************************
 
 
                          ANSIBLE
 
 
+
+
+*************************************************************************************************************************
+
+                                 PROMETHEUS & GRAFANA
+AND HOW DO YOU MONITOR YOUR ENV
+
+                                        PROMETHEUS & GRAFANA  ***deployed with helm chart
+You already explained the fact that when our appl are running since we have microservices because what we are deploying are federated microservices for our fintech client
+so we are making use of prometheus and grafana those once are equally deployed in our env using helm chart
+so once we deploy prmethus & grafana, what happens is that in promethus thers an alert manager & we have defined alerting rules like if cpu goes below 45% theres going to be
+an alert, if it goes above 75% an alert will be triggered & this is because we want to prevent problems from occurring, an emails will be sent
+secondly, we have configured latency such that within 10 millisecs endusers should acces our appl, if our latency goes above what we have configured, alert will be triggered
+the alert manager will be triggered
+if our memory is low ie if we are low on memory the alert will be trigerred & whatever is happening in our cluster we are using grafana
+so in grafana promethus is the data source
+Grafana is used for visualization
+you can use promethus & grafana & grafana with many other stuffs, there are many things that grafana can display in metrix
+so grafana is a visualization open source monitoring tool, it needs data from a source 
+In this case the the data source of grafana is promethus because whatever is happening in our k8 cluster, promethus have note expoter to scrap all those data, kube state metrix
+& the promethus server itself & it equally have a time series database so all of this infromation is captured within the proemthus deployment
+So now in grafana, prometheus server becomes the datasource for grafana, so whatever is happening in our cluster, grafana will display it in a nice dashboard
+so we can know even before our end client notice that thers a problem, the grafana dashboard should be able to display it to us that smt is about to go wrong 
+& we get it fixed before our users are even aware, so we are deploying promethus & grafana in our env
+so if anything is happening in the cl8 it can be visualized because we are heavy on security and as such we need to monito the applications
+
+One more things we need to know how the appl is behaving ie what is happening because these are federated microservices generating a lot of log files so how do we manage that
+
+
+                         ELASTIC STACK   ***deployed with helm chart
+We are using elastic stack, which is elastic search fibric & kubana & we are deploying elastic search using helm chart that will help us for log aggregation & data analytics 
+we are able to know how our appl behave with ease because we are using such a tool.
 
 
 
