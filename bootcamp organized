@@ -438,6 +438,22 @@ so u are saying this u are very relaxed, i mean you hv some pauses in your prese
 
 
 
+                                   LINUX
+
+ WHEN YOU HAVE A SPIKE IN THE CPU USAGE HOW WILL YOU CHECK THAT MEMORRY? , WHAT LINUX COMMAND WILL YOU USE
+58.06 
+ when you have you appls running & thers a spike in cpu, like cpu has gone to 80%plus
+the first command to run is the 'top command
+it gives the processes running & the resources been ultilized
+the spike in cpu may be as a result of a particular process that is consuming your cpu
+so look at the nature of the process & you may have to stop the process 
+eg you are executing multiple command, so which of them is consuming your cpu & to what extend
+so that is one way you can get that particular issue resloved
+and if its a zombie process, like a process that has nothing to do, just kill the process
+
+*******************************************************************************************
+
+
 
 
                                                AWS
@@ -454,6 +470,8 @@ i equally mg8 ebs , efs, s3 bucket for my org
 i equally mg8 elastic clod compute ec2, IAM , i grant and deny access
 it is worth noting at the moment am managing our aws services with the help of terrafrm which is very imp
 
+
+****************************************************************************************************************
 
 
 
@@ -484,6 +502,30 @@ similarly if our client wants us to dev a particular feature, we create a new br
   bc of the nature of our appl, to track all the versioning, when we are trying to commit code from one branch to another, we use the git rebase command over the git merge command
 
 
+  HOW MANY DEVELOPERS DO YOU WORK WITH
+In landmark you are working in a team of 13, & there are 6 developers
+and these 6 developers are distributed in diff geo locations, some in the US , some in Canada & some in India.
+
+
+ HOW DO EACH OF THEM COMMIT THEIR CODE
+For them to commit code in github, we have created a project repository where all of them can commit code into the repository in github  
+they gain access using ssh keys & token, there are 2things that they use because in most env, ssh is more automated than PASWD
+once you forward your ssh key into github, you realize that 
+thers a bash shell script that we even wrote when we did git, the bash shell script will take the token of a specific developer & create an ssh key for that developer
+but since that token is created defining what the developer can do because we are heavy on security
+becasue when a PAT is created in github, you define what the token can do & anyone the token is assigned to will not be ablre to do anything more then what was defined in the 
+token
+so we use personal acces token & ssh keys for developers to be able to commit code in our project repository
+its also imp to note that none of these developers can commit code directly to the master branch, every commit in the master branch goes through a pull request
+
+             HOW DO THEY ACCESS HEIR GITHUB
+They access github via personal access token & ssh keys 
+so they mostly make use of the ssh url because we have 2 url ; we have ssh & https for every repository you create in github
+
+                  HOW MANY BRANCHES DO YOU HAVE IN GIT
+We have about 5 branches
+the dev, the stage, the master, the feature & the bugfix branch, those are the minimun branches that we maintain in our github repository
+
 bootcamp dec26 2023 class33
 
 QUESTION 
@@ -501,7 +543,7 @@ and when we fet to k8, we are going to do k8 manifest files, writing files that 
 when we get to docker we will write docker files, when we get to ansible we will write ansible play books, those play books will be committe dto our github account
 
 
-boothcamp 33 1st video
+************ boothcamp 33 1st video
 TELL US WHAT YOU USE GIT FOR  ....  prof
 ANS:
 We use git for versoning and github as our source code manager
@@ -566,6 +608,9 @@ so in the quest for containerisation, we use docker for containerisation and k8 
 all times by having some tools that monitors my env , observe the appl and if ther is any incideence, i am aware , i get notified , (even my client notices) if thers any
 problem i am notified, thats my experience, so my hands are very dirty with work
 
+***********************************************************************************************************
+
+
 
 
                                           TOMCAT
@@ -617,6 +662,10 @@ so if you have an application mgt process, when should you be bothered abt encry
 encrypted
 
 
+
+
+
+**************************************************************************************************************************************
 
 
                                              JENKINS
@@ -875,6 +924,7 @@ its also worth explaning that hv equally been able to upload diff classes of art
 jar/war/ear , npm ie for node js applictaion, dockerimages 
 
 
+********************************************************************************************************************
 
 
 
@@ -1267,6 +1317,67 @@ it is less prone to error compared to console and CLI
 SO U SHUD BE ABLE TO EXPLAIN THIS AS YOUR PROJECT AND your done with it,
 this could be your only project , as a matter of fact 
 
+
+ ************* Github interview 2022
+
+   HOW DO YOU DEPLOY YOUR APPL IS JUST ONCE OR CONTINOUS 
+
+In landmark, most of the appl we do deployment every sunday, weekends that is when we do our deployments
+and we have equally configured a con job, however when that deployment is taking place most of the engrs will need to watch it
+in real time right, hv watch my watch my wife for eg when they hv deployment at times it goes at 8pm after work, engr sare going to wait till then
+even though the system is automated they want to watch, bc while you are deploying you can pause your deployment
+as a matter of fact am goung to be introducing those particular concept in this class bc i start k8 today with them
+So in deployment assuming you were deploying & you notice smt, you can pause the deployent, get it fixed & you resume deployment
+At the point of deployment, we may still have to scan our images, remember when you do kubectl apply, it will pull images frm where they are kept nexus, etc & deploy your appl
+but if the images hv become vulnerable, so while that process is ongoing you may want to scan that image & if you realise there are now vulnerability, you hv to pause the 
+deployment & get the stuff fixed before you resume deployment.
+
+**** so we deploy appl weekly & the process is continous deployment because its connected to a jnekins job, k8 & jenkins integration
+
+
+     YOUR EXPERIENCE IN TERFRM
+i just installed a k8 cl8 using terfrm script
+Am not sure I expalined this project, your experience in terfrm 
+because this cl8 is a fully managed production ready cl8
+we see the node created using the cl8
+and IT has Created multi iam resources as well
+also it created an auto scaler that has a launch template & launch configurtaion
+desired is 2, max is 4
+so if u have an appl where only 3users will access it & u need just 2 server , you can put there 2 & edit max to even 200
+and as your users are expandng thats how your infastructure is expanding in the flag 
+with this you can save money, you wont spend too much money 
+why bc if you just create 200 servers bc you anticipate to hv 2million users in the future, ypou will be paying for 2million severs when u dnt need them now
+
+
+
+
+1.01
+QUESTION
+   when we are provisioning this, we've specified the amt of instances when we are trying to provision this 
+
+ans; yes
+this was already defined
+explaing the terfrm script in github, with the scaling desired state max & min  ... you can edit this file to any desired number you want
+
+
+     BUT FAG WAS NOT CONFIGURED IN THIS FILE
+He said but we hv another where fag is con
+
+
+                       CLUSTER AUTO SCALING
+1.05.30   .. but for the cl8 to scale you need to deploy CAS
+
+   1.07.00
+but for kops , we dnt deploy autoscaler 
+yes
+It is automatic bc when you use kops , kops deploys using cloud formation
+when you do kops create cl8, in the backend, thers a cloud formation stack that is running
+like this new class, am goin to start with what is applicable immediately bc i realized most comapnies use kops & Eks now
+so as you execute kops create cl8, its runs cloud formation template in the backend 
+know that cloud formation is iaac, the same thing that terfrm does, cloud formation will do 
+and the cloud formation template will create autoscalers, lb as matter of fact it creates wverything for you, everything is created
+so kops & eks is competing but eks got more funtionality than kops
+
 ***************************************************************************************
 
 
@@ -1340,7 +1451,53 @@ verify: cat terraformstate/ terraform show / console
  WE can also talk about 
 migrating /importing  fully to IAC with terraform
 
+
+ Github interview 2022
+ SAY YOU CREATE A GAME & NOW ONLY 3 PEOPLE ARE USING IT BUT YOU ARE GOING TO HAVE LIKE 3MILLION USERS TOMORROW, HOW WOULD YOU CREATE THE INFASTRUCTURE
+Thank you so much for this question
+
+52.50 In our env Most of the appl we manage it have rapidly grown over a short period of time 
+we are deploying our applications in k8 clusters, we have implemented the use of EKs , with EKS , we are provisioning EKS using
+55.15 The answer to this question got to do with scaling, if you have 3 users today but today 30million users, you can achieve that using scaling
+you are telling them that we have provisoned our cl8 using eks & the adv with this is that it comes with some other services like scaling
+we can scale both at the cl8 level & AT THE POD LEVEL SO FOR that purpose we  are going to deploy our appl in this type of of a cl8 where we can scale via HPA, & CAS, cls8 auto
+scaling, so in that case with the inscreas in users our appl have been configured to scale even in the flag
+out of this there is smt EKS equally provide EKS has serevrless fagging & with this we will not even need to bother abt scaling because AWs will take care of that for us
+if we have only one user, it is going to be scaling in the flag for us so all those 2options is very possible
+and if this appl need databases we will equally ensure that our database will equally scale with multiple read replicas
+
+
+                       CONTENT DELIVERY
+And in accesing this appl, we can now have stuff like cloud front for content delivery so that if users are trying to acces this application from diff location, what will you
+configure?  elastic cash, cloud front & CDN, content delivery
+
+
+
+                           EKS CLUSTER USING TERFRM SCRIPT IN GITHUB REPO
+** now sharing his screen 
+ hes provisioning an eks cluster 
+in configuring the eks cl8 he is using terfrm 
+the trfm script is already found in our git repo which he cloned 
+he created the user called eks
+
+
+ YOUR EXPERIENCE IN TERFRM
+i just installed a k8 cl8 using terfrm script
+Am not sure I expalined this project, your experience in terfrm 
+because this cl8 is a fully managed production ready cl8
+we see the node created using the cl8
+and IT has Created multi iam resources as well
+also it created an auto scaler that has a launch template & launch configurtaion
+desired is 2, max is 4
+so if u have an appl where only 3users will access it & u need just 2 server , you can put there 2 & edit max to even 200
+and as your users are expandng thats how your infastructure is expanding in the flag 
+with this you can save money, you wont spend too much money 
+why bc if you just create 200 servers bc you anticipate to hv 2million users in the future, ypou will be paying for 2million severs when u dnt need them now
+
+
 ****************************************************************************************************************
+
+
 
 
                          ANSIBLE
@@ -1350,7 +1507,12 @@ migrating /importing  fully to IAC with terraform
 
 *************************************************************************************************************************
 
+
+
+
                                  PROMETHEUS & GRAFANA
+ Github interview 2022
+
 AND HOW DO YOU MONITOR YOUR ENV
 
                                         PROMETHEUS & GRAFANA  ***deployed with helm chart
@@ -1384,6 +1546,8 @@ we are able to know how our appl behave with ease because we are using such a to
 
 
 **********************************************************************************
+
+interview question bootcamp dec19
 **** you can be hired as a devops enginer but does platform engr
 Devops Master Program
 ﻿﻿﻿Devops Engineer
