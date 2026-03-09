@@ -150,3 +150,138 @@ but i work on terfrm on a daily basis & this is what i do to provision my infrat
 so always bring it bk home & from then build on it it
 this is what terfrm does & its good, this is how i deploy my infastructure,this how i do testing, i integrate terfrm with so & so tool
 so you can can always redirect your interview back to you & that way shine in the process
+*******************************************************************************************
+
+
+
+
+                          FROM A LAWYER TO Sr. Devops Engr
+
+Interview was partitioned into 4 diff parts/topics
+they blended jenkins, the continous integration part of jenkins into 1 sessions
+continous deployment was split into 2, mainly Docker & k8
+And the AWS part of it
+
+
+for the jenkins & the other part of it 
+the good thing is that he didnt hv the opportunity to ask me a lot of question because the first quetsion trown at me was a general question
+and i saw that as an opportunity to trow in everything in my head to an extant limit the follow up question
+
+
+The general Question was;
+Can you explain what you understand by continous integration & deployment & how you implemented it in your pipeline
+i approached the question by first telling them the exact pipeline i was going to be talking abt
+and i went further to explain by bringing in when soft code is uploaded to git repo, moving up to k8, in the middle of it putting in the diff needed plugings, the diff
+jenkins plugins
+talking about how we use helm & ansible & terfrm to provision
+i took bat 16/17 minutes
+and my tacktics worked because my explanation took out 5 of his questions from the list so there was no need for him asking them
+
+DOCKER 
+what i undestand by docker & how we implement docker in our pipeline in landmark
+he went into docker file asking how we constitute our docker file & the best practices we apply
+i explained it & aslo talked about docker compose even though he didnt ask about it
+
+
+k8
+1) If we have a pod , a node in our cl8 and at the point of deployment we realise that one of the nod in our cl8 is not up & running to receive appl
+what can be done to troubleshoot the situation
+
+the question cut me off guide so i went through the permilinary things like checking if the instance was running & all the likes but he was just shaking his head
+so i suspectd smt was missing from my answer so i kept on trying
+so i went on to the k8 architecture kubelet & kube proxy so even before he let me explain what it is, he said thats the response he was looking for because you need 
+kublet for a container to be able to run in a node right 
+so he said for time constraint no need to explain it
+
+2) then he asked how we ensure security in our k pipeline
+so i talked abt RBAC, iam roles, mapping of iam roles to diff service account that allows for diff deployment that are to be done in the k8 cl8 which i spoke on at length
+
+3) in our k8 pipeline is there a mistake or smt which i had done wrongly before in my job that i can explain what happened  & what have been able to do with it
+so i had to make him understand that in landmark,  our jobs & diff roles in the pipeline have been specified & so far in k8 i havent had smt which i did wrong
+have had challenges but not smt i did wrong & had to correct but i still had to find smt else 
+
+so i remembered last sunday about lamda
+so you have to create a custom key that attaches diff roles to it as to managers of that key & other users to that key , so that immediately came to mind & i told him
+i once had a configuration, a lamda function that had been created by our developers which i was asked to run in running the lamda function, i used the default key, kms key 
+that was provided by AWS and that was the challenge which i later went on to face bc we were not able to mg8 it & i soughted it by creating a custom key mgt system for that
+lamda function & i was able to redeploy it 
+so that was basically k8 as a whole bc remember the ci/cd pipeline i incorporated everything in it to limit the question
+
+
+AWS 
+he gave me a problem to solve but without using my computer or paper, i should just explain how i will do it
+
+create 2 instances, one frontend, one backend & create the resource that enables the backend & frontend instances to be able to communicate & for the backend instance to be 
+10.35 accessible out of the VPC ... he specified i should not use the default ec2 aws vpc that comes with the account
+
+11.44
+2) the uses of user data when creating an instance
+i explained what user data is used for , that fact that we executed bash shell script in user date that can update packages or craete users depending on what you want to use 
+the user data for 
+I also explained that the uses of ussr data is limited even though he didnt ask me for it but i try to ensure 
+i dont over provide info & i dnt give him less info
+my my goal was avoiding more followup question
+
+3) what is meta data in ec2.. that was a bit challenging for me
+ i just told him its data abt data but i went ahead to tel him abt all the components of the ec2, like amazon machine image 
+and i got to find out that all those diff components used i creating ec2 & the other stuffs i mentioned are the meta data he was looking for 
+
+
+4) the diff EBS storage type, tell me the diff EBS storage type & what they are used for 
+i talked about SSB & HDB 
+
+
+ 
+5) on k8, Elastic search, fibre & kibana
+
+so the single questions were quite few bc i was lucky enough i can say, when he asked me the ci/cd open question i used that as an opportunity to trown in everything in my 
+head , talking abt, integrating CM, continous monitoring explaining the tools the diff monitoring tools & how we use them so he said their wa sno need asking abt promethus & 
+new relic bc i already explained how we use them in our pipeline
+
+and the final question was what dept i would like to work in, plaform; provision resources or the ci/cd pipeline 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
