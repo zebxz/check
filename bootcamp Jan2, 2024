@@ -91,6 +91,17 @@ so port 8080 matching with port 8080
 
 
 
+   35.00       How to migrate from an onprem infastructure to Aws
+There are diff aws services that is used for storing of data
+And migrating will neccesitate data been distributed such that data can be accessed with relative used
+1) one of the aws services we have used to migrate data is s3 bucket with this data can be moved/migrated bc we can just download all the files i the S3 bucket
+eg
+using the command AWs s3 cp , i can copy a file from my local server to an s3 remote bucket in Aws once the file is there, it becomes very easy for the file to be accessed
+there are many tools that we can use but have talked abt the most basic option to migrate data & that migration will take place using s3 BUCKET
+
+2)Also we cud use an ebs vol, we can create snapshot from the Ebs vol & use it to create new servers with such info which is very important bc if i have data already in my 
+database server & extract, i create a snapshot from that particular piece of vol, we can use that snapshot & copy whatever files into a new system completely, 
+that is data migration
 
 
 
