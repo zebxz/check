@@ -55,7 +55,8 @@ Again in some of our appl, we dont have HPA, so when theres a spike we simply do
 there are more pods , it will fix the problem of the spike
 
 
-HOW ARE APPLICATIONS EXPOSED/ you have an appl that is running how do you expose the appl to endusers
+ **HOW ARE APPLICATIONS EXPOSED/ you have an appl that is running how do you expose the appl to endusers?
+
 We are managing containerized app that is running in k8 & the good thing is that k8 has what is called service discovery so we are able to use a service 
 to discover an app that is running so the service acts as a DNS resolver, performing all dns resolution that gets to do with the pod so if i want to 
 access a particular pod or container am going to do that through a service that is managing the pod or conatiner 
@@ -86,9 +87,9 @@ the label for the pod must match the selector in the service otherwise the servi
 so port 8080 matching with port 8080
 
 3) more coud be asked in k8, you could even be given a fresh k8 manifest file to look at & if thers any error you fix them & run them
-
-
-
+42.00
+4) Deploying an application with a wrong image namewhich requested in image pull error, bc am trying to pull an image that does not exists in our local 
+repository or in our image registory in dockerhub
 
 
    35.00       How to migrate from an onprem infastructure to Aws
@@ -102,8 +103,6 @@ there are many tools that we can use but have talked abt the most basic option t
 2)Also we cud use an ebs vol, we can create snapshot from the Ebs vol & use it to create new servers with such info which is very important bc if i have data already in my 
 database server & extract, i create a snapshot from that particular piece of vol, we can use that snapshot & copy whatever files into a new system completely, 
 that is data migration
-
-
 
 38;54 you can be given a ticket to migrate data form an onprem database to a cloud data base 
 
@@ -122,10 +121,26 @@ ie to say
 
 
 42.00
+we were taught how to expose our appl via http, but how do we do that bc in the real world i dnt think we will be exposing appl via http
+i know its going to be https, so how do we do that if we are using kops & kubeadm??
 
+for us to be able to expose our appl using kops for example deploying a cl8 that runs in AWs, the adv is that kops comes with other Aws services including the load balancer & with 
+the loadbalancer that becomes our frontend address so if you have a  lb the only thing we do in our env is that we create hosted zones like app.com pointing
+ to that particular lb,so with the help of app.com, we can route traffic to the lb
+it is worth noting that here again that recently we are nt just doing app.com, there are lots of other parameters which is been considered when it comes
+to exposing app to endusers
+for this app to be exposed it needs to be secured so we use Tls certificate & in Aws there is a service called aws service certificate manager with the help
+of this certificate we hv been able to create tls certificate manager & we hv used the certificate to securely deploy our app using https in the place of 
+http so you can use Aws certificate manager to achive that option
 
+you can also use ingress with the help of ingress that also works
 
-
+ 
+50.16   DBA; Data base admninistrator
+in our team we have a DBA who basically is incharge of managing data base query
+but our main task has included deploying a database in k8 but now the internal functionality of the data base is managed by our DBA which is part of our 
+team 
+dnt go to the interview & want to answer everything, i knw you have done everything bc just been a devops engr is too much work, to add data base administration
 
 
 
