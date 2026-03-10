@@ -9,7 +9,13 @@ by the Api server
 we also have the scheduler incharge of scheduling pods on nodes & it schedules pods base on how much resources the nodes are having
 we aslo have the controller managers & their function is to ensure that the state of resources that k8 is creating is maintained for eg if we need 10 pods
 the ccontroller manager will ensure that we have 10 pods running at all times.
-we have the ETC, which is a key value store that stores & captures all info or REQ made in the cl8, 
+we have the ETC, which is a key value store that stores & captures all info or all REQ made in the cl8, 
 those are the components of the master node
 
-Also we have the 
+Also we have the worker node which is made up of the pry node agent which is kubelet, we also have the netwrk agent which is kube proxy & very importantly
+we have the container runtime, since k8 manages & ochestrates containers the container runtime is in charge of creating & starting the container & in this case
+in our env we are basically using container D as our conatiner runtime 
+its also worth noting here that in the k8 arachitecture for any task to be executed in the cl8 a rEQ has to made & the REQ in k8 is called an Api call & for 
+the REQ to be made, we need what is called the kubectl which is the command line utility for k8 or a dashboard, k8 dashboard, so either kubectl or a k8
+dashboard is able to make the REQ into the cl8 & whatever REQ is made the REQ wll be processed by the APi server
+and for any REQ to be made, it needs to go through authentication & authorization 
