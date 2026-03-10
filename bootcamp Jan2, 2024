@@ -35,8 +35,10 @@ have also used RC replication controller, daemon set, let me make a comment on d
 like have mostly deployed pod thats expected to run or to be scheduled on all node using daemon set because damenon set will schedule our pod based on the
 number of node that is available, so if theres is 1 node it wil be 1 pod, 30 node, 30 pod
 and eg of appls have deployed using daemon set includes node exporters that is able to collect metric from a particular server & scan them into promethus 
-server, so that is node exporter
+server, so that is node exporters
 
-
-
+Also we have appls like monitoring appl which we have been able to use deamon set to deploy them
+We also have pod, have deploy using pod & have also deployed using static pod, however in our env we dont use pod for deployment, we use controller 
+managers bc they are able to maintain the state of the appl whereas pod cannot achieve that bc with pod if the pod goes down it cant be recreated,
+completely dead & gone..so we dont use pod, we use other enhanced features in k8
 
