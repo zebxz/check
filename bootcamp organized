@@ -1166,8 +1166,69 @@ Also the k8 architecture is such that calls are made into the cl8 and that happe
 create containers, namespaces, security like RBAC and for any of these to happen, authentication must happen via the kube config file
 
 so thats the k8 architecture
- 
 
+
+
+bootcamp Jan2, 2024
+kubernetes architecture
+
+thank u so much the team of landmark am so excited to be part of this panel today
+
+Kubernetes is made up of there is control plane which is like the master node & worker node.so its a cl8 master made up of the master node & worker node
+ the master node has components including the Api server which is the main administrattive point into the cl8, any REQ made into the cl8, the REQ is managed
+by the Api server 
+we also have the scheduler incharge of scheduling pods on nodes & it schedules pods base on how much resources the nodes are having
+we aslo have the controller managers & their function is to ensure that the state of resources that k8 is creating is maintained for eg if we need 10 pods
+the ccontroller manager will ensure that we have 10 pods running at all times.
+we have the ETC, which is a key value store that stores & captures all info or all REQ made in the cl8, 
+those are the components of the master node
+
+Also we have the worker node which is made up of the pry node agent which is kubelet, we also have the netwrk agent which is kube proxy & very importantly
+we have the container runtime, since k8 manages & ochestrates containers the container runtime is in charge of creating & starting the container & in this case
+in our env we are basically using container D as our conatiner runtime 
+its also worth noting here that in the k8 arachitecture for any task to be executed in the cl8 a rEQ has to made & the REQ in k8 is called an Api call & for 
+the REQ to be made, we need what is called the kubectl which is the command line utility for k8 or a dashboard, k8 dashboard, so either kubectl or a k8
+dashboard is able to make the REQ into the cl8 & whatever REQ is made the REQ wll be processed by the APi server
+and for any REQ to be made, it needs to go through authentication & authorization & in k8 we use what is called the RBAC to be able to authenticate 
+however authentication happens via the kube config file, so with the help of the kube config file, users, k8 engrs are able to connect into the cl8 
+and perfrom diff task howerver for task to be executed, administrators are authorized through the role base access control
+so this is how the k8 cl8 is structured, we have the client, the master node & the worker node .. thank you so much
+
+explain some of the objects you ahve used to deploy workload in k8
+Thank you again for this question
+In my env we basically deploy using k8 & have been exposed to a wide range of k8 objects which includes pods, replica set, rc, stateful set, deployments 
+among others 
+have used all of these objs when it comes to deploying & managing containerized appls 
+eg most of our appl that we deploy are stateless appl & in that case we are using deploying as our obj because of its advantages, the fact that
+yoyu can pause a deployment, you can resume from pause , you can roll back roll out with relative ease & you can achieve all of these at zero downtime
+so that is one of the k8 obj have use.
+have also used RC replication controller, daemon set, let me make a comment on daemon st
+like have mostly deployed pod thats expected to run or to be scheduled on all node using daemon set because damenon set will schedule our pod based on the
+number of node that is available, so if theres is 1 node it wil be 1 pod, 30 node, 30 pod
+and eg of appls have deployed using daemon set includes node exporters that is able to collect metric from a particular server & scan them into promethus 
+server, so that is node exporters
+
+Also we have appls like monitoring appl which we have been able to use deamon set to deploy them
+We also have pod, have deploy using pod & have also deployed using static pod, however in our env we dont use pod for deployment, we use controller 
+managers bc they are able to maintain the state of the appl whereas pod cannot achieve that bc with pod if the pod goes down it cant be recreated,
+completely dead & gone..so we dont use pod, we use other enhanced features in k8
+
+
+**HOW ARE APPLICATIONS EXPOSED/ you have an appl that is running how do you expose the appl to endusers?
+
+We are managing containerized app that is running in k8 & the good thing is that k8 has what is called service discovery so we are able to use a service 
+to discover an app that is running so the service acts as a DNS resolver, performing all dns resolution that gets to do with the pod so if i want to 
+access a particular pod or container am going to do that through a service that is managing the pod or conatiner 
+again it depend on how traffic needs to be accessed, a situation where we expect traffic to be just within the cl8 we use the cl8 ip service only, if we 
+expect traffic to be routed both internally and externally we use the node port or node balancer services bc those 2 service type wil permit external access,
+external traffic, external node into our k8 env so its worth mentioning here that this is how we do expose our appl
+Most importantly again we are exposing our appl using nginx ingress which provides a layer 7 LB, where rules can be defined & traffic is routed to backend 
+appl either a pathway routing or a host based routing
+so with the help of nginx ingress software have have been able to expose our appl to cx running in production
+  26. 50 thats an imp aspect u shud be able to explain, if thers a spike thats what you should be able to tell them 
+
+
+bootcamp dec26 2023 class33
 
  SETTING UP A CL8 USING KOPS 
    Walk me tru your kops kubernetes cluster setup
@@ -1280,8 +1341,33 @@ if the junior engr try to resolve  it and they cannot, the ticket is forwarded t
  If we have a pod , a node in our cl8 and at the point of deployment we realise that one of the nod in our cl8 is not up & running to receive appl
 what can be done to troubleshoot the situation
 
+ 
+
+bootcamp Jan2, 2024
+29.00
+ you spoke about k8 service discovery, helping pods to be discovered, what will permit a service created been unable to connect to the backend pod
+can that happen & if it happens what can be the causes/ is it possible that you create a service for an appl & the service is unable to perform Dns 
+resolution, unable to route traffic to the application, & if that happens what could be the problem & what could be the solution??
+
+1)  **selector & label error
+thank you again everyone am excicted to be in this interview panel
+everything kept constant, if w ecreate a service for a particular appl, for you to access the appl its accessed via the service
+so it gives us a kind of multi tier deployment & a multi tier deployment is a highly secured deployment 
+for the service to be able to control or mg8 a pod or  grp of pod then thers what is called in the service selector & in the pod we have label 
+the label for the pod must match the selector in the service otherwise the service wont be able to route traffic related to those backend pod
 
 
+33.20 
+ 2) node port diff from the container port ...   proff no its the container port & the target port
+so port 8080 matching with port 8080
+
+3) more coud be asked in k8, you could even be given a fresh k8 manifest file to look at & if thers any error you fix them & run them
+42.00
+4) Deploying an application with a wrong image namewhich requested in image pull error, bc am trying to pull an image that does not exists in our local 
+repository or in our image registory in dockerhub
+
+
+interview question bootcamp dec19
  MANAGING K8 CLUSTER AND EKS USING TERFRM                                 
 
 thank you so much mr steve, i hv managed several projects bt most recently, i was tasked to mg8 a k8 cluster and eks cl8 using terafrm
@@ -1342,7 +1428,6 @@ but if the images hv become vulnerable, so while that process is ongoing you may
 deployment & get the stuff fixed before you resume deployment.
 
 **** so we deploy appl weekly & the process is continous deployment because its connected to a jnekins job, k8 & jenkins integration
-
 
      YOUR EXPERIENCE IN TERFRM
 i just installed a k8 cl8 using terfrm script
