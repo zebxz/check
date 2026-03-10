@@ -42,3 +42,21 @@ We also have pod, have deploy using pod & have also deployed using static pod, h
 managers bc they are able to maintain the state of the appl whereas pod cannot achieve that bc with pod if the pod goes down it cant be recreated,
 completely dead & gone..so we dont use pod, we use other enhanced features in k8
 
+
+when we have an application and there is a spike what do we do ?
+how have you been able to mg8 a situation when thers a spike in terms of appl accessibility
+
+we need to scale or in our env we have configured what we call auto scaling, Hpa, that scales automatically
+so for that to function effective;y, we have also deployed a metrix server whcih is able to guage , check on our system at all times to ensure that we have 
+sufficient resources for the system to run effectively & if theres a spike our auto scaler eill be triggerred & more pod will be triggered to ensure that 
+the additional load load is been processed seamlessly with relative ease
+
+Again in some of our appl, we dont have HPA, so when theres a spike we simply do kubectl scale, with this command we can scale & add more replicas & once
+there are more pods , it will fix the problem of the spike
+
+
+
+
+
+
+
