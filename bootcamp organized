@@ -476,6 +476,64 @@ i equally mg8 elastic clod compute ec2, IAM , i grant and deny access
 it is worth noting at the moment am managing our aws services with the help of terrafrm which is very imp
 
 
+bootcamp Jan2, 2024
+How to migrate from an onprem infastructure to Aws
+There are diff aws services that is used for storing of data
+And migrating will neccesitate data been distributed such that data can be accessed with relative used
+1) one of the aws services we have used to migrate data is s3 bucket with this data can be moved/migrated bc we can just download all the files i the S3 bucket
+eg
+using the command AWs s3 cp , i can copy a file from my local server to an s3 remote bucket in Aws once the file is there, it becomes very easy for the file to be accessed
+there are many tools that we can use but have talked abt the most basic option to migrate data & that migration will take place using s3 BUCKET
+
+2)Also we cud use an ebs vol, we can create snapshot from the Ebs vol & use it to create new servers with such info which is very important bc if i have data already in my 
+database server & extract, i create a snapshot from that particular piece of vol, we can use that snapshot & copy whatever files into a new system completely, 
+that is data migration
+
+38;54 you can be given a ticket to migrate data form an onprem database to a cloud data base 
+
+ first we have to identify how much data has to be migrated, ie frm the on prem to the aws cloud 
+so the data shud be hosted by aws, if the data is running on my normal window server all i can do is i can create a new server in Aws, log in & copy the file from server1 to
+server2 and how can copy files from one serve to another 
+we can use the scp command files & 40.03, directors 
+
+40.10..
+there are other options that can be used that is more complexed like dedicated softwarefor just data migrated 
+but the basic ones are what we have just spoken about, just make sure you create a server with sufficient resources to receive the data
+and if the server is created in Aws We can use the Scp command to copy over
+41.07 and then while the data is in the bucket u can create a new server in Aws & restore the data from the bucket into the servevr
+if we expect it to run in the server, we can copy it again from whatever 
+ie to say 
+
+
+ CERTIFICATE mgt
+we were taught how to expose our appl via http, but how do we do that bc in the real world i dnt think we will be exposing appl via http
+i know its going to be https, so how do we do that if we are using kops & kubeadm??
+
+for us to be able to expose our appl using kops for example deploying a cl8 that runs in AWs, the adv is that kops comes with other Aws services including the load balancer & with 
+the loadbalancer that becomes our frontend address so if you have a  lb the only thing we do in our env is that we create hosted zones like app.com pointing
+ to that particular lb,so with the help of app.com, we can route traffic to the lb
+it is worth noting that here again that recently we are nt just doing app.com, there are lots of other parameters which is been considered when it comes
+to exposing app to endusers
+for this app to be exposed it needs to be secured so we use Tls certificate & in Aws there is a service called aws service certificate manager with the help
+of this certificate we hv been able to create tls certificate manager & we hv used the certificate to securely deploy our app using https in the place of 
+http so you can use Aws certificate manager to achive that option
+
+you can also use ingress with the help of ingress that also works
+
+ 
+50.16   DBA; Data base admninistrator
+in our team we have a DBA who basically is incharge of managing data base query
+but our main task has included deploying a database in k8 but now the internal functionality of the data base is managed by our DBA which is part of our 
+team 
+dnt go to the interview & want to answer everything, i knw you have done everything bc just been a devops engr is too much work, to add data base 
+administration
+
+ if you are asked data base question, say in my env i have been exposed to couple of data bases both relational & non relational SQL & non SQl data bases
+but most importantly our env is highly specialized & we have a DBA who is incharge of managing data base related ticket.
+
+
+                  CERTIFICATE mgt
+ 51.55  will share video on configuring tsl certificate from end to end 
 ****************************************************************************************************************
 
 
