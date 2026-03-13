@@ -266,6 +266,26 @@ you shud be able to walk the interviewer tru any tool
 
 
 
+BOOTCAMP January 3
+
+. TELL US A PROJECT U ARE PROUD OF .... do we do the run down from beginning to end 
+  proff, no u cant do the run down 
+The run down is the main project we are working on but within that project there are a lot of projects that can come out of it 
+WE are working in a team, we are 13 of us and we are developing, building, testing,&  deploying, web & enterprise java based applications 
+and once the app are deployed, we are equally tasked to ensure that they are running as expected  so we have to deployit & also deploy monitoring tools around it
+we have to ensure that the appl is secured, accessibility is very secured
+
+
+                            PROJECT BIG PICTURE/INFASTRUCTURE ENGR
+that is the big umbrella project where you can explain the entire morning devotion from when developers commit the code to when jenkins will pull, to when jenkins connect 
+with maven to do a build, to when sonarqube is running code quality still via jenkins connection, to when artifacts are built , that is a single project that you guys are 
+working on but within this project there are multiple moving parts that for eg Zino is incharge of provisioning the infrastructure so you are like the infastructure engr of
+the project so what is your job? you ensure you provision the jenkins server, the k8 cl8, you provision nexus & sonarqube 
+so in this project you are the guy incharge of infastruture
+
+
+
+
 *** boothcamp 33 1st video
 TO YOU WHAT IS DEVOPS ?? 
 ***************
@@ -535,11 +555,40 @@ but most importantly our env is highly specialized & we have a DBA who is inchar
 
                   CERTIFICATE mgt
  51.55  will share video on configuring tsl certificate from end to end 
+
+
+
+BOOTCAMP January 3
+  what happens when you type google.com
+  Student answer: 
+what happens when you type google.com, your computer has networkk interface so it will communictae with your isp, ie your internet service provider 
+your isp will try to locta ethe ip address of your google.com & while tyring to locate the ip addressor dns resolver, so dns resolver will try to look for your name on route 
+name server & if it cant find it there, it will try to find it on .com server which is tld is top level domain & if cant find it there it will try to look other areaas, mayb
+if u are hosting your website on whiz.com or route53 or go daddy.com, it will most likely find your ip address in there after which it sends a msg/traffic back to your 
+computer so once it sends the ip address back to your computer then in our env where we use Aws/lb, webserver, appservr, & database server
+so if u are using lb then it picks the traffic & redirects it to the ip address of your webserver probabaly in ur public subnet in your vpc so its going to send the traffic 
+bk to your ip address of your webserever once the traffic hits the webserver then it sends bk the content of whatever is in the server, whatever ur appl that is running in 
+the webserver it going to send that back to you, then thats why when you type google.com you are able to see google.com
+
+proff.. thats a good explaination
+i was goin to narrow that explanation to one of our k8 project where you just explain not considering other netwroking aspect as a computer catch and all of that but that
+respond, i think it cuts some of the things you guys can pay attention to . 
 ****************************************************************************************************************
 
 
 
                                                  GIT
+
+BOOTCAMP January 3
+
+    CREATING ROLES IN GITHUB
+54.30  can mg8 github from terfrm
+you can create teams, add members etc from terfrm
+
+
+1.01.30  There will be a time they will be asking for your github account to see how active it is
+
+
 
     Github interview 2022
 
@@ -995,6 +1044,8 @@ jar/war/ear , npm ie for node js applictaion, dockerimages
                                     SONARQUBE
 bootcamp dec26 2023 class33
 
+issue you encountered
+
            ( ROLL BACKS, due to no code quality software )
 we had a serious issue with one of our client where we managed a fintech appl, we kept having multiple rollbacks 
 we will deploy the appl but the client will call back informing us that smt was wrong, there were multiple rolbacks , i was tasked to invetsigate what was the problem bc 
@@ -1042,6 +1093,36 @@ that is your benchmark so in sonarqube server you have established your quality 
 mark.
 49.00 we arrive on this benchmark base on the nature of our appl
 we are managing crital apl for a fintech cleint, we cant afford to make any mistake, thats how we arrive at the benchmark
+
+
+BOOTCAMP January 3
+PROJECT YOU ARE PROUD OF
+
+ CODE QUALITY ANALYSIS
+WE have a particular client that we onboarded but for some reaso, i wasnt part of the onboarding of the client, we were deploying applications & we kept on having multiple
+rollbacks bc when thers no proper code quality this means means that you can deploy a bad code to production & what happens next is that your cx will complain 
+and they will ask for the previous version ie what they had before bc they dont like the new version & so you have to keep rolling back & thats not a good impression, the 
+client wont be happy with such situation
+so we had this problem & our main task was how do we keep our rollbacks at the barest minimun
+engr were asked to research on that, i came back days after and i recommended for a code quality tool to be introduced in the pipeline for the client and i specifically 
+requested that we should try to use Sonarqube
+So sonarqube will ensure that if we have bad quality software it is not deployed to production, it will prevent the deployment, sonarqube will give us a report that tells us 
+where ther are problems in the code & how to fix it before deploying the app to production, so that what we did with sonarqube such that when developers commit new version 
+of the code if there are problems they must get it fixed if not Sonarqube will reject it, thats how i introduced Sonarqube in my env
+and when i did that dvelopers were not happy with me & nick named me madam Sonarqube bc they had to keep going bk to their job until they got it right before it was deployed
+but after we ran that for about 90 days they were all happy because our cc was no longer complianing anymore
+you can also say bc of the project i was given the award of the month by the company and some incentive by the CTO as the most impactful employee of the month bc it saved a
+lot of money for the company bc our goodwill was no longer at stake of taking one step forward & 3steps behind.
+
+hightest level in IT the CTO 
+chief technical officer was so exicted & i recieved some incentive for the month
+
+43.30
+code duplication & code smell are not the same 
+code duplication could equally result in code smell ie bad coding , not writing a good software
+duplication in code is when u keep repeating stuff in the code & making the code so bulky &maintenance a serious problem
+eg a code that u can write with 500 line bt bc of duplication you write it with 900lines, that doesnt make any sense
+so you can always refer to what you wrote before by coding it as a function by importing the function 
 
 ******************************************************************************************************************************
 
@@ -1322,6 +1403,27 @@ what else do we hv for IAM apart from users,  we hv
 IAM = user/ roles/ groups/ policy           ****** so with the help of IAM, we can create an IAM user and attach the required policy that will permit kops to create all 
 of this and attach it to our kops server and once that happens we are able to deploy our kops cl8 with relatve use
 so we hv to create an iam suer , then attach the creadentials like the access code and secret access code to permit the resources to be created when we run kops create
+
+
+BOOTCAMP January 3
+PRoject am proud of
+
+     EKS PROJECT
+so if u are asked to talk about the project you are proud of,
+you can talk about the fact that when you joined the team, the team was using kubeadm as their k8 cl8
+they were deploying appl on a kubeadm cl8 & in one of our meetings we agreed that a new cl8 category should be craeted & used in the env
+and i quickly recommended that we use Amazon Eks,so i wastasked to provision a full Aws amazon EKS cl8 & that was the project
+and i decided to provision the cl8 using IAAC with terfrm so with one trfrm script, i could provison an entire EKS cl8 with all its component uisng tefrm modules & with the
+same module, i could destroy the cl8
+that is a project am proud of bc it has solved a lot of problems bc b4 now we used to spend a lot of time ensuring our cl8 is up & running
+but since we are now using Eks, we now spend our time focusing on managing the app because  Aws ENSURES THAT OUR CONTROL PLANE IS UP AND RUNNING AND FUNCTIONING TA all 
+times. as expected that is a project you can talk about
+so you acn talk abt how you were tasked to provison an Eks cl8 & you did that & the entire team is very exicted & happy bc it has helped to reusce the workload & issues
+
+bc when you create a self managed cl8 like kubeadm, u need to ensur ethat you are monitoring the cl8, you need to ensure that cl8 is functioning and runing at all time 
+which means u are spending more time on the cl8 than the time spent on the app
+but more time should be spent on managing the appl not checking if the cl8 is running or not
+thats one project you can talk about
 
 
 
@@ -1648,6 +1750,13 @@ with this you can save money, you wont spend too much money
 why bc if you just create 200 servers bc you anticipate to hv 2million users in the future, ypou will be paying for 2million severs when u dnt need them now
 
 
+
+BOOTCAMP January 3
+
+    CREATING ROLES IN GITHUB
+54.30  can mg8 github from terfrm
+you can create teams, add members etc from terfrm
+
 ****************************************************************************************************************
 
 
@@ -1655,6 +1764,18 @@ why bc if you just create 200 servers bc you anticipate to hv 2million users in 
 
                          ANSIBLE
 
+BOOTCAMP January 3
+
+  I USED ANSBLE /WROTE PLAY BOOK TO EASE CONFIGURATION MGT & TAKE AUTOMATION TO THE NEXT LEVEL
+YOu can also talk about how you are using ansible in your env
+
+in my env before i joined the team configuration mgt was done using script, command & all of that but when i joined the team, we held a meeting & our main meeting was how do 
+we automate our current task & make things easier.
+i quickly recommended that we should use ansible in our env so that we can easily configure servers, so that with ansible we can configure an entire host ,a fleet of about
+1000 serevrs at once rather than running bash shell script on individual servers, that wa sthe recommendation i gave and it has worked in my env such that 
+for eg, we have a task where we create new users in the env when they join the team, i wrote an ansible playbook & its been used by our systems admins & when they have any
+problem, i have now become the escalation point , they have to refer to me to ensure the problem is fixed
+thats a project you are proud of , how you used ansible to ease configuration mgt in your env & to take automation to the next level
 
 
 
