@@ -26,9 +26,28 @@ APPly for eg will provision or destroy resources & give you your desired infastr
 but for that to happen who ever is running those command needs to be authorized so in AWs
 we achieve that by using identity & access mgt
 we create users & share profiles to our diff infastructure engr bc we have diff engrs working together trying to mg8 all of this 
-since we have 3diff infastructure engrs in our env 
+since we have 3diff infastructure engrs in our env the mgt of our state file is very imp
 
-18.20
+18.20               state file mg8 in S3 bucket
+our state file is mg8 in s3 bucket so we hv a backend s3 bucket where our statefile is mge & in addition to that we also ensure that our infastructure is
+not broken so we lock our statefile so thats what trfrm is all abt and trefrm is a very powerfrul tool because it can be easily integrated with the version
+control tool like github, we upload our trfrm module into github such that if you want to deploy a particular infastructure, u can get into github, bring in 
+the terfrm files, modify it & with the help of some few trfrm command we are able to provision resources as desired
+
+its also imp to note that since we work in a very dynamic env, we have infastructures that were not created by trfrm but since we are heavy with iaac,we
+wantto ensure that terfrm is incharge of managing our infastructure so we ensure that all infastructure is put under the mgt of trfrm becasue with that we
+can rely on our infastructure, at a glance we can know what is happening, so we are constantly running trfrm import so that it can come under trfrm's mgt
+and if we need to destroy a parrticular resource in our env, there is one the command trfrm dstroy, but trfrm destroy will destroy the entire resource in
+our env, so instaed of running that, we can run trfrm destroy & pass a tag to identify the particular resource we want to destry (flag dash dash) or by 
+21;00 putting a comment on a particular terfrm resource file to destroy the file
+
+so i have a lot of experirnce in trfrm when it comes to deploying diff infastructure in Aws 
+
+
+
+
+
+
 
 
 
