@@ -51,6 +51,74 @@ and at the end they will know that you are good.
 
 
 
+     KUBERNETES
+23.15  
+
+  Thank you again so much k8 is a very imp tool in my env , in our project bc commonly we say everything ends in k8 because our our application, we mg8
+containerized web and enterprise appl for clients & these clients are mostly fintech & those appl are running in k8 cl8
+1) why choose k8?
+its because of the way its architected, the architecture of k8, it permits us to have a deployment env where we have multiple servers running & each 
+communicating with ecah other , therfrore k8 comes with what is called the worker node & the master node
+the master node is the control plane that comes with the api server , the Api server is the main adminstrative point of the cl8, whatsoever you want to do 
+in the cl8 it must go through the api server, its the one that recieves the request, as a master of fact we commonly say, if you amke an Api call into your
+cl8, that Api call is received & processed by the Api server which ensures that the caller is authorized & authenticated & this goes through the kubeconfig
+file , thats the function of the Api server,so when the Api server receives the info, mayb the call is to deploy some pod/containers in the cl8, so when 
+it receives the info, it has to persist the data, so it staores the data in etcd, so inside the control plane, we have the etcd, its the key value store, 
+it acts as a data base of our cl8, the info is stored in etcd, 
+
+the next thing is that inside the master node, theres the scheduler, it will schedule the pod to be created on worker node & the scheduling will be done 
+based on how much resources is available on the worker node  eg in our env, we hv a cl8 that runs with 111 worker nodes..
+so the scheduler will automatically with the speed of light identify the node that has sufficient resources to schedule the specific pod or if we are 
+using some constrain, like node selector, node affinity, pd affinity, so if there are constrains, these will be considered before scheduling the pods
+
+  SELF HEALING
+Apart from the scheduler, the control plane also comes will controller managers
+k8 has the feature of self healing capabilities which means that if application fails, if your container fails, if a pod fails k8 can automatically recreate
+the pod, we call that feature self healing capabilities and that happens because the controller manager comes with that feature to permit k8 to achieve that
+end to end process & dont forget k8 is a container ochestrater, used to ochestrate containers, to mg8 containers, to deploy, to scale conatiners to ensure 
+they are running & healthy that is k8 interms of its architecture.
+
+we equally have the worker node & this comes with 
+1) the kublet which is the pry node agent, this is incahrge of running the task in the worker node
+2)the kube proxy, incharge of networking inside the cl8
+3) container runtime, because k8 is ochestrating containerized appl which means that it will get images, it pulls, it creates & starts containers
+so that is what k8 is all about, so that is the architecture of the cl8
+
+
+                   installing EKS/ self manged k8 cluster 
+    so my experience as far as clustering is concerned, i have been able to install self managed cl8 using softwares like kubeadm, i have equally installed 
+and setup clusters using kobs and using amazon EKS & after thia cl8 is setup have been able to deploy applications in clusters
+and while deployment is taking place there is what we call k8 objects, 
+objects like pod, replica sets, replication controllers, daemon set, deployment, stateful set, config maps, secret, volumes, persistent vol, persistent vol 
+claim, storage classes among others 
+so these are the objects that we use to deploy application in k8
+
+
+                                
+once the applications are deployed & they are running the intention of deploying application is for an enduser to be able to access the application
+so for eg, if your name is James, the reason you were born & given the name james is bc if they call James you should be able to answer who is calling me 
+so similarly these applications are running they are containerized application, some of them are supporting banks, banks have millions of customers, they 
+have to access these applications, somebody has a bank account & wants to access the account, the account is hosted on the k8 cl8, its running, so how does
+she accesss the account, so in k8, since we can have multiple replicas of a pod running, we use what we call service discovery & that is why one of the 
+features of k8 is what is called load balancing, the load can be easily balanced via service discovery & how does it work
+
+there are diff type of services that k8 support, the default service type is called clusterip that permit diff application to talk to each other internally 
+within the cl8, so if there are 2pods that need to communicate eg application pod needs to talk to a database base pod, the comm is est through service 
+discovery, so with the help of one service name, we can have a set of pod answering that service name, so eg i have my webapp with 10 pod, so what happens 
+is i create one service for my webapp, it measn that webapp service has an endpoint or endpoints 
+
+
+                            endpoints
+in this case if there are 10 pods the endpoints becomes 10, so the webapp has 10 pods that if you want to acces the webapp, the service will loadbalancing
+traffic thats why we say that k8 has a loadbalancing capability or feature that is k8
+remember that under normal circumtances, when we were deploying monolithic, we had to use a loadbalancer to route traffic but k8 comes with loadbalancing
+inherent in it as part of its feature so it solves a big problem of bringing a webserver & behind the webserver is a fleet of appservers & that is why 
+it is one of the most powerful appl deployment tool today 
+
+so my experience include 
+
+
+
 
 
 
