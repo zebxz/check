@@ -122,7 +122,30 @@ we equally have external name service
 
 its also important for me to mention here that i ahve been able to deploy both stateful appl & stateless appl 
 and when we deploy stateless appl, it is deployed from code that our developers are working on so we have a team developers when they commit a new version 
-of the application the application is deployed but most of this needs to talk to a database to persist the data 
+of the application the application it is deployed but most of this stateless appl needs to talk to a database to persist the data 
+so we are deploying both yhe appl & a database alongside, the database is been deployed as a stateful appl whereas our own legacy appl is deployed as 
+stateless
+
+In our env our choice obj to deploy stateless appl is deployment bc deployment supports rollout, rollback, we can pause, we can review & deployment comes
+with diff deployment strategies like recreate rollling update
+and we can equally use deployment techniques like blue green, carnary
+that is our choice option when it comes to deploying appl in k8, that is the obj that we are using
+
+we deploy both monolithic & microservices
+again when it comes to our stateful applications we can deploy them using staeful set or at times we use replica sets but when we use replica set we deploy 
+it along side persistent vol, so we have a persistent vol so that our data can persist 
+so persist vol is used as part of the deploymeny
+
+
+      Third party application we deploy & supported 
+it is imp for me to also make mention here that in my env i have nt only deployed custom app ,we also deploy applications that are 3rd party 
+eg Promethus & grafana, we are not the one developing but we can use it to monitor the rest of the cl8, we can use promethus & grafana to monitor our appl
+perfromance, that is a third party appl, where we are deploying a group of microservices, this microservices they are tasked to perform diff task in the cl8
+we have equally deployed a 3rd party appl like ngnix ingress, 
+we have equally deployed a 3rd party appl like Elastic search fibri & 
+
+
+
 
 
 
