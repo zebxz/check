@@ -435,5 +435,14 @@ we have 10million user who wants to access the application & yes they can
 
 
             FOR TRAFFIC TO ACCESS THE K8 CLUSTER
+In our env we ensure traffic flows by using a load balancer;ingress
+inside my public subnet we create ELB, Elastic load balancers or in my vpc we have an elastic load balancer 
+so this ELB is able to help route traffic
+sO we create one more resource in AWs, its a global resource; route53, 
+so we create route53 for DNS; domain name
 
-
+In the route53, we create some Arecord, so our loadbalncer url
+lets assume we have a complicated loadbalancer url like kkufhr8hr0ii400j
+but we cant give that to endusers , so we create Arecord 
+eg instead of this url;  kkufhr8hr0ii400j, use use web.app.com
+so we give our endusers the host name we created:web.app.com
