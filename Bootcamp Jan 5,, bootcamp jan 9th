@@ -304,3 +304,18 @@ if they ask you stuff you can say i may have forgetten its been long since i dea
 they see you as a sincere person
 becasue you are an engr but as good as you are you are not expected to know everything
 
+
+What is the difference between using helm chart and manifest?
+
+everything in k8 is all about manifest files 
+a manifestfile is simply like a k8 declarative file that has defined a set of resource that will be created in k8 
+eg you want to create pod, or name space , you write a manifest file to achieve that 
+the diff with helm is that helm has a rendering machine that will create the entire manifest file template for you
+so when you do helm create the entire manifest file to deploy an end to end appl is rendering
+helm rendering machine is going to render the file such that all you need to do is just to change specific lines like the image name 
+the image version, the container pod, the service type, very simple things are now been modified using helm
+helm equally has chart, so the same way we have k8 manifest file, source code repository like github, we also have helm chart 
+there are helm chart to deploy so many 3rd party applications
+helm is a package manager, when you do helm create all your manifest file to deploy eg we want to deploy springapp 
+helm craete springapp, it will craete all the manifest file in a nice dir structure and all you ahve to do is just change a few lines
+thats what helm does for you
