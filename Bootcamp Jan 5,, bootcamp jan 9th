@@ -369,6 +369,8 @@ lets go through the interview when we are done we can tail about the salary
 Asking about Farget not configured in K8
 
 
+
+                                     EKS 
 first create a Vpc
 launch the cluster in the vpc 
 the vpc has public subnet (publicSN1 & publicSN2)
@@ -383,7 +385,7 @@ Once we have our cluster   *** i bliv all the nodes makes up the cluster
 
 3&4 PublicSN1, We create webapp1  & PublicSN2, We create webapp2
 
-5&6 PrivateSN1, We create webapp1 & PrivateSN2, We create webapp2
+5&6 PrivateSN1, We create dbapp1 & PrivateSN2, We create dbapp2
 in total we created 6nodes
 
 9.38
@@ -392,6 +394,15 @@ we dnt have any control over the control plane
 
 
             HOW TO CONTROL MY CLUSTER 
+INside my vpc , maybe inside the PublicSN2, il create a k8 control node, this is not part of my cluster 
+or i can call it task node & once i ssh into the node am able to run tasks
+frm my env,  i ssh into the node am able to run tasks and my interest is to run/excute workload in k8
+the task node must have kubectl installed ie the command line utility ,so we can make some calls, we can execute task in the cluster
+eg i want to deploy an application : kubetlc apply -f db-deplloy.yml
+lest assume its is deploying a db application & we are using some constraints 
+in the manifest file we are using maybe node afinity or node selector
+so using the node selector we are saying
+labels:
+app dbNode
 
-
-
+therefor the scheduler will schedule one db app on each of the dbNode 
