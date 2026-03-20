@@ -996,6 +996,41 @@ continous deployment
 continous monitoring and continous security because security goes with monitoring
 
 
+
+Bootcamp Jan 5
+
+ 53.40  .. you read the job description and make your story
+
+55. 30  transform and accelerate our software delivery pipelines 
+  is it possible to accelerate it?
+
+yes, it all depends on the triggers not just triggers but triggers is one of the ways to reduce the lead time 
+the time that it takes for your pipeline line to run from end to end 
+what triggers the job for eg you want to look at the 
+eg  github web hook is faster than pull scm to trigger a job so you realize that your choice of build trigger will have an impact
+even your choice of plugging, you could have a task that could be supported than more than one plugging 
+you will have a task eg you wnat deploy to tomcat ,how do you deploy to tomcat?
+we are simply copying the war files in the webapp dir, how do i copy the file?
+you could use the scp command, now the scp command will impliy that which pluggin do we need for scp, we need mayb an ssh pluggin, we can also use 
+publish over ssh, that can work, now it has beeen proven that the fastest plugging or the pluggin that will achieve the task almost at the fastest speed 
+is deploy to container bc that plugging is tailored to achieve only that task
+ssh pluggin supports so many things that got to do ssh but deploy to container that is the sole task of the pluggin 
+which means that so many child processes that run in the background will not be there if you are using deploying to deploy but ssh pluggin will have a lot
+of proccesses running including the one that you want to realise
+
+so you can improve your pipeline by making use of better pluggin
+so you could tell them in the interview that when i came to my team they were deploying monolithic appl or application that were architected through our
+pipeline & the those deployment were taking place in tomcat, now the pluggin that was been used to achieve that deployment was an ssh agent plugging on
+the pipeline & scp command was used to copy the files into webapp dir in tomcat but i realised that that process was taking more them so i quickly reviwed
+and that svaed some minutes in the deployment phase as far as the panel is concerned 
+so that is a contribution i brought to the team , choice of pluggin, choice of build trigger  and even how the build trigger is configured
+if i configure pull scm that checks if there are changes in the code ever yminute comapred to everyday, to to achieve a faster solution
+so even the way its configured will have an impact 
+and you are the devops engr, you are the sme. the subject matter expert.. 
+you may not even be the one to actually get the job done but you know what should be done so you can direct others to get the job the done so you are 
+observing & monitoring
+
+
 ****************************************************************************************************************************************
 
 
@@ -1368,6 +1403,115 @@ so with the help of nginx ingress software have have been able to expose our app
   26. 50 thats an imp aspect u shud be able to explain, if thers a spike thats what you should be able to tell them 
 
 
+
+Bootcamp Jan 5
+if you were asked to talk about k8 as a standalone entity that could be an entire interview, you could lecture them for 1hr
+and at the end they will know that you are good.
+
+     KUBERNETES
+23.15  
+
+  Thank you again so much k8 is a very imp tool in my env , in our project bc commonly we say everything ends in k8 because our our application, we mg8
+containerized web and enterprise appl for clients & these clients are mostly fintech & those appl are running in k8 cl8
+1) why choose k8?
+its because of the way its architected, the architecture of k8, it permits us to have a deployment env where we have multiple servers running & each 
+communicating with ecah other , therfrore k8 comes with what is called the worker node & the master node
+the master node is the control plane that comes with the api server , the Api server is the main adminstrative point of the cl8, whatsoever you want to do 
+in the cl8 it must go through the api server, its the one that recieves the request, as a master of fact we commonly say, if you amke an Api call into your
+cl8, that Api call is received & processed by the Api server which ensures that the caller is authorized & authenticated & this goes through the kubeconfig
+file , thats the function of the Api server,so when the Api server receives the info, mayb the call is to deploy some pod/containers in the cl8, so when 
+it receives the info, it has to persist the data, so it staores the data in etcd, so inside the control plane, we have the etcd, its the key value store, 
+it acts as a data base of our cl8, the info is stored in etcd, 
+
+the next thing is that inside the master node, theres the scheduler, it will schedule the pod to be created on worker node & the scheduling will be done 
+based on how much resources is available on the worker node  eg in our env, we hv a cl8 that runs with 111 worker nodes..
+so the scheduler will automatically with the speed of light identify the node that has sufficient resources to schedule the specific pod or if we are 
+using some constrain, like node selector, node affinity, pd affinity, so if there are constrains, these will be considered before scheduling the pods
+
+  SELF HEALING
+Apart from the scheduler, the control plane also comes will controller managers
+k8 has the feature of self healing capabilities which means that if application fails, if your container fails, if a pod fails k8 can automatically recreate
+the pod, we call that feature self healing capabilities and that happens because the controller manager comes with that feature to permit k8 to achieve that
+end to end process & dont forget k8 is a container ochestrater, used to ochestrate containers, to mg8 containers, to deploy, to scale conatiners to ensure 
+they are running & healthy that is k8 interms of its architecture.
+
+we equally have the worker node & this comes with 
+1) the kublet which is the pry node agent, this is incahrge of running the task in the worker node
+2)the kube proxy, incharge of networking inside the cl8
+3) container runtime, because k8 is ochestrating containerized appl which means that it will get images, it pulls, it creates & starts containers
+so that is what k8 is all about, so that is the architecture of the cl8
+
+
+                   installing EKS/ self manged k8 cluster  & deployment objects 
+    so my experience as far as clustering is concerned, i have been able to install self managed cl8 using softwares like kubeadm, i have equally installed 
+and setup clusters using kobs and using amazon EKS & after thia cl8 is setup have been able to deploy applications in clusters
+and while deployment is taking place there is what we call k8 objects, 
+objects like pod, replica sets, replication controllers, daemon set, deployment, stateful set, config maps, secret, volumes, persistent vol, persistent vol 
+claim, storage classes among others 
+so these are the objects that we use to deploy application in k8
+
+
+                                    service types
+once the applications are deployed & they are running the intention of deploying application is for an enduser to be able to access the application
+so for eg, if your name is James, the reason you were born & given the name james is bc if they call James you should be able to answer who is calling me 
+so similarly these applications are running they are containerized application, some of them are supporting banks, banks have millions of customers, they 
+have to access these applications, somebody has a bank account & wants to access the account, the account is hosted on the k8 cl8, its running, so how does
+she accesss the account, so in k8, since we can have multiple replicas of a pod running, we use what we call service discovery & that is why one of the 
+features of k8 is what is called load balancing, the load can be easily balanced via service discovery & how does it work
+
+there are diff type of services that k8 support, the default service type is called clusterip that permit diff application to talk to each other internally 
+within the cl8, so if there are 2pods that need to communicate eg application pod needs to talk to a database base pod, the comm is est through service 
+discovery, so with the help of one service name, we can have a set of pod answering that service name, so eg i have my webapp with 10 pod, so what happens 
+is i create one service for my webapp, it measn that webapp service has an endpoint or endpoints 
+
+
+                            endpoints
+in this case if there are 10 pods the endpoints becomes 10, so the webapp has 10 pods that if you want to acces the webapp, the service will loadbalancing
+traffic thats why we say that k8 has a loadbalancing capability or feature that is k8
+remember that under normal circumtances, when we were deploying monolithic, we had to use a loadbalancer to route traffic but k8 comes with loadbalancing
+inherent in it as part of its feature so it solves a big problem of bringing a webserver & behind the webserver is a fleet of appservers & that is why 
+it is one of the most powerful appl deployment tool today 
+
+so my experience include using diff kinds of service dicovery in k8 which inslude clusterip, nodeport, loadbalncer& ingress
+with the help of ingress we have been able to expose our application
+we equally have external name service 
+
+
+its also important for me to mention here that i ahve been able to deploy both stateful appl & stateless appl 
+and when we deploy stateless appl, it is deployed from code that our developers are working on so we have a team developers when they commit a new version 
+of the application the application it is deployed but most of this stateless appl needs to talk to a database to persist the data 
+so we are deploying both yhe appl & a database alongside, the database is been deployed as a stateful appl whereas our own legacy appl is deployed as 
+stateless
+
+In our env our choice obj to deploy stateless appl is deployment bc deployment supports rollout, rollback, we can pause, we can review & deployment comes
+with diff deployment strategies like recreate rollling update
+and we can equally use deployment techniques like blue green, carnary
+that is our choice option when it comes to deploying appl in k8, that is the obj that we are using
+
+we deploy both monolithic & microservices
+again when it comes to our stateful applications we can deploy them using staeful set or at times we use replica sets but when we use replica set we deploy 
+it along side persistent vol, so we have a persistent vol so that our data can persist 
+so persist vol is used as part of the deploymeny
+
+
+      Third party application we deploy & supported 
+it is imp for me to also make mention here that in my env i have nt only deployed custom app ,we also deploy applications that are 3rd party 
+eg Promethus & grafana, we are not the one developing but we can use it to monitor the rest of the cl8, we can use promethus & grafana to monitor our appl
+perfromance, that is a third party appl, where we are deploying a group of microservices, this microservices they are tasked to perform diff task in the cl8
+we have equally deployed a 3rd party appl like ngnix ingress, 
+we have equally deployed a 3rd party appl like Elastic search filebeat & kibana
+and the good thing with all of this is that k8 comes with a package manager which makes the deployment in k8 simplified & the package manager is helm.
+if you look at it we have touched most of the things that we should discuss about k8 & by the time that is done it becomes a simplitic discussion
+
+ so now the question you ask them bc you dwell a lot on Ci/cd  which is very good but why i have to go out of this is that there may be time you have to 
+dwell on diff specific areas, you should be able to have an end to end conversation with them on that area & be very relaxed.
+
+you could equally like as a devops engr there were times that you were part of policy, part of decision making, you guys had to decide on stuff, which tool 
+to use  
+
+
+
+
 bootcamp dec26 2023 class33
 
  SETTING UP A CL8 USING KOPS 
@@ -1528,6 +1672,22 @@ so port 8080 matching with port 8080
 repository or in our image registory in dockerhub
 
 
+Bootcamp Jan 5
+How would you troubleshoot a node that is not joining the node group after EKS setup?
+
+   doesnt look like a problem we have faced in our env, 
+we have faced a problem where the entire node group did not/ has not yet joinned the EKS cluster
+
+you are answering the question as an engr, 
+An engr is someone who has been doing work fixing things that are bad and you have experience when it comes to that 
+so you are answering the question from a place of what you have done, what you have fixed so that if it does not tally you can letthem know that i have not
+had this problem before 
+if they ask you stuff you can say i may have forgetten its been long since i dealt with that i cant remmeber quite a few stuff in that regard
+they see you as a sincere person
+becasue you are an engr but as good as you are you are not expected to know everything
+
+
+
 interview question bootcamp dec19                             PROJECT I HAVE MANAGED
  MANAGING K8 CLUSTER AND EKS USING TERFRM                                 
 
@@ -1636,6 +1796,245 @@ so kops & eks is competing but eks got more funtionality than kops
 ***************************************************************************************
 
 
+Bootcamp Jan 5
+ terfrm project 
+proff said trfrm is high level high level 
+then you need to be able to explain the terfrm workflow
+In our wenv use trfmr to provsion resources  & currently our cloud of choice is Aws 
+talking abt terfm its a tool that we hv implemented & it now runs in prod in our env for over 3yrs now,
+it has the capacity to be able to help us to use the same set of trefm modules since tefrm is a kind of a multi cloud solution or what is called cloud agnostic
+so we can use trfm acress multiple providers like AWs azure, GCp among others
+the good thing abt trfrm which we are using in our env most importantly is the fact that tfrm brings infastructure as a code to light
+and what that mean is that we have our infastructure such that at any point in time we can know for sure how much infastructure we have running, in a glane you can just check
+the tfrm state file & thats what makes trfem so powerful because it comes with a trfrm state file, with the help of state file that captures everything al the resources that
+trfm is managing
+also with trfrm w ehave the workflow, whereby you have ot initialize a trfrm local work dir & by doing that we download the REQ provider pluggins so by the time you run
+trfrm init that is going to happen 
+and we make use of trfrm moduels, in our env we modules to achieve all virtually almost all of our provisioning task 
+eg to create a jenkins server, k8 cluster, to deploy EKS, & we can use the same modules across diff envs just by changing the variables 
+so we can use the same module to deploy infastructure in dev env, stage env & in prod
+Ans with the help of simple tfrm commands like trfrm format or trfm validate we are going to be able to ascertain if our tfrm file structure has been well written 
+if there are any issues tfrm validate indictates theres an issues on the particular file then i can go there & corect it thats validate & revalidate
+thers trfrm format that will reorganize the trfrm file structure in the best way that our resources can be easily provisioned
+thers trfrm plan which gives us an execution plan like wahat resources are we going to create or destroy or how many is been added or removed or modified
+so tfrm plan gives you the exact picture of what will happen then u can audit the plan is this what we really want , so yes this is our desired/expected outcome
+frm then we then need to apply
+APPly for eg will provision or destroy resources & give you your desired infastructured state thats is tfrm
+but for that to happen who ever is running those command needs to be authorized so in AWs
+we achieve that by using identity & access mgt
+we create users & share profiles to our diff infastructure engr bc we have diff engrs working together trying to mg8 all of this 
+since we have 3diff infastructure engrs in our env the mgt of our state file is very imp
+
+
+18.20               state file mg8 in S3 bucket
+our state file is mg8 in s3 bucket so we hv a backend s3 bucket where our statefile is mge & in addition to that we also ensure that our infastructure is
+not broken so we lock our statefile so thats what trfrm is all abt and trefrm is a very powerfrul tool because it can be easily integrated with the version
+control tool like github, we upload our trfrm module into github such that if you want to deploy a particular infastructure, u can get into github, bring in 
+the terfrm files, modify it & with the help of some few trfrm command we are able to provision resources as desired
+
+its also imp to note that since we work in a very dynamic env, we have infastructures that were not created by trfrm but since we are heavy with iaac,we
+wantto ensure that terfrm is incharge of managing our infastructure so we ensure that all infastructure is put under the mgt of trfrm becasue with that we
+can rely on our infastructure, at a glance we can know what is happening, so we are constantly running trfrm import so that it can come under trfrm's mgt
+and if we need to destroy a parrticular resource in our env, there is one the command trfrm dstroy, but trfrm destroy will destroy the entire resource in
+our env, so instaed of running that, we can run trfrm destroy & pass a tag to identify the particular resource we want to destry (flag dash dash) or by 
+21;00 putting a comment on a particular terfrm resource file to destroy the file
+
+so i have a lot of experirnce in trfrm when it comes to deploying diff infastructure in Aws 
+
+
+
+Bootcamp Jan 5
+  etcd/S3 bucket 
+Have you ever back up or export etcd file?
+when we used kops, our etcd was exported into an s3 bucket
+when we deployed with kops, we created an s3 bucket, if you go to that S3 bucket 
+i think i destroyed the cluster, when you destroy the cluster evrything is destroyed 
+
+ok see this kops cluster we created, if i cick on the cl8 most of the content as a matter of fact the content of etcd was exported to S3 bucket
+
+
+    So can we do that for EKS 
+ofcourse becasue when you use Eks as well for us to add an s3 busket & export our etcd is very easy, same process
+am going to configure an eks so that next class again we can look at it carefully.
+
+
+ what is a large project??
+if a project is very large, k8 project which is very large,  you may have a cl8 with a good number of nodes & the node that you have in your cl8, they 
+could have capacity to support that project
+mayb we have a cl with 14 worker nodes, thats a big project
+now this 14 node cl8, what is part of the node?, what is the node capacity interms of node sizes 
+in terms of cpu, interms of the ebs vol size, in terms of the instance type
+this instance type is whatis going to detr the memory bc memory is a function of the instance type 
+memory the Ram depends on the instance type and even the instance type cpu, this can equally be affected
+eg it comes
+14nodes:
+vcpu 
+the the ebs 
+
+for eg if you want to buy a computer , you can say my computer has one core ,central processing unit 
+we can have 
+cpu cores -- /1/2/4/8/16
+
+
+1.17.00    launching instance in AwS 
+Instace type      vcpus          Architecture     memory      storage
+T2 SMALL             1
+c5ad.xlarge          4
+c5ad. 16xlarge       64                                        2400
+
+
+so if you are managing large project your instance types will be the type that can support your application at ultra low latency
+something like this : c5ad. 16xlarge
+so the minimum ebs vol you can attach to it is 2400gb & it must be SSD not HDD
+
+so if you are are managing a project that has 14 nodes & these are the nodes capacity, that will tell you that this is a serious project running in 
+production, very important
+so its like it can be preocesssing about 64 transactions concurrently, nothing will happen 
+and 1vcpus maybe able to run about 128 transactions so which means that it will be 64 times 128
+beause you have millions of customers but again how many instances do we have in the  cluster? we have 14 instances
+
+because you cannot be telling them in the interview about t2 medium ot t2 micro, those were for practice 
+
+
+1.21.20  student   when i was reading, when talking about large projects, we were almost talking abt using up to 5control planes & moving the head cd to 
+another server, storing them,........ for a very big project
+
+
+proffff      what do you mean by using 5control planes 
+are you like saying you have 5diff clusters bc each cluster has a control plane 
+the control plane may have more than one master node thats a diff thing 
+
+so if you are saying in my env we are managing, we have 3 env each of them has seperate clusters 
+we have a cluster for dev env, test env, uat env & for prod 
+which means you have 4 diff clusters 
+
+Or you could even say that for prod we have 3 diff clusters running, we have 3clusters that are running in production
+
+but then again k8 can scale 
+if you are running on a managed cl8, you are almost sure that your master node cannot fail like AwS eks
+so your control plane is available at all time, so you can play around the worker node, you can increase
+
+what is the max number of worker node that one cl8 can have 
+
+did we look at large k8 cluster resource quota
+lets check online 
+
+1.23.50     kubernetes official website 
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+
+A cluster is a set of nodes (physical or virtual machines) running Kubernetes agents, managed by the control plane. Kubernetes v1.35 supports clusters with up to 5,000 nodes. More specifically, Kubernetes is designed to accommodate configurations that meet all of the following criteria:
+
+No more than 110 pods per node
+No more than 5,000 nodes
+No more than 150,000 total pods
+No more than 300,000 total containers
+You can scale your cluster by adding or removing nodes. The way you do this depends on how your cluster is deployed.
+
+
+
+1.36.00   How would you troubleshoot a node that is not joining the node group after EKS setup?
+
+   doesnt look like a problem we have faced in our env, 
+we have faced a problem where the entire node group did not/ has not yet joinned the EKS cluster
+
+you are answering the question as an engr, 
+An engr is someone who has been doing work fixing things that are bad and you have experience when it comes to that 
+so you are answering the question from a place of what you have done, what you have fixed so that if it does not tally you can letthem know that i have not
+had this problem before 
+if they ask you stuff you can say i may have forgetten its been long since i dealt with that i cant remmeber quite a few stuff in that regard
+they see you as a sincere person
+becasue you are an engr but as good as you are you are not expected to know everything
+
+
+Bootcamp Jan 5
+ what is a large project
+if a project is very large, k8 project which is very large,  you may have a cl8 with a good number of nodes & the node that you have in your cl8, they 
+could have capacity to support that project
+mayb we have a cl with 14 worker nodes, thats a big project
+now this 14 node cl8, what is part of the node?, what is the node capacity interms of node sizes 
+in terms of cpu, interms of the ebs vol size, in terms of the instance type
+this instance type is whatis going to detr the memory bc memory is a function of the instance type 
+memory the Ram depends on the instance type and even the instance type cpu, this can equally be affected
+eg it comes
+14nodes:
+vcpu 
+the the ebs 
+
+for eg if you want to buy a computer , you can say my computer has one core ,central processing unit 
+we can have 
+cpu cores -- /1/2/4/8/16
+
+
+1.17.00    launching instance in AwS 
+Instace type      vcpus          Architecture     memory      storage
+T2 SMALL             1
+c5ad.xlarge          4
+c5ad. 16xlarge       64                                        2400
+
+
+so if you are managing large project your instance types will be the type that can support your application at ultra low latency
+something like this : c5ad. 16xlarge
+so the minimum ebs vol you can attach to it is 2400gb & it must be SSD not HDD
+
+so if you are are managing a project that has 14 nodes & these are the nodes capacity, that will tell you that this is a serious project running in 
+production, very important
+so its like it can be preocesssing about 64 transactions concurrently, nothing will happen 
+and 1vcpus maybe able to run about 128 transactions so which means that it will be 64 times 128
+beause you have millions of customers but again how many instances do we have in the  cluster? we have 14 instances
+
+because you cannot be telling them in the interview about t2 medium ot t2 micro, those were for practice 
+
+
+1.21.20  student   when i was reading, when talking about large projects, we were almost talking abt using up to 5control planes & moving the head cd to 
+another server, storing them,........ for a very big project
+
+
+proffff      what do you mean by using 5control planes 
+are you like saying you have 5diff clusters bc each cluster has a control plane 
+the control plane may have more than one master node thats a diff thing 
+
+so if you are saying in my env we are managing, we have 3 env each of them has seperate clusters 
+we have a cluster for dev env, test env, uat env & for prod 
+which means you have 4 diff clusters 
+
+Or you could even say that for prod we have 3 diff clusters running, we have 3clusters that are running in production
+
+but then again k8 can scale 
+if you are running on a managed cl8, you are almost sure that your master node cannot fail like AwS eks
+so your control plane is available at all time, so you can play around the worker node, you can increase
+
+what is the max number of worker node that one cl8 can have 
+
+did we look at large k8 cluster resource quota
+lets check online 
+
+1.23.50     kubernetes official website 
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+
+A cluster is a set of nodes (physical or virtual machines) running Kubernetes agents, managed by the control plane. Kubernetes v1.35 supports clusters with up to 5,000 nodes. More specifically, Kubernetes is designed to accommodate configurations that meet all of the following criteria:
+
+No more than 110 pods per node
+No more than 5,000 nodes
+No more than 150,000 total pods
+No more than 300,000 total containers
+You can scale your cluster by adding or removing nodes. The way you do this depends on how your cluster is deployed.
+
+
+
+1.36.00   How would you troubleshoot a node that is not joining the node group after EKS setup?
+
+   doesnt look like a problem we have faced in our env, 
+we have faced a problem where the entire node group did not/ has not yet joinned the EKS cluster
+
+you are answering the question as an engr, 
+An engr is someone who has been doing work fixing things that are bad and you have experience when it comes to that 
+so you are answering the question from a place of what you have done, what you have fixed so that if it does not tally you can letthem know that i have not
+had this problem before 
+if they ask you stuff you can say i may have forgetten its been long since i dealt with that i cant remmeber quite a few stuff in that regard
+they see you as a sincere person
+becasue you are an engr but as good as you are you are not expected to know everything
+
+*****************************************************************************************************************************
 
 
 
@@ -1816,10 +2215,42 @@ We are using elastic stack, which is elastic search fibric & kubana & we are dep
 we are able to know how our appl behave with ease because we are using such a tool.
 
 
+Bootcamp Jan 5
 
+   Third party application we deploy & supported 
+
+it is imp for me to also make mention here that in my env i have nt only deployed custom app ,we also deploy applications that are 3rd party 
+eg Promethus & grafana, we are not the one developing but we can use it to monitor the rest of the cl8, we can use promethus & grafana to monitor our appl
+perfromance, that is a third party appl, where we are deploying a group of microservices, this microservices they are tasked to perform diff task in the cl8
+we have equally deployed a 3rd party appl like ngnix ingress, 
+we have equally deployed a 3rd party appl like Elastic search filebeat & kibana
+and the good thing with all of this is that k8 comes with a package manager which makes the deployment in k8 simplified & the package manager is helm.
+if you look at it we have touched most of the things that we should discuss about k8 & by the time that is done it becomes a simplitic discussion
 
 
 **********************************************************************************
+
+
+Helm chart
+
+What is the difference between using helm chart and manifest?
+
+everything in k8 is all about manifest files 
+a manifestfile is simply like a k8 declarative file that has defined a set of resource that will be created in k8 
+eg you want to create pod, or name space , you write a manifest file to achieve that 
+the diff with helm is that helm has a rendering machine that will create the entire manifest file template for you
+so when you do helm create the entire manifest file to deploy an end to end appl is rendering
+helm rendering machine is going to render the file such that all you need to do is just to change specific lines like the image name 
+the image version, the container pod, the service type, very simple things are now been modified using helm
+helm equally has chart, so the same way we have k8 manifest file, source code repository like github, we also have helm chart 
+there are helm chart to deploy so many 3rd party applications
+helm is a package manager, when you do helm create all your manifest file to deploy eg we want to deploy springapp 
+helm craete springapp, it will craete all the manifest file in a nice dir structure and all you ahve to do is just change a few lines
+thats what helm does for you
+
+**********************************************************************************
+
+
 
 interview question bootcamp dec19
 **** you can be hired as a devops enginer but does platform engr
