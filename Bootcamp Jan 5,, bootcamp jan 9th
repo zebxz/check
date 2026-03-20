@@ -393,11 +393,15 @@ in total we created 6nodes
 we dnt have any control over the control plane
 
 
-            HOW TO CONTROL MY CLUSTER 
+
+            HOW TO CONTROL MY CLUSTER SINCE AWS MANAGES THE CONTROL PLANE/MASTERNODE
 INside my vpc , maybe inside the PublicSN2, il create a k8 control node, this is not part of my cluster 
 or i can call it task node & once i ssh into the node am able to run tasks
 frm my env,  i ssh into the node am able to run tasks and my interest is to run/excute workload in k8
 the task node must have kubectl installed ie the command line utility ,so we can make some calls, we can execute task in the cluster
+
+
+                      Making a deployment
 eg i want to deploy an application : kubetlc apply -f db-deplloy.yml
 lest assume its is deploying a db application & we are using some constraints 
 in the manifest file we are using maybe node afinity or node selector
@@ -405,4 +409,20 @@ so using the node selector we are saying
 labels:
 app dbNode
 
-therefor the scheduler will schedule one db app on each of the dbNode 
+therefor bc the replica say 2, ..mee
+the scheduler will schedule one db app on each of the dbNode 
+and if any of the pod goes dwn the controller manager recreates its based on the instruction in the manifest file for the deployment
+
+Also, if i create anoter deployment
+eg i want to deploy an application : kubetlc apply -f webapp-deplloy.yml
+
+node selector 
+labels:
+app webappNode
+
+therefor bc the replica says 1, the scheduler will schedule one webapp one the PublicSN2
+and if  the pod goes down the controller manager recreates its
+
+
+
+
