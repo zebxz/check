@@ -456,6 +456,35 @@ Thats how the service flows into the cl8
 
 2)     CREATE A LB SERVICE
 but inside our cl8 we have created a service of either type nodePort or lb; Loadbalancer service
-Now we have LB serice called webSVC 
+Now we have LB service called webSVC 
 so when traffic gets to it the ELB, it will immediately identify the service involved ie webSVC & route traffic to the service 
-Now traffic is routed & once traffic comes here via this service we can discover our appl running
+Now traffic is routed & once traffic comes here (webSVC) via this service we can discover our appl running (Webapp)
+29.00  so service routes traffic to the pod (web)
+similarly, the webapp needs to talk to the db
+
+
+                     CREATE A DATA BASE SERVICE 
+     clusterip service for communication within the cluster
+so traffic from the webapp comes to the database service & from the database service it is routed to data baase pod
+internally this is what happens 
+
+
+                            NAT GATEWAY
+but now we have a private subnet
+if the db pod needs to have any communication with the internet, as part of our infastructure, we need to install a NATgateway in one of the public subnet
+
+
+  33.00     FARGATE PROFILES 
+how will that work in my cluster
+if we want to create fargate profiles, you see the way we created node groups dbnode & webapp node grp, we can also create a fargate profile but fargate profiles
+are only created in private subnet
+
+ In the PrivateSN2, i can create my fargate profile
+in my profile,i can decide to deploy my appl directly using the fargate profile
+i can assign a label to my profile
+eg labels:
+app:fgp
+so if i want to deploy an application, this fargate profile does not have node, its serverless
+  
+
+
