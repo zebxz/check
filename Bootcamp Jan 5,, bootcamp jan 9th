@@ -508,7 +508,41 @@ so fargate is a serverless solution
 instead of creating loadbalancers directly we can use ingress
 
 
-   Why are we using the ip address of the lb and not that of the application
+38.00   Why are we using the ip address of the lb and not that of the application
+
+if you look at how a webserevr operates
+lets me bring the webserver part of it and explain
+because that lb is an elastic load balancer.. ELB
+
+if we have users like 10million users trying to access our appl, 
+we dont allow their traffic to get to the appservers/application directly, because its not secured
+its also problematic because most of the time we have multiple appservers for redundancy 
+so thereis always multiple appservers & if you have multiple appserver, its going to be a problem for you to mg8 it
+so based on what you are saying, why dont we use the nodePort ipaddress, we dont do that
+so what we do inbetween the endusers & the appservers is we create a webserver
+the webserver acts as a load balancer
+41.30
+  **** when you create a webserver it only becomes a webserver when you install a software like ngnix 
+so it becomes an ngnix webserver 
+so in the webserver/LB, we create a listener so that it can listen 
+generally it listens on port 80 
+so if i have the ip address of all my servers which ip do i give to endsuers?
+do i give them the ip addresses of my appservers or my webserver/LB ? of course the ip of my LB
+so if the ip of my LB is 30.0.25.66:80
+therefore its listening on port 80 & traffic from endusers gets in on port 80, thats how the traffic gets in
+so when traffic from the 10million users get in, the LB does loadbalancing routing the traffic 
+so even if i have 20 appservers & i want to access my application, how do i access it
+
+bc someone was asked how do they access application in your env
+simple this is a typical illustration 
+therefore it listens on port 80
+45.30   this is the frontend to the users:  30.0.25.66:80
+then the backend: thees are my appserevrs running in the backend... appserver1.. 100.0.25.66:8080, appserver2 20.0.15.66:9009, appserver3 ...etc
+so at the backend the LB is routing traffic to the diff servers on their respective pod, 
+this is how we expose appl to endusers 
+this is a normal scenario but the same thing in k8
+so when you bring in the LB, this is what its doing
+
 
 46.15  so your question wheter we should the ip address of our node directly and not the loadbalancer that cannot work when lb is been used
 but if we were using nodePort, if nodePortwas the srevice type we could do that 
