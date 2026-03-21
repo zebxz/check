@@ -420,7 +420,7 @@ node selector
 labels:
 app webappNode
 
-therefor bc the replica says 1, the scheduler will schedule a single webapp on the PublicSN2
+therefor bc the replica in the deployment says 1, the scheduler will schedule a single webapp on the PublicSN2
 and if  the pod goes down the controller manager recreates its
 
 
@@ -446,3 +446,13 @@ lets assume we have a complicated loadbalancer url like kkufhr8hr0ii400j
 but we cant give that to endusers , so we create Arecord 
 eg instead of this url;  kkufhr8hr0ii400j, use use web.app.com
 so we give our endusers the host name we created:web.app.com
+once the 10million users type web.app.com, within mili sec, it queries global donamin name service ..dns
+26.20  in the background ns lookup is executed & it immediately identifies the name saver is the ELB 
+it identifies that the appl is tied to an ELB
+Thats how the service flows into the cl8
+
+
+but inside our cl8 we have created a service of either type nodePort or lb; Loadbalancer service
+Now we have LB serice called webSVC 
+so when traffic gets to it the ELB, it will immediately identify the service involved &  route traffic to the service 
+
