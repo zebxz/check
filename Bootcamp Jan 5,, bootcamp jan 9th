@@ -371,15 +371,15 @@ Asking about Farget not configured in K8
 
 
                                  STEPS FOR EXTERNAL TRAFFIC TO GET INTO THE EKS CLUSTER
-first create a Vpc
+1)first create a Vpc
 launch the cluster in the vpc 
 the vpc has public subnet (publicSN1 & publicSN2)
 ALSO PRIVATE SUBNET (privateSN1 & privateSN2)
 We are deploying EKS in the vpc 
 what are we creating in the EKS ?
 Once we have our cluster   *** i bliv all the nodes makes up the cluster
-1)assuming we create/deploy a database node grp & an auto scaling grp/launch template (for the ASG; minimum =1, desired=1 & max 50)
-2)webapp node grp & an auto scaling grp/launch template  (for the ASG; minimum =1, desired=1 & max 50) *** i bliv ecah of the node has its own autoscaler
+A)assuming we create/deploy a database node grp & an auto scaling grp/launch template (for the ASG; minimum =1, desired=1 & max 50)
+B)webapp node grp & an auto scaling grp/launch template  (for the ASG; minimum =1, desired=1 & max 50) *** i bliv ecah of the node has its own autoscaler
 8.30  
 ****this is Eks and AWs manages the control plane, so you wont see the control plane here 
 
@@ -400,8 +400,8 @@ or i can call it task node & once i ssh into the node am able to run tasks
 frm my env,  i ssh into the node am able to run tasks and my interest is to run/excute workload in k8
 the task node must have kubectl installed ie the command line utility ,so we can make some calls, we can execute task in the cluster
 
-
-                      Making a deployment
+2)
+                      Making a deployment kubernetes
 eg i want to deploy an application : kubetlc apply -f db-deplloy.yml
 lest assume its is deploying a db application & we are using some constraints 
 in the manifest file we are using maybe node afinity or node selector
@@ -424,7 +424,7 @@ therefor bc the replica in the deployment says 1, the scheduler will schedule a 
 and if  the pod goes down the controller manager recreates its
 
 
-                EXPOSING THE APPLICATION USING OBJECT CALLED SERVICE 
+     3)           EXPOSING THE APPLICATION USING OBJECT CALLED SERVICE 
 ensuring the webApp and the dbapp can be discovered
 so use the kubenetes object called service 
 
@@ -435,12 +435,12 @@ so use the kubenetes object called service
 we have 10million user who wants to access the application & yes they can 
 
 
-      1)    USING ELB FOR TRAFFIC TO ACCESS THE K8 CLUSTER
+      3A)    USING ELB FOR TRAFFIC TO ACCESS THE K8 CLUSTER
 In our env we ensure traffic flows by using a load balancer;ingress
 inside my public subnet we create ELB, Elastic load balancers or in my vpc we have an elastic load balancer 
 so this ELB is able to help route traffic
 
-1a)          CREATE ROUTE53/A RECORD 
+ai)          CREATE ROUTE53/A RECORD 
 sO we create one more resource in AWs, its a global resource; route53, 
 so we create route53 for DNS; domain name
 
@@ -454,7 +454,7 @@ once the 10million users type web.app.com, within mili sec, it queries global do
 it identifies that the appl is tied to an ELB
 Thats how the service flows into the cl8
 
-2)     CREATE A LB SERVICE
+aii)     CREATE A LB SERVICE
 but inside our cl8 we have created a service of either type nodePort or lb; Loadbalancer service
 Now we have LB service called webSVC 
 so when traffic gets to it the ELB, it will immediately identify the service involved ie webSVC & route traffic to the service 
@@ -463,15 +463,16 @@ Now traffic is routed & once traffic comes here (webSVC) via this service we can
 similarly, the webapp needs to talk to the db
 
 
-                     CREATE A DATA BASE SERVICE 
+              3b)       CREATE A DATA BASE SERVICE 
      clusterip service for communication within the cluster
 so traffic from the webapp comes to the database service & from the database service it is routed to data baase pod
 internally this is what happens 
 
 
-                            NAT GATEWAY
+                 bi)           NAT GATEWAY
 but now we have a private subnet
 if the db pod needs to have any communication with the internet, as part of our infastructure, we need to install a NATgateway in one of the public subnet
+
 
 
   33.00     FARGATE PROFILES 
