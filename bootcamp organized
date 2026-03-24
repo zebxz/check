@@ -2292,6 +2292,43 @@ helm craete springapp, it will craete all the manifest file in a nice dir struct
 thats what helm does for you
 
 **********************************************************************************
+bootcamp jan 9th
+
+       FARGATE
+so fargate is a serverless solution 
+
+how will that work in my cluster
+if we want to create fargate profiles, you see the way we created node groups dbnode & webapp node grp, we can also create a fargate profile but fargate profiles
+are only created in private subnet
+
+ In the PrivateSN2, i can create my fargate profile
+in my profile,i can decide to deploy my appl directly using the fargate profile
+i can assign a label to my profile
+eg labels:
+app:fgp
+so if i want to deploy an application, this fargate profile does not have node, its serverless
+  i want to deploy my application, i write my manifest file & ill select/indicate the fargate profile label
+ie it will deploy the app in fargate profile
+lets assume we hv a deployment thats coming into our cluster
+ once i run this: kubetlc apply -f app-deploy.yml, we wnat to deploy our application app pod , 
+here in the webapp our app pod is been deployed using fargate profile 
+ this: kubetlc apply -f app-deploy.yml,  & replica is 2 but this is constrained to fargate profile 
+ a deployment is created inside the cluster : app deployment
+so on the fargate profile 2 replica is created
+36.35
+*** but fargate is serverless, so we dont need to create any node group but we are able to host pod
+so if our replica is 20 , we will have 20 pods created 
+so traffic is routed to our fargate profile & 20 pods are created
+
+*** so even though its serverless to us, to AwS theres a server there, and its managed by AwS 
+so AwS wil ensure that all the 20pods are hosted
+so when i run kubectl get pod, ill seee all the pod running
+so fargate is a serverless solution 
+
+
+
+
+****************************************************************************************************
 
 
 
