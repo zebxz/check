@@ -1147,7 +1147,9 @@ from devops engr to senior devops engr
   where we hv the frontend which is a webserver & the webserver we have installed & configured the ngnix software that determines how traffic is routed to the 
 app servers running in the backend, thats smt you can talk abt if you are asked at all
 
-therea re other options in ngnix , i didnt do the demo in ths class 
+
+                           3MASTER NODES CLUSTER
+there are other options in ngnix , i didnt do the demo in ths class 
 but you can use an ngnix webserver & create a multi master node kubeadm cl8
 what that implies is that i create a kubeadm cl8 with 3masters 
 that 3masters all have control plane so there are 3control plane for each of those masters 
@@ -1159,10 +1161,46 @@ where if there are 3000 request that the webserver is receiving  & there are 3ap
 in the case where you have 3master nodes, those master nodes 
 this are other use cases its just we dnt use self managed cl8 anymore, we hv gone pass that level, so we cant be ..
 
-1.37.40
+
+******
+1.37.40 diagrammatic explanantion of the 3master nodes 
+this could just be for more security of your cl8
+the 3maters all have the control plane
+lets assume there is only one masternode in my cl8
+we could decide that traffic does not get to the master node directly, if it wants to talk to the master it goes tru a webserver
+so traffic comes to an ngnix webserver like thsi so it as a proxy
+therfore it increases the security of the master node bc traffic goes to the master via a proxy
+and when traffic comes to the master we can now mg8 the number of pod
+workload in the cluster is been manged by the control plane .. ** i bliv thats the master
+
+but the problem is this is a kubenetes engr , this is her job
+the question now is that this type of infastructure if smt goes wrong with our master node there is a problem
+do we have any fail over, have we made arrangement to recover from such a disaster, no our infastructure is not permitting that to happen
+so what do we do?we come with a multi node master cluster
+bc ngnix is suppose to do loadbalancing
+so now the way our traffic is conditioned is such that it comes to the master node 
+so there are conditions which says that the frontend is the ngnix webserver 
+the backend is the master nodes.. master node1, master node2, master node3
+but traffic first goes to master1, if it cant talk to master1 then it goes to master2, if both 1 & 2 are down then thats the only case it goes to master3
+because we dnt neeed 2 control planse in the cl8, 1 is sufficient
+if smt goes wrong with master1 it goes to master2,, thats how traffic is managed & from there the cl8 is managed
 
 
-you can use ngnix to create a 
+1.43.30                jenkins engr
+ lets assume you are trying to manage some critical services, you are in charge of managing jenkins
+we want to assess jenkins server, can we decide to assess jenkins via an ngnix webserver , ofcourse yes
+
+you may be using ngnix, if u want to access your jenkins env, what do you do..for you to access jenkins for ci/cd automation 
+traffic is not doing directly to jenkins, its routed via a webserver , this is for more security
+so you can see what the webserver does 
+the via server now routes traffic 
+
+
+
+** prof pls show how to push k8 manifest files created by helm to github
+PROF KEN was in class22, & i did that with them
+
+pls share terfrm vault video
 ***********************************************************************************************
 
 
