@@ -1140,10 +1140,33 @@ but ill share one video & nxt week we will look at it again
 
 
     Amambua resume
+1.22.14   jira for bug tracking, confluence for documentation
+from devops engr to senior devops engr
+
+1.35..  we covered ngnix ingress in k8, also in deploying appl in tomcat in a multi tier architecture
+  where we hv the frontend which is a webserver & the webserver we have installed & configured the ngnix software that determines how traffic is routed to the 
+app servers running in the backend, thats smt you can talk abt if you are asked at all
+
+therea re other options in ngnix , i didnt do the demo in ths class 
+but you can use an ngnix webserver & create a multi master node kubeadm cl8
+what that implies is that i create a kubeadm cl8 with 3masters 
+that 3masters all have control plane so there are 3control plane for each of those masters 
+the reason for doing that is so that if smt goes with one of the master ngnix in the frontend can route traffic to the other masters
+so in this case traffic is not routed tru the round robbin algorithm, its routed using a diff parameter like fail over
+because when you are routing traffic using ngnix, the default routing option is round robbin
+where if there are 3000 request that the webserver is receiving  & there are 3appservers that it has to route traffic to so it can apportion the request evenly
+1000 to appserver1, 1000 to appserver2, 1000 to appserver3
+in the case where you have 3master nodes, those master nodes 
+this are other use cases its just we dnt use self managed cl8 anymore, we hv gone pass that level, so we cant be ..
+
+1.37.40
+
+
+you can use ngnix to create a 
 ***********************************************************************************************
 
 
-19) Kubernetes Rancher and AWS1-Jan 7, 2021
+19) Kubernetes Rancher and AWS1-Jan 7, 2021 
 
 
 
