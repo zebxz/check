@@ -970,10 +970,37 @@ so if you are dealing with helm there will be a values file & some templates whi
 those are very imp aspect to take note of
 
 when you look at helm u realise that if you are going to write a k8 manifest file , we can use helm for that purpose
-if you wnat 
+if you wnat to deploy an appl ther are a lot of k8 objects that are involved 
+lets assume you want to deploy and expose an application or deploy & expose micro service appl
+what are some of the manifest files you should write just for this one job
 
+lets assume you want to deploy an appl like spring app
+and springapp requires a data base & in this case its mongodb
+so if you are going to deploy this this appl; springapp & mongodb database, a lot of objects are involved in this deployment
+eg for springapp deployment some of the objects involved
+for mongodb database some of the objects involved 
+statefulset  if your not going for statafulset you can use replicasets
+PV/PVC/Sc        ... 38.14
+configmaps
+Secrets
+next for exposing the appl
+ingress .. probably you want to use ingress and once you have ingress you are using a clusterip service
+ClusterIP service 
 
-37.00 
+similarly for springapp
+deployment ... 39.38.. when we use deployment, under deployment there will be replicaset,  it will create replicaset & replicaset will deploy the pod
+configmaps
+secrets
+ingress
+doesnt need to maintain its state si this is not needed (PV/PVC/Sc)
+
+all of this manifest file have to be written 
+and to expose this appl, we are deploying ingress & a clusterip service
+so all of these objects need to be created, a lot of manifest file is involved 
+now if i want to deploy i could just do
+helm create springapp   .... am creating a springapp deployment
+i wnat to also deploy my datatbase:
+helm create mongodb
 
 
 ***********************************************************************************************
