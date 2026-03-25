@@ -1078,6 +1078,23 @@ valuse can also be changed from false to true & vice versa
 so we have to create helm repos (github pages/nexus)& push the chart & in the future we can pull the chart & use it
 
 we have the helm commands we can use for all these
+each of the helm chart (repo) contains the template file & the values file
+once i add the helm chart repo & they have been changes into the helm chart like new pushes into the helmchart
+we can run helm update repo ... it updates the repo
+once the repo is updated
+helm install and it dploys all th yml files generated
+
+if i want to modify my value file before deploying with helm 
+helm show values myapp > myapp-values.yml    ie redirect it to this file
+once i create the new file & make some changes
+to update the deployment ; helm update springapp myapp -f
+may what have changed inthe value file is just the version, thats simlpe, i have deployed the application
+
+if i want to deploy a new version of the application or i no longer need this version anymore
+helm uninstall ....& all the objects that was created will be destroyed .. just like terfrm 
+it will destroy everything that was created for the deployment
+
+so if you going for an interview this is what helm is involved
 
 ***********************************************************************************************
 
