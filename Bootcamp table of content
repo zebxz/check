@@ -1038,9 +1038,48 @@ so helm is deploying all of this object for you
 
 44.56 it is a lot of cummbersome job to write a manifest file for all of this, 
 so helm create springapp, it generates the entire manifets file
-so all this manifest files rEq 
+so all this manifest files rEq For all the objecst, helm will generate it for you
+when its generated it comes with default value 
+
+helm create springapp 
+ generate - template /
+ default value like  deployment.yaml
+service.yml   ... under this in the service type, it may choose a default service type
+in the default value if you have choosen ingress as yes, it will create ingress.yml
+because in the default values it will ask do you wnat to create persistent, persistent vol& all of that ? 
+if you say yes
+it will create PV,PVC.SC.yml... these are 3yml files
+so all of these is been craeted 
+
+in Rbacck all the manifest files will be created but they will hold default values ... 47.00
+
+for deployment
+deployment.yaml
+ image:ngnix
+but if the image you wnat to deploy is mylandmarktech/hello 
+therefor i have to change it, these are default value
+
+service.yml
+targetport
+
+also if the tag is a default tag, you change it as well
+
+
+ 49.00              the changes take place in the value file
+
+All these changes are not taking place in the template but in the values file called values.yml
+Once i change the vlaue in the values file evrything changes 
+it changes in both the deployment & the service.yml
+valuse can also be changed from false to true & vice versa
+
+
+  51.30     create helm repose/we have helm chart that can be reused in the future
+ once am done with this deployment, i have helm chart that can be reused in the future for springapp & mongodb
+so we have to create helm repos (github pages/nexus)& push the chart & in the future we can pull the chart & use it
+
 
 ***********************************************************************************************
+
 
 19) Kubernetes Rancher and AWS1-Jan 7, 2021
 
