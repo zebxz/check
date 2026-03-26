@@ -3,7 +3,9 @@ bootcamp dec26 2023 class33
 bootcamp dec 19th
 boothcamp 33 1st video/ Github interview 2022
 bootcamp Jan2, 2024,, BOOTCAMP Jan3
+bootcamp Jan 9, 2024
 morning devotion - Jan 17, 2024
+ morning devotion - Jan 19, 2024
 *** REfer devops interview question suggested answer
 Like; Why do you want to leave your current job?
 
@@ -1356,12 +1358,78 @@ our jenkins job will now deploy to a kubernetes server, & take note that the jen
 to production & since it is 3tier enduser will talk to the appl using the lb but the lb is pointing to a dns name , a host name; app.com
 
 
+
+Github interview 2022
+
                                            NGNIX INGRESS
 and as you rightly said since some of these appls are microservices we are configuring an ingress, nginx ingress
 Because with the help of nginx ingress we can configure ssl termination which implies endusers will access the appl from an https protocol number 1
 number2.. we configure ssl termination & ssl redirect 
 and in addition to that nginx ingress provides an additional layer of security and it is imp to note as i said earlier on our entire infastruture we are very high/heavy on 
 security
+
+
+
+ morning devotion - Jan 19, 2024
+
+we covered ngnix ingress in k8, also in deploying appl in tomcat in a multi tier architecture
+  where we hv the frontend which is a webserver & the webserver we have installed & configured the ngnix software that determines how traffic is routed to the 
+app servers running in the backend, thats smt you can talk abt if you are asked at all
+
+
+                           3MASTER NODES CLUSTER
+there are other options in ngnix , i didnt do the demo in ths class 
+but you can use an ngnix webserver & create a multi master node kubeadm cl8
+what that implies is that i create a kubeadm cl8 with 3masters 
+that 3masters all have control plane so there are 3control plane for each of those masters 
+the reason for doing that is so that if smt goes with one of the master ngnix in the frontend can route traffic to the other masters
+so in this case traffic is not routed tru the round robbin algorithm, its routed using a diff parameter like fail over
+because when you are routing traffic using ngnix, the default routing option is round robbin
+where if there are 3000 request that the webserver is receiving  & there are 3appservers that it has to route traffic to so it can apportion the request evenly
+1000 to appserver1, 1000 to appserver2, 1000 to appserver3
+in the case where you have 3master nodes, those master nodes 
+this are other use cases its just we dnt use self managed cl8 anymore, we hv gone pass that level, so we cant be ..
+
+
+******
+1.37.40 diagrammatic explanantion of the 3master nodes 
+this could just be for more security of your cl8
+the 3maters all have the control plane
+lets assume there is only one masternode in my cl8
+we could decide that traffic does not get to the master node directly, if it wants to talk to the master it goes tru a webserver
+so traffic comes to an ngnix webserver like thsi so it as a proxy
+therfore it increases the security of the master node bc traffic goes to the master via a proxy
+and when traffic comes to the master we can now mg8 the number of pod
+workload in the cluster is been manged by the control plane .. ** i bliv thats the master
+
+but the problem is this is a kubenetes engr , this is her job
+the question now is that this type of infastructure if smt goes wrong with our master node there is a problem
+do we have any fail over, have we made arrangement to recover from such a disaster, no our infastructure is not permitting that to happen
+so what do we do?we come with a multi node master cluster
+bc ngnix is suppose to do loadbalancing
+so now the way our traffic is conditioned is such that it comes to the master node 
+so there are conditions which says that the frontend is the ngnix webserver 
+the backend is the master nodes.. master node1, master node2, master node3
+but traffic first goes to master1, if it cant talk to master1 then it goes to master2, if both 1 & 2 are down then thats the only case it goes to master3
+because we dnt neeed 2 control planse in the cl8, 1 is sufficient
+if smt goes wrong with master1 it goes to master2,, thats how traffic is managed & from there the cl8 is managed
+
+
+1.43.30                jenkins engr
+ lets assume you are trying to manage some critical services, you are in charge of managing jenkins
+we want to assess jenkins server, can we decide to assess jenkins via an ngnix webserver , ofcourse yes
+
+you may be using ngnix, if u want to access your jenkins env, what do you do..for you to access jenkins for ci/cd automation 
+traffic is not doing directly to jenkins, its routed via a webserver , this is for more security
+so you can see what the webserver does 
+the via server now routes traffic 
+
+
+
+** prof pls show how to push k8 manifest files created by helm to github
+PROF KEN was in class22, & i did that with them
+
+pls share terfrm vault video
 
 *********************************************************************************************
 
@@ -2205,7 +2273,215 @@ if the db pod needs to have any communication with the internet, as part of our 
 
 
 
+
+**********************************************************************************
+
+  
+                    FARGATE
+bootcamp jan 9th
+so fargate is a serverless solution 
+
+how will that work in my cluster
+if we want to create fargate profiles, you see the way we created node groups dbnode & webapp node grp, we can also create a fargate profile but fargate profiles
+are only created in private subnet
+
+ In the PrivateSN2, i can create my fargate profile
+in my profile,i can decide to deploy my appl directly using the fargate profile
+i can assign a label to my profile
+eg labels:
+app:fgp
+so if i want to deploy an application, this fargate profile does not have node, its serverless
+  i want to deploy my application, i write my manifest file & ill select/indicate the fargate profile label
+ie it will deploy the app in fargate profile
+lets assume we hv a deployment thats coming into our cluster
+ once i run this: kubetlc apply -f app-deploy.yml, we wnat to deploy our application app pod , 
+here in the webapp our app pod is been deployed using fargate profile 
+ this: kubetlc apply -f app-deploy.yml,  & replica is 2 but this is constrained to fargate profile 
+ a deployment is created inside the cluster : app deployment
+so on the fargate profile 2 replica is created
+36.35
+*** but fargate is serverless, so we dont need to create any node group but we are able to host pod
+so if our replica is 20 , we will have 20 pods created 
+so traffic is routed to our fargate profile & 20 pods are created
+
+*** so even though its serverless to us, to AwS theres a server there, and its managed by AwS 
+so AwS wil ensure that all the 20pods are hosted
+so when i run kubectl get pod, ill seee all the pod running
+so fargate is a serverless solution 
+
+
+
+***********************************************************************************************************
+
+     Helm chart
+
+What is the difference between using helm chart and manifest?
+
+everything in k8 is all about manifest files 
+a manifestfile is simply like a k8 declarative file that has defined a set of resource that will be created in k8 
+eg you want to create pod, or name space , you write a manifest file to achieve that 
+the diff with helm is that helm has a rendering machine that will create the entire manifest file template for you
+so when you do helm create the entire manifest file to deploy an end to end appl is rendering
+helm rendering machine is going to render the file such that all you need to do is just to change specific lines like the image name 
+the image version, the container pod, the service type, very simple things are now been modified using helm
+helm equally has chart, so the same way we have k8 manifest file, source code repository like github, we also have helm chart 
+there are helm chart to deploy so many 3rd party applications
+helm is a package manager, when you do helm create all your manifest file to deploy eg we want to deploy springapp 
+helm craete springapp, it will craete all the manifest file in a nice dir structure and all you ahve to do is just change a few lines
+thats what helm does for you
+
+
+
+    morning devotion - Jan 19, 2024
+
+
+if you talk about kubernetes & not talk about helm you limit yourself
+  how does helm work?
+helm is able to generate k8 manifset file & those files comes with the values file & the template 
+so if you are dealing with helm there will be a values file & some templates which will be renderd as far as k8 is concerned
+those are very imp aspect to take note of  
+
+when you look at helm u realise that if you are going to write a k8 manifest file , we can use helm for that purpose
+if you wnat to deploy an appl ther are a lot of k8 objects that are involved 
+lets assume you want to deploy and expose an application or deploy & expose micro service appl
+what are some of the manifest files you should write just for this one job
+
+
+              TYpe of application deployed.. springapp
+lets assume you want to deploy an appl like spring app
+and springapp requires a data base & in this case its mongodb
+
+            Objects required for the deployment & exposing the appl
+so if you are going to deploy this this appl; springapp & mongodb database, a lot of objects are involved in this deployment
+eg for springapp deployment some of the objects involved
+for mongodb database some of the objects involved 
+statefulset  if your not going for statafulset you can use replicasets
+PV/PVC/Sc        ... 38.14
+configmaps
+Secrets
+next for exposing the appl
+ingress .. probably you want to use ingress and once you have ingress you are using a clusterip service
+ClusterIP service 
+
+similarly for springapp
+deployment ... 39.38.. when we use deployment, under deployment there will be replicaset,  it will create replicaset & replicaset will deploy the pod
+configmaps
+secrets
+ingress
+doesnt need to maintain its state si this is not needed (PV/PVC/Sc)
+all of this manifest file have to be written 
+
+and to expose this appl, we are deploying ingress & a clusterip service
+so all of these objects need to be created, a lot of manifest file is involved 
+now if i want to deploy i could just do;
+
+          Helm command to create the deployment 
+helm create springapp   .... am creating a springapp deployment
+ helm create mongodb  .....i wnat to also deploy my datatbase
+
+
+***once i execute this 2 simple commands,
+it generates template
+it also generates values file
+this template that is going to be generating, its going to have template 
+
+41.05 helm does not only only create the objects/deployment  ....meee
+ 41.21***who is suppose to mg8 this deployment?
+we configure who has access to a deployment/k8 security by using RBAC     .. pronouced R.. back
+therfore helm deploys the application, exposes the appl & secures the appl 
+so there is role base access control, who have acess to the appl 
+
+         objects for RBAC
+under RBAC , we have;
+namespace              ...who is going to have access to which namespace
+service account         44.00.. like under service account, i can create a a service account for my springapp deploymnet & 
+role & roleBinding        in this service account i decide to create a role, i create a role that can mg8 the springapp deployment
+clusterRole & clusterRoleBinding     .. then in that role, i bind the role to a particular grp of usr, lets asume we hv some applications runing in prod 
+                                     so we create a role, that role is permitting you to mg8 that particular deployment so i bind that role to my devops engrs 
+                                    thats role binding, meaning it will be restricted to a particular ns,if it is clusterRole&clusterroleBinding its for the entire cl8
+
+SO al of this object is created as part of the deployment & helm is able to do all of this for you
+
+helm can also automate using HPA     ... 43.26
+like when there is a spike in the application
+to automatically increate the number of pod without running kubectl scale 
+
+so helm is deploying all of this object for you
+
+44.56 it is a lot of cummbersome job to write a manifest file for all of this, 
+so helm create springapp, it generates the entire manifets file
+so all this manifest files rEq For all the objecst, helm will generate it for you
+when its generated it comes with default value 
+
+helm create springapp 
+ generate - template /
+ default value like  deployment.yaml
+service.yml   ... under this in the service type, it may choose a default service type
+in the default value if you have choosen ingress as yes, it will create ingress.yml
+because in the default values it will ask do you wnat to create persistent, persistent vol& all of that ? 
+if you say yes
+it will create PV,PVC.SC.yml... these are 3yml files
+so all of these is been craeted 
+
+in Rbacck all the manifest files will be created but they will hold default values ... 47.00
+
+for deployment
+deployment.yaml
+ image:ngnix
+but if the image you wnat to deploy is mylandmarktech/hello 
+therefor i have to change it, these are default value
+
+service.yml
+targetport
+
+also if the tag is a default tag, you change it as well
+
+
+ 49.00              the changes take place in the value file
+
+All these changes are not taking place in the template but in the values file called values.yml
+Once i change the vlaue in the values file evrything changes 
+it changes in both the deployment & the service.yml
+valuse can also be changed from false to true & vice versa
+
+
+  51.30     create helm repose/we have helm chart that can be reused in the future
+ once am done with this deployment, i have helm chart that can be reused in the future for springapp & mongodb
+so we have to create helm repos (github pages/nexus)& push the chart & in the future we can pull the chart & use it
+
+we have the helm commands we can use for all these
+each of the helm chart (repo) contains the template file & the values file
+once i add the helm chart repo & they have been changes into the helm chart like new pushes into the helmchart
+we can run helm update repo ... it updates the repo
+once the repo is updated
+helm install and it dploys all th yml files generated
+
+if i want to modify my value file before deploying with helm 
+helm show values myapp > myapp-values.yml    ie redirect it to this file
+once i create the new file & make some changes
+to update the deployment ; helm update springapp myapp -f
+may what have changed inthe value file is just the version, thats simlpe, i have deployed the application
+
+if i want to deploy a new version of the application or i no longer need this version anymore
+helm uninstall ....& all the objects that was created will be destroyed .. just like terfrm 
+it will destroy everything that was created for the deployment
+
+so if you going for an interview this is what helm is involved
+
+
+   3 components of helm
+CLI
+Charts
+helmrepos
+  these are the 3 elents involved in helm
+
+so if you are asked to deploy your appl in k8, if you know how to generate manifest file using  helm, 
+this is going to be one of your fastest option for your deployment to happen
+
+
+
 *****************************************************************************************************************************
+
 
 
 
@@ -2400,63 +2676,6 @@ if you look at it we have touched most of the things that we should discuss abou
 
 
 **********************************************************************************
-
-
-Helm chart
-
-What is the difference between using helm chart and manifest?
-
-everything in k8 is all about manifest files 
-a manifestfile is simply like a k8 declarative file that has defined a set of resource that will be created in k8 
-eg you want to create pod, or name space , you write a manifest file to achieve that 
-the diff with helm is that helm has a rendering machine that will create the entire manifest file template for you
-so when you do helm create the entire manifest file to deploy an end to end appl is rendering
-helm rendering machine is going to render the file such that all you need to do is just to change specific lines like the image name 
-the image version, the container pod, the service type, very simple things are now been modified using helm
-helm equally has chart, so the same way we have k8 manifest file, source code repository like github, we also have helm chart 
-there are helm chart to deploy so many 3rd party applications
-helm is a package manager, when you do helm create all your manifest file to deploy eg we want to deploy springapp 
-helm craete springapp, it will craete all the manifest file in a nice dir structure and all you ahve to do is just change a few lines
-thats what helm does for you
-
-**********************************************************************************
-bootcamp jan 9th
-
-       FARGATE
-so fargate is a serverless solution 
-
-how will that work in my cluster
-if we want to create fargate profiles, you see the way we created node groups dbnode & webapp node grp, we can also create a fargate profile but fargate profiles
-are only created in private subnet
-
- In the PrivateSN2, i can create my fargate profile
-in my profile,i can decide to deploy my appl directly using the fargate profile
-i can assign a label to my profile
-eg labels:
-app:fgp
-so if i want to deploy an application, this fargate profile does not have node, its serverless
-  i want to deploy my application, i write my manifest file & ill select/indicate the fargate profile label
-ie it will deploy the app in fargate profile
-lets assume we hv a deployment thats coming into our cluster
- once i run this: kubetlc apply -f app-deploy.yml, we wnat to deploy our application app pod , 
-here in the webapp our app pod is been deployed using fargate profile 
- this: kubetlc apply -f app-deploy.yml,  & replica is 2 but this is constrained to fargate profile 
- a deployment is created inside the cluster : app deployment
-so on the fargate profile 2 replica is created
-36.35
-*** but fargate is serverless, so we dont need to create any node group but we are able to host pod
-so if our replica is 20 , we will have 20 pods created 
-so traffic is routed to our fargate profile & 20 pods are created
-
-*** so even though its serverless to us, to AwS theres a server there, and its managed by AwS 
-so AwS wil ensure that all the 20pods are hosted
-so when i run kubectl get pod, ill seee all the pod running
-so fargate is a serverless solution 
-
-
-
-
-****************************************************************************************************
 
 
 
