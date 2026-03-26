@@ -122,6 +122,81 @@ in working life. These sample answers are intended to inspire you to create your
 ********** he said you should answer the question using landmark morning devotion template
 
 
+
+
+
+About landmark coy
+   we have been in existence for over 2decadess and our main job include managing a fintect client
+ so we have a lot of fintect clients we do mg8, whicg means taht we use financial technology to help them
+like you hv a coy like paypal that wants you to help them automate their payment gateway
+so we are able to help them with all of that, so we program the appl such that getting payment from endusers is a very easy process
+those are thing you want to talk abt, you want to let them have that understanding
+
+
+
+
+*** boothcamp 33 1st video
+                                                    TO YOU WHAT IS DEVOPS ?? 
+***************
+
+DEVOPS is not a tool, its a methodology the aim is to be able to achieve automation and continous improvement when it comes to software delivery and appl development, thats 
+what devops is all about and bc its nt a tool, it uses  a set of tools , git for example for versioningbc when developers are developing appl that will be developed, ther
+will be multiple version of that appl that will be created for the clients and how is that vsersions managed, so git is the open source software/tool that is able to track 
+changes in the code so we use git for versioning, as a matter of fact we classify git as a ditributed vesrion control system, so devops is making use of multiple tools and 
+git is one of them and not just git it also deals with source code mgt tool,ther are multiple tools , github, gitlab etc, so when it comes to managing the source code github is
+involved
+i must say here that in my env we are managing java based project, ofcourse project can be multiple languages be it python project, java script, be it  mpm, there are multiple
+types of projects that could be managed 
+from time to time, we manage other related projects but our main focus has been on java project and to that effect we are building this project after the devlopers hv wriiten 
+the code, we are buiding it using a java based tool called maven , with the help of maven in our development process we can then do a build and all of this is part of the 
+devops process bc to ease of all of these proceses we are nt just using maven directly bt we are using another devops tool that helps to automate the connection , it helps to 
+connect/integrate the dot together and the tool is claled jenkins so with the help of jenkins once developers commit a new version of the appl in github, jenkins will pull the
+new version of the appl and jenkins is connecting with mave to do a build,
+and again, maven is a very powerful build tool and its open source, its an open source tool that will help us ensure that the code is well written, it validates the code, it 
+checks the file structure, it ensures everyting was well done as expected and once its validated, it goes ahead to compile the java classes, after which it does unit test cases
+and if the unit test cases passes in maven then the packages are created , so with a simple mpm package al of this is goin to be realised
+
+AND HOW IS IT POSSIBLE THAT MAVEN CAN DO ALL  OF THIS ?
+
+its possible bc maven makes use of pluggins, dependencies and with the help of this maven is able to validate the code, compile java classes, run unit test cases and able to 
+create packages, so you see that when it comes to devops processes, deveops is all about improvement, so once it brings in maven, maven ensures that packages but it doent 
+just end there, bc a good pipeline considers several factors including security, diaster recovery etc , so once maven informs us that these are packages created within our 
+devops cycle, we hv a tool thats incharge of the code quality.called quality checker, which is sonarqube, sonarqube has been part of our project, it is part of our project, it
+performs code quality analysis and establishes report that informs of the quality, ie, good,medium or poor quality but before that in our env we hv created our benchmark for
+code quality called quality gates/profiles, our benchmark hv been created eg, for most our project our becnchmark is expected to be atleast 90%, which implies that developers
+are expected to write atleast 9 out of 10 lines for test cases , so sonarqube wil be checking if this is what the developers actually did, so deveops with all of this, jenkins
+is helping to connect all of this tool together to integrtae them together so with the help of jenkins we can achieve continous integration where once developers commit a code
+and evrything is fine then artifacts are created
+so this is what devops is all about, it stretches beyound that point bc once we hv sonarqube performing that task the nxt tin is that we hv our artifacts once sonarqube validates
+and tell us that these are good code, the nxt tin is we nid to backup the artifact just inacse thers a disater and we use artifactries to be able to be upload our artifacts into
+and in our env we use an open source artifactory called nexus and of course ther are other artifactries you could ude like jfork, amazon, ecr bt in our env we principally use
+nexus for that purpose so once the artifcats are uploaded we are now reday for deployment and to deploy we get into a predeployment phase where we hv a  docker file which we 
+use to containerise our appl bc we are basically managing containerized appl with the help of a docker file we are able to create images, share the imgaes in docker registry for
+eg in our env we using dockerhub ....... 
+
+************ so u must always speak as someone who is at work not one in the class u see when am speaking i want to tk u bk to my env, 
+
+ and once the images are in dockerhub we no whv our container ochestra, we hv a tool we are using to ochetrate these containers which is called k8, so with the help of k8
+our containers are created, scaled, managed, if thers a problem it comes to a self healing capability,  eg if theres a problem k8 will ensure that eg if a port went down 
+since we always use controller mangers in our deployment, they will recretae the port , if a node goes down, all the pods running on that node will be evicted and automatically 
+assigned to new node.. thats how we achieve our build release and deployment job , just bc we mk use of devops and devops helps use to be able to integrate with diff tools to
+be able to achieve our objectives but we dnt only deploy the appl and end ther
+we ask our selves whta happens if the appl goes down how are we goint o be made aware, how are we goin to be made informed, so still within our devops processes using automation
+tool like jenkins we hv what is called continous monitoring , we hv to observe hw the appl is performing so contantly we are observing, is the appl perfroming well or not
+how are we goin to know , so since we manage containerized appl in our env, we hv what is called promthus and grafana , and with this we deploy an apll monitoring tool kit 
+that monitors all the appl and if thers a prob we will be allerted bc promethus comes with couple of micro services and one of them is the alert manger. we hv creatd alert manger 
+eg if a pod is down an alert is down a alert will be triggered, if a node is down an alert is triggered, if a node is low on cpu or memory, an alert will be trigerred , we hv
+configured all of this . when it comes to monitoring tha apll but this is not all , we want to also knw hw our appl are behaving, so we hv a log mgt appl in our ev equally 
+called elastic search hybrid and kibana, it tells us how our appl are behaving , this is also deployed in our env, in all of this we also ensure that everything is done securely 
+so continous securtiy is of eptical importance in our env
+
+********** so if you ask me the question of what devops is all about it can take you to any level that you want to go, you can go any direction bt whatever direction u want to 
+use the bottom line is that u just hv to ensure that your communication is intelligent as per what devops is all about
+
+  
+
+
+
 Morning Devotion dec15 model answers
 1)tell me about yourself
 
@@ -315,65 +390,6 @@ so in this project you are the guy incharge of infastruture
 
 
 
-*** boothcamp 33 1st video
-TO YOU WHAT IS DEVOPS ?? 
-***************
-
-DEVOPS is not a tool, its a methodology the aim is to be able to achieve automation and continous improvement when it comes to software delivery and appl development, thats 
-what devops is all about and bc its nt a tool, it uses  a set of tools , git for example for versioningbc when developers are developing appl that will be developed, ther
-will be multiple version of that appl that will be created for the clients and how is that vsersions managed, so git is the open source software/tool that is able to track 
-changes in the code so we use git for versioning, as a matter of fact we classify git as a ditributed vesrion control system, so devops is making use of multiple tools and 
-git is one of them and not just git it also deals with source code mgt tool,ther are multiple tools , github, gitlab etc, so when it comes to managing the source code github is
-involved
-i must say here that in my env we are managing java based project, ofcourse project can be multiple languages be it python project, java script, be it  mpm, there are multiple
-types of projects that could be managed 
-from time to time, we manage other related projects but our main focus has been on java project and to that effect we are building this project after the devlopers hv wriiten 
-the code, we are buiding it using a java based tool called maven , with the help of maven in our development process we can then do a build and all of this is part of the 
-devops process bc to ease of all of these proceses we are nt just using maven directly bt we are using another devops tool that helps to automate the connection , it helps to 
-connect/integrate the dot together and the tool is claled jenkins so with the help of jenkins once developers commit a new version of the appl in github, jenkins will pull the
-new version of the appl and jenkins is connecting with mave to do a build,
-and again, maven is a very powerful build tool and its open source, its an open source tool that will help us ensure that the code is well written, it validates the code, it 
-checks the file structure, it ensures everyting was well done as expected and once its validated, it goes ahead to compile the java classes, after which it does unit test cases
-and if the unit test cases passes in maven then the packages are created , so with a simple mpm package al of this is goin to be realised
-
-AND HOW IS IT POSSIBLE THAT MAVEN CAN DO ALL  OF THIS ?
-
-its possible bc maven makes use of pluggins, dependencies and with the help of this maven is able to validate the code, compile java classes, run unit test cases and able to 
-create packages, so you see that when it comes to devops processes, deveops is all about improvement, so once it brings in maven, maven ensures that packages but it doent 
-just end there, bc a good pipeline considers several factors including security, diaster recovery etc , so once maven informs us that these are packages created within our 
-devops cycle, we hv a tool thats incharge of the code quality.called quality checker, which is sonarqube, sonarqube has been part of our project, it is part of our project, it
-performs code quality analysis and establishes report that informs of the quality, ie, good,medium or poor quality but before that in our env we hv created our benchmark for
-code quality called quality gates/profiles, our benchmark hv been created eg, for most our project our becnchmark is expected to be atleast 90%, which implies that developers
-are expected to write atleast 9 out of 10 lines for test cases , so sonarqube wil be checking if this is what the developers actually did, so deveops with all of this, jenkins
-is helping to connect all of this tool together to integrtae them together so with the help of jenkins we can achieve continous integration where once developers commit a code
-and evrything is fine then artifacts are created
-so this is what devops is all about, it stretches beyound that point bc once we hv sonarqube performing that task the nxt tin is that we hv our artifacts once sonarqube validates
-and tell us that these are good code, the nxt tin is we nid to backup the artifact just inacse thers a disater and we use artifactries to be able to be upload our artifacts into
-and in our env we use an open source artifactory called nexus and of course ther are other artifactries you could ude like jfork, amazon, ecr bt in our env we principally use
-nexus for that purpose so once the artifcats are uploaded we are now reday for deployment and to deploy we get into a predeployment phase where we hv a  docker file which we 
-use to containerise our appl bc we are basically managing containerized appl with the help of a docker file we are able to create images, share the imgaes in docker registry for
-eg in our env we using dockerhub ....... 
-
-************ so u must always speak as someone who is at work not one in the class u see when am speaking i want to tk u bk to my env, 
-
- and once the images are in dockerhub we no whv our container ochestra, we hv a tool we are using to ochetrate these containers which is called k8, so with the help of k8
-our containers are created, scaled, managed, if thers a problem it comes to a self healing capability,  eg if theres a problem k8 will ensure that eg if a port went down 
-since we always use controller mangers in our deployment, they will recretae the port , if a node goes down, all the pods running on that node will be evicted and automatically 
-assigned to new node.. thats how we achieve our build release and deployment job , just bc we mk use of devops and devops helps use to be able to integrate with diff tools to
-be able to achieve our objectives but we dnt only deploy the appl and end ther
-we ask our selves whta happens if the appl goes down how are we goint o be made aware, how are we goin to be made informed, so still within our devops processes using automation
-tool like jenkins we hv what is called continous monitoring , we hv to observe hw the appl is performing so contantly we are observing, is the appl perfroming well or not
-how are we goin to know , so since we manage containerized appl in our env, we hv what is called promthus and grafana , and with this we deploy an apll monitoring tool kit 
-that monitors all the appl and if thers a prob we will be allerted bc promethus comes with couple of micro services and one of them is the alert manger. we hv creatd alert manger 
-eg if a pod is down an alert is down a alert will be triggered, if a node is down an alert is triggered, if a node is low on cpu or memory, an alert will be trigerred , we hv
-configured all of this . when it comes to monitoring tha apll but this is not all , we want to also knw hw our appl are behaving, so we hv a log mgt appl in our ev equally 
-called elastic search hybrid and kibana, it tells us how our appl are behaving , this is also deployed in our env, in all of this we also ensure that everything is done securely 
-so continous securtiy is of eptical importance in our env
-
-********** so if you ask me the question of what devops is all about it can take you to any level that you want to go, you can go any dirextion bt whatever direction u want to 
-use the bottom line is that u just hv to ensure that your communication is intelligent as per what devops is all about
-
-  
 
 
 interview question bootcamp dec19
@@ -449,7 +465,7 @@ this is another explanation i did in class34
 
 where is deployment taking place
 we see deployment is taking place in UAT , UAT deploymen,  this env you realise additional testing like performance, penetraion,etc and the client has
-to confirmif hes happy can we conclude and say that the deal is done
+to confirm if hes happy can we conclude and say that the deal is done
 if the client is happy, we hv 2 possibilities either we go tru continous deployment and auto approve then we deploy to production bt this only happen in 
 our inhouse/internal project our intrenal project, most of the time we go with continous delivery where thers a manual approval, the cleint signs and 
 agrre that this is what is expected  b4 the appl is dpeloyed to production
@@ -463,7 +479,7 @@ how do we deploy to production:
 in production we are deploying using docker and k8, we are  containerising and we are managing containers, the appl are running, the cx is happy, bt smt could go wrong
 so how do we manage a situation where the appl stop function or nt function as expected
 we hv an appl perfromance monitroing job which we deploy in our jenkins pipeline and what the job does is that it monitors how our appl is performing and if smt is going 
-wrong we are immediately notified and if smt is going wrong we are immediately notified and in our env we use newrelic, we also use promethus to cahieve this process and if
+wrong we are immediately notified and if smt is going wrong we are immediately notified and in our env we use newrelic, we also use promethus to achieve this process and if
 smt goes wrong, the support team is contacted , ticket are created and the team goes ahead to resolve the issue ,and we use jira for ticketing and bug tracking  and conflux 
 for documentation.
 
@@ -488,6 +504,9 @@ also let we walk you tru how our pipelines are configured beecause evrything is 
 
 so u are saying this u are very relaxed, i mean you hv some pauses in your presentation...
 *****************************************************************************
+
+
+
 
 
 
