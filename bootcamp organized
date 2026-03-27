@@ -640,6 +640,17 @@ you can create teams, add members etc from terfrm
 1.01.30  There will be a time they will be asking for your github account to see how active it is
 
 
+bootCamp25 session with Yvonne
+ SIMILARITY BTW GITLAB/GITBUCKET/GITHUB
+her team currently uses bitbucket but its similar to github in terms of approach & evrything is still git so we are still using all the git command
+one of the projects we are using gitlab, the only diff is that gitlab has its own ci/cd pipeline within it so you just integrate it & it runs ci/cd through gitlab
+so thats just the diff but evry of the source code mgt tools still use the regular git command that we are used to
+so we still use do pull, pushes, commit, branching sys so evrytin is still the same 
+so frm what am seeing industry wide interms of source code mgt tools, whatever one you are using is still built on git 
+so out der currently there is gitlab, gitbucket, github, there are many other ones, thsoe are the 3 that have touched leaving school but everything is same principle
+
+
+
 
     Github interview 2022
 
@@ -771,6 +782,24 @@ our java projects, maven helps us to do a build , we equally sonarqube for code 
 so in the quest for containerisation, we use docker for containerisation and k8 to ochestratet the containers, not just ochetration, i ensure the containers are running at
 all times by having some tools that monitors my env , observe the appl and if ther is any incideence, i am aware , i get notified , (even my client notices) if thers any
 problem i am notified, thats my experience, so my hands are very dirty with work
+
+
+
+   bootCamp25 session with Yvonne
+
+4.42  most often what we do as a team as well is creating branches out of the main master branch or the development branch do your fixes on it, do your commit & usualy 
+people have to review any pull request, so you create a pull req its been reviewed & then an allocated person or reviewers wil review it to ensure there are no conflicts 
+before any merch is made so its still the standsrd branching system that we all have
+so multiple people are doing multiple fixes at the same time & multiple people are doing pushes to a specific repo, so its key
+
+so what i will say is start going over basic things like git interms of doing a gi tpull
+go to the main landmark repo, do a pull, fork it to yours, create a branch , bc its easy to think when you see someone else doing it & its like yea its not that complicated
+until its your turn & you are asked to share your screen and asked to do a pull, do a push, do a commit, do a rebase & you see you are having a lot of issues because you have 
+not practiced those aspart
+
+so be more practical interms of your use, do your push, create a pull request, commit it, & see if you have any conflicts frm there you will know what branch am i on, making
+sure you are not on a master nobody shud be working on a master branch, but most often in a general work setting, once you are already working on master it shows you are not
+experienced like that, so this are little bit of things that people look at
 
 ***********************************************************************************************************
 
@@ -1080,6 +1109,28 @@ so even the way its configured will have an impact
 and you are the devops engr, you are the sme. the subject matter expert.. 
 you may not even be the one to actually get the job done but you know what should be done so you can direct others to get the job the done so you are 
 observing & monitoring
+
+
+
+bootCamp25 session with Yvonne
+
+  JENKINS
+in our wrk env we use jenkins for our ci/cd pipeline, literally we use jenkins for lamost everything thats the funny thing
+so even for terfrm init, plan , apply, my team specifically we create jenkins job for all of that  just to mk sure we can see what its doing, 
+we can stop  it ahead of time & we can continue it 
+most of our deployments are not that local, usually its easy to know who did what, when did you do it how do you do it, lol, so thats another trap to it 
+
+JENKINS
+
+  in my team we are heavy on jenkins file so we not doing any like, you know how normally we are building form jenkins, w ednt do any build form jenkins
+we create a jenkins files, these are equally stored in a scm like github, so we sva ethem there for reuseability 
+incase of eg we create thing slike jobs, rather than going into jenkins & going to configure & setting up your parameters within your configure & all of that 
+most from what am seeing industry wide, its much more flexible & easier when you have a script, so jenkins file script where editing is done on the script & it deployed
+easily so it doesnt cancel out, what we hv learnt is really key interms of how it functions/ works
+so still revice tose aspect & say ill go back to jekins, jenkins is really really key & thats why they always ask what is groovy scripting experisnce bc they want to see
+much you can work within jenkins , so thats another thing with jenkins, we create our pipelines,within our pipelines is the same thing we hv learnt 
+maven to do our builds, incoporating sonarqube, we are using a diff its still a nexus tool, we are using nexus IQ but its definitely doing what sonarqube is doing for just 
+capturing any bug & stuffs like that so we incorporate that within our pipeline 
 
 
 ****************************************************************************************************************************************
@@ -1430,6 +1481,16 @@ the via server now routes traffic
 PROF KEN was in class22, & i did that with them
 
 pls share terfrm vault video
+
+
+bootCamp25 session with Yvonne
+  MY Team equally supports developers, we set up local env for developers to be able, so we can create like containers
+we create virtual machines for them to be able to do testing locally without having to alway refer bk to our team for support 
+so its pushing me a lot bk as well to learn a lot about virtual machines, setting up one functionality & just integration as well as databases
+another thing that this env has pushed me a lot to is databases 
+its was just like mongodb thats just what we have use right, but currently my team is heavy on postgre & so many other products that we have not used before 
+so its a learning curve but one thing ill say its been open minded & creating time to learn so its always learning, learning, & ore learning 
+
 
 *********************************************************************************************
 
@@ -2273,6 +2334,15 @@ if the db pod needs to have any communication with the internet, as part of our 
 
 
 
+bootCamp25 session with Yvonne
+    VSCODE
+Another thing is IDE, like vscode that we use
+so start looking at extensions on your vscode, am using terfrm i definitely need trfem extensions, am using k8, i need k8 extensions in it
+i want to make sure that am having no linkedin issues so i need to put a linked extension & i want to make sure as well that my formating is right 
+so those are basic things as well, extension as well on vscode that we just need to think about and start capturing those, so you dont cm in and youa re looking like a new bee
+you are doing a push, & you have a lot of formating issues which are things that just an extenson addiction on your vscode can help elevate that aspect for you
+
+
 
 **********************************************************************************
 
@@ -2481,6 +2551,15 @@ so if you are asked to deploy your appl in k8, if you know how to generate manif
 this is going to be one of your fastest option for your deployment to happen
 
 
+bootCamp25 session with Yvonne
+
+i See somebody asking about helm 
+so this perticular project we are working on we are not using helm & thats smt am pushing for bc jenkins pipelines are a lot completed bc we are not using helm 
+we are using a lot of env substitions inorder to cover up for helm,  t my manager doesnt relaly like helm so hes pushing bk against helm
+a diff project i worked on we used helm alot more but current now we are not he complexity of it is great as well  cos everytime within our pipelines we are having to do env 
+that smt i leanrt too as well writing groovy scripts to be able to substitue any syntax errors so theres a lot thats been incorported
+so helm is a lot better as a k8 mgt tool
+
 
 *****************************************************************************************************************************
 
@@ -2599,6 +2678,18 @@ why bc if you just create 200 servers bc you anticipate to hv 2million users in 
 
 
 
+bootCamp25 session with Yvonne
+    TERRAFORM
+so interms of uniformity acrosss so we still use terfrm, we use trfrm heavily for infrastructure provisioning.
+have used trfrm as well for patchng, to pass user data, 
+its a little bit more complicated with trefrm bc you hv multiple infastructure that you are provisioning but its possible
+mostly what we did is using json file sto incoporate terfrm & json as well just many other coding lnaguages but its possible 
+ranging back to terfrm in terms of best practices & how to better ultilize it
+prof mentioned abt s3 bucket & securing our statefiles those are still very key component
+and the ststefile is imp bc it keeps a reocrd of everything u hv deployed & most often what teams would do incase of anything, its pretty easy when many people are using 
+statefile for them to be corrupted.... 
+
+
 BOOTCAMP January 3
 
     CREATING ROLES IN GITHUB
@@ -2626,7 +2717,20 @@ problem, i have now become the escalation point , they have to refer to me to en
 thats a project you are proud of , how you used ansible to ease configuration mgt in your env & to take automation to the next level
 
 
+bootCamp25 session with Yvonne
 
+FOr our patching we use ansible , we create playbooks for many things
+
+so i was asigned the task of making an update due to a loj4 issue
+in one of that envi had to do the patching, we had 180 servers, so thats where ansible came in  cos i cannot access 180 servers manually 
+so i made use of ansible, created ansible playbk, inventory, where i was just calling out all of the ip addresses & equally created task within it where am defining yum update
+like you can create playbookfor yum update, so i created that for that patch
+i think i made most or all of the patches within a day or half a day, which was a lot simpler, am using ansible
+
+16.45
+so just look into integrationS of ansible & AWS , hw we ensure communictaion
+how do you ensure that communication btw the tool or just creating a host, your task , your handler within ansible
+so play around with that
 *************************************************************************************************************************
 
 
@@ -2679,6 +2783,116 @@ if you look at it we have touched most of the things that we should discuss abou
 
 **********************************************************************************
 
+bootCamp25 session with Yvonne
+
+  RANCHER
+we eequally have nexus to push our artifacts to
+we use k8 for ochestration & we use a lot of ranccher, dashboard to see & mg8 all of our cl8
+so its definitely similar to everyting we have learnt in school ill say the only diff is looking at it on a wholelistic/general perspective
+
+11.23 SO usually with k8 you would eithr use things like rancher to be able to visualize bc its kind of hard to see everything thats within your cl8
+to see your Ns, any applications that hav been deployed easily, so we use rancher for that
+so you would either use rancher or k8 dashboard, so k8 equally has a dashboard that you can use to access your cl8 to see whter you appl have been deployed, to see your 
+services and just access individual Namespaces so the same principles go
+
+i remember we had, we call them PAT session, it was knowledge transfer session, one of my co worker was going tru k8, it reminded me of our k8 class 
+cos literally we started with the control plane, its the master nod ethat we have,  same principle, dnt think that you are missing out anything
+
+
+            RKE
+          All of our kubernetes clusters are RKE, thats rancher kubernstes clusters that we use so rancher is already incorporated in it & we just use a dashboard to access it
+smt if we want to do new deployment or just test to see if our replicas are wroking or to see if a new pod will be regenerated after its killed
+its easy to just go to your rancher dashboard board kill all of them & see how they are recreated back, so we do that we use a lot of things for monitoring
+we equally use promethus, we use NEGUX to monitor our services, We equally are currently onboarding as well to ansible tower so thats going to be new to the team
+so a lot of things are going to move to ansible tower for us
+
+
+20.45 while using k8 do you deploy to tomcat?
+yes we deploy to tomcat mostly
+**************************************************************************************************
+
+bootCamp25 session with Yvonne
+     IS ORIENTAION PROVIDED????/
+SOmetime will gradually walk you into it but i was on a team that didnt, so it depends on the team
+another thing to do in situation like that is to start asking if they have any run books or if they are on confluence, do you have any confluence pages o you can point 
+me to fo rthis resource
+some team are really good at documenting things & some are not so it does vay from across teams 
+
+
+23.43  DO YOU HV PARTICULAR JOB ROLE OR you work on all the applications
+
+my team is a bit of everythin, sometimes am working as devsecop , my teams is called a devesecop team, but we doing devesecop & SRE as well
+so we setting up all of our monitorings, all of the alertings, we are equally working on the security side of it where we are doing all the patchings, updates
+a lot of remediations for all of the servers, so have regular scans where its scanning all of our applications, all of the host & those scans do pick up a lot of issues & 
+those scans do pick up a lot of issues & we do remediations & resolve any vulnerabilities that come up from there 
+
+And on the devops side of it, cos devsecops team we all are working on diff microservices so within my team, i think we have currently 20 diff microservices that we are 
+working, they are all integrated in some form but everybody is been assigned diff microservices to mg8
+eg mine starts from , developers will write their code under microservice & send it to us 
+my focus is to getting infastructure provisioned for it as well as somehow, we have a testing team but our team still test functionality & work through integration & 
+equally using for endpoint management we use ngnix so same thing, ngnix ngnix ingress for routing
+so ill create those endpoint the main thing that the developers and the database team really care aboutfor the microservice a lot of the time is just are they able to hit
+those end points so doing all of that integration on your microservises that is assigned to you is equally part of your role
+so it spans across from backend to frontend vice versa so we are integarting all of that and doing testings on each of them
+so currently as the microservices are increasing its been shared accross the team 
+
+
+
+27..00   standard way if we are starting off smt new we start from the dev env
+test it out der its like a play env, wher u can creaete ec2 instances there, you can test out any of your scripts or any code or anything you are working on
+and as its working we do migrations to the staging env & fmr der to the prod env
+the crucial envs currently are mostly staging & prod 
+prod is definitely key but most often what has worked in the staging env is what is been migrated to the prod env
+we all work on this env & everybody is given access to ittt
+
+*** the only thing is that when you leave from landmark & you are interviwing/working , usually we go in at a senior level
+and the senior level usually comes with that level of confinement so they give you access as well to the prod env
+smt some team will withhold it while some will say hey your are a senior engr we are giving you access to everything
+but just be very wise in that regardds interms of knowing thattest our things in the dev env once it works its migarted to the staging env 
+ usually migration to the pro, that decision usualy comes from mayb a manager or higher to say ok this has worked, lets migrate it to prod & lets get it to go live  
+
+
+                          AGILE ENVIRONMNT; all about ticketing
+
+28.34      in terms of project on a monthly basis we use scrum so its an agile env where tickets do comes up & tickets are assigned to you 
+  anothe rneed to you need to learn is that every ticket assigned to you has a story point,  story point they always say this is 2point
+usually a point is equivalent to a day, if they tell you 0.5, the expectation is for u to do it in few hours thats another thing to bear in bear 
+anything you are working on in an agile env there is that expectation for you to create a ticket so that they can track your work 
+so you can either deal with teams that have scrum managers or you reach out to a scrum manager they help you create a ticket 
+sometimes somehing can be assigned to you and they will ask how many point do you think you can do it in 
+so equate points to things & you will hv a wait, if somebody says its 2points they expect you to turn it in 2days. so it varies
+if its an agile env its usually a ticketing format, tickets are assigned to you, you are expected to workout on the ticket 
+somtimes if its frm another team, you will work the ticket, test it with the person, get the confirmation that its working & then close the ticket
+
+Another thing i will say is weigh the dynamics and the structure of your team, if you see that your team is full of peoeple that seem to
+work things through quickly, they are always on top of you finishing project or finishing assigned task to you, it brings more consciousness
+that i need to work fast or i need to get clarifications on the ticket early so am not wasting time trying to find out what it is when i could have 
+asked about it early
+but usually if you are assigned a ticket and the ticket doesnt have a lot of content within it alwasy reach out early so that you get the content
+so that you are not tuning around wasting time when they expect you to delivery
+
+
+
+31.35             ANY CHALLENGES ? 
+YES there are challenges in everything
+ill say a lot of the challenges are expectations as well as time allocated to things
+iil say the more mastery you have on stuff before work ill say will be a lot easier to approach it 
+the more you master or understnd the prior to work the quicker it will be for you to integrate at work 
+
+ The challenge comes when you are learning new things & you are expected to deliver those things while learninf
+or thats where you are struggling for time
+another thing to work env is personality, there are personality clashes to diff people & how they approach stuff 
+so just learning how to seperate peoples personalities from the actual task that is put in hand for you to do
+
+
+HOW MANY ARE YOU IN YOUR TEAM & WHATS THE JOB ROLE
+ MY team has been flunctuating  a lot, everybody is deveSecOp but there are people taht are assigned more on the security side while some on the
+devops side but its a large team
+
+
+
+
+***************************************************************************************************************
 
 
 interview question bootcamp dec19
