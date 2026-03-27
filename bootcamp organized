@@ -2287,7 +2287,7 @@ labels:
 app webappNode
 
 therefor bc the replica in the deployment says 1, the scheduler will schedule a single webapp on the PublicSN2
-and if  the pod goes down the controller manager recreates its
+and if the pod goes down the controller manager recreates its
 
 
      3)           EXPOSING THE APPLICATION USING OBJECT CALLED SERVICE 
@@ -2323,7 +2323,7 @@ Thats how the service flows into the cl8
 aii)     CREATE A LB SERVICE
 but inside our cl8 we have created a service of either type nodePort or lb; Loadbalancer service
 Now we have LB service called webSVC 
-so when traffic gets to it the ELB, it will immediately identify the service involved ie webSVC & route traffic to the service 
+so when traffic gets to it the ELB, ( i bliv we set the elb up in aws) it will immediately identify the service involved ie webSVC & route traffic to the service 
 Now traffic is routed & once traffic comes here (webSVC) via this service we can discover our appl running (Webapp)
 29.00  so service routes traffic to the pod (web)
 similarly, the webapp needs to talk to the db
