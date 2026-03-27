@@ -1083,7 +1083,79 @@ ngnix ingress is a pod so the pod will be hosted on a node
 inside my cl8, we also create an ingress resource, this is a k8 object
 with the resource we define how traffic is routed
 now this lb still within the cluster since we are heavy on AWs, we use another AWs global service which we will map with the lb to create Arecord
-so we are creating recordset, so in route53, we 
+so we are creating recordset, so in route53, 
+my loadbalancer url , very long so instaed we create recordset & we have a domain name called web.app.com
+
+39.00
+so because we have this ngnix ingress which is a layer7 loadbalancer & can support multiple backend appl 
+such that if we have lets assume our webapp & another frontend application like; myapp
+so these are the applications that we have & we have other ports for myapp, so i can create clusterip for myapp Service; myappSVC
+***that is only possible because we now have an external service which can be used which is my loadbalancer 
+these are pods that should be accessed externally but what are we using?
+since we have ngnix ingress, we have defined rules traffic can be routed, 
+therfore we create recordset; in our rules
+we say smt like if somebody type my.app.com, the service should be routed to myappservice
+so these are record set that are been created, so here is our Arecord
+then in the routing rules & our ingress class:ngnix
+
+*****so we give the endusers the hostname we have created; web.app.co, my.app.com, sp.app.com
+this is how the routing is taking place, so we can have multiple services, this is because we have an applictaion load balancer deployed in cluster
+and this gives us an additional layer of security because security is inherent in our env
+
+and it also eases routing because if we are going to be having multiple external loadbalancers that will be a prolem
+so with one load balancer, if we have multiple microservices we are able to easily access them
+
+but take note that, when it come sto routing, how many kind of routing is supported by an application load balancer
+1)host based routing
+2) path based routing
+
+so we have defined host based routing above
+
+*** if we were going to create path based routing
+it could be app.com, everything here is app.com, we just have app.com
+app.com/sp
+app.com/db
+   
+**so this path based routing where you have a single host name with multiple path
+app.com/ .... if i have just this, it is the root path
+
+so either we go for hostbase routing or path base routing but this is going to support multiple applicatons
+so the interview question was for you to dwell more on how do you expose microservice application
+
+
+45.50   now ot an extent we can use service mesh, its going to help us to be able to see how, because if you look at our cl8 now, you will realise that there are so
+may services and we are talking about 2applications so you can have like 10 diff applications so how can you mg8 them, we can equally use another add on called service mesh
+
+i think we already have a video on that, am goin to forward it so you see how we can use service mesh & istil to achieve the same process
+just to take this guy to the next level
+
+
+46.54   the application we deployment using the jenkins docker k8 integration, whether that is a microservice application bc the deployment, obviously this is more
+secured but its slightly diff,so is that a microservice application??
+
+the fact again is that we presented a prototype, what we deployed, we presented a prototype interms of deployment so you can explain that to be a microservice application
+becasue who is doing the development?  developers are writng the code thats why anndrea, wyou should not talk docker file for developers, you talk about developers when
+it comes to writing the code, modifying it, again the codes are developed in java
+
+lats asuume that developeers have written the code for us to deploy an application that is archited as a microservice application, 
+it doesnt matter whether it is microservice or monolithic but when it is microservices, it menas that you have one appl that have diff modules
+so you can either login,register.. etc
+
+but that is an application that once they are deployed they have to communictae with each other 
+& in kubernetes how do applications communicate with each other? they communicate using their service name to discover each other
+be it a microservice application or a multiple applciation, its the asme concept
+
+so if you wnat to talk abt the project we did from a micro service perspective, you will just be informing them that 
+i in my env, am managing federated microservice application
+theose application, we have out team of developers their taks is to write/develop the appl & commit the lastest version of the application to github which is our scm
+then you pick up from there..
+
+
+49.50
+
+
+
+
 
 ************************************************************************************************
 
