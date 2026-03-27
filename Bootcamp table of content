@@ -985,7 +985,7 @@ what lib did you use to grab/ have access to your s3 bucket    ....
 
 
 Proff
-19.00     HOW DO YOU EXPOSE YOUR MICROSERVICES APPL ?
+19.00            HOW DO YOU EXPOSE YOUR MICROSERVICES APPL ?
 Student you can use the netwrk services to expose your microservices like Nodeport, loadbalancer
 
    ASlso explained in 'kubernetes 6, kubernetes 12 ngnix ingress' & tomcat 1and2 AND Nginx
@@ -994,6 +994,7 @@ Student you can use the netwrk services to expose your microservices like Nodepo
 proff.. this quetsion, if you have to explain evrything in the end to end devops life cycle, it could be good but t could not really pass the msg that those guys 
 are looking for bc..
 
+                                 Types of kubernetes services
 how do you expose your micro service appl ?
 thank you for that question we use k8 in our env to ochestrtae containers; thats an umbrella statement
 once our appl are deployed, ther are diff ind of services which k8 support which we equally implement them in our env
@@ -1011,13 +1012,46 @@ and since we are using k8, k8 comes with inherent service & if you look at servi
 it supports loadbalancing all the services (clusterip, Nodeport, loadbalancers, external name, ngnix ingress)supports load balancing 
  what does that implies?
 
+
 lets look at the implictaion of service discovery in our env
 22.44  using a diagram to explain
 
-so we have webapp pod; maybe node1, node2, node3,
+
+*****OUR WEBAPPS
+so we have webapp pod; maybe webapp145, webapp0776, webapp7876,
 so this single application got multiple pods, these are a set of unique pods running the same application, these are just diff replicas
 so how do we expose these application?
 we already know that we are going to use service, it does not matter the type of service
+
+***OUR DATABASE
+25.00  when it comes to services, we have diff kind of services depending on who wants to have access the appl
+lets assume that we have other applications; db 01, here is my database pod...this is a database application, 
+we are in the cluster, if you want to access the appl it must go through the service
+
+
+                         Internal traffic for the database; clusterip
+                       (so the webapps can communicate with the database)
+the nxt thing is that if you want to access your database appl how is it managed?, we need a service
+lets asumme we have 2pods for database running, its a stateful set, 4 replicas running
+these my webapp needs to communicate with my database pod, these are all microservices & they dont communicate directly 
+the communication is established via a database service & we can use clusterip, so we craete a database service called clusterip DBservice
+so if the the webapps want to talk with to the database it must go via the database service & the service will be perfroming dns resolution acting as a proxy
+so it acts as an additional layer of security
+
+
+                    External traffic for the webapps; NodePort
+so if someone is trying to access from outside the cluster, they want to accesss the webapps, so they will use NodePort service
+the webapps pod are hosted on nodes so we are going to use the nodeport, so we are using the nodeip (nodeip:NodePort) 55.33.99.0
+so for external traffic 
+
+PORT RANGE 
+30,000 to 32676
+
+this is for external traffic, so once it gets into the cluster/ one of the nodes, immediately k8 identifies that the traffic is meant for the webservice & from there
+its routed from any to all of the pods
+
+*** do this type of 
+
 
 ************************************************************************************************
 
