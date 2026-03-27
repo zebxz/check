@@ -948,7 +948,7 @@ TELL me about your self & tell me about the project you are working on are 2 dif
 lol
 29.00 65years old woman
 
-1.08  
+1.08    Landmark existence
      we have been in existence for over 2decadess and our main job include managing a fintect client
  so we have a lot of fintect clients we do mg8, whicg means taht we use financial technology to help them
 like you hv a coy like paypal that wants you to help them automate their payment gateway
@@ -997,14 +997,6 @@ to have the understanding of using Agrocd & gitops to deploy appl in k8
 
 34.48 if you talk about kubernetes & not talk about helm you limit yourself
   how does helm work?
-helm is able to generate k8 manifset file & those files comes with the values file & the template 
-so if you are dealing with helm there will be a values file & some templates which will be renderd as far as k8 is concerned
-those are very imp aspect to take note of  
-
-when you look at helm u realise that if you are going to write a k8 manifest file , we can use helm for that purpose
-if you wnat to deploy an appl ther are a lot of k8 objects that are involved 
-lets assume you want to deploy and expose an application or deploy & expose micro service appl
-what are some of the manifest files you should write just for this one job
 
 
               TYpe of application deployed.. springapp
@@ -1015,25 +1007,6 @@ and springapp requires a data base & in this case its mongodb
 so if you are going to deploy this this appl; springapp & mongodb database, a lot of objects are involved in this deployment
 eg for springapp deployment some of the objects involved
 for mongodb database some of the objects involved 
-statefulset  if your not going for statafulset you can use replicasets
-PV/PVC/Sc        ... 38.14
-configmaps
-Secrets
-next for exposing the appl
-ingress .. probably you want to use ingress and once you have ingress you are using a clusterip service
-ClusterIP service 
-
-similarly for springapp
-deployment ... 39.38.. when we use deployment, under deployment there will be replicaset,  it will create replicaset & replicaset will deploy the pod
-configmaps
-secrets
-ingress
-doesnt need to maintain its state si this is not needed (PV/PVC/Sc)
-all of this manifest file have to be written 
-
-and to expose this appl, we are deploying ingress & a clusterip service
-so all of these objects need to be created, a lot of manifest file is involved 
-now if i want to deploy i could just do;
 
           Helm command to create the deployment 
 helm create springapp   .... am creating a springapp deployment
@@ -1051,15 +1024,7 @@ we configure who has access to a deployment/k8 security by using RBAC     .. pro
 therfore helm deploys the application, exposes the appl & secures the appl 
 so there is role base access control, who have acess to the appl 
 
-         objects for RBAC
-under RBAC , we have;
-namespace              ...who is going to have access to which namespace
-service account         44.00.. like under service account, i can create a a service account for my springapp deploymnet & 
-role & roleBinding        in this service account i decide to create a role, i create a role that can mg8 the springapp deployment
-clusterRole & clusterRoleBinding     .. then in that role, i bind the role to a particular grp of usr, lets asume we hv some applications runing in prod 
-                                     so we create a role, that role is permitting you to mg8 that particular deployment so i bind that role to my devops engrs 
-                                    thats role binding, meaning it will be restricted to a particular ns,if it is clusterRole&clusterroleBinding its for the entire cl8
-
+*** objects for RBAC
 SO al of this object is created as part of the deployment & helm is able to do all of this for you
 
 helm can also automate using HPA     ... 43.26
@@ -1071,70 +1036,19 @@ so helm is deploying all of this object for you
 44.56 it is a lot of cummbersome job to write a manifest file for all of this, 
 so helm create springapp, it generates the entire manifets file
 so all this manifest files rEq For all the objecst, helm will generate it for you
-when its generated it comes with default value 
 
-helm create springapp 
- generate - template /
- default value like  deployment.yaml
-service.yml   ... under this in the service type, it may choose a default service type
-in the default value if you have choosen ingress as yes, it will create ingress.yml
-because in the default values it will ask do you wnat to create persistent, persistent vol& all of that ? 
-if you say yes
-it will create PV,PVC.SC.yml... these are 3yml files
-so all of these is been craeted 
-
-in Rbacck all the manifest files will be created but they will hold default values ... 47.00
-
-for deployment
-deployment.yaml
- image:ngnix
-but if the image you wnat to deploy is mylandmarktech/hello 
-therefor i have to change it, these are default value
-
-service.yml
-targetport
-
-also if the tag is a default tag, you change it as well
 
 
  49.00              the changes take place in the value file
 
-All these changes are not taking place in the template but in the values file called values.yml
-Once i change the vlaue in the values file evrything changes 
-it changes in both the deployment & the service.yml
-valuse can also be changed from false to true & vice versa
 
 
   51.30     create helm repose/we have helm chart that can be reused in the future
- once am done with this deployment, i have helm chart that can be reused in the future for springapp & mongodb
-so we have to create helm repos (github pages/nexus)& push the chart & in the future we can pull the chart & use it
 
-we have the helm commands we can use for all these
-each of the helm chart (repo) contains the template file & the values file
-once i add the helm chart repo & they have been changes into the helm chart like new pushes into the helmchart
-we can run helm update repo ... it updates the repo
-once the repo is updated
-helm install and it dploys all th yml files generated
-
-if i want to modify my value file before deploying with helm 
-helm show values myapp > myapp-values.yml    ie redirect it to this file
-once i create the new file & make some changes
-to update the deployment ; helm update springapp myapp -f
-may what have changed inthe value file is just the version, thats simlpe, i have deployed the application
-
-if i want to deploy a new version of the application or i no longer need this version anymore
-helm uninstall ....& all the objects that was created will be destroyed .. just like terfrm 
-it will destroy everything that was created for the deployment
-
-so if you going for an interview this is what helm is involved
+****** so if you going for an interview this is what helm is involved
 
 
    3 components of helm
-CLI
-Charts
-helmrepos
-  these are the 3 elents involved in helm
-
 so if you are asked to deploy your appl in k8, if you know how to generate manifest file using helm, 
 this is going to be one of your fastest option for your deployment to happen
 
@@ -1147,57 +1061,23 @@ but ill share one video & nxt week we will look at it again
 1.22.14   jira for bug tracking, confluence for documentation
 from devops engr to senior devops engr
 
+
 1.35..  we covered ngnix ingress in k8, also in deploying appl in tomcat in a multi tier architecture
   where we hv the frontend which is a webserver & the webserver we have installed & configured the ngnix software that determines how traffic is routed to the 
 app servers running in the backend, thats smt you can talk abt if you are asked at all
 
 
-                           3MASTER NODES CLUSTER
-there are other options in ngnix , i didnt do the demo in ths class 
-but you can use an ngnix webserver & create a multi master node kubeadm cl8
-what that implies is that i create a kubeadm cl8 with 3masters 
-that 3masters all have control plane so there are 3control plane for each of those masters 
-the reason for doing that is so that if smt goes with one of the master ngnix in the frontend can route traffic to the other masters
-so in this case traffic is not routed tru the round robbin algorithm, its routed using a diff parameter like fail over
-because when you are routing traffic using ngnix, the default routing option is round robbin
-where if there are 3000 request that the webserver is receiving  & there are 3appservers that it has to route traffic to so it can apportion the request evenly
-1000 to appserver1, 1000 to appserver2, 1000 to appserver3
-in the case where you have 3master nodes, those master nodes 
-this are other use cases its just we dnt use self managed cl8 anymore, we hv gone pass that level, so we cant be ..
+***** 3MASTER NODES CLUSTER
 
 
 ******
 1.37.40 diagrammatic explanantion of the 3master nodes 
-this could just be for more security of your cl8
-the 3maters all have the control plane
-lets assume there is only one masternode in my cl8
-we could decide that traffic does not get to the master node directly, if it wants to talk to the master it goes tru a webserver
-so traffic comes to an ngnix webserver like thsi so it as a proxy
-therfore it increases the security of the master node bc traffic goes to the master via a proxy
-and when traffic comes to the master we can now mg8 the number of pod
-workload in the cluster is been manged by the control plane .. ** i bliv thats the master
-
-but the problem is this is a kubenetes engr , this is her job
-the question now is that this type of infastructure if smt goes wrong with our master node there is a problem
-do we have any fail over, have we made arrangement to recover from such a disaster, no our infastructure is not permitting that to happen
-so what do we do?we come with a multi node master cluster
-bc ngnix is suppose to do loadbalancing
-so now the way our traffic is conditioned is such that it comes to the master node 
-so there are conditions which says that the frontend is the ngnix webserver 
-the backend is the master nodes.. master node1, master node2, master node3
-but traffic first goes to master1, if it cant talk to master1 then it goes to master2, if both 1 & 2 are down then thats the only case it goes to master3
-because we dnt neeed 2 control planse in the cl8, 1 is sufficient
-if smt goes wrong with master1 it goes to master2,, thats how traffic is managed & from there the cl8 is managed
 
 
 1.43.30                jenkins engr
  lets assume you are trying to manage some critical services, you are in charge of managing jenkins
 we want to assess jenkins server, can we decide to assess jenkins via an ngnix webserver , ofcourse yes
 
-you may be using ngnix, if u want to access your jenkins env, what do you do..for you to access jenkins for ci/cd automation 
-traffic is not doing directly to jenkins, its routed via a webserver , this is for more security
-so you can see what the webserver does 
-the via server now routes traffic 
 
 
 
@@ -1233,91 +1113,38 @@ pls share terfrm vault video
 
 
 0.00                   SIMILARITY BTW GITLAB/GITBUCKET/GITHUB
-her team currently uses bitbucket but its similar to github in terms of approach & evrything is still git so we are still using all the git command
-one of the projects we are using gitlab, the only diff is that gitlab has its own ci/cd pipeline within it so you just integrate it & it runs ci/cd through gitlab
-so thats just the diff but evry of the source code mgt tools still use the regular git command that we are used to
-so we still use do pull, pushes, commit, branching sys so evrytin is still the same 
-so frm what am seeing industry wide interms of source code mgt tools, whatever one you are using is still built on git 
-so out der currently there is gitlab, gitbucket, github, there are many other ones, thsoe are the 3 that have touched leaving school but everything is same principle
 
 
                              JENKINS
-in our wrk env we use jenkins for our ci/cd pipeline, literally we use jenkins for almost everything thats the funny thing
-so even for terfrm init, plan , apply, my team specifically we create jenkins job for all of that  just to mk sure we can see what its doing, 
-we can stop  it ahead of time & we can continue it 
-most of our deployments are not that local, usually its easy to know who did what, when did you do it how do you do it, lol, so thats another trap to it 
+
 
 
                                    TERRAFORM
-so interms of uniformity acrosss so we still use terfrm, we use trfrm heavily for infrastructure provisioning.
-have used trfrm as well for patchng, to pass user data, 
-its a little bit more complicated with trefrm bc you hv multiple infastructure that you are provisioning but its possible
-mostly what we did is using json file sto incoporate terfrm & json as well just many other coding lnaguages but its possible 
-ranging back to terfrm in terms of best practices & how to better ultilize it
-prof mentioned abt s3 bucket & securing our statefiles those are still very key component
-and the ststefile is imp bc it keeps a reocrd of everything u hv deployed & most often what teams would do incase of anything, its pretty easy when many people are using 
+
 statefile for them to be corrupted.... 
 
 
                             GITHUB
 
-4.42  most often what we do as a team as well is creating branches out of the main master branch or the development branch do your fixes on it, do your commit & usualy 
-people have to review any pull request, so you create a pull req its been reviewed & then an allocated person or reviewers wil review it to ensure there are no conflicts 
-before any merch is made so its still the standsrd branching system that we all have
-so multiple people are doing multiple fixes at the same time & multiple people are doing pushes to a specific repo, so its key
 
-so what i will say is start going over basic things like git interms of doing a gi tpull
-go to the main landmark repo, do a pull, fork it to yours, create a branch , bc its easy to think when you see someone else doing it & its like yea its not that complicated
-until its your turn & you are asked to share your screen and asked to do a pull, do a push, do a commit, do a rebase & you see you are having a lot of issues because you have 
-not practiced those aspart
-
-so be more practical interms of your use, do your push, create a pull request, commit it, & see if you have any conflicts frm there you will know what branch am i on, making
-sure you are not on a master nobody shud be working on a master branch, but most often in a general work setting, once you are already working on master it shows you are not
-experienced like that, so this are little bit of things that people look at
 
 
 
                           VSCODE
-Another thing is IDE, like vscode that we use
-so start looking at extensions on your vscode, am using terfrm i definitely need trfem extensions, am using k8, i need k8 extensions in it
-i want to make sure that am having no linkedin issues so i need to put a linked extension & i want to make sure as well that my formating is right 
-so those are basic things as well, extension as well on vscode that we just need to think about and start capturing those, so you dont cm in and youa re looking like a new bee
-you are doing a push, & you have a lot of formating issues which are things that just an extenson addiction on your vscode can help elevate that aspect for you
+
 
 
                             JENKINS
 
-  in my team we are heavy on jenkins file so we not doing any like, you know how normally we are building form jenkins, w ednt do any build form jenkins
-we create a jenkins files, these are equally stored in a scm like github, so we sva ethem there for reuseability 
-incase of eg we create thing slike jobs, rather than going into jenkins & going to configure & setting up your parameters within your configure & all of that 
-most from what am seeing industry wide, its much more flexible & easier when you have a script, so jenkins file script where editing is done on the script & it deployed
-easily so it doesnt cancel out, what we hv learnt is really key interms of how it functions/ works
-so still revice tose aspect & say ill go back to jekins, jenkins is really really key & thats why they always ask what is groovy scripting experisnce bc they want to see
-much you can work within jenkins , so thats another thing with jenkins, we create our pipelines,within our pipelines is the same thing we hv learnt 
-maven to do our builds, incoporating sonarqube, we are using a diff its still a nexus tool, we are using nexus IQ but its definitely doing what sonarqube is doing for just 
-capturing any bug & stuffs like that so we incorporate that within our pipeline 
+  
 
 
                                   RANCHER
-we eequally have nexus to push our artifacts to
-we use k8 for ochestration & we use a lot of ranccher, dashboard to see & mg8 all of our cl8
-so its definitely similar to everyting we have learnt in school ill say the only diff is looking at it on a wholelistic/general perspective
-
-11.23 SO usually with k8 you would eithr use things like rancher to be able to visualize bc its kind of hard to see everything thats within your cl8
-to see your Ns, any applications that hav been deployed easily, so we use rancher for that
-so you would either use rancher or k8 dashboard, so k8 equally has a dashboard that you can use to access your cl8 to see whter you appl have been deployed, to see your 
-services and just access individual Namespaces so the same principles go
-
-i remember we had, we call them PAT session, it was knowledge transfer session, one of my co worker was going tru k8, it reminded me of our k8 class 
-cos literally we started with the control plane, its the master nod ethat we have,  same principle, dnt think that you are missing out anything
 
 
 18.39      RKE
           All of our kubernetes clusters are RKE, thats rancher kubernstes clusters that we use so rancher is already incorporated in it & we just use a dashboard to access it
-smt if we want to do new deployment or just test to see if our replicas are wroking or to see if a new pod will be regenerated after its killed
-its easy to just go to your rancher dashboard board kill all of them & see how they are recreated back, so we do that we use a lot of things for monitoring
-we equally use promethus, we use NEGUX to monitor our services, We equally are currently onboarding as well to ansible tower so thats going to be new to the team
-so a lot of things are going to move to ansible tower for us
+sometimes if we want to do new deployment or just test to see if our replicas are wroking or to see if a new pod will be regenerated after its killed
 
 
 20.45 while using k8 do you deploy to tomcat?
@@ -1326,72 +1153,30 @@ yes we deploy to tomcat mostly
 
                   HELM
 i See somebody asking about helm 
-so this perticular project we are working on we are not using helm & thats smt am pushing for bc jenkins pipelines are a lot completed bc we are not using helm 
-we are using a lot of env substitions inorder to cover up for helm,  t my manager doesnt relaly like helm so hes pushing bk against helm
-a diff project i worked on we used helm alot more but current now we are not he complexity of it is great as well  cos everytime within our pipelines we are having to do env 
-that smt i leanrt too as well writing groovy scripts to be able to substitue any syntax errors so theres a lot thats been incorported
-so helm is a lot better as a k8 mgt tool
 
 
                            DOCKER
 13.50
 
-   MY Team equally supports developers, we set up local env for developers to be able, so we can create like containers
-we create virtual machines for them to be able to do testing locally without having to alway refer bk to our team for support 
-so its pushing me a lot bk as well to learn a lot about virtual machines, setting up one functionality & just integration as well as databases
-another thing that this env has pushed me a lot to is databases 
-its was just like mongodb thats just what we have use right, but currently my team is heavy on postgre & so many other products that we have not used before 
-so its a learning curve but one thing ill say its been open minded & creating time to learn so its always learning, learning, & ore learning 
-
+  
 
               ANSIBLE
-15.15   FOr our patching we use ansible , we create playbooks for many things
-
-so i was asigned the task of making an update due to a loj4 issue
-in one of that envi had to do the patching, we had 180 servers, so thats where ansible came in  cos i cannot access 180 servers manually 
-so i made use of ansible, created ansible playbk, inventory, where i was just calling out all of the ip addresses & equally created task within it where am defining yum update
-like you can create playbookfor yum update, so i created that for that patch
-i think i made most or all of the patches within a day or half a day, which was a lot simpler, am using ansible
-
 16.45
-so just look into integrationS of ansible & AWS , hw we ensure communictaion
-how do you ensure that communication btw the tool or just creating a host, your task , your handler within ansible
-so play around with that
+
 
 
 
 19.00                 IS ORIENTAION PROVIDED????/
-SOmetime will gradually walk you into it but i was on a team that didnt, so it depends on the team
-another thing to do in situation like that is to start asking if they have any run books or if they are on confluence, do you have any confluence pages o you can point 
-me to fo rthis resource
-some team are really good at documenting things & some are not so it does vay from across teams 
 
 
 23.43  DO YOU HV PARTICULAR JOB ROLE OR you work on all the applications
 
-my team is a bit of everythin, sometimes am working as devsecop , my teams is called a devesecop team, but we doing devesecop & SRE as well
-so we setting up all of our monitorings, all of the alertings, we are equally working on the security side of it where we are doing all the patchings, updates
-a lot of remediations for all of the servers, so have regular scans where its scanning all of our applications, all of the host & those scans do pick up a lot of issues & 
-those scans do pick up a lot of issues & we do remediations & resolve any vulnerabilities that come up from there 
-
-And on the devops side of it, cos devsecops team we all are working on diff microservices so within my team, i think we have currently 20 diff microservices that we are 
-working, they are all integrated in some form but everybody is been assigned diff microservices to mg8
-eg mine starts from , developers will write their code under microservice & send it to us 
-my focus is to getting infastructure provisioned for it as well as somehow, we have a testing team but our team still test functionality & work through integration & 
-equally using for endpoint management we use ngnix so same thing, ngnix ngnix ingress for routing
-so ill create those endpoint the main thing that the developers and the database team really care aboutfor the microservice a lot of the time is just are they able to hit
-those end points so doing all of that integration on your microservises that is assigned to you is equally part of your role
-so it spans across from backend to frontend vice versa so we are integarting all of that and doing testings on each of them
-so currently as the microservices are increasing its been shared accross the team 
 
 
 
+               DEV/STAGE/PROD
 27..00   standard way if we are starting off smt new we start from the dev env
-test it out der its like a play env, wher u can creaete ec2 instances there, you can test out any of your scripts or any code or anything you are working on
-and as its working we do migrations to the staging env & fmr der to the prod env
-the crucial envs currently are mostly staging & prod 
-prod is definitely key but most often what has worked in the staging env is what is been migrated to the prod env
-we all work on this env & everybody is given access to ittt
+
 
 *** the only thing is that when you leave from landmark & you are interviwing/working , usually we go in at a senior level
 and the senior level usually comes with that level of confinement so they give you access as well to the prod env
@@ -1402,36 +1187,10 @@ but just be very wise in that regardds interms of knowing thattest our things in
 
                           AGILE ENVIRONMNT; all about ticketing
 
-28.34      in terms of project on a monthly basis we use scrum so its an agile env where tickets do comes up & tickets are assigned to you 
-  anothe rneed to you need to learn is that every ticket assigned to you has a story point,  story point they always say this is 2point
-usually a point is equivalent to a day, if they tell you 0.5, the expectation is for u to do it in few hours thats another thing to bear in bear 
-anything you are working on in an agile env there is that expectation for you to create a ticket so that they can track your work 
-so you can either deal with teams that have scrum managers or you reach out to a scrum manager they help you create a ticket 
-sometimes somehing can be assigned to you and they will ask how many point do you think you can do it in 
-so equate points to things & you will hv a wait, if somebody says its 2points they expect you to turn it in 2days. so it varies
-if its an agile env its usually a ticketing format, tickets are assigned to you, you are expected to workout on the ticket 
-somtimes if its frm another team, you will work the ticket, test it with the person, get the confirmation that its working & then close the ticket
-
-Another thing i will say is weigh the dynamics and the structure of your team, if you see that your team is full of peoeple that seem to
-work things through quickly, they are always on top of you finishing project or finishing assigned task to you, it brings more consciousness
-that i need to work fast or i need to get clarifications on the ticket early so am not wasting time trying to find out what it is when i could have 
-asked about it early
-but usually if you are assigned a ticket and the ticket doesnt have a lot of content within it alwasy reach out early so that you get the content
-so that you are not tuning around wasting time when they expect you to delivery
-
-
+28.34   
 
 31.35             ANY CHALLENGES ? 
 YES there are challenges in everything
-ill say a lot of the challenges are expectations as well as time allocated to things
-iil say the more mastery you have on stuff before work ill say will be a lot easier to approach it 
-the more you master or understnd the prior to work the quicker it will be for you to integrate at work 
-
- The challenge comes when you are learning new things & you are expected to deliver those things while learninf
-or thats where you are struggling for time
-another thing to work env is personality, there are personality clashes to diff people & how they approach stuff 
-so just learning how to seperate peoples personalities from the actual task that is put in hand for you to do
-
 
 HOW MANY ARE YOU IN YOUR TEAM & WHATS THE JOB ROLE
  MY team has been flunctuating  a lot, everybody is deveSecOp but there are people taht are assigned more on the security side while some on the
@@ -1440,7 +1199,7 @@ devops side but its a large team
 
 36.00   
 
-1.14.24  you cant tell them coy you are working working for 
+1.14.24  PROFF ...you cant tell them coy you are working working for 
 privacy act, against coy policy 
 
               if they ask you in landmark which env do you support 
