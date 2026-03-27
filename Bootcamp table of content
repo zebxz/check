@@ -916,6 +916,58 @@ proff
 librabies is just like a set of code which you can import into python just like functions ,when you talk about, even though python still has functions
 i mean modules as well, you can always import those libraries and perfrom diff operations when you are doing software development with python
 
+
+               DOCKER FILE
+he was asked how he fix docker file that has an issue & he said he will send it bk 
+   
+proff
+8.40   Docker file is not a code, if you push docker file to developers its a serious problem
+
+   what do i have in my docker file ?
+base image 
+FROM/ COPY/ ADD /RUN/ CMD/ USER / ENTRYPOINT /EXPOSE/ ENV/ ARG/ NETWRK / VOLUMES/ workdir
+
+I have keywords in my dockerfile like
+ from, used to define my docker image
+copy, if i need to copy any files from my docker host to my docker image
+add, if i need to either copy a file from my docker host or https location
+run, if i need to execute commands while creating my docker image, i pass the keyword run 
+cmd, these are commands that are executed when creating the containers,with entry point ... cmd & entry point
+ the only diff btw cmd & entrypoint is the fact that cmd you can override, entry point you cannot
+user, by default the docker file runs on the root user, so if you want to change the user you can use the keyword user 
+expose ... normaly this declares the port that the container listens on, the container port
+ENV, if you wnat to pass SOME ENV VAR, use the env
+ARg.. if you want to pass some arguments 
+Network.. we also have netwrk which we went deep into netwrk 
+workdir... where you carry out task, like the pwd where all task are executed
+you can present this to them
+
+
+12.05        HOW to resolve issues occurring in you docker file?
+
+  it is imp that docker file ... based on what we hv spoken before, the entire containerization interms of your containerization experience code can only be 
+based on docker files, which means you leave from in docker, you know with doddcker files to kubernetes
+
+The only thing we use docker to do today is to create images & ship them to image registry
+now what can of issue can occur in the dockerfile
+eg
+you are trying to copy an image, you want to copy a file but the file cannot be found
+or you are trying to copy from an https location & the rest API is no longer available 
+you are trying to copy a file from a remote location online & the file cannot be found thats an issue
+
+what happens when there are so many run instructions that is enabling you to create super large images thats a problem with your docker file, how do u fix it?
+what happen in your docker file if containers are created as a child process which implies that your cmd, your run, you entry point instruction
+you are passing them in shell form instead of an executable form, how do you fix it
+
+what happens if you are running all your stuff as root user & you know that that theres a risk so you decide to change your docker file to add a user
+what could happen if you are using a wrong pod in your docker file to expose your container... eg an appl that listens on port 8080, you are using port 9090
+thats a problem
+if this happens, you deploy your appl, you want to access your appl, you are unable to because the appl is listening on the wrong port 
+becaus eyou defined the wrong pod
+how do i resolve it ???
+you check the docker file, vi into the file and get the file fixed
+if it relates to base images that need scanning you scan it or you use official base image, cos ou cud be passing a base image that is unofficial, mayb someone else 
+in you team did that, so thats a problem..   so you are using images of high risk vulnerabilty 
 ************************************************************************************************
 
 
