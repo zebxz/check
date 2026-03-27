@@ -1050,8 +1050,40 @@ PORT RANGE
 this is for external traffic, so once it gets into the cluster/ one of the nodes, immediately k8 identifies that the traffic is meant for the webservice & from there
 its routed from any to all of the pods
 
-*** do this type of 
+*** do this type of architecture have any vulneribilty risk?
+even though it is very secured, we can improve on the security
 
+based on the service type which of the service type gives more security? is it clusterip or NodePort
+clusterip gives more security 
+
+since you are discussing and trying to dwell more on security
+in our env we use clusterip regardless of whether the appl need to be accessed externally or internally, our service type is clusterip  
+
+32.00 if we using clusterip in place of NodePort for our webservice, it means that service cannot come directly from external sources
+so how does traffic then come in?
+so in our env we deploy a kubernetes pluggin or an operator which is called ingress, there are many types of ingress but we specifically deploy ngnix ingress
+
+
+       HOW IS NGNIX INGRESS DEPLOYED
+It is deployed as a pod
+so we have ngnix ingress controller
+we are working on a Eks cluster or KOBs Cluster which permits us to ultilize other AWs services, thats what happens
+we have ngnix ingress, which comes with a service, it comes with loadbalancer service ie elastic load balancer & its a layer7 load balancer, an application loadbalncer
+so it provides an appl load baalancer
+and you agree with me that , each of the pods are hosted on nodes
+so when you create a lb, is not also on a node but its created in your netwrk, so we have the lb which is created as a service
+therfrore if i want to access my applications ( the 50 million users), their traffic comes directly to the loadbalancer
+so this is a more secured way of exposing your application
+
+
+now when it comes ot the lb, it immediatelys identifies that the traffic is menat for ngnix ingress
+so you wnat to talk to your appl but its going tru ngnix ingress
+ngnix ingress is a pod so the pod will be hosted on a node 
+
+inside my cl8, we also create an ingress resource, this is a k8 object
+with the resource we define how traffic is routed
+now this lb still within the cluster since we are heavy on AWs, we use another AWs global service which we will map with the lb to create Arecord
+so we are creating recordset, so in route53, we 
 
 ************************************************************************************************
 
