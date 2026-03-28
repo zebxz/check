@@ -1163,9 +1163,50 @@ so it creates thing slike login.war
 pay.war
 order.war
 theese are difff artifacts that are created
+this appl has been decoupled
 
-53
+                                  MULTIPLE JOBS IN JENKINS , jenkins can support multiple project
+        **still in jenkins with the same guy we can have multiple jobs
+so we are creating multiple jobs & the job is pulling frm the repository
+so previous job was ebay but this other job is a tesla job which has not been decoupled, it is running as a microservice
+therfore for tesla jenkins will create monolithic artifact
+its creating tesla.war
 
+55.16    jenkins can support multiple project
+one of the project is microservice & the other project is monolithic
+once the artifact is created jenkins runs code quality with sonaqube or sonarcloud 
+but if theres a failure developers are informed to get it fixed
+afterwhich we create backups, all the artifacts are stored in an artifactory either in nexus or jfrog
+be it microservice or monolothic we can back it up
+
+58.oo
+we are working in a containerized env
+so we have predeployment stage ...we are doing containerization with the help of dockerfiles we create a docker image using docker build command
+afterwhich we distribute the imgae with docker push but first you must login... these are imp commands  
+the images are pushed to dockerhub... docker registry like dockerhub, nexus, jfrog, amazon elastic registry;ecr.. these are private registery
+next , deployment is taking place in k8 cluster
+so from jenkins we are running a command like kubectl or we are using a pipeline
+so we are running kops OR EKS, one of this two..
+in our env we go for cluster that are production ready
+so in our cluster we have our nodes
+so for deployment to take place k8 has eg in the node is running on kublet & container runtime, so it is able to get the image that docker has containerized, it will
+pull the imageinto the cl8, these are images the image resgistry
+so k8 pulls the image, creates the container & starts it
+so this is what is happening in the cluster & its able to start the conatiner beacsue there is a container runtime
+so we have a pod  on the pod there is a conatiner, so the images will be pulled, 
+it will pull the image, it will create containers & it will start containers
+so we are creating pods inside the cluster
+
+so can you see clearly the use of docker
+and we are not deploying them using docker run command becasue with docker you cannot scale
+so we are managing both monolitic & microservices
+
+but the interviewer was interested in knowing how do you expose microservice applications, which is what we explained before 
+so you hva eto explain the service discovery path of k8 
+so start by telling them that in your env we use k8 for appl mgt so we expose them within the k8 cluster
+
+
+1.07    WHAT SCRIPTING TOOLS DO YOU USE 
 ************************************************************************************************
 
 
