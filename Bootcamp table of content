@@ -1680,8 +1680,14 @@ in the vpc we have ec2 instances
    D)  we place an appserver in the private subnet..  ( we can place it in any of the private subnet)
 
    E)  For webserver1 to talk to appserver1  (route tables not in any subnet)
-       1) first we create routing routes.. so we create a route table with routes
-    F)  Jumpserver in the public subnet
+       1) In the private subnet:
+          first we create routing routes.. so we create a route table with routes
+           Local route 10.0.0.0/24    
+        2) In The public subnet 
+             route table for internet  ... permitted via IGW
+                10.0.0.0/24 & 0.0.0.0/0-IGW
+    F)  Jumpserver in the public subnet & access is given to the engr who wants to access it via security group
+
 
 2nd VPC 
 we have only 2private subnets
@@ -1714,14 +1720,26 @@ so we advice them, let us to create another vpc with no overlapping cidr
 
 1.18.10          FOR TRAFFIC TO LEAVE THE WEBSERVER TO THE APPSERVER
            2 Things should be done
-           1) route table should be created to support local routing so they can communicate with each other
-                for access within the vpc
+           1) route table should be created to support local routing ..  (local 10.0.0.0/24) this is permitted via the vpc cidr block
+               so they can communicate with each other
+               this is for access within the vpc 
+            2)  Route table for external/ all access.... IGW is permitting the route
 
-1.19.35      AN engr needs to communiacte to the jump server
-            Jumpserver in the public subnet in vpc1
-               
-          
 
+1.19.35      SECURITY GROUP FOR AN engr Who needs to communiacte to the jump server
+            Jumpserver is created in the public subnet in vpc1
+ 1.21.10     create route table to support route from the internet (10.0.0.0/24 & 0.0.0.0/0-IGW)
+            the route table is for external or all access.... IGW is permitting the route
+1.21.55       the route table created to support local routing .. is permitted via the vpc cidr block & associated with the private subent
+          Therefore the route table that permits traffic from the internet will be associated with the public subnet in VPC1
+         Therfore traffic from the engr goes to the jumpserver bc the route permits that to happen
+              but is the route permission sufficient? the route table is not all that is needed
+
+1.22.30     FIREWALL
+we have 2layers of security 
+the first layer is at NACL, this stands in front of the subnet ...mee(public)
+
+lets assume that the engr paul is trying to carryout some admin task, so he has to ssh
 
 
 
