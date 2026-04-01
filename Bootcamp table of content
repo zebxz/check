@@ -1737,9 +1737,20 @@ so we advice them, let us to create another vpc with no overlapping cidr
 
 1.22.30     FIREWALL
 we have 2layers of security 
-the first layer is at NACL, this stands in front of the subnet ...mee(public)
+1)the first layer is at NACL, this stands in front of the subnet ...mee(public)
+1.24.30  
+2) Security group
 
+         OPEN PORT 22 in NACL
 lets assume that the engr paul is trying to carryout some admin task, so he has to ssh
+so we open port 22 
+SO we create a rule in NACL to open port22
+This means that traffic from port 22 can get into the subnet 
+ ** the for the server 
+
+         SECURITY GRP FOR TRAFFIC TO HIT THE JUMPSERVER
+On the the jumpserver, we have a security grp so we have to oepn port 22
+
 
 
 
