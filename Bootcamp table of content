@@ -1668,24 +1668,33 @@ because event though you have done all of devops but now they have given you a j
 1.06 to 1.40    AWS network infastructure / Diagram for interview
 
 we hv 2vpcs, we are heavy on sceurity
-1) first vpc
+1) first vpc   
+    CIDR   10.0.0.0/16  
+
 each has a public & private subnet  ..  we can have up to 2 public & private subnet
 in the vpc we have ec2 instances 
 12.19.. we add IGW here
 1.14.56..   we place the webserver inside the public subnet
-we place an appserver in the private subnet..  ( we can place it in sny of the private subnet)
+we place an appserver in the private subnet..  ( we can place it in any of the private subnet)
+
+For webserver1 to talk to appserver1
+       1) first we create routing routes.. so we create a route table with routes
+
 
 2nd vpc 
 we have only 2private subnets
-
+CIDR   10.0.0.0/16  
 
 1.12.38     To establish a private network between the 2 vpc, 
     we have to create vpc peering,  A pairing connection so we can pair the 2vpcs together
 we place an appserver in the private subnet
 
 1.15.50    For webserver1 to talk to appserver1
+       1) first we create routing routes.. so we create a route table with routes
 
-        we create route tables 
+               Ensure the cidr blocks are not overlapping
+1.17.10        VPC 1;   10.0.0.0/16  
+               VPC 2:   10.10.0.0/16
 
 
 1.43.30        Build tools for ph2 application 
