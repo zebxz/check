@@ -1676,8 +1676,8 @@ in the vpc we have ec2 instances
 12.19.. 
    B) we add IGW here
 1.14.56..  
-   C)  we place the webserver inside the public subnet
-   D)  we place an appserver in the private subnet..  ( we can place it in any of the private subnet)
+   C)  we place the webserver1 & the jumpserver inside the public subnet
+   D)  we place an appserver1 in the private subnet..  ( we can place it in any of the private subnet)
 
    E)  For webserver1 to talk to appserver1  (route tables not in any subnet)
        1) In the private subnet:
@@ -1687,6 +1687,14 @@ in the vpc we have ec2 instances
              route table for internet  ... permitted via IGW
                 10.0.0.0/24 & 0.0.0.0/0-IGW
     F)  Jumpserver in the public subnet & access is given to the engr who wants to access it via security group
+              IN nacl create rule for port22 & in the security grp on the jumpserver open port22
+
+     G)  For traffic from the 40milllion users to hit the webserver
+            IN nacl create rule for port 80 &443 & in the security grp on the webserver open port80 & 443
+          
+       H)  FIREWALL: we have 2layers of security
+          Nacl & security group
+
 
 
 2nd VPC 
@@ -1700,6 +1708,9 @@ we have only 2private subnets
 
 1.15.50    D) For webserver1 to talk to appserver1
        1) first we create routing routes.. so we create a route table with routes
+
+
+
 
 
 
@@ -1749,9 +1760,20 @@ This means that traffic from port 22 can get into the subnet
  ** the for the server 
 
          SECURITY GRP FOR TRAFFIC TO HIT THE JUMPSERVER
-On the the jumpserver, we have a security grp so we have to oepn port 22
+On the the jumpserver, we have a security grp so we have to open port 22
 
 
+           IN NACL FOR 40 MILLION USERS TO ACCESS THE APPLICATION .....(webserver)
+  We open port 80 & 443
+
+        SECURITY GRP FOR TRAFFIC TO HIT THE WEBSERVER
+    we open port 80 & 443, in the security grp or firewall 
+
+thefore traffic from the 40 million users can be routed
+The route table2 is pemitting the traffic because the traffic from the users is comming from the internet & route table2 has IGW ie frm the internet  
+
+
+1.26.53       *** In VP2 
 
 
 1.43.30        Build tools for ph2 application 
