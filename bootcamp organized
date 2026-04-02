@@ -648,6 +648,39 @@ the webserver it going to send that back to you, then thats why when you type go
 proff.. thats a good explaination
 i was goin to narrow that explanation to one of our k8 project where you just explain not considering other netwroking aspect as a computer catch and all of that but that
 respond, i think it cuts some of the things you guys can pay attention to . 
+
+
+
+Bootcamp Jan 5
+  etcd/S3 bucket 
+Have you ever back up or export etcd file?
+when we used kops, our etcd was exported into an s3 bucket
+when we deployed with kops, we created an s3 bucket, if you go to that S3 bucket 
+i think i destroyed the cluster, when you destroy the cluster evrything is destroyed 
+
+ok see this kops cluster we created, if i cick on the cl8 most of the content as a matter of fact the content of etcd was exported to S3 bucket
+
+
+    So can we do that for EKS 
+ofcourse becasue when you use Eks as well for us to add an s3 busket & export our etcd is very easy, same process
+am going to configure an eks so that next class again we can look at it carefully.
+
+
+ ***state file mg8 in S3 bucket
+our state file is mg8 in s3 bucket so we hv a backend s3 bucket where our statefile is mge & in addition to that we also ensure that our infastructure is
+not broken so we lock our statefile so thats what trfrm is all abt and trefrm is a very powerfrul tool because it can be easily integrated with the version
+control tool like github, we upload our trfrm module into github such that if you want to deploy a particular infastructure, u can get into github, bring in 
+the terfrm files, modify it & with the help of some few trfrm command we are able to provision resources as desired
+
+its also imp to note that since we work in a very dynamic env, we have infastructures that were not created by trfrm but since we are heavy with iaac,we
+wantto ensure that terfrm is incharge of managing our infastructure so we ensure that all infastructure is put under the mgt of trfrm becasue with that we
+can rely on our infastructure, at a glance we can know what is happening, so we are constantly running trfrm import so that it can come under trfrm's mgt
+and if we need to destroy a parrticular resource in our env, there is one the command trfrm dstroy, but trfrm destroy will destroy the entire resource in
+our env, so instaed of running that, we can run trfrm destroy & pass a tag to identify the particular resource we want to destry (flag dash dash) or by 
+21;00 putting a comment on a particular terfrm resource file to destroy the file
+
+so i have a lot of experirnce in trfrm when it comes to deploying diff infastructure in Aws 
+
 ****************************************************************************************************************
 
 
@@ -1311,21 +1344,8 @@ in addiction to that, we scan our base image for any vulunerabity & SQS injectio
 using docker , thats my only job 
 it could alos be only ochestrating or managing containerized appl using k8, so thats all i do at work am, the k8 engr in our env
 
-
  containerisation of applications using docker   
-      - I'm task to install docker and kubernetes in ubuntu servers 
-      - I containerised applications by:
-         - writing and modifying dockerfiles using best practices
-         - use ONLY Official images for base images   
-         - Reduce the number of RUN keyword to create light weight images 
-           because it add layers to your image and the final image size. 
-         - use executable form over shell form for CMD,ENTRYPOINT
-           & RUN Instructions for the application process to run as parent 
-         - Use alpine images as much as possible   
-         - scan images before use  
-         - .dockerignore file. 
-      - creating and sharing images in registry - dockerhub/nexus
-
+ 
 
 
  bootcamp dec19
@@ -1363,6 +1383,55 @@ we use use ﻿﻿Use alpine images bc they are light weight
 
 ****** because we hv folks working as application support specialist OR application support engineers , 
 as an application support , this could be your job, managing containerized application
+
+
+
+bootcampSession - Jan 12, 2023
+ what do i have in my docker file ?
+base image 
+FROM/ COPY/ ADD /RUN/ CMD/ USER / ENTRYPOINT /EXPOSE/ ENV/ ARG/ NETWRK / VOLUMES/ workdir
+
+I have keywords in my dockerfile like
+ from, used to define my docker image
+copy, if i need to copy any files from my docker host to my docker image
+add, if i need to either copy a file from my docker host or https location
+run, if i need to execute commands while creating my docker image, i pass the keyword run 
+cmd, these are commands that are executed when creating the containers,with entry point ... cmd & entry point
+ the only diff btw cmd & entrypoint is the fact that cmd you can override, entry point you cannot
+user, by default the docker file runs on the root user, so if you want to change the user you can use the keyword user 
+expose ... normaly this declares the port that the container listens on, the container port
+ENV, if you wnat to pass SOME ENV VAR, use the env
+ARg.. if you want to pass some arguments 
+Network.. we also have netwrk which we went deep into netwrk 
+workdir... where you carry out task, like the pwd where all task are executed
+you can present this to them
+
+
+12.05        HOW to resolve issues occurring in you docker file?
+
+  it is imp that docker file ... based on what we hv spoken before, the entire containerization interms of your containerization experience code can only be 
+based on docker files, which means you leave from in docker, you know with doddcker files to kubernetes
+
+The only thing we use docker to do today is to create images & ship them to image registry
+now what can of issue can occur in the dockerfile
+eg
+you are trying to copy an image, you want to copy a file but the file cannot be found
+or you are trying to copy from an https location & the rest API is no longer available 
+you are trying to copy a file from a remote location online & the file cannot be found thats an issue
+
+what happens when there are so many run instructions that is enabling you to create super large images thats a problem with your docker file, how do u fix it?
+what happen in your docker file if containers are created as a child process which implies that your cmd, your run, you entry point instruction
+you are passing them in shell form instead of an executable form, how do you fix it
+
+what happens if you are running all your stuff as root user & you know that that theres a risk so you decide to change your docker file to add a user
+what could happen if you are using a wrong pod in your docker file to expose your container... eg an appl that listens on port 8080, you are using port 9090
+thats a problem
+if this happens, you deploy your appl, you want to access your appl, you are unable to because the appl is listening on the wrong port 
+becaus eyou defined the wrong pod
+how do i resolve it ???
+you check the docker file, vi into the file and get the file fixed
+if it relates to base images that need scanning you scan it or you use official base image, cos you cud be passing a base image that is unofficial, mayb someone else 
+in you team did that, so thats a problem..   so you are using images with high risk of vulnerabilty 
 
 
 
@@ -1432,79 +1501,6 @@ so from the image registry, jenkins will trigger another playbook , pls not even
 our jenkins job will now deploy to a kubernetes server, & take note that the jenkins integration is done using pluggins & with all of this we have deployed our application 
 to production & since it is 3tier enduser will talk to the appl using the lb but the lb is pointing to a dns name , a host name; app.com
 
-
-
-Github interview 2022
-
-                                           NGNIX INGRESS
-and as you rightly said since some of these appls are microservices we are configuring an ingress, nginx ingress
-Because with the help of nginx ingress we can configure ssl termination which implies endusers will access the appl from an https protocol number 1
-number2.. we configure ssl termination & ssl redirect 
-and in addition to that nginx ingress provides an additional layer of security and it is imp to note as i said earlier on our entire infastruture we are very high/heavy on 
-security
-
-
-
- morning devotion - Jan 19, 2024
-
-we covered ngnix ingress in k8, also in deploying appl in tomcat in a multi tier architecture
-  where we hv the frontend which is a webserver & the webserver we have installed & configured the ngnix software that determines how traffic is routed to the 
-app servers running in the backend, thats smt you can talk abt if you are asked at all
-
-
-                           3MASTER NODES CLUSTER
-there are other options in ngnix , i didnt do the demo in ths class 
-but you can use an ngnix webserver & create a multi master node kubeadm cl8
-what that implies is that i create a kubeadm cl8 with 3masters 
-that 3masters all have control plane so there are 3control plane for each of those masters 
-the reason for doing that is so that if smt goes with one of the master ngnix in the frontend can route traffic to the other masters
-so in this case traffic is not routed tru the round robbin algorithm, its routed using a diff parameter like fail over
-because when you are routing traffic using ngnix, the default routing option is round robbin
-where if there are 3000 request that the webserver is receiving  & there are 3appservers that it has to route traffic to so it can apportion the request evenly
-1000 to appserver1, 1000 to appserver2, 1000 to appserver3
-in the case where you have 3master nodes, those master nodes 
-this are other use cases its just we dnt use self managed cl8 anymore, we hv gone pass that level, so we cant be ..
-
-
-******
-1.37.40 diagrammatic explanantion of the 3master nodes 
-this could just be for more security of your cl8
-the 3maters all have the control plane
-lets assume there is only one masternode in my cl8
-we could decide that traffic does not get to the master node directly, if it wants to talk to the master it goes tru a webserver
-so traffic comes to an ngnix webserver like thsi so it as a proxy
-therfore it increases the security of the master node bc traffic goes to the master via a proxy
-and when traffic comes to the master we can now mg8 the number of pod
-workload in the cluster is been manged by the control plane .. ** i bliv thats the master
-
-but the problem is this is a kubenetes engr , this is her job
-the question now is that this type of infastructure if smt goes wrong with our master node there is a problem
-do we have any fail over, have we made arrangement to recover from such a disaster, no our infastructure is not permitting that to happen
-so what do we do?we come with a multi node master cluster
-bc ngnix is suppose to do loadbalancing
-so now the way our traffic is conditioned is such that it comes to the master node 
-so there are conditions which says that the frontend is the ngnix webserver 
-the backend is the master nodes.. master node1, master node2, master node3
-but traffic first goes to master1, if it cant talk to master1 then it goes to master2, if both 1 & 2 are down then thats the only case it goes to master3
-because we dnt neeed 2 control planse in the cl8, 1 is sufficient
-if smt goes wrong with master1 it goes to master2,, thats how traffic is managed & from there the cl8 is managed
-
-
-1.43.30                jenkins engr
- lets assume you are trying to manage some critical services, you are in charge of managing jenkins
-we want to assess jenkins server, can we decide to assess jenkins via an ngnix webserver , ofcourse yes
-
-you may be using ngnix, if u want to access your jenkins env, what do you do..for you to access jenkins for ci/cd automation 
-traffic is not doing directly to jenkins, its routed via a webserver , this is for more security
-so you can see what the webserver does 
-the via server now routes traffic 
-
-
-
-** prof pls show how to push k8 manifest files created by helm to github
-PROF KEN was in class22, & i did that with them
-
-pls share terfrm vault video
 
 
 bootCamp25 session with Yvonne
@@ -2009,7 +2005,7 @@ know that cloud formation is iaac, the same thing that terfrm does, cloud format
 and the cloud formation template will create autoscalers, lb as matter of fact it creates wverything for you, everything is created
 so kops & eks is competing but eks got more funtionality than kops
 
-***************************************************************************************
+******************************
 
 
 Bootcamp Jan 5
@@ -2162,80 +2158,6 @@ they see you as a sincere person
 becasue you are an engr but as good as you are you are not expected to know everything
 
 
-Bootcamp Jan 5
- what is a large project
-if a project is very large, k8 project which is very large,  you may have a cl8 with a good number of nodes & the node that you have in your cl8, they 
-could have capacity to support that project
-mayb we have a cl with 14 worker nodes, thats a big project
-now this 14 node cl8, what is part of the node?, what is the node capacity interms of node sizes 
-in terms of cpu, interms of the ebs vol size, in terms of the instance type
-this instance type is whatis going to detr the memory bc memory is a function of the instance type 
-memory the Ram depends on the instance type and even the instance type cpu, this can equally be affected
-eg it comes
-14nodes:
-vcpu 
-the the ebs 
-
-for eg if you want to buy a computer , you can say my computer has one core ,central processing unit 
-we can have 
-cpu cores -- /1/2/4/8/16
-
-
-1.17.00    launching instance in AwS 
-Instace type      vcpus          Architecture     memory      storage
-T2 SMALL             1
-c5ad.xlarge          4
-c5ad. 16xlarge       64                                        2400
-
-
-so if you are managing large project your instance types will be the type that can support your application at ultra low latency
-something like this : c5ad. 16xlarge
-so the minimum ebs vol you can attach to it is 2400gb & it must be SSD not HDD
-
-so if you are are managing a project that has 14 nodes & these are the nodes capacity, that will tell you that this is a serious project running in 
-production, very important
-so its like it can be preocesssing about 64 transactions concurrently, nothing will happen 
-and 1vcpus maybe able to run about 128 transactions so which means that it will be 64 times 128
-beause you have millions of customers but again how many instances do we have in the  cluster? we have 14 instances
-
-because you cannot be telling them in the interview about t2 medium ot t2 micro, those were for practice 
-
-
-1.21.20  student   when i was reading, when talking about large projects, we were almost talking abt using up to 5control planes & moving the head cd to 
-another server, storing them,........ for a very big project
-
-
-proffff      what do you mean by using 5control planes 
-are you like saying you have 5diff clusters bc each cluster has a control plane 
-the control plane may have more than one master node thats a diff thing 
-
-so if you are saying in my env we are managing, we have 3 env each of them has seperate clusters 
-we have a cluster for dev env, test env, uat env & for prod 
-which means you have 4 diff clusters 
-
-Or you could even say that for prod we have 3 diff clusters running, we have 3clusters that are running in production
-
-but then again k8 can scale 
-if you are running on a managed cl8, you are almost sure that your master node cannot fail like AwS eks
-so your control plane is available at all time, so you can play around the worker node, you can increase
-
-what is the max number of worker node that one cl8 can have 
-
-did we look at large k8 cluster resource quota
-lets check online 
-
-1.23.50     kubernetes official website 
-https://kubernetes.io/docs/setup/best-practices/cluster-large/
-
-A cluster is a set of nodes (physical or virtual machines) running Kubernetes agents, managed by the control plane. Kubernetes v1.35 supports clusters with up to 5,000 nodes. More specifically, Kubernetes is designed to accommodate configurations that meet all of the following criteria:
-
-No more than 110 pods per node
-No more than 5,000 nodes
-No more than 150,000 total pods
-No more than 300,000 total containers
-You can scale your cluster by adding or removing nodes. The way you do this depends on how your cluster is deployed.
-
-
 
 1.36.00   How would you troubleshoot a node that is not joining the node group after EKS setup?
 
@@ -2358,17 +2280,96 @@ if the db pod needs to have any communication with the internet, as part of our 
 
 
 
+
+
+ morning devotion - Jan 19, 2024
+
+we covered ngnix ingress in k8, also in deploying appl in tomcat in a multi tier architecture
+  where we hv the frontend which is a webserver & the webserver we have installed & configured the ngnix software that determines how traffic is routed to the 
+app servers running in the backend, thats smt you can talk abt if you are asked at all
+
+
+                           3MASTER NODES CLUSTER
+there are other options in ngnix , i didnt do the demo in ths class 
+but you can use an ngnix webserver & create a multi master node kubeadm cl8
+what that implies is that i create a kubeadm cl8 with 3masters 
+that 3masters all have control plane so there are 3control plane for each of those masters 
+the reason for doing that is so that if smt goes with one of the master ngnix in the frontend can route traffic to the other masters
+so in this case traffic is not routed tru the round robbin algorithm, its routed using a diff parameter like fail over
+because when you are routing traffic using ngnix, the default routing option is round robbin
+where if there are 3000 request that the webserver is receiving  & there are 3appservers that it has to route traffic to so it can apportion the request evenly
+1000 to appserver1, 1000 to appserver2, 1000 to appserver3
+in the case where you have 3master nodes, those master nodes 
+this are other use cases its just we dnt use self managed cl8 anymore, we hv gone pass that level, so we cant be ..
+
+
+******
+1.37.40 diagrammatic explanantion of the 3master nodes 
+this could just be for more security of your cl8
+the 3maters all have the control plane
+lets assume there is only one masternode in my cl8
+we could decide that traffic does not get to the master node directly, if it wants to talk to the master it goes tru a webserver
+so traffic comes to an ngnix webserver like thsi so it as a proxy
+therfore it increases the security of the master node bc traffic goes to the master via a proxy
+and when traffic comes to the master we can now mg8 the number of pod
+workload in the cluster is been manged by the control plane .. ** i bliv thats the master
+
+but the problem is this is a kubenetes engr , this is her job
+the question now is that this type of infastructure if smt goes wrong with our master node there is a problem
+do we have any fail over, have we made arrangement to recover from such a disaster, no our infastructure is not permitting that to happen
+so what do we do?we come with a multi node master cluster
+bc ngnix is suppose to do loadbalancing
+so now the way our traffic is conditioned is such that it comes to the master node 
+so there are conditions which says that the frontend is the ngnix webserver 
+the backend is the master nodes.. master node1, master node2, master node3
+but traffic first goes to master1, if it cant talk to master1 then it goes to master2, if both 1 & 2 are down then thats the only case it goes to master3
+because we dnt neeed 2 control planse in the cl8, 1 is sufficient
+if smt goes wrong with master1 it goes to master2,, thats how traffic is managed & from there the cl8 is managed
+
+
+1.43.30                jenkins engr
+ lets assume you are trying to manage some critical services, you are in charge of managing jenkins
+we want to assess jenkins server, can we decide to assess jenkins via an ngnix webserver , ofcourse yes
+
+you may be using ngnix, if u want to access your jenkins env, what do you do..for you to access jenkins for ci/cd automation 
+traffic is not doing directly to jenkins, its routed via a webserver , this is for more security
+so you can see what the webserver does 
+the via server now routes traffic 
+
+
+
+** prof pls show how to push k8 manifest files created by helm to github
+PROF KEN was in class22, & i did that with them
+
+pls share terfrm vault video
+
+
+
+
+
+Github interview 2022
+
+                                           NGNIX INGRESS
+and as you rightly said since some of these appls are microservices we are configuring an ingress, nginx ingress
+Because with the help of nginx ingress we can configure ssl termination which implies endusers will access the appl from an https protocol number 1
+number2.. we configure ssl termination & ssl redirect 
+and in addition to that nginx ingress provides an additional layer of security and it is imp to note as i said earlier on our entire infastruture we are very high/heavy on 
+security
+
+**********************************************************************************
+
+
+                                       VSCODE
+
 bootCamp25 session with Yvonne
     VSCODE
 Another thing is IDE, like vscode that we use
 so start looking at extensions on your vscode, am using terfrm i definitely need trfem extensions, am using k8, i need k8 extensions in it
 i want to make sure that am having no linkedin issues so i need to put a linked extension & i want to make sure as well that my formating is right 
-so those are basic things as well, extension as well on vscode that we just need to think about and start capturing those, so you dont cm in and youa re looking like a new bee
-you are doing a push, & you have a lot of formating issues which are things that just an extenson addiction on your vscode can help elevate that aspect for you
+so those are basic things as well, extension as well on vscode that we just need to think about and start capturing those, so you dont cm in and youa re looking like a new 
+bee you are doing a push, & you have a lot of formating issues which are things that just an extenson addiction on your vscode can help elevate that aspect for you
 
-
-
-**********************************************************************************
+*********************************************************************************************************************
 
   
                     FARGATE
@@ -2622,6 +2623,22 @@ Morning Devotion dec15 model answers
         terraform init/validate/fmt/plan/apply/destroy/import/refresh   
       - with same terraform script i provision resources in dev/test/prod
 
+
+bootcamp Jan 5th
+***state file mg8 in S3 bucket
+our state file is mg8 in s3 bucket so we hv a backend s3 bucket where our statefile is mge & in addition to that we also ensure that our infastructure is
+not broken so we lock our statefile so thats what trfrm is all abt and trefrm is a very powerfrul tool because it can be easily integrated with the version
+control tool like github, we upload our trfrm module into github such that if you want to deploy a particular infastructure, u can get into github, bring in 
+the terfrm files, modify it & with the help of some few trfrm command we are able to provision resources as desired
+
+its also imp to note that since we work in a very dynamic env, we have infastructures that were not created by trfrm but since we are heavy with iaac,we
+wantto ensure that terfrm is incharge of managing our infastructure so we ensure that all infastructure is put under the mgt of trfrm becasue with that we
+can rely on our infastructure, at a glance we can know what is happening, so we are constantly running trfrm import so that it can come under trfrm's mgt
+and if we need to destroy a parrticular resource in our env, there is one the command trfrm dstroy, but trfrm destroy will destroy the entire resource in
+our env, so instaed of running that, we can run trfrm destroy & pass a tag to identify the particular resource we want to destry (flag dash dash) or by 
+21;00 putting a comment on a particular terfrm resource file to destroy the file
+
+so i have a lot of experirnce in trfrm when it comes to deploying diff infastructure in Aws 
 
 
 
