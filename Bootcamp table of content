@@ -1679,13 +1679,17 @@ in the vpc we have ec2 instances
    C)  we place the webserver1 & the jumpserver inside the public subnet
    D)  we place an appserver1 in the private subnet..  ( we can place it in any of the private subnet)
 
-   E)  For webserver1 to talk to appserver1  (route tables not in any subnet)
+   E)  For webserver1 to talk to appserver1  (route table association)
        1) In the private subnet:
           first we create routing routes.. so we create a route table with routes
-           Local route 10.0.0.0/24    
-        2) In The public subnet 
-             route table for internet  ... permitted via IGW
+           Local route 10.0.0.0/24    aassociated with the private subnet
+        2) In The public subnet  
+             route table for internet, associated with the public subnet... permitted via IGW
                 10.0.0.0/24 & 0.0.0.0/0-IGW
+   1.44.35   the route table is like a router
+when you configure a router you decide how traffic will take place
+based on the route table that we created you can sue the route table to est connection insie the vpc to each of the subnet
+
     F)  Jumpserver in the public subnet & access is given to the engr who wants to access it via security group
               IN nacl create rule for port22 & in the security grp on the jumpserver open port22
 
@@ -1699,8 +1703,7 @@ in the vpc we have ec2 instances
             The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
        J) Natgateway
        K)  ELastic loadbalancer
-     we want & internet facing loadbalancer 
-
+     we want & internet facing loadbalancer
 
 
 
@@ -1716,6 +1719,13 @@ we have only 2private subnets
           so we associate it with the 2subnets
            E)  VPC PAIRING;  2vpc (vpc1 & vpc2) can operate like one netwrk   (not place in any vpc,, i bliv its a netwrk service)
             The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
+
+     *****  where do we place s3 bucket
+        on any vpc, its a regional service, its a vpc based service 
+
+       DNS
+    has nothing to do with vpc, its not a regional service, its a global service
+    its a public service, its going to be out of the vpc
 
 
 
@@ -1824,8 +1834,11 @@ because you are now a cloud architect, you can come up with a diagram, you can c
 
  it can come from from ci/cd but most infastructure diagram will be something like this 
 
+
+
 1.35.40    where do we place s3 bucket
         on any vpc, its a regional service, its a vpc based service 
+
 
        DNS
 has nothing to do with vpc, its not a regional service, its a global service
@@ -1846,7 +1859,13 @@ so you can have diff types of diagram in a diagrammatic pictural interview sessi
 
 
 1.43.30        Build tools for ph2 application 
-            at this age you should be able to check out about it
+           Am not very certain of that but by the grace of God at this age you should be able to check out about it
+
+ 1.44.35   the route table is like a router
+when you configure a router you decide how traffic will take place
+based on the route table that we created you can sue the route table to est connection insie the vpc to each of the subnet
+
+1.52.50  network & security goes together because you can use network to enhance security
 
 ****************************************************************************************************
 
