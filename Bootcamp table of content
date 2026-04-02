@@ -1258,6 +1258,36 @@ we can easily rollback & rollout with relative ease achieving minimum downtime
 we have equally used diff deployment strategy like the blue greeen deployment, carnary deployment where carnary deployment is deployment which is done based on mainly 
 a particular eg mayb in london, ghana, lagos or mayb based on age or deployment based on youth or adult
 
+i cannot talk abt k8 without the architecture
+k8 architecture is made up of the workernode & the masternode, the master node is made up of the Apiserver, the apiserver receives calls frm  the commandline & the garphic
+user interface
+ another impo componnet of the master node is the etcd which is used as value store or data base , anoda component is the scheduler as it name sounds is used to schedule
+diff worker nodes based on the node selector or noed affinity but most importantly bsase on the amt of reosurce sfound on the node bc above everything we cannnot 
+schedule a conatiner on node a that does not have enough resources to carry it
+
+theres also the contorller manager which ensure that the number of number of replica sets declared in our manifest file is kept so incase anything happens to one pod,
+the controller manager automatcally replaces it
+
+for the workernode, its madeup of the kublet contianer runtime & kubeproxy
+the kublet est comm btw the workenode & the masternode & the kubeproxy is incharge of network
+
+we have also use ansible as our automation tool to patch our server & for confguration mg8, before that we also used terfrm to dpeloy our resource on aws
+at the same time we have deployed promethus & grafena for monitoring
+promethus gives the data the node exported expoerts the data & we use grafana dashboard to view the data because garfana has a very visual dashbaord that ebven non IT user 
+can easily understand
+
+i talked about AwS AS our cloud provider of choice & have used a lot aws services in aws such as aws storage srevices,  block storage whic is  ebs volumes  & they need ec2
+instances to be attached on it, i talked abt file storages,  elastic files storages , nfs storages 
+efs can be mounted on multiple servers so achieving some kind of data schronization
+also talked abt obj storages which is s3 storages, we use s3 to store our videos & image sfor our appl
+also talkes abt the diff storage clsses  for s3 , the standard storage class, the glazier & deeep galzier storage calsses
+
+also talked of the netwrking in AWs that we have use, have created vpcs that have cm with private/pub subnet,create route table , i pub route table & 2private route tables
+have also use nategate way to allow traffic frm the internet to reach our servers in the private subnet so we configure the nategate way with a private route table 
+which is associated with the private subnet
+
+also talked abt elastic loadbalancers , appl laod balnacers
+i talker abt a lot of things even ngrix,  how deploy ingress controllers, ingress service s& it acts as elastic loadbalancers
 **********************************************************************************************
 
 19) Kubernetes Rancher and AWS1-Jan 7, 2021 
