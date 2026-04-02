@@ -1802,8 +1802,10 @@ The vpc pairing connection must be active if The webserver in vpc1 needs to rout
           NATGATEWAY  Creating a one way traffic
 where appserver2 can talk to the internet eg ping google.com
 
-1.29.30   eg, we have an engr that is working in our team, from the internet he should not be able to access resources in the private subnet
-             we cannot establish such traffic connection
+1.29.30   eg, we have an engr that is working in our team, from the internet he should not be able to access resources in the private subnet 
+             we cannot establish such traffic connection .. Its not a proper connection, For security reasons we should not have smt like that
+         1.33,50  *** but if we need the 2way internet traffic, it should come from the internet gateway IGW in vpc1
+      but generally it is not recommended because if we have created pivate subnet ie vp2, it means resources there should not have direct access to the internet  
 
 1.30.40          NATGATEWAY PLACED IN THE PUBLIC SUBNET
 but the server in the private subnet in vpc2 can talk to the internet through the natgateway
@@ -1815,6 +1817,10 @@ but the server in the private subnet in vpc2 can talk to the internet through th
 
 1.32.12                 ELastic loadbalancer
      we want & internet facing loadbalancer so we place it in vpc1
+
+1.33,50  *** but if we need the 2way internet traffic, it should come from the internet gateway IGW in vpc1
+      but generally it is not recommended because if we have created pivate subnet ie vp2, it means resources there should not have direct access to the internet  
+because you are now a cloud architect, you can come up with a diagram, you can check exicting diagram, you can advice & all of that
 
 
 
