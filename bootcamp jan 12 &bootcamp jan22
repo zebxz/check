@@ -391,3 +391,274 @@ whats important is that you understand the concept
 
 
 *********************************************************************************************************
+
+          bc jan 22, 2024
+
+
+
+asked for $93 per hour but recruiter said they dont pay in Cad 
+so he convertion to euro & sent her the amount
+
+she also asked if his current role is remote & he said yes & she said ok
+she also told him to add the cost of him using his personal laptop 
+
+
+
+****he was asked how we ensure security in our SDLC 
+
+
+13.00  ***proff go through  Bootcamp32-legacy2 
+the channel was 80% run by proff ken, hes one of ure landmark graduates who is also excelling well globally...
+
+includes git actions
+TERRAFORM VAULT
+AWS credentials & parker ..
+Eks troubleshooting section
+adding a role to EKS to be assumed by admins
+and a lot of other things
+
+
+interview with engr Cecilia 
+
+istio & service mesh how it is deployed
+
+EKS infastructure engr overview
+
+20.10  theres a video on helm am suppose to share with you guys on how to create a helm repo
+cos i need to have helm installed, i need a working k8 cl8 to do a live video
+but since i dont have that working cl8, il share the video with you guys
+
+31.50, a 30minutes video that summarizes AWs in 30 minutes
+
+*****32..15  midway into this course you were a build & release engr
+but having skipped those stages & completed this course, you are a full devops engr
+
+
+34.40 platform engr is almost the same as a system engr role 
+system engr manages maybe a particular operating system
+
+or work as a multi platform engr 
+you wil be managing multi platforms like linux, windows, mac sys, androis sys, ios, solaris, sun system 
+
+if you hire me as your platform engr, focus on linux, if you have any jobs to perform on the linux system am the guy for it
+is it installation, i acn do that, file mgt, users mgt , security mgt 
+you can explain the kind of things you have done on the linux platform,
+ i have been able to build an entire ci/cd on the entire CI/CD on the linux platform & how did i do build the platform?
+i used terfrm to automate the creation of all those resources in aws , i used ansible to automate how the resources are been configured form end to end 
+so platform engr goes deep into that
+
+
+36.oo   however most of the times coys may give you plaform engr but the content interm sof job descritption is a devops job
+
+
+37.10 .. what does infasstructure engr do interms of work & content 
+hes uses mostly iaac 
+if you are considered as an infastructure engr it means that you are heavy on terfrm
+you are the terfm guy in the coy, if they wnat to say anything abt terfrm you are the person they are talking about, when it comes to infastructure engineerin
+you could have a job where you are only working on terfrm & if that is your job whta that implies is that you may need to do extensive research on that
+because event though you have done all of devops but now they have given you a job to work on terfrm 
+
+
+1.06 to 1.40    AWS network infastructure / DIAGRAM STEPS for interview
+
+we have 2VPCs, we are heavy on sceurity
+1) first vpc   
+   A) CIDR   10.0.0.0/16  
+
+each has a public & private subnet  ..  we can have up to 2 public & private subnet
+in the vpc we have ec2 instances 
+12.19.. 
+   B) we add IGW here
+1.14.56..  
+   C)  we place the webserver1 & the jumpserver inside the public subnet
+   D)  we place an appserver1 in the private subnet..  ( we can place it in any of the private subnet)
+
+   E)  For webserver1 to talk to appserver1  (route table association)
+       1) In the private subnet:
+          first we create routing routes.. so we create a route table with routes
+           Local route 10.0.0.0/24    aassociated with the private subnet
+        2) In The public subnet  
+             route table for internet, associated with the public subnet... permitted via IGW
+                10.0.0.0/24 & 0.0.0.0/0-IGW
+   1.44.35   the route table is like a router
+when you configure a router you decide how traffic will take place
+based on the route table that we created you can sue the route table to est connection insie the vpc to each of the subnet
+
+    F)  Jumpserver in the public subnet & access is given to the engr who wants to access it via security group
+              IN nacl create rule for port22 & in the security grp on the jumpserver open port22
+
+     G)  For traffic from the 40milllion users to hit the webserver
+            IN nacl create rule for port 80 &443 & in the security grp on the webserver open port80 & 443
+          
+       H)  FIREWALL: we have 2layers of security
+          Nacl & security group
+
+      I)    VPC PAIRING;  2vpc (vpc1 & vpc2) can operate like one netwrk   (not place in any vpc,, i bliv its a netwrk service)
+            The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
+       J) Natgateway
+       K)  ELastic loadbalancer
+     we want & internet facing loadbalancer
+
+
+
+2nd VPC 
+we have only 2private subnets
+         A)    CIDR   10.0.0.0/16  
+1.12.38  B)   To establish a private network between the 2 vpc, 
+    we have to create vpc peering,  A pairing connection so we can pair the 2vpcs together
+          C)   we place an appserver in the private subnet
+              eg; appserver4 & appserver2
+           D) ROUTE TABLE ASSOCIATION
+          we can associate this one route table to 2 subnets 
+          so we associate it with the 2subnets
+           E)  VPC PAIRING;  2vpc (vpc1 & vpc2) can operate like one netwrk   (not place in any vpc,, i bliv its a netwrk service)
+            The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
+
+     *****  where do we place s3 bucket
+        on any vpc, its a regional service, its a vpc based service 
+
+       DNS
+    has nothing to do with vpc, its not a regional service, its a global service
+    its a public service, its going to be out of the vpc
+
+
+
+
+               THE THINGS INCLUDED IN VPC1 & VPC2 Above
+
+********    12.19.. 
+             we create IGW in VPC 1, where we have public subnet
+
+1.15.50     For webserver1 to talk to appserver1
+       1) first we create routing routes.. so we create a route table with routes
+
+               Ensure the cidr blocks are not overlapping
+1.17.10        VPC 1;   10.0.0.0/16  
+               VPC 2:   10.10.0.0/16
+
+  in the interview they could give you an overlapping cidr block, so what do you advice them to do?
+           eg.... VPC 1;   10.0.0.0/24 
+                  VPC 2;   10.0.0.0/24
+
+*** this two cidr block overlaps so we cannot create avpc connection 
+so we advice them, let us to create another vpc with no overlapping cidr
+
+
+1.18.10          FOR TRAFFIC TO LEAVE THE WEBSERVER TO THE APPSERVER
+           2 Things should be done
+           1) route table should be created to support local routing ..  (local 10.0.0.0/24) this is permitted via the vpc cidr block
+               so they can communicate with each other
+               this is for access within the vpc 
+            2)  Route table for external/ all access.... IGW is permitting the route
+
+
+1.19.35      SECURITY GROUP FOR AN engr Who needs to communiacte to the jump server
+            Jumpserver is created in the public subnet in vpc1
+ 1.21.10     create route table to support route from the internet (10.0.0.0/24 & 0.0.0.0/0-IGW)
+            the route table is for external or all access.... IGW is permitting the route
+1.21.55       the route table created to support local routing .. is permitted via the vpc cidr block & associated with the private subent
+          Therefore the route table that permits traffic from the internet will be associated with the public subnet in VPC1
+         Therfore traffic from the engr goes to the jumpserver bc the route permits that to happen
+              but is the route permission sufficient? the route table is not all that is needed
+
+1.22.30     FIREWALL
+we have 2layers of security 
+1)the first layer is at NACL, this stands in front of the subnet ...mee(public)
+1.24.30  
+2) Security group
+
+         OPEN PORT 22 in NACL
+lets assume that the engr paul is trying to carryout some admin task, so he has to ssh
+so we open port 22 
+SO we create a rule in NACL to open port22
+This means that traffic from port 22 can get into the subnet 
+ ** the for the server 
+
+         SECURITY GRP FOR TRAFFIC TO HIT THE JUMPSERVER
+On the the jumpserver, we have a security grp so we have to open port 22
+
+
+           IN NACL FOR 40 MILLION USERS TO ACCESS THE APPLICATION .....(webserver)
+  We open port 80 & 443
+
+        SECURITY GRP FOR TRAFFIC TO HIT THE WEBSERVER
+    we open port 80 & 443, in the security grp or firewall 
+
+thefore traffic from the 40 million users can be routed
+The route table2 is pemitting the traffic because the traffic from the users is comming from the internet & route table2 has IGW ie frm the internet  
+
+
+1.26.53       *** In VPC2 
+   It doesnt have access to the internet
+        we create appserver2 & appserver4
+          Route table3, 
+      local 172.0.0.0/24, permitting local traffic via the vpc
+
+****ROUTE TABLE ASSOCIATION
+we can associate this one route table to 2 subnets 
+so we associate it with the 2subnets in vpc2
+
+ VPC PAIRING;  2vpc can operate like one netwrk
+The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
+   then the 2vpc can operate like one netwrk
+1.30.35...  Because we created the private network btw the 2vpc, therfore they are almost operating like one vpc with 4subnets
+
+          NATGATEWAY  Creating a one way traffic
+where appserver2 can talk to the internet eg ping google.com
+
+1.29.30   eg, we have an engr that is working in our team, from the internet he should not be able to access resources in the private subnet 
+             we cannot establish such traffic connection .. Its not a proper connection, For security reasons we should not have smt like that
+         1.33,50  *** but if we need the 2way internet traffic, it should come from the internet gateway IGW in vpc1
+      but generally it is not recommended because if we have created pivate subnet ie vp2, it means resources there should not have direct access to the internet  
+
+1.30.40          NATGATEWAY PLACED IN THE PUBLIC SUBNET
+but the server in the private subnet in vpc2 can talk to the internet through the natgateway
+   172.0.0.0/24vpc
+ 0.0.0.0/0natGW 
+ withis this the appservers in vpc2 (private subnet) can talk to the internet but someone in the internet cannot connot communicate with the apperservers
+  Therefore this infastructure is heavy on security
+
+
+1.32.12                 ELastic loadbalancer
+     we want & internet facing loadbalancer so we place it in vpc1
+
+1.33,50  *** but if we need the 2way internet traffic, it should come from the internet gateway IGW in vpc1
+      but generally it is not recommended because if we have created pivate subnet ie vp2, it means resources there should not have direct access to the internet  
+because you are now a cloud architect, you can come up with a diagram, you can check exicting diagram, you can advice & all of that
+
+ it can come from from ci/cd but most infastructure diagram will be something like this 
+
+
+
+1.35.40    where do we place s3 bucket
+        on any vpc, its a regional service, its a vpc based service 
+
+
+       DNS
+has nothing to do with vpc, its not a regional service, its a global service
+its a public service, its going to be out of the vpc
+ & if we have load balancers, lets assume we create a hosted name called app.com
+we can create A record to match our laodbalncers so that if endusers are trying to access our application it wont be any issue
+eg using the webserver url/ public ip, we can create some Arecord,  using the load balancer url , we can create C name record/record set
+so we can create this recordset in route 53 as an aws service so that user can easily access our appl using a more proper dns or host name
+
+
+How does authentication take place in the jumpserver ?
+normally for you ssh into the jumpserver you will need the key
+ssh -i key.pem ubuntu@80.88.100.5     ... this is an ssh private key
+if you already have PW configured .. you could do PW athentication with ssh ubuntu@80.88.100.5
+OR you could establish a passwordless authentication.. this too can work
+
+so you can have diff types of diagram in a diagrammatic pictural interview session
+
+
+1.43.30        Build tools for ph2 application 
+           Am not very certain of that but by the grace of God at this age you should be able to check out about it
+
+ 1.44.35   the route table is like a router
+when you configure a router you decide how traffic will take place
+based on the route table that we created you can sue the route table to est connection insie the vpc to each of the subnet
+
+1.52.50  network & security goes together because you can use network to enhance security
+
+
