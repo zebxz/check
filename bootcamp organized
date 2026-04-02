@@ -464,6 +464,104 @@ whats important is that you understand the concept
 
 1;31;40   open check pay.. just depends on what you can do
 
+*********************************************************************************************************************************
+
+
+* I will use this as my interview template
+
+5.50   to 18.30
+
+i was basically asked tell us abt your env & i used that as an opportuninty to make sure i talk detaily such that i answer all the question they have in mind
+
+thank you very much my name is , have been devops engr for the past 6yrs
+i work for dominion systems which is an IT consulting firm where we develop maintain monitor & deploy applications for fintech client & clients in the banking sector too
+as a devops engr i have had to perfrom several roles & these roles range frm maintaining & monitoring existing projects to onboarding new projects wher i create repositories
+in github wheere developers push their codes & unit test cases, i also create teams, organisatiosn, add team members assign their roles & responsibilities & ensure i remind
+the developers about our git best practices such as: avoiding merge conflict, implementing least privileges & using branching strategy
+
+and for our brnaching strategy we maintain 3main branches which is the dev stage & the master branch
+code from the dev branch is commited to the dev env , code from from stage is commmited to the testing & code frm the master is committed to the prod env
+other branches can be created if eg we have a bug in the code, we can create a bug fix branch from the master branch & when the bug is removed we when merge it back to the 
+master branch
+
+Have also been incharge of setting up our ci/cd pipeline which uses jenkins as our automation tool
+the first stage in our ci/cd pipeline is to integrate jenkins with github to clone our github repository & then we intergrate it with maven
+so using webhooks we automate the process where developers push/commit code to github & the webhook build triggers are are triggerred & jenkins pulls the code & does
+ a build with maven 
+
+Basically what maven does is that maven bulds the codes into packages these package scud either be jar, war or ear
+jar pacakges are java stanalone appliactions which contain only java code, while war packages are web applications contains both java code & web content & Ear packages are 
+eneterprise applications which conatains multiple modules, web content & java code
+
+so in our env since we are very heavy with security we integrate jenkins with sonarqube so sonarqube servers as another added layer of security where we test the code
+and when integrating jenkins with sonarqube , we define our benchmark bugs shud be equal to zero, code coverage shud be 95% & duplicate lines shud be less than 5%
+and so when jenkins build a code using maven pluggings, a code quality report is generate which passes tru the quality gate sthat we have set in sonarqube & once this is done
+the next step is to backup the artifacts & we back it up in our artifactories which is nexus but we dnt only use nexus as a diaster recovery  but we can aslo craete/configure
+like a maven proxy repo with nexus to server as a remote repo to avoid direct communication with the internet which is maven central repo when maven searches for dependencies
+& this servers as an added security too .  .. ill verify .. 
+
+so once this is done we are done with our build & release engineering & we prepare for continous deployment
+
+so in our env we use docker as our containerization platform , with dockerization we produce light weight conatainers which packages all our app in dependencies & as a 
+devops engr, my role is to write & modify most of the time 98% of the time existing dockerfiles & use them to build dodcker images which is then shipped to the image 
+registry which is dockerhub in our env
+
+in our env we adhere to docker best ptactices; whih are using official docker base images in our dockerfiles 
+reduce the number of run instructions ot rduece the number of layers so as to keep the images inorder to keep the image light, scan images before using
+told him this one is one of the most imp docker best practices, it came from a troubleshooting & am the one that came out with the solution, our app were failing
+we didnt know what to do & i found out that in our docker files they were using shell form over &executable form  our appl were running in child process & they were been 
+kileld unnoticed so we came up with this new dockerbest practices which is to use executable over shell form  for commands & entry shell so that our appl will run as parent
+process & wont be killed unnoticed.. & the guy was like wow wow
+
+
+11.40 in the past we deployed appl using docker & docker compose files to deploy microservices appl however since docker cannot support an overlay ntwrk, we had to switch to
+a conatiner ochestration tool wich is k8 .
+so with k8, initially we were using kubeadm i our env but now we switched to EKS & KOPS, whcih produces a production ready cl8 which we dnt have to spend soo much time 
+managing bc AWs does the managing of our plane & interms of the the private vpc which comes with the pub & private subnet & elastic loadbalancers & integrate with other
+otehr services like route53, so thats why we switevhed from kudeadm to KOPS & eks
+
+ANd we also use to write a lot of manifest files but inorder to reduce the amt of workload in wirting mainfestfiles we atrted using helm & helm comes with a herm chart
+so we jsut go in and do some modifications like the port in which we want to expose the container & justt deploy our appl with no stresss
+
+in K8 , i cannot talk about k8 without talking about the deployment objects
+in k8 we have used replication controllers, daemonset, replicaset, deployment but in our env w emainly use deployment bc it comes with rollingupdates & with rollingupdate
+we can easily rollback & rollout with relative ease achieving minimum downtime
+
+we have equally used diff deployment strategy like the blue greeen deployment, carnary deployment where carnary deployment is deployment which is done based on mainly 
+a particular eg mayb in london, ghana, lagos or mayb based on age or deployment based on youth or adult
+
+i cannot talk abt k8 without the architecture
+k8 architecture is made up of the workernode & the masternode, the master node is made up of the Apiserver, the apiserver receives calls frm  the commandline & the garphic
+user interface
+ another impo componnet of the master node is the etcd which is used as value store or data base , anoda component is the scheduler as it name sounds is used to schedule
+diff worker nodes based on the node selector or noed affinity but most importantly bsase on the amt of reosurce sfound on the node bc above everything we cannnot 
+schedule a conatiner on node a that does not have enough resources to carry it
+
+theres also the contorller manager which ensure that the number of number of replica sets declared in our manifest file is kept so incase anything happens to one pod,
+the controller manager automatcally replaces it
+
+for the workernode, its madeup of the kublet contianer runtime & kubeproxy
+the kublet est comm btw the workenode & the masternode & the kubeproxy is incharge of network
+
+we have also use ansible as our automation tool to patch our server & for confguration mg8, before that we also used terfrm to dpeloy our resource on aws
+at the same time we have deployed promethus & grafena for monitoring
+promethus gives the data the node exported expoerts the data & we use grafana dashboard to view the data because garfana has a very visual dashbaord that ebven non IT user 
+can easily understand
+
+i talked about AwS AS our cloud provider of choice & have used a lot aws services in aws such as aws storage srevices,  block storage whic is  ebs volumes  & they need ec2
+instances to be attached on it, i talked abt file storages,  elastic files storages , nfs storages 
+efs can be mounted on multiple servers so achieving some kind of data schronization
+also talked abt obj storages which is s3 storages, we use s3 to store our videos & image sfor our appl
+also talkes abt the diff storage clsses  for s3 , the standard storage class, the glazier & deeep galzier storage calsses
+
+also talked of the netwrking in AWs that we have use, have created vpcs that have cm with private/pub subnet,create route table , i pub route table & 2private route tables
+have also use nategate way to allow traffic frm the internet to reach our servers in the private subnet so we configure the nategate way with a private route table 
+which is associated with the private subnet
+
+also talked abt elastic loadbalancers , appl laod balnacers
+i talker abt a lot of things even ngrix,  how deploy ingress controllers, ingress service s& it acts as elastic loadbalancers
+**********************************************************************************************
+
 
 ********************************************************************************************
 
