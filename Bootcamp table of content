@@ -1700,22 +1700,21 @@ in the vpc we have ec2 instances
 2nd VPC 
 we have only 2private subnets
          A)    CIDR   10.0.0.0/16  
-
 1.12.38  B)   To establish a private network between the 2 vpc, 
     we have to create vpc peering,  A pairing connection so we can pair the 2vpcs together
-
           C)   we place an appserver in the private subnet
-
-1.15.50    D) For webserver1 to talk to appserver1
-       1) first we create routing routes.. so we create a route table with routes
+              eg; appserver4 & appserver2
 
 
 
 
-
+               THE THINGS INCLUDED IN VPC1 & VPC2 Above
 
 ********    12.19.. 
-             we create IGW 
+             we create IGW in VPC 1, where we have public subnet
+
+1.15.50     For webserver1 to talk to appserver1
+       1) first we create routing routes.. so we create a route table with routes
 
                Ensure the cidr blocks are not overlapping
 1.17.10        VPC 1;   10.0.0.0/16  
@@ -1773,14 +1772,31 @@ thefore traffic from the 40 million users can be routed
 The route table2 is pemitting the traffic because the traffic from the users is comming from the internet & route table2 has IGW ie frm the internet  
 
 
-1.26.53       *** In VP2 
-          Route table3  
-      local 10.0.0.0/24, permitting local traffic via the vpc
+1.26.53       *** In VPC2 
+   It doesnt have access to the internet
+        we create appserver2 & appserver4
+          Route table3, 
+      local 172.0.0.0/24, permitting local traffic via the vpc
+
+****ROUTE TABLE ASSOCIATION
 we can associate this one route table to 2 subnets 
 so we associate it with the 2subnets in vpc2
 
-Vpc doe not have access to the internet
-          
+   2vpc can operate like one netwrk
+The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
+   then the 2vpc can operate like one netwrk
+1.30.35...  Because we created the private network btw the 2vpc, therfore they are almost operating like one vpc with 4subnets
+
+          Creating a one way traffic
+where appserver2 can talk to the internet eg ping google.com
+
+
+1.29.30   eg, we have an engr that is working in our team, from the internet he should not be able to access resources in the private subnet
+             we cannot establish such traffic connection
+
+1.30.40          NATGATEWAY PLACED IN THE PUBLIC SUBNET
+but the server in the private subnet in vpc2 can talk to the internet through the natgateway
+
 
 
 1.43.30        Build tools for ph2 application 
