@@ -1822,6 +1822,17 @@ but the server in the private subnet in vpc2 can talk to the internet through th
       but generally it is not recommended because if we have created pivate subnet ie vp2, it means resources there should not have direct access to the internet  
 because you are now a cloud architect, you can come up with a diagram, you can check exicting diagram, you can advice & all of that
 
+ it can come from from ci/cd but most infastructure diagram will be something like this 
+
+1.35.40    where do we place s3 bucket
+        on any vpc, its a regional service, its a vpc based service 
+
+       DNS
+has nothing to do with vpc, its not a regional service, its a global service
+its a public service, its going to be out of the vpc
+ & if we have load balancers, lets assume we create a hosted name called app.com
+we can create A record to match our laodbalncers so that if endusers are trying to access our application it wont be any issue
+eg using the webserver url/ public ip, we can create some Arecord,  using the load balancer url , we can create C name record/record set
 
 
 1.43.30        Build tools for ph2 application 
