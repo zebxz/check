@@ -1230,7 +1230,34 @@ like a maven proxy repo with nexus to server as a remote repo to avoid direct co
 
 so once this is done we are done with our build & release engineering & we prepare for continous deployment
 
-so in our env we use docker as our 
+so in our env we use docker as our containerization platform , with dockerization we produce light weight conatainers which packages all our app in dependencies & as a 
+devops engr, my role is to write & modify most of the time 98% of the time existing dockerfiles & use them to build dodcker images which is then shipped to the image 
+registry which is dockerhub in our env
+
+in our env we adhere to docker best ptactices; whih are using official docker base images in our dockerfiles 
+reduce the number of run instructions ot rduece the number of layers so as to keep the images inorder to keep the image light, scan images before using
+told him this one is one of the most imp docker best practices, it came from a troubleshooting & am the one that came out with the solution, our app were failing
+we didnt know what to do & i found out that in our docker files they were using shell form over &executable form  our appl were running in child process & they were been 
+kileld unnoticed so we came up with this new dockerbest practices which is to use executable over shell form  for commands & entry shell so that our appl will run as parent
+process & wont be killed unnoticed.. & the guy was like wow wow
+
+
+11.40 in the past we deployed appl using docker & docker compose files to deploy microservices appl however since docker cannot support an overlay ntwrk, we had to switch to
+a conatiner ochestration tool wich is k8 .
+so with k8, initially we were using kubeadm i our env but now we switched to EKS & KOPS, whcih produces a production ready cl8 which we dnt have to spend soo much time 
+managing bc AWs does the managing of our plane & interms of the the private vpc which comes with the pub & private subnet & elastic loadbalancers & integrate with other
+otehr services like route53, so thats why we switevhed from kudeadm to KOPS & eks
+
+ANd we also use to write a lot of manifest files but inorder to reduce the amt of workload in wirting mainfestfiles we atrted using helm & helm comes with a herm chart
+so we jsut go in and do some modifications like the port in which we want to expose the container & justt deploy our appl with no stresss
+
+in K8 , i cannot talk about k8 without talking about the deployment objects
+in k8 we have used replication controllers, daemonset, replicaset, deployment but in our env w emainly use deployment bc it comes with rollingupdates & with rollingupdate
+we can easily rollback & rollout with relative ease achieving minimum downtime
+
+we have equally used diff deployment strategy like the blue greeen deployment, carnary deployment where carnary deployment is deployment which is done based on mainly 
+a particular eg mayb in london, ghana, lagos or mayb based on age or deployment based on youth or adult
+
 **********************************************************************************************
 
 19) Kubernetes Rancher and AWS1-Jan 7, 2021 
