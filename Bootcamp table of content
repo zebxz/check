@@ -1695,6 +1695,13 @@ in the vpc we have ec2 instances
        H)  FIREWALL: we have 2layers of security
           Nacl & security group
 
+      I)    VPC PAIRING;  2vpc (vpc1 & vpc2) can operate like one netwrk   (not place in any vpc,, i bliv its a netwrk service)
+            The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
+       J) Natgateway
+       K)  ELastic loadbalancer
+     we want & internet facing loadbalancer 
+
+
 
 
 2nd VPC 
@@ -1704,6 +1711,11 @@ we have only 2private subnets
     we have to create vpc peering,  A pairing connection so we can pair the 2vpcs together
           C)   we place an appserver in the private subnet
               eg; appserver4 & appserver2
+           D) ROUTE TABLE ASSOCIATION
+          we can associate this one route table to 2 subnets 
+          so we associate it with the 2subnets
+           E)  VPC PAIRING;  2vpc (vpc1 & vpc2) can operate like one netwrk   (not place in any vpc,, i bliv its a netwrk service)
+            The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
 
 
 
@@ -1782,20 +1794,27 @@ The route table2 is pemitting the traffic because the traffic from the users is 
 we can associate this one route table to 2 subnets 
 so we associate it with the 2subnets in vpc2
 
-   2vpc can operate like one netwrk
+ VPC PAIRING;  2vpc can operate like one netwrk
 The vpc pairing connection must be active if The webserver in vpc1 needs to route traffic to appserver4 in vpc2
    then the 2vpc can operate like one netwrk
 1.30.35...  Because we created the private network btw the 2vpc, therfore they are almost operating like one vpc with 4subnets
 
-          Creating a one way traffic
+          NATGATEWAY  Creating a one way traffic
 where appserver2 can talk to the internet eg ping google.com
-
 
 1.29.30   eg, we have an engr that is working in our team, from the internet he should not be able to access resources in the private subnet
              we cannot establish such traffic connection
 
 1.30.40          NATGATEWAY PLACED IN THE PUBLIC SUBNET
 but the server in the private subnet in vpc2 can talk to the internet through the natgateway
+   172.0.0.0/24vpc
+ 0.0.0.0/0natGW 
+ withis this the appservers in vpc2 (private subnet) can talk to the internet but someone in the internet cannot connot communicate with the apperservers
+  Therefore this infastructure is heavy on security
+
+
+1.32.12                 ELastic loadbalancer
+     we want & internet facing loadbalancer so we place it in vpc1
 
 
 
