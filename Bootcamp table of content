@@ -1207,8 +1207,30 @@ as a devops engr i have had to perfrom several roles & these roles range frm mai
 in github wheere developers push their codes & unit test cases, i also create teams, organisatiosn, add team members assign their roles & responsibilities & ensure i remind
 the developers about our git best practices such as: avoiding merge conflict, implementing least privileges & using branching strategy
 
-and for our brnaching strategy we maintain 3main branches which is the dev stage.. 7.20
+and for our brnaching strategy we maintain 3main branches which is the dev stage & the master branch
+code from the dev branch is commited to the dev env , code from from stage is commmited to the testing & code frm the master is committed to the prod env
+other branches can be created if eg we have a bug in the code, we can create a bug fix branch from the master branch & when the bug is removed we when merge it back to the 
+master branch
 
+Have also been incharge of setting up our ci/cd pipeline which uses jenkins as our automation tool
+the first stage in our ci/cd pipeline is to integrate jenkins with github to clone our github repository & then we intergrate it with maven
+so using webhooks we automate the process where developers push/commit code to github & the webhook build triggers are are triggerred & jenkins pulls the code & does
+ a build with maven 
+
+Basically what maven does is that maven bulds the codes into packages these package scud either be jar, war or ear
+jar pacakges are java stanalone appliactions which contain only java code, while war packages are web applications contains both java code & web content & Ear packages are 
+eneterprise applications which conatains multiple modules, web content & java code
+
+so in our env since we are very heavy with security we integrate jenkins with sonarqube so sonarqube servers as another added layer of security where we test the code
+and when integrating jenkins with sonarqube , we define our benchmark bugs shud be equal to zero, code coverage shud be 95% & duplicate lines shud be less than 5%
+and so when jenkins build a code using maven pluggings, a code quality report is generate which passes tru the quality gate sthat we have set in sonarqube & once this is done
+the next step is to backup the artifacts & we back it up in our artifactories which is nexus but we dnt only use nexus as a diaster recovery  but we can aslo craete/configure
+like a maven proxy repo with nexus to server as a remote repo to avoid direct communication with the internet which is maven central repo when maven searches for dependencies
+& this servers as an added security too .  .. ill verify .. 
+
+so once this is done we are done with our build & release engineering & we prepare for continous deployment
+
+so in our env we use docker as our 
 **********************************************************************************************
 
 19) Kubernetes Rancher and AWS1-Jan 7, 2021 
