@@ -1,0 +1,392 @@
+bootcampSession - Jan 12, 2023  
+
+          his interview was inperson... 4,00
+0.30  he was asked which python lib he has used 
+IN OUR env we use boto3 inorder to access our AWS services, our s3 bucket
+i know pdf which i use in personal project for editing my pdf files 
+as well as cybone whch is more of like a tablob services for graph plotting
+as well as have also used other python lib like reach, https, pendulog, date & time, if i want to configure date & time as well
+have also used python lib tqdpn and many others
+
+its a simple question almost like what terfrm modules have you used
+
+proff
+librabies is just like a set of code which you can import into python just like functions ,when you talk about, even though python still has functions
+i mean modules as well, you can always import those libraries and perfrom diff operations when you are doing software development with python
+
+
+               DOCKER FILE
+he was asked how he fix docker file that has an issue & he said he will send it bk 
+   
+proff
+8.40   Docker file is not a code, if you push docker file to developers its a serious problem
+
+   what do i have in my docker file ?
+base image 
+FROM/ COPY/ ADD /RUN/ CMD/ USER / ENTRYPOINT /EXPOSE/ ENV/ ARG/ NETWRK / VOLUMES/ workdir
+
+I have keywords in my dockerfile like
+ from, used to define my docker image
+copy, if i need to copy any files from my docker host to my docker image
+add, if i need to either copy a file from my docker host or https location
+run, if i need to execute commands while creating my docker image, i pass the keyword run 
+cmd, these are commands that are executed when creating the containers,with entry point ... cmd & entry point
+ the only diff btw cmd & entrypoint is the fact that cmd you can override, entry point you cannot
+user, by default the docker file runs on the root user, so if you want to change the user you can use the keyword user 
+expose ... normaly this declares the port that the container listens on, the container port
+ENV, if you wnat to pass SOME ENV VAR, use the env
+ARg.. if you want to pass some arguments 
+Network.. we also have netwrk which we went deep into netwrk 
+workdir... where you carry out task, like the pwd where all task are executed
+you can present this to them
+
+
+12.05        HOW to resolve issues occurring in you docker file?
+
+  it is imp that docker file ... based on what we hv spoken before, the entire containerization interms of your containerization experience code can only be 
+based on docker files, which means you leave from in docker, you know with doddcker files to kubernetes
+
+The only thing we use docker to do today is to create images & ship them to image registry
+now what can of issue can occur in the dockerfile
+eg
+you are trying to copy an image, you want to copy a file but the file cannot be found
+or you are trying to copy from an https location & the rest API is no longer available 
+you are trying to copy a file from a remote location online & the file cannot be found thats an issue
+
+what happens when there are so many run instructions that is enabling you to create super large images thats a problem with your docker file, how do u fix it?
+what happen in your docker file if containers are created as a child process which implies that your cmd, your run, you entry point instruction
+you are passing them in shell form instead of an executable form, how do you fix it
+
+what happens if you are running all your stuff as root user & you know that that theres a risk so you decide to change your docker file to add a user
+what could happen if you are using a wrong pod in your docker file to expose your container... eg an appl that listens on port 8080, you are using port 9090
+thats a problem
+if this happens, you deploy your appl, you want to access your appl, you are unable to because the appl is listening on the wrong port 
+becaus eyou defined the wrong pod
+how do i resolve it ???
+you check the docker file, vi into the file and get the file fixed
+if it relates to base images that need scanning you scan it or you use official base image, cos you cud be passing a base image that is unofficial, mayb someone else 
+in you team did that, so thats a problem..   so you are using images with high risk of vulnerabilty 
+
+
+     17.05                 THE QA lady asked WHAT SCRIPTING TOOLS DO YOU USE/ AUTOMATING TOOLS?  
+he said we use bash shell scripting & python 
+she said very good 
+
+what do you use the python for?
+we use python for scripting to automate our task, our ci/cd pipeline
+i told him one of as easy as grabbing an AMI & bc we are talking about microservices
+i also spoke about trying to acces s3 bucket
+
+then she asked what pyton lib have you used ?       i said have not used python lib, then she tried to ask it again
+what lib did you use to grab/ have access to your s3 bucket    ....  
+
+
+Proff
+19.00            HOW DO YOU EXPOSE YOUR MICROSERVICES APPL ?
+Student you can use the netwrk services to expose your microservices like Nodeport, loadbalancer
+
+   ASlso explained in 'kubernetes 6, kubernetes 12 ngnix ingress' & tomcat 1and2 AND Nginx
+
+
+proff.. this quetsion, if you have to explain evrything in the end to end devops life cycle, it could be good but t could not really pass the msg that those guys 
+are looking for bc..
+
+                                 Types of kubernetes services
+how do you expose your micro service appl ?
+thank you for that question we use k8 in our env to ochestrtae containers; thats an umbrella statement
+once our appl are deployed, ther are diff ind of services which k8 support which we equally implement them in our env
+the services include; clusterip, Nodeport, loadbalancers, external name & we also use k8 operators like ngnix ingress , those are k8 operators, those are add on 
+that can be deployed, apart for ingress theres what is called service mesh, you guys may want to read more on service mesh, thers what is called service & istio
+because they are now talking about micro services 
+21.40 .. he went back to ngnix ingress & changed it to ingress[ngnix/haProxy]
+ingress does nt not only have ngnix, with ingress there are many options theres ngnix, there haProxy , there are many stuff under ingress, ngnix is jsut one of the 
+software that you can use 
+
+so how do you expose you appl
+you should have hv first explained that what do we use in our  env
+we use k8 in our env to be able to ochestrate conatiners, so once the containers have been ochestrated & they are running the question now is how do you expose them
+and since we are using k8, k8 comes with inherent service & if you look at service discovery in k8 , what does it support?
+it supports loadbalancing all the services (clusterip, Nodeport, loadbalancers, external name, ngnix ingress)supports load balancing 
+ what does that implies?
+
+
+lets look at the implictaion of service discovery in our env
+22.44  using a diagram to explain
+
+
+*****OUR WEBAPPS
+so we have webapp pod; maybe webapp145, webapp0776, webapp7876,
+so this single application got multiple pods, these are a set of unique pods running the same application, these are just diff replicas
+so how do we expose these application?
+we already know that we are going to use service, it does not matter the type of service
+
+***OUR DATABASE
+25.00  when it comes to services, we have diff kind of services depending on who wants to have access the appl
+lets assume that we have other applications; db 01, here is my database pod...this is a database application, 
+we are in the cluster, if you want to access the appl it must go through the service
+
+
+                         Internal traffic for the database; clusterip
+                       (so the webapps can communicate with the database)
+the nxt thing is that if you want to access your database appl how is it managed?, we need a service
+lets asumme we have 2pods for database running, its a stateful set, 4 replicas running
+these my webapp needs to communicate with my database pod, these are all microservices & they dont communicate directly 
+the communication is established via a database service & we can use clusterip, so we craete a database service called clusterip DBservice
+so if the the webapps want to talk with to the database it must go via the database service & the service will be perfroming dns resolution acting as a proxy
+so it acts as an additional layer of security
+
+
+                    External traffic for the webapps; NodePort
+so if someone is trying to access from outside the cluster, they want to accesss the webapps, so they will use NodePort service
+the webapps pod are hosted on nodes so we are going to use the nodeport, so we are using the nodeip (nodeip:NodePort) 55.33.99.0
+so for external traffic 
+
+PORT RANGE 
+30,000 to 32676
+
+this is for external traffic, so once it gets into the cluster/ one of the nodes, immediately k8 identifies that the traffic is meant for the webservice & from there
+its routed from any to all of the pods
+
+*** do this type of architecture have any vulneribilty risk?
+even though it is very secured, we can improve on the security
+
+based on the service type which of the service type gives more security? is it clusterip or NodePort
+clusterip gives more security 
+
+since you are discussing and trying to dwell more on security
+in our env we use clusterip regardless of whether the appl need to be accessed externally or internally, our service type is clusterip  
+
+32.00 if we using clusterip in place of NodePort for our webservice, it means that service cannot come directly from external sources
+so how does traffic then come in?
+so in our env we deploy a kubernetes pluggin or an operator which is called ingress, there are many types of ingress but we specifically deploy ngnix ingress
+
+
+       HOW IS NGNIX INGRESS DEPLOYED
+It is deployed as a pod
+so we have ngnix ingress controller
+we are working on a Eks cluster or KOBs Cluster which permits us to ultilize other AWs services, thats what happens
+we have ngnix ingress, which comes with a service, it comes with loadbalancer service ie elastic load balancer & its a layer7 load balancer, an application loadbalncer
+so it provides an appl load baalancer
+and you agree with me that , each of the pods are hosted on nodes
+so when you create a lb, is not also on a node but its created in your netwrk, so we have the lb which is created as a service
+therfrore if i want to access my applications ( the 50 million users), their traffic comes directly to the loadbalancer
+so this is a more secured way of exposing your application
+
+
+now when it comes ot the lb, it immediatelys identifies that the traffic is menat for ngnix ingress
+so you wnat to talk to your appl but its going tru ngnix ingress
+ngnix ingress is a pod so the pod will be hosted on a node 
+
+inside my cl8, we also create an ingress resource, this is a k8 object
+with the resource we define how traffic is routed
+now this lb still within the cluster since we are heavy on AWs, we use another AWs global service which we will map with the lb to create Arecord
+so we are creating recordset, so in route53, 
+my loadbalancer url , very long so instaed we create recordset & we have a domain name called web.app.com
+
+39.00
+so because we have this ngnix ingress which is a layer7 loadbalancer & can support multiple backend appl 
+such that if we have lets assume our webapp & another frontend application like; myapp
+so these are the applications that we have & we have other ports for myapp, so i can create clusterip for myapp Service; myappSVC
+***that is only possible because we now have an external service which can be used which is my loadbalancer 
+these are pods that should be accessed externally but what are we using?
+since we have ngnix ingress, we have defined rules traffic can be routed, 
+therfore we create recordset; in our rules
+we say smt like if somebody type my.app.com, the service should be routed to myappservice
+so these are record set that are been created, so here is our Arecord
+then in the routing rules & our ingress class:ngnix
+
+*****so we give the endusers the hostname we have created; web.app.co, my.app.com, sp.app.com
+this is how the routing is taking place, so we can have multiple services, this is because we have an applictaion load balancer deployed in cluster
+and this gives us an additional layer of security because security is inherent in our env
+
+and it also eases routing because if we are going to be having multiple external loadbalancers that will be a prolem
+so with one load balancer, if we have multiple microservices we are able to easily access them
+
+but take note that, when it come sto routing, how many kind of routing is supported by an application load balancer
+1)host based routing
+2) path based routing
+
+so we have defined host based routing above
+
+*** if we were going to create path based routing
+it could be app.com, everything here is app.com, we just have app.com
+app.com/sp
+app.com/db
+   
+**so this path based routing where you have a single host name with multiple path
+app.com/ .... if i have just this, it is the root path
+
+so either we go for hostbase routing or path base routing but this is going to support multiple applicatons
+so the interview question was for you to dwell more on how do you expose microservice application
+
+
+45.50   now ot an extent we can use service mesh, its going to help us to be able to see how, because if you look at our cl8 now, you will realise that there are so
+may services and we are talking about 2applications so you can have like 10 diff applications so how can you mg8 them, we can equally use another add on called service mesh
+
+i think we already have a video on that, am goin to forward it so you see how we can use service mesh & istil to achieve the same process
+just to take this guy to the next level
+
+
+46.54   the application we deployment using the jenkins docker k8 integration, whether that is a microservice application bc the deployment, obviously this is more
+secured but its slightly diff,so is that a microservice application??
+
+the fact again is that we presented a prototype, what we deployed, we presented a prototype interms of deployment so you can explain that to be a microservice application
+becasue who is doing the development?  developers are writng the code thats why anndrea, wyou should not talk docker file for developers, you talk about developers when
+it comes to writing the code, modifying it, again the codes are developed in java
+
+lats asuume that developeers have written the code for us to deploy an application that is archited as a microservice application, 
+it doesnt matter whether it is microservice or monolithic but when it is microservices, it menas that you have one appl that have diff modules
+so you can either login,register.. etc
+
+but that is an application that once they are deployed they have to communictae with each other 
+& in kubernetes how do applications communicate with each other? they communicate using their service name to discover each other
+be it a microservice application or a multiple applciation, its the asme concept
+
+so if you wnat to talk abt the project we did from a micro service perspective, you will just be informing them that 
+i in my env, am managing federated microservice application
+theose application, we have out team of developers their taks is to write/develop the appl & commit the lastest version ofhttps://github.com/zebxz/check/blob/main/Bootcamp%20table%20of%20content the application to github which is our scm
+then you pick up from there..
+
+
+49.50  
+so developers to the code to github
+our webapp has moduels..
+module for login, registraton, payment, order
+
+so once the new version is commited, we have our jenkins job
+therefor jenkins will do a build & create diff artifacts
+since we managing a java project, jenkins connects  using global tool configurtaion,so maven is a tool in jenkins
+so it creates thing slike login.war
+pay.war
+order.war
+theese are difff artifacts that are created
+this appl has been decoupled
+
+                                  MULTIPLE JOBS IN JENKINS , jenkins can support multiple project
+        **still in jenkins with the same guy we can have multiple jobs
+so we are creating multiple jobs & the job is pulling frm the repository
+so previous job was ebay but this other job is a tesla job which has not been decoupled, it is running as a microservice
+therfore for tesla jenkins will create monolithic artifact
+its creating tesla.war
+
+55.16    jenkins can support multiple project
+one of the project is microservice & the other project is monolithic
+once the artifact is created jenkins runs code quality with sonaqube or sonarcloud 
+but if theres a failure developers are informed to get it fixed
+afterwhich we create backups, all the artifacts are stored in an artifactory either in nexus or jfrog
+be it microservice or monolothic we can back it up
+
+58.oo
+we are working in a containerized env
+so we have predeployment stage ...we are doing containerization with the help of dockerfiles we create a docker image using docker build command
+afterwhich we distribute the imgae with docker push but first you must login... these are imp commands  
+the images are pushed to dockerhub... docker registry like dockerhub, nexus, jfrog, amazon elastic registry;ecr.. these are private registery
+next , deployment is taking place in k8 cluster
+so from jenkins we are running a command like kubectl or we are using a pipeline
+so we are running kops OR EKS, one of this two..
+in our env we go for cluster that are production ready
+so in our cluster we have our nodes
+so for deployment to take place k8 has eg in the node is running on kublet & container runtime, so it is able to get the image that docker has containerized, it will
+pull the imageinto the cl8, these are images the image resgistry
+so k8 pulls the image, creates the container & starts it
+so this is what is happening in the cluster & its able to start the conatiner beacsue there is a container runtime
+so we have a pod  on the pod there is a conatiner, so the images will be pulled, 
+it will pull the image, it will create containers & it will start containers
+so we are creating pods inside the cluster
+
+so can you see clearly the use of docker
+and we are not deploying them using docker run command becasue with docker you cannot scale
+so we are managing both monolitic & microservices
+
+but the interviewer was interested in knowing how do you expose microservice applications, which is what we explained before 
+so you have to explain the service discovery path of k8 
+so start by telling them that in your env we use k8 for appl mgt so we expose them within the k8 cluster
+
+
+1.07    WHAT SCRIPTING TOOLS DO YOU USE 
+
+bash shell scripting
+Jenkinsfile [groovy]
+Dockerfiles
+HCL - terraform
+yaml - ansible playbooks / k8s manifest
+python
+
+python could come last because your exp in python is not very extensive but the other ones, extensive
+these are some of the stuffs we have used for automation
+because all of these toools are used for automation
+eg jenkins file
+we have even written normal docker file, its a simple bash shell script, its written in simple bashe shell script for docker file
+these are stuff that you have dealt with in your env, thats what you should be talking about
+
+
+10.10   HOW MY DAY TO DAY ENV LOOKS LIKE/ HOW I start my day to day
+
+ once i get to the office
+First thing check in my emails as well as slack notification for any ticket or previous ticket that was done previous day as well as checking my jira,
+my jira board for any to do list as well, just trying to keep updated to what has happened during the night shift , after checking those 
+
+Making sure that my to do list any ticket as well
+the next stage is i have to get ready for our standup meeting, during which either we talking about if we have any blockers any ticket on review 
+any task that was done the previous day just to keep everyone updated 
+everyday is different, we could have onprompt meeting, or we could have our sprint meeting interms of particular project we are working on 
+and after that i will be going back to my work station & try to work on task of higher priorities just based on tickets thats been assigned to me 
+
+So everyday is different as i said earlier, we could also have an  onprompt meeting basedon cx ask & based on security reasons & talking to the security team as well
+after that once am working on my ticket towards the end of the day, make sure thers enough documentation of what have done & getting ready for the next day
+
+*** then he asked how we talked ot our developers?
+so i just went back to the standup/onprompt meeting and asking them based on the project we are doing 
+asking the developers in their own session what have they done, if they have any blockers, =how they are comíng up with their side of their project
+depend son what they answer  & all taht ... thats it from there, so thats how i answered that question
+
+***that was a good response Andrei
+
+*** so let me ask other engrs, do you have any thing to add?
+as a team we all have an open line of communication, at any time we can reach out to each other to make sure that we are all on the same page,
+if developers have any question that i can address, they can reach out to me & vice & versa
+
+we communicate professional ensuring that my feedback is understood & that i also understand what they say as well 
+
+
+proff 17.00
+as Andrew said in the mrn he ahs to check if thers any ticket assigned
+we use jira for ticketing
+we use confluence  for documentation
+
+                    COLLABORATIVE ENV
+so that implies that is if any job will be assigned to you it will be created on jira 
+& you can equally create a ticket for yourself
+eg you ahve a team thers an issue, the issue is nt going, eg they are trying to use ansible playbk to configure, our jenkins env is failing
+and you a observer ther are some error msg which you have an idea on how to fix it & no ticekt has been created for it, 
+you can create a ticket for yourself & get that resolved,
+so my team is collaborative, we cooporate with ecah other, we have open communication, but most importantly we use jira for ticketing
+
+                NOTIFICATION
+and for notifying the team members if something is wrong we have slack channels & email notifiacation, with all of that we can know what is going on 
+so in the mrn, the first thing you want to check on the jira dashboard if a tciket was assigned to you
+if theres a ticket you check how many were assigned if its more than one, you have to confirm the one with the highest priority
+
+***if you are given 2tickets, both are all of the same high priority, which do you fix first?
+ANS:   you have to consult
+You have to go back to the manager/team leader/ supervisor & ask , which one do you want me start with
+so you must consult, meaning you are a teams persons, you carry everyone along
+
+ how do you communicate with developers?
+we have an open communication if thers an issue i can just call the developer up & ask to get help & all of that
+but we have a slack channel where everbody comm via & if theres an issue which i need to create a ticket and assign to a developer, i also craete a ticket on the jira
+dashboard & assign a ticket to the developer because once the ticket is created its automatically notified via email
+
+
+1.20.40   but most importantly, i want you guys to be very relaxed in your interviews, bc if you are relaxed it shows you have gotten your hands dirty
+
+
+*** ibe i dont care if you can installl it or not
+whats important is that you understand the concept
+
+
+1;31;40   open check pay.. just depends on what you can do
+
+
+
+*********************************************************************************************************
