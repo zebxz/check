@@ -653,7 +653,7 @@ Importing the cluster
 CLick add cluster
 run the commnand below to bypass the certificate check
 
-then back in the cli/mobarterm
+then back in the cli/mobarterm, he showed us the same clusters we have on the k8/rancher dashboard
 
 Rancher is not just a dashboard because it provides us with an infrastructure which we can incorporate diff clusters ** i bliv like GKE cluster, KOPS cluster
 eg we have another cl8 created under this user with a diff kubeconfig file
@@ -666,7 +666,7 @@ take note that when you mg8 a pro grade env its going to have diff k8 cl8 & you 
 from this point as well we can integrate as well with git & railon
 
 we can enable monitoring to see live metrics here
-because rancheer equally have their own monitoring tool that you can use
+because rancher equally have their own monitoring tool that you can use
 
 
 interview question
@@ -681,9 +681,38 @@ these are components of the master node or control plane
 then below, you can see events & it will tell you what is happening in the server in real time
 
 
-we can enable monitoring to see live metrics here
-and this is smt that we have used so many commands to achieve it, remember 
+              PROMETHUS REQUIRED A LOT OF COMMANDS
+26.25 we can enable monitoring to see live metrics here
+and this is smt that we have used so many commands to achieve it, remember like promethus limit & stuff  we had used thousands of lines of code to be able to enable promethus
+alert that if smt is going wrong notify us.
 
+those are just some main stuffs i want us to look at when it comes to this more advanced concept 
+
+27.50     EXPLORER SECTION 
+where we can check what is going on in this cl8
+
+   KUBECONFIG FILE
+I can launch a kube config file from here, i can get this kube config file & install it in any other server & mg8 this cl8 frm that server
+
+LAUNCH KUBECTL  (run kubectl commands inside here) 
+kubectl get all, get svc
+we can see the services running in my EKS 22 cluster 
+i can equally launch my kubectl from here, 
+so this becomes a central point for eg
+
+28.50 eg if you are trying to do a specific deployment in one cl8 & for some reason if it fails, you can jsut redeploy in another cl8 becasue you want to achieve
+high availabilty, & after redeploying in another cl8, you can now start troubleshooting the problem
+
+
+** back to cluster explorer
+we can create cron job .. eg to program deployment to take place at 2am
+
+all we what we saw in k8, you can see them here ( ingress, service discovery, secret, config maps)
+
+
+
+
+TO WATCH
 kubernetes 12,13 - Helm
 2 Agro CD Video
 
