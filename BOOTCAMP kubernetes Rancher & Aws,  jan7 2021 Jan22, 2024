@@ -1,0 +1,130 @@
+PLATFORMS:
+LINUX 
+    Redhat
+    Centos
+    UBuntu
+    Amazon Linux 2
+     Linux Commands 
+     Shell Scripting
+WINDOWS 
+    Powershell
+    GitBash
+
+The first thing sonarqube does is check for code coverage ie the number of unit test cases that developers have written
+then code smell, code smells, code bugs, vulnerability & duplicate lines
+
+8.15 MANAGING K8 CL8 USING KUBERNETES DASHBOARD & RANCHER
+we have looked at k8 & seen how we can monitor our applications running in our k8 cl8
+
+if you have a cl8, how can you mg8 your cl8 on a dashboard, thers smt called k8 cluster & in configuring this dashboard we are going to use a 3rd tool callled rancher
+
+the first thing that Rancher does is that it provides a dashboard where we can mg8 our k8 resources & deployment
+
+K8 Comes with a cl8 of servers which makes our application highly available 
+
+
+   HOW CAN WE ACCESS THE API SERVER
+we could use the cli ie the kubectl
+OR 
+UI *user interface) ie k8 dashboard , its a dashboard that we can use to mg8 our k8 cl8
+
+     HOW DO YOU INSTALL RANCHER
+I think have shown us before, its just one comand that you can use to mg8 a cl8 of servers
+
+
+   CONFIGURING THE CL8 ON THE RANCHER KUBERNETES UI
+11.36 has cluster from GKE, AWS KOPS, & EKS, self managed cluster
+
+Importing the cluster  
+CLick add cluster
+run the commnand below to bypass the certificate check
+
+then back in the cli/mobarterm, he showed us the same clusters we have on the k8/rancher dashboard
+
+Rancher is not just a dashboard because it provides us with an infrastructure which we can incorporate diff clusters ** i bliv like GKE cluster, KOPS cluster
+eg we have another cl8 created under this user with a diff kubeconfig file
+
+take note that when you mg8 a pro grade env its going to have diff k8 cl8 & you will need such a dashboard to mg8 all of it
+
+21.40  from our dashbord we can mg8 all our deployment, create users, security, roles, all of these task is very easy to achieve from this guru interface
+
+23.00 with this cl8 we can deploy any application that we want to deploy
+from this point as well we can integrate as well with git & railon
+
+we can enable monitoring to see live metrics here
+because rancher equally have their own monitoring tool that you can use
+
+
+interview question
+24.00 what are you monitoring using prometheus, what have you ever nonticed using promethus as a monitoring tool
+in our previous class we realised that our servers are running on low memory bc we have created an alert that says that  if memory goes below a certain threshold, let it 
+trigger the alert manager to notify the parties concerned either via email notification, slack channel notification etc
+it shows us the servers we have & if they are healthy or not
+
+25.20 for the self managed k8 cl8, its telling us that/ we can see that the etcd is ok, the nodes are fine but smt is wrong with the scheduer & controller manager
+these are components of the master node or control plane 
+
+then below, you can see events & it will tell you what is happening in the server in real time
+
+
+              PROMETHUS REQUIRED A LOT OF COMMANDS
+26.25 we can enable monitoring to see live metrics here
+and this is smt that we have used so many commands to achieve it, remember like promethus limit & stuff  we had used thousands of lines of code to be able to enable promethus
+alert that if smt is going wrong notify us.
+
+those are just some main stuffs i want us to look at when it comes to this more advanced concept 
+
+27.50     EXPLORER SECTION 
+where we can check what is going on in this cl8
+
+   KUBECONFIG FILE
+I can launch a kube config file from here, i can get this kube config file & install it in any other server & mg8 this cl8 frm that server
+
+LAUNCH KUBECTL  (run kubectl commands inside here) 
+kubectl get all, get svc
+we can see the services running in my EKS 22 cluster 
+i can equally launch my kubectl from here, 
+so this becomes a central point for eg
+
+28.50 eg if you are trying to do a specific deployment in one cl8 & for some reason if it fails, you can jsut redeploy in another cl8 becasue you want to achieve
+high availabilty, & after redeploying in another cl8, you can now start troubleshooting the problem
+
+
+** back to cluster explorer
+we can create cron job .. eg to program deployment to take place at 2am
+
+all we what we saw in k8, you can see them here ( ingress, service discovery, secret, config maps)
+
+
+30.30 OBJECTS
+Can create objects with or without yaml.files
+you click on it & theres a default template, you can just change the values
+
+whats imp is for you to know have this understanding & play around with the cl8, if you need accese to play around you must not configure onewhen you start to work, you
+wont configure the entire infastructure, most of the infastructure you will meet them already configured.
+
+32.00        APPS
+here you ll see many other options you can use
+if you click on shell a commnad line opens where you can run commands like kubectl 
+also you can change your clusters
+
+
+  Charts
+like you can use to configure hAproxy  , data dog; its another monitoring tool which we can use to monitor our servers & applications
+and if u realise you see that helm chart is used for most of this installation
+all these are stuffs that are available w ecan take advantage of 
+
+they have asked a few people, do you hv experience with Rancher?
+this is the experinece you need to take note of rancher just makes your task easier to be able to manage your applications 
+
+Asking if rancher if free & open source
+yes it is, but it equally has a licence version but the one we have here now is the free & open source verison
+
+
+35.00     USING RANCHER TO CREATE A CLUSTER
+One more thing is that you can use rancher to create a cluster, remember that we had used rancher to import a cluster
+you can also use rancher to create a cluster
+theres option to register an existing cluster & also to create a new kubernetes cluster
+
+   ILLUSTRATION OF CREATING CREDENTIALS TO CREATE A CLUSTER USING RANCHER
+
