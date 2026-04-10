@@ -373,11 +373,64 @@ Fault Tolerant
 The ability of our system to withstand failures in one/more of its components & still remain available
 FT ensure that if one of our web server failed, the backup server immediately took over
 
+1.11.12   we equally saw this when we installed a prod grade k8 cl8 in aws cloud, both using kops & EKS , we realized that we had attached an autoscaler & in the autoscaler
+if any sever goes down it has to maintian the desired state the auto scaler replaces it immedistely this is diff to achieve in an onpre env but in the cloud we can have a 
+highly fault tolerant infastructure
+
 
 Scalability
 Scalability handles the changing needs of an application within the confines of the infrastructure via statically adding or removing resources to meet applications demands
-if needed.
+if needed. an infastructure that can scale is very imp
 
 Elasticity
 Elasticity is the ability to grow or shrink infrastructure resources dynamically as needed to adapt to workload changes in an automatic manner, maximizing the use of resources. 
 This can result in savings in infrastructure costs overall.
+
+
+1.13.20     AWS GOALS
+On prem infastructure      you use 30% of your time managing your business & 70% managing all the undifferentiated heavy lifting
+                         WHILE
+AWS cloud based infastructure  you use 70% of your time to focus more on your business  and 30% for configuring your cloud assets (MANAGING YOUR APPLications in your cl8)
+
+
+                               
+            WHAT IS CLOUD SERVICE
+A Cloud service is any service made available to users on demand via the internet from a cloud computing providers servers
+
+
+           WHAT IS CLOUD COMPUTING
+its the delivery of computing services-servers, storage, databases, networking, software, analytics & more- over the internet
+so all these services can be provided to us, our application, database, OS
+And that is why i have my servers hosted by AWS & all i have to do is just to install a simple software on my laptop & i am accessing the server
+i dont need to go & buy a new server to installl linux or whatever i want to do, so this is the power of cloud computing
+
+
+
+                    THE MAIN DIFF BTW SAAS, PAAS, IAAS
+This is the diff main structure you need to take specific note of because This is the intro of your resume
+
+1)ONprem :
+YOU MANAGE : APPlication, data, runtime, middleware, O/s, virtualization, servers, storage , networking
+
+
+  ** today that we have cloud providers like AWs, Azue, Google..  we can go for  any of this 
+
+2)IAAS :  eg Ec2 instance, its an infastructure as a service
+CLOUD PROVIDER MANGES:
+ virtualization, servers, storage , networking
+YOU MANAGE :
+ APPlication, data, runtime, middleware, O/s,
+
+so if you are asked in an interview, which time of infastructure have you managed?
+one of it is IAAS, PAAS & SAAS
+
+3)PAAS:    the cloud provider provides a platform & all you have to do is to ensure that your application & data is available & running eg EKS
+APPlication, data, runtime, middleware, O/s, virtualization, servers, storage , networkingYOU MANAGE :
+ YOU MANAGE:
+APPlication, data,
+
+
+4)SAAS:   the cloud provider manages everything eg cloud watch
+CLOUD PROVIDER MANAGES:
+APPlication, data, runtime, middleware, O/s, virtualization, servers, storage , networking
+
