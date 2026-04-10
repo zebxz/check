@@ -1,5 +1,6 @@
 ******** explanation on how traffic is routed is in nginx tomcat & kub 10&11 & KUB 12; NGINX 
 
+
 KUB 14 HElm
 **meeee** WHY do we have more than one cluster in kubernetes  ????
 why is helm characterized with using just one cluster?????    **** Helm manages one cluster while Rancher manages more than one cluster
@@ -7,6 +8,76 @@ why is helm characterized with using just one cluster?????    **** Helm manages 
 Helm is not restricted to a single cluster, but it is designed to manage one specific Kubernetes cluster at a time through a direct client-API server interaction. 
 The perception of it being single-cluster-only stems from its fundamental architecture as a package manager rather than a multi-cluster orchestration tool
 
+
+
+
+                                   PROMETHEUS & GRAFANA
+BOOTCAMP kubernetes Rancher & Aws1,  jan7 2021 Jan22, 2024
+
+interview question
+24.00 what are you monitoring using prometheus, what have you ever nonticed using promethus as a monitoring tool
+in our previous class we realised that our servers are running on low memory bc we have created an alert that says that  if memory goes below a certain threshold, let it 
+trigger the alert manager to notify the parties concerned either via email notification, slack channel notification etc
+it shows us the servers we have & if they are healthy or not
+
+
+interview2022/Patick.interview
+
+#### How did you work with prometheus
+How did you monitor your cluster. assume you had multiple clusters with multiple pods running?
+
+Ans:
+This is the case of rancher bc with it i can monitor all my clusters because it gives me a dashboard inteface where i can monitor all my cluster, their health so its easy to 
+realise that
+
+
+#### What Did you ever monitor or observe as a problem and how did you solve it. (using prometheus)
+
+ANS:
+if you realise, IN our last class thers smt we discussed, we had configured prometheus & we had a problem, there was low memory & alerts were generated
+
+##### how was it solved?
+the responsible parties were notified & actions were taking
+eg if you realise that your servers are running down on memeory, what can you do?
+
+if you have an EKS cluster, you can add one more node group to support the existing nodes that are running, those are just options that can be done
+
+##### eg
+if you have senen that your pods have high latency where users take a very long time to get to your application what will you do?
+
+ANS:
+you need to see how you can distribute your node group across more availability zones
+
+
+####How was the communication between the clusters and the pods. how did prometheus monitor this with respect to end users.
+
+Ans
+In the last class one of the things that we looked at is service discovery
+bc if promethus is going to monitor your pods, applications runing it needs to be able to talk to those pods & its does it via service discovery
+which most of the time comm within the cluster uses clusterip which is a desfault service for k8
+
+
+### In monitoring using prometheus what did you observe in the cluster.
+
+ANS
+in our last class we have set some rules to observer if our node was down, if smt is wrong we are observing 
+we  are eqully trying to check the general health of our server, the control plane & stuff
+we are checking if our pods are running, we are observing the latency ie how much time its taking our users to access our application, we are observing all of that
+
+
+###What were the monitoring parameters and how did you observe them
+
+this is the same as the last bc if u dnt answer are they reframe the quetsion again
+
+
+## What is the difference between monitoring and application observation
+
+Ans
+atimes we just observe to ensure the appl is available, like when we did newrelic 
+we realised that ones smt went wrong with our appl  we can know in real time because we are going to start seeing 404 error, bc the appl cannot be found smt is wrong
+
+
+####Have you ever had a problem you observed on prometheuse. How did you solve the problem?
 
 
 
