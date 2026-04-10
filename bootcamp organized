@@ -3453,7 +3453,164 @@ and the good thing with all of this is that k8 comes with a package manager whic
 if you look at it we have touched most of the things that we should discuss about k8 & by the time that is done it becomes a simplitic discussion
 
 
+
+
+BOOTCAMP kubernetes Rancher & Aws1,  jan7 2021 Jan22, 2024
+
+interview question
+24.00 what are you monitoring using prometheus, what have you ever nonticed using promethus as a monitoring tool
+in our previous class we realised that our servers are running on low memory bc we have created an alert that says that  if memory goes below a certain threshold, let it 
+trigger the alert manager to notify the parties concerned either via email notification, slack channel notification etc
+it shows us the servers we have & if they are healthy or not
+
+
+interview2022/Patick.interview
+
+#### How did you work with prometheus
+How did you monitor your cluster. assume you had multiple clusters with multiple pods running?
+
+Ans:
+This is the case of rancher bc with it i can monitor all my clusters because it gives me a dashboard inteface where i can monitor all my cluster, their health so its easy to 
+realise that
+
+
+#### What Did you ever monitor or observe as a problem and how did you solve it. (using prometheus)
+
+ANS:
+if you realise, IN our last class thers smt we discussed, we had configured prometheus & we had a problem, there was low memory & alerts were generated
+
+##### how was it solved?
+the responsible parties were notified & actions were taking
+eg if you realise that your servers are running down on memeory, what can you do?
+
+if you have an EKS cluster, you can add one more node group to support the existing nodes that are running, those are just options that can be done
+
+##### eg
+if you have senen that your pods have high latency where users take a very long time to get to your application what will you do?
+
+ANS:
+you need to see how you can distribute your node group across more availability zones
+
+
+####How was the communication between the clusters and the pods. how did prometheus monitor this with respect to end users.
+
+Ans
+In the last class one of the things that we looked at is service discovery
+bc if promethus is going to monitor your pods, applications runing it needs to be able to talk to those pods & its does it via service discovery
+which most of the time comm within the cluster uses clusterip which is a desfault service for k8
+
+
+### In monitoring using prometheus what did you observe in the cluster.
+
+ANS
+in our last class we have set some rules to observer if our node was down, if smt is wrong we are observing 
+we  are eqully trying to check the general health of our server, the control plane & stuff
+we are checking if our pods are running, we are observing the latency ie how much time its taking our users to access our application, we are observing all of that
+
+
+###What were the monitoring parameters and how did you observe them
+
+this is the same as the last bc if u dnt answer are they reframe the quetsion again
+
+
+## What is the difference between monitoring and application observation
+
+Ans
+atimes we just observe to ensure the appl is available, like when we did newrelic 
+we realised that ones smt went wrong with our appl  we can know in real time because we are going to start seeing 404 error, bc the appl cannot be found smt is wrong
+
+
+####Have you ever had a problem you observed on prometheuse. How did you solve the problem?
 **********************************************************************************
+
+
+
+
+                            RANCHER
+BOOTCAMP kubernetes Rancher & Aws1,  jan7 2021 Jan22, 2024   
+
+***mee ,  One adv of rancher over promethus
+
+PROMETHEUS REQUIRED A LOT OF COMMANDS
+I have been able to use both based on the advantage that one has over the other for eg with rancher we can enable monitoring to see live metric but promethus 
+requires a lot of command & thousands of lines of code to achieve the same task
+
+
+How did you work with prometheus?
+How did you monitor your cluster. assume you had multiple clusters with multiple pods running?
+
+Ans:
+This is the case of rancher bc with it i can monitor all my clusters because it gives me a dashboard inteface where i can monitor all my cluster, their health so its easy to 
+realise that
+
+    
+
+
+             RANCHER
+Rancher is not just a dashboard because it provides us with an infrastructure which we can incorporate diff clusters ** i bliv like GKE cluster, KOPS cluster
+eg we have another cl8 created under this user with a diff kubeconfig file
+
+take note that when you mg8 a pro grade env its going to have diff k8 cl8 & you will need such a dashboard to mg8 all of it
+
+21.40  from our dashbord we can mg8 all our deployment, create users, security, roles, all of these task is very easy to achieve from this guru interface
+
+23.00 with this cl8 we can deploy any application that we want to deploy
+from this point as well we can integrate as well with git & railon
+
+we can enable monitoring to see live metrics here
+because rancher equally have their own monitoring tool that you can use
+
+
+  USING RANCHER TO CREATE A CLUSTER
+One more thing is that you can use rancher to create a cluster, remember that we had used rancher to import a cluster
+you can also use rancher to create a cluster
+theres option to register an existing cluster & also to create a new kubernetes cluster
+
+   ILLUSTRATION OF CREATING CREDENTIALS TO CREATE A CLUSTER USING RANCHER
+
+
+WHAT IS THE ADVANTAGE OF RANCHER
+Rancher gives us high available, better visiblity of our k8 cl8 the way our appl is running & even better mgt
+because from here we can create other clusters 
+eg GKE, 
+Rancher helps us to mange diff k8 clusters irrespective of where they are hosted
+even self manged kubeadm, you can have a cluster like this using rancher to mg8 them 
+
+54.26  with rancher, you can create a cl8 and add nodes form diff cloud which will have you high availability 
+which means that i can create a cl8, & add serves from amazon ec2, i can add azure servers , digitalOcean, vSphere etc
+which implies you can have one cluster & that particular cluster have have worker node from diff cloud providers, it gives u that option
+or you can just create a hosted k8 provider, like AWS, EKS, azure, GKE
+you are able to achieve that using rancher, thats how powerful rancher is 
+
+rancher actually helps with visibilty , metric, logs & stuff easier for us to just incorporate it here when we use rancher
+
+
+
+
+8.15          MANAGING K8 CL8 USING KUBERNETES DASHBOARD & RANCHER
+we have looked at k8 & seen how we can monitor our applications running in our k8 cl8
+
+if you have a cl8, how can you mg8 your cl8 on a dashboard, thers smt called k8 cluster & in configuring this dashboard we are going to use a 3rd tool callled rancher
+
+the first thing that Rancher does is that it provides a dashboard where we can mg8 our k8 resources & deployment
+
+K8 Comes with a cl8 of servers which makes our application highly available 
+
+
+   HOW CAN WE ACCESS THE API SERVER
+we could use the cli ie the kubectl
+OR 
+UI *user interface) ie k8 dashboard , its a dashboard that we can use to mg8 our k8 cl8
+
+
+ HOW DO YOU INSTALL RANCHER /CONFIGURING THE CL8 ON THE RANCHER KUBERNETES UI
+
+Importing the cluster  
+CLick add cluster
+run the commnand below to bypass the certificate check
+
+
+
 
 bootCamp25 session with Yvonne
 
