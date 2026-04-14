@@ -1474,6 +1474,7 @@ the type is an application
 if you had to do another release, you will repeat this task & it will create a new release number
 
 
+   F)
 1.47.00          PUSH TO GITHUB    
             (whenever you clone a repo from github, if you run the command -v, it gives you the alias the default alias is origin
 
@@ -1487,14 +1488,30 @@ gitpush origin
 everything up to date
 
 
-              WE cloned a repo (helm22) in git, deployed the myapp application & commited the helm chart to the repo
-      but we have not added our repo yet
+     WHY GIT PUSH SAY 'EVRYTHING IS UP TO DATE' BUT its not
+ ***its trying to do a git push but its saying that everything is up to date 
+checking in github we can only see the READ.me file
+but in the repo, we have;apps-0.1.0.tgz helm22/  index.yaml  READ.md
+
+
+git status we have files that have not been committed, untracked files
+
+*** we have to run 'git add'
+then git commit -m 'class22 helm charts'
+
+git push origin
+
+*** if you are asked to authenticate pls do that
+because it will ask especially if you are doing it for the first time
+
 
 
 
 1.51.50              TO SEE OUR REPOS
   landmarktechnologies ¬/music/helm       
    helm repo ls
+NAME    URL
+nginx   https://helm.nginx.com/stable         ** for now we have only one repo & i can add our custom repository
 
 
             TO SEE OUR APPLICATIONS THAT ARE RUNNING
