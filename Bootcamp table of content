@@ -1371,6 +1371,8 @@ now this is my vscode
 just type helm' it will give you all the options you can use for the command & also what helm is used for 
 
 
+iLLustration1:
+
 55.00   INSTALLING NGINX USING HELM
 
 
@@ -1382,6 +1384,7 @@ this file is written in GO language
 
 
 
+                     CONFIGURE THE 'HELM CHART' REPO  AS A GITHUB PAGES SITE/CREATING GITHUB REPO
 1.27.40      haven done the deployment , all my chart are found in this repository
    HOW CAN I MAKE THE DEPLOYMENT AVAILABLE IN MY CROSS FUNCTIONAL TEAM/ 
 
@@ -1394,8 +1397,41 @@ but today we wil create our repo in github & upload our chart/package
 select settings
 
 
+iLLustration2:        DEPLOY AN APPLICATION USING A CLONED HELM REPO
 
-1.45.40       INDEX FILE
+
+              A) CLONING A REPO THAT HAS AN APPLICATION DEPLOYED USING HELM 
+***   we have an application that we deployed using helm & all our charts are in 'apps'
+
+  WE cloned the repo (helm22) in git,
+
+ls 
+apps helm22
+
+
+
+     B)TO CHECK IF ANYTHING IS WRONG WITH YOUR CHART
+        helm lint apps' 
+
+
+1.42.00     
+
+C)        TO CREATE A PACKAGE/ARCHIVE FOR OUR HELM CHART
+landmarktechnologies ¬/music/helm       
+       helm package apps/
+
+landmarktechnologies ¬/music/helm       
+Ls -l
+-rw-r-r    landmarktechnologies   apps-0.1.0.tgz          it has compressed all the chart that we have ** ARchive file for our chart
+
+
+D)
+   MOVE 
+
+
+E)
+
+1.45.40     CREATING AN INDEX FILE
 This file was generated when we executed ;   helm repo index  
        we did not vi to create the file
 
@@ -1405,7 +1441,60 @@ it tells you of the version of our helm chart
 it tells you the version, this is a release number
 if you had to do another release, you will repeat this task & it will create a new release number
 
-1.47.00
+1.47.00 
+
+
+
+              WE cloned a repo (helm22) in git, deployed the myapp application & commited the helm chart to the repo
+      but we have not added our repo yet
+
+
+
+1.51.50              TO SEE OUR REPOS
+  landmarktechnologies ¬/music/helm       
+   helm repo ls
+
+
+            TO SEE OUR APPLICATIONS THAT ARE RUNNING
+landmarktechnologies ¬/music/helm       
+helm ls
+             NAME       NAMESPACE     REVISION    UPDATED                STATUS       CHART
+         myapps          default         1                               deployed      apps-0.1.0
+
+
+                            TO UNINSTALL
+landmarktechnologies ¬/music/helm       
+helm uninstall myapps 
+             uninstalled
+
+
+     TO REMOVE THE APP FROM MY SERVER  (cd into the appl dir)
+landmarktechnologies ¬/music/helm       
+cd music
+landmarktechnologies ¬/music/helm       
+cd helm
+landmarktechnologies ¬/music/helm       
+ls
+apps helm22
+landmarktechnologies ¬/music/helm       
+rm-rf apps/     .. so we dont have the app info again
+
+
+        TO DEPLOY THE APPLICATION WE DELETED   (
+
+
+1.58.00                helm search repo myapp
+
+         NAME        CHART VESRION    APP VERSION      DESCRIPTION 
+    Myappp/apps         0.1.0           1.16.0         A helm chart for kubernetes
+
+
+                   CREATING A CUSTOM VALUES FILE
+HElm show value myapp/apps>> myapp.values          ie redirect the values file into a new file (myapp.values)
+    we can vi into the file & change any values we want
+
+
+helm install webapp myapp/apps 
 *****************************************************************************************
 
 
