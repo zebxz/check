@@ -1,5 +1,5 @@
 https://github.com/LandmakTechnology...  total of 122 repositories
- 
+  
 
 Refer to the file: Bootcamp Organized (i combined some/ almost all of the files inside it)
 
@@ -1385,29 +1385,45 @@ this file is written in GO language
 
 
                      CONFIGURE THE 'HELM CHART' REPO  AS A GITHUB PAGES SITE/CREATING GITHUB REPO
+
+Github pages     https://mylandmakTechnology.github.io/helm22/
+Github repo      https://github.com/mylandmakTechnology/helm22.git
+
+
 1.27.40      haven done the deployment , all my chart are found in this repository
-   HOW CAN I MAKE THE DEPLOYMENT AVAILABLE IN MY CROSS FUNCTIONAL TEAM/ 
+   HOW CAN I MAKE THE DEPLOYMENT AVAILABLE IN MY CROSS FUNCTIONAL TEAM 
 
   *** how to create our own helm repository
 
 1.35.30   when it comes to helm we can have repo in github, in nexus & in jfrog
-but today we wil create our repo in github & upload our chart/package
+but today we wil create our helm repo in github & upload our helm chart/package into the repository
+we have a repo we laready created called helm22
 
-1.36. 20     to do that we have to create github pages
-select settings
+
+1.36. 20     CREATE GIT HELM REPO & CREAT github pages
+once you create the repo go to/select settings & scroll down to  github pages
+ source is in the main branch 
+then save
+
+1.38.30   this is the github pages url:    this is not a repository you can clone
+https://mylandmakTechnology.github.io/helm22/
+
+
 
 
 iLLustration2:        DEPLOY AN APPLICATION USING A CLONED HELM REPO
 
 
-              A) CLONING A REPO THAT HAS AN APPLICATION DEPLOYED USING HELM 
+              A) CLONING A REPO THAT HAS AN APPLICATION DEPLOYED USING HELM (It will include the application & the helm chart)
 ***   we have an application that we deployed using helm & all our charts are in 'apps'
 
   WE cloned the repo (helm22) in git,
+landmarktechnologies ¬/music/helm       
+git clone   https://mylandmaktechnology.github.io/helm22
 
+landmarktechnologies ¬/music/helm       
 ls 
 apps helm22
-
 
 
      B)TO CHECK IF ANYTHING IS WRONG WITH YOUR CHART
@@ -1416,7 +1432,7 @@ apps helm22
 
 1.42.00     
 
-C)        TO CREATE A PACKAGE/ARCHIVE FOR OUR HELM CHART
+C)             TO CREATE A PACKAGE/ARCHIVE FOR OUR HELM CHART
 landmarktechnologies ¬/music/helm       
        helm package apps/
 
@@ -1426,23 +1442,49 @@ Ls -l
 
 
 D)
-   MOVE 
-
+            MOVE THE PACKAGE INTO GITHUB REPO 
+landmarktechnologies ¬/music/helm       
+ mv apps-0.1.0.tgz helm22/
+landmarktechnologies ¬/music/helm       
+ls helm22
+apps-0.1.0.tgz helm22/
 
 E)
 
-1.45.40     CREATING AN INDEX FILE
-This file was generated when we executed ;   helm repo index  
-       we did not vi to create the file
+1.45.40           CREATING AN INDEX FILE
 
-vi into index
+landmarktechnologies ¬/music/helm       
+helm repo index helm22 --url https://mylandmaktechnology.github.io/helm22
+landmarktechnologies ¬/music/helm       
+cd helm22
+landmarktechnologies ¬/music/helm       
+ls
+apps-0.1.0.tgz helm22/  index.yaml  READ.md
+
+This index file was generated when we executed ;   helm repo index  
+       it generated index.yaml file
+    we did not vi to create the file
+
+
+vi into index.yaml
 
 it tells you of the version of our helm chart
 it tells you the version, this is a release number
+the type is an application
 if you had to do another release, you will repeat this task & it will create a new release number
 
-1.47.00 
 
+1.47.00          PUSH TO GITHUB    
+            (whenever you clone a repo from github, if you run the command -v, it gives you the alias the default alias is origin
+
+landmarktechnologies ¬/music/helm       
+ git remote -v
+origin  https://github.com/mylandmakTechnology/helm22.git (fetch)
+origin  https://github.com/mylandmakTechnology/helm22.git (push)
+
+landmarktechnologies ¬/music/helm       
+gitpush origin
+everything up to date
 
 
               WE cloned a repo (helm22) in git, deployed the myapp application & commited the helm chart to the repo
