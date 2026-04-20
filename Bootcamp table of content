@@ -1645,7 +1645,9 @@ helm install webapp myapp/apps ---set service.type=NodePort  --set image.tag=3
 
 
 
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm
+Install helm3
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 
 $ chmod 700 get_helm.sh
 
@@ -1662,7 +1664,7 @@ helm repo rm nginx search repo nginx
 helm search repo nginx   # searches number of deploys
 helm template nginx-stable/nginx-ingress    # review charts
 helm show values nginx/nginx-ingress       # show values/varaiables
-helm install -f Grafana-values.yml grafana stable/grafana -n monitor
+helm install -f Grafana-values.yml grafana stable/grafana -n monitoring
 
 helm upgrade
 
@@ -1671,7 +1673,7 @@ helm install webapp myapp/apps --set service.type=NodePort
 helm upgrade apps helmrepo/apps --set service.type=NodePort
 helm upgrade apps helmrepo/apps --set image.tag=1
 helm repo add helmrepo https://landmaktechnology-github.io/helm
-kubectl get secret --namespace monitoring grafana -o jsonpath="{.
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 
          USING HELM TO DEPLOY PROMETHEUS
