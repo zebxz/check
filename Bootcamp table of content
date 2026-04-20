@@ -1644,6 +1644,36 @@ helm install webapp myapp/apps ---set service.type=NodePort  --set image.tag=3
 
 
 
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm
+
+$ chmod 700 get_helm.sh
+
+$ ./get_helm.sh
+
+# Create deployment manifests (helm charts) for myapp
+helm create myapp
+
+helm install # will deploy applications helm
+uninstall  # will undeploy applications
+upgrade  #will rollout deployments of applications
+helm ls  # List deployments
+helm repo rm nginx search repo nginx
+helm search repo nginx   # searches number of deploys
+helm template nginx-stable/nginx-ingress    # review charts
+helm show values nginx/nginx-ingress       # show values/varaiables
+helm install -f Grafana-values.yml grafana stable/grafana -n monitor
+
+helm upgrade
+
+helm install webapp myapp/apps --set service.type=NodePort
+
+helm upgrade apps helmrepo/apps --set service.type=NodePort
+helm upgrade apps helmrepo/apps --set image.tag=1
+helm repo add helmrepo https://landmaktechnology-github.io/helm
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.
+
+
          USING HELM TO DEPLOY PROMETHEUS
 
 2.17.08
@@ -1654,6 +1684,7 @@ these software is been developed right, dont forget that as a devops engr  you c
 eg you were working for newrelic & initially newrelic cud nt manage k8 API, you can advice that if we want to be in business in the longrun , we need to incorporate
 APi, microservice APi monitoring
 most of these monitoring tools try to do everything, they dnt want their client to have them & have other vendors
+
 
 
 *****************************************************************************************
