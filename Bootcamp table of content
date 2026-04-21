@@ -1758,9 +1758,60 @@ you have helped coy to uptimize the best use of resources because of data
 
 
 GRAFANA
+Grafana is the open source tool that alows you to easily visualize information
+
+what are garafana dashboards?
+grafana dashboard takes information from server monitoring tool like prometheus to display this information
+so grafana requires a data source , the data source can be prometheus or many other things , they have several data source 
+so grafana is not only used for prometheus its used for other monitoring & alerting tools as well
+so grafana dashboard takes information from server monitoring tool like prometheus to display the information
+
+
 
 2.32.00  PROMETHUS ARCHITECTURE 
-10mins
+          ***meee, prometheus pulls from metrics from prometheus target with the help of an exporter & it also pulls from kuberbernetes cluster 
+     and in some cases a push gateway pushes metrics into kubernetes
+the metrics can be visualized on the prometheus UI or Grafana 
+
+
+1)prometheus server:
+it has a retriever, a data baase & a webserserver (http server) accepts promQL queries
+the retriever is configured to pull metrics into prometheus, & how does it pull the metrics?
+
+2)prometheus target
+How does it pull the metrics?
+it can pull it from prometheus target
+we can install a prometheus exporter in the target
+the exporter will help to gather materic from server in a way that prometheus can process & prometheus will pull those metrics
+
+3)Kubernetes/service discovery
+here its trying to pull metrics from a cluster
+
+4)Push gateway
+in some cases we can have a push gateway where metrics can be pushed into kubernetes
+
+5)promQL
+so one thing you should take note of is the fact that we have a prometheus server, which has a database
+because when all the info are pulled into prometheus they are stored in this database 
+and once the information are pulled into prometheus, we have a data source like grafana
+grafana can pull the information, it can now cause us to visualize the data
+
+Apart from grafana, even prometheus has a web user interface which w ecan visualize the information feom the web user interface 
+the problem is that its is going to come in the form of promQL
+We have seen stuff like Sql, where we use it to query data in my secure data base
+for prometheus it use promQL
+
+so these are the options that can be used to visualize metrics that prometheus is generating
+
+6)  Alert manager
+so whatever happens in the prometheus server, the info will be pushed to the alerting manager to send notification to whoever needs to be notified  via
+stuff like pagerduty, slack channel, email notification
+
+so this is how the prometheus architecture is 
+
+
+
+
 *****************************************************************************************
 
 
