@@ -1770,6 +1770,7 @@ so grafana dashboard takes information from server monitoring tool like promethe
 
 
 2.32.00  PROMETHUS ARCHITECTURE 
+             2.42.24.... Prometheus is a pull mechanism
           ***meee, prometheus uses a retriever to pull metrics into prometheus using prometheus target which has an exporter installed & it also pulls from kuberbernetes
 cluster and in some cases a push gateway pushes metrics into kubernetes  
  metrics can come from application, services, servers & the retriever pulls it into the prometheus stores (metrics data) ie the time series Database
@@ -1870,6 +1871,67 @@ untar & execute
 converts metrics of the server
 exposes/metrics endpoint
 configure to scrap the endpoint
+
+
+     ALERT MANAGER
+how does prometheus trigger the alert?
+who receives the alert?
+
+it will read from the alert rules in the config file, we are going to define some alert rules saying that if servers are down trigger an alert
+notify our system administrators that the servers are down
+
+so we have an alert manager who ensures that he pushes the information it rceives to the right party by notifying them eg that the application is running very slow
+
+
+             2.42.24.... Prometheus is a pull mechanism
+
+IMPortance of prometheus/characteristics
+
+Reliable
+stand alone & self containing  ie if your cluster goes down it wont have an impact on prometheus, its independent
+works even if other parts of infastructure is broken  ie if you have prometheus running & smt goes rong with some of your serves & stuff, prometheus will stil be there to 
+                                         tell you what is going on
+No extensive setup needed
+less complex
+fully compatible
+prometheus component available as Docker images
+can easily be deployed in container environments like kubernetes  and today prometheus has a lot of intergration including integration with Aws cloud watch
+
+difficult to scale 
+Limits monitoring 
+
+   work arounds;
+increase prometheus server capacity  ie you need a high server capacity for prometheus
+
+
+When we look at kubernetes & docker it is fully compatible 
+
+
+
+Kube State Metrics:
+kube-state-metrics is a service that listens to the Kubernetes API server and generates metrics about the state of the objects, including deployments, nodes, and pods.
+Grafana:
+Grafana is designed for analyzing and visualizing metrics such as system CPU, memory, disk and I/O utilization.
+Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored. Create, explore, and share dashboards with your team and 
+foster a data driven culture:
+
+Prerequisite:
+1) Kubernetes Cluster With Storage Class Configured (Dynamic Provisioning).
+
+If Storage Class is not Configured then make persistence enabled as false in helm values files # Which is not suggestable as if pods are terminated and recreated we will 
+lost the data.
+2)Kubernetes nodes with minimum 4GB RAM With 2 Core Processer.
+3) Server which has kubectl & helm configured
+
+
+Deploy Prometheus, Exporters, Alert Manager & Grafana
+https://github.com/myLandmakTechnology/prometheus-grafana-ELK-EFK
+
+1) Add helm repo which contains Prometheus and Grafana charts.
+
+
+
+
 
 *****************************************************************************************
 
