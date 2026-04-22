@@ -1830,6 +1830,47 @@ which units are monitored of those targets   ?
 5)exceptions count  ie once your appl are running , there could be some exception & endusers cannot access the application or it is running very slow 
 prometheus monitors all of that
 
+
+  METRICS
+Format; human readable text-based
+Metrics entries:  TYPE and HELP attributes
+
+HELP  ; description of what the metric is
+TYPE;  3 metrics types
+
+1)Counter how many times X happened? 
+     tells how many times eg  request count eg you have a paraticular rest Api where users are trying to access, how many times did they access the rest API 
+ thats a counter metrics
+
+2) Gauge;  what is the current value of x now? 
+eg if i excute a command df-h, it tells how much % of file system is been used, X can be the cpu, memory etc
+
+3) Histogram How long or how big? 
+eg how long does it take for endusers to access your application
+
+
+
+    TRAGET ENDPOINTS AND EXPORTERS
+2.39.40    Exporters will fetch for metrics & convert them into a format that prometheus can understand & it fetches the metrics from the target
+it exposes the metrics in /metrics & prometheus can retrieve the metrics & data is collected
+
+
+collecting metrics data from targetes
+
+Data retrieval worker pulls over http endpoints from target (linux server)/metrics , target (external service) /metrics
+   ( so we can have a node that is just there to collect the metrics pull from httpd endpoints) collecting metris from target it goes via/metrics
+
+hostaddress/metrics
+must be in correct format
+
+
+MONITOR A LINUX SERVER?
+download a node exporter       ,,, exporters available as Docker images
+untar & execute
+converts metrics of the server
+exposes/metrics endpoint
+configure to scrap the endpoint
+
 *****************************************************************************************
 
 
