@@ -1768,9 +1768,12 @@ so grafana dashboard takes information from server monitoring tool like promethe
 
 
 
+
 2.32.00  PROMETHUS ARCHITECTURE 
-          ***meee, prometheus pulls from metrics from prometheus target with the help of an exporter & it also pulls from kuberbernetes cluster 
-     and in some cases a push gateway pushes metrics into kubernetes
+          ***meee, prometheus uses a retriever to pull metrics into prometheus using prometheus target which has an exporter installed & it also pulls from kuberbernetes
+cluster and in some cases a push gateway pushes metrics into kubernetes  
+ metrics can come from application, services, servers & the retriever pulls it into the prometheus stores (metrics data) ie the time series Database
+
 the metrics can be visualized on the prometheus UI or Grafana 
 
 
@@ -1783,6 +1786,7 @@ How does it pull the metrics?
 it can pull it from prometheus target
 we can install a prometheus exporter in the target
 the exporter will help to gather materic from server in a way that prometheus can process & prometheus will pull those metrics
+   2.36.40   metrics can come from application, services, servers & the retrievr pulls it into the prometheus stores (metircs data) ie the time sereies Database
 
 3)Kubernetes/service discovery
 here its trying to pull metrics from a cluster
@@ -1807,10 +1811,24 @@ so these are the options that can be used to visualize metrics that prometheus i
 so whatever happens in the prometheus server, the info will be pushed to the alerting manager to send notification to whoever needs to be notified  via
 stuff like pagerduty, slack channel, email notification
 
-so this is how the prometheus architecture is 
+so this is how the prometheus architecture looks like
 
 
+     TARGETS & METRICS
+what is prometheus monitoring?
+1) Linux/windows server
+2) Apache server
+3) single application
+4) service like database
 
+
+which units are monitored of those targets   ?
+1)CPU status
+2)memory/disk space usage
+3)Request count
+4)request duration
+5)exceptions count  ie once your appl are running , there could be some exception & endusers cannot access the application or it is running very slow 
+prometheus monitors all of that
 
 *****************************************************************************************
 
