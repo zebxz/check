@@ -2174,9 +2174,31 @@ based on the route table that we created you can sue the route table to est conn
 ****************************************************************************************************
 
 
+Projects Agro cd troubleshooting 
+
+6.00 Diff btw terrafrm provider & provisioners
+we use trfrm for infastructure provisioning, provisioning means it just creates the infastructure for you but if you want to configure
+configuration simply means like after after i have provisioned the infastructure, i want to install like software like say its an ec2 instance, i want to lets say
+run commands or i want to transfer a script into the instance after creation, then terfrm offers what is called a provisioners
+you use a provisioner to connect to an instance once you connect to an instance, once you connect to the instance you are able to run commands & do your configuration work 
+on the instance after creation
+so we use provisioners for configuration but one of the characters of provisioner is it only runs once
+when a provisioner fails, if it doesnt execute, bc in most cases provisioners are used with null resources, empty resources
+whereby you dont want to create any resource bc you just wnat to connect to an instance and after connecting to your instance & do your configuration work
+so when you read through the documentation provisioner has to be used as a last resource, thats why trfrm is nt strong, we dont typically use terfrm for configuration 
+management bc of that behaviour of provisioner, 
+if a provisioner fails it will then hv to recreate, it will be destroyed & recreated 
+if you hv a provisioner inside of a null resource so it just means that if smt goes wrong with that particular null resource like the command fails or the script you are
+trying to run, if the script fails, mayb it doesnt find a package & it fails , once it fails it will have to destroy the resource & recreate it again
+
+so in a nut shell, if you are aked in an interview what a provisioner is 
 
 
 
+
+
+
+****************************************************************************************************************
 
                      ****  MY ABOUT ON linkedin FROM CHATGPT
 
