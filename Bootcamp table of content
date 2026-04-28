@@ -2215,6 +2215,11 @@ is mainly focus on the cd, continuous delivery aspect of it
 
 
   refer to the slide for the 
+
+a pull mechanism, 
+bc its an agent, it pulls the deployment into the cluster
+
+AGRO CD WORKFLOW
 it doesnt necessarily replace other ci/cd
 agro cd is built specifically for kubernetesagrocd monitors for any changes & applies changes (every 3mins  by default) or webhooks could be congifured to apply the changes 
 immediately 
@@ -2223,7 +2228,32 @@ we cud set it up to use like webhooks in your git reposiory if you want it to be
 if u leave it by default it will tk like 3mins for any changes you mk to be reflected in k8
 
 
-22.24  
+22.24  SO when we look at entire workflow, you can still hv git, where git is focused on the CI process of your CI/CD workflow
+you can have your Jenkins focused on like the actual build, the testing, storing your repository in Nexus, you can hv Jenkins or github actions still focused on that piece
+but Agro cd is really just coming in to bridge the gap btw you git repository & your k8 workflow
+so Agro cd is coming as a middle man, as an agent btw those two to make sure everything is flowing as expected
+
+Jenkins does nt have to get replaced, i hv heard people saying why ddid we even bother learning jenkins
+if we jst hv Agro cd why dont we go right into Agro cd but NO you are not replacing, Jenkins can still server its purpose, github actions can still server their purpose
+Agro cd is mainly just focused on the CD portion , just the continous delivery portion
+
+
+24.37  screenshot
+with Agro cd the purpose the whole purpose is you shudnt be goin into the cl8 like that 
+you can kind of hv a higher security to where not that many people ar ehaving acces to your cl8
+you can basically restrict your access to the actual cl8 & give people more acces to the  git workflow, so they only going into git & making changes in git 
+as oppose to everybody going into your k8 cl8 & running your kubectl apply 
+So thats the part of the purpose that Agro cd came to solve
+
+EASY ROLL BACK GIT HISTORY 
+so theres also easy roll back mechnaism where if anything was to happen where u introduce a code or deployment that didnt work as expected or when it got to your k8 cluster 
+it didnt work as expected or when it got to your k8 cl8 its just causing all sorts of proble, you could easily roll back to the previous version utilizing git history
+
+** Because of the pull mecchanism, Agro cd will be the only one that actually applies changes to the cluseter
+  Agrcd is using a pull mechanism so its actually puling the code into k8 as oppose to just been pushed into it
+
+25.52  scrren schot 
+Agro cd uses alot of k8 resources
 ****************************************************************************************************************
 
                      ****  MY ABOUT ON linkedin FROM CHATGPT
