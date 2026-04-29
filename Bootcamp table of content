@@ -2202,26 +2202,41 @@ then say provisioner has to be used as a last resort because when they fail, the
 AGRO CD
 Whenever it comes to project i always go through 600, so many projects before i decide on one 
 
-i dnt expect thsi to go too long but if the ends short
+i dnt expect this to go too long but if the ends short
 I also did another one with nodejs and docker, i cud show it briefly bt if nt ill send the cose & the resources that helped me if anybody else wants to go thru it
 
 
 
-19.00       check out the slides
+                               CI/CD
+19.00      
 Agro cd is continous delivery tool
 when i first heard about agro cd i had thought it had basically like come to replace like jenkins, or githubs actions etc but it really just
 focuses on the cd aspect of a ci/cd pipepline, so its nt actually it does do everything but other tools are still there to focus ci portion while agro cd 
 is mainly focus on the cd, continuous delivery aspect of it 
 
+Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
+• Argo CD doesn't necessarily replace other CI/CD tools
+• Argo CD focuses primarily on the CD portion of the CI/CD workflow
+• Argo CD focuses on solving the limitations that other CI/CD tools lacked with one of those being visibility into Kubernetes after an application has been deployed.
+• Argo CD is built specifically for Kubernetes.
 
-  refer to the slide for the 
 
+AGRO CD
 a pull mechanism, 
 bc its an agent, it pulls the deployment into the cluster
 
+ArgoCD is installed on the Kubernetes cluster
+• ArgoCD agent installed on the cluster using a pull mechanism to pull in Kubernetes
+manifest changes and apply them
+
+
 AGRO CD WORKFLOW
-it doesnt necessarily replace other ci/cd
-agro cd is built specifically for kubernetesagrocd monitors for any changes & applies changes (every 3mins  by default) or webhooks could be congifured to apply the changes 
+Deploy ArgoCD in Kubernetes cluster
+• Configure ArgoCD to track Git repository
+• ArgoCD monitors for any changes and applies changes (every 3mins by default) or webhooks could be configured to apply the changes immediately.
+
+liKe i said earlier, it doesnt necessarily replace other ci/cd
+agro cd is built specifically for kubernetes agrocd monitors for any changes & applies changes (every 3mins  by default) or webhooks could be congifured to apply the changes 
 immediately 
 ie agrocd basically monitors the changes that is happening in our github repository & by default it will apply it to k8 every 3mins
 we cud set it up to use like webhooks in your git reposiory if you want it to be more of an immediate process thats smt you hv to setup
@@ -2238,7 +2253,12 @@ if we jst hv Agro cd why dont we go right into Agro cd but NO you are not replac
 Agro cd is mainly just focused on the CD portion , just the continous delivery portion
 
 
-24.37  screenshot
+24.37  ArgoCD compares desired configuration in the Git repo with the actual state in the Kubernetes cluster.
+• All changes are made in the application configuration file in the Git repo as opposed to running kubectl apply directly on the cluster
+Easy rollback (Git History)
+Because of the pull mechanism, ArgoCD will be the only one that actually applies changes to the cluster.
+
+
 with Agro cd the purpose the whole purpose is you shudnt be goin into the cl8 like that 
 you can kind of hv a higher security to where not that many people ar ehaving acces to your cl8
 you can basically restrict your access to the actual cl8 & give people more acces to the  git workflow, so they only going into git & making changes in git 
@@ -2252,9 +2272,32 @@ it didnt work as expected or when it got to your k8 cl8 its just causing all sor
 ** Because of the pull mecchanism, Agro cd will be the only one that actually applies changes to the cluseter
   Agrcd is using a pull mechanism so its actually puling the code into k8 as oppose to just been pushed into it
 
-25.52  scrren schot 
+
+25.52 Agro cd as an agent actually utilizes K8 resources, you can install jenkins directly on your k8 but its not actually utilizing k8 resources but 
+Agro cd as an agent actually utilizes K8 resources & thats why its gaining  a lot of popularity & its definitely something we would want to know going into this field
 Agro cd uses alot of k8 resources
+  uses etcd to store data
+  uses k8 controller manager to compare actual and desire state
+so when its doing a comparing btw whats in the git hub repo and whats in the cl8, its actually utilizing a controller manger to do that
+
+we have real time updates of application state with Agro cd
+
+
+28.00
+STEPS TO USE AGRO CD
+
+1) Deploy agro cd into your cluster
+there are diff resources you can utilize that can assist you with that 
+its really a very simple installation process
+
+  ** she posted the requirement in the chat
+the installation has everything agro cd needs to run efficiently
+
+
+29.10   one of the things we need is the agro cd server that you ll need to design your cd workflow
 ****************************************************************************************************************
+
+
 
                      ****  MY ABOUT ON linkedin FROM CHATGPT
 
