@@ -1751,6 +1751,8 @@ Agro cd saying everthing is healthy but its not syncing with the new version
 TRoubleshooting;               NOT SYNCING/NOT READING GIT TO GRAB NEW INFO/VERSION 
 51.00           Agro cd saying everthing is healthy but its not syncing with the new version
 
+
+RESOLUTION 1:  didnt work
          PROff go bk to terminal where its portforwarding
 proff, is it montoring your Dev branch or main branch?
  she said she wants it to monitor her dev, thats why she put the path as dev
@@ -1769,19 +1771,23 @@ for Agrocd to be able to login, bc these are APIs communicating , she said no sh
 
 
 1.03   OBinna sent her the manifest for the secret
+next;
 on Gitlab; project Access token
 token name; Agro cd
 
+next
 Back in Agrocd configuration, paste the Access token as password
 must be in the deplyment files directory,  then kubectl apply -f secret.yaml
-she also applied it in the service.yaml dir, the application.yaml dir & deployment
+she also applied it in the service.yaml dir, the application.yaml dir & deployment.yaml
 but nothing changed
 
+next
  proff said apply it to the namespace as well 
 kubectl apply -f secret.yaml -n agrocd
 secret/agrocd  repo configured
 
-In the dashboard, its shows it succeeded but i noticed that before she ran the secret in the name space, it also showed succeeded
+In the dashboard, its shows it succeeded, also i noticed that before she ran the secret to the name space, it also showed succeeded
+so i dont think applying it to the namespace made gave us the succeeded.
 
 1.12.30
 the last time proff took us tru the process during the class, i think he had the same problem but he actually fixed it at the end 
@@ -1789,6 +1795,7 @@ he it started working, started seeing the deployment, time he does a deployment,
 if we go back to the video , we will see it, it was around the scm, he did smt there so it stsrted working
 
 
+ANOTHER ISSUE
 1.13.00   ITs NOT READING HER REPO,its TARgeting another REPO
 On the dashboard, she clicked on the myapp-agro application & noticed ITs targeting the girls video she watched
 
@@ -1801,6 +1808,7 @@ it looks like itd coming from your deployment
 someone said its the image, she said its the the girls image, its a public image 
 
 
+RESOLUTION 3:  Didnt work
 1.17.00   TRYING MYLANDMARK TECH IMAGE 
 mylandmarktech/spring-boot-mongo:latest
 run git add deployment.yml
@@ -1826,7 +1834,7 @@ So how do i get this deployment to loook/use my own repo
 I copied her content & i created mine
 
 
-** RESOLUTION 3      ... didnt work
+** RESOLUTION 4      ... didnt work
 
 1.33.10       clicked open the myapp/agrocd application on the agrocd dashboard
 We can see its the girls repo that its picking
@@ -1867,6 +1875,14 @@ it shouldnt, bc your repo url, u hv pointed a diff source
 
 1.46.30
 It refreshed the myapp/agro application but myservice & my app didnt refresh
+
+
+1.48   DELETING EVERYTHING; the pod the service 
+who can share a link to brush more on agrocd?
+someone said ; pick a course on udemy, thats the best
+
+to delete evrryinh, she copied a link, from the agrocd documentation site
+
 ****************************************************************************************************************
 
 
