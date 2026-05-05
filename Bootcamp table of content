@@ -2284,7 +2284,7 @@ we have real time updates of application state with Agro cd
 
 
 
-                 USING AGROCD & GITLAB( She said the lady on youtube used gitlab)
+                 USING AGROCD & GITLAB( She said the lady on youtube used gitlab so she used it as well) 1.00
 28.00
 STEPS TO USE AGRO CD
 
@@ -2378,7 +2378,8 @@ Agro cd saying everthing is healthy but its not syncing with the new version
 
 
 TRoubleshooting;               NOT SYNCING/NOT READING GIT TO GRAB NEW INFO/VERSION 
-51.00
+51.00           Agro cd saying everthing is healthy but its not syncing with the new version
+
          PROff go bk to terminal where its portforwarding
 proff, is it montoring your Dev branch or main branch?
  she said she wants it to monitor her dev, thats why she put the path as dev
@@ -2388,13 +2389,57 @@ lets create smt, create that merge request
 then go back to agro & refresh/sync...... still not working
 
 
-Somebody suggesting she needs to deploy agrocd secret in the cluster
+Obinna suggesting she needs to deploy agrocd secret in the cluster
 did you create secret obj in the cluster because the branch is protected, it doesnt hv permission to pull it to the cl8
 it can work now if the gitlab is public, so probably you need to deploy agrocd secret obj in the cluster
 prof asking when you ran it 6hrs ago, did you ever create a secret? NO...so you never created a secret for you repository, like for 
 for Agrocd to be able to login, bc these are APIs communicating , she said no she didnt create a secret on Agrocd 
 
 
+1.03   OBinna sent her the manifest for the secret
+on Gitlab; project Access token
+token name; Agro cd
+
+Back in Agrocd configuration, paste the Access token as password
+must be in the deplyment files directory,  then kubectl apply -f secret.yaml
+she also applied it in the service.yaml dir, the application.yaml dir & deployment
+but nothing changed
+
+ proff said apply it to the namespace as well 
+kubectl apply -f secret.yaml -n agrocd
+secret/agrocd  repo configured
+
+In the dashboard, its shows it succeeded but i noticed that before she ran the secret in the name space, it also showed succeeded
+
+1.12.30
+the last time proff took us tru the process during the class, i think he had the same problem but he actually fixed it at the end 
+he it started working, started seeing the deployment, time he does a deployment, increased the node it works
+if we go back to the video , we will see it, it was around the scm, he did smt there so it stsrted working
+
+
+1.13.00   ITs NOT READING HER REPO,its TARgeting another REPO
+On the dashboard, she clicked on the myapp-agro application & noticed ITs targeting the girls video she watched
+
+somebody said there could be smt that is pointing to her repo in the configuration, mayb in the image
+somebody said mayb its in the appliaction, but she said in the application she changed it
+
+proff said its coming from in the deployment, the application has already been configured, so that is good
+it looks like itd coming from your deployment
+
+someone said its the image, she said its the the girls image, its a public image 
+
+
+1.17.00   TRYING MYLANDMARK TECH IMAGE 
+mylandmarktech/spring-boot-mongo:latest
+run git add deployment.yml
+
+in gitlab; create merge request
+but agro not picking
+
+  To check all the pods that running   .....kubeclt get pod -A
+To delete the previous application  .....kubectl delete -f application.yaml
+redeploy  ......       kubectl apply -f application.yaml
+check if the pods are running .......  kubeclt get pod -A
 
 ****************************************************************************************************************
 
