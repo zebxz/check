@@ -1,0 +1,645 @@
+***Content is the same as the kubernetes helm video in our class 33
+
+ HOW DO YOU MAKE API CALLS?,INSTALLING HELM, VSCODE (virtual studio code), Type helm if not know the option of  a particular command, 
+INSTALLING NGINX USING HELM, CONFIGURE THE 'HELM CHART' REPO  AS A GITHUB PAGES SITE/CREATING GITHUB REPO, 
+ HOW CAN I MAKE THE DEPLOYMENT AVAILABLE IN MY CROSS FUNCTIONAL TEAM, CREATE GIT HELM REPO & CREAT github pages, 
+CREATE GIT HELM REPO & CREAT github pages, DEPLOY AN APPLICATION USING A CLONED HELM REPO; CLONING A HELM REPO THAT HAS AN APPLICATION 
+DEPLOYED USING HELM/ TO CHECK IF ANYTHING IS WRONG WITH YOUR CHART/TO CREATE A PACKAGE/ARCHIVE FOR OUR HELM CHART/
+MOVE THE PACKAGE INTO GITHUB REPO/CREATING AN INDEX FILE/PUSH TO GITHUB/WHY GIT PUSH SAY 'EVRYTHING IS UP TO DATE' BUT its not/TO SEE OUR REPOS
+ TO SEE OUR APPLICATIONS THAT ARE RUNNING/ TO UNINSTALL THE APPLICATION WE DEPLOYED/TO REMOVE THE APP FROM MY SERVER  (cd into the appl dir)
+TO DEPLOY THE APPLICATION WE DELETED/CREATING A CUSTOM VALUES FILE TO MAKE CHANGES TO THE VALUES OF THE PREVIOUS DEPLOYMENT/
+ 2 WAYS WE CAN INSTALL AFTER MAKING CHANGES TO THE VALUES FILE/DEPLOYING IN A SPECIFIC  NAMESPACE/
+TO UPGRADE THE DEPLOYMENT /USE A NEW IMAGE ie rollout new features/ DEPLOYING IN A SPECIFIC NAMESPACE/ TO get tHE DEPLOYMENT in the
+specific namespace/TO get tHE DEPLOYMENT in the DEFAULT namespace/TO UPGRADE THE DEPLOYMENT /USE A NEW IMAGE ie rollout new features/
+Install helm3 ( copied Form the script)/USING HELM TO DEPLOY PROMETHEUS, ABOUT PROMETHEUS;FEATURES, What Is Server Monitoring?
+WHAT IS PROMETHEUS MONITORING?,WHAT HAVE YOU DONE THAT YOU ARE PROUD OF ?,GRAFANA,what are garafana dashboards?,PROMETHUS ARCHITECTURE,
+TARGETS & METRICS, which units are monitored of those targets,  METRICS,  TRAGET ENDPOINTS AND EXPORTERS, MONITOR A LINUX SERVER,
+ALERT MANAGER, IMPortance of prometheus/characteristics, Deploy Prometheus, Exporters, Alert Manager & Grafana
+
+
+
+
+START
+******Running note
+
+
+20.34   how do you manage your releases in your k8 cluster or in your pipeline
+          thats one thing we will look at shortly from now
+
+1.28.50    ***When you have a new version of the code ..; run helm upgrade
+               ie to upgrade the apps / deploy the new code that has been pushed to github
+     helm upgrade myapps apps --set image.tag=3
+
+
+26.27    HOW DO YOU MAKE API CALLS?
+   YOu can use either the UI or the CLI
+and which ever is used will require the kube config authentication 
+you can equally use another file but you will need to set the env variable
+
+
+28.50      INSTALLING HELM
+32.30    installing helm on his window computer
+34.10   if the installing fails go to windows login & type power shell
+        Run as administrator 
+   you cannot do an installation if you dont have admin right
+
+if you open power shell it opens a window (powershell) , it says /windows/system32
+but the initial pwershell i had open is like a normal user & if i try to install smt here it wont allow me bc sudo commands cannot be run by normal user
+so you have to go to powershell & selesct run as administrator
+
+so now helm has been installed in my computer
+
+QUESTION
+Proff in a working env, are we allowed to do that
+
+proff 
+yes, you are going to have privelege escalation
+we assign sudo right or privileges to users in our linux system
+we have to go to a specific file: vi/etc/sudoers
+so if you work in a coy & they want you to run specific tasks that requires sudo right you will be added to sudoers file, people that have right todo more
+and you are going to work as a senior devops engr which means that you are in that position to be able to run such task most of the time
+
+
+39.40
+2)   installing helm using powershell is it possible that without the  kubeconfig file you still can be able to have helm installed using powershell  ?
+
+   ANS:
+Whats happening is that you need the kube config file to talk to the cl8
+installing the software does not mean its going to do anything for you once you install helm you need to have kubectl
+i already have kubectl installed on my computer
+the question is how can you install kubectl on your windows>?
+Google on that and see how you can achieve that and install it as well 
+but it will be for you to come to this powershell OR you can just download & run
+
+
+                  VSCODE (virtual studio code)
+*** having installed helm , i need my kubeconfig file
+now this is my vscode
+
+44.00  Am doing this because we are going to be dealing with a lot of files as such w eneed this type of IDE where we can easily mg8 the files
+
+
+48.40          you may not know the option of  a particular command
+just type helm' it will give you all the options you can use for the command & also what helm is used for 
+
+
+iLLustration1:
+
+55.00   INSTALLING NGINX USING HELM
+
+
+vLAUES file
+ls template
+lets check this deployment file & see what is in deployment
+this file is written in GO language
+1.18.05    GO & yaml are very close to each other
+
+
+
+                     CONFIGURE THE 'HELM CHART' REPO  AS A GITHUB PAGES SITE/CREATING GITHUB REPO
+
+Github pages     https://mylandmakTechnology.github.io/helm22/
+Github repo      https://github.com/mylandmakTechnology/helm22.git
+
+
+1.27.40      haven done the deployment , all my chart are found in this repository
+   HOW CAN I MAKE THE DEPLOYMENT AVAILABLE IN MY CROSS FUNCTIONAL TEAM 
+
+  *** how to create our own helm repository
+
+1.35.30   when it comes to helm we can have repo in github, in nexus & in jfrog
+but today we wil create our helm repo in github & upload our helm chart/package into the repository
+we have a repo we laready created called helm22
+
+
+1.36. 20     CREATE GIT HELM REPO & CREAT github pages
+once you create the repo go to/select settings & scroll down to  github pages
+ source is in the main branch 
+then save
+
+1.38.30   this is the github pages url:    this is not a repository you can clone
+https://mylandmakTechnology.github.io/helm22/
+
+
+
+
+iLLustration2:        DEPLOY AN APPLICATION USING A CLONED HELM REPO
+
+
+              A) CLONING A REPO THAT HAS AN APPLICATION DEPLOYED USING HELM (It will include the application & the helm chart)
+***   we have an application that we deployed using helm & all our charts are in 'apps'
+
+  WE cloned the repo (helm22) in git,
+landmarktechnologies ¬/music/helm       
+git clone   https://mylandmaktechnology.github.io/helm22
+
+landmarktechnologies ¬/music/helm       
+ls 
+apps helm22
+
+
+     B)TO CHECK IF ANYTHING IS WRONG WITH YOUR CHART
+        helm lint apps' 
+
+
+1.42.00     
+
+C)             TO CREATE A PACKAGE/ARCHIVE FOR OUR HELM CHART
+landmarktechnologies ¬/music/helm       
+       helm package apps/
+
+landmarktechnologies ¬/music/helm       
+Ls -l
+-rw-r-r    landmarktechnologies   apps-0.1.0.tgz          it has compressed all the chart that we have ** ARchive file for our chart
+
+
+D)
+            MOVE THE PACKAGE INTO GITHUB REPO 
+landmarktechnologies ¬/music/helm       
+ mv apps-0.1.0.tgz helm22/
+landmarktechnologies ¬/music/helm       
+ls helm22
+apps-0.1.0.tgz helm22/
+
+E)
+
+1.45.40           CREATING AN INDEX FILE
+
+landmarktechnologies ¬/music/helm       
+helm repo index helm22 --url https://mylandmaktechnology.github.io/helm22
+landmarktechnologies ¬/music/helm       
+cd helm22
+landmarktechnologies ¬/music/helm       
+ls
+apps-0.1.0.tgz helm22/  index.yaml  READ.md
+
+This index file was generated when we executed ;   helm repo index  
+       it generated index.yaml file
+    we did not vi to create the file
+
+
+vi into index.yaml
+
+it tells you of the version of our helm chart
+it tells you the version, this is a release number
+the type is an application
+if you had to do another release, you will repeat this task & it will create a new release number
+
+
+   F)
+1.47.00          PUSH TO GITHUB    
+            (whenever you clone a repo from github, if you run the command -v, it gives you the alias the default alias is origin
+
+landmarktechnologies ¬/music/helm       
+ git remote -v
+origin  https://github.com/mylandmakTechnology/helm22.git (fetch)
+origin  https://github.com/mylandmakTechnology/helm22.git (push)
+
+landmarktechnologies ¬/music/helm       
+gitpush origin
+everything up to date
+
+
+     WHY GIT PUSH SAY 'EVRYTHING IS UP TO DATE' BUT its not
+ ***its trying to do a git push but its saying that everything is up to date 
+checking in github we can only see the READ.me file
+but in the repo, we have;apps-0.1.0.tgz helm22/  index.yaml  READ.md
+
+
+git status we have files that have not been committed, untracked files
+
+*** we have to run 'git add'
+then git commit -m 'class22 helm charts'
+
+git push origin
+
+*** if you are asked to authenticate pls do that
+because it will ask especially if you are doing it for the first time
+
+
+
+
+1.51.50              TO SEE OUR REPOS
+  landmarktechnologies ¬/music/helm       
+   helm repo ls
+NAME    URL
+nginx   https://helm.nginx.com/stable         ** for now we have only one repo & i can add our custom repository
+
+ ** for now we have only one repo & i can add our custom repository
+
+
+   G)         TO SEE OUR APPLICATIONS THAT ARE RUNNING
+landmarktechnologies ¬/music/helm       
+helm ls
+             NAME       NAMESPACE     REVISION    UPDATED                STATUS       CHART
+         myapps          default         1                               deployed      apps-0.1.0
+
+
+     H)                       TO UNINSTALL THE APPLICATION WE DEPLOYED
+landmarktechnologies ¬/music/helm       
+helm uninstall myapps 
+             uninstalled
+
+
+  I)   TO REMOVE THE APP FROM MY SERVER  (cd into the appl dir)
+landmarktechnologies ¬/music/helm       
+cd music
+landmarktechnologies ¬/music/helm       
+cd helm
+landmarktechnologies ¬/music/helm       
+ls
+apps helm22
+landmarktechnologies ¬/music/helm       
+rm-rf apps/     .. so we dont have the app info again
+
+
+1.53.00
+    
+J)           TO DEPLOY THE APPLICATION WE DELETED   
+I dont have the helm chart on my server but i have the helm chart in our helm repo hosted in github
+
+    landmarktechnologies ¬/music/helm       
+ a)  helm repo add helm22     OR  i can decide to call it the name of my application 
+  helm repo add myapp https://mylandmaktechnology.github.io/helm22         ** this url is the github pages, if u use the repository url it wont go
+
+    landmarktechnologies ¬/music/helm       
+ helm repo ls
+NAME    URL
+nginx   https://helm.nginx.com/stable   
+myapp    https://mylandmaktechnology.github.io/helm22        **repo is added
+
+
+    ** i can just deploy the application from this repo
+
+     First lets know the chart that are in this repository
+
+1.58.00  
+    landmarktechnologies ¬/music/helm       
+ b)    helm search repo myapp
+
+         NAME        CHART VESRION    APP VERSION      DESCRIPTION 
+    Myappp/apps         0.1.0           1.16.0         A helm chart for kubernetes
+
+  1.55.45     ** if i want to do deployment  for eg all of you can deploy this appl now with just this simple helm command & it contains everything
+                                       ** webapp is the name of the app i want to deploy & myapp/apps is the 
+this application is a java based app, theres a lot you can do as well
+
+lets check the values file 
+lets check the template before we install because you are a devops engr, you did not prepare this helm chart
+mayb someone else prepared it & you just need it to do deployment but you haveto check to mk sure that what you are deploying is what you have to deploy
+remember we saw under k8 security that make sure you deploy the right images 
+
+K)        
+        CREATING A CUSTOM VALUES FILE TO MAKE CHANGES TO THE VALUES OF THE PREVIOUS DEPLOYMENT
+HElm show value myapp/apps>> myapp.values          ie redirect the values file into a new file (myapp.values)
+    we can vi into myapp.values & change any values we want
+
+
+1.59.30     2 WAYS WE CAN INSTALL AFTER MAKING CHANGES TO THE VALUES FILE
+if we have like many lines of changes we have modified 
+
+a)    DEPLOY USING THE DEFAULT VALUES FILE
+helm install webapp myapp/apps               ** if i deploy this appl it will deploy the appl from the deafult value file that was already created/that came with the chart
+
+b) DEPLOY USING THE CHANGED VALUES FILE
+  helm install webapp myapp/apps  -f myapp.values       
+
+bi)  DEPLOYING IF AM ONLY CHANGING ONE INFO                 ** since am changing only one info, i dnt need to go into the entire values file
+   helm install webapp myapp/apps ---set service.type=NodePort
+
+
+2.01.40    WE  see webapp has been deployed 
+
+    landmarktechnologies ¬/music/helm       
+   helm install webapp myapp/apps ---set service.type=NodePort
+
+landmarktechnologies ¬/music/helm       
+kubectl get all
+we see the service type is NodePort
+
+
+*** so this is how you can use helm
+
+                       DEPLOYING IN A SPECIFIC  NAMESPACE
+
+QUESTION :
+  to do it in a particular namespace,  do we need to do a manifest file?
+
+we will see that after the break because we will use helm to deply prometheus  & we wil create a namespace
+based on what she is aksing like her, if i was going to do helm installl , we laready know that when you dont pass a namespace, resources are cretaed in the default ns 
+if you wnat to deploy resources in a diff ns , you put -n  THE NAMESPace you want to deploy
+
+    landmarktechnologies ¬/music/helm       
+   helm install webapp myapp/apps ---set service.type=NodePort -n efk
+
+** we see it deployed & it comes as REVISION 1, because i deployed it in a seperate NAmespace 
+
+
+                         TO get tHE DEPLOYMENT in the specific namespace
+    landmarktechnologies ¬/music/helm       
+helm ls -n efk
+
+                            TO get tHE DEPLOYMENT in the DEFAULT namespace
+    landmarktechnologies ¬/music/helm       
+helm ls
+
+     TO UPGRADE THE DEPLOYMENT /USE A NEW IMAGE ie rollout new features
+    landmarktechnologies ¬/music/helm       
+   helm upgrade webapp myapp/apps --set image-tag=3   * error because the service type for the original values file is clusterip & in k8 you cant change frm Nodeport service 
+                                                                   to clusterip but we can change from clusterip to nodeport
+When i ran this command initially, it is going to the helm chart where our manifest files are found & discoverying the the srevice type is clusterip but i had already
+deployed on nodeport, you cant move image from cluster to nodeport but the reverse is true
+
+
+    landmarktechnologies ¬/music/helm       
+helm install webapp myapp/apps ---set service.type=NodePort  --set image.tag=3
+
+
+
+
+Install helm3    ( copied Form the script)
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+
+$ chmod 700 get_helm.sh
+
+$ ./get_helm.sh
+
+# Create deployment manifests (helm charts) for myapp
+helm create myapp
+
+helm install # will deploy applications helm
+uninstall  # will undeploy applications
+upgrade  #will rollout deployments of applications
+helm ls  # List deployments
+helm repo rm nginx search repo nginx
+helm search repo nginx   # searches number of deploys
+helm template nginx-stable/nginx-ingress    # review charts
+helm show values nginx/nginx-ingress       # show values/varaiables
+helm install -f Grafana-values.yml grafana stable/grafana -n monitoring
+
+helm upgrade
+
+helm install webapp myapp/apps --set service.type=NodePort
+
+helm upgrade apps helmrepo/apps --set service.type=NodePort
+helm upgrade apps helmrepo/apps --set image.tag=1
+helm repo add helmrepo https://landmaktechnology-github.io/helm
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+
+
+         USING HELM TO DEPLOY PROMETHEUS
+
+2.17.08
+Question , promethus is almost like newrelic but for k8?
+
+ANS:  Not just for k8, there are some statement that you cant make them from end to end reason is bc companies are improving 
+these software is been developed right, dont forget that as a devops engr  you can work for a coy thats just developing software
+eg you were working for newrelic & initially newrelic cud nt manage k8 API, you can advice that if we want to be in business in the longrun , we need to incorporate
+APi, microservice APi monitoring
+most of these monitoring tools try to do everything, they dnt want their client to have them & have other vendors
+
+
+             ABOUT PROMETHEUS    ( copied Form the script)
+Prometheus is an opensource monitoring and alerting toolkit. Prometheus consists of several
+componens some of which are listed below;
+
+1)The Prometheus server which scrapes(collects) and stores time series data based on a pull mechanism
+2)A riles engine which allows generation of Alerts based on the scraped metrices.
+3)An alertmanager for handling alerts.
+4)Multiple integrations for graphing and dashboarding
+
+Enterprise looking to decrease downtime & optimize resources can implement server monitoring using tools like prometheus & grafana 
+
+
+What Is Server Monitoring?
+Server monitoring is a way to look into what your servers are doing in real time.
+It can provide you with actionable data, and is most often used for troubleshooting and capacity planning.
+It's typically done at three levels:
+
+Network (e.g., traffic, bandwidth, latency).
+Machine (e.g.. CPU and memory utilization and storage).
+Application (e.g., rate of user commands, logs, large syncs, commits submits, etc.).
+
+
+What Is Server Monitoring?
+Server monitoring is a way to look into what your servers are doing in real time.
+it can provide you mun actionable data, and 1s most often used for troubleshooting and capacity planning. It's typically done at three levels:
+• Network (e.g., trailic, bandwidth, latency)
+Machine (e.g., CPU and memory utilization and storage).
+Application (e.g., rate of user commands, logs, large syncs, commits/submits, etc.).
+
+
+Why Monitor Your Servers?
+Server monitoring has a lot of benefits. The biggest benefit is avoiding reactive panics. You can get a head start on issues occurring in your servers or applications before your users are impacted.
+Along with this benefit, vou can also use monitoring to figure out how to;
+
+Increase uptime
+Improve hardware and software nerformance
+Plan for the future by making the best use of your rsources
+
+Implementing monitoring can give you an almost immediate return on investment, you can observe trends, spikes and anomalies that may indicate a problem
+and then you can drill down to discover the root cause of the issue.
+
+
+WHAT IS PROMETHEUS MONITORING?
+Prometheus is an open source system that collects and manages server & application metrics 
+it can lso be configured to notify your team when an issue arises
+
+
+2.26.00  Actionable data ; if smt is happening it tells you the type of action to take next
+for eg your server is about to go down, its blinking, what do you do?
+either you create more servers or add more volume
+
+this comes a lot in the interviews....
+Helping companies to optimize the us eof their resources
+
+WHAT HAVE YOU DONE THAT YOU ARE PROUD OF ?
+Hvae helped my client to optimize/maximize the best use of their resources, 
+before i joined the team they had a lot of servers that were running idle
+
+eg  you joined  team & they have like 500 servesr, when you try to run the top command or when you check, you realise that for the past 6months
+those servers have been @30% utilization interms of cpu, memory & storage
+it means you are wasting resources becasue if you have 500 servers & they all run at 30% utilization maybe you can reduce the number of servers to 250 servers 
+& they will be running at 60% , 60% maybe a fair deal
+so what have you done?
+you have helped coy to uptimize the best use of resources because of data 
+
+
+GRAFANA
+Grafana is the open source tool that alows you to easily visualize information
+
+what are garafana dashboards?
+grafana dashboard takes information from server monitoring tool like prometheus to display this information
+so grafana requires a data source , the data source can be prometheus or many other things , they have several data source 
+so grafana is not only used for prometheus its used for other monitoring & alerting tools as well
+so grafana dashboard takes information from server monitoring tool like prometheus to display the information
+
+
+
+
+2.32.00  PROMETHUS ARCHITECTURE 
+             2.42.24.... Prometheus is a pull mechanism       **meee, like agro cd
+          ***meee, prometheus uses a retriever to pull metrics into prometheus using prometheus target which has an exporter installed & it also pulls from kuberbernetes
+cluster and in some cases a push gateway pushes metrics into kubernetes  
+ metrics can come from application, services, servers & the retriever pulls it into the prometheus stores (metrics data) ie the time series Database
+
+the metrics can be visualized on the prometheus UI or Grafana 
+
+
+1)prometheus server: 
+it has a retriever, a data baase & a webserserver (http server) accepts promQL queries
+the retriever is configured to pull metrics into prometheus, & how does it pull the metrics?
+
+2)prometheus target
+How does it pull the metrics?
+it can pull it from prometheus target
+we can install a prometheus exporter in the target
+the exporter will help to gather materic from server in a way that prometheus can process & prometheus will pull those metrics
+   2.36.40   metrics can come from application, services, servers & the retrievr pulls it into the prometheus stores (metircs data) ie the time sereies Database
+
+3)Kubernetes/service discovery
+here its trying to pull metrics from a cluster
+
+4)Push gateway
+in some cases we can have a push gateway where metrics can be pushed into kubernetes
+
+5)promQL
+so one thing you should take note of is the fact that we have a prometheus server, which has a database
+because when all the info are pulled into prometheus they are stored in this database 
+and once the information are pulled into prometheus, we have a data source like grafana
+grafana can pull the information, it can now cause us to visualize the data
+
+Apart from grafana, even prometheus has a web user interface which w ecan visualize the information feom the web user interface 
+the problem is that its is going to come in the form of promQL
+We have seen stuff like Sql, where we use it to query data in my secure data base
+for prometheus it use promQL
+
+so these are the options that can be used to visualize metrics that prometheus is generating
+
+6)  Alert manager
+so whatever happens in the prometheus server, the info will be pushed to the alerting manager to send notification to whoever needs to be notified  via
+stuff like pagerduty, slack channel, email notification
+
+so this is how the prometheus architecture looks like
+
+
+     TARGETS & METRICS
+what is prometheus monitoring?
+1) Linux/windows server
+2) Apache server
+3) single application
+4) service like database
+
+
+which units are monitored of those targets   ?
+1)CPU status
+2)memory/disk space usage
+3)Request count
+4)request duration
+5)exceptions count  ie once your appl are running , there could be some exception & endusers cannot access the application or it is running very slow 
+prometheus monitors all of that
+
+
+  METRICS
+Format; human readable text-based
+Metrics entries:  TYPE and HELP attributes
+
+HELP  ; description of what the metric is
+TYPE;  3 metrics types
+
+1)Counter how many times X happened? 
+     tells how many times eg  request count eg you have a paraticular rest Api where users are trying to access, how many times did they access the rest API 
+ thats a counter metrics
+
+2) Gauge;  what is the current value of x now? 
+eg if i excute a command df-h, it tells how much % of file system is been used, X can be the cpu, memory etc
+
+3) Histogram How long or how big? 
+eg how long does it take for endusers to access your application
+
+
+
+    TRAGET ENDPOINTS AND EXPORTERS
+2.39.40    Exporters will fetch for metrics & convert them into a format that prometheus can understand & it fetches the metrics from the target
+it exposes the metrics in /metrics & prometheus can retrieve the metrics & data is collected
+
+
+collecting metrics data from targetes
+
+Data retrieval worker pulls over http endpoints from target (linux server)/metrics , target (external service) /metrics
+   ( so we can have a node that is just there to collect the metrics pull from httpd endpoints) collecting metris from target it goes via/metrics
+
+hostaddress/metrics
+must be in correct format
+
+
+MONITOR A LINUX SERVER?
+download a node exporter       ,,, exporters available as Docker images
+untar & execute
+converts metrics of the server
+exposes/metrics endpoint
+configure to scrap the endpoint
+
+
+     ALERT MANAGER
+how does prometheus trigger the alert?
+who receives the alert?
+
+it will read from the alert rules in the config file, we are going to define some alert rules saying that if servers are down trigger an alert
+notify our system administrators that the servers are down
+
+so we have an alert manager who ensures that he pushes the information it rceives to the right party by notifying them eg that the application is running very slow
+
+
+             2.42.24.... Prometheus is a pull mechanism
+
+IMPortance of prometheus/characteristics
+
+Reliable
+stand alone & self containing  ie if your cluster goes down it wont have an impact on prometheus, its independent
+works even if other parts of infastructure is broken  ie if you have prometheus running & smt goes rong with some of your serves & stuff, prometheus will stil be there to 
+                                         tell you what is going on
+No extensive setup needed
+less complex
+fully compatible
+prometheus component available as Docker images
+can easily be deployed in container environments like kubernetes  and today prometheus has a lot of intergration including integration with Aws cloud watch
+
+difficult to scale 
+Limits monitoring 
+
+   work arounds;
+increase prometheus server capacity  ie you need a high server capacity for prometheus
+
+
+When we look at kubernetes & docker it is fully compatible 
+
+
+
+Kube State Metrics:
+kube-state-metrics is a service that listens to the Kubernetes API server and generates metrics about the state of the objects, including deployments, nodes, and pods.
+Grafana:
+Grafana is designed for analyzing and visualizing metrics such as system CPU, memory, disk and I/O utilization.
+Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored. Create, explore, and share dashboards with your team and 
+foster a data driven culture:
+
+Prerequisite:
+1) Kubernetes Cluster With Storage Class Configured (Dynamic Provisioning).
+
+If Storage Class is not Configured then make persistence enabled as false in helm values files # Which is not suggestable as if pods are terminated and recreated we will 
+lost the data.
+2)Kubernetes nodes with minimum 4GB RAM With 2 Core Processer.
+3) Server which has kubectl & helm configured
+
+
+Deploy Prometheus, Exporters, Alert Manager & Grafana
+https://github.com/myLandmakTechnology/prometheus-grafana-ELK-EFK
+
+1) Add helm repo which contains Prometheus and Grafana charts.
+
+
+
+
