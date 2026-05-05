@@ -1718,20 +1718,19 @@ automated:
 5)SELF HELP:  eg u want to lock down your cl8, u wnt to hardned it wher by no one can run commands without doing it the ryt process eg using  git, u can hv agro cd delete it
   PRUNE :  
 
-                 41.30; So thats our configration, it helps agro cd keeps track of whats going on in git & inside the cluster
-
-
+                
 
 DEPLOYING AN APPLICATION & A SERVICE
 
 Next;
-   DEPLOYMENT Yaml  for the deployment that we are running
+DEPLOYMENT Yaml  for the deployment that we are running *** the file she uses /apply kubectly apply on when she need to update anything
   SERVICE.yaml       for service connection
+ Application.yaml  ..     41.30; So thats our configration, it helps agro cd keeps track of whats going on in git & inside the cluster
 
 
 HOW DO PROCESS A DEPLYMENT
     when all this is done 
-42.36   i ran kubectl apply to apply the configuration file & it created all of this  ***me a dashboard
+42.36   i ran kubectl apply to apply the configuration file **meee(application.yaml) & it created all of this  ***me a dashboard
   it shows the service that was created , the deployment, the endpoint, replica set 
 when u scrol down, u see exactly what is running
 
@@ -1761,6 +1760,7 @@ lets create smt, create that merge request
 then go back to agro & refresh/sync...... still not working
 
 
+***RESOLUTION 2;    didnt work 
 Obinna suggesting she needs to deploy agrocd secret in the cluster
 did you create secret obj in the cluster because the branch is protected, it doesnt hv permission to pull it to the cl8
 it can work now if the gitlab is public, so probably you need to deploy agrocd secret obj in the cluster
@@ -1826,17 +1826,47 @@ So how do i get this deployment to loook/use my own repo
 I copied her content & i created mine
 
 
+** RESOLUTION 3      ... didnt work
+
 1.33.10       clicked open the myapp/agrocd application on the agrocd dashboard
 We can see its the girls repo that its picking
 So this is the aplictaion that is running in your cluster is heres , mayb you had applied it, you hv applied the same aplication before 
 so when you are doing kubectl apply, even with the changes its still picking up the  her application bc it was already there
 Its still picking up on that one, so go back to your k8 terminal 
 
+STEPS;
 kubectl get pod -A
 YOU can see the applications is showing 7hrs ago but we just deployed an applictaion now 
 so when you are runing kubectl apply, that appl already exists, if there are no changes it doesnt apply
 so can you try and delete evrything in that namespace 
 
+
+ GET THE APPLICATION DEPLOYED IN THE AGRO CD NAMESPACE & DELETE 
+kubectl get application -n agrocd
+kubectl delete application myapp-agrocd-application -n argocd
+Kbectl get application  -n agrocd 
+   ***no resources found in agrocd namespace
+
+1.37.50   
+next we check on agrocd dashboard & the application has been deleted
+next kubectl get pod -A
+ we still see some pod, he said those are agro servers , its fine
+
+deploy the application again
+kubectl apply -f application.yaml
+my agro application created
+
+1.39.00  **** checked the agrocd dashboard but its still pointing to her repo 
+
+
+** quetsion
+prof like i created my own folder, copied her code, put it all in my folders, is there somewhere it still points to her repo?
+it shouldnt, bc your repo url, u hv pointed a diff source 
+
+1.43 20…. Agrocd only targets your manifest deployment your appl is just a configuration
+
+1.46.30
+It refreshed the myapp/agro application but myservice & my app didnt refresh
 ****************************************************************************************************************
 
 
