@@ -1826,7 +1826,16 @@ So how do i get this deployment to loook/use my own repo
 I copied her content & i created mine
 
 
-1.30.40
+1.33.10       clicked open the myapp/agrocd application on the agrocd dashboard
+We can see its the girls repo that its picking
+So this is the aplictaion that is running in your cluster is heres , mayb you had applied it, you hv applied the same aplication before 
+so when you are doing kubectl apply, even with the changes its still picking up the  her application bc it was already there
+Its still picking up on that one, so go back to your k8 terminal 
+
+kubectl get pod -A
+YOU can see the applications is showing 7hrs ago but we just deployed an applictaion now 
+so when you are runing kubectl apply, that appl already exists, if there are no changes it doesnt apply
+so can you try and delete evrything in that namespace 
 
 ****************************************************************************************************************
 
