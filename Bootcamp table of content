@@ -1913,6 +1913,27 @@ application.yaml dev
 
 checked agrocd dashboard successfully deployed &its now reading from her repo
 myapp-agro-application 
+
+
+2.10.00 TROUBLESHOOTING service error
+ successfully & we can see the the other 3applictaions deployed successfuly
+
+2.13.00    REDUCING THE NUMBER OF PODS
+
+ TO ROLL BACK, WE will do it in git 
+if yiu want to add a new version of this application, you can do it on the deployment.yaml & buch it to git 
+so nobody will have to touch the cluster
+so i guess the whole purpose is everything will be in git, you dnt hv to do anything inside of the actual k8 cluster, agrocd will do it for you
+
+so if we try the girls image it will work right, bc we are using landmark image 
+
+QUESTION
+if we changing the image, do we then need to do a new , & mayb craete deployment
+ans:
+ WHAT we just need to do is since ists picking it from the repository, so if we push it now, what it will do is it will add it & commit & then merge to your main 
+branch, it should pick it & then redeploy the application.
+
+so all we need  to do is update this (the image in the configuration file ) with her own image 
 ****************************************************************************************************************
 
 
