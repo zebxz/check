@@ -15,8 +15,9 @@ Then go to Task manager; select perfomance
 and i see virtualization enabled
 
 
-STARTING DOCKER ENGINE STUCKED
-Docker was stucked at starting the docker engine
+DOCKER ENGINE STUCKED AT STARTING
+
+A) installing Wsl, windows subsystem for linux
 chatgpt said in the windows terminal run: wsl -l -v
 i ran it but it said : 
 windows subsystem for Linux has no installed distribution 
@@ -30,5 +31,26 @@ Create a default Unix user account : ekehc
 Password: Meekyways
 distribution successfully installed. It can be launched via 'wsl.exe -d Ubuntu'
 
+***STill stucked ...
+shut down Docker
+B) Disable control flow guard
+Go to setings
+systems & security; windows security
+App & browser control 
+scroll to exploit protection; program settings
+look for:   C:\WINDOWS\System32\vmcompute.exe , if not there, 
+look up and click add programme to customize; choose exact file path & add C:\WINDOWS\System32\vmcompute.exe 
+then scrool down it should hv been added, then right click on it and click on edit
+then disable clontrol flow guard
+then click apply & close
 
+then in powershell 
+run as administrator 
+then run ' net start vmcompute
+next set the wsl version
+wsl --set-default-version 2
+then close 
 
+restart computer & docker
+
+**** its stil stucked
