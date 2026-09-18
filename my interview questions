@@ -169,36 +169,42 @@ AND For RELIABILTY I alked about exposing the app using k8 service objects like,
 for lb, ngnix is layer6 lb and to reduce cost because using lb ie ELB, its an expensive service  and i gave the whole run down of deploying the ngnix ingerss controller in the cl8 to route traffic to the backend apps, 
 create service for the ingress controller which serves as the frontend & based on the service create ingress rules which will determine how service was routed. & to do that we hv to create route53 in AWS, Arecord set,
 & can routed it using either path or host then deploy the rule 
-3)How does jenkins know the particular job to pull from all the multiple jobs running in SCM 
+3)For example, you have 10 containers in frontend and 10 containers at the backend , on google are you going to put all the ipaddress?
+ No all the containers have a unique ip address   
+He said for example, you type ABC.com in google
+I said when you type the Alias name in google, google does... i  didnt complete it ... i wanted to say goodle does DNS resolution & through service discover, it discovers the conatiner/application
+but i said endpoint
+He said its service
+4)How does jenkins know the particular job to pull from all the multiple jobs running in SCM 
  I said i can remember for now mayb  ill come back to it ....then he asked Did you configure the webhook? ... i said no 
-4) what happens after Jenkins pulls the code ?
+5) what happens after Jenkins pulls the code ?
  I gave the ci/cd rundown... ended  at nexus , he wnated to interrupt then i said we sue doecker to conternarize & to deploy our appl & dockercompse file to deploy our microservices but bc it doesnt suppose an overlay etwrk we started using Eks as AWS mg8 our control plane
-5) What are some of the isues you have experienced using jenkins
+6) What are some of the isues you have experienced using jenkins
  some pluggings were outdated, i had to update them  from the official website
-6) Why use Jenkins not gItlab  etc?
+7) Why use Jenkins not gItlab  etc?
 Thats thats the tool they use when i joined the coy
-7)How do you manage all the manifest files. 
+8)How do you manage all the manifest files. 
 Uisng helm chart
-8) Whats the diff btw docker & Kubernetes
+9) Whats the diff btw docker & Kubernetes
  Docker doesnt supporrt an overlay network, with doscker you cant scale
-9) does docker replaces kubernetes?   ... NO
-10)Can we have docker in kubernetes ?
+10) does docker replaces kubernetes?   ... NO
+11)Can we have docker in kubernetes ?
 I said no , he said why 
 i said because we ahve kubernetes runtime Container -d and docker has its own runtime 
 But he said no docker uses Container -D so we just extracted container-d
-11) So how do you deploy the artifacts in k8
+12) So how do you deploy the artifacts in k8
 I said have been able to create k8 secrets to pull the image from our docker registry 
 he said how do you deploy the application, i asked do you mean the command? he said yes
 I said kubectl apply, he asked and what , I said -f... he said ok.
-12) You deploy an application bUT IT cRashes , how do you troubleshoot it?
+13) You deploy an application bUT IT cRashes , how do you troubleshoot it?
 I'll check the kublet & kubeproxy & iil run the exec command BUT he said BUT the container is not running yet ..  and i said thats true.
    He asked again, you deploy an application but it keeps creashing, what will you do about it?
 I said it has never happened in my env, but if it happens ill check the kublet & kubeproxy,  i shud have added ill check the docker image.
-13) why will you check the kublet?
+14) why will you check the kublet?
 because its the pry agent running on the worker node
-14) What some troubleshooting commands you will run ?
+15) What some troubleshooting commands you will run ?
 Kubectl describe pod & ill also check the log files 
-15) And what will you check for in the log files ?
+16) And what will you check for in the log files ?
 It depends, each issue is unique so what ill check for is pertitent to the issue of concern
 
 
