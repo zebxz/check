@@ -166,7 +166,7 @@ The interview PAYMENGTUS SEPT 16th, 2026 .. 4pm
 1) How do you ensure high availability and reliability ?  .. For high availability i talked about deploying the app in multiple availability zones with Application lb and kubernetes pod autoscaler so it dynamically adjust based on demand.
 AND For RELIABILTY I alked about exposing the app using k8 service objects like, clusterip, nodeport, external name, lb, ngnix ingress
 2) why do you use ngnix ingress ?
-for lb, ngnix is layer6 lb and to reduce cost because using lb ie ELB, its an expensive service  and i gave the whole run down of deploying the ngnix ingerss controller in the cl8 to route traffic to the backend apps, 
+for lb, ngnix is a layer7 lb and to reduce cost because using lb ie ELB, its an expensive service  and i gave the whole run down of deploying the ngnix ingerss controller in the cl8 to route traffic to the backend apps, 
 create service for the ingress controller which serves as the frontend & based on the service create ingress rules which will determine how service was routed. & to do that we hv to create route53 in AWS, Arecord set,
 & can routed it using either path or host then deploy the rule 
 3)For example, you have 10 containers in frontend and 10 containers at the backend , on google are you going to put all the ipaddress?
