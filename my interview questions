@@ -160,13 +160,34 @@ AS a kubernetes engr you should be able to answer all the questions, i hope so..
 
 
 The interview PAYMENGTUS SEPT 16th, 2026 .. 4pm
-1) How do you ensure high availability and reliability ?  .. i talked about deploying the app in multiple availability zones withapplication lb and kubernetes pod autoscaler so it dynamically adjust based on demand.
-I also talked about exposing the app using k8 service objects like, clusterip, nodeport, external name, lb, ngnix ingress
+1) How do you ensure high availability and reliability ?  .. For high availability i talked about deploying the app in multiple availability zones with Application lb and kubernetes pod autoscaler so it dynamically adjust based on demand.
+AND For RELIABILTY I alked about exposing the app using k8 service objects like, clusterip, nodeport, external name, lb, ngnix ingress
 2) why do you use ngnix ingress ?
 for lb, ngnix is layer6 lb and to reduce cost because using lb ie ELB, its an expensive service  and i gave the whole run down of deploying the ngnix ingerss controller in the cl8 to route traffic to the backend apps, 
 create service for the ingress controller which serves as the frontend & based on the service create ingress rules which will determine how service was routed. & to do that we hv to create route53 in AWS, Arecord set,
 & can routed it using either path or host then deploy the rule 
 3)How does jenkins know the particular job to pull from all the multiple jobs running in SCM 
  I said i can remember for now mayb  ill come back to it ....then he asked Did you configure the webhook? ... i said no 
-4) 
+4) what happens after Jenkins pulls the code ?
+ I gave the ci/cd rundown... ended  at nexus , he wnated to interrupt then i said we sue doecker to conternarize & to deploy our appl & dockercompse file to deploy our microservices but bc it doesnt suppose an overlay etwrk we started using Eks as AWS mg8 our control plane
+5) What are some of the isues you have experienced using jenkins
+ some pluggings were outdated, i had to update them  from the official website
+6) Why use Jenkins not gItlab  etc?
+Thats thats the tool they use when i joined the coy
+7)How do you manage all the manifest files. 
+Uisng helm chart
+8) Whats the diff btw docker & Kubernetes
+ Docker doesnt supporrt an overlay network, with doscker you cant scale
+9) does docker replaces kubernetes?   ... NO
+10)Can we have docker in kubernetes ?
+I said no , he said why 
+i said because we ahve kubernetes runtime Container -d and docker has its own runtime 
+But he said no docker uses Container -D so we just extracted container-d
+11) So how do you deploy the artifacts in k8
+I said have been able to create k8 secrets to pull the image from our docker registry 
+he said how do you deploy the application, i asked do you mean the command? he said yes
+I said kubectl apply, he asked and what , I said -f... he said ok.
+12) You deploy an application 
+
+
 
