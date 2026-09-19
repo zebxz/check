@@ -7,18 +7,24 @@ You can use it to enable multiple OS, to run simulteaneously
 
 
 
+RANCHER:
+
+To see how the cluster is performing at all times.
+
+
+Jira for ticketing
+
+Confluence for documentation
+
+Slack channel where everyone comm with
+
+
+
+MY DAILY ROUTINE
 
 
 
 
-
-
-
-
-
-End to end docker k8mvideo
-
-KUB 1&2: 1.53 kubectl apply-f
 
 
 Deplyment obj:
@@ -42,6 +48,68 @@ control/master node
 Kubectl once authorized in the kube.config file, you can run workloads eg kubectl create/get/delete/describe/apply/run/expose
 
 we have also deployed 3rd party application for monitoring like prometheus & grafana, so grafana comes with a virtualization dashboard, we are able to virtualize & see the perfromance of our application at any point in time.
+
+
+
+
+
+Worker node made up of:
+
+POD: the smallest unit, containers are deployed in pods
+
+Kublet the pry node agent, it’s the agent that runs on the worker node.
+
+Kublet. you can run workloads eg kubectl create, kubectl delete, etc
+
+Once you have been authorized & authenticated, in the kube.config file.
+
+Kube proxy, network agent: est communication btw the worker node & the master node.
+
+Container runtime: container-d
+
+
+We also have the vol concept
+
+In kubernetes we have stateless & statefull appl
+
+Statefless appdnt need to maintain its state but stateful apps need to maintain its state so we deploy it along with a piece of vol storage.
+
+And that takes us to vol concept
+
+We have persistent and non-persistent vol
+
+NON-PERSISTENT: eg; bindmount, this storage type is not managed by the docker and so it can be easily deleted by a non docker process eg sudo rm-rf, bc its not managed by the application.
+
+
+PERSISTENT VOL: eg hostpath, NFS, EFS
+
+This is a storage resource in the cluster and its lifecycle is independent of any single pod.
+
+It provides persistent storage for a stateful application ensuring that data is not lost even if the pods
+
+
+
+
+
+
+
+
+
+
+
+End to end docker k8mvideo
+
+KUB 1&2: 1.53 kubectl apply-f
+
+
+
+START
+
+
+
+
+
+
 
 
 
