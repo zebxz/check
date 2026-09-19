@@ -50,6 +50,38 @@ there are other options that can be used that is more complexed like dedicated s
 sonarqube scan code that are in github, the raw code, while the tools are tools that scan images for vulnerability , docker images..... thats the difference
 
 
+therfore in our environment there are 7 key concepts we hv on our checklist 
+we want to achieve automation
+so we have continous development
+continous integration
+continous testing
+continous delivery
+continous deployment
+continous monitoring and continous security because security goes with monitoring
+
+
+Bootcamp jan5
+ TRANSFORM AND ACCELERATE OUR SOFTWARE DELIVERY PIPELINES
+  is it possible to accelerate it?
+
+yes, it all depends on the triggers not just triggers but triggers is one of the ways to reduce the lead time 
+the time that it takes for your pipeline line to run from end to end 
+what triggers the job for eg you want to look at the 
+eg  github web hook is faster than pull scm to trigger a job so you realize that your choice of build trigger will have an impact
+even your choice of plugging, you could have a task that could be supported with more than one plugging 
+
+so you can improve your pipeline by making use of better pluggin
+so you could tell them in the interview that when i came to my team they were deploying monolithic appl or application that were architected through our
+pipeline & the those deployment were taking place in tomcat, now the pluggin that was been used to achieve that deployment was an ssh agent plugging on
+the pipeline & scp command was used to copy the files into webapp dir in tomcat but i realised that that process was taking more them so i quickly reviwed
+and that svaed some minutes in the deployment phase as far as the panel is concerned 
+so that is a contribution i brought to the team , choice of pluggin, choice of build trigger  and even how the build trigger is configured
+if i configure pull scm that checks if there are changes in the code ever yminute comapred to everyday, to to achieve a faster solution
+so even the way its configured will have an impact 
+and you are the devops engr, you are the sme. the subject matter expert.. 
+you may not even be the one to actually get the job done but you know what should be done so you can direct others to get the job the done so you are 
+observing & monitoring
+
 
 
 TYPES OF SECURITY WE HAVE AT DIFF LEVELS/TOOL
@@ -69,8 +101,23 @@ we equally have security groups, we have WA..
 
 
 
-MY EXPERIENCES WITH JENKINS
 
+ JENKINS PIPELINE
+so in our jenkins pipeline job, we hv several jobs, we have a job where jenkins deploy directly to k8 cluster
+we hv a job where jenkins build, ship to ansible & ansible manages the deployment, all those have been configured
+in this jenkins job, immediately developers commit code to github, it is imp to note that security again is inherent
+and before code are commited particularly to our master branch, it must go through a pool request so evrything has been configured as such because of security
+but once that code is commited, we hv connfigured build triggers using github webhook number1
+pullSCM number2 & build periodically depending on the job
+because job like database backup, what we need is build periodically, that is what we hv configured
+so once thers a commit in github, a jenkins job is been triggerd, jenkins pulls the new version of the code bc any commit id is a new version of the code
+so jenkins is pulling the new version of the code & since our Project are java based, we are using maven for a build
+so jenkins is integrated with maven to execute a clean package goal, where the code will be validated, cmpiled , test cases run & if it passes packages are created
+now those packages created the nxt thing that will happen is that, u knw bc of hw sensitive our appls are, software quality is our top priority, we hv introduced sonarqube for
+code quality
+
+
+MY EXPERIENCES WITH JENKINS
 
  i hv written i use the ansible playbk to install my jenkins once that is done, i configure the server
 to ensure that jenkins is working properly and it is worth noting that for jenkins to work or even start, we need java, so b4 i hv jenkins installed in my playbk, one of the 
