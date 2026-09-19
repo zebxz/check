@@ -42,6 +42,119 @@ there are other options that can be used that is more complexed like dedicated s
 
 
 
+    JENKINS
+ i was going tru the vidoes
+1:41:00     we can scan our images, containers, application before we actually pull them for deployment  , we use some  tools like sleek, trivy, whitehouse for vulnerability
+
+                   ****** whats the difference btw this scanning tools and sonarqube
+sonarqube scan code that are in github, the raw code, while the tools are tools that scan images for vulnerability , docker images..... thats the difference
+
+
+
+
+TYPES OF SECURITY WE HAVE AT DIFF LEVELS/TOOL
+so that is how all of this configured & at the level of the jenkins pipeline, we have security like:
+RBAC, we have project based authoriztion, we equally use Aws iam  to ensure that our env is secured, 36.39
+we also use LDAP integration tO ensure our env is completely secured and at the level of our k8 cluster security as well is very heavy
+thats why we use namespaces concept to restrict who can have access because there are developers/team members who can never have access to the kube system namespace
+thats the namespace that controls your entire cluster, the kube system
+and we create namespaces and restrict certain users to function only in those name space with the help of role, & role binding, cluster role binding we can achieve all of this
+
+
+and in terms of our overall infastructure most of our servers are running in private subnet so when we use terfrm 
+so we use infastructure as a code; terfrm to provision this infastructure & we have our frontend lbs running in the public subnet
+our entire infastructure runs in private subnet reasons been that we want to ensure high security, so thats how all of that is done
+so in our vpc settings we use NACL for security at the subnet level
+we equally have security groups, we have WA..
+
+
+
+MY EXPERIENCES WITH JENKINS
+
+
+ i hv written i use the ansible playbk to install my jenkins once that is done, i configure the server
+to ensure that jenkins is working properly and it is worth noting that for jenkins to work or even start, we need java, so b4 i hv jenkins installed in my playbk, one of the 
+task is to install java, thats my first experience with java, installing the jenkins sevrer, configuring the server and ensuring that jenkins is working properly
+****** EXperience number2:
+i also hv exp where hv been task to upgarde my jenkins version eg upgarding frm verson 30 to 32
+with that what hv done in the past is hv been tasked to recommission my jenkins server, so i hv to uninstall the old version of jenkins and reinstall the new version
+also i hv been asked to secure the server and as part of jenkins security 2things hv i done, hv been able to change my jenkins default port from .8080. to .. 
+not just changing the jenkins default port,i hv ensured that in my env we access our jenkins sever via a proxy, therfrore you dnt talk to jenkins server direclty, we use a 
+webserver, an ngnix websever to access jenkins bc it is more secured, (if u want to access ur appl servers and u use a webserver in btw the proxy,its more secured)
+so in my env hv been able to access my jenkins server using an ngnix webserver, that is part of the security
+thats not all my experience in jenkins also includes running jobs, jenkin jobs ... eg 
+i hv been able to craete simple free style project, hv also been able to create maven project bc most of the project we mange this projects are code that are developed in 
+java and we use maven as a compiler, maven is used to do a build and those are maven projects which i hv deployed
+hv also been able to deploy what we call, multi-line pipeline project that can be deployed to diff branches , if u do a commit in the dev branch it will trigger a job, also
+if u do a comit in the stage as well. .. so hv beeen able to write pipeline that manges multi-line pipeline projects 
+also hv been able to create pipeline jobs in jenkins uisng both sripted and declaractive pipelines, writing jenkins files, maintaining jenkins files thats my experience
+my exprience buttresses and stresses a lot when it comes to writing and  maintaining jenkins files 
+now once i hv the servers running, thers could be a problem, eg trying to do a uild but its failing , so what hv i been able to accomplish with that?
+
+
+JENKINS PROBLEM
+a spart of my experince hv been able to troubleshoot build failures, so if thers a problem in the build, i read the error messages, bc since jenkins has a console output
+from theconsole output, you can see the log where ther was a problem, thats my experience, troubleshooting build failures in jenkins 
+as part of my experience my task ahs always been to ensure that we automate everytin frm jenkins
+talking abt automation in jenkins, in our env w ehv what is called the 7c; continous dev, we hv continous integration, continous provisoning, continuos configuration etc
+
+ther can be a problem wher the server is down , lets assume your master server for k8 is down , if our docker build server is down for conatineroztaion
+what will happen if ther are some changes in API version and you are trying to use old manifest files , how will you fix such a problem. ther are many probelms that can arise
+in your env
+ther could be a problem wher pods are not running , we cud hv reosurces problem , we hv induffficient resources, so our srever cannot support a higher level of application 
+deployment thats a big problem 
+explain this problem and tell us how you fixed it 
+
+
+55:28   ,, said he was using jenkins to do a build but was always having a fail
+
+proff:
+    if theres a problem ,you dnt just first dive into your pom.xml file
+the first thing is to check the logs, if we are building in jenkins, thats what we call console output 
+u go to the console output and try to identify what cud be the cause of the problem, if the cause of the problem will need that i get into pom.xml to check then il do that 
+if the cause is for you to talk to dvelopers to inform them to check their code , it cannot runbc the compilers they hv defined is the wrong compilers they shud check
+their pluggins , the pluggins defined in pom.xml are not th epluggins the job neeeds to run , so they shud wrk on it and define the correct pluggins , 
+so if theres a problem check the logs 
+
+
+
+
+ your jenkins pipeline
+
+thank you for that question, i work as a devops engr for over 6yrs
+my basic task is to create automated piplelines where we are able to build appli, test and deploy them in their respestive env
+and we use jenkins bc it comes with all its automated features , so we use jenkins to automate the entire process and my piplrine strats frm me setting up my architecture
+all what is needed as a a requirement and based on our requirement we hv jenkins ., its required thats wher everytin is automated, we hv git and github is required when it 
+comes to devloping and versioning application
+in our env we are managing java projects so we are building with maven and maven is part of the pipeline and we run maven as a jenkins slave and as a result, we enusre that 
+maven is one of my  jenkins slave, so in the jenkins slave architecture, am attaching a slave called maven , once that happens the next thing that goes into the pipeline 
+gets to do with code quality analysis and we are using sonarqube so i ensure my sonarqube srever is setup and running and once that happens i integrate sonarqube with jenkins 
+and the integration happens using the project file , pom.xml, i equally intergrate sonarqube with nexus for artifacts to be uploaded, the automated process of uploading 
+artifacts into nexus, i integrate jenkins with docker, the reason i do that is bc we mg8 conatinerize appli, micro service applications , this ensures the appli has been 
+well packged , we hv to dpeloy the appli and we are using docker so we containerize the sppli by creating docker images and shipping them to dockerhub, so once that proces
+is done, we are now ready to deploy our applictaion and in the first deployment we deploy to a user acceptance  testing env for the user to be able to appreciate the quality
+of sofware developed on their behalf , if the client is happy they sign a doc called a signup doc to agrree that he wants us to dpeloy to production and that proces sof 
+deploying to production frm UAT via a manual approval is what is called continous delivery . 
+in some few of our projects we dnt need manual approval , everything is automated and thats continuos deployment
+so this is my expeience as far as th ejnkins pipeline is concerned
+
+as part of my job, i write pipeline scripts, i write jenkins file , i also modify existing jenkins file to be able to have this entire end to end process automated
+
+its imp to note that jenkins is able to integrate with all the components highlighted bc of the fact that jenkins can extend its functionalities tru pluggins 
+
+
+   ********** you can also go ahead and talk up to that once the application is deployed, the nxt tin is to ensure the appl is monitored, is  observed, on our jenkins pipeline
+we also hv a contnous monitoring job that is deployed once the appl are running ....  chris asked why he didnt add monitoring ( with promethus n grafana, newrelics)
+proff said we can also add it as well.. 
+
+
+   
+
+
+
+
+
+
 DOCKER ISSUE:
 Deploy app with the wrong image 
 
