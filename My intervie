@@ -35,6 +35,7 @@ I deploy applications to multiple avilability zones in AWS with an application l
 
 Also expose our application using kubenetes service objects like clusterip for internal communication & nodeport, externalname, lb, & ingress for external communication. However bc load balancers are expensive service in AWS, In my env we deploy ngnix ingress
 controller in our cluster to route traffic to the backend application, ngnix ingress is a layer7 LB, so it can suppot multiple backend application. after that we create a service like NgnixSVC to serve as our frontend and after that based on the service, we create
-some ingress rules 
+some ingress rules which determines how traffic is routed.
+But for us to create the rules, in AWS we have to create route53 , Arecordset, & we can either use hostbase routing or pathbased routing & then we deploy the ingress rule we have defined.
 
 
