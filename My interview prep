@@ -73,44 +73,7 @@ Multicontainerpod
 
 Replication controllers
 
-Replicaset
-
-
-
-control/master node
-
-Kubectl once authorized in the kube.config file, you can run workloads eg kubectl create/get/delete/describe/apply/run/expose
-
-we have also deployed 3rd party application for monitoring like prometheus & grafana, so grafana comes with a virtualization dashboard, we are able to virtualize & see the perfromance of our application at any point in time.
-
-
-
-
-
-Worker node made up of:
-
-POD: the smallest unit, containers are deployed in pods
-
-Kublet the pry node agent, it’s the agent that runs on the worker node.
-
-Kublet. you can run workloads eg kubectl create, kubectl delete, etc
-
-Once you have been authorized & authenticated, in the kube.config file.
-
-Kube proxy, network agent: est communication btw the worker node & the master node.
-
-Container runtime: container-d
-
-
-
-
-
-
-
-watch the End to end docker k8 video
-
-KUB 1&2: 1.53 kubectl apply-f
-
+Replicaset, Deployment, Demonset
 
 
 SECURITY
@@ -124,11 +87,21 @@ kubectl create namespace dev --v=8
 
 
 
-
 COST OPTIMIZATION
 Right sizing instances, serveless, cost monitoring
 
 
+
+
+
+
+
+  ********************************************************************         START
+
+
+watch the End to end docker k8 video
+
+KUB 1&2: 1.53 kubectl apply-f
 
 
 
@@ -199,8 +172,9 @@ process & wont be killed unnoticed.. & the guy was like wow wow
 11.40 in the past we deployed appl using docker & docker compose files to deploy microservices appl however since docker cannot support an overlay ntwrk, we had to switch to
 a conatiner ochestration tool wich is k8 .
 so with k8, initially we were using kubeadm i our env but now we switched to EKS & KOPS, whcih produces a production ready cl8 which we dnt have to spend soo much time 
-managing bc AWs does the managing of our plane & interms of the the private vpc which comes with the pub & private subnet & elastic loadbalancers & integrate with other
+managing bc AWs does the managing of our Control plane/maaster node & interms of the the private vpc which comes with the pub & private subnet & elastic loadbalancers & integrate with other
 other services like route53, so thats why we switevhed from kudeadm to KOPS & eks
+
 
 ANd we also use to write a lot of manifest files but inorder to reduce the amt of workload in wrting mainfestfiles we atrted using helm & helm comes with a herm chart
 so we jsut go in and do some modifications like the port in which we want to expose the container & justt deploy our appl with no stresss
@@ -222,13 +196,27 @@ schedule a conatiner on node a that does not have enough resources to carry it
 theres also the contorller manager which ensure that the number of number of replica sets declared in our manifest file is kept so incase anything happens to one pod,
 the controller manager automatcally replaces it
 
-for the workernode, its madeup of the kublet contianer runtime & kubeproxy
-the kublet est comm btw the workenode & the masternode & the kubeproxy is incharge of network
+for the workernode, its made up of the Pod, Kubectl, kublet, container runtime & kubeproxy
+the kublet; the pry node agent, est comm btw the workenode & the masternode & the kubeproxy is incharge of network
+Kubectl once authorized in the kube.config file, you can run workloads eg kubectl create/get/delete/describe/apply/run/expose
+POD: the smallest unit, containers are deployed in pods, Container runtime: container-d
+
+kubelet: The Agent Between Master and Worker Nodes
+The kubelet is the agent that runs on each worker node in a Kubernetes cluster. It communicates with the master node and ensures that the containers on its node are running and healthy.
+The kubelet reports the status of the node and the pods back to the master node, which is crucial for maintaining the cluster's health and availability. The kubelet also implements liveness/readiness/startup probes, 
+runs init containers in order, and handles volume mounting. If the kubelet dies, the node goes NotReady, and pods may be evicted. This ensures that the cluster remains operational and responsive to change
+
 
 we have also use ansible as our automation tool to patch our server & for confguration mg8, before that we also used terfrm to dpeloy our resource on aws
-at the same time we have deployed promethus & grafena for monitoring
-promethus gives the data the node exported expoerts the data & we use grafana dashboard to view the data because garfana has a very visual dashbaord that ebven non IT user 
-can easily understand
+ Third party application we deploy & supported 
+we have also deployed 3rd party application for monitoring like prometheus & grafana for monitoring, so grafana comes with a virtualization dashboard, we are able to virtualize & see the perfromance of our application at any point in time.
+promethus gives the data the node exported expoerts the data & we use grafana dashboard to view the data because garfana has a very visual dashbaord that ebven non IT user can easily understand
+we have equally deployed a 3rd party appl like ngnix ingress, 
+we have equally deployed a 3rd party appl like Elastic search filebeat & kibana
+and the good thing with all of this is that k8 comes with a package manager which makes the deployment in k8 simplified & the package manager is helm.
+
+you could equally like as a devops engr there were times that you were part of policy, part of decision making, you guys had to decide on stuff, which tool 
+to use
 
 i talked about AwS AS our cloud provider of choice & have used a lot aws services in aws such as aws storage srevices,  block storage whic is  ebs volumes  & they need ec2
 instances to be attached on it, i talked abt file storages,  elastic files storages , nfs storages 
@@ -243,34 +231,6 @@ which is associated with the private subnet
 also talked abt elastic loadbalancers , appl laod balnacers
 i talker abt a lot of things even ngrix,  how deploy ingress controllers, ingress service s& it acts as elastic loadbalancers
 
-
-In Kubernetes; We also have the vol concept
-
-In kubernetes we have stateless & statefull appl
-
-Statefless appdnt need to maintain its state but stateful apps need to maintain its state so we deploy it along with a piece of vol storage.
-
-And that takes us to vol concept
-
-We have persistent and non-persistent vol
-
-NON-PERSISTENT: eg; bindmount, this storage type is not managed by the docker and so it can be easily deleted by a non docker process eg sudo rm-rf, bc its not managed by the application.
-
-
-PERSISTENT VOL: eg hostpath, NFS, EFS
-
-This is a storage resource in the cluster and its lifecycle is independent of any single pod.
-
-It provides persistent storage for a stateful application ensuring that data is not lost even if the pods
-
-
-
-
-
-
-
-
-***
 
 
 
@@ -292,20 +252,21 @@ it along side persistent vol, so we have a persistent vol so that our data can p
 so persist vol is used as part of the deploymeny
 
 
-      Third party application we deploy & supported 
-it is imp for me to also make mention here that in my env i have nt only deployed custom app ,we also deploy applications that are 3rd party 
-eg Promethus & grafana, we are not the one developing but we can use it to monitor the rest of the cl8, we can use promethus & grafana to monitor our appl
-perfromance, that is a third party appl, where we are deploying a group of microservices, this microservices they are tasked to perform diff task in the cl8
-we have equally deployed a 3rd party appl like ngnix ingress, 
-we have equally deployed a 3rd party appl like Elastic search filebeat & kibana
-and the good thing with all of this is that k8 comes with a package manager which makes the deployment in k8 simplified & the package manager is helm.
-if you look at it we have touched most of the things that we should discuss about k8 & by the time that is done it becomes a simplitic discussion
+We have persistent and non-persistent vol
 
- so now the question you ask them bc you dwell a lot on Ci/cd  which is very good but why i have to go out of this is that there may be time you have to 
-dwell on diff specific areas, you should be able to have an end to end conversation with them on that area & be very relaxed.
+NON-PERSISTENT: eg; bindmount, this storage type is not managed by the docker and so it can be easily deleted by a non docker process eg sudo rm-rf, bc its not managed by the application.
 
-you could equally like as a devops engr there were times that you were part of policy, part of decision making, you guys had to decide on stuff, which tool 
-to use  
+
+PERSISTENT VOL: eg hostpath, NFS, EFS
+
+This is a storage resource in the cluster and its lifecycle is independent of any single pod.
+
+It provides persistent storage for a stateful application ensuring that data is not lost even if the pods
+
+
+*****    END
+
+
 
 
 
